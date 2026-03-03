@@ -1,0 +1,168 @@
+---
+/**
+ * video.astro
+ * Pagina "Video Marketing Olistico" — contenuto dalla pagina WP slug "video".
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { getPageBySlug } from '@lib/wordpress';
+
+const page = await getPageBySlug('video');
+
+const title   = page?.title?.rendered   ?? 'Video Marketing Olistico';
+const content = page?.content?.rendered ?? '';
+
+const seoTitle = `${title} - Marco Munich`;
+const seoDesc  = 'Guarda i video di Marco Munich sul Personal Branding Olistico e il Marketing Autentico.';
+---
+
+<BaseLayout title={seoTitle} description={seoDesc} currentPath="/video/">
+
+  <div class="video-page">
+
+    <div class="video-page__hero">
+      <h1 class="video-page__title">Video Marketing Olistico</h1>
+      <p class="video-page__subtitle">
+        Guarda i miei video sul Personal Branding e Marketing Autentico.
+      </p>
+      <a
+        href="https://www.youtube.com/channel/UCh9LH2mnDSJ2l3jfDVsGSIA?sub_confirmation=1"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="video-page__subscribe"
+      >
+        ▶ Iscriviti al canale YouTube
+      </a>
+    </div>
+
+    <div class="video-page__content">
+      <Fragment set:html={content} />
+    </div>
+
+  </div>
+
+</BaseLayout>
+
+<style>
+  .video-page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 56px 24px 80px;
+  }
+
+  .video-page__hero {
+    text-align: center;
+    margin-bottom: 56px;
+    padding-bottom: 40px;
+    border-bottom: 2px solid #0A0A0A;
+  }
+
+  .video-page__title {
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: 800;
+    line-height: 1.1;
+    color: #0A0A0A;
+    margin-bottom: 16px;
+  }
+
+  .video-page__subtitle {
+    font-size: 18px;
+    color: rgba(10,10,10,0.6);
+    margin-bottom: 24px;
+  }
+
+  .video-page__subscribe {
+    display: inline-block;
+    background: #FF0000;
+    color: white;
+    padding: 12px 28px;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    transition: background 0.15s;
+  }
+  .video-page__subscribe:hover {
+    background: #cc0000;
+  }
+
+  /* Griglia video dal plugin EPYT */
+  .video-page__content :global(.epyt-gallery-list) {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    margin-top: 16px;
+  }
+
+  .video-page__content :global(.epyt-video-wrapper) {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    background: #000;
+    margin-bottom: 12px;
+  }
+
+  .video-page__content :global(.epyt-video-wrapper iframe) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  .video-page__content :global(.epyt-gallery-item) {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .video-page__content :global(.epyt-gallery-item-title) {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.4;
+    color: #0A0A0A;
+    margin-top: 8px;
+  }
+
+  /* Paginazione */
+  .video-page__content :global(.epyt-pagination) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin: 40px 0 0;
+    font-size: 14px;
+  }
+
+  .video-page__content :global(.epyt-pagebutton) {
+    cursor: pointer;
+    background: #0A0A0A;
+    color: white;
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+    font-size: 13px;
+    user-select: none;
+  }
+  .video-page__content :global(.epyt-pagebutton.hide) {
+    visibility: hidden;
+  }
+
+  /* Bottone iscrizione plugin */
+  .video-page__content :global(.epyt-gallery-subscribe) {
+    display: none; /* Già mostrato nel nostro hero */
+  }
+
+  @media (max-width: 900px) {
+    .video-page__content :global(.epyt-gallery-list) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 560px) {
+    .video-page__content :global(.epyt-gallery-list) {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
