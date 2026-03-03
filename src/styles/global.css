@@ -1,0 +1,166 @@
+/* ──────────────────────────────────────────────────────────────────────────────
+   global.css — Stili base per marcomunich.com (Astro + Tailwind)
+   ────────────────────────────────────────────────────────────────────────────── */
+
+/* Font: Host Grotesk da Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300..800;1,300..800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Reset e base ─────────────────────────────────────────────────────────── */
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    font-family: 'Host Grotesk', system-ui, sans-serif;
+    font-size: 16px;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    @apply text-brand-black bg-white;
+    color: rgba(10, 10, 10, 0.85);
+    line-height: 1.7;
+  }
+
+  /* Titoli */
+  h1 { @apply text-h1 font-extrabold; }
+  h2 { @apply text-h2 font-normal; }
+  h3 { @apply text-h3 font-semibold; }
+  h4, h5, h6 { @apply font-semibold; }
+
+  /* Link nel body */
+  a {
+    @apply transition-opacity duration-150;
+  }
+  a:hover {
+    opacity: 0.8;
+  }
+
+  /* Immagini responsive */
+  img {
+    @apply max-w-full h-auto;
+  }
+
+  /* Reset liste */
+  ul, ol {
+    list-style: revert;
+    padding-left: revert;
+  }
+}
+
+/* ── Componenti riutilizzabili ──────────────────────────────────────────────── */
+@layer components {
+
+  /* Wrapper sito — larghezza massima centrata */
+  .site-wrapper {
+    @apply w-full max-w-site mx-auto px-6;
+  }
+
+  /* Pulsante primario (stile originale: sfondo scuro, testo bianco) */
+  .btn-primary {
+    @apply inline-block px-6 py-3 bg-brand-black text-white text-sm font-semibold
+           uppercase tracking-widest border border-brand-black
+           transition-all duration-200;
+  }
+  .btn-primary:hover {
+    @apply bg-white text-brand-black;
+  }
+
+  /* Pulsante outline (ghost — usato nella hero) */
+  .btn-outline {
+    @apply inline-block px-6 py-3 bg-transparent text-white text-sm font-semibold
+           uppercase tracking-widest border border-white
+           transition-all duration-200;
+  }
+  .btn-outline:hover {
+    @apply bg-white text-brand-black;
+  }
+
+  /* Card articolo — usata nel blog e nella sezione "Ultimi Articoli" */
+  .post-card {
+    @apply flex flex-col;
+  }
+  .post-card__image {
+    @apply w-full aspect-video object-cover mb-3;
+  }
+  .post-card__title {
+    @apply text-base font-semibold leading-snug text-brand-black hover:text-brand-gray
+           transition-colors duration-150;
+  }
+  .post-card__btn {
+    @apply mt-3 inline-block px-4 py-2 border border-brand-black text-xs
+           uppercase tracking-widest font-semibold
+           hover:bg-brand-black hover:text-white transition-all duration-150;
+  }
+
+  /* Sezione con sfondo nero */
+  .section-dark {
+    @apply bg-brand-darkbg text-white py-16 px-6;
+  }
+
+  /* Sezione con sfondo bianco */
+  .section-light {
+    @apply bg-white text-brand-black py-16 px-6;
+  }
+
+  /* Breadcrumb */
+  .breadcrumb {
+    @apply text-xs text-brand-gray uppercase tracking-widest flex gap-2 items-center;
+  }
+  .breadcrumb a {
+    @apply text-brand-gray hover:text-brand-black;
+  }
+  .breadcrumb span {
+    @apply opacity-50;
+  }
+
+  /* Contenuto articolo — stili tipografici per HTML generato da WordPress */
+  .prose-marcomunich {
+    @apply text-base leading-relaxed;
+    color: rgba(10, 10, 10, 0.85);
+  }
+  .prose-marcomunich h2 {
+    @apply text-2xl font-bold mt-10 mb-4 text-brand-black;
+  }
+  .prose-marcomunich h3 {
+    @apply text-xl font-semibold mt-8 mb-3 text-brand-black;
+  }
+  .prose-marcomunich p {
+    @apply mb-5;
+  }
+  .prose-marcomunich ul, .prose-marcomunich ol {
+    @apply mb-5 pl-6;
+  }
+  .prose-marcomunich li {
+    @apply mb-2;
+  }
+  .prose-marcomunich a {
+    @apply underline underline-offset-2;
+  }
+  .prose-marcomunich strong {
+    @apply font-bold;
+  }
+  .prose-marcomunich blockquote {
+    @apply border-l-4 border-brand-gray pl-5 italic my-6 text-brand-gray;
+  }
+  .prose-marcomunich img {
+    @apply my-6 w-full;
+  }
+  .prose-marcomunich hr {
+    @apply my-8 border-brand-border;
+  }
+  /* FAQ — stile per sezioni accordion/Q&A presenti negli articoli */
+  .prose-marcomunich .wp-block-details,
+  .prose-marcomunich details {
+    @apply border border-brand-border p-4 mb-3;
+  }
+  .prose-marcomunich summary {
+    @apply font-semibold cursor-pointer;
+  }
+}

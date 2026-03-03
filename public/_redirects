@@ -1,0 +1,36 @@
+# ── Netlify Redirects ─────────────────────────────────────────────────────────
+# Formato: /vecchio-url  /nuovo-url  codice-http
+
+# Pagine rinominate
+/risorse/                           /inizia-da-qui/                 301
+/risorse                            /inizia-da-qui/                 301
+
+# Blog (vecchio slug WP)
+/blog-consulenza-marketing/         /blog/                          301
+/blog-2/                            /blog/                          301
+
+# Chi sono (alias)
+/la-mia-storia/                     /chi-sono/                      301
+/chi-sono2/                         /chi-sono/                      301
+/come-posso-aiutarti-2/             /servizi/                       301
+/come-posso-aiutarti1/              /servizi/                       301
+
+# Pagine di ringraziamento/conferma — redirect alla homepage
+/grazie/                            /                               302
+/grazie-standard/                   /                               302
+/grazie-standard-2/                 /                               302
+/conferma-donazione/                /                               302
+/donazione-prodgratuito/            /                               302
+/donazione-fallita/                 /                               302
+/consulenza-accettata/              /                               302
+/consulenza-non-accettata/          /                               302
+/conferma-registrazione-webinar-qa/ /                               302
+
+# Vecchie pagine di corso/servizi → servizi
+/sessione-introduttiva/             /servizi/                       301
+/consulenza-introduttiva/           /servizi/                       301
+/prenota-la-sessione/               https://wa.link/zva8dp          302
+/prenotazione/                      https://wa.link/zva8dp          302
+
+# Pagine privacy/cookie (rimangono su WP per ora)
+# /cookie-policy/  e /privacy-policy/ le lasciamo passare a WP

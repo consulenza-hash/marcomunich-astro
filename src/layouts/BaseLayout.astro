@@ -1,0 +1,77 @@
+---
+/**
+ * BaseLayout.astro
+ * Layout base condiviso da tutte le pagine.
+ * Gestisce: <head> con meta SEO, Header, Footer, e slot per il contenuto.
+ *
+ * Props:
+ *   title:       string  — <title> della pagina
+ *   description: string  — meta description
+ *   image:       string  — og:image (opzionale)
+ *   currentPath: string  — path corrente per highlight nav (opzionale)
+ *   noIndex:     boolean — true per pagine che non devono essere indicizzate
+ */
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import '@styles/global.css';
+
+const {
+  title = 'Marco Munich - Personal Branding Olistico',
+  description = "L'autenticità è la strada per fare qualsiasi cosa nella vita",
+  image = 'https://marcomunich.com/og-image.jpg',
+  currentPath = '/',
+  noIndex = false,
+} = Astro.props;
+
+const siteUrl = 'https://marcomunich.com';
+const canonicalUrl = `${siteUrl}${currentPath}`;
+const fullTitle = title.includes('Marco Munich') ? title : `${title} - Marco Munich`;
+---
+
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO base -->
+  <title>{fullTitle}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonicalUrl} />
+  {noIndex && <meta name="robots" content="noindex, nofollow" />}
+
+  <!-- Open Graph / Social -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonicalUrl} />
+  <meta property="og:title" content={fullTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={image} />
+  <meta property="og:locale" content="it_IT" />
+  <meta property="og:site_name" content="Marco Munich - Personal Branding Olistico" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={fullTitle} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={image} />
+
+  <!-- Favicon (usa quello esistente di WP) -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+  <!-- Slot per <head> extra (es. meta SEO specifici per articolo) -->
+  <slot name="head" />
+</head>
+
+<body>
+  <!-- Padding top per compensare header fisso (64px) -->
+  <div class="pt-16">
+    <Header currentPath={currentPath} />
+
+    <main id="main-content">
+      <slot />
+    </main>
+
+    <Footer />
+  </div>
+</body>
+</html>

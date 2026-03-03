@@ -1,0 +1,176 @@
+---
+/**
+ * chi-sono.astro
+ * Pagina statica "Chi sono" — contenuto preso dalla pagina WP con slug "chi-sono".
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { getPageBySlug, getFeaturedImageUrl } from '@lib/wordpress';
+
+const page = await getPageBySlug('chi-sono');
+
+const title   = page?.title?.rendered   ?? 'Chi sono';
+const content = page?.content?.rendered ?? '';
+const imageUrl = getFeaturedImageUrl(page, 'large');
+
+const seoTitle = page?.yoast_head_json?.title ?? `${title} - Marco Munich`;
+const seoDesc  = page?.yoast_head_json?.description ?? 'Marco Munich: Personal Branding Olistico per coach, counselor e operatori olistici.';
+---
+
+<BaseLayout title={seoTitle} description={seoDesc} currentPath="/chi-sono/">
+
+  <div class="static-page">
+
+    <!-- Hero con foto -->
+    <div class="static-page__hero chi-sono__hero">
+      <div class="chi-sono__intro">
+        <h1 class="static-page__title">Chi sono</h1>
+        <p class="chi-sono__role">Personal Branding Olistico</p>
+      </div>
+      {imageUrl && (
+        <img
+          src={imageUrl}
+          alt="Marco Munich"
+          class="chi-sono__photo"
+          width="320"
+          height="320"
+          loading="eager"
+        />
+      )}
+    </div>
+
+    <!-- Contenuto WP -->
+    <div class="static-page__content prose-marcomunich">
+      <Fragment set:html={content} />
+    </div>
+
+    <!-- CTA finale -->
+    <div class="static-page__cta">
+      <p>Ti ritrovi in quello che penso?</p>
+      <a href="https://wa.link/zva8dp" target="_blank" rel="noopener noreferrer" class="btn-primary">
+        FACCIAMO UNA CHIACCHIERATA
+      </a>
+    </div>
+
+  </div>
+
+</BaseLayout>
+
+<style>
+  .static-page {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 56px 24px 80px;
+  }
+
+  /* ── Hero ──────────────────────────────────────────────────────────────────── */
+  .static-page__hero {
+    margin-bottom: 48px;
+    border-bottom: 2px solid #0A0A0A;
+    padding-bottom: 32px;
+  }
+
+  .chi-sono__hero {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .chi-sono__intro { flex: 1; min-width: 240px; }
+
+  .static-page__title {
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 800;
+    line-height: 1.1;
+    color: #0A0A0A;
+    margin-bottom: 10px;
+  }
+
+  .chi-sono__role {
+    font-size: 16px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(10,10,10,0.5);
+    font-weight: 600;
+  }
+
+  .chi-sono__photo {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 50%;
+    filter: grayscale(100%);
+    flex-shrink: 0;
+  }
+
+  /* ── Contenuto ─────────────────────────────────────────────────────────────── */
+  .static-page__content {
+    font-size: 17px;
+    line-height: 1.75;
+    color: #0A0A0A;
+  }
+
+  .static-page__content :global([class*="tve_"]),
+  .static-page__content :global([class*="thrv_"]) {
+    all: revert;
+  }
+
+  .static-page__content :global(h2) {
+    font-size: 26px;
+    font-weight: 700;
+    margin: 40px 0 16px;
+  }
+  .static-page__content :global(h3) {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 32px 0 12px;
+  }
+  .static-page__content :global(p) {
+    margin-bottom: 20px;
+  }
+  .static-page__content :global(a) {
+    color: #0A0A0A;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .static-page__content :global(ul),
+  .static-page__content :global(ol) {
+    margin: 0 0 20px 24px;
+  }
+  .static-page__content :global(li) {
+    margin-bottom: 8px;
+  }
+  .static-page__content :global(img) {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 24px auto;
+  }
+  .static-page__content :global(strong) {
+    font-weight: 700;
+  }
+  .static-page__content :global(blockquote) {
+    border-left: 3px solid #0A0A0A;
+    padding-left: 20px;
+    margin: 24px 0;
+    font-style: italic;
+    color: rgba(10,10,10,0.7);
+  }
+
+  /* ── CTA ────────────────────────────────────────────────────────────────────── */
+  .static-page__cta {
+    margin-top: 64px;
+    padding-top: 40px;
+    border-top: 1px solid #E5E5E5;
+    text-align: center;
+  }
+  .static-page__cta p {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: rgba(10,10,10,0.7);
+  }
+
+  @media (max-width: 600px) {
+    .chi-sono__hero { flex-direction: column-reverse; }
+    .chi-sono__photo { width: 140px; height: 140px; }
+  }
+</style>

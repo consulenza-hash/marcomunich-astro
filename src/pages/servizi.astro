@@ -1,0 +1,157 @@
+---
+/**
+ * servizi.astro
+ * Pagina statica "Servizi" — contenuto preso dalla pagina WP con slug "servizi".
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { getPageBySlug, getFeaturedImageUrl } from '@lib/wordpress';
+
+const page = await getPageBySlug('servizi');
+
+const title   = page?.title?.rendered   ?? 'Servizi';
+const content = page?.content?.rendered ?? '';
+
+const seoTitle = page?.yoast_head_json?.title ?? `${title} - Marco Munich`;
+const seoDesc  = page?.yoast_head_json?.description ?? 'Servizi di Personal Branding Olistico di Marco Munich per coach, counselor e operatori olistici.';
+---
+
+<BaseLayout title={seoTitle} description={seoDesc} currentPath="/servizi/">
+
+  <div class="static-page">
+
+    <!-- Hero -->
+    <div class="static-page__hero">
+      <h1 class="static-page__title">Servizi</h1>
+      <p class="static-page__subtitle">
+        Cerco sempre di metterti nelle condizioni di fare da solo.
+      </p>
+    </div>
+
+    <!-- Contenuto WP -->
+    <div class="static-page__content prose-marcomunich">
+      <Fragment set:html={content} />
+    </div>
+
+    <!-- CTA finale -->
+    <div class="static-page__cta">
+      <p>Non sai quale servizio fa per te?</p>
+      <a href="https://wa.link/zva8dp" target="_blank" rel="noopener noreferrer" class="btn-primary">
+        PARLIAMONE SU WHATSAPP
+      </a>
+    </div>
+
+  </div>
+
+</BaseLayout>
+
+<style>
+  .static-page {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 56px 24px 80px;
+  }
+
+  .static-page__hero {
+    margin-bottom: 48px;
+    border-bottom: 2px solid #0A0A0A;
+    padding-bottom: 32px;
+  }
+
+  .static-page__title {
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 800;
+    line-height: 1.1;
+    color: #0A0A0A;
+    margin-bottom: 16px;
+  }
+
+  .static-page__subtitle {
+    font-size: 18px;
+    line-height: 1.6;
+    color: rgba(10,10,10,0.65);
+  }
+
+  /* ── Contenuto ─────────────────────────────────────────────────────────────── */
+  .static-page__content {
+    font-size: 17px;
+    line-height: 1.75;
+    color: #0A0A0A;
+  }
+
+  /* Thrive layout helpers — rendiamo leggibili le colonne/sezioni */
+  .static-page__content :global([class*="tve_"]),
+  .static-page__content :global([class*="thrv_"]) {
+    all: revert;
+  }
+
+  .static-page__content :global(.thrv_columns),
+  .static-page__content :global(.tve_colm),
+  .static-page__content :global([data-css]) {
+    display: block !important;
+    width: 100% !important;
+    float: none !important;
+  }
+
+  .static-page__content :global(h2) {
+    font-size: 28px;
+    font-weight: 800;
+    margin: 48px 0 16px;
+    padding-top: 24px;
+    border-top: 1px solid #E5E5E5;
+  }
+  .static-page__content :global(h2:first-child) {
+    border-top: none;
+    margin-top: 0;
+    padding-top: 0;
+  }
+  .static-page__content :global(h3) {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 32px 0 12px;
+  }
+  .static-page__content :global(h4) {
+    font-size: 17px;
+    font-weight: 700;
+    margin: 24px 0 8px;
+  }
+  .static-page__content :global(p) {
+    margin-bottom: 20px;
+  }
+  .static-page__content :global(a) {
+    color: #0A0A0A;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .static-page__content :global(ul),
+  .static-page__content :global(ol) {
+    margin: 0 0 20px 24px;
+  }
+  .static-page__content :global(li) {
+    margin-bottom: 10px;
+  }
+  .static-page__content :global(img) {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 24px 0;
+  }
+  .static-page__content :global(strong) {
+    font-weight: 700;
+  }
+
+  /* Nasconde JSON di configurazione Thrive che appare come testo -->  */
+  .static-page__content :global(script) { display: none; }
+
+  /* ── CTA ─────────────────────────────────────────────────────────────────── */
+  .static-page__cta {
+    margin-top: 64px;
+    padding-top: 40px;
+    border-top: 1px solid #E5E5E5;
+    text-align: center;
+  }
+  .static-page__cta p {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: rgba(10,10,10,0.7);
+  }
+</style>

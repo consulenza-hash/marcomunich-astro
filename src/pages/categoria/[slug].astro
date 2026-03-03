@@ -1,0 +1,149 @@
+---
+/**
+ * categoria/[slug].astro
+ * Pagina archivio per categoria — griglia articoli filtrati.
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import PostCard from '@components/PostCard.astro';
+import {
+  getAllCategories,
+  getPostsByCategory,
+  getAllPosts,
+} from '@lib/wordpress';
+
+export async function getStaticPaths() {
+  const categories = await getAllCategories();
+  const allPosts   = await getAllPosts();
+
+  return categories.map((cat) => {
+    const posts = allPosts
+      .filter((p) => p.categories?.includes(cat.id))
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+    return {
+      params: { slug: cat.slug },
+      props:  { category: cat, posts },
+    };
+  });
+}
+
+const { category, posts } = Astro.props;
+const catName = category.name ?? '';
+const catDesc = category.description ?? '';
+---
+
+<BaseLayout
+  title={`${catName} - Marco Munich`}
+  description={catDesc || `Articoli sulla categoria ${catName} di Marco Munich.`}
+  currentPath={`/categoria/${category.slug}/`}
+>
+
+  <!-- Hero -->
+  <section class="cat-hero">
+    <div class="cat-hero__overlay"></div>
+    <div class="cat-hero__content">
+      <p class="cat-hero__eyebrow">Categoria</p>
+      <h1 class="cat-hero__title" set:html={catName} />
+      {catDesc && <p class="cat-hero__desc">{catDesc}</p>}
+    </div>
+  </section>
+
+  <!-- Griglia articoli -->
+  <div class="cat-body site-wrapper">
+
+    {posts.length > 0 ? (
+      <div class="blog-grid">
+        {posts.map((post) => <PostCard post={post} />)}
+      </div>
+    ) : (
+      <p class="cat-empty">Nessun articolo in questa categoria.</p>
+    )}
+
+    <div class="cat-back">
+      <a href="/blog/">← Tutti gli articoli</a>
+    </div>
+
+  </div>
+
+</BaseLayout>
+
+<style>
+  .cat-hero {
+    position: relative;
+    height: 240px;
+    background-color: #0A0A0A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .cat-hero__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+  }
+  .cat-hero__content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    color: white;
+    padding: 0 24px;
+  }
+  .cat-hero__eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 10px;
+  }
+  .cat-hero__title {
+    font-size: clamp(24px, 4vw, 42px);
+    font-weight: 800;
+    color: white;
+    margin-bottom: 10px;
+  }
+  .cat-hero__desc {
+    font-size: 15px;
+    color: rgba(255,255,255,0.65);
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .cat-body {
+    padding-top: 48px;
+    padding-bottom: 80px;
+  }
+
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px 32px;
+  }
+
+  .cat-empty {
+    text-align: center;
+    color: rgba(10,10,10,0.5);
+    padding: 60px 0;
+    font-size: 15px;
+  }
+
+  .cat-back {
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid #E5E5E5;
+  }
+  .cat-back a {
+    font-size: 14px;
+    color: #0A0A0A;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .cat-back a:hover { opacity: 0.6; }
+
+  @media (max-width: 900px) {
+    .blog-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 560px) {
+    .blog-grid { grid-template-columns: 1fr; }
+    .cat-hero  { height: 180px; }
+  }
+</style>

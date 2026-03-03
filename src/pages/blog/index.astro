@@ -1,0 +1,201 @@
+---
+/**
+ * blog/index.astro
+ * Pagina blog — griglia 3 colonne con tutti gli articoli.
+ * Replica esatta della pagina /blog-consulenza-marketing/
+ * con header scuro, hero banner, search (statica) e griglia card.
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import PostCard from '@components/PostCard.astro';
+import { getAllPosts } from '@lib/wordpress';
+
+const allPosts = await getAllPosts();
+
+// Ordina per data decrescente (più recenti prima)
+const posts = allPosts.sort(
+  (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+);
+---
+
+<BaseLayout
+  title="Blog Marketing Olistico - Marco Munich"
+  description="Articoli su personal branding autentico, marketing etico e mindset per coach, counselor e operatori olistici."
+  currentPath="/blog/"
+>
+
+  <!-- ── Hero banner blog ─────────────────────────────────────────────────── -->
+  <section class="blog-hero">
+    <div class="blog-hero__overlay"></div>
+    <div class="blog-hero__content">
+      <h1 class="blog-hero__title">Blog Marketing Olistico</h1>
+      <p class="blog-hero__subtitle">Benvenuto</p>
+    </div>
+  </section>
+
+  <!-- ── Corpo pagina ─────────────────────────────────────────────────────── -->
+  <div class="blog-body site-wrapper">
+
+    <!-- Search (statica — filtra via JS leggero) -->
+    <div class="blog-search">
+      <input
+        type="search"
+        id="blog-search-input"
+        placeholder="Cerca"
+        aria-label="Cerca articoli"
+        class="blog-search__input"
+      />
+      <button class="blog-search__btn" aria-label="Cerca">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+        </svg>
+        Cerca
+      </button>
+    </div>
+
+    <!-- Griglia articoli -->
+    <div class="blog-grid" id="blog-grid">
+      {posts.map((post) => (
+        <PostCard post={post} />
+      ))}
+    </div>
+
+    <!-- Nessun risultato (nascosto di default) -->
+    <p class="blog-noresults" id="blog-noresults" aria-live="polite" hidden>
+      Nessun articolo trovato per questa ricerca.
+    </p>
+
+  </div>
+
+</BaseLayout>
+
+<!-- Search client-side minimale (filtra per titolo senza JS framework) -->
+<script>
+  const input = document.getElementById('blog-search-input');
+  const grid  = document.getElementById('blog-grid');
+  const noRes = document.getElementById('blog-noresults');
+  const cards = grid?.querySelectorAll('article');
+
+  input?.addEventListener('input', () => {
+    const query = input.value.trim().toLowerCase();
+    let visible = 0;
+
+    cards?.forEach((card) => {
+      const title = card.querySelector('.post-card__title')?.textContent?.toLowerCase() ?? '';
+      const show  = !query || title.includes(query);
+      card.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+
+    noRes && (noRes.hidden = visible > 0);
+  });
+</script>
+
+<style>
+  /* ── Hero banner ─────────────────────────────────────────────────────────── */
+  .blog-hero {
+    position: relative;
+    height: 280px;
+    background-image: url('https://marcomunich.com/wp-content/uploads/thrive-theme/images/Blog-List-simple-_02-1-8-1.jpg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Fallback colore se immagine manca */
+    background-color: #2a2a2a;
+  }
+
+  .blog-hero__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+  }
+
+  .blog-hero__content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    color: white;
+  }
+
+  .blog-hero__title {
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: 700;
+    color: white;
+    margin-bottom: 8px;
+  }
+
+  .blog-hero__subtitle {
+    font-size: 14px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+  }
+
+  /* ── Body ────────────────────────────────────────────────────────────────── */
+  .blog-body {
+    padding-top: 48px;
+    padding-bottom: 80px;
+  }
+
+  /* ── Search ──────────────────────────────────────────────────────────────── */
+  .blog-search {
+    display: flex;
+    gap: 0;
+    margin-bottom: 40px;
+    max-width: 520px;
+  }
+
+  .blog-search__input {
+    flex: 1;
+    padding: 12px 16px;
+    border: 1px solid #E5E5E5;
+    border-right: none;
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+  }
+  .blog-search__input:focus {
+    border-color: #0A0A0A;
+  }
+
+  .blog-search__btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 20px;
+    background: #0A0A0A;
+    color: white;
+    border: none;
+    font-size: 13px;
+    font-family: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.05em;
+    transition: background 0.15s;
+  }
+  .blog-search__btn:hover { background: #333; }
+
+  /* ── Griglia 3 colonne ───────────────────────────────────────────────────── */
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px 32px;
+  }
+
+  .blog-noresults {
+    text-align: center;
+    color: rgba(10,10,10,0.5);
+    padding: 40px 0;
+    font-size: 15px;
+  }
+
+  /* ── Responsive ──────────────────────────────────────────────────────────── */
+  @media (max-width: 900px) {
+    .blog-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 560px) {
+    .blog-grid { grid-template-columns: 1fr; }
+    .blog-hero  { height: 200px; }
+  }
+</style>

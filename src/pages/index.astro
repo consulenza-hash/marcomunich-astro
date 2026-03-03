@@ -1,0 +1,523 @@
+---
+/**
+ * index.astro
+ * Homepage di marcomunich.com
+ * Replica esatta dell'originale, sezione per sezione:
+ *
+ * 1. Hero (sfondo nero, foto B&W, titolo, CTA)
+ * 2. "Chi NON ha un punto di vista" — lista bullet
+ * 3. "Chi HA un punto di vista" — griglia 3x3 con checkmark
+ * 4. "Come lavoro" — steps 01/02/03
+ * 5. Dark CTA — "Non adatto a chi ha già chiarezza"
+ * 6. Ultimi Articoli — griglia 3 colonne
+ * 7. Bio/Quote section
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import PostCard from '@components/PostCard.astro';
+import { getLatestPosts } from '@lib/wordpress';
+
+const latestPosts = await getLatestPosts(3);
+---
+
+<BaseLayout
+  title="Marco Munich - Personal Branding Olistico"
+  description="Sviluppa un punto di vista per promuoverti online come voce diversa dalle altre. Personal Branding Olistico per coach, counselor e operatori olistici."
+  currentPath="/"
+>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       1. HERO — sfondo nero, foto B&W, titolo grande, CTA
+       ══════════════════════════════════════════════════════════════════════ -->
+  <section class="hero">
+    <div class="hero__photo-wrap">
+      <img
+        src="https://marcomunich.com/wp-content/uploads/2019/04/Schermata-2019-03-21-alle-15.44.12.png"
+        alt="Marco Munich"
+        class="hero__photo"
+        width="200"
+        height="200"
+        loading="eager"
+      />
+    </div>
+    <h1 class="hero__title">Personal Branding Olistico</h1>
+    <p class="hero__subtitle">
+      <a href="/inizia-da-qui/" class="hero__subtitle-link">Sviluppa un punto di vista</a>
+      per promuoverti online come voce diversa dalle altre.
+    </p>
+    <a href="https://wa.link/zva8dp" class="btn-outline">Ti va di fare una chiacchierata?</a>
+  </section>
+
+  <!-- Navigazione (già nell'Header, ma nella homepage originale appare come barra separata sotto l'hero) -->
+  <!-- L'header fisso copre questa funzione -->
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       2. CHI NON HA UN PUNTO DI VISTA
+       ══════════════════════════════════════════════════════════════════════ -->
+  <section class="section-light">
+    <div class="site-wrapper">
+      <h2 class="section-title--uppercase">
+        Chi non ha un punto di vista di<br />solito fa queste cose
+      </h2>
+
+      <ul class="pain-list">
+        <li>Si presenta sempre come vorrebbe essere visto, mai per quello che è.</li>
+        <li>Sceglie sfondi e contesti studiati per farti pensare a lui come qualcuno che non è.</li>
+        <li>Cancella ogni traccia di errore. Tutto deve sembrare perfetto.</li>
+        <li>Pesa ogni parola per portarti dove serve a lui, cioè alla vendita.</li>
+        <li>Pubblica quando "dovrebbe", non quando ha voglia. Mai alle 3 di notte, ché non c'è nessuno.</li>
+        <li>È difficile parlarci davvero. C'è sempre un muro, deleghe, filtri. Credono che più sei irraggiungibile, più sembri importante.</li>
+        <li>Dice cose che risuonano, ma senti che usa la tua sofferenza. Ti lascia in bilico: penso bene o male?</li>
+        <li>Tocca il cuore, ma lo fa per calcolo. Senti che c'è sempre un secondo fine.</li>
+        <li>Sei un numero. Appena entri, prassi standard. Parla di "onboarding" come se fossi salito su una nave, ma per lui sei un oggetto, non una persona.</li>
+        <li>È stanco, ma non lo dice mai. Anzi, più è stanco più predica che non bisogna mollare.</li>
+        <li>Non è mai contento di parlare se non c'è un ritorno. Si chiede sempre: questa persona mi serve?</li>
+      </ul>
+
+      <div class="result-block">
+        <h3 class="result-block__title">Risultato?</h3>
+        <p>
+          Infelicità. Nonostante ricchezza e successo.<br />
+          Non la vuoi? Allora <strong>non fare niente di quello che hai appena letto.</strong>
+        </p>
+        <a href="https://wa.link/zva8dp" class="btn-primary mt-6 inline-block">
+          Ti va di fare una chiacchierata?
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       3. CHI HA UN PUNTO DI VISTA FORTE
+       ══════════════════════════════════════════════════════════════════════ -->
+  <section class="section-light" style="border-top: 1px solid #E5E5E5;">
+    <div class="site-wrapper">
+      <h2 class="section-title--uppercase">
+        Invece, chi ha un punto di vista forte e onesto, fa queste:
+      </h2>
+
+      <div class="features-grid">
+        <!-- Riga 1 -->
+        <div class="feature-item">
+          <span class="feature-item__check" aria-hidden="true">✔</span>
+          <p>Si mostra per quello che è, <strong>dalla stanza o studio in cui vive veramente.</strong></p>
+        </div>
+        <div class="feature-item">
+          <span class="feature-item__check" aria-hidden="true">✔</span>
+          <p>Usa modalità, tempistiche e mezzi che vuole, come si vuole, a orari che desidera (pubblicando anche alle 3 di notte si attira il pubblico delle 3 di notte).</p>
+        </div>
+        <div class="feature-item">
+          <span class="feature-item__check" aria-hidden="true">✔</span>
+          <p>Dialoga direttamente con le persone anziché innalzare muri come funnel, pagine web, moduli su moduli di iscrizioni, email, ecc.</p>
+        </div>
+        <div class="feature-item">
+          <span class="feature-item__check" aria-hidden="true">✔</span>
+          <p>Quando parla quello che sento <strong>mi risuona subito</strong> e parla la mia lingua</p>
+        </div>
+        <!-- Riga 2 -->
+        <div class="feature-item">
+          <span class="feature-item__check" aria-hidden="true">✔</span>
+          <p><strong>Non si perde in chiacchiere</strong> e arriva subito al punto</p>
+        </div>
+        <div class="feature-item">
+          <span class="feature-item__check" aria-hidden="true">✔</span>
+          <p>Tocca il cuore o le emozioni in modo onesto, senza dietrologia ma con voglia di aiutare e innamoramento del processo</p>
+        </div>
+        <div class="feature-item">
+          <span class="feature-item__check" aria-hidden="true">✔</span>
+          <p>Si percepisce una fedeltà alla propria natura</p>
+        </div>
+        <!-- Riga 3 -->
+        <div class="feature-item">
+          <span class="feature-item__check" aria-hidden="true">✔</span>
+          <p>Crede veramente in quello che dice, a costo di sembrare anche "un pó fissato"</p>
+        </div>
+        <div class="feature-item">
+          <span class="feature-item__check" aria-hidden="true">✔</span>
+          <p><strong>Difficilmente arriva a stancarsi completamente</strong>: è sempre nel proprio spazio ed è innamorato di questo argomento. Starebbe ore a parlarne.</p>
+        </div>
+        <div class="feature-item">
+          <span class="feature-item__check" aria-hidden="true">✔</span>
+          <p>È felice di parlare agli altri e senza quei pesi che sentiamo sempre quando "stiamo vendendo".</p>
+        </div>
+      </div>
+
+      <div class="text-center mt-10">
+        <a href="https://wa.link/zva8dp" class="btn-primary">Ti va di fare una chiacchierata?</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       4. COME LAVORO — Steps 01 / 02 / 03
+       ══════════════════════════════════════════════════════════════════════ -->
+  <section class="section-light" style="border-top: 1px solid #E5E5E5;">
+    <div class="site-wrapper">
+      <div class="steps-grid">
+        <div class="step">
+          <h3 class="step__number">01. Scopriamo il tuo perché</h3>
+          <div class="step__divider"></div>
+          <p>Facciamo una chiacchierata e vediamo quante bugie ti racconti, sulla base di questo, ti propongo come agire.</p>
+        </div>
+        <div class="step">
+          <h3 class="step__number">02. Ti illustro le opzioni</h3>
+          <div class="step__divider"></div>
+          <p>Dopo la chiacchierata ti dico apertamente cosa penso di te e di quanto potenziale secondo me hai, oppure no, e, nel caso, cambiare strada totalmente.</p>
+        </div>
+        <div class="step">
+          <h3 class="step__number">03. Mi dedico a te</h3>
+          <div class="step__divider"></div>
+          <p>Non voglio sentirmi dire che ho ragione se poi non vengono fatte azioni in merito. Sono a favore dei rapporti aperti e diretti, diciamoci le cose come stanno e accetta le mie opzioni: ti darò tutto quello che posso, compatibilmente con lo spazio e possibilità economica che mi mostrerai.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       5. DARK CTA — "Non adatto a chi ha già chiarezza"
+       ══════════════════════════════════════════════════════════════════════ -->
+  <section class="section-dark">
+    <div class="site-wrapper text-center">
+      <h2 class="dark-cta__title">Non adatto a chi ha già chiarezza.</h2>
+      <p class="dark-cta__body">
+        Non posso aiutare chi crede di sapersi già promuovere o chi crede di sapere già in generale.<br />
+        Se non funziona, non sai un cavolo, né del tuo pubblico né del perché sei qui a fare questo lavoro.
+      </p>
+      <p class="dark-cta__body mt-4">
+        <a href="/inizia-da-qui/" class="dark-cta__link">Se accetti questo PRIMA, possiamo andare d'accordo.</a>
+      </p>
+      <p class="dark-cta__body mt-4">
+        Inoltre, ovviamente, non sono adatto a chi, leggendo questo, ci vede arroganza: andate a combattere le vostre
+        guerre a favore del perbenismo altrove, non qui.<br />
+        Qui osserviamo entrambi i lati della medaglia e accettiamo che a volte serve lo scudo, e a volte serve la spada.<br />
+        Non è tutto rose e fiori.
+      </p>
+      <p class="dark-cta__body mt-4">
+        <a href="https://wa.link/zva8dp" class="dark-cta__link">
+          In ogni caso tutto questo lo posso comprendere soltanto con una chiacchierata diretta.
+        </a>
+      </p>
+      <a href="https://wa.link/zva8dp" class="btn-outline mt-8 inline-block">
+        Ti va di fare una chiacchierata?
+      </a>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       6. ULTIMI ARTICOLI
+       ══════════════════════════════════════════════════════════════════════ -->
+  <section class="section-light">
+    <div class="site-wrapper">
+      <h2 class="section-title text-center mb-4">Ultimi Articoli</h2>
+      <p class="section-subtitle text-center mb-10">
+        Gli articoli sono una fonte inestimabile di valore che cerco di veicolare senza trattenere
+        le informazioni pubbliche con quelle in privato: mi sentirai spesso citare un mio articolo,
+        proprio per questo motivo.
+      </p>
+
+      <div class="latest-grid">
+        {latestPosts.map((post) => (
+          <PostCard post={post} />
+        ))}
+      </div>
+
+      <div class="text-center mt-10">
+        <a href="/blog/" class="btn-primary">Carica altri articoli...</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       7. BIO / QUOTE
+       ══════════════════════════════════════════════════════════════════════ -->
+  <section class="bio-section">
+    <div class="bio-section__inner site-wrapper">
+      <div class="bio-section__photo">
+        <img
+          src="https://marcomunich.com/wp-content/uploads/2020/09/119536256_3677336615611976_7436592590631298239_n.jpg"
+          alt="Marco Munich"
+          width="330"
+          height="460"
+          loading="lazy"
+        />
+      </div>
+      <div class="bio-section__content">
+        <span class="bio-section__quote-icon" aria-hidden="true">"</span>
+        <blockquote class="bio-section__quote">
+          Ti aiuto a capire come la vita mostra costantemente ciò che ti serve a svoltare e aiutare il prossimo, o la collettività.
+        </blockquote>
+        <p class="bio-section__name">Marco Munich</p>
+        <p class="bio-section__url">www.marcomunich.com</p>
+        <a href="https://wa.link/zva8dp" class="btn-primary mt-6 inline-block">
+          Facciamo una chiacchierata
+        </a>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  /* ── Hero ────────────────────────────────────────────────────────────────── */
+  .hero {
+    background-color: #1E1E1F;
+    color: white;
+    text-align: center;
+    padding: 64px 24px 72px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .hero__photo-wrap {
+    width: 180px;
+    height: 180px;
+    overflow: hidden;
+    border-radius: 4px;
+    margin-bottom: 8px;
+  }
+
+  .hero__photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(100%);
+  }
+
+  .hero__title {
+    font-size: clamp(36px, 6vw, 72px);
+    font-weight: 800;
+    color: white;
+    line-height: 1.1;
+    max-width: 760px;
+  }
+
+  .hero__subtitle {
+    font-size: clamp(16px, 2vw, 20px);
+    color: rgba(255,255,255,0.85);
+    max-width: 600px;
+    line-height: 1.5;
+  }
+
+  .hero__subtitle-link {
+    color: white;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* ── Section titles ──────────────────────────────────────────────────────── */
+  .section-title--uppercase {
+    font-size: clamp(20px, 3vw, 32px);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    text-align: center;
+    margin-bottom: 40px;
+    color: #0A0A0A;
+  }
+
+  .section-title {
+    font-size: clamp(24px, 3vw, 36px);
+    font-weight: 700;
+    color: #0A0A0A;
+  }
+
+  .section-subtitle {
+    font-size: 15px;
+    color: rgba(10,10,10,0.6);
+    max-width: 680px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* ── Pain list (sezione 2) ───────────────────────────────────────────────── */
+  .pain-list {
+    max-width: 720px;
+    margin: 0 auto 40px;
+    padding-left: 20px;
+  }
+
+  .pain-list li {
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 10px;
+    color: rgba(10,10,10,0.8);
+  }
+
+  /* ── Result block ────────────────────────────────────────────────────────── */
+  .result-block {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .result-block__title {
+    font-size: 28px;
+    font-weight: 400;
+    margin-bottom: 16px;
+  }
+
+  .result-block p {
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* ── Features grid 3x3 (sezione 3) ──────────────────────────────────────── */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px 40px;
+    max-width: 960px;
+    margin: 0 auto 40px;
+  }
+
+  .feature-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+  }
+
+  .feature-item__check {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: #0A0A0A;
+    color: white;
+    border-radius: 50%;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .feature-item p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: rgba(10,10,10,0.8);
+  }
+
+  /* ── Steps grid (sezione 4) ──────────────────────────────────────────────── */
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .step__number {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #0A0A0A;
+  }
+
+  .step__divider {
+    width: 32px;
+    height: 2px;
+    background: #0A0A0A;
+    margin-bottom: 16px;
+  }
+
+  .step p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: rgba(10,10,10,0.7);
+  }
+
+  /* ── Dark CTA (sezione 5) ────────────────────────────────────────────────── */
+  .dark-cta__title {
+    font-size: clamp(24px, 4vw, 40px);
+    font-weight: 700;
+    color: white;
+    margin-bottom: 24px;
+  }
+
+  .dark-cta__body {
+    font-size: 15px;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.85);
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .dark-cta__link {
+    color: white;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* ── Latest articles grid (sezione 6) ───────────────────────────────────── */
+  .latest-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px 32px;
+  }
+
+  /* ── Bio section (sezione 7) ─────────────────────────────────────────────── */
+  .bio-section {
+    background: #F7F7F7;
+    padding: 64px 24px;
+  }
+
+  .bio-section__inner {
+    display: grid;
+    grid-template-columns: 330px 1fr;
+    gap: 64px;
+    align-items: center;
+    max-width: 900px;
+  }
+
+  .bio-section__photo img {
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: grayscale(100%);
+  }
+
+  .bio-section__quote-icon {
+    font-size: 48px;
+    color: rgba(10,10,10,0.15);
+    line-height: 1;
+    display: block;
+    margin-bottom: -16px;
+  }
+
+  .bio-section__quote {
+    font-size: 20px;
+    line-height: 1.5;
+    font-weight: 500;
+    color: #0A0A0A;
+    border: none;
+    padding: 0;
+    margin: 0 0 16px;
+  }
+
+  .bio-section__name {
+    font-size: 15px;
+    font-weight: 700;
+    color: #0A0A0A;
+    margin-bottom: 2px;
+  }
+
+  .bio-section__url {
+    font-size: 13px;
+    color: rgba(10,10,10,0.45);
+  }
+
+  /* ── Responsive ──────────────────────────────────────────────────────────── */
+  @media (max-width: 900px) {
+    .features-grid { grid-template-columns: repeat(2, 1fr); }
+    .steps-grid     { grid-template-columns: 1fr; }
+    .latest-grid    { grid-template-columns: repeat(2, 1fr); }
+    .bio-section__inner { grid-template-columns: 1fr; }
+    .bio-section__photo { max-width: 280px; margin: 0 auto; }
+  }
+
+  @media (max-width: 560px) {
+    .features-grid { grid-template-columns: 1fr; }
+    .latest-grid    { grid-template-columns: 1fr; }
+  }
+</style>

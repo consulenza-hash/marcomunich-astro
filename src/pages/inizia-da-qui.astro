@@ -1,0 +1,133 @@
+---
+/**
+ * inizia-da-qui.astro
+ * Pagina statica "Inizia da qui" — contenuto preso dalla pagina WP con slug "risorse".
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { getPageBySlug, getFeaturedImageUrl } from '@lib/wordpress';
+
+const page = await getPageBySlug('risorse');
+
+const title   = page?.title?.rendered   ?? 'Inizia da qui';
+const content = page?.content?.rendered ?? '';
+const imageUrl = getFeaturedImageUrl(page, 'large');
+
+const seoTitle = page?.yoast_head_json?.title ?? `${title} - Marco Munich`;
+const seoDesc  = page?.yoast_head_json?.description ?? 'Da dove iniziare con il Personal Branding Olistico di Marco Munich.';
+---
+
+<BaseLayout title={seoTitle} description={seoDesc} currentPath="/inizia-da-qui/">
+
+  <div class="static-page">
+
+    <!-- Hero -->
+    <div class="static-page__hero">
+      <h1 class="static-page__title">Inizia da qui</h1>
+      <p class="static-page__subtitle">
+        Sviluppa un punto di vista per promuoverti online come voce diversa dalle altre.
+      </p>
+    </div>
+
+    <!-- Contenuto WP -->
+    <div class="static-page__content prose-marcomunich">
+      <Fragment set:html={content} />
+    </div>
+
+    <!-- CTA finale -->
+    <div class="static-page__cta">
+      <p>Hai domande? Parliamoci direttamente.</p>
+      <a href="https://wa.link/zva8dp" target="_blank" rel="noopener noreferrer" class="btn-primary">
+        FACCIAMO UNA CHIACCHIERATA
+      </a>
+    </div>
+
+  </div>
+
+</BaseLayout>
+
+<style>
+  .static-page {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 56px 24px 80px;
+  }
+
+  .static-page__hero {
+    margin-bottom: 48px;
+    border-bottom: 2px solid #0A0A0A;
+    padding-bottom: 32px;
+  }
+
+  .static-page__title {
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 800;
+    line-height: 1.1;
+    color: #0A0A0A;
+    margin-bottom: 16px;
+  }
+
+  .static-page__subtitle {
+    font-size: 18px;
+    line-height: 1.6;
+    color: rgba(10,10,10,0.65);
+  }
+
+  .static-page__content {
+    font-size: 17px;
+    line-height: 1.75;
+    color: #0A0A0A;
+  }
+
+  /* Pulisce le classi Thrive non necessarie */
+  .static-page__content :global([class*="tve_"]),
+  .static-page__content :global([class*="thrv_"]) {
+    all: revert;
+  }
+
+  .static-page__content :global(h2) {
+    font-size: 26px;
+    font-weight: 700;
+    margin: 40px 0 16px;
+  }
+  .static-page__content :global(h3) {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 32px 0 12px;
+  }
+  .static-page__content :global(p) {
+    margin-bottom: 20px;
+  }
+  .static-page__content :global(a) {
+    color: #0A0A0A;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .static-page__content :global(ul),
+  .static-page__content :global(ol) {
+    margin: 0 0 20px 24px;
+  }
+  .static-page__content :global(li) {
+    margin-bottom: 8px;
+  }
+  .static-page__content :global(img) {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 24px 0;
+  }
+  .static-page__content :global(strong) {
+    font-weight: 700;
+  }
+
+  .static-page__cta {
+    margin-top: 64px;
+    padding-top: 40px;
+    border-top: 1px solid #E5E5E5;
+    text-align: center;
+  }
+  .static-page__cta p {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: rgba(10,10,10,0.7);
+  }
+</style>
