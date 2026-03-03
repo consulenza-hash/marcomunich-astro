@@ -1,0 +1,148 @@
+---
+/**
+ * tag/[slug].astro
+ * Pagina archivio per tag — griglia articoli filtrati.
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import PostCard from '@components/PostCard.astro';
+import {
+  getAllTags,
+  getAllPosts,
+} from '@lib/wordpress';
+
+export async function getStaticPaths() {
+  const tags     = await getAllTags();
+  const allPosts = await getAllPosts();
+
+  return tags.map((tag) => {
+    const posts = allPosts
+      .filter((p) => p.tags?.includes(tag.id))
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+    return {
+      params: { slug: tag.slug },
+      props:  { tag, posts },
+    };
+  });
+}
+
+const { tag, posts } = Astro.props;
+const tagName = tag.name ?? '';
+const tagDesc = tag.description ?? '';
+---
+
+<BaseLayout
+  title={`Tag: ${tagName} - Marco Munich`}
+  description={tagDesc || `Articoli con tag ${tagName} di Marco Munich.`}
+  currentPath={`/tag/${tag.slug}/`}
+>
+
+  <!-- Hero -->
+  <section class="tag-hero">
+    <div class="tag-hero__overlay"></div>
+    <div class="tag-hero__content">
+      <p class="tag-hero__eyebrow">Tag</p>
+      <h1 class="tag-hero__title">#{tagName}</h1>
+      {tagDesc && <p class="tag-hero__desc">{tagDesc}</p>}
+    </div>
+  </section>
+
+  <!-- Griglia articoli -->
+  <div class="tag-body site-wrapper">
+
+    {posts.length > 0 ? (
+      <div class="blog-grid">
+        {posts.map((post) => <PostCard post={post} />)}
+      </div>
+    ) : (
+      <p class="tag-empty">Nessun articolo con questo tag.</p>
+    )}
+
+    <div class="tag-back">
+      <a href="/blog/">← Tutti gli articoli</a>
+    </div>
+
+  </div>
+
+</BaseLayout>
+
+<style>
+  .tag-hero {
+    position: relative;
+    height: 200px;
+    background-color: #2a2a2a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .tag-hero__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+  }
+  .tag-hero__content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    color: white;
+    padding: 0 24px;
+  }
+  .tag-hero__eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 8px;
+  }
+  .tag-hero__title {
+    font-size: clamp(22px, 4vw, 36px);
+    font-weight: 800;
+    color: white;
+    margin: 0;
+  }
+  .tag-hero__desc {
+    font-size: 14px;
+    color: rgba(255,255,255,0.65);
+    max-width: 500px;
+    margin: 10px auto 0;
+  }
+
+  .tag-body {
+    padding-top: 48px;
+    padding-bottom: 80px;
+  }
+
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px 32px;
+  }
+
+  .tag-empty {
+    text-align: center;
+    color: rgba(10,10,10,0.5);
+    padding: 60px 0;
+    font-size: 15px;
+  }
+
+  .tag-back {
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid #E5E5E5;
+  }
+  .tag-back a {
+    font-size: 14px;
+    color: #0A0A0A;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .tag-back a:hover { opacity: 0.6; }
+
+  @media (max-width: 900px) {
+    .blog-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 560px) {
+    .blog-grid { grid-template-columns: 1fr; }
+    .tag-hero  { height: 160px; }
+  }
+</style>

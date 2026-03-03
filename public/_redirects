@@ -2,8 +2,8 @@
 # Formato: /vecchio-url  /nuovo-url  codice-http
 
 # Pagine rinominate
-/risorse/                           /inizia-da-qui/                 301
-/risorse                            /inizia-da-qui/                 301
+/inizia-da-qui/                      /risorse/                       301
+/inizia-da-qui                       /risorse/                       301
 
 # Blog (vecchio slug WP)
 /blog-consulenza-marketing/         /blog/                          301
@@ -32,5 +32,6 @@
 /prenota-la-sessione/               https://wa.link/zva8dp          302
 /prenotazione/                      https://wa.link/zva8dp          302
 
-# Pagine privacy/cookie (rimangono su WP per ora)
-# /cookie-policy/  e /privacy-policy/ le lasciamo passare a WP
+# Pagine privacy/cookie (ora locali)
+/cookie-policy/                       /cookie-policy/                 200
+/privacy-policy/                      /privacy-policy/                200

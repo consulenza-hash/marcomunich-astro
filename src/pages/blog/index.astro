@@ -68,26 +68,46 @@ const posts = allPosts.sort(
 
 </BaseLayout>
 
-<!-- Search client-side minimale (filtra per titolo senza JS framework) -->
+<!-- Search client-side minimale (filtra per titolo, categoria e tag via data-search) -->
 <script>
-  const input = document.getElementById('blog-search-input');
-  const grid  = document.getElementById('blog-grid');
-  const noRes = document.getElementById('blog-noresults');
-  const cards = grid?.querySelectorAll('article');
+  function setupBlogSearch() {
+    const input  = document.getElementById('blog-search-input') as HTMLInputElement;
+    const btn    = document.querySelector('.blog-search__btn');
+    const grid   = document.getElementById('blog-grid');
+    const noRes  = document.getElementById('blog-noresults');
+    const cards  = grid?.querySelectorAll('.post-card');
 
-  input?.addEventListener('input', () => {
-    const query = input.value.trim().toLowerCase();
-    let visible = 0;
+    function performSearch() {
+      const query = input.value.trim().toLowerCase();
+      let visible = 0;
 
-    cards?.forEach((card) => {
-      const title = card.querySelector('.post-card__title')?.textContent?.toLowerCase() ?? '';
-      const show  = !query || title.includes(query);
-      card.style.display = show ? '' : 'none';
-      if (show) visible++;
+      cards?.forEach((card) => {
+        const searchData = card.getAttribute('data-search') ?? '';
+        const show = !query || searchData.includes(query);
+        (card as HTMLElement).style.display = show ? '' : 'none';
+        if (show) visible++;
+      });
+
+      if (noRes) noRes.hidden = visible > 0;
+    }
+
+    input?.addEventListener('input', performSearch);
+    
+    // Supporto click bottone e tasto Enter
+    btn?.addEventListener('click', performSearch);
+    input?.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        performSearch();
+      }
     });
 
-    noRes && (noRes.hidden = visible > 0);
-  });
+    console.log('Blog search setup complete');
+  }
+
+  // Esegui al caricamento e dopo eventuali navigazioni Astro
+  setupBlogSearch();
+  document.addEventListener('astro:page-load', setupBlogSearch);
 </script>
 
 <style>

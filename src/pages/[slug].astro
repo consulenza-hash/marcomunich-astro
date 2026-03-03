@@ -15,6 +15,8 @@ import {
   getPrimaryCategory,
   formatDate,
 } from '@lib/wordpress';
+import fs from 'node:fs';
+import path from 'node:path';
 
 // ── Generazione pagine statiche ───────────────────────────────────────────────
 export async function getStaticPaths() {
@@ -77,51 +79,44 @@ const seoImage = post.yoast_head_json?.og_image?.[0]?.url ?? imageUrl ?? '';
         <Fragment set:html={title} />
       </h1>
 
-      <!-- Meta: data + tag -->
+      <!-- Meta: data + categorie + tag -->
       <div class="article-page__meta">
-        <span>Ultimo aggiornamento il {date}</span>
+        <time datetime={post.date}>Ultimo aggiornamento il {date}</time>
+        {category && (
+          <span class="article-page__category">
+            in <a href={`/categoria/${category.slug}/`}>{category.name}</a>
+          </span>
+        )}
         {tags.length > 0 && (
           <span class="article-page__tags">
-            Tag:{' '}
-            {tags.map((tag, i) => (
-              <span>
-                <a href={`/tag/${tag.slug}/`}>{tag.name}</a>
-                {i < tags.length - 1 ? ', ' : ''}
-              </span>
+            — Tag: {tags.map((tag, i) => (
+              <a href={`/tag/${tag.slug}/`}>{tag.name}{i < tags.length - 1 ? ', ' : ''}</a>
             ))}
           </span>
         )}
       </div>
 
-      <!-- Player audio TTS (MeMentor) — nascosto via JS se il file non esiste -->
-      <div class="tts-player" id={`tts-${post.id}`}>
-        <span class="tts-player__label">Ascolta l'articolo:</span>
-        <audio
-          controls
-          preload="metadata"
-          class="tts-player__audio"
-        >
-          <source src={`https://marcomunich.com/wp-content/uploads/text-to-speech-tts/mementor-${post.id}-it.mp3`} type="audio/mpeg" />
-        </audio>
-      </div>
-      <script define:vars={{ postId: post.id }}>
-        // Nasconde il player se l'MP3 non esiste per questo articolo
-        const wrapper = document.getElementById('tts-' + postId);
-        if (wrapper) {
-          const audio = wrapper.querySelector('audio');
-          if (audio) {
-            audio.addEventListener('error', () => {
-              wrapper.style.display = 'none';
-            });
-            const source = audio.querySelector('source');
-            if (source) {
-              source.addEventListener('error', () => {
-                wrapper.style.display = 'none';
-              });
-            }
-          }
+      {/* Player audio TTS (MeMentor) — Mostrato solo se il file esiste localmente */}
+      {(() => {
+        const audioPath = path.join(process.cwd(), 'public', 'audio', `mementor-${post.id}-it.mp3`);
+        const hasAudio = fs.existsSync(audioPath);
+        
+        if (hasAudio) {
+          return (
+            <div class="tts-player" id={`tts-${post.id}`}>
+              <span class="tts-player__label">Ascolta l'articolo (AI):</span>
+              <audio
+                controls
+                preload="none"
+                class="tts-player__audio"
+              >
+                <source src={`/audio/mementor-${post.id}-it.mp3`} type="audio/mpeg" />
+              </audio>
+            </div>
+          );
         }
-      </script>
+        return null;
+      })()}
 
       <!-- Immagine in evidenza -->
       {imageUrl && (

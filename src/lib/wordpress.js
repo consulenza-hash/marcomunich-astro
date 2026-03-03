@@ -102,6 +102,22 @@ export async function getCategoryBySlug(slug) {
   const cats = await wpFetch(`/categories?slug=${slug}`);
   return cats[0] ?? null;
 }
+// ── TAG ───────────────────────────────────────────────────────────────────────
+
+/**
+ * Recupera tutti i tag con almeno 1 articolo.
+ */
+export async function getAllTags() {
+  return wpFetch('/tags?per_page=100&hide_empty=true');
+}
+
+/**
+ * Recupera un singolo tag tramite slug.
+ */
+export async function getTagBySlug(slug) {
+  const tags = await wpFetch(`/tags?slug=${slug}`);
+  return tags[0] ?? null;
+}
 
 // ── PAGINE ────────────────────────────────────────────────────────────────────
 

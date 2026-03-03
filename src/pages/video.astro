@@ -42,6 +42,46 @@ const seoDesc  = 'Guarda i video di Marco Munich sul Personal Branding Olistico 
 
 </BaseLayout>
 
+<script>
+  // Gestione click sui thumb del plugin EPYT (senza caricare il JS del plugin)
+  function setupVideoGallery() {
+    const gallery = document.querySelector('.epyt-gallery');
+    if (!gallery) {
+      console.log('EPYT Gallery not found');
+      return;
+    }
+
+    const mainIframe = gallery.querySelector('.epyt-video-wrapper iframe') as HTMLIFrameElement;
+    const thumbs = gallery.querySelectorAll('.epyt-gallery-thumb');
+
+    console.log(`Found ${thumbs.length} thumbnails`);
+
+    thumbs.forEach(thumb => {
+      // Usiamo mousedown o gestiamo il bubbling per sicurezza
+      thumb.addEventListener('click', (e) => {
+        e.preventDefault();
+        const videoId = thumb.getAttribute('data-videoid');
+        console.log('Clicked video:', videoId);
+        
+        if (videoId && mainIframe) {
+          // Costruisce l'URL embed
+          const url = new URL(mainIframe.src);
+          // Rimuoviamo la parte finale del path (/embed/ID) e la sostituiamo
+          const newSrc = `https://www.youtube.com/embed/${videoId}${url.search}`;
+          mainIframe.src = newSrc;
+          
+          // Scroll up al video principale
+          mainIframe.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      });
+    });
+  }
+
+  // Esegui al caricamento e dopo eventuali navigazioni Astro
+  setupVideoGallery();
+  document.addEventListener('astro:page-load', setupVideoGallery);
+</script>
+
 <style>
   .video-page {
     max-width: 1100px;
@@ -85,21 +125,29 @@ const seoDesc  = 'Guarda i video di Marco Munich sul Personal Branding Olistico 
     background: #cc0000;
   }
 
-  /* Griglia video dal plugin EPYT */
-  .video-page__content :global(.epyt-gallery-list) {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 32px;
-    margin-top: 16px;
+  /* ── Griglia video (EPYT Plugin Overrides) ───────────────────────────────── */
+  
+  .video-page__content :global(.epyt-gallery-rowbreak),
+  .video-page__content :global(.epyt-gallery-clear) {
+    display: none !important;
   }
 
+  .video-page__content :global(.epyt-gallery) {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Wrapper video principale */
   .video-page__content :global(.epyt-video-wrapper) {
     position: relative;
     padding-bottom: 56.25%;
     height: 0;
     overflow: hidden;
     background: #000;
-    margin-bottom: 12px;
+    margin-bottom: 32px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    order: 1;
   }
 
   .video-page__content :global(.epyt-video-wrapper iframe) {
@@ -108,19 +156,68 @@ const seoDesc  = 'Guarda i video di Marco Munich sul Personal Branding Olistico 
     left: 0;
     width: 100% !important;
     height: 100% !important;
+    border: none;
   }
 
-  .video-page__content :global(.epyt-gallery-item) {
-    display: flex;
-    flex-direction: column;
+  /* Subscribe button inside gallery */
+  .video-page__content :global(.epyt-gallery-subscribe) {
+    display: none !important;
   }
 
-  .video-page__content :global(.epyt-gallery-item-title) {
+  /* Miniature container */
+  .video-page__content :global(.epyt-gallery-list) {
+    order: 3;
+  }
+
+  .video-page__content :global(.epyt-gallery-allthumbs) {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 32px 24px !important;
+    width: 100% !important;
+    margin: 0 !important;
+  }
+
+  .video-page__content :global(.epyt-gallery-thumb) {
+    cursor: pointer !important;
+    display: flex !important;
+    flex-direction: column !important;
+    transition: transform 0.2s ease;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    position: relative;
+  }
+  
+  /* Assicuriamoci che i figli non blocchino il click */
+  .video-page__content :global(.epyt-gallery-thumb *) {
+    pointer-events: none;
+  }
+
+  .video-page__content :global(.epyt-gallery-thumb:hover) {
+    transform: translateY(-4px);
+  }
+
+  .video-page__content :global(.epyt-gallery-img-box) {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    background: #eee;
+    margin-bottom: 12px;
+  }
+
+  .video-page__content :global(.epyt-gallery-img) {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .video-page__content :global(.epyt-gallery-title) {
     font-size: 14px;
     font-weight: 600;
     line-height: 1.4;
     color: #0A0A0A;
-    margin-top: 8px;
   }
 
   /* Paginazione */
@@ -129,40 +226,37 @@ const seoDesc  = 'Guarda i video di Marco Munich sul Personal Branding Olistico 
     align-items: center;
     justify-content: center;
     gap: 16px;
-    margin: 40px 0 0;
+    margin: 20px 0 32px;
     font-size: 14px;
+    font-weight: 600;
+    order: 2;
   }
 
   .video-page__content :global(.epyt-pagebutton) {
     cursor: pointer;
     background: #0A0A0A;
     color: white;
-    padding: 8px 16px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-weight: 600;
-    font-size: 13px;
-    user-select: none;
+    padding: 6px 14px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border: none;
   }
   .video-page__content :global(.epyt-pagebutton.hide) {
-    visibility: hidden;
+    display: none !important;
   }
 
-  /* Bottone iscrizione plugin */
-  .video-page__content :global(.epyt-gallery-subscribe) {
-    display: none; /* Già mostrato nel nostro hero */
-  }
-
+  /* Responsive */
   @media (max-width: 900px) {
-    .video-page__content :global(.epyt-gallery-list) {
-      grid-template-columns: repeat(2, 1fr);
+    .video-page__content :global(.epyt-gallery-allthumbs) {
+      grid-template-columns: repeat(2, 1fr) !important;
     }
   }
 
   @media (max-width: 560px) {
-    .video-page__content :global(.epyt-gallery-list) {
-      grid-template-columns: 1fr;
+    .video-page__content :global(.epyt-gallery-allthumbs) {
+      grid-template-columns: 1fr !important;
     }
+    .video-page { padding-top: 32px; }
   }
 </style>
