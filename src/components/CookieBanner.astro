@@ -1,0 +1,236 @@
+---
+/**
+ * CookieBanner.astro
+ * Banner GDPR leggero in italiano.
+ * Gestisce: GA4 Consent Mode v2 + Facebook Pixel consent.
+ * Salva la scelta in localStorage per 365 giorni.
+ */
+---
+
+<div id="cookie-banner" role="dialog" aria-label="Informativa cookie" aria-live="polite">
+  <div class="cookie-inner">
+    <p class="cookie-text">
+      🍪 Questo sito usa <strong>cookie analitici e di marketing</strong> per migliorare la tua esperienza.
+      Puoi accettarli tutti o continuare solo con quelli strettamente necessari.
+      <a href="/privacy-policy/" target="_blank" class="cookie-link">Privacy Policy</a>
+    </p>
+    <div class="cookie-buttons">
+      <button id="cookie-accept" class="btn-accept">Accetta tutti</button>
+      <button id="cookie-reject" class="btn-reject">Solo necessari</button>
+    </div>
+  </div>
+</div>
+
+<style>
+  #cookie-banner {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 99999;
+    background: #1a1a2e;
+    color: #fff;
+    padding: 1rem 1.5rem;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.3);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  #cookie-banner.visible {
+    display: block;
+  }
+
+  .cookie-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .cookie-text {
+    flex: 1;
+    margin: 0;
+    min-width: 200px;
+  }
+
+  .cookie-link {
+    color: #7eb9ff;
+    text-decoration: underline;
+    margin-left: 0.3rem;
+  }
+
+  .cookie-buttons {
+    display: flex;
+    gap: 0.75rem;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+  }
+
+  .btn-accept {
+    background: #0c83fb;
+    color: #fff;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: background 0.2s;
+  }
+
+  .btn-accept:hover {
+    background: #0a6fd6;
+  }
+
+  .btn-reject {
+    background: transparent;
+    color: #ccc;
+    border: 1px solid #555;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .btn-reject:hover {
+    border-color: #aaa;
+    color: #fff;
+  }
+
+  @media (max-width: 600px) {
+    .cookie-inner {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+    .cookie-buttons {
+      width: 100%;
+    }
+    .btn-accept, .btn-reject {
+      flex: 1;
+      text-align: center;
+    }
+  }
+</style>
+
+<script>
+  (function () {
+    const STORAGE_KEY = 'mm_cookie_consent';
+    const EXPIRY_DAYS = 365;
+    const GA4_ID = 'G-24JGZFXFEP';
+    const GA4_ID2 = 'G-354107331';
+    const FB_PIXEL_ID = '1254522452438928';
+
+    // --- Helpers ---
+    function saveConsent(value) {
+      const expires = new Date();
+      expires.setDate(expires.getDate() + EXPIRY_DAYS);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ value, expires: expires.toISOString() }));
+    }
+
+    function loadConsent() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return null;
+        const { value, expires } = JSON.parse(raw);
+        if (new Date(expires) < new Date()) {
+          localStorage.removeItem(STORAGE_KEY);
+          return null;
+        }
+        return value; // 'all' | 'necessary'
+      } catch {
+        return null;
+      }
+    }
+
+    function hideBanner() {
+      const banner = document.getElementById('cookie-banner');
+      if (banner) banner.classList.remove('visible');
+    }
+
+    // --- GA4 consent update ---
+    function grantGA4() {
+      if (typeof gtag === 'function') {
+        gtag('consent', 'update', {
+          analytics_storage: 'granted',
+          ad_storage: 'granted',
+          ad_user_data: 'granted',
+          ad_personalization: 'granted',
+        });
+      }
+    }
+
+    function denyGA4() {
+      if (typeof gtag === 'function') {
+        gtag('consent', 'update', {
+          analytics_storage: 'denied',
+          ad_storage: 'denied',
+          ad_user_data: 'denied',
+          ad_personalization: 'denied',
+        });
+      }
+    }
+
+    // --- Facebook Pixel loader ---
+    function loadFBPixel() {
+      if (window._fbPixelLoaded) return;
+      window._fbPixelLoaded = true;
+      /* eslint-disable */
+      !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+      /* eslint-enable */
+      fbq('init', FB_PIXEL_ID);
+      fbq('track', 'PageView');
+    }
+
+    // --- Accept All ---
+    function acceptAll() {
+      saveConsent('all');
+      grantGA4();
+      loadFBPixel();
+      hideBanner();
+    }
+
+    // --- Reject / Necessary only ---
+    function rejectAll() {
+      saveConsent('necessary');
+      denyGA4();
+      hideBanner();
+    }
+
+    // --- Init ---
+    function init() {
+      const consent = loadConsent();
+
+      if (consent === 'all') {
+        // Previously accepted — grant silently
+        grantGA4();
+        loadFBPixel();
+        return;
+      }
+
+      if (consent === 'necessary') {
+        // Previously rejected — ensure denied
+        denyGA4();
+        return;
+      }
+
+      // No choice yet — show banner
+      const banner = document.getElementById('cookie-banner');
+      if (banner) banner.classList.add('visible');
+
+      document.getElementById('cookie-accept').addEventListener('click', acceptAll);
+      document.getElementById('cookie-reject').addEventListener('click', rejectAll);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  })();
+</script>

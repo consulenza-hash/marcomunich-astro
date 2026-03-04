@@ -2,7 +2,7 @@
 /**
  * BaseLayout.astro
  * Layout base condiviso da tutte le pagine.
- * Gestisce: <head> con meta SEO, Header, Footer, e slot per il contenuto.
+ * Gestisce: <head> con meta SEO, GA4, Schema JSON-LD, GDPR, Header, Footer.
  *
  * Props:
  *   title:       string  — <title> della pagina
@@ -10,9 +10,11 @@
  *   image:       string  — og:image (opzionale)
  *   currentPath: string  — path corrente per highlight nav (opzionale)
  *   noIndex:     boolean — true per pagine che non devono essere indicizzate
+ *   schemaType:  string  — 'WebPage' | 'Article' | 'CollectionPage' (opzionale, default: 'WebPage')
  */
 import Header from '@components/Header.astro';
 import Footer from '@components/Footer.astro';
+import CookieBanner from '@components/CookieBanner.astro';
 import '@styles/global.css';
 
 const {
@@ -21,11 +23,57 @@ const {
   image = 'https://marcomunich.com/og-image.jpg',
   currentPath = '/',
   noIndex = false,
+  schemaType = 'WebPage',
 } = Astro.props;
 
 const siteUrl = 'https://marcomunich.com';
 const canonicalUrl = `${siteUrl}${currentPath}`;
 const fullTitle = title.includes('Marco Munich') ? title : `${title} - Marco Munich`;
+
+// JSON-LD Schema
+const schemaGraph = [
+  {
+    "@type": ["Organization", "Person"],
+    "@id": `${siteUrl}/#person`,
+    "name": "Marco Munich - CONTENT MARKETING PER IL SETTORE OLISTICO",
+    "url": siteUrl,
+    "image": {
+      "@id": `${siteUrl}/#logo`
+    }
+  },
+  {
+    "@type": "ImageObject",
+    "@id": `${siteUrl}/#logo`,
+    "url": `${siteUrl}/og-image.jpg`,
+    "width": "330",
+    "height": "330",
+    "caption": "Marco Munich - CONTENT MARKETING PER IL SETTORE OLISTICO",
+    "inLanguage": "it-IT"
+  },
+  {
+    "@type": "WebSite",
+    "@id": `${siteUrl}/#website`,
+    "url": siteUrl,
+    "name": "Marco Munich - Personal Branding Olistico",
+    "publisher": { "@id": `${siteUrl}/#person` },
+    "inLanguage": "it-IT",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": `${siteUrl}/?s={search_term_string}`,
+      "query-input": "required name=search_term_string"
+    }
+  },
+  {
+    "@type": schemaType,
+    "@id": `${canonicalUrl}#webpage`,
+    "url": canonicalUrl,
+    "name": fullTitle,
+    "description": description,
+    "isPartOf": { "@id": `${siteUrl}/#website` },
+    "about": { "@id": `${siteUrl}/#person` },
+    "inLanguage": "it-IT"
+  }
+];
 ---
 
 <!doctype html>
@@ -39,6 +87,9 @@ const fullTitle = title.includes('Marco Munich') ? title : `${title} - Marco Mun
   <meta name="description" content={description} />
   <link rel="canonical" href={canonicalUrl} />
   {noIndex && <meta name="robots" content="noindex, nofollow" />}
+
+  <!-- Google Search Console verification -->
+  <meta name="google-site-verification" content="32fAEP-qgKaM8ugnFjGu7XPcAtbzNr0PSsHgUwyPRB0" />
 
   <!-- Open Graph / Social -->
   <meta property="og:type" content="website" />
@@ -55,8 +106,63 @@ const fullTitle = title.includes('Marco Munich') ? title : `${title} - Marco Mun
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={image} />
 
-  <!-- Favicon (usa quello esistente di WP) -->
+  <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+  <!-- JSON-LD Schema (equivalente Rank Math) -->
+  <script type="application/ld+json" set:html={JSON.stringify({ "@context": "https://schema.org", "@graph": schemaGraph })} />
+
+  <!-- ═══════════════════════════════════════════════
+       GOOGLE ANALYTICS 4 — Consent Mode v2
+       is:inline → script letterale (non ESM module), gtag globale.
+       Default: tutti denied (GDPR EU compliance).
+       Il CookieBanner aggiorna i consent dopo la scelta.
+  ═══════════════════════════════════════════════ -->
+  <script is:inline>
+    // Consent Mode v2 — DEVE essere prima del caricamento di gtag.js
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function(){ window.dataLayer.push(arguments); };
+    gtag('consent', 'default', {
+      analytics_storage:   'denied',
+      ad_storage:          'denied',
+      ad_user_data:        'denied',
+      ad_personalization:  'denied',
+      wait_for_update:     500,
+    });
+  </script>
+
+  <!-- GA4 async load -->
+  <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-24JGZFXFEP"></script>
+  <script is:inline>
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = window.gtag || function(){ window.dataLayer.push(arguments); };
+    gtag('js', new Date());
+    gtag('config', 'G-24JGZFXFEP');
+    gtag('config', 'G-354107331');
+  </script>
+
+  <!-- ═══════════════════════════════════════════════
+       ACTIVECAMPAIGN — Site Tracking
+       Sostituisce il plugin activecampaign-subscription-forms.
+       ⚠️  Configura: sostituisci XXXXXXXX con il tuo Account ID ActiveCampaign
+       (trovalo in ActiveCampaign → Settings → Tracking → Site Tracking)
+  ═══════════════════════════════════════════════ -->
+  <!--
+  <script>
+    (function(e,t,o,n,p,r,i){
+      e.visitorGlobalObjectAlias=n;
+      e[e.visitorGlobalObjectAlias]=e[e.visitorGlobalObjectAlias]||function(){
+        (e[e.visitorGlobalObjectAlias].q=e[e.visitorGlobalObjectAlias].q||[]).push(arguments)
+      };
+      e[e.visitorGlobalObjectAlias].l=(new Date).getTime();
+      r=t.createElement("script");r.src=o;r.async=true;
+      i=t.getElementsByTagName("script")[0];i.parentNode.insertBefore(r,i)
+    })(window,document,"https://diffuser-cdn.app-us1.com/diffuser/diffuser.js","vgo");
+    vgo('setAccount', 'XXXXXXXX');
+    vgo('setTrackByDefault', true);
+    vgo('process');
+  </script>
+  -->
 
   <!-- Slot per <head> extra (es. meta SEO specifici per articolo) -->
   <slot name="head" />
@@ -73,5 +179,8 @@ const fullTitle = title.includes('Marco Munich') ? title : `${title} - Marco Mun
 
     <Footer />
   </div>
+
+  <!-- GDPR Cookie Consent Banner (in italiano) -->
+  <CookieBanner />
 </body>
 </html>
