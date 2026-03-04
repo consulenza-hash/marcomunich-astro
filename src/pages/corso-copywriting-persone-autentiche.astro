@@ -70,17 +70,9 @@ const testimonials = [
 >
 
 <style is:global>
-  :root {
-    --red: #DC2626;
-    --red-dark: #991B1B;
-    --red-light: #FEF2F2;
-    --dark: #0D0404;
-    --dark2: #1A0808;
-  }
-
-  .copy-page .btn-red {
+  .copy-page .btn-blue {
     display: inline-block;
-    background: #DC2626;
+    background: #5551D3;
     color: #fff;
     padding: 16px 36px;
     font-weight: 700;
@@ -90,23 +82,23 @@ const testimonials = [
     letter-spacing: .5px;
     transition: background .2s;
   }
-  .copy-page .btn-red:hover { background: #991B1B; opacity: 1; }
+  .copy-page .btn-blue:hover { background: #3730A3; opacity: 1; }
 
-  .copy-page .btn-outline-red {
+  .copy-page .btn-outline-blue {
     display: inline-block;
     background: transparent;
-    color: #DC2626;
+    color: #5551D3;
     padding: 14px 32px;
     font-weight: 700;
     font-size: 15px;
     text-decoration: none;
     border-radius: 4px;
-    border: 2px solid #DC2626;
+    border: 2px solid #5551D3;
     transition: all .2s;
   }
-  .copy-page .btn-outline-red:hover { background: #DC2626; color: #fff; opacity: 1; }
+  .copy-page .btn-outline-blue:hover { background: #5551D3; color: #fff; opacity: 1; }
 
-  .copy-page .feature-icon svg { width: 36px; height: 36px; color: #DC2626; }
+  .copy-page .feature-icon svg { width: 36px; height: 36px; color: #5551D3; }
   .copy-page .topic-item { display: flex; gap: 12px; align-items: flex-start; padding: 13px 0; border-bottom: 1px solid rgba(255,255,255,.08); }
   .copy-page .topic-item:last-child { border: none; }
 
@@ -121,16 +113,16 @@ const testimonials = [
 <div class="copy-page">
 
 <!-- ── HERO ──────────────────────────────────────────────────────────────── -->
-<section style="background: #0D0404; color: #fff; padding: 80px 24px 0;">
+<section style="background: #06061A; color: #fff; padding: 80px 24px 0;">
   <div class="hero-grid" style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;">
 
     <!-- Testo -->
     <div>
-      <div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(220,38,38,.15); border: 1px solid rgba(220,38,38,.4); color: #fca5a5; padding: 6px 14px; border-radius: 100px; font-size: 13px; font-weight: 700; letter-spacing: 2px; margin-bottom: 24px;">
+      <div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(85,81,211,.15); border: 1px solid rgba(85,81,211,.4); color: #a5b4fc; padding: 6px 14px; border-radius: 100px; font-size: 13px; font-weight: 700; letter-spacing: 2px; margin-bottom: 24px;">
         ✦ VIDEO CORSO
       </div>
       <h1 style="font-size: clamp(34px, 4.5vw, 52px); font-weight: 800; line-height: 1.1; color: #fff; margin-bottom: 20px;">
-        Creazione del<br><span style="color: #DC2626;">Messaggio Autentico</span>
+        Creazione del<br><span style="color: #5551D3;">Messaggio Autentico</span>
       </h1>
       <p style="font-size: 18px; line-height: 1.7; color: #bbb; margin-bottom: 12px; font-style: italic;">
         Come cambierebbe il tuo lavoro se mostrassi davvero chi sei?
@@ -140,8 +132,8 @@ const testimonials = [
         quando ci si promuove online — attirando solo persone a cui risuona la tua vera essenza.
       </p>
       <div style="display: flex; gap: 16px; flex-wrap: wrap;">
-        <a href="#costi" class="btn-red">Scopri i costi →</a>
-        <a href="https://youtu.be/_83q4eUXmCo" target="_blank" rel="noopener" class="btn-outline-red">Guarda la lezione gratuita</a>
+        <a href="#costi" class="btn-blue">Scopri i costi →</a>
+        <a href="https://youtu.be/_83q4eUXmCo" target="_blank" rel="noopener" class="btn-outline-blue">Guarda la lezione gratuita</a>
       </div>
     </div>
 
@@ -156,7 +148,7 @@ const testimonials = [
         />
         <!-- Quote overlay -->
         <div style="position:absolute; bottom:0; left:0; right:0; padding:20px 20px; background:linear-gradient(transparent,rgba(0,0,0,.8));">
-          <p style="color:#fca5a5; font-size:13px; font-style:italic; margin:0; line-height:1.5;">
+          <p style="color:#a5b4fc; font-size:13px; font-style:italic; margin:0; line-height:1.5;">
             "Comunicare in modo autentico è il miglior marketing che esiste."
           </p>
           <p style="color:#888; font-size:12px; margin:6px 0 0;">— Marco Munich</p>
@@ -175,7 +167,7 @@ const testimonials = [
       { n: "1", label: "Gruppo Telegram privato" },
     ].map(s => (
       <div>
-        <p style="font-size:32px; font-weight:800; color:#DC2626; margin:0; line-height:1;">{s.n}</p>
+        <p style="font-size:32px; font-weight:800; color:#5551D3; margin:0; line-height:1;">{s.n}</p>
         <p style="font-size:13px; color:#888; margin:4px 0 0; letter-spacing:.5px;">{s.label}</p>
       </div>
     ))}
@@ -187,7 +179,7 @@ const testimonials = [
   <div style="max-width: 1080px; margin: 0 auto;">
     <div class="two-col" style="display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; margin-bottom:60px;">
       <div>
-        <p style="color:#DC2626; font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase; margin-bottom:12px;">Il percorso</p>
+        <p style="color:#5551D3; font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase; margin-bottom:12px;">Il percorso</p>
         <h2 style="font-size:clamp(26px,3vw,38px); font-weight:800; margin-bottom:16px;">Avere un Messaggio Autentico significa creare Terreno fertile</h2>
         <p style="color:#555; font-size:16px; line-height:1.8; margin-bottom:16px;">
           Agli albori della nostra attività siamo sempre in ansia da prestazione
@@ -213,7 +205,7 @@ const testimonials = [
     <h3 style="text-align:center; font-size:18px; font-weight:600; color:#555; margin-bottom:36px;">In questo percorso imparerai a:</h3>
     <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:20px;">
       {features.map(f => (
-        <div style="border:1px solid #f0f0f0; border-top:3px solid #DC2626; border-radius:8px; padding:24px;">
+        <div style="border:1px solid #f0f0f0; border-top:3px solid #5551D3; border-radius:8px; padding:24px;">
           <div class="feature-icon" style="margin-bottom:12px;" set:html={f.icon} />
           <h4 style="font-size:15px; font-weight:700; text-transform:uppercase; letter-spacing:.5px; margin-bottom:8px;">{f.title}</h4>
           <p style="color:#555; font-size:14px; line-height:1.6; margin:0;">{f.text}</p>
@@ -224,7 +216,7 @@ const testimonials = [
 </section>
 
 <!-- ── TI RISUONA ─────────────────────────────────────────────────────── -->
-<section style="padding: 80px 24px; background: #FEF2F2;">
+<section style="padding: 80px 24px; background: #EEF2FF;">
   <div class="two-col" style="max-width:1080px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;">
     <div style="border-radius:12px; overflow:hidden; aspect-ratio:4/5; background:#111; position:relative;">
       <img
@@ -233,15 +225,15 @@ const testimonials = [
         style="width:100%; height:100%; object-fit:cover; display:block;"
         loading="lazy"
       />
-      <div style="position:absolute; bottom:0; left:0; right:0; background:linear-gradient(transparent,rgba(13,4,4,.85)); padding:28px 24px;">
+      <div style="position:absolute; bottom:0; left:0; right:0; background:linear-gradient(transparent,rgba(6,6,26,.85)); padding:28px 24px;">
         <p style="color:#fff; font-size:16px; font-style:italic; margin:0; line-height:1.5;">
           "Il concetto di marketing è spesso percepito negativamente — e capisco perché."
         </p>
-        <p style="color:#fca5a5; font-size:13px; margin:8px 0 0;">— Marco Munich</p>
+        <p style="color:#a5b4fc; font-size:13px; margin:8px 0 0;">— Marco Munich</p>
       </div>
     </div>
     <div>
-      <p style="color:#DC2626; font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase; margin-bottom:12px;">Perché il messaggio autentico?</p>
+      <p style="color:#5551D3; font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase; margin-bottom:12px;">Perché il messaggio autentico?</p>
       <h2 style="font-size:clamp(26px,3vw,38px); font-weight:800; margin-bottom:20px;">Ti risuona?</h2>
       <p style="font-size:16px; line-height:1.8; color:#333; margin-bottom:16px;">
         Il percorso è dedicato a chi <strong>non ama "fare marketing"</strong> nel senso
@@ -251,7 +243,7 @@ const testimonials = [
         Il marketing classico è quasi sempre sinonimo di "azioni finalizzate a ottenere qualcosa
         in cambio". Ma noi partiamo da un posto diverso: la tua vera essenza.
       </p>
-      <div style="background:#fff; border-left:4px solid #DC2626; padding:16px 20px; border-radius:0 8px 8px 0;">
+      <div style="background:#fff; border-left:4px solid #5551D3; padding:16px 20px; border-radius:0 8px 8px 0;">
         <p style="margin:0; font-size:15px; color:#333; font-weight:500;">
           Quando accettiamo di mostrarci davvero, <strong>non servono più strategie</strong>
           — diventiamo noi stessi un flusso che risuona solo con le persone giuste.
@@ -262,15 +254,15 @@ const testimonials = [
 </section>
 
 <!-- ── ARGOMENTI ──────────────────────────────────────────────────────── -->
-<section style="padding: 80px 24px; background: #1A0808;">
+<section style="padding: 80px 24px; background: #0D0B2E;">
   <div style="max-width:1000px; margin:0 auto;">
-    <p style="color:#fca5a5; font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase; margin-bottom:12px;">Il programma</p>
+    <p style="color:#a5b4fc; font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase; margin-bottom:12px;">Il programma</p>
     <h2 style="font-size:clamp(26px,3vw,38px); font-weight:800; color:#fff; margin-bottom:12px;">Ecco di cosa parleremo</h2>
     <p style="color:#999; margin-bottom:44px; font-size:16px;">Un elenco completo degli argomenti che affronteremo nelle 5 video lezioni.</p>
     <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:0;">
       {topics.map(item => (
         <div class="topic-item">
-          <span style="color:#DC2626; font-weight:700; flex-shrink:0; font-size:16px; margin-top:1px;">▸</span>
+          <span style="color:#5551D3; font-weight:700; flex-shrink:0; font-size:16px; margin-top:1px;">▸</span>
           <span style="color:#ddd; font-size:15px; line-height:1.5;">{item}</span>
         </div>
       ))}
@@ -281,7 +273,7 @@ const testimonials = [
 <!-- ── VIDEO LEZIONE GRATUITA ─────────────────────────────────────────── -->
 <section style="padding: 80px 24px; background: #fff;">
   <div style="max-width:800px; margin:0 auto; text-align:center;">
-    <p style="color:#DC2626; font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase; margin-bottom:12px;">Assaggia il percorso</p>
+    <p style="color:#5551D3; font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase; margin-bottom:12px;">Assaggia il percorso</p>
     <h2 style="font-size:clamp(24px,2.5vw,34px); font-weight:800; margin-bottom:16px;">Guarda la Lezione Introduttiva Gratuita</h2>
     <p style="color:#555; font-size:16px; margin-bottom:36px;">Prima di acquistare, vedi con i tuoi occhi il metodo e il mio approccio.</p>
     <div style="border-radius:12px; overflow:hidden; position:relative; background:#111; aspect-ratio:16/9;">
@@ -311,7 +303,7 @@ const testimonials = [
       ].map((item, i) => (
         <div style="background:#fff; border-radius:8px; padding:28px; position:relative; overflow:hidden;">
           <div style="font-size:42px; font-weight:900; color:rgba(220,38,38,.08); position:absolute; top:8px; right:16px; line-height:1;">{i+1}</div>
-          <h4 style="font-size:15px; font-weight:700; margin-bottom:10px; padding-right:20px; color:#DC2626;">{item.title}</h4>
+          <h4 style="font-size:15px; font-weight:700; margin-bottom:10px; padding-right:20px; color:#5551D3;">{item.title}</h4>
           <p style="color:#555; font-size:14px; line-height:1.6; margin:0;">{item.text}</p>
         </div>
       ))}
@@ -320,9 +312,9 @@ const testimonials = [
 </section>
 
 <!-- ── È IDEALE PER TE SE ─────────────────────────────────────────────── -->
-<section style="padding: 80px 24px; background: #FEF2F2;">
+<section style="padding: 80px 24px; background: #EEF2FF;">
   <div style="max-width:1000px; margin:0 auto;">
-    <h2 style="text-align:center; font-size:clamp(26px,3vw,38px); font-weight:800; margin-bottom:48px;">È ideale per te <span style="color:#DC2626;">se:</span></h2>
+    <h2 style="text-align:center; font-size:clamp(26px,3vw,38px); font-weight:800; margin-bottom:48px;">È ideale per te <span style="color:#5551D3;">se:</span></h2>
     <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:20px;">
       {ideals.map((item, i) => (
         <div style="background:#fff; border-radius:8px; padding:28px; position:relative; overflow:hidden;">
@@ -338,7 +330,7 @@ const testimonials = [
 <!-- ── COSTI ───────────────────────────────────────────────────────────── -->
 <section id="costi" style="padding: 80px 24px; background: #f7f7f7;">
   <div style="max-width:1000px; margin:0 auto;">
-    <p style="color:#DC2626; font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase; text-align:center; margin-bottom:12px;">Costi</p>
+    <p style="color:#5551D3; font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase; text-align:center; margin-bottom:12px;">Costi</p>
     <h2 style="text-align:center; font-size:clamp(26px,3vw,38px); font-weight:800; margin-bottom:12px;">Scegli come vuoi iniziare</h2>
     <p style="text-align:center; color:#555; margin-bottom:48px; font-size:16px;">Puoi fare il percorso in autonomia o con il mio supporto diretto.</p>
 
@@ -348,7 +340,7 @@ const testimonials = [
       <div style="background:#fff; border-radius:12px; padding:36px; border:2px solid #eee;">
         <p style="font-size:13px; font-weight:700; color:#888; text-transform:uppercase; letter-spacing:1px; margin-bottom:16px;">Percorso Pre-registrato</p>
         <div style="margin-bottom:4px;">
-          <span style="font-size:48px; font-weight:900; color:#0D0404;">€90</span>
+          <span style="font-size:48px; font-weight:900; color:#06061A;">€90</span>
         </div>
         <p style="color:#999; font-size:13px; margin-bottom:20px;">pagamento unico</p>
         <p style="color:#555; font-size:15px; line-height:1.7; margin-bottom:24px;">
@@ -362,20 +354,20 @@ const testimonials = [
             "1 Sessione individuale D&R in regalo",
           ].map(i => (
             <li style="display:flex; gap:10px; align-items:flex-start; padding:8px 0; border-bottom:1px solid #f0f0f0; font-size:15px; color:#333;">
-              <span style="color:#DC2626; font-weight:700; flex-shrink:0;">✓</span> {i}
+              <span style="color:#5551D3; font-weight:700; flex-shrink:0;">✓</span> {i}
             </li>
           ))}
         </ul>
         <a href="https://wa.link/wjlw58" target="_blank" rel="noopener"
-          style="display:block; text-align:center; padding:14px; border:2px solid #DC2626; color:#DC2626; font-weight:700; font-size:15px; text-decoration:none; border-radius:4px; transition:all .2s;">
+          style="display:block; text-align:center; padding:14px; border:2px solid #5551D3; color:#5551D3; font-weight:700; font-size:15px; text-decoration:none; border-radius:4px; transition:all .2s;">
           Scrivimi per acquistare →
         </a>
       </div>
 
       <!-- Card €500 -->
-      <div style="background:#0D0404; border-radius:12px; padding:36px; border:2px solid #DC2626; position:relative;">
-        <div style="position:absolute; top:-14px; left:50%; transform:translateX(-50%); background:#DC2626; color:#fff; font-size:12px; font-weight:700; letter-spacing:1px; padding:4px 16px; border-radius:100px; white-space:nowrap;">CONSIGLIATO</div>
-        <p style="font-size:13px; font-weight:700; color:#fca5a5; text-transform:uppercase; letter-spacing:1px; margin-bottom:16px;">Percorso Privato con Marco</p>
+      <div style="background:#06061A; border-radius:12px; padding:36px; border:2px solid #5551D3; position:relative;">
+        <div style="position:absolute; top:-14px; left:50%; transform:translateX(-50%); background:#5551D3; color:#fff; font-size:12px; font-weight:700; letter-spacing:1px; padding:4px 16px; border-radius:100px; white-space:nowrap;">CONSIGLIATO</div>
+        <p style="font-size:13px; font-weight:700; color:#a5b4fc; text-transform:uppercase; letter-spacing:1px; margin-bottom:16px;">Percorso Privato con Marco</p>
         <div style="margin-bottom:4px;">
           <span style="font-size:48px; font-weight:900; color:#fff;">€500</span>
         </div>
@@ -392,16 +384,16 @@ const testimonials = [
             "Facilitazione passo-passo del processo",
           ].map(i => (
             <li style="display:flex; gap:10px; align-items:flex-start; padding:8px 0; border-bottom:1px solid rgba(255,255,255,.08); font-size:15px; color:#ddd;">
-              <span style="color:#DC2626; font-weight:700; flex-shrink:0;">✓</span> {i}
+              <span style="color:#5551D3; font-weight:700; flex-shrink:0;">✓</span> {i}
             </li>
           ))}
         </ul>
-        <a href="https://wa.link/wjlw58" target="_blank" rel="noopener" class="btn-red"
-          style="display:block; text-align:center; background:#DC2626;">
+        <a href="https://wa.link/wjlw58" target="_blank" rel="noopener" class="btn-blue"
+          style="display:block; text-align:center; background:#5551D3;">
           Scrivimi per acquistare →
         </a>
         <p style="text-align:center; margin-top:12px; font-size:13px; color:#888;">
-          <a href="https://wa.link/wjlw58" target="_blank" rel="noopener" style="color:#fca5a5;">Scrivimi per pagare in 3 rate da €167</a>
+          <a href="https://wa.link/wjlw58" target="_blank" rel="noopener" style="color:#a5b4fc;">Scrivimi per pagare in 3 rate da €167</a>
         </p>
       </div>
 
@@ -428,8 +420,8 @@ const testimonials = [
     </h2>
     <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:24px;">
       {testimonials.map(t => (
-        <div style="background:#fff; border-radius:8px; padding:28px; border-top:3px solid #DC2626; box-shadow:0 2px 12px rgba(0,0,0,.05);">
-          <p style="font-size:13px; font-weight:700; color:#DC2626; text-transform:uppercase; letter-spacing:1px; margin-bottom:14px;">{t.title}</p>
+        <div style="background:#fff; border-radius:8px; padding:28px; border-top:3px solid #5551D3; box-shadow:0 2px 12px rgba(0,0,0,.05);">
+          <p style="font-size:13px; font-weight:700; color:#5551D3; text-transform:uppercase; letter-spacing:1px; margin-bottom:14px;">{t.title}</p>
           <p style="font-size:15px; color:#444; line-height:1.7; font-style:italic; margin-bottom:20px;">"{t.quote}"</p>
           <p style="font-size:14px; font-weight:700; margin:0;">{t.name}</p>
           <p style="font-size:13px; color:#999; margin:2px 0 0;">{t.role}</p>
