@@ -8,7 +8,9 @@
  */
 import imageMapping from '../data/imageMapping.json' assert { type: 'json' };
 
-const WP_API = 'https://marcomunich.com/wp-json/wp/v2';
+const WP_API    = 'https://marcomunich.com/wp-json/wp/v2';
+const WP_SITE   = 'https://marcomunich.com';
+const RM_API    = `${WP_SITE}/wp-json/rankmath/v1/getHead`;
 
 // ── Utility: fetch con gestione errori ────────────────────────────────────────
 async function wpFetch(endpoint, fallback = []) {
@@ -165,6 +167,58 @@ export function getPrimaryCategory(post) {
   } catch {
     return null;
   }
+}
+
+// ── RANK MATH HEADLESS SEO ────────────────────────────────────────────────────
+
+/**
+ * Recupera il blocco <head> SEO di Rank Math per un URL specifico.
+ * Richiede: Rank Math → General Settings → Others → "Headless CMS Support" = ON
+ *
+ * Restituisce l'HTML grezzo del <head> (string) oppure null se non disponibile.
+ */
+export async function getRankMathHead(postSlug) {
+  const targetUrl = `${WP_SITE}/${postSlug}/`;
+  const apiUrl    = `${RM_API}?url=${encodeURIComponent(targetUrl)}`;
+  try {
+    const res = await fetch(apiUrl, { signal: AbortSignal.timeout(15000) });
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data?.success ? (data.head ?? null) : null;
+  } catch (err) {
+    console.warn(`[Rank Math] fetch failed per /${postSlug}/:`, err.message);
+    return null;
+  }
+}
+
+/**
+ * Estrae title, description e og:image dall'HTML <head> restituito da Rank Math.
+ * NON usa canonical/og:url (li gestisce BaseLayout con l'URL Astro corretto).
+ */
+export function parseRankMathHead(headHtml) {
+  if (!headHtml) return {};
+
+  // <title>
+  const titleMatch = headHtml.match(/<title[^>]*>([^<]*)<\/title>/i);
+  const title = titleMatch?.[1]?.trim() ?? null;
+
+  // meta name="description"
+  const descMatch = headHtml.match(
+    /<meta[^>]+name=["']description["'][^>]+content=["']([^"']*)["']/i
+  ) ?? headHtml.match(
+    /<meta[^>]+content=["']([^"']*)["'][^>]+name=["']description["']/i
+  );
+  const description = descMatch?.[1]?.trim() ?? null;
+
+  // og:image
+  const ogImgMatch = headHtml.match(
+    /<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']*)["']/i
+  ) ?? headHtml.match(
+    /<meta[^>]+content=["']([^"']*)["'][^>]+property=["']og:image["']/i
+  );
+  const ogImage = ogImgMatch?.[1]?.trim() ?? null;
+
+  return { title, description, ogImage };
 }
 
 /**

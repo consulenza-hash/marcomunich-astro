@@ -187,4 +187,10 @@ import BaseLayout from '@layouts/BaseLayout.astro';
   .thrive-page-wrap {
     overflow-x: hidden;
   }
+
+  /* Override Thrive's Jost font on the "MARCO MUNICH / PERSONAL BRANDING OLISTICO" heading */
+  :global([data-css="tve-u-18ff6e743ed"]),
+  :global([data-css="tve-u-18ff6e6f568"]) {
+    font-family: 'Host Grotesk', system-ui, sans-serif !important;
+  }
 </style>

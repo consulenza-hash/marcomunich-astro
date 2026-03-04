@@ -14,6 +14,8 @@ import {
   getFeaturedImageUrl,
   getPrimaryCategory,
   formatDate,
+  getRankMathHead,
+  parseRankMathHead,
 } from '@lib/wordpress';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -41,12 +43,31 @@ const tags        = post._embedded?.['wp:term']?.[1] ?? [];
 // Articoli correlati (stessa categoria)
 const related = await getRelatedPosts(post.id, post.categories ?? [], 3);
 
-// Meta SEO (Rank Math esporta questi campi, altrimenti usiamo excerpt)
-const seoTitle = post.yoast_head_json?.title ?? title;
-const seoDesc  = post.yoast_head_json?.description
-              ?? post.excerpt?.rendered?.replace(/<[^>]+>/g, '').slice(0, 160)
-              ?? '';
-const seoImage = post.yoast_head_json?.og_image?.[0]?.url ?? imageUrl ?? '';
+// Meta SEO da Rank Math Headless CMS API
+// Richiede: Rank Math → General Settings → Others → "Headless CMS Support" = ON
+// Se non ancora attivato, usa titolo e excerpt come fallback automatico.
+const rmHead  = await getRankMathHead(post.slug);
+const rmSeo   = parseRankMathHead(rmHead);
+
+const seoTitle = rmSeo.title       ?? title;
+const seoDesc  = rmSeo.description ?? post.excerpt?.rendered?.replace(/<[^>]+>/g, '').slice(0, 160) ?? '';
+const seoImage = rmSeo.ogImage     ?? imageUrl ?? '';
+
+// BreadcrumbList JSON-LD
+const siteUrl = 'https://marcomunich.com';
+const breadcrumbItems = [
+  { "@type": "ListItem", "position": 1, "name": "Home",  "item": `${siteUrl}/`      },
+  { "@type": "ListItem", "position": 2, "name": "Blog",  "item": `${siteUrl}/blog/` },
+  ...(category
+    ? [{ "@type": "ListItem", "position": 3, "name": category.name, "item": `${siteUrl}/categoria/${category.slug}/` }]
+    : []
+  ),
+];
+const breadcrumbSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": breadcrumbItems,
+});
 ---
 
 <BaseLayout
@@ -54,7 +75,12 @@ const seoImage = post.yoast_head_json?.og_image?.[0]?.url ?? imageUrl ?? '';
   description={seoDesc}
   image={seoImage}
   currentPath={`/${post.slug}/`}
+  schemaType="Article"
+  datePublished={post.date}
+  dateModified={post.modified ?? post.date}
 >
+  <!-- BreadcrumbList schema per rich results Google -->
+  <script slot="head" type="application/ld+json" set:html={breadcrumbSchema} />
 
   <article class="article-page">
 

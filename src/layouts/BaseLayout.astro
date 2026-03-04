@@ -5,12 +5,14 @@
  * Gestisce: <head> con meta SEO, GA4, Schema JSON-LD, GDPR, Header, Footer.
  *
  * Props:
- *   title:       string  — <title> della pagina
- *   description: string  — meta description
- *   image:       string  — og:image (opzionale)
- *   currentPath: string  — path corrente per highlight nav (opzionale)
- *   noIndex:     boolean — true per pagine che non devono essere indicizzate
- *   schemaType:  string  — 'WebPage' | 'Article' | 'CollectionPage' (opzionale, default: 'WebPage')
+ *   title:          string  — <title> della pagina
+ *   description:    string  — meta description
+ *   image:          string  — og:image (opzionale)
+ *   currentPath:    string  — path corrente per highlight nav (opzionale)
+ *   noIndex:        boolean — true per pagine che non devono essere indicizzate
+ *   schemaType:     string  — 'WebPage' | 'Article' | 'CollectionPage' (opzionale, default: 'WebPage')
+ *   datePublished:  string  — ISO date, solo per articoli (es. post.date)
+ *   dateModified:   string  — ISO date, solo per articoli (es. post.modified)
  */
 import Header from '@components/Header.astro';
 import Footer from '@components/Footer.astro';
@@ -24,6 +26,8 @@ const {
   currentPath = '/',
   noIndex = false,
   schemaType = 'WebPage',
+  datePublished,
+  dateModified,
 } = Astro.props;
 
 const siteUrl = 'https://marcomunich.com';
@@ -35,11 +39,21 @@ const schemaGraph = [
   {
     "@type": ["Organization", "Person"],
     "@id": `${siteUrl}/#person`,
-    "name": "Marco Munich - CONTENT MARKETING PER IL SETTORE OLISTICO",
+    "name": "Marco Munich",
+    "alternateName": "Marco Munich Personal Branding Olistico",
     "url": siteUrl,
+    "email": "consulenza@marcomunich.com",
     "image": {
       "@id": `${siteUrl}/#logo`
-    }
+    },
+    "sameAs": [
+      "https://www.youtube.com/@marcomunich",
+      "https://www.instagram.com/marcomunich/",
+      "https://www.facebook.com/marcomunich.consulente/",
+      "https://www.linkedin.com/in/marco-munich/",
+      "https://twitter.com/marcomunich",
+      "https://open.spotify.com/show/2WwJsiCJYSZnawH2TQ6N2n"
+    ]
   },
   {
     "@type": "ImageObject",
@@ -47,7 +61,7 @@ const schemaGraph = [
     "url": `${siteUrl}/og-image.jpg`,
     "width": "330",
     "height": "330",
-    "caption": "Marco Munich - CONTENT MARKETING PER IL SETTORE OLISTICO",
+    "caption": "Marco Munich - Personal Branding Olistico",
     "inLanguage": "it-IT"
   },
   {
@@ -71,7 +85,13 @@ const schemaGraph = [
     "description": description,
     "isPartOf": { "@id": `${siteUrl}/#website` },
     "about": { "@id": `${siteUrl}/#person` },
-    "inLanguage": "it-IT"
+    "inLanguage": "it-IT",
+    ...(datePublished && { "datePublished": datePublished }),
+    ...(dateModified  && { "dateModified":  dateModified  }),
+    ...(schemaType === 'Article' && {
+      "author":    { "@id": `${siteUrl}/#person` },
+      "publisher": { "@id": `${siteUrl}/#person` },
+    }),
   }
 ];
 ---
@@ -92,13 +112,16 @@ const schemaGraph = [
   <meta name="google-site-verification" content="32fAEP-qgKaM8ugnFjGu7XPcAtbzNr0PSsHgUwyPRB0" />
 
   <!-- Open Graph / Social -->
-  <meta property="og:type" content="website" />
+  <meta property="og:type" content={schemaType === 'Article' ? 'article' : 'website'} />
   <meta property="og:url" content={canonicalUrl} />
   <meta property="og:title" content={fullTitle} />
   <meta property="og:description" content={description} />
   <meta property="og:image" content={image} />
   <meta property="og:locale" content="it_IT" />
   <meta property="og:site_name" content="Marco Munich - Personal Branding Olistico" />
+  {datePublished && <meta property="article:published_time" content={datePublished} />}
+  {dateModified  && <meta property="article:modified_time"  content={dateModified}  />}
+  {schemaType === 'Article' && <meta property="article:author" content="Marco Munich" />}
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
@@ -141,7 +164,7 @@ const schemaGraph = [
     gtag('config', 'G-354107331');
   </script>
 
-  <!-- Slot per <head> extra (es. meta SEO specifici per articolo) -->
+  <!-- Slot per <head> extra (es. BreadcrumbList schema per articoli) -->
   <slot name="head" />
 </head>
 
