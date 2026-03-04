@@ -1,0 +1,118 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Contatti - Marco Munich"
+  description="Contatta Marco Munich per informazioni su consulenze e percorsi di marketing olistico. Email: consulenza@marcomunich.com"
+  currentPath="/contatti/"
+>
+  <div class="contatti-page">
+    <div class="contatti-hero">
+      <h1>Contatti</h1>
+      <p class="contatti-sub">Vuoi approfondire? Sentiamoci.</p>
+    </div>
+
+    <div class="contatti-card">
+      <div class="contatti-item">
+        <span class="contatti-icon">✉️</span>
+        <div>
+          <div class="contatti-label">Email</div>
+          <a href="mailto:consulenza@marcomunich.com" class="contatti-value">
+            consulenza@marcomunich.com
+          </a>
+        </div>
+      </div>
+
+      <div class="contatti-item">
+        <span class="contatti-icon">📞</span>
+        <div>
+          <div class="contatti-label">Telefono</div>
+          <a href="tel:+393895776332" class="contatti-value">
+            +39 389 577 6332
+          </a>
+        </div>
+      </div>
+
+      <div class="contatti-item">
+        <span class="contatti-icon">🕐</span>
+        <div>
+          <div class="contatti-label">Disponibilità</div>
+          <div class="contatti-value">Lunedì – Venerdì, 9:00 – 17:00</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .contatti-page {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 72px 24px 100px;
+  }
+
+  .contatti-hero {
+    text-align: center;
+    margin-bottom: 56px;
+  }
+
+  .contatti-hero h1 {
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 800;
+    color: #0A0A0A;
+    margin-bottom: 12px;
+  }
+
+  .contatti-sub {
+    font-size: 18px;
+    color: rgba(10,10,10,0.55);
+  }
+
+  .contatti-card {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    background: #f8f8f8;
+    border-radius: 12px;
+    padding: 40px;
+  }
+
+  .contatti-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .contatti-icon {
+    font-size: 28px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .contatti-label {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(10,10,10,0.45);
+    margin-bottom: 6px;
+  }
+
+  .contatti-value {
+    font-size: 17px;
+    font-weight: 600;
+    color: #0A0A0A;
+    text-decoration: none;
+  }
+
+  a.contatti-value:hover {
+    color: #0c83fb;
+    text-decoration: underline;
+  }
+
+  @media (max-width: 480px) {
+    .contatti-card { padding: 28px 20px; }
+    .contatti-page { padding-top: 48px; }
+  }
+</style>
