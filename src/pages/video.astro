@@ -43,41 +43,60 @@ const seoDesc  = 'Guarda i video di Marco Munich sul Personal Branding Olistico 
 </BaseLayout>
 
 <script>
-  // Gestione click sui thumb del plugin EPYT (senza caricare il JS del plugin)
   function setupVideoGallery() {
     const gallery = document.querySelector('.epyt-gallery');
-    if (!gallery) {
-      console.log('EPYT Gallery not found');
-      return;
-    }
+    if (!gallery) return;
 
     const mainIframe = gallery.querySelector('.epyt-video-wrapper iframe') as HTMLIFrameElement;
     const thumbs = gallery.querySelectorAll('.epyt-gallery-thumb');
+    if (!mainIframe || !thumbs.length) return;
 
-    console.log(`Found ${thumbs.length} thumbnails`);
+    // ── Fix embed iniziale ───────────────────────────────────────────────
+    // EPYT imposta come src il Channel ID (UCx-g4qtAtQ) invece di un Video ID.
+    // Il Channel ID produce un embed "canale split" di YouTube — visivamente errato.
+    // Sostituiamo con il primo vero Video ID trovato nei thumb (non inizia con "UC").
+    const firstRealVideoId = Array.from(thumbs)
+      .map(t => t.getAttribute('data-videoid') || '')
+      .find(id => id.length === 11 && !id.startsWith('UC'));
 
+    if (firstRealVideoId) {
+      const params = new URLSearchParams({
+        enablejsapi: '1',
+        autoplay: '0',
+        rel: '0',
+        modestbranding: '1',
+        fs: '1',
+        controls: '1',
+      });
+      mainIframe.src = `https://www.youtube.com/embed/${firstRealVideoId}?${params}`;
+      mainIframe.title = 'Video principale';
+    }
+
+    // ── Click sui thumbnail → aggiorna player principale ─────────────────
     thumbs.forEach(thumb => {
-      // Usiamo mousedown o gestiamo il bubbling per sicurezza
       thumb.addEventListener('click', (e) => {
         e.preventDefault();
         const videoId = thumb.getAttribute('data-videoid');
-        console.log('Clicked video:', videoId);
-        
-        if (videoId && mainIframe) {
-          // Costruisce l'URL embed
-          const url = new URL(mainIframe.src);
-          // Rimuoviamo la parte finale del path (/embed/ID) e la sostituiamo
-          const newSrc = `https://www.youtube.com/embed/${videoId}${url.search}`;
-          mainIframe.src = newSrc;
-          
-          // Scroll up al video principale
-          mainIframe.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
+        if (!videoId || videoId.startsWith('UC')) return;
+
+        const params = new URLSearchParams({
+          enablejsapi: '1',
+          autoplay: '1',
+          rel: '0',
+          modestbranding: '1',
+          fs: '1',
+          controls: '1',
+        });
+        mainIframe.src = `https://www.youtube.com/embed/${videoId}?${params}`;
+        mainIframe.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+        // Evidenzia il thumb attivo
+        thumbs.forEach(t => t.classList.remove('is-active'));
+        thumb.classList.add('is-active');
       });
     });
   }
 
-  // Esegui al caricamento e dopo eventuali navigazioni Astro
   setupVideoGallery();
   document.addEventListener('astro:page-load', setupVideoGallery);
 </script>
@@ -195,6 +214,11 @@ const seoDesc  = 'Guarda i video di Marco Munich sul Personal Branding Olistico 
 
   .video-page__content :global(.epyt-gallery-thumb:hover) {
     transform: translateY(-4px);
+  }
+
+  .video-page__content :global(.epyt-gallery-thumb.is-active) {
+    outline: 3px solid #0c83fb;
+    outline-offset: 3px;
   }
 
   .video-page__content :global(.epyt-gallery-img-box) {
