@@ -1,176 +1,332 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
+
+const steps = [
+  {
+    n: "1",
+    title: "Vedremo insieme quanto è facile installare le piattaforme",
+    text: "Magari hai una certa età e hai sempre visto i social e i mezzi tecnologici come complicati da utilizzare. In questa guida è spiegato tutto in modo molto semplice."
+  },
+  {
+    n: "2",
+    title: "Scopriremo le due metodologie di impatto nel pubblico e lo sforzo che serve",
+    text: "Senza conoscere le due metodologie di impatto, si rischia di non sapere a quale tipo di sforzo si va incontro. Andiamo a capire questo prima di iniziare a mettere in pratica tutto."
+  },
+  {
+    n: "3",
+    title: "La mappa di quello che va fatto e il \"tragitto\" che il pubblico fa naturalmente",
+    text: "Ti mostrerò esattamente quello che ho costruito io, senza particolari difficoltà — per agevolare il passaggio da potenziale cliente a cliente, senza funnel e cose complicate."
+  },
+  {
+    n: "4",
+    title: "Un elenco completo di tutti gli strumenti che utilizzo io stesso",
+    text: "Quasi tutti gli strumenti sono gratuiti, tranne qualcuno con un costo veramente basso che ti permetterà di abbattere molto del lavoro, dei costi e dello sforzo."
+  },
+];
+
+const ideals = [
+  { title: "Sei sempre stato negato con i computer", text: "Non ti sei mai sentito in grado di gestire nulla di complicato e desideri iniziare a mettere in piedi qualcosa che lavori per te, non contro di te." },
+  { title: "Vuoi prepararti per il lavoro da remoto", text: "Molti si sono informati su come lavorare online senza il contatto fisico. In questo percorso ti spiego come mettere in piedi tutto facilmente." },
+  { title: "Hai già visto come lavoro e vuoi gli stessi strumenti", text: "Dentro il videocorso trovi un elenco completo di tutti gli strumenti che utilizzo, con consigli e possibilità di farmi domande." },
+  { title: "Non hai voglia di impegnarti troppo", text: "È solo richiesto un impegno iniziale per impostare tutto. Poi funziona da sé e ti servirà il minimo sforzo." },
+];
 ---
 
 <BaseLayout
   title="Iniziare a Lavorare Senza sito Web - Marco Munich"
-  description="Strategie per iniziare l'attivita professionale online senza la necessità di un sito web."
+  description="Mini percorso per Coach, Counselor e Terapeuti. Due ore di lezione per iniziare a lavorare subito senza bisogno di un sito web."
   currentPath="/lavorare-senzasito/"
 >
-  <link slot="head" rel="stylesheet" href="/thrive/lavorare-senzasito.css" />
 
-  <div class="thrive-page-wrap">
-    <Fragment set:html={`<div id="tve_editor" class="tve_shortcode_editor tar-main-content" data-post-id="3054">
-<div id="landingpage-top-section" class="landingpage-section top-section placeholder-section hide-section"><div class="section-background"></div><div class="section-content"></div></div>
-<div class="thrive-group-edit-config" style="display: none !important"></div>
-<div data-inherit-lp-settings="1" data-match-lp-colors="1" class="thrv_wrapper thrv-page-section thrv-lp-block tcb-local-vars-root" style="" data-css="tve-u-5f2854320c15f6" tcb-template-name="Hero Area Block 02" tcb-template-id="56083" data-keep-css_id="1"><div class="thrive-group-edit-config" style="display: none !important"></div><div class="thrive-local-colors-config" style="display: none !important"></div>
-	<div class="tve-page-section-out" data-css="tve-u-5f2854320c1600" style="" data-ct-name="Rounded Corner" data-ct="fancydivider-38730" data-element-name="Fancy Divider"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1000 234.7" style="height: 137px;" xml:space="preserve" data-position="bottom" data-ct="38730" decoration-type="Rounded Corner" class="svg-shape-bottom" width="100%" preserveAspectRatio="none" data-css="tve-u-5f2854320c1619">
-<style type="text/css">
-</style>
-<path class="p16eb204b34b" d="M1000,2.2L571,172c-60.6,23.6-85.4,22.6-146.2,0L0,0v234.7h1000V2.2z"></path>
-</svg></div>
-	<div class="tve-page-section-in   tve_empty_dropzone" data-css="tve-u-5f2854320c1625"><div class="thrv_wrapper tve_image_caption" data-css="tve-u-5f2854320c1632" style=""><span class="tve_image_frame" style=""><img data-opt-id=1572307913  fetchpriority="high" decoding="async" class="tve_image wp-image-1101" alt="" data-id="1101" width="225" data-init-width="3000" height="68" data-init-height="900" title="ma non dovevi fare il botto_ (2)" src="https://mlfqwn4vwjlv.i.optimole.com/w:225/h:68/q:mauto/g:sm/f:best/ig:avif/https://marcomunich.com/wp-content/uploads/2020/02/ma-non-dovevi-fare-il-botto_-2.png" data-width="225" data-height="68" data-css="tve-u-5f2854320c1641" style="aspect-ratio: auto 3000 / 900;" mt-m="-1" loading="lazy" srcset="https://mlfqwn4vwjlv.i.optimole.com/w:1920/h:576/q:mauto/g:sm/f:best/ig:avif/https://marcomunich.com/wp-content/uploads/2020/02/ma-non-dovevi-fare-il-botto_-2.png 3000w, https://mlfqwn4vwjlv.i.optimole.com/w:300/h:90/q:mauto/g:sm/f:best/ig:avif/https://marcomunich.com/wp-content/uploads/2020/02/ma-non-dovevi-fare-il-botto_-2.png 300w, https://mlfqwn4vwjlv.i.optimole.com/w:1024/h:307/q:mauto/g:sm/f:best/ig:avif/https://marcomunich.com/wp-content/uploads/2020/02/ma-non-dovevi-fare-il-botto_-2.png 1024w, https://mlfqwn4vwjlv.i.optimole.com/w:768/h:230/q:mauto/g:sm/f:best/ig:avif/https://marcomunich.com/wp-content/uploads/2020/02/ma-non-dovevi-fare-il-botto_-2.png 768w, https://mlfqwn4vwjlv.i.optimole.com/w:1536/h:461/q:mauto/g:sm/f:best/ig:avif/https://marcomunich.com/wp-content/uploads/2020/02/ma-non-dovevi-fare-il-botto_-2.png 1536w, https://mlfqwn4vwjlv.i.optimole.com/w:1920/h:575/q:mauto/g:sm/f:best/ig:avif/https://marcomunich.com/wp-content/uploads/2020/02/ma-non-dovevi-fare-il-botto_-2.png 2048w" sizes="auto, (max-width: 225px) 100vw, 225px" /></span></div><div class="thrv_wrapper thrv_text_element"><h3 class="" data-css="tve-u-5f2854320c1654" style="text-align: center;">Mini Percorso per Coach, Counselor e Terapeuti</h3></div><div class="thrv_wrapper thrv_text_element" style="" data-css="tve-u-5f2854320c1660"><h1 class="" data-css="tve-u-5f2854320c1680" style="text-align: center;"><strong>Iniziare a Lavorare Senza sito Web</strong></h1></div><div class="thrv_wrapper thrv_text_element"><h3 class="" data-css="tve-u-5f2854320c16a1" style="text-align: center;"><strong>D</strong><strong>ue ore di lezione</strong> dove scopriamo tutto ciò che serve sapere ad un Counselor, un Coach o un Terapeuta, per <strong>iniziare a lavorare subito</strong> e preoccuparsi solo di creare contenuti e gestire solo il vostro lavoro.</h3></div><div class="thrv_wrapper thrv-button thrv-button-v2 tcb-local-vars-root" data-css="tve-u-5f2854320c16e0" data-button-size="s">
-	<div class="thrive-colors-palette-config" style="display: none !important"></div>
-	<a href="#tve-jump-171eea2aaf7" class="tcb-button-link tve-jump-scroll" jump-animation="smooth">
-		<span class="tcb-button-texts"><span class="tcb-button-text thrv-inline-text">Voglio saperne di più</span></span>
-	</a>
-</div><div class="thrv_responsive_video thrv_wrapper" data-aspect-ratio-default="0" data-type="youtube" data-aspect-ratio="16:9" data-url="https://youtu.be/lo1Ji3OkYCg" style="" data-byline="1" data-overlay="1" data-rel="0" data-modestbranding="1" data-float="false" data-float-visibility="mobile" data-css="tve-u-173b58f3f74" data-float-position="top-left" data-float-width-d="300px" data-float-padding1-d="25px" data-float-padding2-d="25px">
-	
+<style is:global>
+  .green-page .btn-green {
+    display: inline-block;
+    background: #16A34A;
+    color: #fff;
+    padding: 16px 36px;
+    font-weight: 700;
+    font-size: 15px;
+    text-decoration: none;
+    border-radius: 4px;
+    letter-spacing: .5px;
+    transition: background .2s;
+  }
+  .green-page .btn-green:hover { background: #166534; opacity: 1; }
 
-	<div class="tve_responsive_video_container" style="padding-bottom: 56.25%;">
-		<div class="tcb-video-float-container"><div class="video_overlay video_overlay_image" data-width="1444" data-height="638" style="background-image: url(&quot;https://mlfqwn4vwjlv.i.optimole.com/w:auto/h:auto/q:mauto/g:sm/f:best/ig:avif/https://marcomunich.com/wp-content/uploads/2020/08/Schermata-2020-08-03-alle-20.46.15.png&quot;); background-repeat: no-repeat; background-size: cover; background-position: center center;"><span class="overlay_play_button"><div class="thrv_icon"><svg class="tcb-icon" viewBox="0 0 512 512" data-id="icon-play-circle-solid" data-name="" style="fill:#fff">
-            <path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm115.7 272l-176 101c-15.8 8.8-35.7-2.5-35.7-21V152c0-18.4 19.8-29.8 35.7-21l176 107c16.4 9.2 16.4 32.9 0 42z"></path>
-        </svg></div></span></div><iframe title="Responsive Video" class="tcb-responsive-video" data-code="lo1Ji3OkYCg" data-provider="youtube" src="https://www.youtube.com/embed/lo1Ji3OkYCg?rel=0&amp;modestbranding=1&amp;controls=1&amp;showinfo=1&amp;fs=1&amp;wmode=transparent&amp;enablejsapi=1" frameborder="0" allowfullscreen="" id="_dytid_9714"></iframe></div>
-	</div>
-</div></div>
-</div><div data-inherit-lp-settings="1" data-match-lp-colors="1" class="thrv_wrapper thrv-page-section thrv-lp-block tcb-local-vars-root" style="margin-bottom: 0px !important;" data-css="tve-u-5f2854320c1703" tcb-template-name="Text Area Block 01" tcb-template-id="56089" data-keep-css_id="1"><div class="thrive-group-edit-config" style="display: none !important"></div><div class="thrive-local-colors-config" style="display: none !important"></div>
-	<div class="tve-page-section-out"></div>
-	<div class="tve-page-section-in   tve_empty_dropzone" data-css="tve-u-5f2854320c1716" style=""><div class="thrv_wrapper thrv_text_element" data-tag="h2" data-css="tve-u-5f2854320c1721"><h2 class="" style="text-align: center;"><!--StartFragment--><!--StartFragment--><!--StartFragment--><!--StartFragment--><!--EndFragment--><!--EndFragment--><!--EndFragment--><!--EndFragment--><strong>Scaricare gran parte del lavoro</strong></h2></div><div class="thrv_wrapper thrv_text_element" data-css="tve-u-5f2854320c1738" style=""><p style="text-align: center;"><!--StartFragment--><!--StartFragment-->Ricordarsi l'appuntamento e ricordarlo al cliente, <strong>mandargli gli estremi di pagamento</strong>, fare loro delle domande pre appuntamento per capire di cosa hanno bisogno... <br><br>Tutte queste sono informazioni che di solito chiediamo a mano (assieme a tante altre) dentro questo mini corso andiamo a vedere tutto quello che ti serve per lavorare senza il sito web, abbiamo solo bisogno dei social e degli strumenti che ti consiglio nelle lezioni.<br><!--EndFragment-->
-<!--EndFragment--></p></div></div>
-</div><div data-inherit-lp-settings="1" data-match-lp-colors="1" class="thrv_wrapper thrv-page-section thrv-lp-block tcb-local-vars-root" data-css="tve-u-5f2854320c1ad1" style="" tcb-template-name="Steps Area Block 02" tcb-template-id="55953" data-keep-css_id="1" id="tve-jump-171eea2aaf7"><div class="thrive-group-edit-config" style="display: none !important"></div><div class="thrive-local-colors-config" style="display: none !important"></div>
-	<div class="tve-page-section-out"></div>
-	<div class="tve-page-section-in   tve_empty_dropzone" data-css="tve-u-5f2854320c1ae0"><div class="thrv_wrapper thrv_text_element" data-tag="h2" data-css="tve-u-5f2854320c1b02"><h2 class="" style="text-align: center;"><!--StartFragment-->Di cosa parleremo nel Corso<!--EndFragment--></h2></div><div class="thrv_wrapper thrv_text_element" data-css="tve-u-5f2854320c1b21" style=""><p data-css="tve-u-5f2854320c1b31" style="text-align: center;"><!--StartFragment--><!--StartFragment-->Prenotazione e pagamento degli appuntamenti, grafiche, creazione degli articoli e strumenti di base da utilizzare.<br><!--EndFragment-->
-<!--EndFragment--></p></div><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad dynamic-group-k3h2t6cl" data-css="tve-u-5f2854320c1b53" style="">
-	<div class="tve-content-box-background"></div>
-	<div class="tve-cb"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad tve_evt_manager_listen tve_et_tve-viewport tve_ea_thrive_animation tve_anim_slide_top dynamic-group-k3h2sphu" data-tcb-events="__TCB_EVENT_[{&quot;t&quot;:&quot;tve-viewport&quot;,&quot;config&quot;:{&quot;anim&quot;:&quot;slide_top&quot;,&quot;loop&quot;:0},&quot;a&quot;:&quot;thrive_animation&quot;}]_TNEVE_BCT__" data-css="tve-u-5f2854320c1b61">
-	<div class="tve-content-box-background " data-css="tve-u-5f2854320c1b82"></div>
-	<div class="tve-cb " data-css="tve-u-5f2854320c1b95"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad dynamic-group-k3h2sls4" data-css="tve-u-5f2854320c1ba2">
-	<div class="tve-content-box-background" data-css="tve-u-5f2854320c1bb9"></div>
-	<div class="tve-cb" data-css="tve-u-5f2854320c1bc1"><div class="thrv_wrapper thrv_text_element dynamic-group-k3h2sgo7" data-css="tve-u-5f2854320c1bd8"><div class="tcb-plain-text" data-css="tve-u-5f2854320c1be0">1</div></div></div>
-</div><div class="thrv_wrapper thrv_text_element dynamic-group-k3h2s8g8" data-css="tve-u-5f2854320c1bf5" data-tag="h4"><h4 class="" data-css="tve-u-5f2854320c1c02"><!--StartFragment--><!--StartFragment--><strong>Vedremo insieme quanto è facile installare le piattaforme<br></strong><!--EndFragment--><!--EndFragment--></h4></div><div class="thrv_wrapper thrv_text_element dynamic-group-k3h2sdcl" data-css="tve-u-5f2854320c1c17"><p data-css="tve-u-5f2854320c1c29"><!--StartFragment--><!--StartFragment--><!--StartFragment-->Magari hai una certa età e hai sempre visto i social e i mezzi tecnologici come complicati da utilizzare, in questa guida è spiegato tutto in modo molto semplice.</p><p><!--EndFragment-->
-<!--EndFragment--></p></div></div>
-</div><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad tve_evt_manager_listen tve_et_tve-viewport tve_ea_thrive_animation tve_anim_slide_top dynamic-group-k3h2sphu" data-tcb-events="__TCB_EVENT_[{&quot;t&quot;:&quot;tve-viewport&quot;,&quot;config&quot;:{&quot;anim&quot;:&quot;slide_top&quot;,&quot;loop&quot;:0},&quot;a&quot;:&quot;thrive_animation&quot;}]_TNEVE_BCT__" data-css="tve-u-5f2854320c1c35">
-	<div class="tve-content-box-background " data-css="tve-u-5f2854320c1c43"></div>
-	<div class="tve-cb " data-css="tve-u-5f2854320c1c58"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad dynamic-group-k3h2sls4" data-css="tve-u-5f2854320c1c68">
-	<div class="tve-content-box-background" data-css="tve-u-5f2854320c1bb9"></div>
-	<div class="tve-cb" data-css="tve-u-5f2854320c1c70"><div class="thrv_wrapper thrv_text_element dynamic-group-k3h2sgo7" data-css="tve-u-5f2854320c1bd8"><div class="tcb-plain-text" data-css="tve-u-5f2854320c1c96"><strong>2</strong></div></div></div>
-</div><div class="thrv_wrapper thrv_text_element dynamic-group-k3h2s8g8" data-css="tve-u-5f2854320c1bf5" data-tag="h4"><h4 class="" data-css="tve-u-5f2854320c1c02"><!--StartFragment--><!--StartFragment--><strong>Scopriremo le due metodologie di impatto nel pubblico e lo sforzo che serve, in entrambe le casistiche.<br></strong><!--EndFragment--><!--EndFragment--></h4></div><div class="thrv_wrapper thrv_text_element dynamic-group-k3h2sdcl" data-css="tve-u-5f2854320c1ca2"><p data-css="tve-u-5f2854320c1c29"><!--StartFragment--><!--StartFragment--><!--StartFragment-->Senza conoscere le due metodologie di impatto, si rischia di non sapere a quale tipo di sforzo fisico si va incontro, andiamo a capire questo, prima di iniziare a mettere in pratica tutto quanto</p><p><!--EndFragment-->
-<!--EndFragment--></p></div></div>
-</div><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad tve_evt_manager_listen tve_et_tve-viewport tve_ea_thrive_animation tve_anim_slide_top dynamic-group-k3h2sphu" data-tcb-events="__TCB_EVENT_[{&quot;t&quot;:&quot;tve-viewport&quot;,&quot;config&quot;:{&quot;anim&quot;:&quot;slide_top&quot;,&quot;loop&quot;:0},&quot;a&quot;:&quot;thrive_animation&quot;}]_TNEVE_BCT__" data-css="tve-u-5f2854320c1cb8">
-	<div class="tve-content-box-background " data-css="tve-u-5f2854320c1cc5"></div>
-	<div class="tve-cb " data-css="tve-u-5f2854320c1cd1"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad dynamic-group-k3h2sls4" data-css="tve-u-5f2854320c1ce2">
-	<div class="tve-content-box-background" data-css="tve-u-5f2854320c1bb9"></div>
-	<div class="tve-cb" data-css="tve-u-5f2854320c1cf4"><div class="thrv_wrapper thrv_text_element dynamic-group-k3h2sgo7" data-css="tve-u-5f2854320c1bd8"><div class="tcb-plain-text" style="" data-css="tve-u-5f2854320c1d09"><strong>3</strong></div></div></div>
-</div><div class="thrv_wrapper thrv_text_element dynamic-group-k3h2s8g8" data-css="tve-u-5f2854320c1bf5" data-tag="h4"><h4 class="" data-css="tve-u-5f2854320c1c02"><!--StartFragment--><strong>La mappa di quello che va fatto e il "tragitto" che il pubblico fa naturalmente, senza sforzo.<br></strong><!--EndFragment--><!--EndFragment--></h4></div><div class="thrv_wrapper thrv_text_element dynamic-group-k3h2sdcl" data-css="tve-u-5f2854320c1d15"><p data-css="tve-u-5f2854320c1c29"><!--StartFragment--><!--StartFragment--><!--StartFragment-->Ti mostrerò esattamente quello che ho costruito io, senza particolari difficoltà e come potrai anche tu mettere in atto un piano estremamente semplice, per agevolare il passaggio da potenziale cliente, a cliente, senza bisogno di funnel e cose complicate.</p><p><!--EndFragment-->
-<!--EndFragment--></p></div></div>
-</div><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad tve_evt_manager_listen tve_et_tve-viewport tve_ea_thrive_animation tve_anim_slide_top dynamic-group-k3h2sphu" data-tcb-events="__TCB_EVENT_[{&quot;t&quot;:&quot;tve-viewport&quot;,&quot;config&quot;:{&quot;anim&quot;:&quot;slide_top&quot;,&quot;loop&quot;:0},&quot;a&quot;:&quot;thrive_animation&quot;}]_TNEVE_BCT__" data-css="tve-u-5f2854320c1d22">
-	<div class="tve-content-box-background " data-css="tve-u-5f2854320c1d32"></div>
-	<div class="tve-cb " data-css="tve-u-5f2854320c1d47"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad dynamic-group-k3h2sls4" data-css="tve-u-5f2854320c1d55">
-	<div class="tve-content-box-background" data-css="tve-u-5f2854320c1bb9"></div>
-	<div class="tve-cb" data-css="tve-u-5f2854320c1d78"><div class="thrv_wrapper thrv_text_element dynamic-group-k3h2sgo7" data-css="tve-u-5f2854320c1bd8"><div class="tcb-plain-text" style="" data-css="tve-u-5f2854320c1d83"><strong>4</strong></div></div></div>
-</div><div class="thrv_wrapper thrv_text_element dynamic-group-k3h2s8g8" data-css="tve-u-5f2854320c1bf5" data-tag="h4"><h4 class="" data-css="tve-u-5f2854320c1c02"><!--StartFragment--><!--StartFragment--><strong>Un elenco completo di tutti gli strumenti che utilizzo io stesso, gratuitamente con video specifici <br></strong><!--EndFragment--><!--EndFragment--></h4></div><div class="thrv_wrapper thrv_text_element dynamic-group-k3h2sdcl" data-css="tve-u-5f2854320c1d96"><p data-css="tve-u-5f2854320c1c29"><!--StartFragment--><!--StartFragment--><!--StartFragment-->Quasi tutti gli strumenti sono gratuiti, tranne qualcuno che però ha un costo veramente basso e ti permetterà di abbattere molto del lavoro, assieme ai costi e allo sforzo fisico.</p><p><!--EndFragment-->
-<!--EndFragment--></p></div></div>
-</div></div>
-</div><div class="thrv_wrapper thrv_text_element" data-css="tve-u-5f2854320c1da2"><p><!--EndFragment-->
-<!--EndFragment--></p></div></div>
-</div><div class="thrv_wrapper thrv-page-section tve-height-update" data-inherit-lp-settings="1">
-	<div class="tve-page-section-out"></div>
-	<div class="tve-page-section-in" data-css="tve-u-1925c4c9d38"><div class="thrv_wrapper thrv-button thrv-button-v2 tcb-local-vars-root" data-css="tve-u-5f2854320c1db1" data-button-size="s">
-	<div class="thrive-colors-palette-config" style="display: none !important"></div>
-	<a href="#tve-jump-171ee6db546" class="tcb-button-link tve-jump-scroll" jump-animation="smooth">
-		<span class="tcb-button-texts"><span class="tcb-button-text thrv-inline-text">Ok, voglio sapere il costo</span></span>
-	</a>
-</div></div>
-</div><div data-inherit-lp-settings="1" data-match-lp-colors="1" class="thrv_wrapper thrv-page-section thrv-lp-block tcb-local-vars-root" data-css="tve-u-5f2854320c1ed0" style="" tcb-template-name="Benefits Area Block 01" tcb-template-id="55917" data-keep-css_id="1"><div class="thrive-group-edit-config" style="display: none !important"></div><div class="thrive-local-colors-config" style="display: none !important"></div>
-	<div class="tve-page-section-out" data-css="tve-u-5f2854320c1ee6" data-ct-name="Offset Corner 02" data-ct="fancydivider-37962" data-element-name="Fancy Divider"></div>
-	<div class="tve-page-section-in   tve_empty_dropzone" data-css="tve-u-5f2854320c1ef6"><div class="thrv_wrapper thrv_text_element" data-tag="h2" data-css="tve-u-5f2854320c1f07" style=""><h2 class="" style="text-align: center;"><!--StartFragment--><!--StartFragment--><!--StartFragment--><!--StartFragment-->È ideale per te <strong>SE:</strong><!--EndFragment--><!--EndFragment--><!--EndFragment--><!--EndFragment--></h2></div><div class="thrv_wrapper thrv-columns dynamic-group-k3fwgjvh" data-css="tve-u-5f2854320c1f17" style="--tcb-col-el-width: 1400;"><div class="tcb-flex-row tcb--cols--2" data-css="tve-u-5f2854320c1f27"><div class="tcb-flex-col"><div class="tcb-col dynamic-group-k3fwgi1n"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad tve_evt_manager_listen tve_et_tve-viewport tve_ea_thrive_animation tve_anim_slide_left dynamic-group-k3fwgfeg" data-css="tve-u-5f2854320c1f32" data-tcb-events="__TCB_EVENT_[{&quot;t&quot;:&quot;tve-viewport&quot;,&quot;config&quot;:{&quot;anim&quot;:&quot;slide_left&quot;,&quot;loop&quot;:0},&quot;a&quot;:&quot;thrive_animation&quot;}]_TNEVE_BCT__" style="padding-right: 50px !important;">
-	<div class="tve-content-box-background" data-css="tve-u-5f2854320c1f48"></div>
-	<div class="tve-cb" data-css="tve-u-5f2854320c1f58" style=""><div class="tcb-clear" data-css="tve-u-5f2854320c1f61"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad dynamic-group-k3fwfuy2" data-css="tve-u-5f2854320c1f70">
-	<div class="tve-content-box-background" data-css="tve-u-5f2854320c1f81"></div>
-	<div class="tve-cb" data-css="tve-u-5f2854320c1f98"></div>
-</div></div><div class="thrv_wrapper thrv_text_element dynamic-group-k3fwfyjh" data-css="tve-u-5f2854320c1fb1" data-tag="h3"><h3 class=""><strong>Sei sempre stato negato con i computer<!--EndFragment--></strong></h3></div><div class="thrv_wrapper thrv_text_element dynamic-group-k3fwg1vr" data-css="tve-u-5f2854320c1fc4"><p data-css="tve-u-5f2854320c1fd3"><!--StartFragment-->Non ti sei mai sentito in grado di gestire nulla di complicato e desideri iniziare a mettere in piedi qualcosa che lavori <strong>per</strong> te, non <strong>contro</strong>, di te.<br><!--EndFragment--></p></div></div>
-</div><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad tve_evt_manager_listen tve_et_tve-viewport tve_ea_thrive_animation tve_anim_slide_top dynamic-group-k3fwgfeg" data-css="tve-u-5f2854320c1fe6" data-tcb-events="__TCB_EVENT_[{&quot;t&quot;:&quot;tve-viewport&quot;,&quot;config&quot;:{&quot;anim&quot;:&quot;slide_top&quot;,&quot;loop&quot;:0},&quot;a&quot;:&quot;thrive_animation&quot;}]_TNEVE_BCT__" style="padding-right: 50px !important;">
-	<div class="tve-content-box-background" data-css="tve-u-5f2854320c1f48"></div>
-	<div class="tve-cb" data-css="tve-u-5f2854320c1ff7" style=""><div class="tcb-clear" data-css="tve-u-5f2854320c2001"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad dynamic-group-k3fwfuy2" data-css="tve-u-5f2854320c2015">
-	<div class="tve-content-box-background" data-css="tve-u-5f2854320c1f81"></div>
-	<div class="tve-cb" data-css="tve-u-5f2854320c1f98"></div>
-</div></div><div class="thrv_wrapper thrv_text_element dynamic-group-k3fwfyjh" data-css="tve-u-5f2854320c1fb1" data-tag="h3"><h3 class=""><strong>Hai già visto come lavoro e desideri avere anche tu alcuni degli strumenti che utilizzo</strong></h3></div><div class="thrv_wrapper thrv_text_element dynamic-group-k3fwg1vr" data-css="tve-u-5f2854320c2023"><p data-css="tve-u-5f2854320c2034">Dentro il videocorso trovi un elenco completo di tutti gli strumenti che utilizzo, compresi consigli e possibilità di farmi domande, sul documento che troverai.</p></div></div>
-</div></div></div><div class="tcb-flex-col"><div class="tcb-col dynamic-group-k3fwgi1n" data-css="tve-u-5f2854320c2044"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad tve_evt_manager_listen tve_et_tve-viewport tve_ea_thrive_animation tve_anim_slide_top dynamic-group-k3fwgfeg" data-css="tve-u-5f2854320c2057" data-tcb-events="__TCB_EVENT_[{&quot;t&quot;:&quot;tve-viewport&quot;,&quot;config&quot;:{&quot;anim&quot;:&quot;slide_top&quot;,&quot;loop&quot;:0},&quot;a&quot;:&quot;thrive_animation&quot;}]_TNEVE_BCT__" style="padding-right: 50px !important;">
-	<div class="tve-content-box-background" data-css="tve-u-5f2854320c1f48"></div>
-	<div class="tve-cb" data-css="tve-u-5f2854320c2060" style=""><div class="tcb-clear" data-css="tve-u-5f2854320c2073"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad dynamic-group-k3fwfuy2" data-css="tve-u-5f2854320c2086">
-	<div class="tve-content-box-background" data-css="tve-u-5f2854320c1f81"></div>
-	<div class="tve-cb" data-css="tve-u-5f2854320c1f98"></div>
-</div></div><div class="thrv_wrapper thrv_text_element dynamic-group-k3fwfyjh" data-css="tve-u-5f2854320c1fb1" data-tag="h3"><h3 class=""><strong>Vuoi prepararti per il lavoro da remoto<!--EndFragment--></strong></h3></div><div class="thrv_wrapper thrv_text_element dynamic-group-k3fwg1vr" data-css="tve-u-5f2854320c2023"><p data-css="tve-u-5f2854320c2034"><!--StartFragment-->Dopo i recenti eventi (COVID-19) molti si sono informati su come potersi "arrangiare" lavorando online, senza il contatto fisico.<br>In questo percorso ti spiego come mettere in piedi tuttofacilmente.<!--EndFragment--></p></div></div>
-</div><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad tve_evt_manager_listen tve_et_tve-viewport tve_ea_thrive_animation tve_anim_slide_left dynamic-group-k3fwgfeg" data-css="tve-u-5f2854320c2097" data-tcb-events="__TCB_EVENT_[{&quot;t&quot;:&quot;tve-viewport&quot;,&quot;config&quot;:{&quot;anim&quot;:&quot;slide_left&quot;,&quot;loop&quot;:0},&quot;a&quot;:&quot;thrive_animation&quot;}]_TNEVE_BCT__" style="padding-right: 50px !important;">
-	<div class="tve-content-box-background" data-css="tve-u-5f2854320c1f48"></div>
-	<div class="tve-cb" data-css="tve-u-5f2854320c20a6" style=""><div class="tcb-clear" data-css="tve-u-5f2854320c20b2"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad dynamic-group-k3fwfuy2" data-css="tve-u-5f2854320c20c3">
-	<div class="tve-content-box-background" data-css="tve-u-5f2854320c1f81"></div>
-	<div class="tve-cb" data-css="tve-u-5f2854320c1f98"></div>
-</div></div><div class="thrv_wrapper thrv_text_element dynamic-group-k3fwfyjh" data-css="tve-u-5f2854320c1fb1" data-tag="h3"><h3 class=""><strong>Non hai voglia di impegnarti troppo<!--EndFragment--></strong></h3></div><div class="thrv_wrapper thrv_text_element dynamic-group-k3fwg1vr" data-css="tve-u-5f2854320c20e4"><p data-css="tve-u-5f2854320c20f2">È solo richiesto un impegno iniziale per impostare tutto quanto, poi funziona tutto da sè e ti servirà un minimo sforzo.</p></div></div>
-</div></div></div></div></div></div>
-</div><div data-inherit-lp-settings="1" data-match-lp-colors="1" class="thrv_wrapper thrv-page-section thrv-lp-block tcb-local-vars-root" style="" data-css="tve-u-5f2854320c2106" tcb-template-name="Call To Action Area Block 03" tcb-template-id="56143" data-keep-css_id="1" id="tve-jump-171ee6db546"><div class="thrive-group-edit-config" style="display: none !important"></div><div class="thrive-local-colors-config" style="display: none !important"></div>
-	<div class="tve-page-section-out" data-css="tve-u-5f2854320c2118" style="" data-ct-name="Waves 01" data-ct="fancydivider-36510" data-element-name="Fancy Divider" data-clip-id="62308c21bd23c"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 97.36" data-position="bottom" data-ct="37830" decoration-type="Offset Corner 01" class="svg-shape-bottom" width="100%" preserveAspectRatio="none" data-css="tve-u-5f2854320c2123" data-changed-dir="1" style="height: 48px;"><defs><style></style></defs><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><path class="p16eb2b5ef98" d="M256.46,83.31a51,51,0,0,1-8,.47A52,52,0,0,1,233,81.92L0,17.32v80H1000V0Z"></path></g></g></svg><svg width="0" height="0" class="tve-decoration-svg"><defs><clipPath id="clip-top-62308c21bd23c" class="decoration-clip clip-path-top" clipPathUnits="objectBoundingBox" data-screen="" decoration-type="divider" pointer-width="5" pointer-height="5" style="zigzag"><polygon points="0 1, 1 1,1 0.05, 0.975 0, 0.95 0.05, 0.925 0, 0.9 0.05, 0.875 0, 0.85 0.05, 0.825 0, 0.8 0.05, 0.775 0, 0.75 0.05, 0.725 0, 0.7 0.05, 0.675 0, 0.6499999999999999 0.05, 0.625 0, 0.6 0.05, 0.575 0, 0.55 0.05, 0.5249999999999999 0, 0.5 0.05, 0.475 0, 0.44999999999999996 0.05, 0.42499999999999993 0, 0.3999999999999999 0.05, 0.375 0, 0.35 0.05, 0.32499999999999996 0, 0.29999999999999993 0.05, 0.2749999999999999 0, 0.25 0.05, 0.22499999999999998 0, 0.19999999999999996 0.05, 0.17499999999999993 0, 0.1499999999999999 0.05, 0.125 0, 0.09999999999999998 0.05, 0.07499999999999996 0, 0.04999999999999993 0.05, 0.02499999999999991 0, 0 0.05, 0 0"></polygon></clipPath></defs></svg></div>
-	<div class="tve-page-section-in   tve_empty_dropzone" data-css="tve-u-5f2854320c2145" style="z-index: auto;"><div class="thrv_wrapper thrv-columns" style="--tcb-col-el-width: 1400;" data-css="tve-u-5f2854320c2154"><div class="tcb-flex-row tcb-resized tcb--cols--2" data-css="tve-u-5f2854320c2168" style=""><div class="tcb-flex-col" data-css="tve-u-5f2854320c2174" style=""><div class="tcb-col"><div class="thrv_wrapper tve_image_caption tcb-mobile-hidden" data-css="tve-u-5f2854320c2183" style=""><span class="tve_image_frame" style=""><img data-opt-id=643567667  fetchpriority="high" decoding="async" class="tve_image wp-image-143" alt="Marco Munich Consulente Marketing per Coach, Operatori Olistici e Terapeuti" data-id="143" width="650" data-init-width="600" height="434" data-init-height="401" title="Marco Munich Consulente Marketing per Coach, Operatori Olistici e Terapeuti" src="https://mlfqwn4vwjlv.i.optimole.com/w:650/h:434/q:mauto/g:sm/f:best/ig:avif/https://marcomunich.com/wp-content/uploads/2019/04/foto_mia.jpg" data-width="650" data-height="434" style="aspect-ratio: auto 600 / 401;" ml-d="-132" data-css="tve-u-5f2854320c2195" center-h-d="true" ml-t="-60" ml-m="-43" loading="lazy" srcset="https://mlfqwn4vwjlv.i.optimole.com/w:600/h:401/q:mauto/g:sm/f:best/ig:avif/https://marcomunich.com/wp-content/uploads/2019/04/foto_mia.jpg 600w, https://mlfqwn4vwjlv.i.optimole.com/w:300/h:201/q:mauto/g:sm/f:best/ig:avif/https://marcomunich.com/wp-content/uploads/2019/04/foto_mia.jpg 300w" sizes="auto, (max-width: 650px) 100vw, 650px" /><span class="tve-image-overlay" style=""></span></span></div></div></div><div class="tcb-flex-col" data-css="tve-u-5f2854320c21a8" style=""><div class="tcb-col" style="" data-css="tve-u-5f2854320c21b1"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad" style="" data-css="tve-u-5f2854320c21c1">
-	<div class="tve-content-box-background"></div>
-	<div class="tve-cb" data-css="tve-u-5f2854320c21e1"><div class="thrv_wrapper thrv_text_element" style="" data-css="tve-u-5f2854320c21f0"><h2 class="" data-css="tve-u-5f2854320c2201">Se senti che ti risuona,&nbsp;<strong>inizia ora</strong><strong>! <span style="text-decoration: underline;">IL CORSO è GRATUITO</span></strong></h2></div><div class="thrv_wrapper thrv_text_element" data-css="tve-u-5f2854320c2212"><p data-css="tve-u-5f2854320c2224">Quello che riceverai:<br><br>✓Accesso alla risorsa con l'elenco di tutte le piattaforme e le informazioni da sapere per partire e dove potrai fare domande commentando⁣ nella risorsa stessa.<br><br>✓2 Video lezioni⁣ di quasi due ore&nbsp;</p><p data-css="tve-u-5f2854320c2224"><em><span style="text-decoration: underline;"><strong>Tutto Il materiale è in descrizione sul video youtube.</strong></span></em></p></div><div class="thrv_wrapper thrv-button thrv-button-v2 tcb-local-vars-root tcb-with-icon" data-css="tve-u-191fae33fde" data-button-size="s"> <div class="thrive-colors-palette-config" style="display: none !important"></div> <a href="https://www.youtube.com/playlist?list=PLKgzAWOyM8xtciXhSPbj32fMzEXbYPUuC" class="tcb-button-link tcb-plain-text" target="_blank"><span class="tcb-button-icon"> <div class="thrv_wrapper thrv_icon tve_no_drag tve_no_icons tcb-icon-inherit-style tcb-local-vars-root tcb-icon-display" data-css="tve-u-191fae3a5d9" style=""><svg class="tcb-icon tcb-local-vars-root" viewBox="0 0 576 512" data-id="icon-youtube-brands" data-name=""><path d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"></path></svg></div> </span> <span class="tcb-button-texts"><span class="tcb-button-text thrv-inline-text" data-css="tve-u-191fae3a5da" style=""><strong>Inizia ora su YouTube</strong></span><span class="tcb-secondary-text thrv-inline-text tve-froala fr-box fr-basic" style="" data-css="tve-u-191fae3a5db"></span></span> </a> </div><div class="thrv_wrapper thrv-credit" data-style="style1" data-cards="visa,masterCard,americanExpress" style="" data-css="tve-u-5f2854320c2353"><svg viewBox="0 0 72 52" class="tcb-visa-card"><g><path class="visa-style-1-st0" d="M7.6,0.9h56.7c3.7,0,6.6,3,6.6,6.6v36.7c0,3.7-3,6.6-6.6,6.6H7.6c-3.7,0-6.6-3-6.6-6.6V7.5C1,3.9,4,0.9,7.6,0.9z"></path><path class="visa-style-1-st1" d="M24.8,33.8h-4.1l-3.1-11.6c-0.1-0.5-0.5-1-0.9-1.2c-1.1-0.6-2.4-1-3.7-1.2v-0.4h6.6c0.9,0,1.6,0.7,1.7,1.5l1.6,8.4l4.1-9.8h4L24.8,33.8z M33.1,33.8h-3.8l3.2-14.5h3.8L33.1,33.8z M41.2,23.3c0.1-0.8,0.8-1.2,1.6-1.2c1.2-0.1,2.6,0.1,3.7,0.7l0.7-3.1c-1.1-0.4-2.4-0.7-3.5-0.7c-3.7,0-6.4,2-6.4,4.8c0,2.1,1.9,3.2,3.3,3.9c1.5,0.7,2,1.1,1.9,1.8c0,1-1.1,1.5-2.3,1.5c-1.4,0-2.7-0.3-4-0.9l-0.7,3.1c1.4,0.6,2.8,0.8,4.2,0.8C44,34,46.6,32,46.6,29C46.6,25.2,41.2,25,41.2,23.3L41.2,23.3z M60,33.8l-3.1-14.5h-3.3c-0.7,0-1.4,0.4-1.6,1.1l-5.6,13.4h4l0.8-2.1H56l0.5,2.1H60z M54.2,23.2l1.1,5.5h-3.2L54.2,23.2z"></path></g></svg><svg viewBox="0 0 72 52" class="tcb-masterCard-card"><g transform="translate(337.000000, 0.000000)"><path class="masterCard-style-1-st0" d="M-329.4,0.9h56.7c3.7,0,6.6,3,6.6,6.6v36.7c0,3.7-3,6.6-6.6,6.6h-56.7c-3.7,0-6.6-3-6.6-6.6V7.5C-336,3.9-333,0.9-329.4,0.9z"></path><g transform="translate(12.526316, 11.194030)"><path class="masterCard-style-1-st1" d="M-313.2,4.5c-2.4-2.1-5.5-3.3-8.8-3.3c-7.5,0-13.6,6.2-13.6,13.8s6.1,13.8,13.6,13.8c3.4,0,6.5-1.2,8.8-3.3c2.4,2.1,5.5,3.3,8.8,3.3c7.5,0,13.6-6.2,13.6-13.8s-6.1-13.8-13.6-13.8C-307.7,1.2-310.8,2.4-313.2,4.5z"></path><path class="masterCard-style-1-st2" d="M-313.2,4.5c-2.4-2.1-5.5-3.3-8.8-3.3c-7.5,0-13.6,6.2-13.6,13.8s6.1,13.8,13.6,13.8c3.4,0,6.5-1.2,8.8-3.3c-2.9-2.5-4.8-6.3-4.8-10.5S-316.1,7-313.2,4.5z"></path><path class="masterCard-style-1-st3" d="M-313.2,25.5c2.4,2.1,5.5,3.3,8.8,3.3c7.5,0,13.6-6.2,13.6-13.8s-6.1-13.8-13.6-13.8c-3.4,0-6.5,1.2-8.8,3.3c2.9,2.5,4.8,6.3,4.8,10.5S-310.2,23-313.2,25.5z"></path></g></g></svg><svg viewBox="0 0 72 52" class="tcb-americanExpress-card"><g><g><g transform="translate(169.000000, 0.000000)"><path class="americanExpress-style-1-st0" d="M-161.4,0.9h56.7c3.7,0,6.6,3,6.6,6.6v36.7c0,3.7-3,6.6-6.6,6.6h-56.7c-3.7,0-6.6-3-6.6-6.6V7.5C-168,3.9-165,0.9-161.4,0.9z"></path></g></g><path class="americanExpress-style-1-st1" d="M31,28.2l-3.8-8.4h-4.6v11.9l-5.4-11.9h-3.8L8,32.3h3.2l1.1-2.7h6l1.1,2.7h6.2v-9.2l4.1,9.2h2.7l4.1-8.9v8.9h3V20.1h-4.6L31,28.5L31,28.2z M15.4,26.9h-1.9l1.9-4.3l0,0l2,4.3L15.4,26.9z"></path><path class="americanExpress-style-1-st1" d="M58.4,26l2.2-2.4l3.2-3.5H60l-3.5,3.8L53,20.1H41.3v12.2H53l3.5-4.1l3.5,4.1h3.8l-3.2-3.8L58.4,26z M51.1,29.8h-6.8v-2.4h6.8V25h-6.8v-2.2h6.8l3.5,3.2L51.1,29.8z"></path></g></svg></div></div>
-</div></div></div></div></div></div>
-</div><div data-inherit-lp-settings="1" data-match-lp-colors="1" class="thrv_wrapper thrv-page-section thrv-lp-block tcb-local-vars-root" data-css="tve-u-5f2854320c2368" style="" tcb-template-name="Hero Area Block 01" tcb-template-id="55941" data-keep-css_id="1"><div class="thrive-group-edit-config" style="display: none !important"></div><div class="thrive-local-colors-config" style="display: none !important"></div>
-<div class="tve-page-section-out" data-ct-name="Offset Corner 01" data-ct="fancydivider-37830" data-element-name="Fancy Divider" data-css="tve-u-5f2854320c2375" style="background-image: linear-gradient(45deg, rgb(119, 128, 217) 0%, var(--tcb-tpl-color-1) 48%, var(--tcb-tpl-color-2) 87%), url(&quot;https://mlfqwn4vwjlv.i.optimole.com/w:auto/h:auto/q:mauto/g:sm/f:best/ig:avif/https://marcomunich.com/wp-content/uploads/tcb_content_templates//images/Smart_Consultation_Heroimg.jpg&quot;)  !important; background-size: auto, cover !important; background-position: 50% 50%, 50% 50% !important; background-attachment: scroll, scroll !important; background-repeat: no-repeat, no-repeat !important; --background-image:linear-gradient(45deg, rgb(119, 128, 217) 0%, var(--tcb-tpl-color-1) 48%, var(--tcb-tpl-color-2) 87%), url(&quot;https://mlfqwn4vwjlv.i.optimole.com/w:auto/h:auto/q:mauto/g:sm/f:best/ig:avif/https://marcomunich.com/wp-content/uploads/tcb_content_templates//images/Smart_Consultation_Heroimg.jpg&quot;)  !important; --background-size:auto,cover  !important; --background-position:50% 50%,50% 50%  !important; --background-attachment:scroll, scroll  !important; --background-repeat:no-repeat, no-repeat  !important;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 97.36" data-position="bottom" data-ct="37830" decoration-type="Offset Corner 01" class="svg-shape-bottom" width="100%" preserveAspectRatio="none" data-css="tve-u-5f2854320c2383" style=""><defs><style></style></defs><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><path class="p1724ba1ac57" d="M256.46,83.31a51,51,0,0,1-8,.47A52,52,0,0,1,233,81.92L0,17.32v80H1000V0Z"></path></g></g></svg></div>
-<div class="tve-page-section-in   tve_empty_dropzone" data-css="tve-u-5f2854320c23a9" style=""><div class="thrv_wrapper thrv_text_element" data-css="tve-u-5f2854320c23b3" data-tag="h1" style=""><!--StartFragment--><h2 class="" data-css="tve-u-5f2854320c23d7" style=""><span style="text-decoration: underline;">Vuoi che mi dedichi <strong>solo a te</strong>?</span></h2><h2 class="" style="" data-css="tve-u-5f2854320c23e7"><span data-css="tve-u-5f2854320c23f0">Se desideri puoi fare il percorso <strong>Privatamente</strong> </span>☟</h2><!--EndFragment--></div><div class="thrv_wrapper thrv_text_element" data-css="tve-u-5f2854320c2405" style=""><p data-css="tve-u-5f2854320c2411"><!--StartFragment--><!--EndFragment-->★ Vedremo insieme quanto è facile fare tutto quanto<br><br>★ Scopriremo le due metodologie di impatto nel pubblico e lo sforzo che serve, in entrambe le casistiche.<br><br>★ La mappa di quello che va fatto e il "tragitto" che il pubblico fa naturalmente, senza sforzo.<br><br>★ Un elenco completo di tutti gli strumenti che utilizzo io stesso, gratuitamente con video specifici <br><br><br><strong><span style="text-decoration: underline;">Quello che riceverai:<br></span></strong></p><p data-css="tve-u-5f2854320c2411"><br></p><p data-css="tve-u-5f2854320c2411">✓3 Sessioni dove rivedremo insieme tutto quanto e andiamo a fare l'installazione di tutte le piattaforme, <strong>insieme</strong></p><p data-css="tve-u-5f2854320c2411"><br></p><p data-css="tve-u-5f2854320c2411">✓Accesso alla risorsa con l'elenco di tutte le piattaforme e le informazioni da sapere per partire e dove potrai fare domande commentando⁣ nella risorsa stessa.<br><br>✓2 Video lezioni⁣ per quasi due ore <br><br>✓60 Minuti di Call in regalo da utilizzare nel percorso di Creazione del Messaggio Autentico (trovi le info dentro la risorsa)</p><p data-css="tve-u-5f2854320c2411"><br></p><p data-css="tve-u-5f2854320c2411"><em><strong><span style="text-decoration: underline;">Il materiale arriva subito via mail pronto per essere visto su Youtube o sull'area membri del mio sito, per le 3 consulenze, entro 24h ti contatterò con un link per la prenotazione della call.</span></strong></em></p></div><div class="tcb-clear" data-css="tve-u-5f2854320c2476"><div class="thrv_wrapper thrv-button tcb-with-icon tcb-flip tve_ea_thrive_animation tve_anim_sweep_to_right" data-tcb_hover_state_parent="" style="margin-bottom: 22px !important;" data-css="tve-u-5f2854320c2486" data-button-size-d="l">
-	<a href="https://wa.link/qracm2" class="tcb-button-link tve_evt_manager_listen tve_et_mouseover" target="_blank" data-tcb-events="__TCB_EVENT_[{&quot;t&quot;:&quot;mouseover&quot;,&quot;config&quot;:{&quot;anim&quot;:&quot;sweep_to_right&quot;,&quot;loop&quot;:1},&quot;a&quot;:&quot;thrive_animation&quot;}]_TNEVE_BCT__" style=""><span class="tcb-button-icon">
-	<div class="thrv_wrapper thrv_icon tve_no_drag tve_no_icons tcb-icon-inherit-style tcb-icon-display" data-css="tve-u-5f2854320c2498" style=""><svg class="tcb-icon" viewBox="0 0 512 512" data-id="icon-stars-solid" data-name="">
-            <path d="M336 160l26.7-53.3L416 80l-53.3-26.7L336 0l-26.7 53.3L256 80l53.3 26.7L336 160zm144 32l-16-32-16 32-32 16 32 16 16 32 16-32 32-16-32-16zm-115.7 75.3L259.5 252l-46.9-95.2c-8.4-17-32.7-17.2-41.2 0L124.5 252 19.7 267.3C.9 270-6.7 293.2 7 306.5l75.9 74-18 104.6c-3.2 18.9 16.7 33.1 33.3 24.2l93.8-49.4 93.8 49.4c16.7 8.8 36.5-5.3 33.3-24.2l-17.9-104.6 75.9-74c13.6-13.3 6-36.5-12.8-39.2z"></path>
-        </svg></div>
-</span>
+  .green-page .btn-outline-green {
+    display: inline-block;
+    background: transparent;
+    color: #16A34A;
+    padding: 14px 32px;
+    font-weight: 700;
+    font-size: 15px;
+    text-decoration: none;
+    border-radius: 4px;
+    border: 2px solid #16A34A;
+    transition: all .2s;
+  }
+  .green-page .btn-outline-green:hover { background: #16A34A; color: #fff; opacity: 1; }
 
-		<span class="tcb-button-texts"><span class="tcb-button-text thrv-inline-text" data-css="tve-u-5f2854320c24a3" style="" data-tcb_hover_state_parent=""><strong>3 Sessioni - 300€</strong></span><span class="tcb-secondary-text thrv-inline-text" style="" data-css="tve-u-5f2854320c24b2">Acquistabili anche in 2 rate da 150€</span></span>
-	</a>
-</div></div><div class="thrv_wrapper thrv_text_element"><p>Scrivimi <a href="https://m.me/marketingperlifecoach" class="" style="outline: none;">direttamente qui</a> se vuoi acquistare in due rate da 150€</p></div><div class="thrv_wrapper thrv-credit" data-style="style1" data-cards="visa,masterCard,americanExpress" style="" data-css="tve-u-5f2854320c24d5"><svg viewBox="0 0 72 52" class="tcb-visa-card"><g><path class="visa-style-1-st0" d="M7.6,0.9h56.7c3.7,0,6.6,3,6.6,6.6v36.7c0,3.7-3,6.6-6.6,6.6H7.6c-3.7,0-6.6-3-6.6-6.6V7.5C1,3.9,4,0.9,7.6,0.9z"></path><path class="visa-style-1-st1" d="M24.8,33.8h-4.1l-3.1-11.6c-0.1-0.5-0.5-1-0.9-1.2c-1.1-0.6-2.4-1-3.7-1.2v-0.4h6.6c0.9,0,1.6,0.7,1.7,1.5l1.6,8.4l4.1-9.8h4L24.8,33.8z M33.1,33.8h-3.8l3.2-14.5h3.8L33.1,33.8z M41.2,23.3c0.1-0.8,0.8-1.2,1.6-1.2c1.2-0.1,2.6,0.1,3.7,0.7l0.7-3.1c-1.1-0.4-2.4-0.7-3.5-0.7c-3.7,0-6.4,2-6.4,4.8c0,2.1,1.9,3.2,3.3,3.9c1.5,0.7,2,1.1,1.9,1.8c0,1-1.1,1.5-2.3,1.5c-1.4,0-2.7-0.3-4-0.9l-0.7,3.1c1.4,0.6,2.8,0.8,4.2,0.8C44,34,46.6,32,46.6,29C46.6,25.2,41.2,25,41.2,23.3L41.2,23.3z M60,33.8l-3.1-14.5h-3.3c-0.7,0-1.4,0.4-1.6,1.1l-5.6,13.4h4l0.8-2.1H56l0.5,2.1H60z M54.2,23.2l1.1,5.5h-3.2L54.2,23.2z"></path></g></svg><svg viewBox="0 0 72 52" class="tcb-masterCard-card"><g transform="translate(337.000000, 0.000000)"><path class="masterCard-style-1-st0" d="M-329.4,0.9h56.7c3.7,0,6.6,3,6.6,6.6v36.7c0,3.7-3,6.6-6.6,6.6h-56.7c-3.7,0-6.6-3-6.6-6.6V7.5C-336,3.9-333,0.9-329.4,0.9z"></path><g transform="translate(12.526316, 11.194030)"><path class="masterCard-style-1-st1" d="M-313.2,4.5c-2.4-2.1-5.5-3.3-8.8-3.3c-7.5,0-13.6,6.2-13.6,13.8s6.1,13.8,13.6,13.8c3.4,0,6.5-1.2,8.8-3.3c2.4,2.1,5.5,3.3,8.8,3.3c7.5,0,13.6-6.2,13.6-13.8s-6.1-13.8-13.6-13.8C-307.7,1.2-310.8,2.4-313.2,4.5z"></path><path class="masterCard-style-1-st2" d="M-313.2,4.5c-2.4-2.1-5.5-3.3-8.8-3.3c-7.5,0-13.6,6.2-13.6,13.8s6.1,13.8,13.6,13.8c3.4,0,6.5-1.2,8.8-3.3c-2.9-2.5-4.8-6.3-4.8-10.5S-316.1,7-313.2,4.5z"></path><path class="masterCard-style-1-st3" d="M-313.2,25.5c2.4,2.1,5.5,3.3,8.8,3.3c7.5,0,13.6-6.2,13.6-13.8s-6.1-13.8-13.6-13.8c-3.4,0-6.5,1.2-8.8,3.3c2.9,2.5,4.8,6.3,4.8,10.5S-310.2,23-313.2,25.5z"></path></g></g></svg><svg viewBox="0 0 72 52" class="tcb-americanExpress-card"><g><g><g transform="translate(169.000000, 0.000000)"><path class="americanExpress-style-1-st0" d="M-161.4,0.9h56.7c3.7,0,6.6,3,6.6,6.6v36.7c0,3.7-3,6.6-6.6,6.6h-56.7c-3.7,0-6.6-3-6.6-6.6V7.5C-168,3.9-165,0.9-161.4,0.9z"></path></g></g><path class="americanExpress-style-1-st1" d="M31,28.2l-3.8-8.4h-4.6v11.9l-5.4-11.9h-3.8L8,32.3h3.2l1.1-2.7h6l1.1,2.7h6.2v-9.2l4.1,9.2h2.7l4.1-8.9v8.9h3V20.1h-4.6L31,28.5L31,28.2z M15.4,26.9h-1.9l1.9-4.3l0,0l2,4.3L15.4,26.9z"></path><path class="americanExpress-style-1-st1" d="M58.4,26l2.2-2.4l3.2-3.5H60l-3.5,3.8L53,20.1H41.3v12.2H53l3.5-4.1l3.5,4.1h3.8l-3.2-3.8L58.4,26z M51.1,29.8h-6.8v-2.4h6.8V25h-6.8v-2.2h6.8l3.5,3.2L51.1,29.8z"></path></g></svg></div></div>
-</div><div id="landingpage-bottom-section" class="landingpage-section bottom-section placeholder-section hide-section"><div class="section-background"></div><div class="section-content"></div></div><div id="thrive-footer" class="thrv_wrapper thrv_symbol thrive-shortcode thrv_footer tve_no_drag thrv_symbol_180" data-id="180" data-selector=".thrv_symbol_180" data-shortcode="thrive_footer" data-tcb-elem-type="footer" data-element-name="Footer"><div class="thrive-shortcode-html thrive-symbol-shortcode " data-symbol-id="180"><style type="text/css" id="tcb-style-base-tcb_symbol-180"  onLoad="typeof window.lightspeedOptimizeStylesheet === 'function' && window.lightspeedOptimizeStylesheet()" class="tcb-lightspeed-style">.tve-custom-menu-inside{z-index:8;}.thrv-page-section{position:relative;box-sizing:border-box !important;}.thrv-page-section .tve-page-section-out{position:absolute;width:100%;height:100%;left:0px;top:0px;box-sizing:border-box;transition:box-shadow 0.5s ease 0s,-webkit-box-shadow 0.5s ease 0s;overflow:hidden;}.thrv-page-section .tve-page-section-in{box-sizing:border-box;margin-right:auto;margin-left:auto;position:relative;z-index:1;min-height:40px;}.tve-page-section-in > .thrv_wrapper:first-child{margin-top:0px;}.tve-page-section-in > .thrv_wrapper:last-child{margin-bottom:0px;}.thrv_text_element a:not(.tcb-button-link){font-size:inherit;}.thrv_text_element{overflow-wrap:break-word;}.thrive-symbol-shortcode{position:relative;}.thrv_footer .thrive-symbol-shortcode{box-sizing:border-box;margin-right:auto;margin-left:auto;min-height:40px;}html{text-rendering:auto !important;}html body{text-rendering:auto !important;}body.tcb_symbol-template-default::before{content:none;}.thrv_wrapper{margin-top:20px;margin-bottom:20px;padding:1px;}.thrv_wrapper div{box-sizing:content-box;}.thrv_symbol .thrv_wrapper:not(.thrv_icon){box-sizing:border-box !important;}.thrv_wrapper.thrv_text_element,.thrv_wrapper.thrv-page-section{margin:0px;}p{font-size:1em;}.tvd-toast{-webkit-box-pack:justify;justify-content:space-between;}.tvd-toast.tve-fe-message{top:50px;width:60%;padding:0px;color:rgb(0,0,0);max-width:500px;position:fixed;z-index:9999993;left:50%;}.tvd-toast.tve-fe-message .tve-toast-message{position:relative;left:-50%;background:rgb(255,255,255);box-shadow:rgb(167,167,167) 0px 0px 15px 0px;}.tvd-toast.tve-fe-message .tve-toast-icon-container{display:inline-block;width:50px;background:green;color:rgb(255,255,255);height:100%;position:absolute;}.tvd-toast.tve-fe-message .tve-toast-message-container{padding:20px 10px 20px 70px;margin:auto 0px;font-family:Roboto,sans-serif;font-size:16px;}.tvd-toast.tve-fe-message span{text-align:center;display:flex;-webkit-box-pack:center;justify-content:center;-webkit-box-orient:vertical;-webkit-box-direction:normal;flex-direction:column;-webkit-box-align:center;align-items:center;min-height:50px;height:100%;width:100%;}.thrv_symbol.thrv_footer{width:100%;position:relative;box-sizing:border-box;}.thrv_symbol.thrv_footer .thrive-symbol-shortcode{margin:0px auto;position:relative;}.symbol-section-in{margin:0px auto;position:relative;z-index:1;box-sizing:border-box;}.symbol-section-in:empty::before{font-family:sans-serif;line-height:40px;}.symbol-section-in::after,.symbol-section-in::before{content:"";display:block;overflow:auto;}.thrive-shortcode-content a{color:inherit;}.symbol-section-out{position:absolute;width:100%;height:100%;left:0px;top:0px;overflow:hidden;box-sizing:border-box !important;}.thrv_wrapper.thrv_text_element{padding:1px;}@media (max-width:767px){html{overflow-x:hidden !important;}html,body{max-width:100vw !important;}}@media screen and (max-device-width:480px){body{text-size-adjust:none;}}</style><style class='tve-symbol-custom-style'>@media (min-width: 300px){.thrv_symbol_180 [data-css="tve-u-164d09209b1"]{max-width: 1069px;text-align: center;}.thrv_symbol_180 [data-css="tve-u-164d0923206"]{background-color: rgba(242,242,242,0) !important;}.thrv_symbol_180 [data-css="tve-u-164d0927213"]{display: block;padding: 30px 20px !important;z-index: 0 !important;}.thrv_symbol_180 [data-css="tve-u-164d09209b1"] p,.thrv_symbol_180 [data-css="tve-u-164d09209b1"] li,.thrv_symbol_180 [data-css="tve-u-164d09209b1"] blockquote,.thrv_symbol_180 [data-css="tve-u-164d09209b1"] address,.thrv_symbol_180 [data-css="tve-u-164d09209b1"] .tcb-plain-text,.thrv_symbol_180 [data-css="tve-u-164d09209b1"] label,.thrv_symbol_180 [data-css="tve-u-164d09209b1"] h1,.thrv_symbol_180 [data-css="tve-u-164d09209b1"] h2,.thrv_symbol_180 [data-css="tve-u-164d09209b1"] h3,.thrv_symbol_180 [data-css="tve-u-164d09209b1"] h4,.thrv_symbol_180 [data-css="tve-u-164d09209b1"] h5,.thrv_symbol_180 [data-css="tve-u-164d09209b1"] h6{color: rgb(131,134,139);}.thrv_symbol_180 [data-css="tve-u-164d0927213"] .tve-page-section-in{display: block;}.thrv_symbol_180 [data-css="tve-u-164d09209b1"] p{margin: 0px !important;padding: 0px !important;}.thrv_symbol_180 [data-css="tve-u-164d0d9fbe5"]{font-family: Arial,Helvetica,sans-serif !important;font-size: 15px !important;}.thrv_symbol_180 [data-css="tve-u-16a8a33d8b7"]{font-size: 12px !important;}.thrv_symbol_180 .thrive-symbol-shortcode{margin-top: 0px !important;}.thrv_symbol_180 [data-css="tve-u-1703918842e"]{float: none;margin-left: auto !important;margin-right: auto !important;}.thrv_symbol_180 [data-css="tve-u-1703918f40b"]{font-family: Arial,Helvetica,sans-serif !important;font-size: 15px !important;}:not(#tve) .thrv_symbol_180 [data-css="tve-u-1703918f40b"]{line-height: 1.25em !important;}.thrv_symbol_180 [data-css="tve-u-17090621d51"]{font-size: 12px !important;}:not(#tve) .thrv_symbol_180 [data-css="tve-u-164d0d9fbe5"]{line-height: 1.25em !important;}}@media (max-width: 1023px){:not(#tve) .thrv_symbol_180 [data-css="tve-u-1703918f40b"]{line-height: 1.3em !important;}}@media (max-width: 767px){.thrv_symbol_180 [data-css="tve-u-164d0927213"]{padding: 10px !important;}.thrv_symbol_180 [data-css="tve-u-164d0d9fbe5"]{font-size: 11px !important;}.thrv_symbol_180 [data-css="tve-u-1703918f40b"]{font-size: 11px !important;}:not(#tve) .thrv_symbol_180 [data-css="tve-u-1703918f40b"]{line-height: 1.4em !important;padding-top: 0px !important;margin-top: 0px !important;}:not(#tve) .thrv_symbol_180 [data-css="tve-u-164d0d9fbe5"]{line-height: 1.4em !important;padding-top: 0px !important;margin-top: 0px !important;}.thrv_symbol_180 [data-css="tve-u-1703918842e"]{margin-top: -12px !important;}}</style><div class="symbol-section-out"></div> <div class="symbol-section-in" style=""><div class="thrv_wrapper thrv-page-section tve-custom-menu-inside" data-css="tve-u-164d0927213" style=""> <div class="tve-page-section-out" data-css="tve-u-164d0923206"></div> <div class="tve-page-section-in tve_empty_dropzone" data-css="tve-u-164d09209b1" style=""><div class="thrv_wrapper thrv_text_element" style="" data-css="tve-u-1703918842e"><p data-css="tve-u-1703918f40b" style="font-size: 12px !important;"><span data-css="tve-u-17090621d51">This site is not a part of the Facebook website or Facebook Inc. Additionally, this site is not endorsed by Facebook in any way. FACEBOOK is a trademark of FACEBOOK, Inc.</span></p><p data-css="tve-u-164d0d9fbe5" style="font-size: 12px !important;"><span data-css="tve-u-16a8a33d8b7"><span class="thrive-shortcode-content" data-attr-id="15" data-extra_key="2" data-option-inline="1" data-shortcode="thrive_global_fields" data-shortcode-name="[Legal] Cookie Policy" data-attr-static-link="{&quot;className&quot;:&quot;&quot;,&quot;href&quot;:&quot;https://marcomunich.com/cookie-policy/&quot;,&quot;target&quot;:&quot;_blank&quot;,&quot;class&quot;:&quot;&quot;}" data-css="tve-u-17090621d55"><a href="https://marcomunich.com/cookie-policy/" target="_blank" class="">Cookie Policy</a></span> |&nbsp;<span class="thrive-shortcode-content" data-attr-id="6" data-extra_key="2" data-option-inline="1" data-shortcode="thrive_global_fields" data-shortcode-name="[Legal] Privacy policy" data-attr-static-link="{&quot;className&quot;:&quot;tve-froala&quot;,&quot;href&quot;:&quot;https://marcomunich.com/privacy-policy/&quot;,&quot;target&quot;:&quot;_blank&quot;,&quot;class&quot;:&quot;tve-froala&quot;}" data-css="tve-u-17090621d58"><a href="https://marcomunich.com/privacy-policy/" target="_blank" class="tve-froala">Privacy policy</a></span></span></p></div></div> </div></div></div></div></div></div>			</div>
-						<div class="fr-dropdown-holder tcb-style-wrap"></div>
-		</div>
-						<script type="speculationrules">
-{"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":["/wp-*.php","/wp-admin/*","/wp-content/uploads/*","/wp-content/*","/wp-content/plugins/*","/wp-content/themes/thrive-theme/*","/*\\?(.+)"]}},{"not":{"selector_matches":"a[rel~=\"nofollow\"]"}},{"not":{"selector_matches":".no-prefetch, .no-prefetch a"}}]},"eagerness":"conservative"}]}
-</script>
-<script type='text/javascript'>( $ => {
-	/**
-	 * Displays toast message from storage, it is used when the user is redirected after login
-	 */
-	if ( window.sessionStorage ) {
-		$( window ).on( 'tcb_after_dom_ready', () => {
-			const message = sessionStorage.getItem( 'tcb_toast_message' );
+  .green-page .step-item { display: flex; gap: 20px; align-items: flex-start; padding: 24px 0; border-bottom: 1px solid rgba(255,255,255,.08); }
+  .green-page .step-item:last-child { border: none; }
 
-			if ( message ) {
-				tcbToast( sessionStorage.getItem( 'tcb_toast_message' ), false );
-				sessionStorage.removeItem( 'tcb_toast_message' );
-			}
-		} );
-	}
-
-	/**
-	 * Displays toast message
-	 *
-	 * @param {string}   message  - message to display
-	 * @param {Boolean}  error    - whether the message is an error or not
-	 * @param {Function} callback - callback function to be called after the message is closed
-	 */
-	function tcbToast( message, error, callback ) {
-		/* Also allow "message" objects */
-		if ( typeof message !== 'string' ) {
-			message = message.message || message.error || message.success;
-		}
-		if ( ! error ) {
-			error = false;
-		}
-		TCB_Front.notificationElement.toggle( message, error ? 'error' : 'success', callback );
-	}
-} )( typeof ThriveGlobal === 'undefined' ? jQuery : ThriveGlobal.$j );
-</script>	`} />
-  </div>
-</BaseLayout>
-
-<style>
-  .thrive-page-wrap {
-    overflow-x: hidden;
+  @media (max-width: 768px) {
+    .green-page .hero-grid,
+    .green-page .two-col { grid-template-columns: 1fr !important; }
+    .green-page .hero-image { display: none; }
   }
 </style>
+
+<div class="green-page">
+
+<!-- ── HERO ──────────────────────────────────────────────────────────────── -->
+<section style="background: #052e1a; color: #fff; padding: 80px 24px 0;">
+  <div class="hero-grid" style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;">
+
+    <!-- Testo -->
+    <div>
+      <div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(22,163,74,.15); border: 1px solid rgba(22,163,74,.4); color: #86efac; padding: 6px 14px; border-radius: 100px; font-size: 13px; font-weight: 700; letter-spacing: 2px; margin-bottom: 16px;">
+        ★ MINI PERCORSO
+      </div>
+      <p style="font-size: 14px; color: #86efac; font-weight: 600; margin-bottom: 8px; letter-spacing: .5px;">Per Coach, Counselor e Terapeuti</p>
+      <h1 style="font-size: clamp(34px, 4.5vw, 52px); font-weight: 800; line-height: 1.1; color: #fff; margin-bottom: 20px;">
+        Iniziare a Lavorare<br><span style="color: #16A34A;">Senza sito Web</span>
+      </h1>
+      <p style="font-size: 17px; line-height: 1.7; color: #bbb; margin-bottom: 36px;">
+        <strong style="color:#fff;">Due ore di lezione</strong> dove scopriamo tutto ciò che serve
+        ad un Counselor, Coach o Terapeuta per <strong style="color:#fff;">iniziare a lavorare subito</strong>
+        — preoccupandosi solo di creare contenuti e gestire il proprio lavoro.
+      </p>
+      <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+        <a href="#programma" class="btn-green">Scopri il programma →</a>
+        <a href="#costi" class="btn-outline-green">Costi e informazioni</a>
+      </div>
+    </div>
+
+    <!-- Video Hero -->
+    <div class="hero-image" style="padding-bottom: 48px;">
+      <div style="border-radius: 12px; overflow: hidden; aspect-ratio: 16/10; background: #064e29; position: relative;">
+        <iframe
+          src="https://www.youtube-nocookie.com/embed/lo1Ji3OkYCg?rel=0&modestbranding=1"
+          title="Iniziare a Lavorare Senza sito Web"
+          frameborder="0"
+          allowfullscreen
+          loading="eager"
+          style="position:absolute; top:0; left:0; width:100%; height:100%;"
+        ></iframe>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Striscia statistiche -->
+  <div style="max-width:1100px; margin:48px auto 0; display:flex; gap:32px; flex-wrap:wrap; padding-bottom:40px; border-top:1px solid rgba(255,255,255,.07); padding-top:32px;">
+    {[
+      { n: "2", label: "Video lezioni" },
+      { n: "~2h", label: "di contenuto" },
+      { n: "1", label: "Risorsa con tutti i link" },
+      { n: "0€", label: "Costo base (gratuito su YouTube)" },
+    ].map(s => (
+      <div>
+        <p style="font-size:32px; font-weight:800; color:#16A34A; margin:0; line-height:1;">{s.n}</p>
+        <p style="font-size:13px; color:#888; margin:4px 0 0; letter-spacing:.5px;">{s.label}</p>
+      </div>
+    ))}
+  </div>
+</section>
+
+<!-- ── SCARICARE IL LAVORO ────────────────────────────────────────────── -->
+<section style="padding: 80px 24px; background: #fff;">
+  <div class="two-col" style="max-width: 1080px; margin: 0 auto; display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;">
+    <div>
+      <p style="color:#16A34A; font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase; margin-bottom:12px;">Il vantaggio</p>
+      <h2 style="font-size:clamp(26px,3vw,38px); font-weight:800; margin-bottom:16px;">Scaricare gran parte del lavoro</h2>
+      <p style="color:#555; font-size:16px; line-height:1.8; margin-bottom:16px;">
+        Ricordarsi l'appuntamento e ricordarlo al cliente, <strong>mandargli gli estremi di pagamento</strong>,
+        fare loro delle domande pre-appuntamento per capire di cosa hanno bisogno…
+      </p>
+      <p style="color:#555; font-size:16px; line-height:1.8;">
+        Tutte queste sono informazioni che di solito chiediamo a mano. In questo mini corso
+        vediamo tutto quello che serve per lavorare senza il sito web — abbiamo solo bisogno
+        dei social e degli strumenti che trovi nelle lezioni.
+      </p>
+    </div>
+    <div style="border-radius:12px; overflow:hidden; aspect-ratio:16/10; background:#f0fdf4; position:relative;">
+      <img
+        src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=700&q=80&fit=crop"
+        alt="Coach o counselor che lavora comodamente dal proprio ufficio senza sito web"
+        style="width:100%; height:100%; object-fit:cover; display:block;"
+        loading="lazy"
+      />
+      <div style="position:absolute; bottom:0; left:0; right:0; background:linear-gradient(transparent,rgba(5,46,26,.85)); padding:20px 24px;">
+        <p style="color:#86efac; font-size:13px; font-style:italic; margin:0;">"Non serve un sito web per iniziare. Serve solo il sistema giusto."</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── DI COSA PARLEREMO ──────────────────────────────────────────────── -->
+<section id="programma" style="padding: 80px 24px; background: #064e29;">
+  <div style="max-width:1000px; margin:0 auto;">
+    <p style="color:#86efac; font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase; margin-bottom:12px;">Il programma</p>
+    <h2 style="font-size:clamp(26px,3vw,38px); font-weight:800; color:#fff; margin-bottom:12px;">Di cosa parleremo nel Corso</h2>
+    <p style="color:#aaa; margin-bottom:48px; font-size:16px;">Prenotazione e pagamento degli appuntamenti, grafiche, creazione degli articoli e strumenti di base da utilizzare.</p>
+    <div>
+      {steps.map(s => (
+        <div class="step-item">
+          <div style="flex-shrink:0; width:44px; height:44px; background:#16A34A; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:20px; font-weight:900; color:#fff;">{s.n}</div>
+          <div>
+            <h4 style="font-size:16px; font-weight:700; color:#fff; margin-bottom:8px;">{s.title}</h4>
+            <p style="color:#aaa; font-size:15px; line-height:1.6; margin:0;">{s.text}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+    <div style="text-align:center; margin-top:48px;">
+      <a href="#costi" class="btn-green">Ok, voglio sapere il costo →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── È IDEALE PER TE SE ─────────────────────────────────────────────── -->
+<section style="padding: 80px 24px; background: #f0fdf4;">
+  <div style="max-width:1000px; margin:0 auto;">
+    <h2 style="text-align:center; font-size:clamp(26px,3vw,38px); font-weight:800; margin-bottom:48px;">È ideale per te <span style="color:#16A34A;">SE:</span></h2>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:20px;">
+      {ideals.map((item, i) => (
+        <div style="background:#fff; border-radius:8px; padding:28px; position:relative; overflow:hidden; border-top:3px solid #16A34A;">
+          <div style="font-size:42px; font-weight:900; color:rgba(22,163,74,.08); position:absolute; top:8px; right:16px; line-height:1;">{i+1}</div>
+          <h4 style="font-size:15px; font-weight:700; margin-bottom:10px; padding-right:20px; color:#052e1a;">{item.title}</h4>
+          <p style="color:#555; font-size:14px; line-height:1.6; margin:0;">{item.text}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- ── CORSO GRATUITO ─────────────────────────────────────────────────── -->
+<section style="padding: 80px 24px; background: #052e1a;">
+  <div class="two-col" style="max-width:1080px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;">
+    <div style="border-radius:12px; overflow:hidden; aspect-ratio:4/5; background:#064e29; position:relative;">
+      <img
+        src="https://marcomunich.com/wp-content/uploads/2019/04/foto_mia.jpg"
+        alt="Marco Munich"
+        style="width:100%; height:100%; object-fit:cover; display:block; opacity:.85;"
+        loading="lazy"
+      />
+    </div>
+    <div>
+      <p style="color:#86efac; font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase; margin-bottom:16px;">Il corso è gratuito</p>
+      <h2 style="font-size:clamp(24px,2.5vw,36px); font-weight:800; color:#fff; margin-bottom:20px;">
+        Se senti che ti risuona,<br><strong style="text-decoration:underline;">IL CORSO è GRATUITO</strong>
+      </h2>
+      <p style="color:#bbb; font-size:15px; line-height:1.8; margin-bottom:24px;">Quello che riceverai:</p>
+      <ul style="list-style:none; padding:0; margin-bottom:32px;">
+        {[
+          "Accesso alla risorsa con l'elenco di tutte le piattaforme",
+          "Le informazioni da sapere per partire subito",
+          "Possibilità di fare domande commentando nella risorsa",
+          "2 Video lezioni di quasi due ore",
+          "Tutto il materiale è in descrizione sul video YouTube",
+        ].map(i => (
+          <li style="display:flex; gap:10px; align-items:flex-start; padding:8px 0; border-bottom:1px solid rgba(255,255,255,.08); font-size:15px; color:#ddd;">
+            <span style="color:#16A34A; font-weight:700; flex-shrink:0;">✓</span> {i}
+          </li>
+        ))}
+      </ul>
+      <a href="https://www.youtube.com/playlist?list=PLKgzAWOyM8xtciXhSPbj32fMzEXbYPUuC" target="_blank" rel="noopener"
+        style="display:inline-flex; align-items:center; gap:10px; background:#FF0000; color:#fff; font-weight:700; font-size:15px; text-decoration:none; padding:14px 28px; border-radius:4px;">
+        <svg viewBox="0 0 576 512" style="width:20px; height:20px; fill:#fff;"><path d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"></path></svg>
+        <strong>Inizia ora su YouTube</strong>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── COSTI PRIVATO ───────────────────────────────────────────────────── -->
+<section id="costi" style="padding: 80px 24px; background: #f7f7f7;">
+  <div style="max-width:1000px; margin:0 auto;">
+    <p style="color:#16A34A; font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase; text-align:center; margin-bottom:12px;">Costi</p>
+    <h2 style="text-align:center; font-size:clamp(26px,3vw,38px); font-weight:800; margin-bottom:12px;">Scegli come vuoi iniziare</h2>
+    <p style="text-align:center; color:#555; margin-bottom:48px; font-size:16px;">Puoi guardare il corso gratuitamente su YouTube o farlo in privato con me.</p>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
+
+      <!-- Card Gratuita -->
+      <div style="background:#fff; border-radius:12px; padding:36px; border:2px solid #eee;">
+        <p style="font-size:13px; font-weight:700; color:#888; text-transform:uppercase; letter-spacing:1px; margin-bottom:16px;">In autonomia</p>
+        <div style="margin-bottom:4px;">
+          <span style="font-size:48px; font-weight:900; color:#052e1a;">Gratis</span>
+        </div>
+        <p style="color:#999; font-size:13px; margin-bottom:20px;">su YouTube, quando vuoi</p>
+        <p style="color:#555; font-size:15px; line-height:1.7; margin-bottom:24px;">
+          Guarda le due video lezioni ai tuoi ritmi, con accesso a tutta la risorsa e ai materiali.
+        </p>
+        <ul style="list-style:none; padding:0; margin-bottom:32px;">
+          {[
+            "2 Video lezioni (~2 ore)",
+            "Risorsa con tutti i link agli strumenti",
+            "Possibilità di fare domande nella risorsa",
+          ].map(i => (
+            <li style="display:flex; gap:10px; align-items:flex-start; padding:8px 0; border-bottom:1px solid #f0f0f0; font-size:15px; color:#333;">
+              <span style="color:#16A34A; font-weight:700; flex-shrink:0;">✓</span> {i}
+            </li>
+          ))}
+        </ul>
+        <a href="https://www.youtube.com/playlist?list=PLKgzAWOyM8xtciXhSPbj32fMzEXbYPUuC" target="_blank" rel="noopener"
+          style="display:block; text-align:center; padding:14px; border:2px solid #16A34A; color:#16A34A; font-weight:700; font-size:15px; text-decoration:none; border-radius:4px;">
+          Guarda su YouTube →
+        </a>
+      </div>
+
+      <!-- Card €300 -->
+      <div style="background:#052e1a; border-radius:12px; padding:36px; border:2px solid #16A34A; position:relative;">
+        <div style="position:absolute; top:-14px; left:50%; transform:translateX(-50%); background:#16A34A; color:#fff; font-size:12px; font-weight:700; letter-spacing:1px; padding:4px 16px; border-radius:100px; white-space:nowrap;">CONSIGLIATO</div>
+        <p style="font-size:13px; font-weight:700; color:#86efac; text-transform:uppercase; letter-spacing:1px; margin-bottom:16px;">Percorso Privato con Marco</p>
+        <div style="margin-bottom:4px;">
+          <span style="font-size:48px; font-weight:900; color:#fff;">€300</span>
+        </div>
+        <p style="color:#999; font-size:13px; margin-bottom:20px;">oppure 2 rate da €150</p>
+        <p style="color:#bbb; font-size:15px; line-height:1.7; margin-bottom:24px;">
+          Facciamo insieme tutto il lavoro: installazione delle piattaforme, configurazione degli strumenti, revisione completa.
+        </p>
+        <ul style="list-style:none; padding:0; margin-bottom:32px;">
+          {[
+            "3 Sessioni private con Marco",
+            "Installazione di tutte le piattaforme insieme",
+            "Accesso alla risorsa completa",
+            "2 Video lezioni per quasi due ore",
+            "60 min di Call in regalo (Messaggio Autentico)",
+          ].map(i => (
+            <li style="display:flex; gap:10px; align-items:flex-start; padding:8px 0; border-bottom:1px solid rgba(255,255,255,.08); font-size:15px; color:#ddd;">
+              <span style="color:#16A34A; font-weight:700; flex-shrink:0;">✓</span> {i}
+            </li>
+          ))}
+        </ul>
+        <a href="https://wa.link/qracm2" target="_blank" rel="noopener" class="btn-green"
+          style="display:block; text-align:center;">
+          3 Sessioni — 300€ →
+        </a>
+        <p style="text-align:center; margin-top:12px; font-size:13px; color:#888;">
+          <a href="https://wa.link/qracm2" target="_blank" rel="noopener" style="color:#86efac;">Scrivimi per pagare in 2 rate da 150€</a>
+        </p>
+      </div>
+
+    </div>
+
+    <!-- WhatsApp CTA -->
+    <div style="text-align:center; margin-top:48px; padding:32px; background:#fff; border-radius:12px;">
+      <p style="font-size:18px; font-weight:700; margin-bottom:8px;">Hai domande prima di iniziare?</p>
+      <p style="color:#555; margin-bottom:20px;">Scrivimi su WhatsApp, rispondo personalmente.</p>
+      <a href="https://wa.link/qracm2" target="_blank" rel="noopener"
+        style="display:inline-flex; align-items:center; gap:10px; background:#25D366; color:#fff; font-weight:700; font-size:15px; text-decoration:none; padding:14px 28px; border-radius:4px;">
+        <svg viewBox="0 0 448 512" style="width:20px; height:20px; fill:#fff;"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"></path></svg>
+        Scrivimi su WhatsApp
+      </a>
+    </div>
+  </div>
+</section>
+
+</div><!-- /green-page -->
+
+</BaseLayout>
