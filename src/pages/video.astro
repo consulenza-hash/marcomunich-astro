@@ -190,7 +190,7 @@ const seoDesc  = 'Guarda i video di Marco Munich sul Personal Branding Olistico 
 
   .video-page__content :global(.epyt-gallery-allthumbs) {
     display: grid !important;
-    grid-template-columns: repeat(3, 1fr) !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
     gap: 32px 24px !important;
     width: 100% !important;
     margin: 0 !important;
@@ -313,13 +313,13 @@ const seoDesc  = 'Guarda i video di Marco Munich sul Personal Branding Olistico 
   /* Responsive */
   @media (max-width: 900px) {
     .video-page__content :global(.epyt-gallery-allthumbs) {
-      grid-template-columns: repeat(2, 1fr) !important;
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
     }
   }
 
   @media (max-width: 560px) {
     .video-page__content :global(.epyt-gallery-allthumbs) {
-      grid-template-columns: 1fr !important;
+      grid-template-columns: minmax(0, 1fr) !important;
     }
     .video-page { padding-top: 32px; }
   }
