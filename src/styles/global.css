@@ -164,3 +164,11 @@
     @apply font-semibold cursor-pointer;
   }
 }
+
+/* ── Variabili CSS Thrive Architect ──────────────────────────────────────────
+   Thrive imposta queste variabili via JS in WP; le definiamo qui per Astro.
+   Senza di esse i layout Thrive usano max-width: none e le colonne si
+   ridimensionano in modo errato. */
+:root {
+  --page-section-max-width: 1080px;
+}
