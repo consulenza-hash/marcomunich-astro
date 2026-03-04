@@ -23,14 +23,38 @@ import path from 'node:path';
 // ── Generazione pagine statiche ───────────────────────────────────────────────
 export async function getStaticPaths() {
   const posts = await getAllPosts();
-  return posts.map((post) => ({
+
+  // Pre-fetch Rank Math SEO in parallelo (batch da 15) invece di sequenziale
+  // Riduce il tempo di build da ~800s a ~30-60s
+  const BATCH = 15;
+  const rmHeads: (string | null)[] = [];
+  for (let i = 0; i < posts.length; i += BATCH) {
+    const slice = posts.slice(i, i + BATCH);
+    const results = await Promise.all(
+      slice.map((p: any) => getRankMathHead(p.slug).catch(() => null))
+    );
+    rmHeads.push(...results);
+  }
+
+  // Correlati calcolati in-memory (0 fetch extra vs 200 fetch API)
+  function getRelatedInMemory(currentId: number, categoryIds: number[], allPosts: any[], count = 3) {
+    return allPosts
+      .filter((p: any) => p.id !== currentId && p.categories?.some((c: number) => categoryIds.includes(c)))
+      .slice(0, count);
+  }
+
+  return posts.map((post: any, idx: number) => ({
     params: { slug: post.slug },
-    props:  { post },
+    props:  {
+      post,
+      rmSeo:   parseRankMathHead(rmHeads[idx] ?? null),
+      related: getRelatedInMemory(post.id, post.categories ?? [], posts),
+    },
   }));
 }
 
 // ── Dati del post corrente ────────────────────────────────────────────────────
-const { post } = Astro.props;
+const { post, rmSeo = {}, related: relatedFromProps = [] } = Astro.props;
 
 const title       = post.title?.rendered ?? '';
 const content     = post.content?.rendered ?? '';
@@ -40,15 +64,10 @@ const imageUrl    = getFeaturedImageUrl(post, 'large');
 const category    = getPrimaryCategory(post);
 const tags        = post._embedded?.['wp:term']?.[1] ?? [];
 
-// Articoli correlati (stessa categoria)
-const related = await getRelatedPosts(post.id, post.categories ?? [], 3);
+// Articoli correlati (pre-calcolati in getStaticPaths, 0 fetch aggiuntivi)
+const related = relatedFromProps;
 
-// Meta SEO da Rank Math Headless CMS API
-// Richiede: Rank Math → General Settings → Others → "Headless CMS Support" = ON
-// Se non ancora attivato, usa titolo e excerpt come fallback automatico.
-const rmHead  = await getRankMathHead(post.slug);
-const rmSeo   = parseRankMathHead(rmHead);
-
+// Meta SEO da Rank Math (pre-fetchato in getStaticPaths in parallelo)
 const seoTitle = rmSeo.title       ?? title;
 const seoDesc  = rmSeo.description ?? post.excerpt?.rendered?.replace(/<[^>]+>/g, '').slice(0, 160) ?? '';
 const seoImage = rmSeo.ogImage     ?? imageUrl ?? '';
