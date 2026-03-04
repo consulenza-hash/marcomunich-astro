@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+
+# Escludi pagine di sistema/ringraziamento
+Disallow: /grazie/
+Disallow: /grazie-standard/
+Disallow: /grazie-standard-2/
+Disallow: /conferma-donazione/
+Disallow: /donazione-prodgratuito/
+Disallow: /donazione-fallita/
+Disallow: /consulenza-accettata/
+Disallow: /consulenza-non-accettata/
+Disallow: /conferma-registrazione-webinar-qa/
+
+Sitemap: https://marcomunich.com/sitemap-index.xml
