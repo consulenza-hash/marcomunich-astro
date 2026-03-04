@@ -1,482 +1,444 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
+
+const features = [
+  {
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></svg>`,
+    title: "Identificare il tuo Messaggio",
+    text: "Trovare le parole che ti descrivono davvero, senza copiare modelli altrui o usare formule preconfezionate."
+  },
+  {
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>`,
+    title: "Attirare le persone giuste",
+    text: "Chi risuona con te ti troverà da solo — smetti di cercare di convincere tutti e inizia a parlare ai tuoi veri clienti."
+  },
+  {
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`,
+    title: "Comunicare senza fingerire",
+    text: "Smettere di indossare maschere professionali e imparare a parlare da cuore a cuore con il tuo pubblico."
+  },
+  {
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`,
+    title: "Uscire dalla genericità",
+    text: "Superare la paura di essere troppo specifici e scoprire che più sei preciso, più attiri le persone giuste."
+  },
+  {
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>`,
+    title: "Trovare continuità",
+    text: "Non sentirti più in ansia prima di scrivere un post — avere un messaggio chiaro rende tutto più semplice e naturale."
+  },
+  {
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`,
+    title: "Partire da te stesso",
+    text: "Capire che il miglior punto di partenza è la tua storia e la tua esperienza — non le ultime tendenze del marketing."
+  },
+];
+
+const topics = [
+  "Come identificare il tuo messaggio autentico unico",
+  "Come parlare del tuo lavoro senza sentirti in vendita",
+  "Come attirare solo le persone a cui risuoni davvero",
+  "Come creare contenuti partendo dalla tua storia personale",
+  "Come superare la paura del giudizio nella comunicazione",
+  "Come uscire dalla genericità e differenziarti autenticamente",
+  "Come gestire commenti, critiche e i 'non capiti'",
+  "Come mantenere la continuità senza esaurirti",
+  "Strumenti pratici per la creazione di contenuti",
+  "Come adattare il tuo messaggio ai diversi canali",
+  "Come costruire fiducia con il tuo pubblico nel tempo",
+  "Come misurare se il tuo messaggio sta funzionando",
+];
+
+const ideals = [
+  { title: "Ricevi consensi ma poca concretezza", text: "Fan, like, commenti, messaggi privati — ma nessuno poi acquista. Il tuo messaggio non sta passando nel modo giusto." },
+  { title: "Ti senti generico/a", text: "Non sai come differenziarti da chi fa il tuo stesso lavoro, e hai paura di essere troppo specifico/a." },
+  { title: "Ti manca la continuità", text: "Non sai di cosa parlare quando ti siedi a scrivere. Vedi la creazione di contenuti come un peso, non un piacere." },
+  { title: "Non ti stai mostrando per chi sei", text: "Ti esprimi con una maschera professionale, e in cuor tuo sai che quello che pubblichi non è davvero tu." },
+];
+
+const testimonials = [
+  { name: "Veronica Veneziani", role: "Operatore Olistico", title: "Partire da sé stessi", quote: "Questo percorso è illuminante, aiuta a fare marketing partendo da sé stessi, utilizzando il proprio potenziale per presentarsi al meglio di ciò che si è." },
+  { name: "Maria Cristina Andreoni", role: "Health & Life Coach", title: "Non ci si sente mai pronti", quote: "Il percorso con Marco è stato il mio primo passo concreto per uscire allo scoperto come coach, grazie al suo modo di accompagnarmi attraverso i dubbi di chi non si sente mai sufficientemente pronto." },
+  { name: "Daniela Capraro", role: "Operatore Olistico", title: "Metterci la faccia", quote: "Questo corso mi sta stimolando a usare la mia creatività. Ho acquisito una struttura per costruire al meglio i miei contenuti: risulto molto più chiara e professionale." },
+];
 ---
 
 <BaseLayout
-  title="Corso: Creazione del Messaggio Autentico - Marco Munich"
-  description="Corso per imparare a creare un messaggio autentico per il tuo brand."
+  title="Creazione del Messaggio Autentico - Marco Munich"
+  description="5 Video Lezioni per fare chiarezza interna sugli argomenti di cui parlare quando ci si promuove online, attirando solo persone a cui risuona la tua vera essenza."
   currentPath="/corso-copywriting-persone-autentiche/"
 >
-  <link slot="head" rel="stylesheet" href="/thrive/corso-copywriting-persone-autentiche.css" />
-
-  <div class="thrive-page-wrap">
-    <Fragment set:html={`<div id="tve_editor" class="tve_shortcode_editor tar-main-content" data-post-id="1953">
-<div id="landingpage-top-section" class="landingpage-section top-section placeholder-section hide-section"><div class="section-background"></div><div class="section-content"></div></div>
-<div class="thrive-group-edit-config" style="display: none !important"></div>
-<div data-inherit-lp-settings="1" data-match-lp-colors="1" class="thrv_wrapper thrv-page-section tve-height-update thrv-lp-block tcb-local-vars-root" data-css="tve-u-1788289fe99" tcb-template-name="Hero Area 15" tcb-template-id="67108" data-keep-css_id="1"><div class="thrive-group-edit-config" style="display: none !important"></div><div class="thrive-local-colors-config" style="display: none !important"></div>
-	<div class="tve-page-section-out"></div>
-	<div class="tve-page-section-in   tve_empty_dropzone" data-css="tve-u-1788289fe9a"><div class="thrv_wrapper thrv-columns" style="--tcb-col-el-width: 1601;"><div class="tcb-flex-row v-2 tcb-resized tcb--cols--2 tcb-desktop-no-wrap tcb-row-reversed-desktop tcb-row-reversed-tablet" data-css="tve-u-1788289fe9b" style=""><div class="tcb-flex-col" style="" data-css="tve-u-1788289fe9c"><div class="tcb-col" style="" data-css="tve-u-1788289fe9d"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad" data-css="tve-u-1788289fe9e" style="">
-	<div class="tve-content-box-background" style="" data-css="tve-u-1788289fe9f"></div>
-	<div class="tve-cb" style="" data-css="tve-u-1788289fea0"><div class="thrv_wrapper thrv_text_element" style="" data-tag="h1" data-css="tve-u-1788289fea1"><h1 class="" data-css="tve-u-1788289fea2" style="text-align: left;">Come cambierebbe il tuo lavoro se mostrassi davvero chi sei?</h1></div><div class="thrv_wrapper thrv_text_element" data-css="tve-u-1788289fea3" style="">	<p data-css="tve-u-1788289fea4"><span style="font-size: 20px;" data-css="tve-u-17c2b8b6d7c">Scopri come trasformare la tua comunicazione online rendendola sincera, naturale e in sintonia con chi sei davvero.</span></p><p data-css="tve-u-1788289fea4"><span style="text-decoration: underline;" data-css="tve-u-17c2b8b6d81">Comunicare online può essere semplice: basta partire dalla tua vera essenza.</span></p></div><div class="thrv_wrapper thrv-button thrv-button-v2 tcb-local-vars-root tve_ea_thrive_animation tve_anim_sweep_to_top" data-button-style="btn-tpl-58359" data-css="tve-u-1788289fea7" style="" data-tcb_hover_state_parent="" data-button-size="s"><div class="thrive-colors-palette-config" style="display: none !important"></div>
-	
-	<a href="#tve-jump-178829635a1" class="tcb-button-link tcb-plain-text tve_evt_manager_listen tve_et_mouseover tve-jump-scroll" data-tcb-events="__TCB_EVENT_[{&quot;t&quot;:&quot;mouseover&quot;,&quot;config&quot;:{&quot;anim&quot;:&quot;sweep_to_top&quot;,&quot;loop&quot;:1},&quot;a&quot;:&quot;thrive_animation&quot;}]_TNEVE_BCT__" style="" jump-animation="smooth">
-		<span class="tcb-button-texts" style=""><span class="tcb-button-text thrv-inline-text" style="">Voglio saperne di più</span></span>
-	</a>
-</div></div>
-</div></div></div><div class="tcb-flex-col" data-css="tve-u-1788289fea8" style=""><div class="tcb-col" data-css="tve-u-1788289fea9" style=""></div></div></div></div></div>
-</div><div class="thrv_wrapper thrv-page-section tve-height-update" data-inherit-lp-settings="1" data-css="tve-u-175b19adaba" style="">
-	<div class="tve-page-section-out"></div>
-	<div class="tve-page-section-in tve_empty_dropzone" data-css="tve-u-175b19a989f" style=""><div class="thrv_wrapper thrv_text_element" data-css="tve-u-175b2f6265a" style="" id="tve-jump-178829635a1"><h4 data-css="tve-u-1741084aea2" class=""><span data-css="tve-u-1741084aea3">Come Promuoversi in modo Autentico grazie al percorso</span></h4><h1 data-css="tve-u-175b1aa4dc4" class="">Creazione del Messaggio Autentico</h1></div><div class="thrv_wrapper thrv_text_element" data-css="tve-u-175b1a310ad"><p dir="ltr" data-css="tve-u-1787dcd0123">Un percorso in <strong>5 Video Lezioni</strong> per fare chiarezza interna sugli argomenti di cui parlare quando ci si promuove online, <strong><span style="text-decoration: underline;">attirando solo persone a cui risuona la tua vera essenza</span>.</strong></p></div><div class="thrv_wrapper thrv-button thrv-button-v2 tcb-local-vars-root" data-button-style="btn-tpl-58334" data-css="tve-u-175b31902cf" style="" data-button-size="s"><div class="thrive-colors-palette-config" style="display: none !important"></div>
-	
-	<a href="#tve-jump-1789238bd08" class="tcb-button-link tcb-plain-text tve-jump-scroll" jump-animation="smooth">
-		<span class="tcb-button-texts" style=""><span class="tcb-button-text thrv-inline-text" style="">COSTI E INFORMAZIONI</span></span>
-	</a>
-</div></div>
-</div><div class="thrv_wrapper thrv-page-section tve-height-update" data-inherit-lp-settings="1" data-type="" data-css="tve-u-1880ac5b830">
-	<div class="tve-page-section-out"></div>
-	<div class="tve-page-section-in"><div class="thrv_responsive_video thrv_wrapper tcb-lazy-load tcb-lazy-load-youtube" data-type="youtube" data-rel="1" data-modestbranding="0" data-aspect-ratio="16:9" data-aspect-ratio-default="0" data-float-position="top-left" data-float-width-d="300px" data-float-padding1-d="25px" data-float-padding2-d="25px" data-float-visibility="mobile" data-url="https://youtu.be/_83q4eUXmCo" style="" data-css="tve-u-1880ac650f9" data-no-cookie="1">
-	
-
-	<div class="tve_responsive_video_container" style="padding-bottom: 56.25%;">
-		<div class="video_overlay"></div>
-	<iframe title="Responsive Video" class="tcb-responsive-video" data-code="_83q4eUXmCo" data-hash="undefined" data-provider="youtube" frameborder="0" allowfullscreen="" loading="lazy" src="https://www.youtube-nocookie.com/embed/_83q4eUXmCo?rel=1&amp;modestbranding=0&amp;controls=1&amp;showinfo=1&amp;fs=1&amp;wmode=transparent&amp;enablejsapi=1"></iframe></div>
-</div></div>
-</div><div data-inherit-lp-settings="1" data-match-lp-colors="1" class="thrv_wrapper thrv-page-section thrv-lp-block tcb-local-vars-root" data-css="tve-u-177cb7b2ce5" style="" tcb-template-name="Hero Area 01" tcb-template-id="64272" data-keep-css_id="1"><div class="thrive-group-edit-config" style="display: none !important"></div><div class="thrive-local-colors-config" style="display: none !important"></div>
-<div class="tve-page-section-out" style="" data-css="tve-u-177cb7b2ce6"></div>
-<div class="tve-page-section-in   tve_empty_dropzone" data-css="tve-u-177cb7b2ce7" style=""><div class="thrv_wrapper thrv_text_element" data-css="tve-u-177cb7b2ce8" style=""><h1 data-css="tve-u-177cb7b2ce9" class="" style="">Avere un Messaggio Autentico significa <span style="text-decoration: underline;">creare Terreno fertile</span>.</h1></div><div class="thrv_wrapper thrv_text_element tve_empty_dropzone" style="" data-css="tve-u-177cb7b2cea"><p style="" data-css="tve-u-1787dd1014f">&nbsp;<strong>Agli albori della nostra attività</strong> siamo sempre in ansia da prestazione e vorremmo un "porto sicuro" da cui cominciare il nostro viaggio di costruzione.</p><p data-css="tve-u-1787dd11944" style=""><strong>Scrivere sapendo che stai attingendo da un tuo spazio personale</strong>, che ti permette di farti amare dai clienti per quello che sei, non per la maschera che spesso molti indossano per paura di mostrarsi realmente.</p></div></div>
-</div><div data-inherit-lp-settings="1" data-match-lp-colors="1" class="thrv_wrapper thrv-page-section tve-height-update thrv-lp-block tcb-local-vars-root" data-css="tve-u-175bbb1d801" style="" tcb-template-name="Benefits 10" tcb-template-id="66385" data-keep-css_id="1"><div class="thrive-group-edit-config" style="display: none !important"></div><div class="thrive-local-colors-config" style="display: none !important"></div>
-	<div class="tve-page-section-out" style="" data-css="tve-u-175bbb1d802"></div>
-	<div class="tve-page-section-in   tve_empty_dropzone" data-css="tve-u-175bbb1d803" style=""><div class="tcb-clear" data-css="tve-u-175bbb1d804"><div class="thrv_wrapper thrv_text_element" data-css="tve-u-175bbb1d805" style=""><h2 style="text-align: center;" class="" data-css="tve-u-175bbb1d806">A quali figure professionali è adatto questo percorso?</h2></div></div><div class="thrv_wrapper thrv-columns dynamic-group-khej42q8" data-css="tve-u-175bbb1d807" style="--tcb-col-el-width: 1443;"><div class="tcb-flex-row v-2 tcb--cols--4" data-css="tve-u-175bbb1d808" style=""><div class="tcb-flex-col" data-css="tve-u-175bbb1d809" style=""><div class="tcb-col dynamic-group-khej3slh"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad dynamic-group-khej3kb5" data-css="tve-u-175bbb1d80a" style="">
-	<div class="tve-content-box-background"></div>
-	<div class="tve-cb"><div class="tcb-clear" data-css="tve-u-175bbb1d80b"><div class="thrv_wrapper thrv_icon tcb-icon-display tcb-local-vars-root dynamic-group-khej1erf" data-css="tve-u-175bbb1d80c" style=""><svg class="tcb-icon" viewBox="0 0 576 512" data-id="icon-star-solid" data-name="">
-            <path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"></path>
-        </svg></div></div><div class="thrv_wrapper thrv_text_element dynamic-group-khej351h" data-css="tve-u-177cb79b344"><h5 style="" class="" data-css="tve-u-175bbb1d80d">Life-Coach</h5></div><div class="thrv_wrapper thrv_text_element dynamic-group-khej3c87" data-css="tve-u-177d1016fd3"><p style="" data-css="tve-u-175bbb1d80e">Molto spesso chi lavora nel coaching ha già avuto esperienza di lavoro con "esperti di marketing" che hanno proposto soltanto strategie. Qui non ne troverai, perché le strategie, in realtà, non esistono.</p></div></div>
-</div></div></div><div class="tcb-flex-col" style=""><div class="tcb-col dynamic-group-khej3slh"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad dynamic-group-khej3kb5" data-css="tve-u-175bbb1d80f" style="">
-	<div class="tve-content-box-background"></div>
-	<div class="tve-cb"><div class="tcb-clear" data-css="tve-u-175bbb1d80b"><div class="thrv_wrapper thrv_icon tcb-icon-display tcb-local-vars-root dynamic-group-khej1erf" data-css="tve-u-175bbb1d810" style=""><svg class="tcb-icon" viewBox="0 0 576 512" data-id="icon-star-solid" data-name="">
-            <path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"></path>
-        </svg></div></div><div class="thrv_wrapper thrv_text_element dynamic-group-khej351h" data-css="tve-u-177cb79b344"><h5 style="" class="" data-css="tve-u-175bbb1d811">Counselor</h5></div><div class="thrv_wrapper thrv_text_element dynamic-group-khej3c87" data-css="tve-u-177d1016fd3"><p data-css="tve-u-175bbb1d80e">Nel counseling capita di sentire una certa paura di risultare "piazzisti" o di mettere in vendita le emozioni. In questo percorso ci sei tu con la tua vita, loro si possono solo specchiare, e, se lo sentiranno, ti contatteranno. Ma tu parti sempre dal tuo cuore.</p></div></div>
-</div></div></div><div class="tcb-flex-col" style="" data-css="tve-u-175bbb1d813"><div class="tcb-col dynamic-group-khej3slh"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad dynamic-group-khej3kb5" data-css="tve-u-175bbb1d814" style="">
-	<div class="tve-content-box-background"></div>
-	<div class="tve-cb"><div class="tcb-clear" data-css="tve-u-175bbb1d80b"><div class="thrv_wrapper thrv_icon tcb-icon-display tcb-local-vars-root dynamic-group-khej1erf" data-css="tve-u-175bbb1d815" style=""><svg class="tcb-icon" viewBox="0 0 576 512" data-id="icon-star-solid" data-name="">
-            <path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"></path>
-        </svg></div></div><div class="thrv_wrapper thrv_text_element dynamic-group-khej351h" data-css="tve-u-177cb79b344"><h5 style="" class="" data-css="tve-u-175bbb1d811">Operatori Olistici</h5></div><div class="thrv_wrapper thrv_text_element dynamic-group-khej3c87" data-css="tve-u-177d1016fd3"><p style="" data-css="tve-u-175bbb1d80e">Tra mille tecniche e discipline olistiche è molto facile perdersi e pensare che "il servizio sia buono e perciò questo basta", in realtà non è così, anche se sei bravissimo/a nel tuo lavoro, serve che al centro ci sia sempre tu.</p></div></div>
-</div></div></div><div class="tcb-flex-col" style=""><div class="tcb-col dynamic-group-khej3slh"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad dynamic-group-khej3kb5" data-css="tve-u-175bbb1d816" style="">
-	<div class="tve-content-box-background"></div>
-	<div class="tve-cb"><div class="tcb-clear" data-css="tve-u-175bbb1d80b"><div class="thrv_wrapper thrv_icon tcb-icon-display tcb-local-vars-root dynamic-group-khej1erf" data-css="tve-u-175bbb1d817" style=""><svg class="tcb-icon" viewBox="0 0 576 512" data-id="icon-star-solid" data-name="">
-            <path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"></path>
-        </svg></div></div><div class="thrv_wrapper thrv_text_element dynamic-group-khej351h" data-css="tve-u-177cb79b344"><h5 style="" class="" data-css="tve-u-175bbb1d811">Chiunque desideri comunicare dal cuore</h5></div><div class="thrv_wrapper thrv_text_element dynamic-group-khej3c87" data-css="tve-u-177d1016fd3"><p style="" data-css="tve-u-175bbb1d80e">È anche per tutti coloro che, non provenendo da uno di questi settori, sentissero che risuonano con quello che dico giornalmente nei miei contenuti e desiderassero differenziare il loro modus operandi, con qualcosa che punti sull'umanità, piuttosto che solo sul prodotto o servizio che vendono.</p></div></div>
-</div></div></div></div></div></div>
-</div><div class="thrv_wrapper thrv-page-section tve-height-update" data-inherit-lp-settings="1" data-css="tve-u-175b2acd1b5" style="">
-	<div class="tve-page-section-out"></div>
-	<div class="tve-page-section-in tve_empty_dropzone" data-css="tve-u-181f0fa5a27"><div class="thrv_wrapper thrv-columns" data-css="tve-u-175b8686929" style="--tcb-col-el-width: 1280;"><div class="tcb-flex-row v-2 tcb--cols--2 tcb-resized tcb-medium-wrap" data-css="tve-u-175b2b16385" style=""><div class="tcb-flex-col" data-css="tve-u-175b855c5de" style=""><div class="tcb-col" style="" data-css="tve-u-178827bfe8e"><div class="thrv_wrapper tve_image_caption tve_ea_thrive_animation tve_anim_fade_in" data-css="tve-u-175b2f51cf3" style=""><span class="tve_image_frame"><img data-opt-id=1078403426  fetchpriority="high" decoding="async" class="tve_image tve_evt_manager_listen tve_et_tve-viewport wp-image-3999" alt="Marco Munich Consulente Marketing per Coach, Operatori Olistici e Terapeuti" data-id="3999" width="564" data-init-width="960" height="563" data-init-height="959" title="Marco Munich Consulente Marketing per Coach, Operatori Olistici e Terapeuti" src="https://mlfqwn4vwjlv.i.optimole.com/w:564/h:563/q:mauto/g:sm/f:best/ig:avif/https://marcomunich.com/wp-content/uploads/2020/09/119536256_3677336615611976_7436592590631298239_n.jpg" data-width="564" data-height="563" data-tcb-events="__TCB_EVENT_[{&quot;t&quot;:&quot;tve-viewport&quot;,&quot;config&quot;:{&quot;anim&quot;:&quot;fade_in&quot;,&quot;loop&quot;:0},&quot;a&quot;:&quot;thrive_animation&quot;}]_TNEVE_BCT__" loading="lazy" style="aspect-ratio: auto 960 / 959;" srcset="https://mlfqwn4vwjlv.i.optimole.com/w:960/h:959/q:mauto/g:sm/f:best/ig:avif/https://marcomunich.com/wp-content/uploads/2020/09/119536256_3677336615611976_7436592590631298239_n.jpg 960w, https://mlfqwn4vwjlv.i.optimole.com/w:300/h:300/q:mauto/g:sm/f:best/ig:avif/https://marcomunich.com/wp-content/uploads/2020/09/119536256_3677336615611976_7436592590631298239_n.jpg 300w, https://mlfqwn4vwjlv.i.optimole.com/w:150/h:150/q:mauto/g:sm/f:best/ig:avif/https://marcomunich.com/wp-content/uploads/2020/09/119536256_3677336615611976_7436592590631298239_n.jpg 150w, https://mlfqwn4vwjlv.i.optimole.com/w:768/h:767/q:mauto/g:sm/f:best/ig:avif/https://marcomunich.com/wp-content/uploads/2020/09/119536256_3677336615611976_7436592590631298239_n.jpg 768w" sizes="auto, (max-width: 564px) 100vw, 564px" /></span></div></div></div><div class="tcb-flex-col" data-css="tve-u-175b855c6a6" style=""><div class="tcb-col" style="" data-css="tve-u-175b8561338"><div class="thrv_wrapper thrv_text_element"><p data-css="tve-u-175b2f5711b" style="">Ciao,</p></div><div class="thrv_wrapper thrv_text_element" data-css="tve-u-175b2f8347e" style=""><p data-css="tve-u-175b2f7684f" style="">Mi chiamo Marco Munich</p></div><div class="thrv_wrapper thrv_text_element" data-css="tve-u-175b2fba240" style=""><p><strong>Sono un Consulente Marketing Olistico</strong><br>Nato il 19 Gennaio 1983, ex "Media Strategist super-mega-iper--expert".</p><p data-css="tve-u-1788279c7ec" style="">Creavo "Funnel", mi occupavo instagram Marketing e restyling ed ero convinto che il successo di un messaggio fosse una questione di "dire le cosa giusta", ero un fanatico della persuasione.<br><br>Mi sono reso conto, abbastanza presto, di come, in queste fredde azioni ripetitive, si perdesse tutta quella magia del nostro essere umani.<br><br>Ho così deciso di cambiare modalità e di eliminare tutti i sistemi che non aiutavano a mostrarmi per come sono realmente.<br><br><strong><em><span style="font-size: 19px; letter-spacing: 1px;" data-css="tve-u-1788279a7aa">"Oggi, secondo me, promuoversi significa parlare onestamente, ascoltare con presenza, agire in compassione e comprensione, accettando l'imperfezione".<br></span></em><span style="letter-spacing: 1px;" data-css="tve-u-1788279c0d8"><span style="font-size: 19px;" data-css="tve-u-1788279a7b0"><br></span></span><em><span style="font-size: 19px; letter-spacing: 1px;" data-css="tve-u-1788279a7b8">Quando accettiamo la critica e impariamo a lasciare andare, non servono più "strategie" perché diventiamo noi stessi un flusso di creatività e coscienza che risuona solo a coloro che sono simili a noi, quelli che definiamo "i nostri clienti ideali".</span></em></strong></p></div></div></div></div></div></div>
-</div><div data-inherit-lp-settings="1" data-match-lp-colors="1" class="thrv_wrapper thrv-page-section tve-height-update thrv-lp-block tcb-local-vars-root" data-css="tve-u-178827aaa1c" style="" tcb-template-name="List Content 03" tcb-template-id="66901" data-keep-css_id="1"><div class="thrive-group-edit-config" style="display: none !important"></div><div class="thrive-local-colors-config" style="display: none !important"></div>
-	<div class="tve-page-section-out"></div>
-	<div class="tve-page-section-in   tve_empty_dropzone" data-css="tve-u-178827aaa1d" style=""><div class="thrv_wrapper thrv_text_element" style="" data-css="tve-u-178827aaa1e"><h2 class="" data-css="tve-u-178827aaa1f" style="text-align: center;"><strong>Il percorso è dedicato a chi non ama "fare marketing"</strong></h2></div><div class="thrv_wrapper thrv_text_element" data-css="tve-u-178827aaa20" style=""><p>Il concetto di 'fare marketing' è spesso percepito in modo negativo nel settore dell’aiuto, e, in tutta onestà, non posso che concordare con chi lo critica. Oggi, il marketing è quasi sempre sinonimo di 'azioni finalizzate a ottenere qualcosa in cambio', un approccio che contrasta profondamente con la nostra missione: aiutare le persone a superare un malessere e, al tempo stesso, riuscire a vivere di questo lavoro con integrità.</p><p>Purtroppo, l’idea di 'vivere di questo' si è spesso intrecciata con pensieri di arricchimento e 'abbondanza', che, in molti casi, si traducono semplicemente nel desiderio di sfruttare i problemi altrui per riempirsi le tasche, avvolgendosi in belle parole.</p><p>Questo fenomeno ha aperto le porte a una schiera di approfittatori che, mascherando le loro vere intenzioni, hanno finito per influenzare anche chi opera con sincerità e dedizione, creando confusione e sfiducia in un settore che dovrebbe essere fondato sull’autenticità e sull’aiuto genuino.</p><h4 class="" style="text-align: center;">Oltre a questo, è adatto a chi...</h4></div><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad dynamic-group-khkjhxk4" style="" data-css="tve-u-178827aaa21">
-	<div class="tve-content-box-background" style="" data-css="tve-u-178827aaa22"></div>
-	<div class="tve-cb" data-css="tve-u-178827aaa23" style=""><div class="thrv_wrapper thrv-columns dynamic-group-khkjhr12" style="--tcb-col-el-width: 1252;" data-css="tve-u-178827aaa24"><div class="tcb-flex-row v-2 tcb--cols--2 tcb-resized" style="" data-css="tve-u-178827aaa25"><div class="tcb-flex-col" data-css="tve-u-178827aaa26" style=""><div class="tcb-col dynamic-group-khkjhjp4" style="padding: 0px !important;" data-css="tve-u-178827aaa27"><div class="tcb-clear" data-css="tve-u-178827aaa28"><div class="thrv_wrapper thrv_icon tcb-icon-display tcb-local-vars-root dynamic-group-khkjgu1a" data-css="tve-u-178827aaa29" style=""><svg class="tcb-icon" viewBox="0 0 512 512" data-id="icon-badge-percent-light" data-name="" style="">
-            <path d="M349.66 173.65l-11.31-11.31c-3.12-3.12-8.19-3.12-11.31 0l-164.7 164.69c-3.12 3.12-3.12 8.19 0 11.31l11.31 11.31c3.12 3.12 8.19 3.12 11.31 0l164.69-164.69c3.13-3.12 3.13-8.18.01-11.31zM240 192c0-26.47-21.53-48-48-48s-48 21.53-48 48 21.53 48 48 48 48-21.53 48-48zm-64 0c0-8.83 7.19-16 16-16s16 7.17 16 16-7.19 16-16 16-16-7.17-16-16zm144 80c-26.47 0-48 21.53-48 48s21.53 48 48 48 48-21.53 48-48-21.53-48-48-48zm0 64c-8.81 0-16-7.17-16-16s7.19-16 16-16 16 7.17 16 16-7.19 16-16 16zm192-80c0-35.5-19.4-68.2-49.6-85.5 9.1-33.6-.3-70.4-25.4-95.5s-61.9-34.5-95.5-25.4C324.2 19.4 291.5 0 256 0s-68.2 19.4-85.5 49.6c-33.6-9.1-70.4.3-95.5 25.4s-34.5 61.9-25.4 95.5C19.4 187.8 0 220.5 0 256s19.4 68.2 49.6 85.5c-9.1 33.6.3 70.4 25.4 95.5 26.5 26.5 63.4 34.1 95.5 25.4 17.4 30.2 50 49.6 85.5 49.6s68.1-19.4 85.5-49.6c32.7 8.9 69.4.7 95.5-25.4 25.1-25.1 34.5-61.9 25.4-95.5 30.2-17.3 49.6-50 49.6-85.5zm-91.1 68.3c5.3 11.8 29.5 54.1-6.5 90.1-28.9 28.9-57.5 21.3-90.1 6.5C319.7 433 307 480 256 480c-52.1 0-64.7-49.5-68.3-59.1-32.6 14.8-61.3 22.2-90.1-6.5-36.8-36.7-10.9-80.5-6.5-90.1C79 319.7 32 307 32 256c0-52.1 49.5-64.7 59.1-68.3-5.3-11.8-29.5-54.1 6.5-90.1 36.8-36.9 80.8-10.7 90.1-6.5C192.3 79 205 32 256 32c52.1 0 64.7 49.5 68.3 59.1 11.8-5.3 54.1-29.5 90.1 6.5 36.8 36.7 10.9 80.5 6.5 90.1C433 192.3 480 205 480 256c0 52.1-49.5 64.7-59.1 68.3z"></path>
-        </svg></div></div></div></div><div class="tcb-flex-col" data-css="tve-u-178827aaa2a" style=""><div class="tcb-col dynamic-group-khkjhe7c" style="" data-css="tve-u-178827aaa2b"><div class="thrv_wrapper thrv_text_element dynamic-group-khkjh1u3" style="" data-css="tve-u-178827aaa2c"><h5 class="" style="" data-css="tve-u-178827aaa2d"><strong>Riceve consensi, ma poca concretezza</strong></h5></div><div class="thrv_wrapper thrv_text_element dynamic-group-khkjh7aw" style="" data-css="tve-u-178827aaa2e"><p data-css="tve-u-178827aaa2f" style="">Spesso "fanno like", commentano e scrivono in privato, ma nulla poi si concretizza: significa che c'è qualcosa di fondo che non sta passando nella nostra comunicazione quotidiana, Creazione del Messaggio Autentico aiuta te a LEGGERE TRA LE RIGHE di ciò che chiedono, sia a te, che nel mondo.</p></div></div></div></div></div></div>
-</div><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad dynamic-group-khkjhxk4" style="" data-css="tve-u-178827aaa30">
-	<div class="tve-content-box-background" style="" data-css="tve-u-178827aaa31"></div>
-	<div class="tve-cb" data-css="tve-u-178827aaa32" style=""><div class="thrv_wrapper thrv-columns dynamic-group-khkjhr12" style="--tcb-col-el-width: 1252;" data-css="tve-u-178827aaa33"><div class="tcb-flex-row v-2 tcb--cols--2 tcb-resized" style="" data-css="tve-u-178827aaa34"><div class="tcb-flex-col" data-css="tve-u-178827aaa35" style=""><div class="tcb-col dynamic-group-khkjhjp4" style="padding: 0px !important;" data-css="tve-u-178827aaa36"><div class="tcb-clear" data-css="tve-u-178827aaa37"><div class="thrv_wrapper thrv_icon tcb-icon-display tcb-local-vars-root dynamic-group-khkjgu1a" data-css="tve-u-178827aaa38" style=""><svg class="tcb-icon" viewBox="0 0 544 512" data-id="icon-chart-pie-light" data-name="" style="">
-            <path d="M527.79 288H290.5l158.03 158.03a16.51 16.51 0 0 0 11.62 4.81c3.82 0 7.62-1.35 10.57-4.13 38.7-36.46 65.32-85.61 73.13-140.86 1.34-9.46-6.51-17.85-16.06-17.85zm-67.91 124.12L367.76 320h140.88c-8.12 34.16-24.96 66-48.76 92.12zM224 288V50.71c0-8.83-7.18-16.21-15.74-16.21-.69 0-1.4.05-2.11.15C86.99 51.49-4.1 155.6.14 280.37 4.47 407.53 113.18 512 240.13 512c.98 0 1.93-.01 2.91-.02 50.4-.63 96.97-16.87 135.26-44.03 7.9-5.6 8.42-17.23 1.57-24.08L224 288zm18.63 191.98l-2.51.02c-109.04 0-204.3-91.92-208-200.72C28.72 179.15 96.33 92.25 192 69.83v231.42l9.37 9.37 141.84 141.84c-30.56 17.62-64.96 27.08-100.58 27.52zM511.96 223.2C503.72 103.74 408.26 8.28 288.8.04c-.35-.03-.7-.04-1.04-.04C279.1 0 272 7.45 272 16.23V240h223.77c9.14 0 16.82-7.68 16.19-16.8zM304 208V33.9c89.25 13.81 160.28 84.85 174.1 174.1H304z"></path>
-        </svg></div></div></div></div><div class="tcb-flex-col" data-css="tve-u-178827aaa39" style=""><div class="tcb-col dynamic-group-khkjhe7c" style="" data-css="tve-u-178827aaa3a"><div class="thrv_wrapper thrv_text_element dynamic-group-khkjh1u3" style="" data-css="tve-u-178827aaa3b"><h5 class="" style="" data-css="tve-u-178827aaa3c"><strong>Da una mano a tutti, ma sente di non risolvere il problema di nessuno</strong></h5></div><div class="thrv_wrapper thrv_text_element dynamic-group-khkjh7aw" style="" data-css="tve-u-178827aaa3d"><p data-css="tve-u-178827aaa3e" style="">La genericità è un grosso problema che ho sentito da numerose persone con cui ho parlato in questi anni, molto spesso questo nasce dal non aver risposto ad alcune domande fondamentali, tra cui "Quali segnali la vita ti ha mostrato, che ti hanno suggerito che aiutare gli altri è la strada giusta?". Il materiale all'interno ti aiuterà a fare chiarezza su questo e altri aspetti.</p></div></div></div></div></div></div>
-</div><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad dynamic-group-khkjhxk4" style="" data-css="tve-u-178827aaa3f">
-	<div class="tve-content-box-background" style="" data-css="tve-u-178827aaa40"></div>
-	<div class="tve-cb" data-css="tve-u-178827aaa41" style=""><div class="thrv_wrapper thrv-columns dynamic-group-khkjhr12" style="--tcb-col-el-width: 1252;" data-css="tve-u-178827aaa42"><div class="tcb-flex-row v-2 tcb--cols--2 tcb-resized" style="" data-css="tve-u-178827aaa43"><div class="tcb-flex-col" data-css="tve-u-178827aaa44" style=""><div class="tcb-col dynamic-group-khkjhjp4" style="padding: 0px !important;" data-css="tve-u-178827aaa45"><div class="tcb-clear" data-css="tve-u-178827aaa46"><div class="thrv_wrapper thrv_icon tcb-icon-display tcb-local-vars-root dynamic-group-khkjgu1a" data-css="tve-u-178827aaa47" style=""><svg class="tcb-icon" viewBox="0 0 512 512" data-id="icon-dice-d10-light" data-name="" style="">
-            <path d="M503.88 261.29L279.8 10.64C273.45 3.55 264.72 0 256 0s-17.45 3.55-23.8 10.64L8.12 261.29c-11.81 13.21-10.6 33.5 2.69 45.22l224.08 197.52c6.03 5.32 13.57 7.97 21.11 7.97 7.54 0 15.08-2.66 21.11-7.97L501.19 306.5c13.29-11.71 14.49-32.01 2.69-45.21zM256 297.95l-75.86-50.57 75.86-177 75.86 177L256 297.95zm-107.28-58.24L47.69 264.97 220.97 71.12l-72.25 168.59zm214.56 0L291.03 71.12 464.5 265.01l-101.22-25.3zM31.91 282.62l.01.04-.03-.02.02-.02zm17.03 15.03l108.34-27.09 82.76 55.19v140.22L48.94 297.65zM271.96 465.9V325.75l82.76-55.19 108.2 27.06L271.96 465.9z"></path>
-        </svg></div></div></div></div><div class="tcb-flex-col" data-css="tve-u-178827aaa49" style=""><div class="tcb-col dynamic-group-khkjhe7c" style="" data-css="tve-u-178827aaa4a"><div class="thrv_wrapper thrv_text_element dynamic-group-khkjh1u3" style="" data-css="tve-u-178827aaa4b"><h5 class="" style="" data-css="tve-u-178827aaa4c"><strong>A chi manca di continuità</strong></h5></div><div class="thrv_wrapper thrv_text_element dynamic-group-khkjh7aw" style="" data-css="tve-u-178827aaa4d"><p data-css="tve-u-178827aaa4e" style="">Sente sempre un peso, ogni giorno, prima di scrivere, di fare un video, vede tutto questo come "promozione" e non come una possibilità di aiutare anche solo una persona al mondo. Appunto per questo, serve fare alcuni passi indietro, per porci le corrette domande, e soltanto poi, fare passi in avanti.</p></div></div></div></div></div></div>
-</div><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad dynamic-group-khkjhxk4" style="" data-css="tve-u-178827aaa3f" id="tva-res-17950d1c0ea">
-	<div class="tve-content-box-background" style="" data-css="tve-u-178827aaa40"></div>
-	<div class="tve-cb" data-css="tve-u-178827aaa41" style=""><div class="thrv_wrapper thrv-columns dynamic-group-khkjhr12" style="--tcb-col-el-width: 1252;" data-css="tve-u-178827aaa42"><div class="tcb-flex-row v-2 tcb--cols--2 tcb-resized" style="" data-css="tve-u-178827aaa43"><div class="tcb-flex-col" data-css="tve-u-178827aaa44" style=""><div class="tcb-col dynamic-group-khkjhjp4" style="padding: 0px !important;" data-css="tve-u-178827aaa45"><div class="tcb-clear" data-css="tve-u-178827aaa46"><div class="thrv_wrapper thrv_icon tcb-icon-display tcb-local-vars-root dynamic-group-khkjgu1a" data-css="tve-u-178827aaa47" style=""><svg class="tcb-icon" viewBox="0 0 512 512" data-id="icon-dice-d10-light" data-name="" style="">
-            <path d="M503.88 261.29L279.8 10.64C273.45 3.55 264.72 0 256 0s-17.45 3.55-23.8 10.64L8.12 261.29c-11.81 13.21-10.6 33.5 2.69 45.22l224.08 197.52c6.03 5.32 13.57 7.97 21.11 7.97 7.54 0 15.08-2.66 21.11-7.97L501.19 306.5c13.29-11.71 14.49-32.01 2.69-45.21zM256 297.95l-75.86-50.57 75.86-177 75.86 177L256 297.95zm-107.28-58.24L47.69 264.97 220.97 71.12l-72.25 168.59zm214.56 0L291.03 71.12 464.5 265.01l-101.22-25.3zM31.91 282.62l.01.04-.03-.02.02-.02zm17.03 15.03l108.34-27.09 82.76 55.19v140.22L48.94 297.65zM271.96 465.9V325.75l82.76-55.19 108.2 27.06L271.96 465.9z"></path>
-        </svg></div></div></div></div><div class="tcb-flex-col" data-css="tve-u-178827aaa49" style=""><div class="tcb-col dynamic-group-khkjhe7c" style="" data-css="tve-u-178827aaa4a"><div class="thrv_wrapper thrv_text_element dynamic-group-khkjh1u3" style="" data-css="tve-u-178827aaa4b"><h5 class="" style="" data-css="tve-u-178827aaa4c"><strong>Ai vincenti, che sentono che qualcosa non va</strong></h5></div><div class="thrv_wrapper thrv_text_element dynamic-group-khkjh7aw" style="" data-css="tve-u-178827aaa4d"><p data-css="tve-u-178827aaa4e" style="">Ci sono un sacco di professionisti che hanno un'attività vincente e funzionante, ma si sentono poco autentici, in cuor loro sanno che non si stanno esprimendo da uno spazio di onestà verso sé stessi e verso il pubblico.</p></div></div></div></div></div></div>
-</div></div>
-</div><div class="thrv_wrapper thrv-page-section tve-height-update" data-inherit-lp-settings="1">
-	<div class="tve-page-section-out"></div>
-	<div class="tve-page-section-in"><div class="thrv_wrapper thrv-button thrv-button-v2 tcb-local-vars-root" data-button-style="btn-tpl-58334" data-css="tve-u-178923a3054" style="" data-button-size="s"><div class="thrive-colors-palette-config" style="display: none !important"></div>
-	
-	<a href="#tve-jump-1789238bd08" class="tcb-button-link tcb-plain-text tve-jump-scroll" jump-animation="smooth">
-		<span class="tcb-button-texts" style=""><span class="tcb-button-text thrv-inline-text" style="">COSTI E INFORMAZIONI</span></span>
-	</a>
-</div></div>
-</div><div data-inherit-lp-settings="1" data-match-lp-colors="1" class="thrv_wrapper thrv-page-section tve-height-update thrv-lp-block tcb-local-vars-root" style="" data-css="tve-u-17891ae3b6d" tcb-template-name="CTA 04" tcb-template-id="65962" data-keep-css_id="1"><div class="thrive-group-edit-config" style="display: none !important"></div><div class="thrive-local-colors-config" style="display: none !important"></div>
-	<div class="tve-page-section-out" data-css="tve-u-17891ae3b6e" style="" data-ct-name="Dotted Wave" data-ct="fancydivider-38697" data-element-name="Fancy Divider" data-clip-id="7475838dd2ffe"><svg width="0" height="0" class="tve-decoration-svg"><defs><clipPath id="clip-bottom-7475838dd2ffe" class="decoration-clip clip-path-bottom" clipPathUnits="objectBoundingBox" data-screen="" decoration-type="slanted" slanted-angle="38" style="" data-inverted="true"><polygon points="0 0, 0 0.2187, 1 1, 1 0"></polygon></clipPath></defs></svg></div>
-	<div class="tve-page-section-in   tve_empty_dropzone" data-css="tve-u-17891ae3b6f" style=""><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad" style="" data-css="tve-u-17891ae3b71">
-	<div class="tve-content-box-background" data-css="tve-u-17891ae3b72" data-ct-name="Shuffle" data-ct="fancydivider-37414" data-element-name="Fancy Divider" style=""></div>
-	<div class="tve-cb" style="" data-css="tve-u-17891ae3b73"><div class="thrv_wrapper thrv-columns" style="--tcb-col-el-width: 1137.59;" data-css="tve-u-17891ae3b74"><div class="tcb-flex-row v-2 tcb--cols--2" data-css="tve-u-17891ae3b75" style=""><div class="tcb-flex-col" data-css="tve-u-17891ae3b76" style=""><div class="tcb-col" style="" data-css="tve-u-17891ae3b77"><div class="thrv_wrapper thrv_text_element" style="" data-tag="h1" data-css="tve-u-17891ae3b78"><p style="" data-css="tve-u-17891ae3b79">UN PERCORSO DI AUTENTICITÁ</p></div><div class="thrv_wrapper thrv_text_element" style="" data-tag="h1" data-css="tve-u-17891ae3b7a"><h2 class="" style="" data-css="tve-u-17891ae3b7b">Ti piacerebbe partecipare?</h2></div><div class="thrv_wrapper thrv-button thrv-button-v2 tcb-local-vars-root tcb-with-icon tcb-flip" data-tcb_hover_state_parent="" data-button-style="btn-tpl-61034" data-css="tve-u-17891ae3b7d" style="" data-button-size="s"><div class="thrive-colors-palette-config" style="display: none !important"></div>
-	
-	<a href="#tve-jump-1789238bd08" class="tcb-button-link tcb-plain-text tve-jump-scroll" style="" rel="noopener" jump-animation="smooth"><span class="tcb-button-icon">
-	<div class="thrv_wrapper thrv_icon tve_no_drag tve_no_icons tcb-icon-inherit-style tcb-local-vars-root tcb-icon-display" data-css="tve-u-17891ae3b7e" data-tcb_hover_state_parent="" style=""><svg class="tcb-icon" viewBox="0 0 24 24" data-id="icon-arrow_forward-duotone" data-name=""><path fill="none" d="M0 0h24v24H0V0z"></path><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8z"></path></svg></div>
-</span>
-
-		<span class="tcb-button-texts" style=""><span class="tcb-button-text thrv-inline-text" style="">ISCRIVITI</span></span>
-	</a>
-</div></div></div><div class="tcb-flex-col" data-css="tve-u-17891b6db5e" style=""><div class="tcb-col" style=""><div class="tcb-clear" data-css="tve-u-17891b70cd7"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad tve_evt_manager_listen tve_et_tve-viewport tve_ea_thrive_animation tve_anim_slide_right" style="top: 0px;" data-css="tve-u-17891ae3b81" data-tcb-events="__TCB_EVENT_[{&quot;t&quot;:&quot;tve-viewport&quot;,&quot;config&quot;:{&quot;anim&quot;:&quot;slide_right&quot;,&quot;loop&quot;:0},&quot;a&quot;:&quot;thrive_animation&quot;}]_TNEVE_BCT__">
-	<div class="tve-content-box-background" style="" data-css="tve-u-17891ae3b82" data-ct-name="Motion" data-ct="fancydivider-37551" data-element-name="Fancy Divider"></div>
-	<div class="tve-cb" style="" data-css="tve-u-17891ae3b83"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad" style="" data-css="tve-u-17891ae3b84">
-	<div class="tve-content-box-background" data-css="tve-u-17891ae3b85" style=""></div>
-	<div class="tve-cb" style="" data-css="tve-u-17891ae3b86"></div>
-</div></div>
-</div></div></div></div></div></div></div>
-</div></div>
-</div><div data-inherit-lp-settings="1" data-match-lp-colors="1" class="thrv_wrapper thrv-page-section tve-height-update thrv-lp-block tcb-local-vars-root" data-css="tve-u-175bbb29808" style="" tcb-template-name="Steps 09" tcb-template-id="66394" data-keep-css_id="1"><div class="thrive-group-edit-config" style="display: none !important"></div><div class="thrive-local-colors-config" style="display: none !important"></div>
-	<div class="tve-page-section-out"></div>
-	<div class="tve-page-section-in   tve_empty_dropzone" data-css="tve-u-175bbb29ad8" style=""><div class="thrv_wrapper thrv_text_element" data-css="tve-u-175bbb2980a" style=""><h2 class="" data-css="tve-u-175bbb2980b" style="text-align: center;">I benefit di Creazione del Messaggio Autentico</h2></div><div class="thrv_wrapper thrv-columns dynamic-group-khejv4v8" data-css="tve-u-175bbb2980c" style="--tcb-col-el-width: 1280;"><div class="tcb-flex-row v-2 tcb--cols--4" data-css="tve-u-175bbb2980d" style=""><div class="tcb-flex-col" style=""><div class="tcb-col dynamic-group-khejuwcy"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad dynamic-group-khejumap" data-css="tve-u-175bbb2980e" style="">
-	<div class="tve-content-box-background"></div>
-	<div class="tve-cb"><div class="thrv_wrapper thrv-columns dynamic-group-kheju3pb" data-css="tve-u-175bbb2980f" style="--tcb-col-el-width: 273;"><div class="tcb-flex-row v-2 tcb--cols--3 tcb-resized tcb-medium-no-wrap tcb-mobile-no-wrap" data-css="tve-u-175bbb29810" style=""><div class="tcb-flex-col" data-css="tve-u-175bbb29811" style=""><div class="tcb-col dynamic-group-khejt4ui" style=""><div class="thrv_wrapper thrv_icon tcb-icon-display tcb-local-vars-root dynamic-group-khejsqnu" data-css="tve-u-175bbb29812" style=""><svg class="tcb-icon" viewBox="0 0 24 24" data-id="icon-pencil-plus-outlined" data-name="" style=""><path d="M14.1,9L15,9.9L5.9,19H5V18.1L14.1,9M17.7,3C17.5,3 17.2,3.1 17,3.3L15.2,5.1L18.9,8.9L20.7,7C21.1,6.6 21.1,6 20.7,5.6L18.4,3.3C18.2,3.1 17.9,3 17.7,3M14.1,6.2L3,17.2V21H6.8L17.8,9.9L14.1,6.2M7,2V5H10V7H7V10H5V7H2V5H5V2H7Z"></path></svg></div></div></div><div class="tcb-flex-col" data-css="tve-u-175bbb29813" style=""><div class="tcb-col dynamic-group-khejtlxz" style=""><div class="thrv_wrapper thrv_text_element tve_evt_manager_listen tve_et_tve-viewport tve_ea_thrive_animation tve_anim_slide_left dynamic-group-khejsxpn" data-tcb-events="__TCB_EVENT_[{&quot;t&quot;:&quot;tve-viewport&quot;,&quot;config&quot;:{&quot;anim&quot;:&quot;slide_left&quot;,&quot;loop&quot;:0},&quot;a&quot;:&quot;thrive_animation&quot;}]_TNEVE_BCT__" style="" data-css="tve-u-178827a3662"><p style="" data-css="tve-u-175bbb29814">01</p></div></div></div><div class="tcb-flex-col" data-css="tve-u-175bbb29815" style=""><div class="tcb-col"><div class="thrv_wrapper thrv-divider dynamic-group-khejty27" data-style-d="tve_sep-1" data-thickness-d="1" data-color-d="rgb(235, 235, 235)" data-css="tve-u-175bbb29816" style="">
-	<hr class="tve_sep tve_sep-1" style="">
-</div></div></div></div></div><div class="thrv_wrapper thrv_text_element dynamic-group-khejuero" data-css="tve-u-177cb7c8048"><p><span style="text-decoration: underline;">Rendersi conto di quanto siamo unici e speciali</span>, solo perché esistiamo. Non per qualcosa che abbiamo fatto.</p></div></div>
-</div></div></div><div class="tcb-flex-col" style=""><div class="tcb-col dynamic-group-khejuwcy"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad dynamic-group-khejumap" data-css="tve-u-175bbb2980e" style="">
-	<div class="tve-content-box-background"></div>
-	<div class="tve-cb"><div class="thrv_wrapper thrv-columns dynamic-group-kheju3pb" data-css="tve-u-175bbb2980f" style="--tcb-col-el-width: 273;"><div class="tcb-flex-row v-2 tcb-resized tcb--cols--3 tcb-medium-no-wrap tcb-mobile-no-wrap" data-css="tve-u-175bbb29817" style=""><div class="tcb-flex-col" data-css="tve-u-175bbb29818" style=""><div class="tcb-col dynamic-group-khejt4ui" style=""><div class="thrv_wrapper thrv_icon tcb-icon-display tcb-local-vars-root dynamic-group-khejsqnu" data-css="tve-u-175bbb29819" style=""><svg class="tcb-icon" viewBox="0 0 24 24" data-id="icon-file-settings-outlined" data-name=""><path d="M6 0A2 2 0 0 0 4 2V18A2 2 0 0 0 6 20H18A2 2 0 0 0 20 18V6L14 0H6M6 2H13V7H18V18H6V2M7 22V24H9V22H7M11 22V24H13V22H11M15 22V24H17V22H15Z"></path></svg></div></div></div><div class="tcb-flex-col" data-css="tve-u-175bbb2981a" style=""><div class="tcb-col dynamic-group-khejtlxz" style=""><div class="thrv_wrapper thrv_text_element tve_evt_manager_listen tve_et_tve-viewport tve_ea_thrive_animation tve_anim_slide_left dynamic-group-khejsxpn" data-tcb-events="__TCB_EVENT_[{&quot;t&quot;:&quot;tve-viewport&quot;,&quot;config&quot;:{&quot;anim&quot;:&quot;slide_left&quot;,&quot;loop&quot;:0},&quot;a&quot;:&quot;thrive_animation&quot;}]_TNEVE_BCT__" style="" data-css="tve-u-178827a3662"><p style="" data-css="tve-u-175bbb2981b">02</p></div></div></div><div class="tcb-flex-col" data-css="tve-u-175bbb2981c" style=""><div class="tcb-col"><div class="thrv_wrapper thrv-divider dynamic-group-khejty27" data-style-d="tve_sep-1" data-thickness-d="1" data-color-d="rgb(235, 235, 235)" data-css="tve-u-175bbb2981d" style="">
-	<hr class="tve_sep tve_sep-1" style="">
-</div></div></div></div></div><div class="thrv_wrapper thrv_text_element dynamic-group-khejuero" data-css="tve-u-177cb7c8048"><p><span style="text-decoration: underline;">Scoprire che la vita ci ha sempre supportato</span> e segnalato quali sono i migliori contenuti da utilizzare, oltre a "quale nicchia scegliere".</p></div></div>
-</div></div></div><div class="tcb-flex-col" style=""><div class="tcb-col dynamic-group-khejuwcy"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad dynamic-group-khejumap" data-css="tve-u-175bbb2980e" style="">
-	<div class="tve-content-box-background"></div>
-	<div class="tve-cb"><div class="thrv_wrapper thrv-columns dynamic-group-kheju3pb" data-css="tve-u-175bbb2980f" style="--tcb-col-el-width: 273;"><div class="tcb-flex-row v-2 tcb-resized tcb--cols--3 tcb-medium-no-wrap tcb-mobile-no-wrap" data-css="tve-u-175bbb2981e" style=""><div class="tcb-flex-col" data-css="tve-u-175bbb2981f" style=""><div class="tcb-col dynamic-group-khejt4ui" style=""><div class="thrv_wrapper thrv_icon tcb-icon-display tcb-local-vars-root dynamic-group-khejsqnu" data-css="tve-u-175bbb29820" style=""><svg class="tcb-icon" viewBox="0 0 24 24" data-id="icon-book-play-outlined" data-name=""><path d="M17,16L22,19L17,22V16M18,2A2,2 0 0,1 20,4V15.42L18,14.27V4H13V12L10.5,9.75L8,12V4H6V20H15V22H6A2,2 0 0,1 4,20V4A2,2 0 0,1 6,2H18Z"></path></svg></div></div></div><div class="tcb-flex-col" data-css="tve-u-175bbb29821" style=""><div class="tcb-col dynamic-group-khejtlxz" style=""><div class="thrv_wrapper thrv_text_element tve_evt_manager_listen tve_et_tve-viewport tve_ea_thrive_animation tve_anim_slide_left dynamic-group-khejsxpn" data-tcb-events="__TCB_EVENT_[{&quot;t&quot;:&quot;tve-viewport&quot;,&quot;config&quot;:{&quot;anim&quot;:&quot;slide_left&quot;,&quot;loop&quot;:0},&quot;a&quot;:&quot;thrive_animation&quot;}]_TNEVE_BCT__" style="" data-css="tve-u-178827a3662"><p style="" data-css="tve-u-175bbb29822">03</p></div></div></div><div class="tcb-flex-col" data-css="tve-u-175bbb29823" style=""><div class="tcb-col"><div class="thrv_wrapper thrv-divider dynamic-group-khejty27" data-style-d="tve_sep-1" data-thickness-d="1" data-color-d="rgb(235, 235, 235)" data-css="tve-u-175bbb2981d" style="">
-	<hr class="tve_sep tve_sep-1" style="">
-</div></div></div></div></div><div class="thrv_wrapper thrv_text_element dynamic-group-khejuero" data-css="tve-u-177cb7c8048"><p><span style="text-decoration: underline;">Sdoganare i falsi miti riguardo al marketing</span> e al promuoversi online: sei tu che decidi cosa è corretto per te.</p></div></div>
-</div></div></div><div class="tcb-flex-col" style=""><div class="tcb-col dynamic-group-khejuwcy"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad dynamic-group-khejumap" data-css="tve-u-175bbb2980e" style="">
-	<div class="tve-content-box-background"></div>
-	<div class="tve-cb"><div class="thrv_wrapper thrv-columns dynamic-group-kheju3pb" data-css="tve-u-175bbb2980f" style="--tcb-col-el-width: 273;"><div class="tcb-flex-row v-2 tcb--cols--2 tcb-resized tcb-mobile-no-wrap m-edit" data-css="tve-u-175bbb29824" style=""><div class="tcb-flex-col" data-css="tve-u-175bbb29825" style=""><div class="tcb-col dynamic-group-khejt4ui" style=""><div class="thrv_wrapper thrv_icon tcb-icon-display tcb-local-vars-root dynamic-group-khejsqnu" data-css="tve-u-175bbb29826" style=""><svg class="tcb-icon" viewBox="0 0 24 24" data-id="icon-camera-plus-outlined" data-name=""><path d="M21 6H17.8L16 4H10V6H15.1L17 8H21V20H5V11H3V20C3 21.1 3.9 22 5 22H21C22.1 22 23 21.1 23 20V8C23 6.9 22.1 6 21 6M8 14C8 18.45 13.39 20.69 16.54 17.54C19.69 14.39 17.45 9 13 9C10.24 9 8 11.24 8 14M13 11C14.64 11.05 15.95 12.36 16 14C15.95 15.64 14.64 16.95 13 17C11.36 16.95 10.05 15.64 10 14C10.05 12.36 11.36 11.05 13 11M5 6H8V4H5V1H3V4H0V6H3V9H5"></path></svg></div></div></div><div class="tcb-flex-col" data-css="tve-u-175bbb29827" style=""><div class="tcb-col" style=""><div class="thrv_wrapper thrv_text_element tve_evt_manager_listen tve_et_tve-viewport tve_ea_thrive_animation tve_anim_slide_left dynamic-group-khejsxpn" data-tcb-events="__TCB_EVENT_[{&quot;t&quot;:&quot;tve-viewport&quot;,&quot;config&quot;:{&quot;anim&quot;:&quot;slide_left&quot;,&quot;loop&quot;:0},&quot;a&quot;:&quot;thrive_animation&quot;}]_TNEVE_BCT__" style="" data-css="tve-u-178827a3662"><p style="" data-css="tve-u-175bbb29828">04</p></div></div></div></div></div><div class="thrv_wrapper thrv_text_element dynamic-group-khejuero" data-css="tve-u-177cb7c8048"><p><span style="text-decoration: underline;">Scoprire il concetto di esplorazione</span> come modalità principale di creazione dei propri contenuti.</p></div></div>
-</div></div></div></div></div></div>
-</div><div class="thrv_wrapper thrv-page-section tve-height-update" data-css="tve-u-175b314f7d2" style="">
-	<div class="tve-page-section-out"></div>
-	<div class="tve-page-section-in tve_empty_dropzone" data-css="tve-u-175b314e7c5"><div class="thrv_wrapper thrv-columns" style="--tcb-col-el-width: 1603;"><div class="tcb-flex-row v-2 tcb--cols--2 tcb-medium-wrap" style="" data-css="tve-u-175b3156e0a"><div class="tcb-flex-col" style="" data-css="tve-u-175b3156ee7"><div class="tcb-col" style="" data-css="tve-u-175b31595c3"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad" data-css="tve-u-175b315ff45" style="">
-	<div class="tve-content-box-background" style="" data-css="tve-u-175b315dd8d"></div>
-	<div class="tve-cb" style="" data-css="tve-u-175b3161320"></div>
-</div></div></div><div class="tcb-flex-col" style="" data-css="tve-u-17891dd8f63"><div class="tcb-col" style="" data-css="tve-u-175b31666e1"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad" data-css="tve-u-175b3181b5a" style="">
-	<div class="tve-content-box-background"></div>
-	<div class="tve-cb"><div class="thrv_wrapper thrv_text_element"><h2 class="" style="">Un Gruppo Telegram per aiutarsi a vicenda e dialogare con me.</h2></div><div class="thrv_wrapper thrv_text_element" style="" data-css="tve-u-175b317cf58"><p data-css="tve-u-175b31aa258" style="">Dentro la nostra comunità ci saranno dei bonus che ti aiuteranno a comprendere la tua personale meccanica di funzionamento grazie all'osservazione del proprio archetipo.<br>Oltre a questo, i corsisti, assieme a me, ti aiuteranno a vedere quello che non ti è chiaro, all'interno del percorso ti ricorderò quando e come sarà utile pubblicare domande e proposte per arricchirti e arricchire.</p></div><div class="thrv_wrapper thrv-button thrv-button-v2 tcb-local-vars-root" data-button-style="btn-tpl-58334" data-css="tve-u-175b1a4aeb0" style="" data-tcb_hover_state_parent="" data-button-size="s"><div class="thrive-colors-palette-config" style="display: none !important"></div>
-	
-	<a href="#tve-jump-178923aa976" class="tcb-button-link tcb-plain-text tve-jump-scroll" jump-animation="smooth">
-		<span class="tcb-button-texts" style=""><span class="tcb-button-text thrv-inline-text" style="">Iscriviti qui</span></span>
-	</a>
-</div></div>
-</div></div></div></div></div></div>
-</div><div class="thrv_wrapper thrv-page-section tve-height-update" data-inherit-lp-settings="1" data-css="tve-u-175b3285d69" style="">
-	<div class="tve-page-section-out" style="" data-css="tve-u-175b329ca2d"></div>
-	<div class="tve-page-section-in tve_empty_dropzone" data-css="tve-u-178924052ca"><div class="thrv_wrapper thrv_text_element tve_evt_manager_listen tve_et_tve-viewport tve_ea_thrive_animation tve_anim_slide_bottom" data-css="tve-u-175b3304e71" style="" data-tcb-events="__TCB_EVENT_[{&quot;t&quot;:&quot;tve-viewport&quot;,&quot;config&quot;:{&quot;anim&quot;:&quot;slide_bottom&quot;,&quot;loop&quot;:0},&quot;a&quot;:&quot;thrive_animation&quot;}]_TNEVE_BCT__"><p data-css="tve-u-175b32fea31" style="">chi ha fatto il percorso</p></div><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tcb-local-vars-root tve-elem-with-group" data-css="tve-u-175b32a5c83" data-ct-name="Image-right 02" data-ct="testimonial-60553" data-element-name="Testimonial" style=""><div class="thrive-group-edit-config" style="display: none !important"></div>
-<div class="tve-content-box-background" data-css="tve-u-175b32a5c85" data-ct-name="Geometric Waves" data-ct="fancydivider-37868" data-element-name="Fancy Divider" style=""></div>
-<div class="tve-cb tve_empty_dropzone" data-css="tve-u-175b32a5c86" style=""><div class="thrv_wrapper thrv-columns tcb-local-vars-root dynamic-group-kcaqb04m" data-css="tve-u-175b32a5c87" style="--tcb-col-el-width: 1278;"><div class="tcb-flex-row v-2 tcb--cols--3" data-css="tve-u-175b32a5c88" style=""><div class="tcb-flex-col" style=""><div class="tcb-col tcb-local-vars-root dynamic-group-kcaqat02" style="" data-css="tve-u-175b32a5c89"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad tcb-local-vars-root dynamic-group-kcaqam85" data-css="tve-u-175b32a5c8a" style="">
-	<div class="tve-content-box-background" data-css="tve-u-175b330b56e" style=""></div>
-	<div class="tve-cb"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad tcb-local-vars-root dynamic-group-kcaqacbw" data-css="tve-u-175b32a5c8c" style="">
-	<div class="tve-content-box-background" data-css="tve-u-175b32a5c8d" style=""></div>
-	<div class="tve-cb" data-css="tve-u-175b32a5c8e" style=""><div class="thrv_wrapper thrv_text_element tcb-local-vars-root dynamic-group-kcaqa4ng" data-css="tve-u-175b32a5c8f" style=""><p class="tcb-global-text-" style="" data-css="tve-u-175b32a5c90">Le domande giuste che Marco fa durante il percorso sono in grado di metterci in contatto con noi stessi, in modo molto profondo, e questo è il grande presupposto per poter proseguire con successo.<br>Nessuno può toglierci la "patata bollente" di fare il lavoro per noi ma avere una guida saggia ed esperta come Marco può fare davvero la differenza.</p></div></div>
-</div><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad tcb-local-vars-root dynamic-group-kcaq9tf0" data-css="tve-u-175b32a5c91" style="">
-	<div class="tve-content-box-background" style="" data-css="tve-u-175b32a5c92"></div>
-	<div class="tve-cb" style="" data-css="tve-u-175b32a5c93"><div class="thrv_wrapper thrv-columns tcb-local-vars-root dynamic-group-kcaq9kcg" data-css="tve-u-175b32a5c94" style="--tcb-col-el-width: 324;"><div class="tcb-flex-row v-2 tcb--cols--2 tcb-mobile-no-wrap m-edit tcb-resized" data-css="tve-u-175b32a5c95" style=""><div class="tcb-flex-col" data-css="tve-u-175b32a5c96" style=""><div class="tcb-col tcb-local-vars-root dynamic-group-kcaq9cev"><div class="thrv_wrapper thrv_text_element tve_empty_dropzone tcb-local-vars-root dynamic-group-kcaq8r87" data-css="tve-u-175b32a5c97" style=""><h4 class="" data-css="tve-u-175b32a5c98" style="">Antonio Furfaro</h4></div><div class="thrv_wrapper thrv_text_element tve_empty_dropzone tcb-local-vars-root dynamic-group-kcaq8wl7" data-css="tve-u-175b32a5c99" style=""><p class="tcb-global-text-" data-css="tve-u-175b32a5c9a" style="">Fisioterapista</p></div></div></div><div class="tcb-flex-col" data-css="tve-u-175b32a5c9b" style=""><div class="tcb-col tcb-local-vars-root dynamic-group-kcaq95iz"><div class="tcb-clear" data-css="tve-u-175b32a5c9c"><div class="thrv_wrapper tve_image_caption tcb-local-vars-root dynamic-group-kcaq8c0l" data-css="tve-u-175b32a5c9d" style=""><span class="tve_image_frame"><img data-opt-id=1373802249  fetchpriority="high" decoding="async" class="tve_image wp-image-4125" alt="Feedback Antonio - Creazione del Messaggio Autentico" data-id="4125" width="69" data-init-width="1330" height="69" data-init-height="1328" title="Schermata 2020-10-05 alle 13.46.59" src="https://mlfqwn4vwjlv.i.optimole.com/w:69/h:69/q:mauto/g:sm/f:best/ig:avif/dpr:2/https://marcomunich.com/wp-content/uploads/2020/10/Schermata-2020-10-05-alle-13.46.59.png" data-width="69" data-height="69" data-css="tve-u-175b32a5c9e" style="aspect-ratio: auto 1330 / 1328;" loading="lazy" srcset="https://mlfqwn4vwjlv.i.optimole.com/w:1081/h:1080/q:mauto/g:sm/f:best/ig:avif/https://marcomunich.com/wp-content/uploads/2020/10/Schermata-2020-10-05-alle-13.46.59.png 1330w, https://mlfqwn4vwjlv.i.optimole.com/w:300/h:300/q:mauto/g:sm/f:best/ig:avif/https://marcomunich.com/wp-content/uploads/2020/10/Schermata-2020-10-05-alle-13.46.59.png 300w, https://mlfqwn4vwjlv.i.optimole.com/w:1024/h:1022/q:mauto/g:sm/f:best/ig:avif/https://marcomunich.com/wp-content/uploads/2020/10/Schermata-2020-10-05-alle-13.46.59.png 1024w, https://mlfqwn4vwjlv.i.optimole.com/w:150/h:150/q:mauto/g:sm/f:best/ig:avif/https://marcomunich.com/wp-content/uploads/2020/10/Schermata-2020-10-05-alle-13.46.59.png 150w, https://mlfqwn4vwjlv.i.optimole.com/w:768/h:767/q:mauto/g:sm/f:best/ig:avif/https://marcomunich.com/wp-content/uploads/2020/10/Schermata-2020-10-05-alle-13.46.59.png 768w" sizes="auto, (max-width: 69px) 100vw, 69px" /></span></div></div></div></div></div></div></div>
-</div></div>
-</div></div></div><div class="tcb-flex-col" style="" data-css="tve-u-17892403e5b"><div class="tcb-col tcb-local-vars-root dynamic-group-kcaqat02" style="" data-css="tve-u-175b32a5c9f"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad tcb-local-vars-root dynamic-group-kcaqam85" data-css="tve-u-175b32a5c8a" style="">
-	<div class="tve-content-box-background" data-css="tve-u-175b330b573" style=""></div>
-	<div class="tve-cb"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad tcb-local-vars-root dynamic-group-kcaqacbw" data-css="tve-u-175b32a5ca0" style="">
-	<div class="tve-content-box-background" data-css="tve-u-175b32a5c8d" style=""></div>
-	<div class="tve-cb" data-css="tve-u-175b32a5ca1" style=""><div class="thrv_wrapper thrv_text_element tcb-local-vars-root dynamic-group-kcaqa4ng" data-css="tve-u-175b32a5c8f" style=""><p class="tcb-global-text-" style="line-height: 1.75em !important;" data-css="tve-u-175b32a5ca2">Questo corso è una guida con cui Marco ti accompagna passo dopo passo nell'elaborazione dei contenuti che arrivano dritti al cuore del cliente, fedeli alla tua vera natura ed al tuo personale modo di esprimerti. Ottimo.</p></div></div>
-</div><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad tcb-local-vars-root dynamic-group-kcaq9tf0" data-css="tve-u-175b32a5ca4" style="">
-	<div class="tve-content-box-background" style="" data-css="tve-u-175b32a5ca5"></div>
-	<div class="tve-cb" style="" data-css="tve-u-175b32a5c93"><div class="thrv_wrapper thrv-columns tcb-local-vars-root dynamic-group-kcaq9kcg" data-css="tve-u-175b32a5c94" style="--tcb-col-el-width: 324;"><div class="tcb-flex-row v-2 tcb--cols--2 tcb-mobile-no-wrap m-edit tcb-resized" data-css="tve-u-175b32a5ca6" style=""><div class="tcb-flex-col" data-css="tve-u-175b32a5ca7" style=""><div class="tcb-col tcb-local-vars-root dynamic-group-kcaq9cev"><div class="thrv_wrapper thrv_text_element tve_empty_dropzone tcb-local-vars-root dynamic-group-kcaq8r87" data-css="tve-u-175b32a5c97" style=""><h4 class="" data-css="tve-u-175b32a5ca8" style="">Barbara&nbsp;</h4></div><div class="thrv_wrapper thrv_text_element tve_empty_dropzone tcb-local-vars-root dynamic-group-kcaq8wl7" data-css="tve-u-175b32a5ca9" style=""><p class="tcb-global-text-" data-css="tve-u-175b32a5caa" style="">Coach</p></div></div></div><div class="tcb-flex-col" data-css="tve-u-175b32a5cab" style=""><div class="tcb-col tcb-local-vars-root dynamic-group-kcaq95iz"><div class="tcb-clear" data-css="tve-u-175b32a5c9c"><div class="thrv_wrapper tve_image_caption tcb-local-vars-root dynamic-group-kcaq8c0l" data-css="tve-u-175b32a5cac" style=""><span class="tve_image_frame"><img data-opt-id=1937259052  fetchpriority="high" decoding="async" class="tve_image wp-image-4124" alt="Feedback Barbara - Creazione del Messaggio Autentico" data-id="4124" width="69" data-init-width="1046" height="69" data-init-height="1054" title="Feedback Barbara - Creazione del Messaggio Autentico" src="https://mlfqwn4vwjlv.i.optimole.com/w:69/h:69/q:mauto/g:sm/f:best/ig:avif/dpr:2/https://marcomunich.com/wp-content/uploads/2020/10/Schermata-2020-10-05-alle-13.35.05.png" data-width="69" data-height="69" data-css="tve-u-175b32a5cad" style="aspect-ratio: auto 1046 / 1054;" loading="lazy" srcset="https://mlfqwn4vwjlv.i.optimole.com/w:1046/h:1054/q:mauto/g:sm/f:best/ig:avif/https://marcomunich.com/wp-content/uploads/2020/10/Schermata-2020-10-05-alle-13.35.05.png 1046w, https://mlfqwn4vwjlv.i.optimole.com/w:298/h:300/q:mauto/g:sm/f:best/ig:avif/https://marcomunich.com/wp-content/uploads/2020/10/Schermata-2020-10-05-alle-13.35.05.png 298w, https://mlfqwn4vwjlv.i.optimole.com/w:1016/h:1024/q:mauto/g:sm/f:best/ig:avif/https://marcomunich.com/wp-content/uploads/2020/10/Schermata-2020-10-05-alle-13.35.05.png 1016w, https://mlfqwn4vwjlv.i.optimole.com/w:150/h:150/q:mauto/g:sm/f:best/ig:avif/https://marcomunich.com/wp-content/uploads/2020/10/Schermata-2020-10-05-alle-13.35.05.png 150w, https://mlfqwn4vwjlv.i.optimole.com/w:768/h:774/q:mauto/g:sm/f:best/ig:avif/https://marcomunich.com/wp-content/uploads/2020/10/Schermata-2020-10-05-alle-13.35.05.png 768w" sizes="auto, (max-width: 69px) 100vw, 69px" /></span></div></div></div></div></div></div></div>
-</div></div>
-</div></div></div><div class="tcb-flex-col" style=""><div class="tcb-col tcb-local-vars-root dynamic-group-kcaqat02" style=""><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad tcb-local-vars-root dynamic-group-kcaqam85" data-css="tve-u-175b32a5cae" style="">
-	<div class="tve-content-box-background" data-css="tve-u-175b32a5c8b" style=""></div>
-	<div class="tve-cb" style="" data-css="tve-u-175b32a5caf"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad tcb-local-vars-root dynamic-group-kcaqacbw" data-css="tve-u-175b32a5cb0" style="">
-	<div class="tve-content-box-background" data-css="tve-u-175b32a5c8d" style=""></div>
-	<div class="tve-cb" data-css="tve-u-175b32a5cb1" style=""><div class="thrv_wrapper thrv_text_element tcb-local-vars-root dynamic-group-kcaqa4ng" data-css="tve-u-175b32a5c8f" style=""><p class="tcb-global-text-" style="line-height: 1.75em !important;" data-css="tve-u-175b32a5cb2">Questo corso mi sta stimolando a usare la mia creatività per mettere sempre di più la faccia in quello che pubblico.<br>Assieme a questo ho acquisito una struttura per poter costruire al meglio i miei articoli: è come avere un "canovaccio" all'interno del quale muovermi per essere più chiara e impattante possibile, per fare capire chi sono e cosa faccio. Mi dona conforto e mi sono già resa conto, dai feedback ricevuti, che, rispetto agli articoli che scrivevo prima, ora risulto molto più chiara e professionale.</p></div></div>
-</div><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad tcb-local-vars-root dynamic-group-kcaq9tf0" data-css="tve-u-175b32a5cb3" style="">
-	<div class="tve-content-box-background" style="" data-css="tve-u-175b32a5cb4"></div>
-	<div class="tve-cb" style="" data-css="tve-u-175b32a5c93"><div class="thrv_wrapper thrv-columns tcb-local-vars-root dynamic-group-kcaq9kcg" data-css="tve-u-175b32a5c94" style="--tcb-col-el-width: 324;"><div class="tcb-flex-row v-2 tcb--cols--2 tcb-mobile-no-wrap m-edit tcb-resized" data-css="tve-u-175b32a5cb5" style=""><div class="tcb-flex-col" data-css="tve-u-175b32a5cb6" style=""><div class="tcb-col tcb-local-vars-root dynamic-group-kcaq9cev"><div class="thrv_wrapper thrv_text_element tve_empty_dropzone tcb-local-vars-root dynamic-group-kcaq8r87" data-css="tve-u-175b32a5c97" style=""><h4 class="" data-css="tve-u-175b32a5cb7" style="">Daniela</h4></div><div class="thrv_wrapper thrv_text_element tve_empty_dropzone tcb-local-vars-root dynamic-group-kcaq8wl7" data-css="tve-u-175b32a5ca9" style=""><p class="tcb-global-text-" data-css="tve-u-175b32a5cb8" style="">Op. Olistico</p></div></div></div><div class="tcb-flex-col" data-css="tve-u-175b32a5cb9" style=""><div class="tcb-col tcb-local-vars-root dynamic-group-kcaq95iz"><div class="tcb-clear" data-css="tve-u-175b32a5c9c"><div class="thrv_wrapper tve_image_caption tcb-local-vars-root dynamic-group-kcaq8c0l" data-css="tve-u-175b32a5cba" style=""><span class="tve_image_frame"><img data-opt-id=1454629303  data-opt-src="https://mlfqwn4vwjlv.i.optimole.com/w:69/h:69/q:mauto/g:sm/f:best/ig:avif/dpr:2/https://marcomunich.com/wp-content/uploads/2020/04/88157255_2770843336334644_5666516199479967744_n.jpg"  decoding="async" class="tve_image wp-image-1750" alt="recensione creazione messaggio autentico consulente marketing per coach, operatori olistici e terapeuti" data-id="1750" width="69" data-init-width="724" height="69" data-init-height="722" title="recensione creazione messaggio autentico consulente marketing coach operatori olistici terapeuti" src="data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%2069%2069%22%20width%3D%2269%22%20height%3D%2269%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Crect%20width%3D%2269%22%20height%3D%2269%22%20fill%3D%22transparent%22%2F%3E%3C%2Fsvg%3E" data-width="69" data-height="69" data-css="tve-u-175b32a5cbb" style="aspect-ratio: auto 724 / 722;" /><noscript><img data-opt-id=1454629303  decoding="async" class="tve_image wp-image-1750" alt="recensione creazione messaggio autentico consulente marketing per coach, operatori olistici e terapeuti" data-id="1750" width="69" data-init-width="724" height="69" data-init-height="722" title="recensione creazione messaggio autentico consulente marketing coach operatori olistici terapeuti" src="https://mlfqwn4vwjlv.i.optimole.com/w:69/h:69/q:mauto/g:sm/f:best/ig:avif/dpr:2/https://marcomunich.com/wp-content/uploads/2020/04/88157255_2770843336334644_5666516199479967744_n.jpg" data-width="69" data-height="69" data-css="tve-u-175b32a5cbb" style="aspect-ratio: auto 724 / 722;"  srcset="https://mlfqwn4vwjlv.i.optimole.com/w:724/h:722/q:mauto/g:sm/f:best/ig:avif/https://mlfqwn4vwjlv.i.optimole.com/w:69/h:69/q:mauto/g:sm/f:best/ig:avif/dpr:2/https://marcomunich.com/wp-content/uploads/2020/04/88157255_2770843336334644_5666516199479967744_n.jpg 724w, https://mlfqwn4vwjlv.i.optimole.com/w:300/h:300/q:mauto/g:sm/f:best/ig:avif/https://mlfqwn4vwjlv.i.optimole.com/w:69/h:69/q:mauto/g:sm/f:best/ig:avif/dpr:2/https://marcomunich.com/wp-content/uploads/2020/04/88157255_2770843336334644_5666516199479967744_n.jpg 300w, https://mlfqwn4vwjlv.i.optimole.com/w:150/h:150/q:mauto/g:sm/f:best/ig:avif/https://mlfqwn4vwjlv.i.optimole.com/w:69/h:69/q:mauto/g:sm/f:best/ig:avif/dpr:2/https://marcomunich.com/wp-content/uploads/2020/04/88157255_2770843336334644_5666516199479967744_n.jpg 150w, https://mlfqwn4vwjlv.i.optimole.com/w:65/h:65/q:mauto/g:sm/f:best/ig:avif/dpr:2/https://mlfqwn4vwjlv.i.optimole.com/w:69/h:69/q:mauto/g:sm/f:best/ig:avif/dpr:2/https://marcomunich.com/wp-content/uploads/2020/04/88157255_2770843336334644_5666516199479967744_n.jpg 65w, https://mlfqwn4vwjlv.i.optimole.com/w:220/h:220/q:mauto/g:sm/f:best/ig:avif/https://mlfqwn4vwjlv.i.optimole.com/w:69/h:69/q:mauto/g:sm/f:best/ig:avif/dpr:2/https://marcomunich.com/wp-content/uploads/2020/04/88157255_2770843336334644_5666516199479967744_n.jpg 220w, https://mlfqwn4vwjlv.i.optimole.com/w:86/h:86/q:mauto/g:sm/f:best/ig:avif/dpr:2/https://mlfqwn4vwjlv.i.optimole.com/w:69/h:69/q:mauto/g:sm/f:best/ig:avif/dpr:2/https://marcomunich.com/wp-content/uploads/2020/04/88157255_2770843336334644_5666516199479967744_n.jpg 86w" sizes="auto, (max-width: 69px) 100vw, 69px" /></noscript></span></div></div></div></div></div></div></div>
-</div></div>
-</div></div></div></div></div><div class="thrv_wrapper thrv-button thrv-button-v2 tcb-local-vars-root" data-button-style="btn-tpl-58334" data-css="tve-u-178925247a4" style="" data-button-size="s"><div class="thrive-colors-palette-config" style="display: none !important"></div>
-	
-	<a href="#tve-jump-1789238bd08" class="tcb-button-link tcb-plain-text tve-jump-scroll" jump-animation="smooth">
-		<span class="tcb-button-texts" style=""><span class="tcb-button-text thrv-inline-text" style="">COSTI E INFORMAZIONI</span></span>
-	</a>
-</div></div>
-</div></div>
-</div><div data-inherit-lp-settings="1" data-match-lp-colors="1" class="thrv_wrapper thrv-page-section tve-height-update thrv-lp-block tcb-local-vars-root" data-css="tve-u-178920ade68" style="" tcb-template-name="List Content 03" tcb-template-id="66901" data-keep-css_id="1"><div class="thrive-group-edit-config" style="display: none !important"></div><div class="thrive-local-colors-config" style="display: none !important"></div>
-	<div class="tve-page-section-out"></div>
-	<div class="tve-page-section-in   tve_empty_dropzone" data-css="tve-u-178920ade69" style=""><div class="thrv_wrapper thrv_text_element" style="" data-css="tve-u-178920ade6a"><h2 class="" data-css="tve-u-178920ade6b" style="text-align: center;"><strong>Di cosa parleremo</strong></h2></div><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad dynamic-group-khkjhxk4" style="" data-css="tve-u-178920ade6d">
-	<div class="tve-content-box-background" style="" data-css="tve-u-178920ade6e"></div>
-	<div class="tve-cb" data-css="tve-u-178920ade6f" style=""><div class="thrv_wrapper thrv-columns dynamic-group-khkjhr12" style="--tcb-col-el-width: 1252;" data-css="tve-u-178920ade70"><div class="tcb-flex-row v-2 tcb--cols--2 tcb-resized" style="" data-css="tve-u-178920ade71"><div class="tcb-flex-col" data-css="tve-u-178920ade72" style=""><div class="tcb-col dynamic-group-khkjhjp4" style="padding: 0px !important;" data-css="tve-u-178920ade73"><div class="tcb-clear" data-css="tve-u-178920ade74"><div class="thrv_wrapper thrv_icon tcb-icon-display tcb-local-vars-root dynamic-group-khkjgu1a" data-css="tve-u-178920ade75" style=""><svg class="tcb-icon" viewBox="0 0 512 512" data-id="icon-exclamation-circle-solid" data-name=""><path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"></path></svg></div></div></div></div><div class="tcb-flex-col" data-css="tve-u-178920ade76" style=""><div class="tcb-col dynamic-group-khkjhe7c" style="" data-css="tve-u-178920ade77"><div class="thrv_wrapper thrv_text_element dynamic-group-khkjh1u3" style="" data-css="tve-u-178920ade78"><h5 class="" style="" data-css="tve-u-178920ade79"><strong>Introduzione e Premesse Fondamentali</strong></h5></div><div class="thrv_wrapper thrv_text_element dynamic-group-khkjh7aw" style="" data-css="tve-u-178920ade7a"><p data-css="tve-u-178920ade7b" style="">In questa introduzione parlo dell'importanza dell'esplorazione "senza agenda" e di quanto la mente cercherà in qualsiasi modo, di impedirti di agire senza una strategia. Senza queste informazioni prima di cominciare, diventa quasi impossibile capire il senso di quello che andremo a fare: questa lezione è gratuita.</p></div></div></div></div></div></div>
-</div><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad dynamic-group-khkjhxk4" style="" data-css="tve-u-178920ade7c">
-	<div class="tve-content-box-background" style="" data-css="tve-u-178920ade7d"></div>
-	<div class="tve-cb" data-css="tve-u-178920ade7e" style=""><div class="thrv_wrapper thrv-columns dynamic-group-khkjhr12" style="--tcb-col-el-width: 1252;" data-css="tve-u-178920ade7f"><div class="tcb-flex-row v-2 tcb--cols--2 tcb-resized" style="" data-css="tve-u-178920ade80"><div class="tcb-flex-col" data-css="tve-u-178920ade81" style=""><div class="tcb-col dynamic-group-khkjhjp4" style="padding: 0px !important;" data-css="tve-u-178920ade82"><div class="tcb-clear" data-css="tve-u-178920ade83"><div class="thrv_wrapper thrv_icon tcb-icon-display tcb-local-vars-root dynamic-group-khkjgu1a" data-css="tve-u-178920ade84" style=""><svg class="tcb-icon" viewBox="0 0 512 512" data-id="icon-history-solid" data-name=""><path d="M504 255.531c.253 136.64-111.18 248.372-247.82 248.468-59.015.042-113.223-20.53-155.822-54.911-11.077-8.94-11.905-25.541-1.839-35.607l11.267-11.267c8.609-8.609 22.353-9.551 31.891-1.984C173.062 425.135 212.781 440 256 440c101.705 0 184-82.311 184-184 0-101.705-82.311-184-184-184-48.814 0-93.149 18.969-126.068 49.932l50.754 50.754c10.08 10.08 2.941 27.314-11.313 27.314H24c-8.837 0-16-7.163-16-16V38.627c0-14.254 17.234-21.393 27.314-11.314l49.372 49.372C129.209 34.136 189.552 8 256 8c136.81 0 247.747 110.78 248 247.531zm-180.912 78.784l9.823-12.63c8.138-10.463 6.253-25.542-4.21-33.679L288 256.349V152c0-13.255-10.745-24-24-24h-16c-13.255 0-24 10.745-24 24v135.651l65.409 50.874c10.463 8.137 25.541 6.253 33.679-4.21z"></path></svg></div></div></div></div><div class="tcb-flex-col" data-css="tve-u-178920ade85" style=""><div class="tcb-col dynamic-group-khkjhe7c" style="" data-css="tve-u-178920ade86"><div class="thrv_wrapper thrv_text_element dynamic-group-khkjh1u3" style="" data-css="tve-u-178920ade87"><h5 class="" data-css="tve-u-178920ade88"><strong>Lezione 1: Ritorno al passato e Creazione della Dichiarazione di Unicità</strong></h5></div><div class="thrv_wrapper thrv_text_element dynamic-group-khkjh7aw" style="" data-css="tve-u-178920ade89"><p>Focalizzarci per un attimo sul tuo passato per capire come la vita ti ha preparato ad aiutare gli altri e creare un "manifesto" personale e unico per risuonare solo con chi ti vede per quello che sai dare al mondo.</p></div></div></div></div></div></div>
-</div><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad dynamic-group-khkjhxk4" style="" data-css="tve-u-178920ade8b">
-	<div class="tve-content-box-background" style="" data-css="tve-u-178920ade8c"></div>
-	<div class="tve-cb" data-css="tve-u-178920ade8d" style=""><div class="thrv_wrapper thrv-columns dynamic-group-khkjhr12" style="--tcb-col-el-width: 1252;" data-css="tve-u-178920ade8e"><div class="tcb-flex-row v-2 tcb--cols--2 tcb-resized" style="" data-css="tve-u-178920ade8f"><div class="tcb-flex-col" data-css="tve-u-178920ade90" style=""><div class="tcb-col dynamic-group-khkjhjp4" style="padding: 0px !important;" data-css="tve-u-178920ade91"><div class="tcb-clear" data-css="tve-u-178920ade92"><div class="thrv_wrapper thrv_icon tcb-icon-display tcb-local-vars-root dynamic-group-khkjgu1a" data-css="tve-u-178920ade93" style=""><svg class="tcb-icon" viewBox="0 0 640 512" data-id="icon-hands-helping-solid" data-name=""><path d="M488 192H336v56c0 39.7-32.3 72-72 72s-72-32.3-72-72V126.4l-64.9 39C107.8 176.9 96 197.8 96 220.2v47.3l-80 46.2C.7 322.5-4.6 342.1 4.3 357.4l80 138.6c8.8 15.3 28.4 20.5 43.7 11.7L231.4 448H368c35.3 0 64-28.7 64-64h16c17.7 0 32-14.3 32-32v-64h8c13.3 0 24-10.7 24-24v-48c0-13.3-10.7-24-24-24zm147.7-37.4L555.7 16C546.9.7 527.3-4.5 512 4.3L408.6 64H306.4c-12 0-23.7 3.4-33.9 9.7L239 94.6c-9.4 5.8-15 16.1-15 27.1V248c0 22.1 17.9 40 40 40s40-17.9 40-40v-88h184c30.9 0 56 25.1 56 56v28.5l80-46.2c15.3-8.9 20.5-28.4 11.7-43.7z"></path></svg></div></div></div></div><div class="tcb-flex-col" data-css="tve-u-178920ade94" style=""><div class="tcb-col dynamic-group-khkjhe7c" style="" data-css="tve-u-178920ade95"><div class="thrv_wrapper thrv_text_element dynamic-group-khkjh1u3" style="" data-css="tve-u-178920ade96"><h5 class="" data-css="tve-u-178920ade97"><strong>Lezione 2: Le Sfide che affrontano e l'aiuto che pensano di necessitare</strong></h5></div><div class="thrv_wrapper thrv_text_element dynamic-group-khkjh7aw" style="" data-css="tve-u-178920ade98"><p data-css="tve-u-178920ade99" style="">Dopo aver identificato il focus a partire da te, esploriamo il mondo attraverso gli occhi delle persone che aiuti e specifichiamo insieme un’area di argomenti su cui basarti, da oggi in poi.</p></div></div></div></div></div></div>
-</div><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad dynamic-group-khkjhxk4" style="" data-css="tve-u-178920ade8b" id="tva-res-178922245ed">
-	<div class="tve-content-box-background" style="" data-css="tve-u-178920ade8c"></div>
-	<div class="tve-cb" data-css="tve-u-178920ade8d" style=""><div class="thrv_wrapper thrv-columns dynamic-group-khkjhr12" style="--tcb-col-el-width: 1252;" data-css="tve-u-178920ade8e"><div class="tcb-flex-row v-2 tcb--cols--2 tcb-resized" style="" data-css="tve-u-178920ade8f"><div class="tcb-flex-col" data-css="tve-u-178920ade90" style=""><div class="tcb-col dynamic-group-khkjhjp4" style="padding: 0px !important;" data-css="tve-u-178920ade91"><div class="tcb-clear" data-css="tve-u-178920ade92"><div class="thrv_wrapper thrv_icon tcb-icon-display tcb-local-vars-root dynamic-group-khkjgu1a" data-css="tve-u-178920ade93" style=""><svg class="tcb-icon" viewBox="0 0 576 512" data-id="icon-eye-solid" data-name=""><path d="M572.52 241.4C518.29 135.59 410.93 64 288 64S57.68 135.64 3.48 241.41a32.35 32.35 0 0 0 0 29.19C57.71 376.41 165.07 448 288 448s230.32-71.64 284.52-177.41a32.35 32.35 0 0 0 0-29.19zM288 400a144 144 0 1 1 144-144 143.93 143.93 0 0 1-144 144zm0-240a95.31 95.31 0 0 0-25.31 3.79 47.85 47.85 0 0 1-66.9 66.9A95.78 95.78 0 1 0 288 160z"></path></svg></div></div></div></div><div class="tcb-flex-col" data-css="tve-u-178920ade94" style=""><div class="tcb-col dynamic-group-khkjhe7c" style="" data-css="tve-u-178920ade95"><div class="thrv_wrapper thrv_text_element dynamic-group-khkjh1u3" style="" data-css="tve-u-178920ade96"><h5 class="" style="" data-css="tve-u-178920ade97"><strong>Lezione 3: La tua Visione del Mondo</strong></h5></div><div class="thrv_wrapper thrv_text_element dynamic-group-khkjh7aw" style="" data-css="tve-u-178920ade98"><p data-css="tve-u-178920ade99" style="">Rafforzeremo il tuo punto di vista in modo che tu possa creare contenuti attraverso questo nuovo obiettivo e lasciare un imprinting nel cuore e nella mente del tuo pubblico.</p></div></div></div></div></div></div>
-</div><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad dynamic-group-khkjhxk4" style="" data-css="tve-u-178920ade8b" id="tva-res-178923539f7">
-	<div class="tve-content-box-background" style="" data-css="tve-u-178920ade8c"></div>
-	<div class="tve-cb" data-css="tve-u-178920ade8d" style=""><div class="thrv_wrapper thrv-columns dynamic-group-khkjhr12" style="--tcb-col-el-width: 1252;" data-css="tve-u-178920ade8e"><div class="tcb-flex-row v-2 tcb--cols--2 tcb-resized" style="" data-css="tve-u-178920ade8f"><div class="tcb-flex-col" data-css="tve-u-178920ade90" style=""><div class="tcb-col dynamic-group-khkjhjp4" style="padding: 0px !important;" data-css="tve-u-178920ade91"><div class="tcb-clear" data-css="tve-u-178920ade92"><div class="thrv_wrapper thrv_icon tcb-icon-display tcb-local-vars-root dynamic-group-khkjgu1a" data-css="tve-u-178920ade93" style=""><svg class="tcb-icon" viewBox="0 0 512 512" data-id="icon-flag-checkered-solid" data-name=""><path d="M243.2 189.9V258c26.1 5.9 49.3 15.6 73.6 22.3v-68.2c-26-5.8-49.4-15.5-73.6-22.2zm223.3-123c-34.3 15.9-76.5 31.9-117 31.9C296 98.8 251.7 64 184.3 64c-25 0-47.3 4.4-68 12 2.8-7.3 4.1-15.2 3.6-23.6C118.1 24 94.8 1.2 66.3 0 34.3-1.3 8 24.3 8 56c0 19 9.5 35.8 24 45.9V488c0 13.3 10.7 24 24 24h16c13.3 0 24-10.7 24-24v-94.4c28.3-12.1 63.6-22.1 114.4-22.1 53.6 0 97.8 34.8 165.2 34.8 48.2 0 86.7-16.3 122.5-40.9 8.7-6 13.8-15.8 13.8-26.4V95.9c.1-23.3-24.2-38.8-45.4-29zM169.6 325.5c-25.8 2.7-50 8.2-73.6 16.6v-70.5c26.2-9.3 47.5-15 73.6-17.4zM464 191c-23.6 9.8-46.3 19.5-73.6 23.9V286c24.8-3.4 51.4-11.8 73.6-26v70.5c-25.1 16.1-48.5 24.7-73.6 27.1V286c-27 3.7-47.9 1.5-73.6-5.6v67.4c-23.9-7.4-47.3-16.7-73.6-21.3V258c-19.7-4.4-40.8-6.8-73.6-3.8v-70c-22.4 3.1-44.6 10.2-73.6 20.9v-70.5c33.2-12.2 50.1-19.8 73.6-22v71.6c27-3.7 48.4-1.3 73.6 5.7v-67.4c23.7 7.4 47.2 16.7 73.6 21.3v68.4c23.7 5.3 47.6 6.9 73.6 2.7V143c27-4.8 52.3-13.6 73.6-22.5z"></path></svg></div></div></div></div><div class="tcb-flex-col" data-css="tve-u-178920ade94" style=""><div class="tcb-col dynamic-group-khkjhe7c" style="" data-css="tve-u-178920ade95"><div class="thrv_wrapper thrv_text_element dynamic-group-khkjh1u3" style="" data-css="tve-u-178920ade96"><h5 class="" style="" data-css="tve-u-178920ade97"><strong>Lezione 4: Concretizzazione del Contenuto e Creazione dell'offerta Autentica</strong></h5></div><div class="thrv_wrapper thrv_text_element dynamic-group-khkjh7aw" style="" data-css="tve-u-178920ade98"><p data-css="tve-u-178920ade99" style="">Vedremo insieme come riconoscere lo spazio da cui il cliente proviene e come "parlare la loro lingua". Ti mostrerò anche come creare un’offerta basandoti su questo sistema autentico. Ti fornirò anche dei pdf per cominciare subito a strutturare contenuti.</p></div></div></div></div></div></div>
-</div></div>
-</div><div data-inherit-lp-settings="1" data-match-lp-colors="1" class="thrv_wrapper thrv-page-section tve-height-update thrv-lp-block tcb-local-vars-root" data-css="tve-u-17ab8cfd7a7" style="" tcb-template-name="Pricing 01" tcb-template-id="66409" data-keep-css_id="1"><div class="thrive-group-edit-config" style="display: none !important"></div><div class="thrive-local-colors-config" style="display: none !important"></div>
-	<div class="tve-page-section-out tcb-responsive-video"></div>
-	<div class="tve-page-section-in   tve_empty_dropzone" data-css="tve-u-17ab8d05ae6"><div class="thrv_wrapper thrv_text_element" data-css="tve-u-17ab8cfd7a9"><h2 class="" data-css="tve-u-17ab8cfd7aa" style="text-align: center;"><strong>Costi e Informazioni</strong></h2></div><div class="thrv_wrapper thrv-pricing-table" data-ct="pricing_table-25459" data-ct-name="Storyteller 3-Column with toggle" data-element-name="Pricing Table" data-css="tve-u-17ab8cfd7ab" style="">
-<div class="thrv_wrapper thrv-button-group tcb-no-clone tcb-no-delete tve_no_drag tcb-no-save tcb-permanently-hidden" data-price-button-group="tve-u-price-button-group-164f5ac3656"><div class="thrv_wrapper thrv-button-group-item tcb-no-clone tcb-no-delete tve_no_drag tcb-no-title tcb-no-save tcb-active-state" data-default="true" data-instance="14718" data-selector="[data-price-button-group=&quot;tve-u-price-button-group-164f5ac3656&quot;] .thrv-button-group-item.tcb-active-state" style="--tve-border-width:1px;">
-<a href="#" class="tcb-button-link">
-<span class="tcb-button-texts" style=""><span class="tcb-button-text thrv-inline-text" style="">Yearly</span></span>
-</a>
-</div></div>
-<div class="tcb-flex-row tcb-pricing-table-box-container tcb-desktop-no-wrap tcb-medium-wrap tcb--cols--1" data-instance="14718" data-css="tve-u-17ab8cfd7ac" style=""><div class="tcb-flex-col" data-label="Basic" style="">
-<div class="tcb-col dynamic-group-khem2lph" data-css="tve-u-17ab8cfd7ad">
-
-</div>
-</div></div>
-</div></div>
-</div><div data-inherit-lp-settings="1" data-match-lp-colors="1" class="thrv_wrapper thrv-page-section tve-height-update thrv-lp-block tcb-local-vars-root" data-css="tve-u-17891fa81f7" style="" tcb-template-name="Pricing 01" tcb-template-id="66409" data-keep-css_id="1" id="tve-jump-1789238bd08"><div class="thrive-group-edit-config" style="display: none !important"></div><div class="thrive-local-colors-config" style="display: none !important"></div>
-	<div class="tve-page-section-out"></div>
-	<div class="tve-page-section-in   tve_empty_dropzone" data-css="tve-u-193bbd65b48"><div class="thrv_wrapper thrv_text_element" data-css="tve-u-17891fa81f9" id="tve-jump-178923aa976"><h2 class="" data-css="tve-u-17891fa81fa" style="text-align: center;">Costi</h2></div><div class="thrv_wrapper thrv-pricing-table" data-ct="pricing_table-25459" data-ct-name="Storyteller 3-Column with toggle" data-element-name="Pricing Table" data-css="tve-u-17891fa81fb" style="">
-<div class="thrv_wrapper thrv-button-group tcb-no-clone tcb-no-delete tve_no_drag tcb-no-save" data-price-button-group="tve-u-price-button-group-164f5ac3656" style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;" data-css="tve-u-193bbd71c5f"><div class="thrv_wrapper thrv-button-group-item tcb-no-clone tcb-no-delete tve_no_drag tcb-no-title tcb-no-save tcb-active-state" data-default="true" data-instance="14718" data-selector="[data-price-button-group=&quot;tve-u-price-button-group-164f5ac3656&quot;] .thrv-button-group-item:not(.tcb-active-state)" style="--tve-border-width:1px; flex: 0 1 auto;">
-<a href="#" class="tcb-button-link">
-<span class="tcb-button-texts" style=""><span class="tcb-button-text thrv-inline-text" style="">PAGAMENTO UNICO</span></span>
-</a>
-</div><div class="thrv_wrapper thrv-button-group-item tcb-no-clone tcb-no-delete tve_no_drag tcb-no-title tcb-no-save" data-instance="88231" data-selector="[data-price-button-group=&quot;tve-u-price-button-group-164f5ac3656&quot;] .thrv-button-group-item.tcb-active-state" style="--tve-border-width: 1px; flex: 0 1 auto;">
-<a href="#" class="tcb-button-link" style="">
-<span class="tcb-button-texts" style=""><span class="tcb-button-text thrv-inline-text" style="">A RATE</span></span>
-</a>
-</div></div>
-<div class="tcb-flex-row tcb-pricing-table-box-container tcb-desktop-no-wrap tcb-medium-wrap tcb--cols--1" data-instance="14718" data-css="tve-u-1789215eb55" style=""><div class="tcb-flex-col" data-label="Premium" style="" data-css="tve-u-17e3e93b583">
-<div class="tcb-col dynamic-group-khem2lph" data-css="tve-u-17891fa81fd"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tcb-pt-cb-wrapper tve_evt_manager_listen tve_et_tve-viewport tve_ea_thrive_animation tve_anim_slide_left dynamic-group-khem2asm" data-css="tve-u-17891fb19b9" style="" data-tcb-events="__TCB_EVENT_[{&quot;t&quot;:&quot;tve-viewport&quot;,&quot;config&quot;:{&quot;anim&quot;:&quot;slide_left&quot;,&quot;loop&quot;:0},&quot;a&quot;:&quot;thrive_animation&quot;}]_TNEVE_BCT__">
-<div class="tve-content-box-background tcb-pt-card" data-css="tve-u-17891fb19b2"></div>
-<div class="tve-cb tcb-pt-card-content" data-css="tve-u-17891fb19b3" style="">
-<div class="tcb-pt-wrapper">
-<div class="thrv_wrapper thrv_icon tcb-icon-display tcb-local-vars-root dynamic-group-khem0nli" data-css="tve-u-17891fb19b7" style="--tve-border-radius:0px; overflow: hidden;" data-style-d="circle_shaded"><svg class="tcb-icon" viewBox="0 0 24 24" data-id="icon-book-duotone" data-name="" style=""><path fill="none" d="M0 0h24v24H0V0z"></path><path opacity=".3" d="M13 13l-3-2.25L7 13V4H6v16h12V4h-5z"></path><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM9 4h2v5l-1-.75L9 9V4zm9 16H6V4h1v9l3-2.25L13 13V4h5v16z"></path></svg></div><div class="thrv_wrapper thrv_text_element tcb-pt-price tcb-pt-currency dynamic-group-khem12nv" data-css="tve-u-175dbbe4c9d"><p style="" data-css="tve-u-17891fb19be">€</p></div>
-<div class="thrv_wrapper thrv_text_element tcb-pt-price tcb-pt-value dynamic-group-khem0w42" data-css="tve-u-175dbbe4c9f"><p style="" data-css="tve-u-17891fb19bc">500</p></div>
-<div class="thrv_wrapper thrv_text_element dynamic-group-khem1h95" data-css="tve-u-17891fb19b6" style=""><h4 data-css="tve-u-17891fa8212" class="">Percorso Privato (in presenza)</h4></div><div class="thrv_wrapper thrv_text_element dynamic-group-khem1t52" data-css="tve-u-17891fb19bb" style=""><ul class=""><li data-css="tve-u-17891fb19bd" style=""><strong>5 Video lezioni </strong><span style="font-weight: normal;">(durata 1 mese e mezzo circa)</span></li><li data-css="tve-u-17891fb19bd" style=""><strong>1 Risorsa di 15 pagine</strong>
-<span style="font-weight: normal;">con tutti i link alle sotto risorse (altri pdf e contenuti)</span></li><li data-css="tve-u-17891fb19bd" style=""><strong>Invito al Gruppo Telegram</strong><span style="font-weight: normal;"></span></li><li data-css="tve-u-17891fb19bd" style=""><strong>5 Sessioni individuali</strong>
-<span style="font-weight: normal;">dove ti seguirò Passo-Passo su ogni step e ti faciliterò il processo di Creazione del Messaggio Autentico</span></li></ul></div><div class="thrv_wrapper thrv-button thrv-button-v2 tcb-local-vars-root dynamic-group-khem21yh" data-button-style="btn-tpl-58334" data-css="tve-u-17891fb19b4" style=""><div class="thrive-colors-palette-config" style="display: none !important"></div>
-	
-	<a href="https://wa.link/wjlw58" class="tcb-button-link tcb-plain-text" target="_blank">
-		<span class="tcb-button-texts" style=""><span class="tcb-button-text thrv-inline-text" style="">Scrivimi per acquistare</span></span>
-	</a>
-</div><div class="thrv_wrapper thrv_text_element"><p><br><a class="" href="#tve-jump-17d32f9229f" jump-animation="smooth" style="outline: none;" data-css="tve-u-17d32fa6c2c"><strong>Guarda la lezione Introduttiva Gratuita</strong></a></p></div><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tcb-pt-cb-wrapper tve_evt_manager_listen tve_et_tve-viewport tve_ea_thrive_animation tve_anim_slide_left khem2asm" data-css="tve-u-17d32f97301" style="" data-tcb-events="__TCB_EVENT_[{&quot;t&quot;:&quot;tve-viewport&quot;,&quot;config&quot;:{&quot;anim&quot;:&quot;slide_left&quot;,&quot;loop&quot;:0},&quot;a&quot;:&quot;thrive_animation&quot;}]_TNEVE_BCT__">
-<div class="tve-content-box-background tcb-pt-card" data-css="tve-u-17d32f9731b"></div>
-<div class="tve-cb tcb-pt-card-content" data-css="tve-u-17d32f9731c" style="">
-<div class="tcb-pt-wrapper">
-<div class="thrv_wrapper thrv_icon tcb-icon-display tcb-local-vars-root khem0nli" data-css="tve-u-17d32f9731d" style="--tve-border-radius:0px; overflow: hidden;" data-style-d="circle_shaded"><svg class="tcb-icon" viewBox="0 0 24 24" data-id="icon-local_library-duotone" data-name="" style=""><path fill="none" d="M0 0h24v24H0V0z"></path><path opacity=".3" d="M19 17.13v-6.95c-2.1.38-4.05 1.35-5.64 2.83L12 14.28l-1.36-1.27C9.05 11.53 7.1 10.56 5 10.18v6.95c2.53.34 4.94 1.3 7 2.83 2.07-1.52 4.47-2.49 7-2.83z"></path><circle opacity=".3" cx="12" cy="5" r="2"></circle><path d="M16 5c0-2.21-1.79-4-4-4S8 2.79 8 5s1.79 4 4 4 4-1.79 4-4zm-6 0c0-1.1.9-2 2-2s2 .9 2 2-.9 2-2 2-2-.9-2-2zM3 19c3.48 0 6.64 1.35 9 3.55 2.36-2.19 5.52-3.55 9-3.55V8c-3.48 0-6.64 1.35-9 3.55C9.64 9.35 6.48 8 3 8v11zm2-8.82c2.1.38 4.05 1.35 5.64 2.83L12 14.28l1.36-1.27c1.59-1.48 3.54-2.45 5.64-2.83v6.95c-2.53.34-4.93 1.3-7 2.82-2.06-1.52-4.47-2.49-7-2.83v-6.94z"></path></svg></div><div class="thrv_wrapper thrv_text_element tcb-pt-price tcb-pt-currency khem12nv" data-css="tve-u-17d32f9731e"><p style="" data-css="tve-u-17d32f9731f">€</p></div>
-<div class="thrv_wrapper thrv_text_element tcb-pt-price tcb-pt-value khem0w42" data-css="tve-u-17d32f97320"><p style="" data-css="tve-u-17d32f97321">90</p></div>
-<div class="thrv_wrapper thrv_text_element khem1h95" data-css="tve-u-17d32f97322" style=""><h4 class="" data-css="tve-u-17d32f97323" style="">Percorso <br>Pre-registrato</h4></div><div class="thrv_wrapper thrv_text_element khem1t52" data-css="tve-u-17d32f97324" style=""><p style="" data-css="tve-u-17d32f97325">L'acquisto di 90€ garantisce l'entrata al gruppo Telegram permanente e 1 ciclo di percorso di gruppo.*</p><ul class=""><li data-css="tve-u-17d32f97326" style="">5 Video lezioni pre-registrate<strong>&nbsp;</strong></li><li data-css="tve-u-17d32f97327" style=""><span style="text-decoration: underline;" data-css="tve-u-17d32f97328">1 Risorsa di 15 pagine</span>
-<span style="font-weight: normal;" data-css="tve-u-17d32f97329">con tutti i link alle sotto risorse (altri pdf e contenuti)</span></li><li data-css="tve-u-17d32f9732a" style=""><span style="text-decoration: underline; text-transform: none;" data-css="tve-u-17d32f9732b">Permanenza nel gruppo Telegram</span>
-<span style="font-weight: normal;" data-css="tve-u-17d32f9732c">per restare aggiornato su date e link per entrare nella Zoom di gruppo e informazioni bonus</span></li><li data-css="tve-u-17d32f9732d" style=""><strong>Una Sessione individuale</strong> per Domande e Risposte in regalo</li></ul></div><div class="thrv_wrapper thrv-button thrv-button-v2 tcb-local-vars-root khem21yh" data-button-style="btn-tpl-58334" data-css="tve-u-17d32f97330" style=""><div class="thrive-colors-palette-config" style="display: none !important"></div>
-	
-	<a href="https://wa.link/wjlw58" class="tcb-button-link tcb-plain-text" style="" target="_blank">
-		<span class="tcb-button-texts" style=""><span class="tcb-button-text thrv-inline-text" style="">Scrivimi per acquistare</span></span>
-	</a>
-</div><div class="thrv_wrapper thrv_text_element"><p><br><a class="" href="#tve-jump-17d32f9229f" jump-animation="smooth" style="outline: none;" data-css="tve-u-17d32fa4520"><strong>Guarda la lezione Introduttiva Gratuita</strong></a></p></div><div class="thrv_wrapper thrv-credit" data-style="style1" data-cards="visa,masterCard,americanExpress,payPal,bitcoin" data-css="tve-u-17d32f97333"><svg viewBox="0 0 72 52" class="tcb-visa-card"><g><path class="visa-style-1-st0" d="M7.6,0.9h56.7c3.7,0,6.6,3,6.6,6.6v36.7c0,3.7-3,6.6-6.6,6.6H7.6c-3.7,0-6.6-3-6.6-6.6V7.5C1,3.9,4,0.9,7.6,0.9z"></path><path class="visa-style-1-st1" d="M24.8,33.8h-4.1l-3.1-11.6c-0.1-0.5-0.5-1-0.9-1.2c-1.1-0.6-2.4-1-3.7-1.2v-0.4h6.6c0.9,0,1.6,0.7,1.7,1.5l1.6,8.4l4.1-9.8h4L24.8,33.8z M33.1,33.8h-3.8l3.2-14.5h3.8L33.1,33.8z M41.2,23.3c0.1-0.8,0.8-1.2,1.6-1.2c1.2-0.1,2.6,0.1,3.7,0.7l0.7-3.1c-1.1-0.4-2.4-0.7-3.5-0.7c-3.7,0-6.4,2-6.4,4.8c0,2.1,1.9,3.2,3.3,3.9c1.5,0.7,2,1.1,1.9,1.8c0,1-1.1,1.5-2.3,1.5c-1.4,0-2.7-0.3-4-0.9l-0.7,3.1c1.4,0.6,2.8,0.8,4.2,0.8C44,34,46.6,32,46.6,29C46.6,25.2,41.2,25,41.2,23.3L41.2,23.3z M60,33.8l-3.1-14.5h-3.3c-0.7,0-1.4,0.4-1.6,1.1l-5.6,13.4h4l0.8-2.1H56l0.5,2.1H60z M54.2,23.2l1.1,5.5h-3.2L54.2,23.2z"></path></g></svg><svg viewBox="0 0 72 52" class="tcb-masterCard-card"><g transform="translate(337.000000, 0.000000)"><path class="masterCard-style-1-st0" d="M-329.4,0.9h56.7c3.7,0,6.6,3,6.6,6.6v36.7c0,3.7-3,6.6-6.6,6.6h-56.7c-3.7,0-6.6-3-6.6-6.6V7.5C-336,3.9-333,0.9-329.4,0.9z"></path><g transform="translate(12.526316, 11.194030)"><path class="masterCard-style-1-st1" d="M-313.2,4.5c-2.4-2.1-5.5-3.3-8.8-3.3c-7.5,0-13.6,6.2-13.6,13.8s6.1,13.8,13.6,13.8c3.4,0,6.5-1.2,8.8-3.3c2.4,2.1,5.5,3.3,8.8,3.3c7.5,0,13.6-6.2,13.6-13.8s-6.1-13.8-13.6-13.8C-307.7,1.2-310.8,2.4-313.2,4.5z"></path><path class="masterCard-style-1-st2" d="M-313.2,4.5c-2.4-2.1-5.5-3.3-8.8-3.3c-7.5,0-13.6,6.2-13.6,13.8s6.1,13.8,13.6,13.8c3.4,0,6.5-1.2,8.8-3.3c-2.9-2.5-4.8-6.3-4.8-10.5S-316.1,7-313.2,4.5z"></path><path class="masterCard-style-1-st3" d="M-313.2,25.5c2.4,2.1,5.5,3.3,8.8,3.3c7.5,0,13.6-6.2,13.6-13.8s-6.1-13.8-13.6-13.8c-3.4,0-6.5,1.2-8.8,3.3c2.9,2.5,4.8,6.3,4.8,10.5S-310.2,23-313.2,25.5z"></path></g></g></svg><svg viewBox="0 0 72 52" class="tcb-americanExpress-card"><g><g><g transform="translate(169.000000, 0.000000)"><path class="americanExpress-style-1-st0" d="M-161.4,0.9h56.7c3.7,0,6.6,3,6.6,6.6v36.7c0,3.7-3,6.6-6.6,6.6h-56.7c-3.7,0-6.6-3-6.6-6.6V7.5C-168,3.9-165,0.9-161.4,0.9z"></path></g></g><path class="americanExpress-style-1-st1" d="M31,28.2l-3.8-8.4h-4.6v11.9l-5.4-11.9h-3.8L8,32.3h3.2l1.1-2.7h6l1.1,2.7h6.2v-9.2l4.1,9.2h2.7l4.1-8.9v8.9h3V20.1h-4.6L31,28.5L31,28.2z M15.4,26.9h-1.9l1.9-4.3l0,0l2,4.3L15.4,26.9z"></path><path class="americanExpress-style-1-st1" d="M58.4,26l2.2-2.4l3.2-3.5H60l-3.5,3.8L53,20.1H41.3v12.2H53l3.5-4.1l3.5,4.1h3.8l-3.2-3.8L58.4,26z M51.1,29.8h-6.8v-2.4h6.8V25h-6.8v-2.2h6.8l3.5,3.2L51.1,29.8z"></path></g></svg><svg viewBox="0 0 72 52" class="tcb-payPal-card"><g><g transform="translate(85.000000, 0.000000)"><path class="payPal-style-1-st0" d="M-77.4,0.9h56.7c3.7,0,6.6,3,6.6,6.6v36.7c0,3.7-3,6.6-6.6,6.6h-56.7c-3.7,0-6.6-3-6.6-6.6V7.5C-84,3.9-81,0.9-77.4,0.9z"></path></g><path class="payPal-style-1-st1" d="M34.7,18.3h8.1c4.3,0,6,2.2,5.7,5.4c-0.4,5.3-3.6,8.3-7.9,8.3h-2.2c-0.6,0-1,0.4-1.1,1.4l-0.9,6.1c-0.1,0.4-0.3,0.6-0.6,0.7h-5.1c-0.5,0-0.6-0.4-0.5-1.2l3.1-19.6C33.4,18.7,33.8,18.3,34.7,18.3z"></path><path class="payPal-style-1-st2" d="M29.6,11.6h8.1c2.3,0,5,0.1,6.8,1.7c1.2,1.1,1.8,2.8,1.7,4.6c-0.5,6.2-4.2,9.6-9.1,9.6h-4c-0.7,0-1.1,0.4-1.3,1.7l-1.1,7.1C30.6,36.7,30.4,37,30,37h-5c-0.6,0-0.7-0.4-0.6-1.3L28,12.9C28.2,12,28.7,11.6,29.6,11.6z"></path></g></svg><svg viewBox="0 0 72 52" class="tcb-bitcoin-card"><g><path class="bitcoin-style-1-st0" d="M63.4,0H6.6C3,0,0,3,0,6.6v36.7C0,47,3,50,6.6,50h56.7c3.7,0,6.6-3,6.6-6.6V6.6C70,3,67,0,63.4,0z"></path></g><g><path class="bitcoin-style-1-st1" d="M42,26c-0.5-0.7-1.3-1.2-2.2-1.4c0.7-0.3,1.2-0.8,1.6-1.4c0.4-0.6,0.6-1.3,0.6-2s-0.1-1.3-0.5-1.9c-0.3-0.5-0.7-1-1.2-1.4c-0.5-0.3-1-0.5-1.7-0.7c-0.5-0.1-1.1-0.1-1.8-0.1v-2.4h-2.6v2.4h-1.5h-0.2v-2.4h-2.6v2.4h-0.4H27v2.6h2.4v10.7H27V33h2.4h0.4v2.2h2.6V33h0.2h1.5v2.2h2.6V33c1,0,1.6-0.1,2-0.1c0.9-0.1,1.6-0.3,2.2-0.7s1-1,1.4-1.6c0.3-0.7,0.5-1.4,0.5-2.1C42.8,27.5,42.5,26.7,42,26z M34.4,19.8c1.5,0,2.4,0,2.8,0.1c0.5,0.1,1,0.3,1.2,0.5c0.3,0.3,0.4,0.7,0.4,1.2s-0.1,1-0.5,1.2C38,23,37.6,23.3,37,23.3c-0.3,0.1-1.1,0.1-2.4,0.1h-2.1v-3.7C32.6,19.8,34.4,19.8,34.4,19.8z M39,29.7c-0.3,0.3-0.7,0.5-1.2,0.6c-0.3,0.1-1,0.1-2.2,0.1h-3v-4.3h2.6c1.5,0,2.4,0.1,2.9,0.2c0.4,0.1,0.7,0.4,1,0.7c0.2,0.3,0.3,0.7,0.3,1.2C39.4,28.8,39.2,29.3,39,29.7z"></path></g><g><path class="bitcoin-style-1-st0" d="M63.4,0H6.6C3,0,0,3,0,6.6v36.7C0,47,3,50,6.6,50h56.7c3.7,0,6.6-3,6.6-6.6V6.6C70,3,67,0,63.4,0z"></path></g><g><path class="bitcoin-style-1-st1" d="M42,26c-0.5-0.7-1.3-1.2-2.2-1.4c0.7-0.3,1.2-0.8,1.6-1.4c0.4-0.6,0.6-1.3,0.6-2s-0.1-1.3-0.5-1.9c-0.3-0.5-0.7-1-1.2-1.4c-0.5-0.3-1-0.5-1.7-0.7c-0.5-0.1-1.1-0.1-1.8-0.1v-2.4h-2.6v2.4h-1.5h-0.2v-2.4h-2.6v2.4h-0.4H27v2.6h2.4v10.7H27V33h2.4h0.4v2.2h2.6V33h0.2h1.5v2.2h2.6V33c1,0,1.6-0.1,2-0.1c0.9-0.1,1.6-0.3,2.2-0.7s1-1,1.4-1.6c0.3-0.7,0.5-1.4,0.5-2.1C42.8,27.5,42.5,26.7,42,26z M34.4,19.8c1.5,0,2.4,0,2.8,0.1c0.5,0.1,1,0.3,1.2,0.5c0.3,0.3,0.4,0.7,0.4,1.2s-0.1,1-0.5,1.2C38,23,37.6,23.3,37,23.3c-0.3,0.1-1.1,0.1-2.4,0.1h-2.1v-3.7C32.6,19.8,34.4,19.8,34.4,19.8z M39,29.7c-0.3,0.3-0.7,0.5-1.2,0.6c-0.3,0.1-1,0.1-2.2,0.1h-3v-4.3h2.6c1.5,0,2.4,0.1,2.9,0.2c0.4,0.1,0.7,0.4,1,0.7c0.2,0.3,0.3,0.7,0.3,1.2C39.4,28.8,39.2,29.3,39,29.7z"></path></g><g><path class="bitcoin-style-1-st1" d="M35,43.5c-10.2,0-18.6-8.3-18.6-18.5S24.7,6.5,35,6.5S53.5,14.8,53.5,25S45.2,43.5,35,43.5z M35,8c-9.4,0-17.1,7.6-17.1,17S25.5,42,35,42s17-7.6,17-17S44.4,8,35,8z"></path></g></svg></div>
-</div>
-
-</div>
-</div>
-</div>
-
-</div>
-</div></div>
-</div></div>
-<div class="tcb-flex-row tcb-pricing-table-box-container tcb-desktop-no-wrap tcb-medium-wrap tcb--cols--1 tcb-permanently-hidden" data-instance="88231" data-css="tve-u-17891fa81fc" style=""><div class="tcb-flex-col" data-label="Premium" style="">
-<div class="tcb-col dynamic-group-khem2lph" data-css="tve-u-17891fa81fd">
-<div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tcb-pt-cb-wrapper tve_evt_manager_listen tve_et_tve-viewport tve_ea_thrive_animation tve_anim_slide_left dynamic-group-khem2asm" data-css="tve-u-17891fa820e" style="" data-tcb-events="__TCB_EVENT_[{&quot;t&quot;:&quot;tve-viewport&quot;,&quot;config&quot;:{&quot;anim&quot;:&quot;slide_left&quot;,&quot;loop&quot;:0},&quot;a&quot;:&quot;thrive_animation&quot;}]_TNEVE_BCT__">
-<div class="tve-content-box-background tcb-pt-card" data-css="tve-u-17891fa81ff"></div>
-<div class="tve-cb tcb-pt-card-content" data-css="tve-u-17891fa8200" style="">
-<div class="tcb-pt-wrapper">
-<div class="thrv_wrapper thrv_icon tcb-icon-display tcb-local-vars-root dynamic-group-khem0nli" data-css="tve-u-17891fa820f" style="--tve-border-radius:0px; overflow: hidden;" data-style-d="circle_shaded"><svg class="tcb-icon" viewBox="0 0 24 24" data-id="icon-account-solid" data-name=""><path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path></svg></div><div class="thrv_wrapper thrv_text_element tcb-pt-price tcb-pt-currency dynamic-group-khem12nv" data-css="tve-u-17891fa8202"><p style="" data-css="tve-u-17891fa8210">€</p></div>
-<div class="thrv_wrapper thrv_text_element tcb-pt-price tcb-pt-value dynamic-group-khem0w42" data-css="tve-u-17891fa8205"><p style="" data-css="tve-u-17891fa8211">167</p></div>
-<div class="thrv_wrapper thrv_text_element tcb-pt-price tcb-pt-period dynamic-group-khem19v2" data-css="tve-u-17891fa8207"><p style="" data-css="tve-u-17891fa8208">x 3 mesi</p></div><div class="thrv_wrapper thrv_text_element dynamic-group-khem1h95" data-css="tve-u-17891fa8209" style=""><h4 class="" style="" data-css="tve-u-17891fa8212">Percorso Privato (in presenza)</h4></div><div class="thrv_wrapper thrv_text_element dynamic-group-khem1t52" data-css="tve-u-17891fa8213" style=""><ul class=""><li data-css="tve-u-17891fb19bd" style="" class="">5 Video lezioni pre-registrate&nbsp;</li><li data-css="tve-u-17891fae8a8" style=""><strong><span data-css="tve-u-17ab8d2fb8c">1 Risorsa di 15 pagine</span></strong>
-<span style="font-weight: normal;">con tutti i link alle sotto risorse (altri pdf e contenuti)</span></li><li data-css="tve-u-17891fae8a8" style=""><span style="text-decoration: none;"><strong><span data-css="tve-u-17ab8d2fb90">Permanenza nel gruppo Telegram</span></strong></span>&nbsp;<span data-css="tve-u-17ab8d2fb93">per restare aggiornato su date e link per entrare nella Zoom di gruppo e informazioni bonus</span></li><li data-css="tve-u-17891fb19bd" style="" class=""><strong>5 Sessioni individuali</strong> dove ti seguirò Passo-Passo su ogni step e ti faciliterò il processo di Creazione del Messaggio Autentico</li></ul></div><div class="thrv_wrapper thrv-button thrv-button-v2 tcb-local-vars-root dynamic-group-khem21yh" data-button-style="btn-tpl-58334" data-css="tve-u-17891fa8215" style=""><div class="thrive-colors-palette-config" style="display: none !important"></div>
-	
-	<a href="https://wa.link/wjlw58" class="tcb-button-link tcb-plain-text" target="_blank">
-		<span class="tcb-button-texts" style=""><span class="tcb-button-text thrv-inline-text" style="">Scrivimi per acquistare</span></span>
-	</a>
-</div><div class="thrv_wrapper thrv-credit" data-style="style1" data-cards="visa,masterCard,americanExpress,payPal,bitcoin" data-css="tve-u-1789214ba1b"><svg viewBox="0 0 72 52" class="tcb-visa-card"><g><path class="visa-style-1-st0" d="M7.6,0.9h56.7c3.7,0,6.6,3,6.6,6.6v36.7c0,3.7-3,6.6-6.6,6.6H7.6c-3.7,0-6.6-3-6.6-6.6V7.5C1,3.9,4,0.9,7.6,0.9z"></path><path class="visa-style-1-st1" d="M24.8,33.8h-4.1l-3.1-11.6c-0.1-0.5-0.5-1-0.9-1.2c-1.1-0.6-2.4-1-3.7-1.2v-0.4h6.6c0.9,0,1.6,0.7,1.7,1.5l1.6,8.4l4.1-9.8h4L24.8,33.8z M33.1,33.8h-3.8l3.2-14.5h3.8L33.1,33.8z M41.2,23.3c0.1-0.8,0.8-1.2,1.6-1.2c1.2-0.1,2.6,0.1,3.7,0.7l0.7-3.1c-1.1-0.4-2.4-0.7-3.5-0.7c-3.7,0-6.4,2-6.4,4.8c0,2.1,1.9,3.2,3.3,3.9c1.5,0.7,2,1.1,1.9,1.8c0,1-1.1,1.5-2.3,1.5c-1.4,0-2.7-0.3-4-0.9l-0.7,3.1c1.4,0.6,2.8,0.8,4.2,0.8C44,34,46.6,32,46.6,29C46.6,25.2,41.2,25,41.2,23.3L41.2,23.3z M60,33.8l-3.1-14.5h-3.3c-0.7,0-1.4,0.4-1.6,1.1l-5.6,13.4h4l0.8-2.1H56l0.5,2.1H60z M54.2,23.2l1.1,5.5h-3.2L54.2,23.2z"></path></g></svg><svg viewBox="0 0 72 52" class="tcb-masterCard-card"><g transform="translate(337.000000, 0.000000)"><path class="masterCard-style-1-st0" d="M-329.4,0.9h56.7c3.7,0,6.6,3,6.6,6.6v36.7c0,3.7-3,6.6-6.6,6.6h-56.7c-3.7,0-6.6-3-6.6-6.6V7.5C-336,3.9-333,0.9-329.4,0.9z"></path><g transform="translate(12.526316, 11.194030)"><path class="masterCard-style-1-st1" d="M-313.2,4.5c-2.4-2.1-5.5-3.3-8.8-3.3c-7.5,0-13.6,6.2-13.6,13.8s6.1,13.8,13.6,13.8c3.4,0,6.5-1.2,8.8-3.3c2.4,2.1,5.5,3.3,8.8,3.3c7.5,0,13.6-6.2,13.6-13.8s-6.1-13.8-13.6-13.8C-307.7,1.2-310.8,2.4-313.2,4.5z"></path><path class="masterCard-style-1-st2" d="M-313.2,4.5c-2.4-2.1-5.5-3.3-8.8-3.3c-7.5,0-13.6,6.2-13.6,13.8s6.1,13.8,13.6,13.8c3.4,0,6.5-1.2,8.8-3.3c-2.9-2.5-4.8-6.3-4.8-10.5S-316.1,7-313.2,4.5z"></path><path class="masterCard-style-1-st3" d="M-313.2,25.5c2.4,2.1,5.5,3.3,8.8,3.3c7.5,0,13.6-6.2,13.6-13.8s-6.1-13.8-13.6-13.8c-3.4,0-6.5,1.2-8.8,3.3c2.9,2.5,4.8,6.3,4.8,10.5S-310.2,23-313.2,25.5z"></path></g></g></svg><svg viewBox="0 0 72 52" class="tcb-americanExpress-card"><g><g><g transform="translate(169.000000, 0.000000)"><path class="americanExpress-style-1-st0" d="M-161.4,0.9h56.7c3.7,0,6.6,3,6.6,6.6v36.7c0,3.7-3,6.6-6.6,6.6h-56.7c-3.7,0-6.6-3-6.6-6.6V7.5C-168,3.9-165,0.9-161.4,0.9z"></path></g></g><path class="americanExpress-style-1-st1" d="M31,28.2l-3.8-8.4h-4.6v11.9l-5.4-11.9h-3.8L8,32.3h3.2l1.1-2.7h6l1.1,2.7h6.2v-9.2l4.1,9.2h2.7l4.1-8.9v8.9h3V20.1h-4.6L31,28.5L31,28.2z M15.4,26.9h-1.9l1.9-4.3l0,0l2,4.3L15.4,26.9z"></path><path class="americanExpress-style-1-st1" d="M58.4,26l2.2-2.4l3.2-3.5H60l-3.5,3.8L53,20.1H41.3v12.2H53l3.5-4.1l3.5,4.1h3.8l-3.2-3.8L58.4,26z M51.1,29.8h-6.8v-2.4h6.8V25h-6.8v-2.2h6.8l3.5,3.2L51.1,29.8z"></path></g></svg><svg viewBox="0 0 72 52" class="tcb-payPal-card"><g><g transform="translate(85.000000, 0.000000)"><path class="payPal-style-1-st0" d="M-77.4,0.9h56.7c3.7,0,6.6,3,6.6,6.6v36.7c0,3.7-3,6.6-6.6,6.6h-56.7c-3.7,0-6.6-3-6.6-6.6V7.5C-84,3.9-81,0.9-77.4,0.9z"></path></g><path class="payPal-style-1-st1" d="M34.7,18.3h8.1c4.3,0,6,2.2,5.7,5.4c-0.4,5.3-3.6,8.3-7.9,8.3h-2.2c-0.6,0-1,0.4-1.1,1.4l-0.9,6.1c-0.1,0.4-0.3,0.6-0.6,0.7h-5.1c-0.5,0-0.6-0.4-0.5-1.2l3.1-19.6C33.4,18.7,33.8,18.3,34.7,18.3z"></path><path class="payPal-style-1-st2" d="M29.6,11.6h8.1c2.3,0,5,0.1,6.8,1.7c1.2,1.1,1.8,2.8,1.7,4.6c-0.5,6.2-4.2,9.6-9.1,9.6h-4c-0.7,0-1.1,0.4-1.3,1.7l-1.1,7.1C30.6,36.7,30.4,37,30,37h-5c-0.6,0-0.7-0.4-0.6-1.3L28,12.9C28.2,12,28.7,11.6,29.6,11.6z"></path></g></svg><svg viewBox="0 0 72 52" class="tcb-bitcoin-card"><g><path class="bitcoin-style-1-st0" d="M63.4,0H6.6C3,0,0,3,0,6.6v36.7C0,47,3,50,6.6,50h56.7c3.7,0,6.6-3,6.6-6.6V6.6C70,3,67,0,63.4,0z"></path></g><g><path class="bitcoin-style-1-st1" d="M42,26c-0.5-0.7-1.3-1.2-2.2-1.4c0.7-0.3,1.2-0.8,1.6-1.4c0.4-0.6,0.6-1.3,0.6-2s-0.1-1.3-0.5-1.9c-0.3-0.5-0.7-1-1.2-1.4c-0.5-0.3-1-0.5-1.7-0.7c-0.5-0.1-1.1-0.1-1.8-0.1v-2.4h-2.6v2.4h-1.5h-0.2v-2.4h-2.6v2.4h-0.4H27v2.6h2.4v10.7H27V33h2.4h0.4v2.2h2.6V33h0.2h1.5v2.2h2.6V33c1,0,1.6-0.1,2-0.1c0.9-0.1,1.6-0.3,2.2-0.7s1-1,1.4-1.6c0.3-0.7,0.5-1.4,0.5-2.1C42.8,27.5,42.5,26.7,42,26z M34.4,19.8c1.5,0,2.4,0,2.8,0.1c0.5,0.1,1,0.3,1.2,0.5c0.3,0.3,0.4,0.7,0.4,1.2s-0.1,1-0.5,1.2C38,23,37.6,23.3,37,23.3c-0.3,0.1-1.1,0.1-2.4,0.1h-2.1v-3.7C32.6,19.8,34.4,19.8,34.4,19.8z M39,29.7c-0.3,0.3-0.7,0.5-1.2,0.6c-0.3,0.1-1,0.1-2.2,0.1h-3v-4.3h2.6c1.5,0,2.4,0.1,2.9,0.2c0.4,0.1,0.7,0.4,1,0.7c0.2,0.3,0.3,0.7,0.3,1.2C39.4,28.8,39.2,29.3,39,29.7z"></path></g><g><path class="bitcoin-style-1-st0" d="M63.4,0H6.6C3,0,0,3,0,6.6v36.7C0,47,3,50,6.6,50h56.7c3.7,0,6.6-3,6.6-6.6V6.6C70,3,67,0,63.4,0z"></path></g><g><path class="bitcoin-style-1-st1" d="M42,26c-0.5-0.7-1.3-1.2-2.2-1.4c0.7-0.3,1.2-0.8,1.6-1.4c0.4-0.6,0.6-1.3,0.6-2s-0.1-1.3-0.5-1.9c-0.3-0.5-0.7-1-1.2-1.4c-0.5-0.3-1-0.5-1.7-0.7c-0.5-0.1-1.1-0.1-1.8-0.1v-2.4h-2.6v2.4h-1.5h-0.2v-2.4h-2.6v2.4h-0.4H27v2.6h2.4v10.7H27V33h2.4h0.4v2.2h2.6V33h0.2h1.5v2.2h2.6V33c1,0,1.6-0.1,2-0.1c0.9-0.1,1.6-0.3,2.2-0.7s1-1,1.4-1.6c0.3-0.7,0.5-1.4,0.5-2.1C42.8,27.5,42.5,26.7,42,26z M34.4,19.8c1.5,0,2.4,0,2.8,0.1c0.5,0.1,1,0.3,1.2,0.5c0.3,0.3,0.4,0.7,0.4,1.2s-0.1,1-0.5,1.2C38,23,37.6,23.3,37,23.3c-0.3,0.1-1.1,0.1-2.4,0.1h-2.1v-3.7C32.6,19.8,34.4,19.8,34.4,19.8z M39,29.7c-0.3,0.3-0.7,0.5-1.2,0.6c-0.3,0.1-1,0.1-2.2,0.1h-3v-4.3h2.6c1.5,0,2.4,0.1,2.9,0.2c0.4,0.1,0.7,0.4,1,0.7c0.2,0.3,0.3,0.7,0.3,1.2C39.4,28.8,39.2,29.3,39,29.7z"></path></g><g><path class="bitcoin-style-1-st1" d="M35,43.5c-10.2,0-18.6-8.3-18.6-18.5S24.7,6.5,35,6.5S53.5,14.8,53.5,25S45.2,43.5,35,43.5z M35,8c-9.4,0-17.1,7.6-17.1,17S25.5,42,35,42s17-7.6,17-17S44.4,8,35,8z"></path></g></svg></div>
-</div>
-
-</div>
-</div>
-</div>
-</div></div></div></div>
-</div><div class="thrv_wrapper thrv-page-section tve-height-update" data-inherit-lp-settings="1" style="" data-css="tve-u-1789219a9d1" data-aspect-ratio-default="0" data-aspect-ratio="16:9">
-	<div class="tve-page-section-out" style="" data-css="tve-u-178924638a8"></div>
-	<div class="tve-page-section-in" data-css="tve-u-178921960cc" style=""><div class="thrv_wrapper thrv_icon tcb-icon-display tcb-local-vars-root" data-css="tve-u-17892194807" style=""><svg class="tcb-icon" viewBox="0 0 512 512" data-id="icon-question-circle-solid" data-name="" style=""><path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zM262.655 90c-54.497 0-89.255 22.957-116.549 63.758-3.536 5.286-2.353 12.415 2.715 16.258l34.699 26.31c5.205 3.947 12.621 3.008 16.665-2.122 17.864-22.658 30.113-35.797 57.303-35.797 20.429 0 45.698 13.148 45.698 32.958 0 14.976-12.363 22.667-32.534 33.976C247.128 238.528 216 254.941 216 296v4c0 6.627 5.373 12 12 12h56c6.627 0 12-5.373 12-12v-1.333c0-28.462 83.186-29.647 83.186-106.667 0-58.002-60.165-102-116.531-102zM256 338c-25.365 0-46 20.635-46 46 0 25.364 20.635 46 46 46s46-20.636 46-46c0-25.365-20.635-46-46-46z"></path></svg></div><div class="thrv_wrapper thrv_text_element" style="" data-css="tve-u-17892179abd"><h2 class="" style="text-align: center;">Per qualsiasi domanda, scrivimi su Whatsapp</h2></div><div class="thrv_wrapper thrv-button thrv-button-v2 tcb-local-vars-root tcb-with-icon" data-css="tve-u-178921820b0">
-	<div class="thrive-colors-palette-config" style="display: none !important"></div>
-	<a href="https://wa.link/wjlw58" class="tcb-button-link tcb-plain-text" target="_blank"><span class="tcb-button-icon">
-	<div class="thrv_wrapper thrv_icon tve_no_drag tve_no_icons tcb-icon-inherit-style tcb-local-vars-root tcb-icon-display" data-css="tve-u-1789218894f" style=""><svg class="tcb-icon" viewBox="0 0 448 512" data-id="icon-whatsapp-brands" data-name=""><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"></path></svg></div>
-</span>
-
-		<span class="tcb-button-texts"><span class="tcb-button-text thrv-inline-text">Scrivimi su Whatsapp</span></span>
-	</a>
-</div></div>
-</div><div data-inherit-lp-settings="1" data-match-lp-colors="1" class="thrv_wrapper thrv-page-section tve-height-update thrv-lp-block tcb-local-vars-root" data-css="tve-u-1787a92c8ac" style="" tcb-template-name="Hero 10" tcb-template-id="66468" data-keep-css_id="1" data-aspect-ratio-default="0" data-aspect-ratio="16:9"><div class="thrive-group-edit-config" style="display: none !important"></div><div class="thrive-local-colors-config" style="display: none !important"></div>
-	<div class="tve-page-section-out" data-css="tve-u-1787a92c8ad" data-ct-name="Offset Corner 01" data-ct="fancydivider-37830" data-element-name="Fancy Divider"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 97.36" data-position="bottom" data-ct="37830" decoration-type="Offset Corner 01" class="svg-shape-bottom" width="100%" preserveAspectRatio="none" data-css="tve-u-1787a92c8ae" style=""><defs><style></style></defs><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><path class="p175b82439ce" d="M256.46,83.31a51,51,0,0,1-8,.47A52,52,0,0,1,233,81.92L0,17.32v80H1000V0Z"></path></g></g></svg></div>
-	<div class="tve-page-section-in   tve_empty_dropzone" data-css="tve-u-1787a92c8af" style=""><div class="thrv_responsive_video thrv_wrapper tcb-lazy-load tcb-lazy-load-youtube" data-type="youtube" data-rel="0" data-modestbranding="1" data-css="tve-u-1880ac08ae3" data-aspect-ratio="16:9" data-aspect-ratio-default="0" data-float-visibility="mobile" data-float-position="top-left" data-float-width-d="300px" data-float-padding1-d="25px" data-float-padding2-d="25px" data-url="https://youtu.be/rRAJz-LydLo">
-	
-
-	<div class="tve_responsive_video_container" style="padding-bottom: 56.25%;">
-		<div class="video_overlay"></div>
-	<iframe title="Responsive Video" class="tcb-responsive-video" data-code="rRAJz-LydLo" data-hash="undefined" data-provider="youtube" frameborder="0" allowfullscreen="" loading="lazy" src="https://www.youtube.com/embed/rRAJz-LydLo?rel=0&amp;modestbranding=1&amp;controls=1&amp;showinfo=1&amp;fs=1&amp;wmode=transparent&amp;enablejsapi=1"></iframe></div>
-</div><div class="thrv_wrapper thrv_text_element"><h1 style="text-align: center;" data-css="tve-u-1787a92c8b1" class="">È tempo di rivedere il modo <strong>in cui ci promuoviamo online.</strong></h1></div><div class="thrv_wrapper thrv_text_element" data-css="tve-u-1787a92c8b3" style=""><p style="text-align: center;">Questo percorso nasce con l'intento di creare una mentalità corretta al promuoversi online, priva di tutti quei falsi miti e "obblighi" che non fanno altro che danneggiare la nostra autostima e ci aprono alla comparazione con l'altro.</p><p style="text-align: center;" data-css="tve-u-178922b89ee">Puoi guardare la lezione introduttiva al percorso <strong><span style="text-decoration: underline;" data-css="tve-u-178922b8b28">GRATUITAMENTE QUI</span></strong></p></div><div class="thrv_wrapper thrv-button thrv-button-v2 tcb-local-vars-root" data-button-style="btn-tpl-58334" data-css="tve-u-17892481814" style="" data-button-size="s"><div class="thrive-colors-palette-config" style="display: none !important"></div>
-	
-	<a href="#tve-jump-1789238bd08" class="tcb-button-link tcb-plain-text tve-jump-scroll" jump-animation="smooth">
-		<span class="tcb-button-texts" style=""><span class="tcb-button-text thrv-inline-text" style="">COSTI E INFORMAZIONI</span></span>
-	</a>
-</div></div>
-</div><div data-inherit-lp-settings="1" data-match-lp-colors="1" class="thrv_wrapper thrv-page-section tve-height-update thrv-lp-block tcb-local-vars-root" data-css="tve-u-178921d9883" style="" tcb-template-name="Text/Content 07" tcb-template-id="64623" data-keep-css_id="1"><div class="thrive-group-edit-config" style="display: none !important"></div><div class="thrive-local-colors-config" style="display: none !important"></div>
-	<div class="tve-page-section-out" style="" data-css="tve-u-178921d9884"></div>
-	<div class="tve-page-section-in   tve_empty_dropzone" style="" data-css="tve-u-178921d9885"><div class="thrv_wrapper thrv_text_element" style="" data-css="tve-u-178921d9886"><h2 class="" data-css="tve-u-178921d9887" style="text-align: center;">Se senti che non è il momento, non acquistare.</h2></div><div class="thrv_wrapper thrv_text_element" style="" data-css="tve-u-178921d9888">	<p data-css="tve-u-178921fb4b2" style=""><span style="text-decoration: underline;">Io spero tanto di esserti stato lo stesso d'aiuto.</span></p><p data-css="tve-u-178921fb4b2" style=""><br>Ti invito, nel dubbio, a scrivermi e vedere insieme se non sia il caso di fare una chiacchierata gratuita, giusto 15 minuti per capire bene dove vuoi andare e se questo percorso fa al caso tuo.</p><p data-css="tve-u-178921d9889">Sono qui per aiutarti.</p><p data-css="tve-u-178921f8073" style="">Alla prossima!</p><p data-css="tve-u-178921fb019" style="">Marco Munich</p></div></div>
-</div>
-
-
-
-
-
-
-
-
-<div id="landingpage-bottom-section" class="landingpage-section bottom-section placeholder-section hide-section"><div class="section-background"></div><div class="section-content"></div></div><div id="thrive-footer" class="thrv_wrapper thrv_symbol thrive-shortcode thrv_footer tve_no_drag thrv_symbol_180" data-id="180" data-selector=".thrv_symbol_180" data-shortcode="thrive_footer" data-tcb-elem-type="footer" data-element-name="Footer"><div class="thrive-shortcode-html thrive-symbol-shortcode " data-symbol-id="180"><style type="text/css" id="tcb-style-base-tcb_symbol-180"  onLoad="typeof window.lightspeedOptimizeStylesheet === 'function' && window.lightspeedOptimizeStylesheet()" class="tcb-lightspeed-style">.tve-custom-menu-inside{z-index:8;}.thrv-page-section{position:relative;box-sizing:border-box !important;}.thrv-page-section .tve-page-section-out{position:absolute;width:100%;height:100%;left:0px;top:0px;box-sizing:border-box;transition:box-shadow 0.5s ease 0s,-webkit-box-shadow 0.5s ease 0s;overflow:hidden;}.thrv-page-section .tve-page-section-in{box-sizing:border-box;margin-right:auto;margin-left:auto;position:relative;z-index:1;min-height:40px;}.tve-page-section-in > .thrv_wrapper:first-child{margin-top:0px;}.tve-page-section-in > .thrv_wrapper:last-child{margin-bottom:0px;}.thrv_text_element a:not(.tcb-button-link){font-size:inherit;}.thrv_text_element{overflow-wrap:break-word;}.thrive-symbol-shortcode{position:relative;}.thrv_footer .thrive-symbol-shortcode{box-sizing:border-box;margin-right:auto;margin-left:auto;min-height:40px;}html{text-rendering:auto !important;}html body{text-rendering:auto !important;}body.tcb_symbol-template-default::before{content:none;}.thrv_wrapper{margin-top:20px;margin-bottom:20px;padding:1px;}.thrv_wrapper div{box-sizing:content-box;}.thrv_symbol .thrv_wrapper:not(.thrv_icon){box-sizing:border-box !important;}.thrv_wrapper.thrv_text_element,.thrv_wrapper.thrv-page-section{margin:0px;}p{font-size:1em;}.tvd-toast{-webkit-box-pack:justify;justify-content:space-between;}.tvd-toast.tve-fe-message{top:50px;width:60%;padding:0px;color:rgb(0,0,0);max-width:500px;position:fixed;z-index:9999993;left:50%;}.tvd-toast.tve-fe-message .tve-toast-message{position:relative;left:-50%;background:rgb(255,255,255);box-shadow:rgb(167,167,167) 0px 0px 15px 0px;}.tvd-toast.tve-fe-message .tve-toast-icon-container{display:inline-block;width:50px;background:green;color:rgb(255,255,255);height:100%;position:absolute;}.tvd-toast.tve-fe-message .tve-toast-message-container{padding:20px 10px 20px 70px;margin:auto 0px;font-family:Roboto,sans-serif;font-size:16px;}.tvd-toast.tve-fe-message span{text-align:center;display:flex;-webkit-box-pack:center;justify-content:center;-webkit-box-orient:vertical;-webkit-box-direction:normal;flex-direction:column;-webkit-box-align:center;align-items:center;min-height:50px;height:100%;width:100%;}.thrv_symbol.thrv_footer{width:100%;position:relative;box-sizing:border-box;}.thrv_symbol.thrv_footer .thrive-symbol-shortcode{margin:0px auto;position:relative;}.symbol-section-in{margin:0px auto;position:relative;z-index:1;box-sizing:border-box;}.symbol-section-in:empty::before{font-family:sans-serif;line-height:40px;}.symbol-section-in::after,.symbol-section-in::before{content:"";display:block;overflow:auto;}.thrive-shortcode-content a{color:inherit;}.symbol-section-out{position:absolute;width:100%;height:100%;left:0px;top:0px;overflow:hidden;box-sizing:border-box !important;}.thrv_wrapper.thrv_text_element{padding:1px;}@media (max-width:767px){html{overflow-x:hidden !important;}html,body{max-width:100vw !important;}}@media screen and (max-device-width:480px){body{text-size-adjust:none;}}</style><style class='tve-symbol-custom-style'>@media (min-width: 300px){.thrv_symbol_180 [data-css="tve-u-164d09209b1"]{max-width: 1069px;text-align: center;}.thrv_symbol_180 [data-css="tve-u-164d0923206"]{background-color: rgba(242,242,242,0) !important;}.thrv_symbol_180 [data-css="tve-u-164d0927213"]{display: block;padding: 30px 20px !important;z-index: 0 !important;}.thrv_symbol_180 [data-css="tve-u-164d09209b1"] p,.thrv_symbol_180 [data-css="tve-u-164d09209b1"] li,.thrv_symbol_180 [data-css="tve-u-164d09209b1"] blockquote,.thrv_symbol_180 [data-css="tve-u-164d09209b1"] address,.thrv_symbol_180 [data-css="tve-u-164d09209b1"] .tcb-plain-text,.thrv_symbol_180 [data-css="tve-u-164d09209b1"] label,.thrv_symbol_180 [data-css="tve-u-164d09209b1"] h1,.thrv_symbol_180 [data-css="tve-u-164d09209b1"] h2,.thrv_symbol_180 [data-css="tve-u-164d09209b1"] h3,.thrv_symbol_180 [data-css="tve-u-164d09209b1"] h4,.thrv_symbol_180 [data-css="tve-u-164d09209b1"] h5,.thrv_symbol_180 [data-css="tve-u-164d09209b1"] h6{color: rgb(131,134,139);}.thrv_symbol_180 [data-css="tve-u-164d0927213"] .tve-page-section-in{display: block;}.thrv_symbol_180 [data-css="tve-u-164d09209b1"] p{margin: 0px !important;padding: 0px !important;}.thrv_symbol_180 [data-css="tve-u-164d0d9fbe5"]{font-family: Arial,Helvetica,sans-serif !important;font-size: 15px !important;}.thrv_symbol_180 [data-css="tve-u-16a8a33d8b7"]{font-size: 12px !important;}.thrv_symbol_180 .thrive-symbol-shortcode{margin-top: 0px !important;}.thrv_symbol_180 [data-css="tve-u-1703918842e"]{float: none;margin-left: auto !important;margin-right: auto !important;}.thrv_symbol_180 [data-css="tve-u-1703918f40b"]{font-family: Arial,Helvetica,sans-serif !important;font-size: 15px !important;}:not(#tve) .thrv_symbol_180 [data-css="tve-u-1703918f40b"]{line-height: 1.25em !important;}.thrv_symbol_180 [data-css="tve-u-17090621d51"]{font-size: 12px !important;}:not(#tve) .thrv_symbol_180 [data-css="tve-u-164d0d9fbe5"]{line-height: 1.25em !important;}}@media (max-width: 1023px){:not(#tve) .thrv_symbol_180 [data-css="tve-u-1703918f40b"]{line-height: 1.3em !important;}}@media (max-width: 767px){.thrv_symbol_180 [data-css="tve-u-164d0927213"]{padding: 10px !important;}.thrv_symbol_180 [data-css="tve-u-164d0d9fbe5"]{font-size: 11px !important;}.thrv_symbol_180 [data-css="tve-u-1703918f40b"]{font-size: 11px !important;}:not(#tve) .thrv_symbol_180 [data-css="tve-u-1703918f40b"]{line-height: 1.4em !important;padding-top: 0px !important;margin-top: 0px !important;}:not(#tve) .thrv_symbol_180 [data-css="tve-u-164d0d9fbe5"]{line-height: 1.4em !important;padding-top: 0px !important;margin-top: 0px !important;}.thrv_symbol_180 [data-css="tve-u-1703918842e"]{margin-top: -12px !important;}}</style><div class="symbol-section-out"></div> <div class="symbol-section-in" style=""><div class="thrv_wrapper thrv-page-section tve-custom-menu-inside" data-css="tve-u-164d0927213" style=""> <div class="tve-page-section-out" data-css="tve-u-164d0923206"></div> <div class="tve-page-section-in tve_empty_dropzone" data-css="tve-u-164d09209b1" style=""><div class="thrv_wrapper thrv_text_element" style="" data-css="tve-u-1703918842e"><p data-css="tve-u-1703918f40b" style="font-size: 12px !important;"><span data-css="tve-u-17090621d51">This site is not a part of the Facebook website or Facebook Inc. Additionally, this site is not endorsed by Facebook in any way. FACEBOOK is a trademark of FACEBOOK, Inc.</span></p><p data-css="tve-u-164d0d9fbe5" style="font-size: 12px !important;"><span data-css="tve-u-16a8a33d8b7"><span class="thrive-shortcode-content" data-attr-id="15" data-extra_key="2" data-option-inline="1" data-shortcode="thrive_global_fields" data-shortcode-name="[Legal] Cookie Policy" data-attr-static-link="{&quot;className&quot;:&quot;&quot;,&quot;href&quot;:&quot;https://marcomunich.com/cookie-policy/&quot;,&quot;target&quot;:&quot;_blank&quot;,&quot;class&quot;:&quot;&quot;}" data-css="tve-u-17090621d55"><a href="https://marcomunich.com/cookie-policy/" target="_blank" class="">Cookie Policy</a></span> |&nbsp;<span class="thrive-shortcode-content" data-attr-id="6" data-extra_key="2" data-option-inline="1" data-shortcode="thrive_global_fields" data-shortcode-name="[Legal] Privacy policy" data-attr-static-link="{&quot;className&quot;:&quot;tve-froala&quot;,&quot;href&quot;:&quot;https://marcomunich.com/privacy-policy/&quot;,&quot;target&quot;:&quot;_blank&quot;,&quot;class&quot;:&quot;tve-froala&quot;}" data-css="tve-u-17090621d58"><a href="https://marcomunich.com/privacy-policy/" target="_blank" class="tve-froala">Privacy policy</a></span></span></p></div></div> </div></div></div></div></div></div>			</div>
-						<div class="fr-dropdown-holder tcb-style-wrap"></div>
-		</div>
-						<script type="speculationrules">
-{"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":["/wp-*.php","/wp-admin/*","/wp-content/uploads/*","/wp-content/*","/wp-content/plugins/*","/wp-content/themes/thrive-theme/*","/*\\?(.+)"]}},{"not":{"selector_matches":"a[rel~=\"nofollow\"]"}},{"not":{"selector_matches":".no-prefetch, .no-prefetch a"}}]},"eagerness":"conservative"}]}
-</script>
-<script type='text/javascript'>( $ => {
-	/**
-	 * Displays toast message from storage, it is used when the user is redirected after login
-	 */
-	if ( window.sessionStorage ) {
-		$( window ).on( 'tcb_after_dom_ready', () => {
-			const message = sessionStorage.getItem( 'tcb_toast_message' );
-
-			if ( message ) {
-				tcbToast( sessionStorage.getItem( 'tcb_toast_message' ), false );
-				sessionStorage.removeItem( 'tcb_toast_message' );
-			}
-		} );
-	}
-
-	/**
-	 * Displays toast message
-	 *
-	 * @param {string}   message  - message to display
-	 * @param {Boolean}  error    - whether the message is an error or not
-	 * @param {Function} callback - callback function to be called after the message is closed
-	 */
-	function tcbToast( message, error, callback ) {
-		/* Also allow "message" objects */
-		if ( typeof message !== 'string' ) {
-			message = message.message || message.error || message.success;
-		}
-		if ( ! error ) {
-			error = false;
-		}
-		TCB_Front.notificationElement.toggle( message, error ? 'error' : 'success', callback );
-	}
-} )( typeof ThriveGlobal === 'undefined' ? jQuery : ThriveGlobal.$j );
-</script>	`} />
-  </div>
-</BaseLayout>
-
-<style>
-  .thrive-page-wrap {
-    overflow-x: hidden;
-  }
-</style>
-
-<script>
-  /**
-   * Fix prezzi: estrae la card €90 da dentro tcb-pt-wrapper e crea
-   * un layout a 2 colonne affiancate (€90 sinistra, €500 destra).
-   */
-  document.addEventListener('DOMContentLoaded', () => {
-    // 1. Trova il tcb-pt-wrapper dentro il pricing table
-    const ptWrapper = document.querySelector('[data-css="tve-u-17891fb19b3"] .tcb-pt-wrapper');
-    if (!ptWrapper) return;
-
-    // 2. Trova la card €90 (ultimo .tcb-pt-cb-wrapper dentro ptWrapper)
-    const card90 = ptWrapper.querySelector('.tcb-pt-cb-wrapper');
-    if (!card90) return;
-
-    // 3. Trova il contenitore del €500 (tve-u-17891fb19b9)
-    const outerWrapper = document.querySelector('[data-css="tve-u-17891fb19b9"]');
-    if (!outerWrapper) return;
-    const parent = outerWrapper.parentElement;
-
-    // 4. Crea il nuovo flex container
-    const row = document.createElement('div');
-    row.style.cssText = 'display:flex; flex-wrap:wrap; gap:24px; justify-content:center; align-items:flex-start; padding: 0 16px;';
-
-    // 5. Metti €90 a sinistra, €500 a destra
-    card90.style.cssText = 'flex:1 1 300px; max-width:480px;';
-    outerWrapper.style.cssText = 'flex:1 1 300px; max-width:480px;';
-
-    row.appendChild(card90);   // sinistra
-    row.appendChild(outerWrapper); // destra
-
-    parent.insertBefore(row, parent.firstChild);
-  });
-</script>
 
 <style is:global>
-  /* ── Fix sezione prezzi corso-copywriting ────────────────────────────────────
-     Nasconde la prima sezione "Yearly" (dynamic-group vuoto, richiede Thrive JS)
-     e riorganizza le card prezzi in 2 colonne affiancate. */
-
-  /* 1. Nasconde prima sezione prezzi (Yearly - dynamic group vuoto) */
-  [data-css="tve-u-17ab8cfd7a7"] {
-    display: none !important;
+  :root {
+    --red: #DC2626;
+    --red-dark: #991B1B;
+    --red-light: #FEF2F2;
+    --dark: #0D0404;
+    --dark2: #1A0808;
   }
 
-  /* 2. Nasconde bottoni toggle PAGAMENTO UNICO / A RATE (non funzionano senza JS) */
-  [data-css="tve-u-17891fa81fb"] .thrv-button-group {
-    display: none !important;
+  .copy-page .btn-red {
+    display: inline-block;
+    background: #DC2626;
+    color: #fff;
+    padding: 16px 36px;
+    font-weight: 700;
+    font-size: 15px;
+    text-decoration: none;
+    border-radius: 4px;
+    letter-spacing: .5px;
+    transition: background .2s;
   }
+  .copy-page .btn-red:hover { background: #991B1B; opacity: 1; }
 
-  /* 3. Il .tve-cb del card €500 (tve-u-17891fb19b3) contiene il card €90 annidato.
-        Lo trasformiamo in un flex-row per affiancare i due elementi principali:
-        .tcb-pt-wrapper (contenuto €500) e .tcb-pt-cb-wrapper (card €90). */
-  [data-css="tve-u-17891fb19b3"] {
-    display: flex !important;
-    flex-direction: row !important;
-    flex-wrap: wrap !important;
-    gap: 24px !important;
-    align-items: flex-start !important;
-    padding: 0 !important;
+  .copy-page .btn-outline-red {
+    display: inline-block;
+    background: transparent;
+    color: #DC2626;
+    padding: 14px 32px;
+    font-weight: 700;
+    font-size: 15px;
+    text-decoration: none;
+    border-radius: 4px;
+    border: 2px solid #DC2626;
+    transition: all .2s;
   }
+  .copy-page .btn-outline-red:hover { background: #DC2626; color: #fff; opacity: 1; }
 
-  /* 4. Il .tcb-pt-wrapper (€500) e il card €90 annidato: ognuno occupa metà */
-  [data-css="tve-u-17891fb19b3"] > .tcb-pt-wrapper {
-    flex: 1 1 calc(50% - 12px) !important;
-    min-width: 260px !important;
-    padding: 30px !important;
-    order: 2; /* €500 a destra */
-  }
+  .copy-page .feature-icon svg { width: 36px; height: 36px; color: #DC2626; }
+  .copy-page .topic-item { display: flex; gap: 12px; align-items: flex-start; padding: 13px 0; border-bottom: 1px solid rgba(255,255,255,.08); }
+  .copy-page .topic-item:last-child { border: none; }
 
-  [data-css="tve-u-17891fb19b3"] > [data-css="tve-u-17d32f97301"] {
-    flex: 1 1 calc(50% - 12px) !important;
-    min-width: 260px !important;
-    order: 1; /* €90 a sinistra */
-  }
-
-  /* 5. Nasconde il link "Guarda la lezione" intermedio */
-  [data-css="tve-u-17891fb19b3"] > .thrv_text_element {
-    display: none !important;
-  }
-
-  /* 6. Il card €500 outer wrapper non deve avere padding extra */
-  [data-css="tve-u-17891fb19b9"] {
-    padding: 0 !important;
-  }
-
-  /* 7. Bottoni acquisto stessa larghezza (100% della card) */
-  [data-css="tve-u-17d32f97330"],
-  [data-css="tve-u-17891fb19b4"] {
-    display: block !important;
-    width: 100% !important;
-    max-width: 100% !important;
-  }
-  [data-css="tve-u-17d32f97330"] .tcb-button-link,
-  [data-css="tve-u-17891fb19b4"] .tcb-button-link {
-    display: block !important;
-    text-align: center !important;
+  @media (max-width: 768px) {
+    .copy-page .hero-grid,
+    .copy-page .two-col { grid-template-columns: 1fr !important; }
+    .copy-page .hero-image { display: none; }
+    .copy-page .reverse-mobile { order: -1; }
   }
 </style>
+
+<div class="copy-page">
+
+<!-- ── HERO ──────────────────────────────────────────────────────────────── -->
+<section style="background: #0D0404; color: #fff; padding: 80px 24px 0;">
+  <div class="hero-grid" style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;">
+
+    <!-- Testo -->
+    <div>
+      <div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(220,38,38,.15); border: 1px solid rgba(220,38,38,.4); color: #fca5a5; padding: 6px 14px; border-radius: 100px; font-size: 13px; font-weight: 700; letter-spacing: 2px; margin-bottom: 24px;">
+        ✦ VIDEO CORSO
+      </div>
+      <h1 style="font-size: clamp(34px, 4.5vw, 52px); font-weight: 800; line-height: 1.1; color: #fff; margin-bottom: 20px;">
+        Creazione del<br><span style="color: #DC2626;">Messaggio Autentico</span>
+      </h1>
+      <p style="font-size: 18px; line-height: 1.7; color: #bbb; margin-bottom: 12px; font-style: italic;">
+        Come cambierebbe il tuo lavoro se mostrassi davvero chi sei?
+      </p>
+      <p style="font-size: 16px; line-height: 1.7; color: #999; margin-bottom: 36px;">
+        5 Video Lezioni per fare chiarezza interna sugli argomenti di cui parlare
+        quando ci si promuove online — attirando solo persone a cui risuona la tua vera essenza.
+      </p>
+      <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+        <a href="#costi" class="btn-red">Scopri i costi →</a>
+        <a href="https://youtu.be/_83q4eUXmCo" target="_blank" rel="noopener" class="btn-outline-red">Guarda la lezione gratuita</a>
+      </div>
+    </div>
+
+    <!-- Immagine -->
+    <div class="hero-image" style="padding-bottom: 48px;">
+      <div style="border-radius: 12px; overflow: hidden; aspect-ratio: 4/3; background: #1a0808; position: relative;">
+        <img
+          src="https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?w=700&q=80&fit=crop"
+          alt="Persona che scrive autenticamente il proprio messaggio"
+          style="width:100%; height:100%; object-fit:cover; display:block; opacity:.75;"
+          loading="eager"
+        />
+        <!-- Quote overlay -->
+        <div style="position:absolute; bottom:0; left:0; right:0; padding:20px 20px; background:linear-gradient(transparent,rgba(0,0,0,.8));">
+          <p style="color:#fca5a5; font-size:13px; font-style:italic; margin:0; line-height:1.5;">
+            "Comunicare in modo autentico è il miglior marketing che esiste."
+          </p>
+          <p style="color:#888; font-size:12px; margin:6px 0 0;">— Marco Munich</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Striscia statistica -->
+  <div style="max-width:1100px; margin:48px auto 0; display:flex; gap:32px; flex-wrap:wrap; padding-bottom:40px; border-top:1px solid rgba(255,255,255,.07); padding-top:32px;">
+    {[
+      { n: "5", label: "Video lezioni" },
+      { n: "5h+", label: "di contenuto" },
+      { n: "1", label: "Risorsa PDF da 15 pagine" },
+      { n: "1", label: "Gruppo Telegram privato" },
+    ].map(s => (
+      <div>
+        <p style="font-size:32px; font-weight:800; color:#DC2626; margin:0; line-height:1;">{s.n}</p>
+        <p style="font-size:13px; color:#888; margin:4px 0 0; letter-spacing:.5px;">{s.label}</p>
+      </div>
+    ))}
+  </div>
+</section>
+
+<!-- ── FARE CHIAREZZA ──────────────────────────────────────────────────── -->
+<section style="padding: 80px 24px; background: #fff;">
+  <div style="max-width: 1080px; margin: 0 auto;">
+    <div class="two-col" style="display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; margin-bottom:60px;">
+      <div>
+        <p style="color:#DC2626; font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase; margin-bottom:12px;">Il percorso</p>
+        <h2 style="font-size:clamp(26px,3vw,38px); font-weight:800; margin-bottom:16px;">Avere un Messaggio Autentico significa creare Terreno fertile</h2>
+        <p style="color:#555; font-size:16px; line-height:1.8; margin-bottom:16px;">
+          Agli albori della nostra attività siamo sempre in ansia da prestazione
+          e vorremmo un "porto sicuro" da cui cominciare il nostro viaggio.
+        </p>
+        <p style="color:#555; font-size:16px; line-height:1.8;">
+          Scrivere sapendo che stai attingendo da un tuo spazio personale,
+          che ti permette di farti amare per quello che sei — non per la maschera
+          che molti indossano per paura di mostrarsi realmente.
+        </p>
+      </div>
+      <div style="border-radius:12px; overflow:hidden; aspect-ratio:16/10; background:#111;">
+        <img
+          src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=700&q=80&fit=crop"
+          alt="Professionista olistica che lavora sul proprio messaggio autentico"
+          style="width:100%; height:100%; object-fit:cover; display:block;"
+          loading="lazy"
+        />
+      </div>
+    </div>
+
+    <!-- Feature grid -->
+    <h3 style="text-align:center; font-size:18px; font-weight:600; color:#555; margin-bottom:36px;">In questo percorso imparerai a:</h3>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:20px;">
+      {features.map(f => (
+        <div style="border:1px solid #f0f0f0; border-top:3px solid #DC2626; border-radius:8px; padding:24px;">
+          <div class="feature-icon" style="margin-bottom:12px;" set:html={f.icon} />
+          <h4 style="font-size:15px; font-weight:700; text-transform:uppercase; letter-spacing:.5px; margin-bottom:8px;">{f.title}</h4>
+          <p style="color:#555; font-size:14px; line-height:1.6; margin:0;">{f.text}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- ── TI RISUONA ─────────────────────────────────────────────────────── -->
+<section style="padding: 80px 24px; background: #FEF2F2;">
+  <div class="two-col" style="max-width:1080px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;">
+    <div style="border-radius:12px; overflow:hidden; aspect-ratio:4/5; background:#111; position:relative;">
+      <img
+        src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=600&q=80&fit=crop"
+        alt="Operatrice olistica che scrive i suoi contenuti autentici"
+        style="width:100%; height:100%; object-fit:cover; display:block;"
+        loading="lazy"
+      />
+      <div style="position:absolute; bottom:0; left:0; right:0; background:linear-gradient(transparent,rgba(13,4,4,.85)); padding:28px 24px;">
+        <p style="color:#fff; font-size:16px; font-style:italic; margin:0; line-height:1.5;">
+          "Il concetto di marketing è spesso percepito negativamente — e capisco perché."
+        </p>
+        <p style="color:#fca5a5; font-size:13px; margin:8px 0 0;">— Marco Munich</p>
+      </div>
+    </div>
+    <div>
+      <p style="color:#DC2626; font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase; margin-bottom:12px;">Perché il messaggio autentico?</p>
+      <h2 style="font-size:clamp(26px,3vw,38px); font-weight:800; margin-bottom:20px;">Ti risuona?</h2>
+      <p style="font-size:16px; line-height:1.8; color:#333; margin-bottom:16px;">
+        Il percorso è dedicato a chi <strong>non ama "fare marketing"</strong> nel senso
+        tradizionale del termine — e in tutta onestà, non posso che concordare.
+      </p>
+      <p style="font-size:16px; line-height:1.8; color:#333; margin-bottom:24px;">
+        Il marketing classico è quasi sempre sinonimo di "azioni finalizzate a ottenere qualcosa
+        in cambio". Ma noi partiamo da un posto diverso: la tua vera essenza.
+      </p>
+      <div style="background:#fff; border-left:4px solid #DC2626; padding:16px 20px; border-radius:0 8px 8px 0;">
+        <p style="margin:0; font-size:15px; color:#333; font-weight:500;">
+          Quando accettiamo di mostrarci davvero, <strong>non servono più strategie</strong>
+          — diventiamo noi stessi un flusso che risuona solo con le persone giuste.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ARGOMENTI ──────────────────────────────────────────────────────── -->
+<section style="padding: 80px 24px; background: #1A0808;">
+  <div style="max-width:1000px; margin:0 auto;">
+    <p style="color:#fca5a5; font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase; margin-bottom:12px;">Il programma</p>
+    <h2 style="font-size:clamp(26px,3vw,38px); font-weight:800; color:#fff; margin-bottom:12px;">Ecco di cosa parleremo</h2>
+    <p style="color:#999; margin-bottom:44px; font-size:16px;">Un elenco completo degli argomenti che affronteremo nelle 5 video lezioni.</p>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:0;">
+      {topics.map(item => (
+        <div class="topic-item">
+          <span style="color:#DC2626; font-weight:700; flex-shrink:0; font-size:16px; margin-top:1px;">▸</span>
+          <span style="color:#ddd; font-size:15px; line-height:1.5;">{item}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- ── VIDEO LEZIONE GRATUITA ─────────────────────────────────────────── -->
+<section style="padding: 80px 24px; background: #fff;">
+  <div style="max-width:800px; margin:0 auto; text-align:center;">
+    <p style="color:#DC2626; font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase; margin-bottom:12px;">Assaggia il percorso</p>
+    <h2 style="font-size:clamp(24px,2.5vw,34px); font-weight:800; margin-bottom:16px;">Guarda la Lezione Introduttiva Gratuita</h2>
+    <p style="color:#555; font-size:16px; margin-bottom:36px;">Prima di acquistare, vedi con i tuoi occhi il metodo e il mio approccio.</p>
+    <div style="border-radius:12px; overflow:hidden; position:relative; background:#111; aspect-ratio:16/9;">
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/_83q4eUXmCo?rel=0&modestbranding=1"
+        title="Creazione del Messaggio Autentico - Lezione Introduttiva"
+        frameborder="0"
+        allowfullscreen
+        loading="lazy"
+        style="position:absolute; top:0; left:0; width:100%; height:100%;"
+      ></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- ── A QUALI PROFESSIONISTI ─────────────────────────────────────────── -->
+<section style="padding: 80px 24px; background: #f7f7f7;">
+  <div style="max-width:1000px; margin:0 auto;">
+    <h2 style="text-align:center; font-size:clamp(24px,3vw,36px); font-weight:800; margin-bottom:16px;">A quali figure professionali è adatto?</h2>
+    <p style="text-align:center; color:#555; margin-bottom:48px; font-size:16px;">Se lavori nel mondo dell'aiuto, della crescita personale o del benessere, questo percorso è per te.</p>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:20px;">
+      {[
+        { title: "Life-Coach", text: "Hai già lavorato con esperti di marketing che proponevano solo strategie. Qui non ne troverai: partiamo dal cuore." },
+        { title: "Counselor", text: "Hai paura di risultare 'piazzista' o di mettere in vendita le emozioni. In questo percorso ci sei tu — loro si specchieranno." },
+        { title: "Operatori Olistici", text: "Tra mille tecniche è facile perdersi. Qualunque sia la tua disciplina, al centro devi esserci sempre tu." },
+        { title: "Chiunque voglia comunicare dal cuore", text: "Se senti che quello che pubblichi non è davvero te, questo percorso ti aiuterà a trovare le parole giuste." },
+      ].map((item, i) => (
+        <div style="background:#fff; border-radius:8px; padding:28px; position:relative; overflow:hidden;">
+          <div style="font-size:42px; font-weight:900; color:rgba(220,38,38,.08); position:absolute; top:8px; right:16px; line-height:1;">{i+1}</div>
+          <h4 style="font-size:15px; font-weight:700; margin-bottom:10px; padding-right:20px; color:#DC2626;">{item.title}</h4>
+          <p style="color:#555; font-size:14px; line-height:1.6; margin:0;">{item.text}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- ── È IDEALE PER TE SE ─────────────────────────────────────────────── -->
+<section style="padding: 80px 24px; background: #FEF2F2;">
+  <div style="max-width:1000px; margin:0 auto;">
+    <h2 style="text-align:center; font-size:clamp(26px,3vw,38px); font-weight:800; margin-bottom:48px;">È ideale per te <span style="color:#DC2626;">se:</span></h2>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:20px;">
+      {ideals.map((item, i) => (
+        <div style="background:#fff; border-radius:8px; padding:28px; position:relative; overflow:hidden;">
+          <div style="font-size:42px; font-weight:900; color:rgba(220,38,38,.08); position:absolute; top:8px; right:16px; line-height:1;">{i+1}</div>
+          <h4 style="font-size:15px; font-weight:700; margin-bottom:10px; padding-right:20px;">{item.title}</h4>
+          <p style="color:#555; font-size:14px; line-height:1.6; margin:0;">{item.text}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- ── COSTI ───────────────────────────────────────────────────────────── -->
+<section id="costi" style="padding: 80px 24px; background: #f7f7f7;">
+  <div style="max-width:1000px; margin:0 auto;">
+    <p style="color:#DC2626; font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase; text-align:center; margin-bottom:12px;">Costi</p>
+    <h2 style="text-align:center; font-size:clamp(26px,3vw,38px); font-weight:800; margin-bottom:12px;">Scegli come vuoi iniziare</h2>
+    <p style="text-align:center; color:#555; margin-bottom:48px; font-size:16px;">Puoi fare il percorso in autonomia o con il mio supporto diretto.</p>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
+
+      <!-- Card €90 -->
+      <div style="background:#fff; border-radius:12px; padding:36px; border:2px solid #eee;">
+        <p style="font-size:13px; font-weight:700; color:#888; text-transform:uppercase; letter-spacing:1px; margin-bottom:16px;">Percorso Pre-registrato</p>
+        <div style="margin-bottom:4px;">
+          <span style="font-size:48px; font-weight:900; color:#0D0404;">€90</span>
+        </div>
+        <p style="color:#999; font-size:13px; margin-bottom:20px;">pagamento unico</p>
+        <p style="color:#555; font-size:15px; line-height:1.7; margin-bottom:24px;">
+          Fai il percorso ai tuoi ritmi, con accesso permanente ai materiali e al gruppo Telegram.
+        </p>
+        <ul style="list-style:none; padding:0; margin-bottom:32px;">
+          {[
+            "5 Video lezioni pre-registrate",
+            "1 Risorsa PDF da 15 pagine",
+            "Permanenza nel Gruppo Telegram",
+            "1 Sessione individuale D&R in regalo",
+          ].map(i => (
+            <li style="display:flex; gap:10px; align-items:flex-start; padding:8px 0; border-bottom:1px solid #f0f0f0; font-size:15px; color:#333;">
+              <span style="color:#DC2626; font-weight:700; flex-shrink:0;">✓</span> {i}
+            </li>
+          ))}
+        </ul>
+        <a href="https://wa.link/wjlw58" target="_blank" rel="noopener"
+          style="display:block; text-align:center; padding:14px; border:2px solid #DC2626; color:#DC2626; font-weight:700; font-size:15px; text-decoration:none; border-radius:4px; transition:all .2s;">
+          Scrivimi per acquistare →
+        </a>
+      </div>
+
+      <!-- Card €500 -->
+      <div style="background:#0D0404; border-radius:12px; padding:36px; border:2px solid #DC2626; position:relative;">
+        <div style="position:absolute; top:-14px; left:50%; transform:translateX(-50%); background:#DC2626; color:#fff; font-size:12px; font-weight:700; letter-spacing:1px; padding:4px 16px; border-radius:100px; white-space:nowrap;">CONSIGLIATO</div>
+        <p style="font-size:13px; font-weight:700; color:#fca5a5; text-transform:uppercase; letter-spacing:1px; margin-bottom:16px;">Percorso Privato con Marco</p>
+        <div style="margin-bottom:4px;">
+          <span style="font-size:48px; font-weight:900; color:#fff;">€500</span>
+        </div>
+        <p style="color:#999; font-size:13px; margin-bottom:20px;">oppure 3 rate da €167</p>
+        <p style="color:#bbb; font-size:15px; line-height:1.7; margin-bottom:24px;">
+          Ti seguo personalmente passo dopo passo su ogni step del processo di Creazione del Messaggio Autentico.
+        </p>
+        <ul style="list-style:none; padding:0; margin-bottom:32px;">
+          {[
+            "5 Video lezioni pre-registrate",
+            "1 Risorsa PDF da 15 pagine",
+            "Invito al Gruppo Telegram",
+            "5 Sessioni individuali con Marco",
+            "Facilitazione passo-passo del processo",
+          ].map(i => (
+            <li style="display:flex; gap:10px; align-items:flex-start; padding:8px 0; border-bottom:1px solid rgba(255,255,255,.08); font-size:15px; color:#ddd;">
+              <span style="color:#DC2626; font-weight:700; flex-shrink:0;">✓</span> {i}
+            </li>
+          ))}
+        </ul>
+        <a href="https://wa.link/wjlw58" target="_blank" rel="noopener" class="btn-red"
+          style="display:block; text-align:center; background:#DC2626;">
+          Scrivimi per acquistare →
+        </a>
+        <p style="text-align:center; margin-top:12px; font-size:13px; color:#888;">
+          <a href="https://wa.link/wjlw58" target="_blank" rel="noopener" style="color:#fca5a5;">Scrivimi per pagare in 3 rate da €167</a>
+        </p>
+      </div>
+
+    </div>
+
+    <!-- WhatsApp CTA -->
+    <div style="text-align:center; margin-top:48px; padding:32px; background:#fff; border-radius:12px;">
+      <p style="font-size:18px; font-weight:700; margin-bottom:8px;">Hai domande prima di acquistare?</p>
+      <p style="color:#555; margin-bottom:20px;">Scrivimi su WhatsApp, rispondo personalmente.</p>
+      <a href="https://wa.link/wjlw58" target="_blank" rel="noopener"
+        style="display:inline-flex; align-items:center; gap:10px; background:#25D366; color:#fff; font-weight:700; font-size:15px; text-decoration:none; padding:14px 28px; border-radius:4px;">
+        <svg viewBox="0 0 448 512" style="width:20px; height:20px; fill:#fff;"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"></path></svg>
+        Scrivimi su WhatsApp
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIANZE ──────────────────────────────────────────────────── -->
+<section style="padding: 80px 24px; background: #f9f9f9;">
+  <div style="max-width:1000px; margin:0 auto;">
+    <h2 style="text-align:center; font-size:clamp(24px,3vw,36px); font-weight:800; margin-bottom:48px;">
+      Cosa dice chi ha già fatto un percorso con me
+    </h2>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:24px;">
+      {testimonials.map(t => (
+        <div style="background:#fff; border-radius:8px; padding:28px; border-top:3px solid #DC2626; box-shadow:0 2px 12px rgba(0,0,0,.05);">
+          <p style="font-size:13px; font-weight:700; color:#DC2626; text-transform:uppercase; letter-spacing:1px; margin-bottom:14px;">{t.title}</p>
+          <p style="font-size:15px; color:#444; line-height:1.7; font-style:italic; margin-bottom:20px;">"{t.quote}"</p>
+          <p style="font-size:14px; font-weight:700; margin:0;">{t.name}</p>
+          <p style="font-size:13px; color:#999; margin:2px 0 0;">{t.role}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+</div><!-- /copy-page -->
+
+</BaseLayout>
