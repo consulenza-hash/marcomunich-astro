@@ -6,6 +6,7 @@
  * quindi WordPress non viene interrogato dagli utenti finali.
  * ─────────────────────────────────────────────────────────────────────────────
  */
+import imageMapping from '../data/imageMapping.json' assert { type: 'json' };
 
 const WP_API = 'https://marcomunich.com/wp-json/wp/v2';
 
@@ -139,7 +140,10 @@ export function getFeaturedImageUrl(post, size = 'medium_large') {
   try {
     const media = post?._embedded?.['wp:featuredmedia']?.[0];
     if (!media) return null;
-    // Prova la dimensione richiesta, poi full, poi source_url
+    // Usa immagine locale se disponibile (indipendente da WP)
+    const localPath = imageMapping[media.id];
+    if (localPath) return localPath;
+    // Fallback: URL WP (durante sviluppo o se media non ancora scaricato)
     return (
       media?.media_details?.sizes?.[size]?.source_url ??
       media?.media_details?.sizes?.full?.source_url ??
