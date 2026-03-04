@@ -172,3 +172,14 @@
 :root {
   --page-section-max-width: 1080px;
 }
+
+/* ── Thrive Animations fix ────────────────────────────────────────────────────
+   Thrive imposta opacity:0 + transform sugli elementi animati e li rivela
+   tramite JS (IntersectionObserver) al momento dello scroll.
+   Senza il JS di Thrive, gli elementi restano invisibili per sempre.
+   Qui forziamo opacity:1 e azzeriamo transform su tutte le pagine Thrive. */
+.tve_ea_thrive_animation {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+}

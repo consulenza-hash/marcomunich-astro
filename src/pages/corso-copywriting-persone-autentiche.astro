@@ -381,3 +381,89 @@ import BaseLayout from '@layouts/BaseLayout.astro';
     overflow-x: hidden;
   }
 </style>
+
+<script>
+  /**
+   * Fix prezzi: estrae la card €90 da dentro tcb-pt-wrapper e crea
+   * un layout a 2 colonne affiancate (€90 sinistra, €500 destra).
+   */
+  document.addEventListener('DOMContentLoaded', () => {
+    // 1. Trova il tcb-pt-wrapper dentro il pricing table
+    const ptWrapper = document.querySelector('[data-css="tve-u-17891fb19b3"] .tcb-pt-wrapper');
+    if (!ptWrapper) return;
+
+    // 2. Trova la card €90 (ultimo .tcb-pt-cb-wrapper dentro ptWrapper)
+    const card90 = ptWrapper.querySelector('.tcb-pt-cb-wrapper');
+    if (!card90) return;
+
+    // 3. Trova il contenitore del €500 (tve-u-17891fb19b9)
+    const outerWrapper = document.querySelector('[data-css="tve-u-17891fb19b9"]');
+    if (!outerWrapper) return;
+    const parent = outerWrapper.parentElement;
+
+    // 4. Crea il nuovo flex container
+    const row = document.createElement('div');
+    row.style.cssText = 'display:flex; flex-wrap:wrap; gap:24px; justify-content:center; align-items:flex-start; padding: 0 16px;';
+
+    // 5. Metti €90 a sinistra, €500 a destra
+    card90.style.cssText = 'flex:1 1 300px; max-width:480px;';
+    outerWrapper.style.cssText = 'flex:1 1 300px; max-width:480px;';
+
+    row.appendChild(card90);   // sinistra
+    row.appendChild(outerWrapper); // destra
+
+    parent.insertBefore(row, parent.firstChild);
+  });
+</script>
+
+<style is:global>
+  /* ── Fix sezione prezzi corso-copywriting ────────────────────────────────────
+     Nasconde la prima sezione "Yearly" (dynamic-group vuoto, richiede Thrive JS)
+     e riorganizza le card prezzi in 2 colonne affiancate. */
+
+  /* 1. Nasconde prima sezione prezzi (Yearly - dynamic group vuoto) */
+  [data-css="tve-u-17ab8cfd7a7"] {
+    display: none !important;
+  }
+
+  /* 2. Nasconde bottoni toggle PAGAMENTO UNICO / A RATE (non funzionano senza JS) */
+  [data-css="tve-u-17891fa81fb"] .thrv-button-group {
+    display: none !important;
+  }
+
+  /* 3. Il .tve-cb del card €500 (tve-u-17891fb19b3) contiene il card €90 annidato.
+        Lo trasformiamo in un flex-row per affiancare i due elementi principali:
+        .tcb-pt-wrapper (contenuto €500) e .tcb-pt-cb-wrapper (card €90). */
+  [data-css="tve-u-17891fb19b3"] {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    gap: 24px !important;
+    align-items: flex-start !important;
+    padding: 0 !important;
+  }
+
+  /* 4. Il .tcb-pt-wrapper (€500) e il card €90 annidato: ognuno occupa metà */
+  [data-css="tve-u-17891fb19b3"] > .tcb-pt-wrapper {
+    flex: 1 1 calc(50% - 12px) !important;
+    min-width: 260px !important;
+    padding: 30px !important;
+    order: 2; /* €500 a destra */
+  }
+
+  [data-css="tve-u-17891fb19b3"] > [data-css="tve-u-17d32f97301"] {
+    flex: 1 1 calc(50% - 12px) !important;
+    min-width: 260px !important;
+    order: 1; /* €90 a sinistra */
+  }
+
+  /* 5. Nasconde il link "Guarda la lezione" intermedio */
+  [data-css="tve-u-17891fb19b3"] > .thrv_text_element {
+    display: none !important;
+  }
+
+  /* 6. Il card €500 outer wrapper non deve avere padding extra */
+  [data-css="tve-u-17891fb19b9"] {
+    padding: 0 !important;
+  }
+</style>
