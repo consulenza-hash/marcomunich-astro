@@ -1,0 +1,85 @@
+Options -Indexes
+Options +FollowSymLinks
+
+# ── Security Headers ──────────────────────────────────────────────────────────
+<IfModule mod_headers.c>
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# ── Cache lunga per asset Astro con hash nel nome ─────────────────────────────
+<LocationMatch "^/_astro/">
+  <IfModule mod_headers.c>
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </IfModule>
+  <IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresDefault "access plus 1 year"
+  </IfModule>
+</LocationMatch>
+
+# ── Redirects ─────────────────────────────────────────────────────────────────
+
+# Pagine rinominate
+Redirect 301 /inizia-da-qui/ /risorse/
+Redirect 301 /inizia-da-qui /risorse/
+
+# Blog (vecchi slug WP)
+Redirect 301 /blog-consulenza-marketing/ /blog/
+Redirect 301 /blog-2/ /blog/
+
+# Chi sono (alias)
+Redirect 301 /la-mia-storia/ /chi-sono/
+Redirect 301 /chi-sono2/ /chi-sono/
+Redirect 301 /come-posso-aiutarti-2/ /servizi/
+Redirect 301 /come-posso-aiutarti1/ /servizi/
+
+# Pagine di ringraziamento/conferma → homepage
+Redirect 302 /grazie/ /
+Redirect 302 /grazie-standard/ /
+Redirect 302 /grazie-standard-2/ /
+Redirect 302 /conferma-donazione/ /
+Redirect 302 /donazione-prodgratuito/ /
+Redirect 302 /donazione-fallita/ /
+Redirect 302 /consulenza-accettata/ /
+Redirect 302 /consulenza-non-accettata/ /
+Redirect 302 /conferma-registrazione-webinar-qa/ /
+
+# Servizi
+Redirect 301 /sessione-introduttiva/ /servizi/
+Redirect 301 /consulenza-introduttiva/ /servizi/
+Redirect 302 /prenota-la-sessione/ https://wa.link/zva8dp
+Redirect 302 /prenotazione/ https://wa.link/zva8dp
+
+# Varianti corso video
+Redirect 301 /creazione-video-autentici-2/ /creazione-video-autentici/
+Redirect 301 /creazione-video-autentici-beta/ /creazione-video-autentici/
+Redirect 301 /corso-come-parlare-in-video/ /creazione-video-autentici/
+
+# Percorsi → Percorsi Online
+Redirect 301 /creazione-messaggio-autentico/ /percorsi-online/
+Redirect 301 /creazione-sito-web-e-corso-online/ /percorsi-online/
+
+# Lead magnet → Risorse
+Redirect 301 /18-modi-trovare-clienti-olistico/ /risorse/
+Redirect 301 /150-domande/ /risorse/
+
+# Testimonianze → Chi sono
+Redirect 301 /testimonianza/ /chi-sono/
+Redirect 301 /testimonianze/ /chi-sono/
+
+# ── Trailing slash: normalizza URL senza slash finale ─────────────────────────
+RewriteEngine On
+RewriteBase /
+
+# Salta file e directory esistenti
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+# Se esiste come directory con index.html, aggiungi trailing slash
+RewriteCond %{REQUEST_FILENAME} -d [OR]
+RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI}/index.html -f
+RewriteRule ^(.+[^/])$ /$1/ [R=301,L]
+
+# ── Pagina 404 personalizzata ─────────────────────────────────────────────────
+ErrorDocument 404 /404.html
