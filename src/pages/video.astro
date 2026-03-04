@@ -95,6 +95,52 @@ const seoDesc  = 'Guarda i video di Marco Munich sul Personal Branding Olistico 
         thumb.classList.add('is-active');
       });
     });
+
+    // ── Paginazione client-side (sostituisce AJAX di EPYT) ────────────────
+    const PER_PAGE = 12;
+    const allThumbs = Array.from(thumbs) as HTMLElement[];
+    const totalPages = Math.ceil(allThumbs.length / PER_PAGE);
+    let currentPage = 0;
+
+    function showPage(page: number) {
+      currentPage = Math.max(0, Math.min(page, totalPages - 1));
+      allThumbs.forEach((t, i) => {
+        t.style.display =
+          i >= currentPage * PER_PAGE && i < (currentPage + 1) * PER_PAGE
+            ? ''
+            : 'none';
+      });
+      // Aggiorna i contatori pagina (possono essere duplicati: top + bottom)
+      gallery.querySelectorAll('.epyt-current').forEach(el => {
+        el.textContent = String(currentPage + 1);
+      });
+      gallery.querySelectorAll('.epyt-totalpages').forEach(el => {
+        el.textContent = String(totalPages);
+      });
+      // Mostra/nascondi pulsanti
+      gallery.querySelectorAll('.epyt-pagebutton').forEach(btn => {
+        const el = btn as HTMLElement;
+        const onclick = el.getAttribute('onclick') || el.dataset.action || '';
+        const isPrev = onclick.includes("'prev'") || onclick.includes('"prev"');
+        const isNext = onclick.includes("'next'") || onclick.includes('"next"');
+        if (isPrev) el.style.display = currentPage === 0 ? 'none' : '';
+        if (isNext) el.style.display = currentPage >= totalPages - 1 ? 'none' : '';
+      });
+    }
+
+    // Intercetta click su TUTTI i .epyt-pagebutton (top e bottom)
+    gallery.addEventListener('click', (e: Event) => {
+      const target = e.target as HTMLElement;
+      const btn = target.closest('.epyt-pagebutton') as HTMLElement | null;
+      if (!btn) return;
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      const onclick = btn.getAttribute('onclick') || btn.dataset.action || '';
+      const isPrev = onclick.includes("'prev'") || onclick.includes('"prev"');
+      showPage(isPrev ? currentPage - 1 : currentPage + 1);
+    }, true);
+
+    if (totalPages > 1) showPage(0);
   }
 
   setupVideoGallery();

@@ -1,0 +1,268 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+
+const punti = [
+  {
+    n: "1",
+    title: "La domanda esistenziale che cambia tutto",
+    text: "Scopri la domanda fondamentale che ti permette di capire come aiutare i tuoi potenziali clienti partendo da ciò che ami, non da ciò che \"dovresti\" fare."
+  },
+  {
+    n: "2",
+    title: "Cosa significa creare da uno spazio di Servizio",
+    text: "La differenza tra un prodotto gratuito creato dalla paura di non avere clienti e uno creato da un genuino desiderio di aiutare. Il pubblico sente questa differenza."
+  },
+  {
+    n: "3",
+    title: "Come trasformare la tua competenza in una gratuità utile",
+    text: "Imparerai a estrarre da te stesso il valore che già possiedi e trasformarlo in qualcosa che le persone sentono come un regalo autentico."
+  },
+  {
+    n: "4",
+    title: "Restare nel tuo centro mentre offri qualcosa gratis",
+    text: "Come fare in modo che la tua gratuità attiri persone a cui risuoni veramente, senza sentirti sfruttato o fuori dal tuo asse."
+  },
+];
+
+const ideals = [
+  { title: "Sei coach, counselor o operatore olistico", text: "Vuoi creare qualcosa da offrire gratuitamente ma non sai da dove iniziare, o non vuoi farlo 'solo per avere la mail' delle persone." },
+  { title: "Hai già un messaggio ma non sai come comunicarlo", text: "Senti di avere qualcosa di valore da condividere ma ti blocchi quando si tratta di creare contenuto gratuito in modo autentico." },
+  { title: "Non vuoi sentirti falso", text: "Vuoi che il tuo prodotto gratuito rispecchi chi sei davvero e non una versione di marketing di te stesso." },
+  { title: "Vuoi attrarre le persone giuste", text: "Stai cercando di costruire un pubblico che risuoni con i tuoi valori, non semplicemente raccogliere contatti." },
+];
+---
+
+<BaseLayout
+  title="Come Creare Prodotti Gratuiti da uno Spazio di Servizio - Marco Munich"
+  description="Video lezione di 50 minuti: la domanda esistenziale che ti permette di creare contenuto gratuito autentico restando in uno spazio di passione per ciò che fai."
+  currentPath="/creare-prodotti-gratuiti/"
+>
+
+  <!-- Hero -->
+  <section class="cpg-hero">
+    <div class="cpg-hero__inner">
+      <span class="cpg-hero__label">Video Lezione · 50 minuti</span>
+      <h1 class="cpg-hero__title">
+        Come Creare Prodotti Gratuiti<br>da uno Spazio di Servizio
+      </h1>
+      <p class="cpg-hero__sub">
+        Una video lezione dove ti mostro la <strong>domanda esistenziale</strong> che ti permette
+        di capire come aiutare i tuoi potenziali clienti attraverso una gratuità
+        restando in uno spazio di <strong>passione e amore</strong> per ciò che fai.
+      </p>
+      <a href="https://wa.link/eemovr" target="_blank" rel="noopener noreferrer" class="cpg-hero__cta">
+        Chiedimi accesso su WhatsApp
+      </a>
+    </div>
+  </section>
+
+  <!-- Cosa impari -->
+  <section class="cpg-section site-wrapper">
+    <h2 class="cpg-section__title">Cosa trovi in questa lezione</h2>
+    <div class="cpg-steps">
+      {punti.map((p) => (
+        <div class="cpg-step">
+          <span class="cpg-step__n">{p.n}</span>
+          <div class="cpg-step__content">
+            <strong class="cpg-step__head">{p.title}</strong>
+            <p class="cpg-step__text">{p.text}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Per chi è -->
+  <section class="cpg-ideal site-wrapper">
+    <h2 class="cpg-section__title">Questo percorso fa per te se…</h2>
+    <div class="cpg-ideal__grid">
+      {ideals.map((item) => (
+        <div class="cpg-ideal__card">
+          <strong class="cpg-ideal__head">{item.title}</strong>
+          <p class="cpg-ideal__text">{item.text}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- CTA finale -->
+  <section class="cpg-cta-section">
+    <div class="cpg-cta-section__inner">
+      <h2 class="cpg-cta-section__title">Pronto a iniziare?</h2>
+      <p class="cpg-cta-section__sub">
+        Scrivimi su WhatsApp per ricevere il link alla lezione.
+      </p>
+      <a href="https://wa.link/eemovr" target="_blank" rel="noopener noreferrer" class="cpg-cta-section__btn">
+        Scrivimi su WhatsApp
+      </a>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  /* ── Hero ─────────────────────────────────────────────────────────────── */
+  .cpg-hero {
+    background: #0A0A0A;
+    color: #fff;
+    padding: 72px 24px 64px;
+    text-align: center;
+  }
+  .cpg-hero__inner { max-width: 760px; margin: 0 auto; }
+
+  .cpg-hero__label {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 20px;
+  }
+  .cpg-hero__title {
+    font-size: clamp(28px, 5.5vw, 52px);
+    font-weight: 800;
+    line-height: 1.1;
+    color: #fff;
+    margin-bottom: 24px;
+  }
+  .cpg-hero__sub {
+    font-size: 18px;
+    line-height: 1.65;
+    color: rgba(255,255,255,0.72);
+    margin-bottom: 36px;
+  }
+  .cpg-hero__cta {
+    display: inline-block;
+    background: #fff;
+    color: #0A0A0A;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 16px 40px;
+    transition: opacity 0.15s;
+  }
+  .cpg-hero__cta:hover { opacity: 0.85; }
+
+  /* ── Sezioni ──────────────────────────────────────────────────────────── */
+  .cpg-section {
+    padding: 64px 24px;
+  }
+  .cpg-ideal {
+    padding: 0 24px 72px;
+  }
+  .cpg-section__title {
+    font-size: clamp(20px, 3vw, 28px);
+    font-weight: 700;
+    color: #0A0A0A;
+    margin-bottom: 40px;
+    text-align: center;
+  }
+
+  /* ── Steps ────────────────────────────────────────────────────────────── */
+  .cpg-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    max-width: 760px;
+    margin: 0 auto;
+  }
+  .cpg-step {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+  }
+  .cpg-step__n {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    background: #0A0A0A;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .cpg-step__content { flex: 1; }
+  .cpg-step__head {
+    display: block;
+    font-size: 17px;
+    font-weight: 700;
+    color: #0A0A0A;
+    margin-bottom: 6px;
+  }
+  .cpg-step__text {
+    font-size: 15px;
+    line-height: 1.65;
+    color: rgba(10,10,10,0.7);
+    margin: 0;
+  }
+
+  /* ── Per chi è ────────────────────────────────────────────────────────── */
+  .cpg-ideal__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .cpg-ideal__card {
+    border: 1.5px solid #E5E5E5;
+    padding: 28px 24px;
+  }
+  .cpg-ideal__head {
+    display: block;
+    font-size: 16px;
+    font-weight: 700;
+    color: #0A0A0A;
+    margin-bottom: 8px;
+  }
+  .cpg-ideal__text {
+    font-size: 14px;
+    line-height: 1.65;
+    color: rgba(10,10,10,0.68);
+    margin: 0;
+  }
+
+  /* ── CTA finale ───────────────────────────────────────────────────────── */
+  .cpg-cta-section {
+    background: #0A0A0A;
+    color: #fff;
+    padding: 72px 24px;
+    text-align: center;
+  }
+  .cpg-cta-section__inner { max-width: 600px; margin: 0 auto; }
+  .cpg-cta-section__title {
+    font-size: clamp(24px, 4vw, 36px);
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 16px;
+  }
+  .cpg-cta-section__sub {
+    font-size: 17px;
+    color: rgba(255,255,255,0.72);
+    margin-bottom: 32px;
+  }
+  .cpg-cta-section__btn {
+    display: inline-block;
+    background: #fff;
+    color: #0A0A0A;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 16px 40px;
+    transition: opacity 0.15s;
+  }
+  .cpg-cta-section__btn:hover { opacity: 0.85; }
+
+  /* ── Responsive ───────────────────────────────────────────────────────── */
+  @media (max-width: 640px) {
+    .cpg-ideal__grid { grid-template-columns: minmax(0, 1fr); }
+    .cpg-step { flex-direction: column; }
+  }
+</style>
