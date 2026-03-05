@@ -30,6 +30,8 @@ const ideals = [
   { title: "Non vuoi sentirti falso", text: "Vuoi che il tuo prodotto gratuito rispecchi chi sei davvero e non una versione di marketing di te stesso." },
   { title: "Vuoi attrarre le persone giuste", text: "Stai cercando di costruire un pubblico che risuoni con i tuoi valori, non semplicemente raccogliere contatti." },
 ];
+
+const VIDEO_URL = "https://youtu.be/vzTqnpFhALE?list=PLKgzAWOyM8xv6uBoRyB28N5fpxtbcepz9";
 ---
 
 <BaseLayout
@@ -38,231 +40,108 @@ const ideals = [
   currentPath="/creare-prodotti-gratuiti/"
 >
 
+<div class="orange-page">
+
   <!-- Hero -->
-  <section class="cpg-hero">
-    <div class="cpg-hero__inner">
-      <span class="cpg-hero__label">Video Lezione · 50 minuti</span>
-      <h1 class="cpg-hero__title">
-        Come Creare Prodotti Gratuiti<br>da uno Spazio di Servizio
+  <section style="background: #1a0500; color: #fff; padding: 80px 24px 64px;">
+    <div style="max-width: 760px; margin: 0 auto; text-align: center;">
+      <div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(234,88,12,.15); border: 1px solid rgba(234,88,12,.4); color: #fdba74; padding: 6px 14px; border-radius: 100px; font-size: 13px; font-weight: 700; letter-spacing: 2px; margin-bottom: 24px;">
+        VIDEO LEZIONE · 50 MINUTI
+      </div>
+      <h1 style="font-size: clamp(30px, 5vw, 50px); font-weight: 800; line-height: 1.1; color: #fff; margin-bottom: 20px;">
+        Come Creare Prodotti Gratuiti<br><span style="color: #EA580C;">da uno Spazio di Servizio</span>
       </h1>
-      <p class="cpg-hero__sub">
-        Una video lezione dove ti mostro la <strong>domanda esistenziale</strong> che ti permette
+      <p style="font-size: 17px; line-height: 1.7; color: #bbb; margin-bottom: 36px;">
+        Una video lezione dove ti mostro la <strong style="color:#fff;">domanda esistenziale</strong> che ti permette
         di capire come aiutare i tuoi potenziali clienti attraverso una gratuità
-        restando in uno spazio di <strong>passione e amore</strong> per ciò che fai.
+        restando in uno spazio di <strong style="color:#fff;">passione e amore</strong> per ciò che fai.
       </p>
-      <a href="https://wa.link/eemovr" target="_blank" rel="noopener noreferrer" class="cpg-hero__cta">
-        Chiedimi accesso su WhatsApp
+      <a href={VIDEO_URL} target="_blank" rel="noopener noreferrer" class="btn-orange">
+        Guarda la lezione gratuita →
       </a>
     </div>
   </section>
 
-  <!-- Cosa impari -->
-  <section class="cpg-section site-wrapper">
-    <h2 class="cpg-section__title">Cosa trovi in questa lezione</h2>
-    <div class="cpg-steps">
-      {punti.map((p) => (
-        <div class="cpg-step">
-          <span class="cpg-step__n">{p.n}</span>
-          <div class="cpg-step__content">
-            <strong class="cpg-step__head">{p.title}</strong>
-            <p class="cpg-step__text">{p.text}</p>
+  <!-- Cosa trovi -->
+  <section style="padding: 72px 24px; background: #fff;">
+    <div style="max-width: 760px; margin: 0 auto;">
+      <h2 style="font-size: clamp(20px, 3vw, 28px); font-weight: 700; color: #0A0A0A; margin-bottom: 40px; text-align: center;">
+        Cosa trovi in questa lezione
+      </h2>
+      <div style="display: flex; flex-direction: column; gap: 28px;">
+        {punti.map((p) => (
+          <div style="display: flex; gap: 20px; align-items: flex-start;">
+            <span style="flex-shrink: 0; width: 40px; height: 40px; background: #EA580C; color: #fff; font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center; border-radius: 4px;">
+              {p.n}
+            </span>
+            <div>
+              <strong style="display: block; font-size: 17px; font-weight: 700; color: #0A0A0A; margin-bottom: 6px;">{p.title}</strong>
+              <p style="font-size: 15px; line-height: 1.65; color: rgba(10,10,10,0.68); margin: 0;">{p.text}</p>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   </section>
 
   <!-- Per chi è -->
-  <section class="cpg-ideal site-wrapper">
-    <h2 class="cpg-section__title">Questo percorso fa per te se…</h2>
-    <div class="cpg-ideal__grid">
-      {ideals.map((item) => (
-        <div class="cpg-ideal__card">
-          <strong class="cpg-ideal__head">{item.title}</strong>
-          <p class="cpg-ideal__text">{item.text}</p>
-        </div>
-      ))}
+  <section style="padding: 0 24px 72px; background: #fff;">
+    <div style="max-width: 900px; margin: 0 auto;">
+      <h2 style="font-size: clamp(20px, 3vw, 28px); font-weight: 700; color: #0A0A0A; margin-bottom: 36px; text-align: center;">
+        Questo percorso fa per te se…
+      </h2>
+      <div class="cpg-grid">
+        {ideals.map((item) => (
+          <div style="border: 1.5px solid #E5E5E5; border-top: 3px solid #EA580C; padding: 24px;">
+            <strong style="display: block; font-size: 16px; font-weight: 700; color: #0A0A0A; margin-bottom: 8px;">{item.title}</strong>
+            <p style="font-size: 14px; line-height: 1.65; color: rgba(10,10,10,0.68); margin: 0;">{item.text}</p>
+          </div>
+        ))}
+      </div>
     </div>
   </section>
 
   <!-- CTA finale -->
-  <section class="cpg-cta-section">
-    <div class="cpg-cta-section__inner">
-      <h2 class="cpg-cta-section__title">Pronto a iniziare?</h2>
-      <p class="cpg-cta-section__sub">
-        Scrivimi su WhatsApp per ricevere il link alla lezione.
+  <section style="background: #1a0500; color: #fff; padding: 72px 24px; text-align: center;">
+    <div style="max-width: 560px; margin: 0 auto;">
+      <h2 style="font-size: clamp(22px, 4vw, 34px); font-weight: 800; color: #fff; margin-bottom: 14px;">
+        Pronto a guardare?
+      </h2>
+      <p style="font-size: 17px; color: rgba(255,255,255,0.7); margin-bottom: 32px;">
+        La lezione è gratuita e disponibile su YouTube.
       </p>
-      <a href="https://wa.link/eemovr" target="_blank" rel="noopener noreferrer" class="cpg-cta-section__btn">
-        Scrivimi su WhatsApp
+      <a href={VIDEO_URL} target="_blank" rel="noopener noreferrer" class="btn-orange">
+        Guarda la lezione gratuita →
       </a>
     </div>
   </section>
 
+</div>
 </BaseLayout>
 
 <style>
-  /* ── Hero ─────────────────────────────────────────────────────────────── */
-  .cpg-hero {
-    background: #0A0A0A;
-    color: #fff;
-    padding: 72px 24px 64px;
-    text-align: center;
-  }
-  .cpg-hero__inner { max-width: 760px; margin: 0 auto; }
-
-  .cpg-hero__label {
+  .btn-orange {
     display: inline-block;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.55);
-    margin-bottom: 20px;
-  }
-  .cpg-hero__title {
-    font-size: clamp(28px, 5.5vw, 52px);
-    font-weight: 800;
-    line-height: 1.1;
+    background: #EA580C;
     color: #fff;
-    margin-bottom: 24px;
-  }
-  .cpg-hero__sub {
-    font-size: 18px;
-    line-height: 1.65;
-    color: rgba(255,255,255,0.72);
-    margin-bottom: 36px;
-  }
-  .cpg-hero__cta {
-    display: inline-block;
-    background: #fff;
-    color: #0A0A0A;
     font-size: 14px;
     font-weight: 700;
     letter-spacing: 0.06em;
     text-transform: uppercase;
     text-decoration: none;
-    padding: 16px 40px;
-    transition: opacity 0.15s;
+    padding: 16px 36px;
+    border-radius: 2px;
+    transition: background 0.15s;
   }
-  .cpg-hero__cta:hover { opacity: 0.85; }
+  .btn-orange:hover { background: #C2410C; }
 
-  /* ── Sezioni ──────────────────────────────────────────────────────────── */
-  .cpg-section {
-    padding: 64px 24px;
-  }
-  .cpg-ideal {
-    padding: 0 24px 72px;
-  }
-  .cpg-section__title {
-    font-size: clamp(20px, 3vw, 28px);
-    font-weight: 700;
-    color: #0A0A0A;
-    margin-bottom: 40px;
-    text-align: center;
-  }
-
-  /* ── Steps ────────────────────────────────────────────────────────────── */
-  .cpg-steps {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    max-width: 760px;
-    margin: 0 auto;
-  }
-  .cpg-step {
-    display: flex;
-    gap: 24px;
-    align-items: flex-start;
-  }
-  .cpg-step__n {
-    flex-shrink: 0;
-    width: 40px;
-    height: 40px;
-    background: #0A0A0A;
-    color: #fff;
-    font-size: 16px;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .cpg-step__content { flex: 1; }
-  .cpg-step__head {
-    display: block;
-    font-size: 17px;
-    font-weight: 700;
-    color: #0A0A0A;
-    margin-bottom: 6px;
-  }
-  .cpg-step__text {
-    font-size: 15px;
-    line-height: 1.65;
-    color: rgba(10,10,10,0.7);
-    margin: 0;
-  }
-
-  /* ── Per chi è ────────────────────────────────────────────────────────── */
-  .cpg-ideal__grid {
+  .cpg-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 24px;
-    max-width: 900px;
-    margin: 0 auto;
-  }
-  .cpg-ideal__card {
-    border: 1.5px solid #E5E5E5;
-    padding: 28px 24px;
-  }
-  .cpg-ideal__head {
-    display: block;
-    font-size: 16px;
-    font-weight: 700;
-    color: #0A0A0A;
-    margin-bottom: 8px;
-  }
-  .cpg-ideal__text {
-    font-size: 14px;
-    line-height: 1.65;
-    color: rgba(10,10,10,0.68);
-    margin: 0;
+    gap: 20px;
   }
 
-  /* ── CTA finale ───────────────────────────────────────────────────────── */
-  .cpg-cta-section {
-    background: #0A0A0A;
-    color: #fff;
-    padding: 72px 24px;
-    text-align: center;
-  }
-  .cpg-cta-section__inner { max-width: 600px; margin: 0 auto; }
-  .cpg-cta-section__title {
-    font-size: clamp(24px, 4vw, 36px);
-    font-weight: 800;
-    color: #fff;
-    margin-bottom: 16px;
-  }
-  .cpg-cta-section__sub {
-    font-size: 17px;
-    color: rgba(255,255,255,0.72);
-    margin-bottom: 32px;
-  }
-  .cpg-cta-section__btn {
-    display: inline-block;
-    background: #fff;
-    color: #0A0A0A;
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    text-decoration: none;
-    padding: 16px 40px;
-    transition: opacity 0.15s;
-  }
-  .cpg-cta-section__btn:hover { opacity: 0.85; }
-
-  /* ── Responsive ───────────────────────────────────────────────────────── */
   @media (max-width: 640px) {
-    .cpg-ideal__grid { grid-template-columns: minmax(0, 1fr); }
-    .cpg-step { flex-direction: column; }
+    .cpg-grid { grid-template-columns: minmax(0, 1fr); }
   }
 </style>

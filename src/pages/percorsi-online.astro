@@ -10,6 +10,8 @@ const courses = [
     tag: "VERSIONE AGGIORNATA E RIVISTA",
     href: "/creazione-messaggio-autentico/",
     cta: "Scopri di più",
+    color: "#5551D3",
+    hoverColor: "#3730A3",
   },
   {
     title: "Come parlare in Video restando sé stessi",
@@ -19,6 +21,8 @@ const courses = [
     tag: "",
     href: "/corso-come-parlare-in-video/",
     cta: "Scopri di più",
+    color: "#DC2626",
+    hoverColor: "#991b1b",
   },
   {
     title: "Come Lavorare Senza Sito Web",
@@ -28,6 +32,8 @@ const courses = [
     tag: "",
     href: "/lavorare-senzasito/",
     cta: "Scopri di più",
+    color: "#16A34A",
+    hoverColor: "#166534",
   },
   {
     title: "Come Creare Prodotti Gratuiti da uno spazio di Servizio",
@@ -37,12 +43,14 @@ const courses = [
     tag: "",
     href: "/creare-prodotti-gratuiti/",
     cta: "Scopri di più",
+    color: "#EA580C",
+    hoverColor: "#C2410C",
   },
 ];
 ---
 
 <BaseLayout
-  title="Percorsi Online - Marco Munich"
+  title="Servizi - Marco Munich"
   description="Scopri i percorsi Online pensati per Coach, Operatori Olistici e Terapeuti o Consulenti che desiderano un Marketing Autentico"
   currentPath="/percorsi-online/"
 >
@@ -50,7 +58,8 @@ const courses = [
   <!-- Hero -->
   <section class="po-hero">
     <div class="po-hero__inner">
-      <h1 class="po-hero__title">Percorsi Online</h1>
+      <h1 class="po-hero__title">Servizi</h1>
+      <p class="po-hero__label">Percorsi Online</p>
       <p class="po-hero__sub">
         Tutto quello a cui punto è metterti nelle condizioni per poter creare
         contenuto da uno spazio autentico di servizio, qualcosa di realmente tuo.
@@ -60,11 +69,11 @@ const courses = [
 
   <!-- Griglia corsi -->
   <section class="po-courses site-wrapper">
-    <h2 class="po-courses__heading">Lavoriamo insieme</h2>
+    <h2 class="po-courses__heading">Lavoriamo insieme — Percorsi Online</h2>
 
     <div class="po-grid">
       {courses.map((c) => (
-        <article class="po-card">
+        <article class="po-card" style={`--accent: ${c.color}; --accent-hover: ${c.hoverColor}`}>
           <div class="po-card__body">
             <span class="po-card__badge">{c.badge}</span>
             <h3 class="po-card__title">{c.title}</h3>
@@ -97,8 +106,16 @@ const courses = [
     font-size: clamp(32px, 6vw, 56px);
     font-weight: 800;
     line-height: 1.1;
-    margin-bottom: 20px;
+    margin-bottom: 8px;
     color: #fff;
+  }
+  .po-hero__label {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 20px;
   }
   .po-hero__sub {
     font-size: 18px;
@@ -145,7 +162,7 @@ const courses = [
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: #fff;
-    background: #0A0A0A;
+    background: var(--accent);
     padding: 4px 12px;
     margin-bottom: 16px;
   }
@@ -173,7 +190,7 @@ const courses = [
   .po-card__cta {
     display: block;
     text-align: center;
-    background: #0A0A0A;
+    background: var(--accent);
     color: #fff;
     font-size: 13px;
     font-weight: 700;
@@ -184,7 +201,7 @@ const courses = [
     transition: background 0.15s;
   }
   .po-card__cta:hover {
-    background: #333;
+    background: var(--accent-hover);
   }
 
   /* ── Responsive ────────────────────────────────────────────────────────── */

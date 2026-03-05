@@ -32,8 +32,8 @@ Redirect 301 /blog-2/ /blog/
 # Chi sono (alias)
 Redirect 301 /la-mia-storia/ /chi-sono/
 Redirect 301 /chi-sono2/ /chi-sono/
-Redirect 301 /come-posso-aiutarti-2/ /servizi/
-Redirect 301 /come-posso-aiutarti1/ /servizi/
+Redirect 301 /come-posso-aiutarti-2/ /percorsi-online/
+Redirect 301 /come-posso-aiutarti1/ /percorsi-online/
 
 # Pagine di ringraziamento/conferma → homepage
 Redirect 302 /grazie/ /
@@ -46,9 +46,11 @@ Redirect 302 /consulenza-accettata/ /
 Redirect 302 /consulenza-non-accettata/ /
 Redirect 302 /conferma-registrazione-webinar-qa/ /
 
-# Servizi
-Redirect 301 /sessione-introduttiva/ /servizi/
-Redirect 301 /consulenza-introduttiva/ /servizi/
+# Servizi → Percorsi Online
+Redirect 301 /servizi/ /percorsi-online/
+Redirect 301 /servizi /percorsi-online/
+Redirect 301 /sessione-introduttiva/ /percorsi-online/
+Redirect 301 /consulenza-introduttiva/ /percorsi-online/
 Redirect 302 /prenota-la-sessione/ https://wa.link/zva8dp
 Redirect 302 /prenotazione/ https://wa.link/zva8dp
 
