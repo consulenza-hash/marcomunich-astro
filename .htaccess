@@ -79,6 +79,15 @@ RewriteBase /
 # Homepage: servi sempre index.html (evita che Apache usi index.php di WordPress)
 RewriteRule ^$ index.html [L]
 
+# Lascia passare WordPress (wp-admin, wp-login, wp-content, wp-includes, xmlrpc)
+RewriteRule ^wp-admin(/.*)?$ - [L]
+RewriteRule ^wp-login\.php$ - [L]
+RewriteRule ^wp-content(/.*)?$ - [L]
+RewriteRule ^wp-includes(/.*)?$ - [L]
+RewriteRule ^xmlrpc\.php$ - [L]
+RewriteRule ^wp-json(/.*)?$ - [L]
+RewriteRule ^wp-cron\.php$ - [L]
+
 # Salta file e directory esistenti
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
