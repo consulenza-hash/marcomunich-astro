@@ -1,5 +1,5 @@
 Options -Indexes
-Options +FollowSymLinks
+DirectoryIndex index.html
 
 # ── Security Headers ──────────────────────────────────────────────────────────
 <IfModule mod_headers.c>
@@ -9,7 +9,7 @@ Options +FollowSymLinks
 </IfModule>
 
 # ── Cache lunga per asset Astro con hash nel nome ─────────────────────────────
-<LocationMatch "^/_astro/">
+<FilesMatch "\.(js|css|woff2|woff|ttf|eot|svg|ico|png|jpg|jpeg|gif|webp|avif)$">
   <IfModule mod_headers.c>
     Header set Cache-Control "public, max-age=31536000, immutable"
   </IfModule>
@@ -17,7 +17,7 @@ Options +FollowSymLinks
     ExpiresActive On
     ExpiresDefault "access plus 1 year"
   </IfModule>
-</LocationMatch>
+</FilesMatch>
 
 # ── Redirects ─────────────────────────────────────────────────────────────────
 
@@ -32,8 +32,8 @@ Redirect 301 /blog-2/ /blog/
 # Chi sono (alias)
 Redirect 301 /la-mia-storia/ /chi-sono/
 Redirect 301 /chi-sono2/ /chi-sono/
-Redirect 301 /come-posso-aiutarti-2/ /servizi/
-Redirect 301 /come-posso-aiutarti1/ /servizi/
+Redirect 301 /come-posso-aiutarti-2/ /percorsi-online/
+Redirect 301 /come-posso-aiutarti1/ /percorsi-online/
 
 # Pagine di ringraziamento/conferma → homepage
 Redirect 302 /grazie/ /
@@ -46,9 +46,10 @@ Redirect 302 /consulenza-accettata/ /
 Redirect 302 /consulenza-non-accettata/ /
 Redirect 302 /conferma-registrazione-webinar-qa/ /
 
-# Servizi
-Redirect 301 /sessione-introduttiva/ /servizi/
-Redirect 301 /consulenza-introduttiva/ /servizi/
+# Servizi → Percorsi Online
+Redirect 301 /servizi/ /percorsi-online/
+Redirect 301 /sessione-introduttiva/ /percorsi-online/
+Redirect 301 /consulenza-introduttiva/ /percorsi-online/
 Redirect 302 /prenota-la-sessione/ https://wa.link/zva8dp
 Redirect 302 /prenotazione/ https://wa.link/zva8dp
 
@@ -57,8 +58,10 @@ Redirect 301 /creazione-video-autentici-2/ /creazione-video-autentici/
 Redirect 301 /creazione-video-autentici-beta/ /creazione-video-autentici/
 Redirect 301 /corso-come-parlare-in-video/ /creazione-video-autentici/
 
+# Pagine rinominate (corso copywriting → nuovo slug)
+Redirect 301 /corso-copywriting-persone-autentiche/ /creazione-messaggio-autentico/
+
 # Percorsi → Percorsi Online
-Redirect 301 /creazione-messaggio-autentico/ /percorsi-online/
 Redirect 301 /creazione-sito-web-e-corso-online/ /percorsi-online/
 
 # Lead magnet → Risorse
@@ -72,6 +75,9 @@ Redirect 301 /testimonianze/ /chi-sono/
 # ── Trailing slash: normalizza URL senza slash finale ─────────────────────────
 RewriteEngine On
 RewriteBase /
+
+# Homepage: servi sempre index.html (evita che Apache usi index.php di WordPress)
+RewriteRule ^$ index.html [L]
 
 # Salta file e directory esistenti
 RewriteCond %{REQUEST_FILENAME} !-f
