@@ -6,122 +6,151 @@
 
 ## Progetto
 
-**marcomunich.com** — Sito Astro v5 (SSG) che sostituisce WordPress, deployato su hosting cPanel condiviso.
+**marcomunich.com** — Sito Astro v5 (SSG) che sostituisce WordPress, deployato su cPanel condiviso (Netsons).
 
 - **Branch `main`**: codice sorgente Astro (`src/`, `public/`, ecc.)
-- **Branch `deploy`**: file statici buildati (HTML a root level, serviti direttamente da Apache)
-- **Deploy manuale**: sul server cPanel, dal terminale: `cd ~/marcomunich.com && git fetch origin deploy && git checkout origin/deploy -- .`
+- **Branch `deploy`**: file statici buildati (HTML a root level, serviti da Apache)
+- **Document Root sul server**: `~/public_html/` ← CRITICO, non `~/marcomunich.com/`
+- **WordPress**: rimane come headless CMS (REST API), accessibile su wp-admin e wp-json
+- **Cloudflare**: proxy attivo davanti al sito (free plan), una sola regola custom: blocca traffico Cina
 
 ---
 
-## Cosa è stato fatto (in ordine cronologico)
-
-### 1. Fix deploy iniziale
-- **Problema**: `<LocationMatch>` nel `.htaccess` non permesso su hosting condiviso → sostituito con `<FilesMatch>`
-- **Problema**: dopo il deploy il sito non aveva stili → doppia causa:
-  - `Options +FollowSymLinks` bloccato sul server → semplificato a `Options -Indexes`
-  - WordPress `index.php` servito al posto di Astro `index.html` → fix: `DirectoryIndex index.html`
-- **Fix**: aggiunto `DirectoryIndex index.html` in `.htaccess`
-
-### 2. Homepage — bottone articoli
-- Testo bottone cambiato: "Carica altri articoli..." → **"Vai agli articoli"**
-- File: `src/pages/index.astro`
-
-### 3. Blog — categoria "Uncategorized"
-- `getPrimaryCategory()` in `src/lib/wordpress.js` ora skippa "uncategorized" e restituisce la prima categoria reale
-- Fix: `.find(t => t.slug !== 'uncategorized') ?? terms[0]`
-
-### 4. Pagina `creazione-video-autentici.astro`
-- Riscritta da zero come pagina Astro pulita (tema rosso `#DC2626`, sfondo `#0D0404`)
-- Struttura identica a `corso-come-parlare-in-video.astro`
-- Deployata sul branch deploy
-
-### 5. Pagina `creazione-messaggio-autentico.astro` (tre modifiche)
-
-#### a) Cambio URL
-- Vecchio: `/corso-copywriting-persone-autentiche/`
-- Nuovo: `/creazione-messaggio-autentico/`
-- File rinominato: `corso-copywriting-persone-autentiche.astro` → `creazione-messaggio-autentico.astro`
-- `currentPath` aggiornato nel file
-
-#### b) Video lezione introduttiva
-- Video aggiornato da `_83q4eUXmCo` a `rRAJz-LydLo?list=PLKgzAWOyM8xuq8wC6UBXhqze9Odan9JhM`
-- Aggiornati: iframe embed + bottone hero "Guarda la lezione gratuita" + link testuale nella sezione finale
-
-#### c) Riorganizzazione sezioni
-- Sezione **"È tempo di rivedere il modo in cui ci promuoviamo online."** spostata in fondo alla pagina (era tra "È ideale per te se" e i prezzi)
-- Sezione **testimonianze** rimossa
-- Struttura finale: Hero → Fare chiarezza → Ti risuona → Argomenti → Video gratuita → A quali professionisti → Chi sono → È ideale per te se → **Prezzi** → **È tempo di rivedere...**
-
-#### d) Aggiornamenti correlati
-- `percorsi-online.astro`: link aggiornato al nuovo slug
-- `risorse.astro`: link aggiornato al nuovo slug
-- `public/.htaccess`: rimossa vecchia redirect `/creazione-messaggio-autentico/ → /percorsi-online/`, aggiunta nuova redirect `301 /corso-copywriting-persone-autentiche/ → /creazione-messaggio-autentico/`
-
-### 6. Setup git sul server (primo deploy)
-- `~/marcomunich.com` sul server non era un git repo → `git init` + `git remote add origin`
-- Autenticazione via token GitHub embed nell'URL
-- Primo `git checkout origin/deploy -- .` eseguito correttamente
-
-### 7. Fix `DirectoryIndex index.html` nel source
-- Aggiunto `DirectoryIndex index.html` in `public/.htaccess` (riga 2) così non si perde nei build futuri
-- Commesso e pushato su entrambi i branch (`main` + `deploy`)
-
----
-
-## Stato attuale
-
-| Cosa | Stato |
-|------|-------|
-| `/creazione-messaggio-autentico/` | ✅ Funziona (solo finestra anonima, browser normale ha cache 301) |
-| Redirect `/corso-copywriting-persone-autentiche/` → nuovo slug | ✅ Funziona |
-| percorsi-online.astro e risorse.astro link aggiornati | ✅ |
-| **Homepage** | ❌ **Ancora rotta** (probabilmente index.php WP ancora prioritario) |
-
----
-
-## Problema aperto: Homepage rotta
-
-**Sintomo**: la homepage (`https://marcomunich.com/`) mostra ancora WordPress o è rotta.
-
-**Causa probabile**: nonostante `DirectoryIndex index.html` nel `.htaccess`, Apache potrebbe ancora servire `index.php` di WordPress. Possibili cause:
-1. `Options +FollowSymLinks` causa 500 sul server (già risolto in passato rimuovendolo — potrebbe essere tornato nel source)
-2. Il `DirectoryIndex` nel `.htaccess` non ha abbastanza priorità rispetto alla config del server
-3. WordPress `index.php` nella root ancora presente
-
-**Da fare per fixare la homepage**:
-1. Verificare sul server: `ls ~/marcomunich.com/index.*` — vedere se ci sono sia `index.html` che `index.php`
-2. Verificare: `cat ~/marcomunich.com/.htaccess | head -5` — controllare che `DirectoryIndex index.html` sia presente
-3. Se `Options +FollowSymLinks` causa problemi, cambiarlo in `Options -Indexes` (solo) nel source e rideplorare
-4. Come fix definitivo alternativo: rinominare o eliminare `index.php` dalla root del server (ma attenzione ai file WP)
-
----
-
-## Workflow deploy (da usare ogni volta)
+## Workflow deploy (usare SEMPRE questo)
 
 ```bash
-# Sul PC locale (branch main):
+# 1. Sul PC locale, buildare SEMPRE su main:
 npm run build
-cp dist/FILE_MODIFICATO /tmp/file-temp
 
-# Switch a deploy:
-git stash
+# 2. Salvare i file buildati in /tmp PRIMA di cambiare branch:
+cp dist/.htaccess /tmp/htaccess-temp
+# (o altri file modificati)
+
+# 3. Passare a deploy e fare commit:
+git checkout -- .claude/settings.local.json   # evita blocco checkout
 git checkout deploy
-cp /tmp/file-temp ./DESTINAZIONE
-git add FILE
-git commit -m "Descrizione"
+cp /tmp/htaccess-temp .htaccess
+git add .
+git commit -m "Descrizione [deploy]"
 git push origin deploy
 git checkout main
-git stash pop
+git push origin main   # pushare main se ci sono commit
 
-# Sul server cPanel (terminale):
-cd ~/marcomunich.com && git fetch origin deploy && git checkout origin/deploy -- .
+# 4. Sul server cPanel (terminale xterm.js):
+cd ~/public_html && git fetch origin deploy && git checkout origin/deploy -- .htaccess
+# oppure per più file:
+git checkout origin/deploy -- .htaccess percorsi-online/index.html ...
 ```
 
 **Note critiche**:
-- Buildare SEMPRE su `main`, mai su `deploy` (deploy branch non ha `package.json`)
-- Salvare i file in `/tmp/` PRIMA di `git stash` / switch a deploy
-- `git checkout origin/deploy -- .` non elimina file non tracciati (WordPress files rimangono)
+- Buildare SEMPRE su `main` (deploy branch non ha `src/` né `package.json`)
+- `.claude/settings.local.json` viene sempre modificato → fare `git checkout -- .claude/settings.local.json` prima di switch
+- xterm.js cPanel: usare tool `computer` → `type` (non JavaScript events)
+- `git checkout origin/deploy -- .` non elimina file non tracciati (WordPress rimane)
+
+---
+
+## Stato attuale pagine
+
+| URL | Stato |
+|-----|-------|
+| `/` — Homepage | ✅ Astro |
+| `/percorsi-online/` (Servizi) | ✅ Cards colorate, headings aggiornati |
+| `/creare-prodotti-gratuiti/` | ✅ Tema arancione, link YouTube |
+| `/video/` | ❌ Mostra shortcode grezzo `[embedyt]` |
+| `wp-admin/` | ✅ Funziona (302 → login) |
+| `wp-login.php` | ✅ Funziona (200) |
+
+---
+
+## `.htaccess` attuale (`public/.htaccess`)
+
+```apache
+Options -Indexes
+DirectoryIndex index.html index.php
+
+# Security Headers
+<IfModule mod_headers.c>
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# Cache lunga per asset con hash
+<FilesMatch "\.(js|css|woff2|...)$"> ... </FilesMatch>
+
+# Redirects (301/302 vari)
+Redirect 301 /servizi/ /percorsi-online/
+# ... altri redirect ...
+
+# RewriteEngine
+RewriteEngine On
+RewriteBase /
+RewriteRule ^$ index.html [L]
+
+# Eccezioni WordPress — IMPORTANTE
+RewriteRule ^wp-admin(/.*)?$ - [L]
+RewriteRule ^wp-login\.php$ - [L]
+RewriteRule ^wp-content(/.*)?$ - [L]
+RewriteRule ^wp-includes(/.*)?$ - [L]
+RewriteRule ^xmlrpc\.php$ - [L]
+RewriteRule ^wp-json(/.*)?$ - [L]
+RewriteRule ^wp-cron\.php$ - [L]
+
+# Trailing slash per pagine Astro
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} -d [OR]
+RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI}/index.html -f
+RewriteRule ^(.+[^/])$ /$1/ [R=301,L]
+
+ErrorDocument 404 /404.html
+```
+
+**Chiavi di questa config**:
+- `DirectoryIndex index.html index.php` → `index.html` prioritario (Astro), ma `index.php` disponibile come fallback per wp-admin e altre directory WP
+- Le regole `RewriteRule ^wp-admin` ecc. lasciano passare WordPress prima che il motore Astro intervenga
+- Senza `index.php` nel DirectoryIndex, `wp-admin/` dava 403 (Apache cercava solo index.html, non trovava, e con -Indexes restituiva 403)
+
+---
+
+## Fix eseguiti in questa sessione (2026-03-05)
+
+### wp-admin 403 — causa e fix
+- **Sintomo**: `https://marcomunich.com/wp-admin/` dava 403 Forbidden
+- **Diagnosi**: `curl https://marcomunich.com/wp-admin/index.php` → 302 (funzionava!); solo la directory `/wp-admin/` dava 403
+- **Causa**: `DirectoryIndex index.html` da solo → Apache cercava `wp-admin/index.html`, non trovava, con `Options -Indexes` restituiva 403 invece di fallback su `index.php`
+- **Fix**: cambiato `DirectoryIndex index.html` → `DirectoryIndex index.html index.php`
+- **Aggiunto anche**: eccezioni RewriteEngine per tutti i path WordPress (wp-admin, wp-login, wp-content, ecc.)
+
+### Cloudflare — verificato non blocca wp-admin
+- Nessuna regola WAF che blocca wp-admin
+- Solo 1 regola custom attiva: blocca traffico dalla Cina
+
+---
+
+## Problema aperto: `/video/` mostra shortcode grezzo
+
+**Sintomo**: la pagina `/video/` mostra il testo letterale:
+```
+[embedyt] https://www.youtube.com/embed?listType=playlist&list=UUh9LH2mnDSJ2l3jfDVsGSIA&layout=gallery[/embedyt]
+```
+
+**Causa**: il plugin WordPress che elabora il shortcode `[embedyt]` non è installato. Astro fetcha `content.rendered` dalla WP REST API, ma WP restituisce il shortcode grezzo perché il plugin non è attivo.
+
+**Plugin da installare**: **EPYT — Easy YouTube Video Player** di Kevin Weber
+- Shortcode: `[embedyt]`
+- Il CSS di `src/pages/video.astro` è già costruito per i suoi output (`.epyt-gallery`, `.epyt-gallery-thumb`, ecc.)
+- **Link installazione**: `https://marcomunich.com/wp-admin/plugin-install.php?s=Easy+YouTube+Video+Player&tab=search`
+
+**Steps per fixare**:
+1. Accedere a `https://marcomunich.com/wp-admin/` → Plugins → Aggiungi nuovo
+2. Cercare "Easy YouTube Video Player" di Kevin Weber
+3. Installare e attivare
+4. Rebuild Astro: `npm run build`
+5. Deploy su server
+
+**Alternativa senza plugin** (opzione B): riscrivere `video.astro` come pagina indipendente che fetcha direttamente dalla YouTube Data API v3 — stessa visual della galleria EPYT ma zero dipendenza da WP/plugin.
 
 ---
 
@@ -129,44 +158,22 @@ cd ~/marcomunich.com && git fetch origin deploy && git checkout origin/deploy --
 
 | File | Note |
 |------|-------|
-| `public/.htaccess` | Source htaccess — viene copiato in `dist/` durante il build |
-| `src/lib/wordpress.js` | `getPrimaryCategory()` skippa "uncategorized" |
-| `src/pages/creazione-messaggio-autentico.astro` | Pagina corso (era `corso-copywriting-persone-autentiche.astro`) |
-| `src/pages/creazione-video-autentici.astro` | Pagina corso video (tema rosso, riscritta) |
-| `src/pages/percorsi-online.astro` | Link aggiornato al nuovo slug |
-| `src/pages/risorse.astro` | Link aggiornato al nuovo slug |
-| `.claude/launch.json` | Dev server: `cmd.exe /c npm run dev` sulla porta 4321 |
+| `public/.htaccess` | Htaccess sorgente — copiato in `dist/` al build |
+| `src/pages/video.astro` | Pagina video — dipende da EPYT per shortcode [embedyt] |
+| `src/pages/percorsi-online.astro` | Servizi con cards colorate per corso |
+| `src/pages/creare-prodotti-gratuiti.astro` | Landing arancione, link YouTube video lezione |
+| `src/pages/creazione-messaggio-autentico.astro` | Ex corso-copywriting, tema viola #5551D3 |
+| `src/pages/creazione-video-autentici.astro` | Tema rosso #DC2626 |
+| `src/components/Header.astro` | Nav: Servizi punta a /percorsi-online/ |
+| `src/lib/wordpress.js` | getPrimaryCategory() skippa "uncategorized" |
+| `.claude/launch.json` | Dev server: porta 4321 |
 
 ---
 
-## Prompt di resume per la prossima sessione
+## Credenziali / accessi noti
 
-```
-Stiamo lavorando su marcomunich.com — un sito Astro v5 (SSG) che sostituisce WordPress,
-deployato su hosting cPanel condiviso con git a due branch: `main` (sorgente) e `deploy`
-(file statici buildati a root level).
-
-Nella sessione precedente abbiamo completato:
-1. Fix .htaccess (LocationMatch → FilesMatch, DirectoryIndex index.html)
-2. Homepage bottone: "Carica altri articoli" → "Vai agli articoli"
-3. Blog: getPrimaryCategory() skippa "uncategorized"
-4. creazione-video-autentici.astro: riscritta come pagina Astro clean (tema rosso)
-5. corso-copywriting-persone-autentiche.astro → rinominato creazione-messaggio-autentico.astro
-   - Nuovo URL: /creazione-messaggio-autentico/
-   - Video lezione aggiornato: rRAJz-LydLo?list=PLKgzAWOyM8xuq8wC6UBXhqze9Odan9JhM
-   - Sezione "È tempo di rivedere..." spostata in fondo (dopo i prezzi)
-   - Testimonianze rimosse
-   - percorsi-online.astro e risorse.astro link aggiornati
-6. DirectoryIndex index.html aggiunto a public/.htaccess
-7. Setup git sul server (~/marcomunich.com): git init + remote + primo deploy
-
-PROBLEMA APERTO: la homepage è ancora rotta.
-- Sintomo: mostra WordPress invece di Astro (o 500)
-- .htaccess ha DirectoryIndex index.html ma sembra non bastare
-- Da indagare: Options +FollowSymLinks potrebbe essere bloccato sul server,
-  oppure index.php di WordPress nella root prende la precedenza
-- File recap completo: .claude/SESSION_RECAP.md
-
-Deploy command (server): cd ~/marcomunich.com && git fetch origin deploy && git checkout origin/deploy -- .
-Remote: https://github.com/consulenza-hash/marcomunich-astro.git
-```
+- **cPanel**: `https://hostingweb21.netsons.net:2083/` (terminale disponibile)
+- **GitHub repo**: `https://github.com/consulenza-hash/marcomunich-astro.git`
+- **WordPress REST API**: `https://marcomunich.com/wp-json/wp/v2/`
+- **YouTube Channel ID**: `UCh9LH2mnDSJ2l3jfDVsGSIA`
+- **Cloudflare account**: Consulenza@marcomunich.com (free plan)
