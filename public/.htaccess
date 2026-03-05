@@ -1,4 +1,4 @@
-Options -Indexes +FollowSymLinks
+Options -Indexes
 DirectoryIndex index.html
 
 # ── Security Headers ──────────────────────────────────────────────────────────
