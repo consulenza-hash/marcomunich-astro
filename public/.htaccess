@@ -48,7 +48,6 @@ Redirect 302 /conferma-registrazione-webinar-qa/ /
 
 # Servizi → Percorsi Online
 Redirect 301 /servizi/ /percorsi-online/
-Redirect 301 /servizi /percorsi-online/
 Redirect 301 /sessione-introduttiva/ /percorsi-online/
 Redirect 301 /consulenza-introduttiva/ /percorsi-online/
 Redirect 302 /prenota-la-sessione/ https://wa.link/zva8dp
