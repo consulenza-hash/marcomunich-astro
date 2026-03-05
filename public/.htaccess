@@ -56,8 +56,10 @@ Redirect 301 /creazione-video-autentici-2/ /creazione-video-autentici/
 Redirect 301 /creazione-video-autentici-beta/ /creazione-video-autentici/
 Redirect 301 /corso-come-parlare-in-video/ /creazione-video-autentici/
 
+# Pagine rinominate (corso copywriting → nuovo slug)
+Redirect 301 /corso-copywriting-persone-autentiche/ /creazione-messaggio-autentico/
+
 # Percorsi → Percorsi Online
-Redirect 301 /creazione-messaggio-autentico/ /percorsi-online/
 Redirect 301 /creazione-sito-web-e-corso-online/ /percorsi-online/
 
 # Lead magnet → Risorse

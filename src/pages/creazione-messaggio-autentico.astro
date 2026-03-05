@@ -55,18 +55,12 @@ const ideals = [
   { title: "Ti manca la continuità", text: "Non sai di cosa parlare quando ti siedi a scrivere. Vedi la creazione di contenuti come un peso, non un piacere." },
   { title: "Non ti stai mostrando per chi sei", text: "Ti esprimi con una maschera professionale, e in cuor tuo sai che quello che pubblichi non è davvero tu." },
 ];
-
-const testimonials = [
-  { name: "Veronica Veneziani", role: "Operatore Olistico", title: "Partire da sé stessi", quote: "Questo percorso è illuminante, aiuta a fare marketing partendo da sé stessi, utilizzando il proprio potenziale per presentarsi al meglio di ciò che si è." },
-  { name: "Maria Cristina Andreoni", role: "Health & Life Coach", title: "Non ci si sente mai pronti", quote: "Il percorso con Marco è stato il mio primo passo concreto per uscire allo scoperto come coach, grazie al suo modo di accompagnarmi attraverso i dubbi di chi non si sente mai sufficientemente pronto." },
-  { name: "Daniela Capraro", role: "Operatore Olistico", title: "Metterci la faccia", quote: "Questo corso mi sta stimolando a usare la mia creatività. Ho acquisito una struttura per costruire al meglio i miei contenuti: risulto molto più chiara e professionale." },
-];
 ---
 
 <BaseLayout
   title="Creazione del Messaggio Autentico - Marco Munich"
   description="5 Video Lezioni per fare chiarezza interna sugli argomenti di cui parlare quando ci si promuove online, attirando solo persone a cui risuona la tua vera essenza."
-  currentPath="/corso-copywriting-persone-autentiche/"
+  currentPath="/creazione-messaggio-autentico/"
 >
 
 <style is:global>
@@ -133,7 +127,7 @@ const testimonials = [
       </p>
       <div style="display: flex; gap: 16px; flex-wrap: wrap;">
         <a href="#costi" class="btn-blue">Scopri i costi →</a>
-        <a href="https://youtu.be/_83q4eUXmCo" target="_blank" rel="noopener" class="btn-outline-blue">Guarda la lezione gratuita</a>
+        <a href="https://youtu.be/rRAJz-LydLo?list=PLKgzAWOyM8xuq8wC6UBXhqze9Odan9JhM" target="_blank" rel="noopener" class="btn-outline-blue">Guarda la lezione gratuita</a>
       </div>
     </div>
 
@@ -278,7 +272,7 @@ const testimonials = [
     <p style="color:#555; font-size:16px; margin-bottom:36px;">Prima di acquistare, vedi con i tuoi occhi il metodo e il mio approccio.</p>
     <div style="border-radius:12px; overflow:hidden; position:relative; background:#111; aspect-ratio:16/9;">
       <iframe
-        src="https://www.youtube-nocookie.com/embed/_83q4eUXmCo?rel=0&modestbranding=1"
+        src="https://www.youtube-nocookie.com/embed/rRAJz-LydLo?list=PLKgzAWOyM8xuq8wC6UBXhqze9Odan9JhM&rel=0&modestbranding=1"
         title="Creazione del Messaggio Autentico - Lezione Introduttiva"
         frameborder="0"
         allowfullscreen
@@ -361,44 +355,6 @@ const testimonials = [
           <p style="color:#555; font-size:14px; line-height:1.6; margin:0;">{item.text}</p>
         </div>
       ))}
-    </div>
-  </div>
-</section>
-
-<!-- ── INTRO COSTI ────────────────────────────────────────────────────── -->
-<section style="padding: 80px 24px; background: #fff;">
-  <div style="max-width:720px; margin:0 auto; text-align:center;">
-    <h2 style="font-size:clamp(24px,3vw,34px); font-weight:800; margin-bottom:24px;">
-      È tempo di rivedere il modo in cui ci promuoviamo online.
-    </h2>
-    <p style="font-size:16px; line-height:1.9; color:#444; margin-bottom:20px;">
-      Questo percorso nasce con l'intento di creare una mentalità corretta al promuoversi online,
-      priva di tutti quei falsi miti e "obblighi" che non fanno altro che danneggiare la nostra
-      autostima e ci aprono alla comparazione con l'altro.
-    </p>
-    <p style="font-size:16px; line-height:1.9; color:#444; margin-bottom:32px;">
-      Puoi guardare la lezione introduttiva al percorso&nbsp;
-      <a href="https://youtu.be/_83q4eUXmCo" target="_blank" rel="noopener"
-        style="color:#5551D3; font-weight:700; text-decoration:underline;">GRATUITAMENTE QUI</a>.
-    </p>
-    <div style="border-top:1px solid #eee; padding-top:32px; margin-top:8px;">
-      <p style="font-size:16px; line-height:1.9; color:#555; margin-bottom:12px; font-style:italic;">
-        Se senti che non è il momento, non acquistare.
-      </p>
-      <p style="font-size:16px; line-height:1.9; color:#444; margin-bottom:12px;">
-        <em>Io spero tanto di esserti stato lo stesso d'aiuto.</em>
-      </p>
-      <p style="font-size:16px; line-height:1.9; color:#444; margin-bottom:24px;">
-        Ti invito, nel dubbio, a scrivermi e vedere insieme se non sia il caso di fare
-        una chiacchierata gratuita — giusto 15 minuti per capire bene dove vuoi andare
-        e se questo percorso fa al caso tuo.
-      </p>
-      <p style="font-size:16px; color:#444; margin-bottom:4px;">Sono qui per aiutarti.</p>
-      <p style="font-size:16px; color:#444; margin-bottom:28px;">Alla prossima!</p>
-      <p style="font-size:17px; font-weight:800; color:#06061A;">Marco Munich</p>
-    </div>
-    <div style="margin-top:36px;">
-      <a href="#costi" class="btn-blue">Costi e informazioni →</a>
     </div>
   </div>
 </section>
@@ -488,21 +444,40 @@ const testimonials = [
   </div>
 </section>
 
-<!-- ── TESTIMONIANZE ──────────────────────────────────────────────────── -->
-<section style="padding: 80px 24px; background: #f9f9f9;">
-  <div style="max-width:1000px; margin:0 auto;">
-    <h2 style="text-align:center; font-size:clamp(24px,3vw,36px); font-weight:800; margin-bottom:48px;">
-      Cosa dice chi ha già fatto un percorso con me
+<!-- ── È TEMPO DI RIVEDERE ────────────────────────────────────────────── -->
+<section style="padding: 80px 24px; background: #fff;">
+  <div style="max-width:720px; margin:0 auto; text-align:center;">
+    <h2 style="font-size:clamp(24px,3vw,34px); font-weight:800; margin-bottom:24px;">
+      È tempo di rivedere il modo in cui ci promuoviamo online.
     </h2>
-    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:24px;">
-      {testimonials.map(t => (
-        <div style="background:#fff; border-radius:8px; padding:28px; border-top:3px solid #5551D3; box-shadow:0 2px 12px rgba(0,0,0,.05);">
-          <p style="font-size:13px; font-weight:700; color:#5551D3; text-transform:uppercase; letter-spacing:1px; margin-bottom:14px;">{t.title}</p>
-          <p style="font-size:15px; color:#444; line-height:1.7; font-style:italic; margin-bottom:20px;">"{t.quote}"</p>
-          <p style="font-size:14px; font-weight:700; margin:0;">{t.name}</p>
-          <p style="font-size:13px; color:#999; margin:2px 0 0;">{t.role}</p>
-        </div>
-      ))}
+    <p style="font-size:16px; line-height:1.9; color:#444; margin-bottom:20px;">
+      Questo percorso nasce con l'intento di creare una mentalità corretta al promuoversi online,
+      priva di tutti quei falsi miti e "obblighi" che non fanno altro che danneggiare la nostra
+      autostima e ci aprono alla comparazione con l'altro.
+    </p>
+    <p style="font-size:16px; line-height:1.9; color:#444; margin-bottom:32px;">
+      Puoi guardare la lezione introduttiva al percorso&nbsp;
+      <a href="https://youtu.be/rRAJz-LydLo?list=PLKgzAWOyM8xuq8wC6UBXhqze9Odan9JhM" target="_blank" rel="noopener"
+        style="color:#5551D3; font-weight:700; text-decoration:underline;">GRATUITAMENTE QUI</a>.
+    </p>
+    <div style="border-top:1px solid #eee; padding-top:32px; margin-top:8px;">
+      <p style="font-size:16px; line-height:1.9; color:#555; margin-bottom:12px; font-style:italic;">
+        Se senti che non è il momento, non acquistare.
+      </p>
+      <p style="font-size:16px; line-height:1.9; color:#444; margin-bottom:12px;">
+        <em>Io spero tanto di esserti stato lo stesso d'aiuto.</em>
+      </p>
+      <p style="font-size:16px; line-height:1.9; color:#444; margin-bottom:24px;">
+        Ti invito, nel dubbio, a scrivermi e vedere insieme se non sia il caso di fare
+        una chiacchierata gratuita — giusto 15 minuti per capire bene dove vuoi andare
+        e se questo percorso fa al caso tuo.
+      </p>
+      <p style="font-size:16px; color:#444; margin-bottom:4px;">Sono qui per aiutarti.</p>
+      <p style="font-size:16px; color:#444; margin-bottom:28px;">Alla prossima!</p>
+      <p style="font-size:17px; font-weight:800; color:#06061A;">Marco Munich</p>
+    </div>
+    <div style="margin-top:36px;">
+      <a href="#costi" class="btn-blue">Costi e informazioni →</a>
     </div>
   </div>
 </section>
