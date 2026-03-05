@@ -75,6 +75,9 @@ Redirect 301 /testimonianze/ /chi-sono/
 RewriteEngine On
 RewriteBase /
 
+# Homepage: servi sempre index.html (evita che Apache usi index.php di WordPress)
+RewriteRule ^$ index.html [L]
+
 # Salta file e directory esistenti
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
