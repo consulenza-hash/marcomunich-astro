@@ -1,343 +1,452 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
+
+const features = [
+  {
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3" fill="currentColor" stroke="none"/></svg>`,
+    title: "Andare oltre la vergogna",
+    text: "Superare la paura di stare davanti alla telecamera e imparare a divertirti pure!"
+  },
+  {
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>`,
+    title: "Parlare con sicurezza",
+    text: "Come parlare con sicurezza senza qualcuno che ti dice cosa dire o ti tira fuori le parole."
+  },
+  {
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="15" height="14" rx="2"/><path d="M17 9l5-3v12l-5-3"/></svg>`,
+    title: "Evitare di leggere cosa dire",
+    text: "Ricordare cosa dire senza testo davanti: la spontaneità conta più del discorso perfetto."
+  },
+  {
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`,
+    title: "Mostrarsi per come sei",
+    text: "Aprirti al mondo con il tuo modo di essere, attirando solo persone a cui risuoni davvero."
+  },
+  {
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18" stroke-width="3" stroke-linecap="round"/></svg>`,
+    title: "Strumenti semplici",
+    text: "Essere conciso e naturale senza imparare video editing o tecniche complesse."
+  },
+];
+
+const topics = [
+  "Come mi faccio venire le idee per i miei video",
+  "Come li pianifico e preparo per la pubblicazione",
+  "Come creo i video (condizioni ambientali e strumenti)",
+  "Come decido quanto lunghi farli, senza sforzo",
+  "Quali mezzi utilizzo (camera/webcam/microfoni)",
+  "Metodi semplici per avere un'ottima luce senza spendere troppo",
+  "Cosa uso per registrare lo schermo e fare video lezioni",
+  "Come decidere se fare una live o una sessione registrata",
+  "Montaggio semplicissimo con PC o Smartphone",
+  "Dove pubblicare e tutte le informazioni necessarie",
+  "Come catturare l'attenzione nei primi 15 secondi",
+  "Come porto interazioni sui miei video",
+];
+
+const ideals = [
+  { title: "Ti vergogni di mostrarti", text: "Hai un blocco e senti che non c'è modo di capire da dove venga o come aggirarlo." },
+  { title: "Ti manca la continuità", text: "Hai difficoltà ad essere continuo/a nella creazione, e così l'algoritmo non ti promuove." },
+  { title: "Ti piace l'autenticità che presento", text: "Hai visto i miei video e ti è stato chiesto \"come faccio\" — questo percorso risponde a questa domanda." },
+  { title: "Fare video \"per vendere\" ti infastidisce", text: "Non sopporti l'idea di fare video solo per vendere: ti aiuterò a vedere un altro angolo." },
+];
+
+const testimonials = [
+  { name: "Veronica Veneziani", role: "Operatore Olistico", title: "Partire da sé stessi", quote: "Questo corso è illuminante, aiuta a fare marketing partendo da sé stessi, utilizzando il proprio potenziale per presentarsi al meglio di ciò che si è." },
+  { name: "Maria Cristina Andreoni", role: "Health & Life Coach", title: "Non ci si sente mai pronti", quote: "Il percorso con Marco è stato il mio primo passo concreto per uscire allo scoperto come coach, grazie al suo modo di accompagnarmi attraverso i dubbi di chi non si sente mai sufficientemente pronto." },
+  { name: "Daniela Capraro", role: "Operatore Olistico", title: "Metterci la faccia", quote: "Questo corso mi sta stimolando a usare la mia creatività. Ho acquisito una struttura per costruire al meglio i miei contenuti: risulto molto più chiara e professionale." },
+];
 ---
 
 <BaseLayout
-  title="Come parlare in Video restando sé stessi - Marco Munich"
-  description="Guida alla creazione di video autentici senza stress."
+  title="Creazione Video Autentici - Come parlare in Video restando sé stessi - Marco Munich"
+  description="3 Video Lezioni per iniziare a produrre contenuti video superando il timore del giudizio, in modo autentico e senza stress."
   currentPath="/creazione-video-autentici/"
 >
-  <link slot="head" rel="stylesheet" href="/thrive/creazione-video-autentici.css" />
 
-  <div class="thrive-page-wrap">
-    <Fragment set:html={`<div id="tve_editor" class="tve_shortcode_editor tar-main-content" data-post-id="3078">
-<div id="landingpage-top-section" class="landingpage-section top-section placeholder-section hide-section"><div class="section-background"></div><div class="section-content"></div></div>
-<div class="thrive-group-edit-config" style="display: none !important"></div>
-<div data-inherit-lp-settings="1" data-match-lp-colors="1" class="thrv_wrapper thrv-page-section thrv-lp-block tcb-local-vars-root" style="" data-css="tve-u-5f2ff0f3413d80" tcb-template-name="Hero Area Block 02" tcb-template-id="56083" data-keep-css_id="1"><div class="thrive-group-edit-config" style="display: none !important"></div><div class="thrive-local-colors-config" style="display: none !important"></div>
-	<div class="tve-page-section-out" data-css="tve-u-5f2ff0f3413d98" data-ct-name="Rounded Corner" data-ct="fancydivider-38730" data-element-name="Fancy Divider" style=""><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1000 234.7" style="height: 137px;" xml:space="preserve" data-position="bottom" data-ct="38730" decoration-type="Rounded Corner" class="svg-shape-bottom" width="100%" preserveAspectRatio="none" data-css="tve-u-5f2ff0f3413da7">
-<style type="text/css">
-</style>
-<path class="p16eb204b34b" d="M1000,2.2L571,172c-60.6,23.6-85.4,22.6-146.2,0L0,0v234.7h1000V2.2z"></path>
-</svg></div>
-	<div class="tve-page-section-in   tve_empty_dropzone" data-css="tve-u-5f2ff0f3413db6"><div class="thrv_wrapper tve_image_caption" data-css="tve-u-5f2ff0f3413dc8" style=""><span class="tve_image_frame" style=""><img data-opt-id=1080721144  fetchpriority="high" decoding="async" class="tve_image wp-image-5264" alt="" data-id="5264" width="240" data-init-width="396" height="52" data-init-height="86" title="4" src="https://mlfqwn4vwjlv.i.optimole.com/w:240/h:52/q:mauto/g:sm/f:best/ig:avif/https://marcomunich.com/wp-content/uploads/2021/05/4-e1620468920662.png" data-width="240" data-height="52" data-css="tve-u-5f2ff0f3413de0" style="aspect-ratio: auto 396 / 86;" mt-m="-0.34369999999999834" loading="lazy" srcset="https://mlfqwn4vwjlv.i.optimole.com/w:396/h:86/q:mauto/g:sm/f:best/ig:avif/https://marcomunich.com/wp-content/uploads/2021/05/4-e1620468920662.png 396w, https://mlfqwn4vwjlv.i.optimole.com/w:300/h:65/q:mauto/g:sm/f:best/ig:avif/https://marcomunich.com/wp-content/uploads/2021/05/4-e1620468920662.png 300w" sizes="auto, (max-width: 240px) 100vw, 240px" /></span></div><div class="thrv_wrapper thrv_text_element"><h3 class="" data-css="tve-u-5f2ff0f3413df5" style="text-align: center;">Video Corso</h3></div><div class="thrv_wrapper thrv_text_element" style="" data-css="tve-u-5f2ff0f3413e08"><h1 class="" data-css="tve-u-5f2ff0f3413e11" style="text-align: center;">Come <strong>parlare in Video</strong>
-<strong>restando sé stessi</strong></h1></div><div class="thrv_wrapper thrv_text_element"><h3 class="" data-css="tve-u-5f2ff0f3413e39" style="text-align: center;">3 Video Lezioni dedicate a chi desidera iniziare a <strong>produrre contenuti video, superando il timore del giudizio</strong>, in un mercato che ci vuole tutti "perfezionisti".</h3></div><div class="thrv_wrapper thrv-button thrv-button-v2 tcb-local-vars-root" data-css="tve-u-5f2ff0f3413e88" data-button-size="s" style="">
-	<div class="thrive-colors-palette-config" style="display: none !important"></div>
-	<a href="#tve-jump-18ff220fb46" class="tcb-button-link tve-jump-scroll" jump-animation="smooth">
-		<span class="tcb-button-texts"><span class="tcb-button-text thrv-inline-text" data-css="tve-u-18ff6f2ebb7" style=""><span style="font-weight: normal;">VIDEO CORSO GRATUITO SU YOUTUBE</span></span></span>
-	</a>
-</div><div class="thrv_responsive_video thrv_wrapper" data-aspect-ratio-default="0" data-type="youtube" data-aspect-ratio="16:9" data-url="https://youtu.be/cr72GzNHEf4" style="" data-byline="1" data-overlay="0" data-rel="0" data-modestbranding="1" data-float="false" data-float-position="top-left" data-float-width-d="300px" data-float-padding1-d="25px" data-float-padding2-d="25px" data-float-visibility="mobile" data-css="tve-u-1756a8e2af6">
-	
-
-	<div class="tve_responsive_video_container" style="padding-bottom: 56.25%;">
-		<div class="tcb-video-float-container"><iframe title="Responsive Video" class="tcb-responsive-video" data-code="cr72GzNHEf4" data-provider="youtube" frameborder="0" allowfullscreen="" id="_dytid_4737" src="https://www.youtube.com/embed/cr72GzNHEf4?rel=0&amp;modestbranding=1&amp;controls=1&amp;showinfo=1&amp;fs=1&amp;wmode=transparent&amp;enablejsapi=1"></iframe><div class="video_overlay"></div></div>
-	</div>
-</div></div>
-</div><div data-inherit-lp-settings="1" data-match-lp-colors="1" class="thrv_wrapper thrv-page-section thrv-lp-block tcb-local-vars-root" style="margin-bottom: 0px !important;" data-css="tve-u-5f2ff0f3413ea3" tcb-template-name="Text Area Block 01" tcb-template-id="56089" data-keep-css_id="1"><div class="thrive-group-edit-config" style="display: none !important"></div><div class="thrive-local-colors-config" style="display: none !important"></div>
-	<div class="tve-page-section-out"></div>
-	<div class="tve-page-section-in   tve_empty_dropzone" data-css="tve-u-5f2ff0f3413eb3" style=""><div class="thrv_wrapper thrv_text_element" data-tag="h2" data-css="tve-u-5f2ff0f3413ec8"><h2 class="" style="text-align: center;"><!--StartFragment--><!--StartFragment--><!--StartFragment--><!--StartFragment-->Fare il tuo <strong>Primo Video e Divertirti</strong><!--EndFragment--><!--EndFragment--><!--EndFragment--><!--EndFragment--></h2></div><div class="thrv_wrapper thrv_text_element" data-css="tve-u-5f2ff0f3413ed2" style=""><p style="text-align: center;"><!--StartFragment--><!--StartFragment-->Creare Video Semplici &nbsp;per condividere il tuo messaggio autentico e accrescere il pubblico, rispettando chi sei veramente, perché metterci la faccia è molto meglio.<br><!--EndFragment-->
-<!--EndFragment--></p></div></div>
-</div><div data-inherit-lp-settings="1" data-match-lp-colors="1" class="thrv_wrapper thrv-page-section thrv-lp-block tcb-local-vars-root" style="" data-css="tve-u-5f2ff0f3413ee1" tcb-template-name="Benefits Area Block 02" tcb-template-id="55920" data-keep-css_id="1"><div class="thrive-group-edit-config" style="display: none !important"></div><div class="thrive-local-colors-config" style="display: none !important"></div>
-	<div class="tve-page-section-out" data-css="tve-u-5f2ff0f3413ef4" style=""></div>
-	<div class="tve-page-section-in   tve_empty_dropzone" data-css="tve-u-5f2ff0f3413f11" style=""><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad" style="" data-css="tve-u-5f2ff0f3413f26">
-	<div class="tve-content-box-background" data-css="tve-u-5f2ff0f3413f36" style=""></div>
-	<div class="tve-cb"><div class="thrv_wrapper thrv-columns" style="--tcb-col-el-width: 1300;" data-css="tve-u-5f2ff0f3413f46"><div class="tcb-flex-row tcb-resized tcb-medium-wrap v-2 tcb--cols--2" style="" data-css="tve-u-5f2ff0f3413f59"><div class="tcb-flex-col" data-css="tve-u-5f2ff0f3413f69" style=""><div class="tcb-col"><div class="thrv_wrapper tve_image_caption" data-css="tve-u-5f2ff0f3413f74"><span class="tve_image_frame"><img data-opt-id=1094184645  fetchpriority="high" decoding="async" class="tve_image wp-image-2128" alt="Female vlogger recording sports related broadcast at home" data-id="2128" width="463" data-init-width="2000" height="281" data-init-height="1213" title="Female vlogger recording sports related broadcast at home" src="https://mlfqwn4vwjlv.i.optimole.com/w:463/h:281/q:mauto/g:sm/f:best/ig:avif/https://marcomunich.com/wp-content/uploads/2020/05/female-vlogger-recording-sports-related-broadcast-at-home.jpg" data-width="463" data-height="281" style="aspect-ratio: auto 2000 / 1213;" data-css="tve-u-173d354fbaa" loading="lazy" srcset="https://mlfqwn4vwjlv.i.optimole.com/w:1780/h:1080/q:mauto/g:sm/f:best/ig:avif/https://marcomunich.com/wp-content/uploads/2020/05/female-vlogger-recording-sports-related-broadcast-at-home.jpg 2000w, https://mlfqwn4vwjlv.i.optimole.com/w:300/h:182/q:mauto/g:sm/f:best/ig:avif/https://marcomunich.com/wp-content/uploads/2020/05/female-vlogger-recording-sports-related-broadcast-at-home.jpg 300w, https://mlfqwn4vwjlv.i.optimole.com/w:1024/h:621/q:mauto/g:sm/f:best/ig:avif/https://marcomunich.com/wp-content/uploads/2020/05/female-vlogger-recording-sports-related-broadcast-at-home.jpg 1024w, https://mlfqwn4vwjlv.i.optimole.com/w:768/h:466/q:mauto/g:sm/f:best/ig:avif/https://marcomunich.com/wp-content/uploads/2020/05/female-vlogger-recording-sports-related-broadcast-at-home.jpg 768w, https://mlfqwn4vwjlv.i.optimole.com/w:1536/h:932/q:mauto/g:sm/f:best/ig:avif/https://marcomunich.com/wp-content/uploads/2020/05/female-vlogger-recording-sports-related-broadcast-at-home.jpg 1536w" sizes="auto, (max-width: 463px) 100vw, 463px" /></span></div><div class="thrv_wrapper thrv_text_element" data-tag="h2" data-css="tve-u-5f2ff0f3413f95" style=""><h2 class="" data-css="tve-u-5f2ff0f3413fa9" style="text-align: center;"><!--StartFragment--><!--StartFragment--><!--StartFragment--><!--StartFragment-->Nel corso per la creazione di&nbsp;<strong>Video</strong><strong>&nbsp;Autentici</strong>, imparerai a:<!--EndFragment-->
-<!--EndFragment-->
-<!--EndFragment-->
-<!--EndFragment--></h2></div></div></div><div class="tcb-flex-col" data-css="tve-u-5f2ff0f3413fb7" style=""><div class="tcb-col dynamic-group-k3fxn8gv" style="" data-css="tve-u-5f2ff0f3413fd8"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad tve_evt_manager_listen tve_et_tve-viewport tve_ea_thrive_animation tve_anim_slide_left dynamic-group-k3fxn5fq" data-css="tve-u-5f2ff0f3413fe5" data-tcb-events="__TCB_EVENT_[{&quot;t&quot;:&quot;tve-viewport&quot;,&quot;config&quot;:{&quot;anim&quot;:&quot;slide_left&quot;,&quot;loop&quot;:0},&quot;a&quot;:&quot;thrive_animation&quot;}]_TNEVE_BCT__" style="">
-	<div class="tve-content-box-background" data-css="tve-u-5f2ff0f3413ff7"></div>
-	<div class="tve-cb" data-css="tve-u-5f2ff0f3414006" style=""><div class="tcb-clear" data-css="tve-u-5f2ff0f3414010"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad dynamic-group-k3fxmx8j" data-css="tve-u-5f2ff0f3414029">
-	<div class="tve-content-box-background" data-css="tve-u-5f2ff0f3414036"></div>
-	<div class="tve-cb" data-css="tve-u-5f2ff0f3414041"></div>
-</div></div><div class="thrv_wrapper thrv_text_element dynamic-group-k3fxn05i" data-css="tve-u-5f2ff0f3414089" data-tag="h3" data-float-d="1"><h3 class="" style="text-align: center;"><strong>ANDARE OLTRE LA VERGOGNA<!--EndFragment--></strong></h3></div><div class="thrv_wrapper thrv_text_element dynamic-group-k3fxn33l" data-css="tve-u-5f2ff0f3414093"><p data-css="tve-u-5f2ff0f34140a0" style="text-align: center;"><!--StartFragment-->Superare la paura di stare davanti alla telecamera e di divertirti pure!<!--EndFragment--></p></div></div>
-</div><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad tve_evt_manager_listen tve_et_tve-viewport tve_ea_thrive_animation tve_anim_slide_left dynamic-group-k3fxn5fq" data-css="tve-u-5f2ff0f34140b3" data-tcb-events="__TCB_EVENT_[{&quot;t&quot;:&quot;tve-viewport&quot;,&quot;config&quot;:{&quot;anim&quot;:&quot;slide_left&quot;,&quot;loop&quot;:0},&quot;a&quot;:&quot;thrive_animation&quot;}]_TNEVE_BCT__" style="">
-	<div class="tve-content-box-background" data-css="tve-u-5f2ff0f3413ff7"></div>
-	<div class="tve-cb" data-css="tve-u-5f2ff0f34140c8" style=""><div class="tcb-clear" data-css="tve-u-5f2ff0f3414010"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad dynamic-group-k3fxmx8j" data-css="tve-u-5f2ff0f3414029">
-	<div class="tve-content-box-background" data-css="tve-u-5f2ff0f3414036"></div>
-	<div class="tve-cb" data-css="tve-u-5f2ff0f3414041"></div>
-</div></div><div class="thrv_wrapper thrv_text_element dynamic-group-k3fxn05i" data-css="tve-u-5f2ff0f3414089" data-tag="h3" data-float-d="1"><h3 class="" style="text-align: center;"><strong>PARLARE CON SICUREZZA<!--EndFragment--></strong></h3></div><div class="thrv_wrapper thrv_text_element dynamic-group-k3fxn33l" data-css="tve-u-5f2ff0f3414093"><p data-css="tve-u-5f2ff0f34140a0" style="text-align: center;"><!--StartFragment-->Come parlare con sicurezza in video senza avere qualcuno che ti deve fare domande per "tirarti fuori le cose" o ti dice cosa dire<!--EndFragment--></p></div></div>
-</div><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad tve_evt_manager_listen tve_et_tve-viewport tve_ea_thrive_animation tve_anim_slide_left dynamic-group-k3fxn5fq" data-css="tve-u-5f2ff0f34140d3" data-tcb-events="__TCB_EVENT_[{&quot;t&quot;:&quot;tve-viewport&quot;,&quot;config&quot;:{&quot;anim&quot;:&quot;slide_left&quot;,&quot;loop&quot;:0},&quot;a&quot;:&quot;thrive_animation&quot;}]_TNEVE_BCT__" style="">
-	<div class="tve-content-box-background" data-css="tve-u-5f2ff0f3413ff7"></div>
-	<div class="tve-cb" data-css="tve-u-5f2ff0f34140e5" style=""><div class="tcb-clear" data-css="tve-u-5f2ff0f3414010"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad dynamic-group-k3fxmx8j" data-css="tve-u-5f2ff0f3414029">
-	<div class="tve-content-box-background" data-css="tve-u-5f2ff0f3414036"></div>
-	<div class="tve-cb" data-css="tve-u-5f2ff0f3414041"></div>
-</div></div><div class="thrv_wrapper thrv_text_element dynamic-group-k3fxn05i" data-css="tve-u-5f2ff0f3414089" data-tag="h3" data-float-d="1"><h3 class="" style="text-align: center;"><strong>EVITARE DI LEGGERE COSA DIRE<!--EndFragment--></strong></h3></div><div class="thrv_wrapper thrv_text_element dynamic-group-k3fxn33l" data-css="tve-u-5f2ff0f3414093"><p data-css="tve-u-5f2ff0f34140a0" style="text-align: center;"><!--StartFragment-->Ricordare cosa dire senza avere bisogno di un testo con le parole da dire, perché la sponteità è più importante del senso del discorso (fidati, capirai)<br><!--EndFragment--></p></div></div>
-</div><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad tve_evt_manager_listen tve_et_tve-viewport tve_ea_thrive_animation tve_anim_slide_left dynamic-group-k3fxn5fq" data-css="tve-u-5f2ff0f34140d3" data-tcb-events="__TCB_EVENT_[{&quot;t&quot;:&quot;tve-viewport&quot;,&quot;config&quot;:{&quot;anim&quot;:&quot;slide_left&quot;,&quot;loop&quot;:0},&quot;a&quot;:&quot;thrive_animation&quot;}]_TNEVE_BCT__" style="">
-	<div class="tve-content-box-background" data-css="tve-u-5f2ff0f3413ff7"></div>
-	<div class="tve-cb" data-css="tve-u-5f2ff0f34140e5" style=""><div class="tcb-clear" data-css="tve-u-5f2ff0f3414010"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad dynamic-group-k3fxmx8j" data-css="tve-u-5f2ff0f3414029">
-	<div class="tve-content-box-background" data-css="tve-u-5f2ff0f3414036"></div>
-	<div class="tve-cb" data-css="tve-u-5f2ff0f3414041"></div>
-</div></div><div class="thrv_wrapper thrv_text_element dynamic-group-k3fxn05i" data-css="tve-u-5f2ff0f3414089" data-tag="h3" data-float-d="1"><h3 style="text-align: center;" class=""><strong>MOSTRARSI PER COME SEI</strong></h3></div><div class="thrv_wrapper thrv_text_element dynamic-group-k3fxn33l" data-css="tve-u-5f2ff0f3414093"><p data-css="tve-u-5f2ff0f34140a0" style="text-align: center;"><!--StartFragment-->Aprirti al mondo con il tuo modo di dire le cose ai tuoi futuri clienti, in totale serenità e autenticità<br><!--EndFragment--></p></div></div>
-</div><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad tve_evt_manager_listen tve_et_tve-viewport tve_ea_thrive_animation tve_anim_slide_left dynamic-group-k3fxn5fq" data-css="tve-u-5f2ff0f34140d3" data-tcb-events="__TCB_EVENT_[{&quot;t&quot;:&quot;tve-viewport&quot;,&quot;config&quot;:{&quot;anim&quot;:&quot;slide_left&quot;,&quot;loop&quot;:0},&quot;a&quot;:&quot;thrive_animation&quot;}]_TNEVE_BCT__" style="">
-	<div class="tve-content-box-background" data-css="tve-u-5f2ff0f3413ff7"></div>
-	<div class="tve-cb" data-css="tve-u-5f2ff0f34140f5" style=""><div class="tcb-clear" data-css="tve-u-5f2ff0f3414010"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad dynamic-group-k3fxmx8j" data-css="tve-u-5f2ff0f3414029">
-	<div class="tve-content-box-background" data-css="tve-u-5f2ff0f3414036"></div>
-	<div class="tve-cb" data-css="tve-u-5f2ff0f3414041"></div>
-</div></div><div class="thrv_wrapper thrv_text_element dynamic-group-k3fxn05i" data-css="tve-u-5f2ff0f3414089" data-tag="h3" data-float-d="1"><h3 class="" style="text-align: center;"><strong>CHIAREZZA E STRUMENTI SEMPLICI&nbsp;</strong></h3></div><div class="thrv_wrapper thrv_text_element dynamic-group-k3fxn33l" data-css="tve-u-5f2ff0f3414093"><p data-css="tve-u-5f2ff0f34140a0" style="text-align: center;"><!--StartFragment-->Diventerai pratico/a ad essere conciso rispettando il tuo spazio, portando pazienza con te stesso/a e senza imparare a fare video editing (montaggio, e altre cose tecniche che ora non servono)<br><!--EndFragment--></p></div><div class="thrv_wrapper thrv-button thrv-button-v2 tcb-local-vars-root" data-css="tve-u-5f2ff0f3414119" data-button-size="s">
-	<div class="thrive-colors-palette-config" style="display: none !important"></div>
-	<a href="#tve-jump-18ff220fb46" class="tcb-button-link tve-jump-scroll" jump-animation="smooth">
-		<span class="tcb-button-texts"><span class="tcb-button-text thrv-inline-text">Ok, voglio iniziare</span></span>
-	</a>
-</div></div>
-</div></div></div></div></div></div>
-</div></div>
-</div><div data-inherit-lp-settings="1" data-match-lp-colors="1" class="thrv_wrapper thrv-page-section thrv-lp-block tcb-local-vars-root" style="margin-bottom: 0px !important;" data-css="tve-u-173d36044bb" tcb-template-name="Text Area Block 01" tcb-template-id="56089" data-keep-css_id="1"><div class="thrive-group-edit-config" style="display: none !important"></div><div class="thrive-local-colors-config" style="display: none !important"></div>
-	<div class="tve-page-section-out"></div>
-	<div class="tve-page-section-in   tve_empty_dropzone" data-css="tve-u-173d36044bc" style=""><div class="thrv_wrapper thrv_text_element" data-tag="h2" data-css="tve-u-173d36044bd"><h2 class="" style="text-align: center;"><!--StartFragment--><!--StartFragment--><!--StartFragment--><!--StartFragment--><!--EndFragment--><!--EndFragment--><!--EndFragment--><!--EndFragment--><strong>T</strong><strong>i risuona?</strong></h2></div><div class="thrv_wrapper thrv_text_element" data-css="tve-u-173d36044be" style=""><p style="text-align: center;"><!--StartFragment--><!--StartFragment-->Se sei in questa pagina, è perché <strong>probabilmente hai già visto un mio video</strong>. <br><br>Non saranno perfetti, non avranno le luci professionali e saranno fatti all’aperto, <strong>m</strong><strong>a sono me stesso al 100%, </strong>questo è per me un traguardo ed è quello che mi sta premiando ora.<br><br>Più del testo, delle immagini e dei podcast, <strong>il video è il miglior mezzo per ottenere credibilità e fiducia con il pubblico e i potenziali clienti</strong>, questo perché passa una mimica, una tonalità di voce e modo di essere, che <strong>non è possibile far notare utilizzando altri mezzi di comunicazione</strong>.<br><br><span style="text-decoration: underline;">Per concludere: più di tutti, il video è il mezzo che le persone vogliono guardare, questo ti farà raggiungere un’altissimo numero di pubblico in più, rispetto al solo testo (per esempio)</span><!--EndFragment-->
-<!--EndFragment--></p></div></div>
-</div><div class="thrv_wrapper thrv-page-section tve-height-update" data-inherit-lp-settings="1">
-	<div class="tve-page-section-out"></div>
-	<div class="tve-page-section-in"><div class="thrv_wrapper thrv-divider" data-style-d="tve_sep-2" data-thickness-d="11" data-color-d="rgb(207, 206, 206)" data-css="tve-u-173d37140be">
-	<hr class="tve_sep tve_sep-2" style="">
-</div></div>
-</div><div data-inherit-lp-settings="1" data-match-lp-colors="1" class="thrv_wrapper thrv-page-section thrv-lp-block tcb-local-vars-root" data-css="tve-u-173d36e0e8c" style="" tcb-template-name="Product Highlight Area Block 01" tcb-template-id="55961" data-keep-css_id="1"><div class="thrive-group-edit-config" style="display: none !important"></div><div class="thrive-local-colors-config" style="display: none !important"></div>
-	<div class="tve-page-section-out" data-css="tve-u-173d36e0e8d"></div>
-	<div class="tve-page-section-in   tve_empty_dropzone" data-css="tve-u-173d36e0e8e"><div class="thrv_wrapper thrv-columns" style="--tcb-col-el-width: 1400;"><div class="tcb-flex-row tcb-resized tcb-medium-wrap tcb--cols--2" data-css="tve-u-173d36e0e8f"><div class="tcb-flex-col" data-css="tve-u-173d36e0e90" style=""><div class="tcb-col" data-css="tve-u-173d36e0e91" style=""><div class="thrv_wrapper thrv_text_element" data-tag="h2" data-css="tve-u-173d36e0e92"><h2 class=""><!--StartFragment--><!--StartFragment-->Il problema è il <strong>perfezionismo</strong><!--EndFragment--><!--EndFragment--></h2></div><div class="thrv_wrapper thrv_text_element" data-css="tve-u-173d36e0e93"><p><!--StartFragment-->Anche per me lo è stato: ho impiegato sempre troppo tempo a fare questi video e pubblicarli in modo continuativo. <br><br>Questo più volte ha bloccato completamente i miei progetti. <br><br>Nel tempo, non ha bloccato solo quello ma anche la possibilità di mostrarmi agli altri per come sono naturalmente, senza sforzo, e di attirare solo coloro a cui piaccio per come sono, non da uno spazio che desidera farsi accettare.<!--EndFragment--></p></div></div></div><div class="tcb-flex-col" data-css="tve-u-173d36e0e94" style=""><div class="tcb-col" data-css="tve-u-173d36e0e95" style=""><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box" data-css="tve-u-173d36e0e96" style="">
-<div class="tve-content-box-background"></div>
-<div class="tve-cb" data-css="tve-u-173d36e0e97"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tcb-mobile-hidden tcb-tablet-hidden" data-css="tve-u-173d36e0e98">
-<div class="tve-content-box-background" data-css="tve-u-173d36e0e99"></div>
-<div class="tve-cb" data-css="tve-u-173d36e0e9a"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box" data-css="tve-u-173d36e0e9b" data-float="1" style="">
-<div class="tve-content-box-background" data-css="tve-u-173d36e0e9c"></div>
-<div class="tve-cb" data-css="tve-u-173d36e0e9d"></div>
-</div></div>
-</div><div class="tcb-clear" data-css="tve-u-173d36e0e9e"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box" data-css="tve-u-173d36e0e9f" data-float="1">
-<div class="tve-content-box-background" data-css="tve-u-173d36e0ea0"></div>
-<div class="tve-cb" data-css="tve-u-173d36e0ea1"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box" data-css="tve-u-173d36e0ea3" style="">
-<div class="tve-content-box-background" data-css="tve-u-173d36e0ea4"></div>
-<div class="tve-cb" data-css="tve-u-173d36e0ea5"></div>
-</div></div>
-</div></div><div class="tcb-clear" data-css="tve-u-173d36e0ea6"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box" data-css="tve-u-173d36e0ea7">
-<div class="tve-content-box-background" data-css="tve-u-173d36e0ea8"></div>
-<div class="tve-cb" data-css="tve-u-173d36e0ea9"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box" data-css="tve-u-173d36e0eaa" style="">
-<div class="tve-content-box-background" data-css="tve-u-173d36e0eab"></div>
-<div class="tve-cb" data-css="tve-u-173d36e0eac"></div>
-</div></div>
-</div></div><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box" data-css="tve-u-173d36e0ead">
-<div class="tve-content-box-background" data-css="tve-u-173d36e0eae"></div>
-<div class="tve-cb" data-css="tve-u-173d36e0eaf"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box" data-css="tve-u-173d36e0eb0" style="">
-<div class="tve-content-box-background" data-css="tve-u-173d36e0eb1"></div>
-<div class="tve-cb" data-css="tve-u-173d36e0eb2"></div>
-</div></div>
-</div></div>
-</div></div></div></div></div></div>
-</div><div class="thrv_wrapper thrv-page-section tve-height-update" data-inherit-lp-settings="1">
-	<div class="tve-page-section-out"></div>
-	<div class="tve-page-section-in"><div class="thrv_wrapper thrv-button thrv-button-v2 tcb-local-vars-root" data-css="tve-u-5f2ff0f3414424" data-button-size="s">
-	<div class="thrive-colors-palette-config" style="display: none !important"></div>
-	<a href="#tve-jump-18ff220fb46" class="tcb-button-link tve-jump-scroll" jump-animation="smooth">
-		<span class="tcb-button-texts"><span class="tcb-button-text thrv-inline-text">Inizia ora</span></span>
-	</a>
-</div></div>
-</div><div data-inherit-lp-settings="1" data-match-lp-colors="1" class="thrv_wrapper thrv-page-section thrv-lp-block tcb-local-vars-root" data-css="tve-u-173d374ba95" style="" tcb-template-name="Steps Area Block 02" tcb-template-id="55953" data-keep-css_id="1"><div class="thrive-group-edit-config" style="display: none !important"></div><div class="thrive-local-colors-config" style="display: none !important"></div>
-	<div class="tve-page-section-out"></div>
-	<div class="tve-page-section-in   tve_empty_dropzone" data-css="tve-u-173d374ba97"><div class="thrv_wrapper thrv_text_element" data-tag="h2" data-css="tve-u-173d374ba98"><h2 class="" style="text-align: center;"><!--StartFragment-->Ecco <strong>di cosa parleremo</strong> nel percorso <!--EndFragment--></h2></div><div class="thrv_wrapper thrv_text_element" data-css="tve-u-173d374ba99" style=""><p style="text-align: center;" data-css="tve-u-173d374ba9a"><!--StartFragment--><!--StartFragment-->Un elenco delle argomentazioni di base che approfondiremo nel percorso e nella risorsa che ti fornirò.<!--EndFragment--><!--EndFragment--></p></div><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad dynamic-group-k3h2t6cl" data-css="tve-u-173d374ba9b" style="">
-	<div class="tve-content-box-background"></div>
-	<div class="tve-cb"><div class="thrv_wrapper thrv-styled_list" data-icon-code="icon-check"><ul class="tcb-styled-list"><li class="thrv-styled-list-item" data-css="tve-u-173d9225a5e"><div class="tcb-styled-list-icon"><div class="thrv_wrapper thrv_icon tve_no_drag tcb-no-delete tcb-no-clone tcb-no-save tcb-icon-inherit-style"><svg class="tcb-icon" viewBox="0 0 32 32" data-id="icon-check" data-name=""><path d="M29.333 10.267c0 0.4-0.133 0.8-0.533 1.2l-14.8 14.8c-0.267 0.267-0.667 0.4-1.067 0.4s-0.933-0.133-1.2-0.533l-2.4-2.267-6.267-6.267c-0.267-0.267-0.4-0.667-0.4-1.2s0.133-0.8 0.533-1.2l2.4-2.4c0.267-0.133 0.667-0.4 1.067-0.4s0.8 0.133 1.2 0.533l5.067 5.067 11.2-11.333c0.267-0.267 0.667-0.533 1.2-0.533 0.4 0 0.8 0.133 1.2 0.533l2.4 2.4c0.267 0.267 0.4 0.667 0.4 1.2z"></path></svg></div></div><span class="thrv-advanced-inline-text tve_editable tcb-styled-list-icon-text tcb-no-delete tcb-no-save tcb-excluded-from-group-item" data-css="tve-u-173d922465d">Come mi faccio venire le idee per i miei video</span></li><li class="thrv-styled-list-item" data-css="tve-u-173d9225a5e"><div class="tcb-styled-list-icon"><div class="thrv_wrapper thrv_icon tve_no_drag tcb-no-delete tcb-no-clone tcb-no-save tcb-icon-inherit-style"><svg class="tcb-icon" viewBox="0 0 32 32" data-id="icon-check" data-name=""><path d="M29.333 10.267c0 0.4-0.133 0.8-0.533 1.2l-14.8 14.8c-0.267 0.267-0.667 0.4-1.067 0.4s-0.933-0.133-1.2-0.533l-2.4-2.267-6.267-6.267c-0.267-0.267-0.4-0.667-0.4-1.2s0.133-0.8 0.533-1.2l2.4-2.4c0.267-0.133 0.667-0.4 1.067-0.4s0.8 0.133 1.2 0.533l5.067 5.067 11.2-11.333c0.267-0.267 0.667-0.533 1.2-0.533 0.4 0 0.8 0.133 1.2 0.533l2.4 2.4c0.267 0.267 0.4 0.667 0.4 1.2z"></path></svg></div></div><span class="thrv-advanced-inline-text tve_editable tcb-styled-list-icon-text tcb-no-delete tcb-no-save" data-css="tve-u-173d375a102">Come li pianifico</span></li><li class="thrv-styled-list-item" data-css="tve-u-173d9225a5e"><div class="tcb-styled-list-icon"><div class="thrv_wrapper thrv_icon tve_no_drag tcb-no-delete tcb-no-clone tcb-no-save tcb-icon-inherit-style"><svg class="tcb-icon" viewBox="0 0 32 32" data-id="icon-check" data-name=""><path d="M29.333 10.267c0 0.4-0.133 0.8-0.533 1.2l-14.8 14.8c-0.267 0.267-0.667 0.4-1.067 0.4s-0.933-0.133-1.2-0.533l-2.4-2.267-6.267-6.267c-0.267-0.267-0.4-0.667-0.4-1.2s0.133-0.8 0.533-1.2l2.4-2.4c0.267-0.133 0.667-0.4 1.067-0.4s0.8 0.133 1.2 0.533l5.067 5.067 11.2-11.333c0.267-0.267 0.667-0.533 1.2-0.533 0.4 0 0.8 0.133 1.2 0.533l2.4 2.4c0.267 0.267 0.4 0.667 0.4 1.2z"></path></svg></div></div><span class="thrv-advanced-inline-text tve_editable tcb-styled-list-icon-text tcb-no-delete tcb-no-save" data-css="tve-u-173d375a102">Come preparo i video per la pubblicazione</span></li><li class="thrv-styled-list-item" data-css="tve-u-173d9225a5e"><div class="tcb-styled-list-icon"><div class="thrv_wrapper thrv_icon tve_no_drag tcb-no-delete tcb-no-clone tcb-no-save tcb-icon-inherit-style" data-css="tve-u-173d3760aee"><svg class="tcb-icon" viewBox="0 0 32 32" data-id="icon-check" data-name=""><path d="M29.333 10.267c0 0.4-0.133 0.8-0.533 1.2l-14.8 14.8c-0.267 0.267-0.667 0.4-1.067 0.4s-0.933-0.133-1.2-0.533l-2.4-2.267-6.267-6.267c-0.267-0.267-0.4-0.667-0.4-1.2s0.133-0.8 0.533-1.2l2.4-2.4c0.267-0.133 0.667-0.4 1.067-0.4s0.8 0.133 1.2 0.533l5.067 5.067 11.2-11.333c0.267-0.267 0.667-0.533 1.2-0.533 0.4 0 0.8 0.133 1.2 0.533l2.4 2.4c0.267 0.267 0.4 0.667 0.4 1.2z"></path></svg></div></div><span class="thrv-advanced-inline-text tve_editable tcb-styled-list-icon-text tcb-no-delete tcb-no-save" data-css="tve-u-173d375a102">Come creo i video (condizioni ambientali e strumenti)</span></li><li class="thrv-styled-list-item" data-css="tve-u-173d9225a5e"><div class="tcb-styled-list-icon"><div class="thrv_wrapper thrv_icon tve_no_drag tcb-no-delete tcb-no-clone tcb-no-save tcb-icon-inherit-style " data-css="tve-u-173d3760ee4"><svg class="tcb-icon" viewBox="0 0 32 32" data-id="icon-check" data-name=""><path d="M29.333 10.267c0 0.4-0.133 0.8-0.533 1.2l-14.8 14.8c-0.267 0.267-0.667 0.4-1.067 0.4s-0.933-0.133-1.2-0.533l-2.4-2.267-6.267-6.267c-0.267-0.267-0.4-0.667-0.4-1.2s0.133-0.8 0.533-1.2l2.4-2.4c0.267-0.133 0.667-0.4 1.067-0.4s0.8 0.133 1.2 0.533l5.067 5.067 11.2-11.333c0.267-0.267 0.667-0.533 1.2-0.533 0.4 0 0.8 0.133 1.2 0.533l2.4 2.4c0.267 0.267 0.4 0.667 0.4 1.2z"></path></svg></div></div><span class="thrv-advanced-inline-text tve_editable tcb-styled-list-icon-text tcb-no-delete tcb-no-save" data-css="tve-u-173d375a102">Come decido (o meno) quanto lunghi farli e come faccio in modo che questo accada senza sforzo</span></li><li class="thrv-styled-list-item" data-css="tve-u-173d9225a5e"><div class="tcb-styled-list-icon"><div class="thrv_wrapper thrv_icon tve_no_drag tcb-no-delete tcb-no-clone tcb-no-save tcb-icon-inherit-style " data-css="tve-u-173d3761222"><svg class="tcb-icon" viewBox="0 0 32 32" data-id="icon-check" data-name=""><path d="M29.333 10.267c0 0.4-0.133 0.8-0.533 1.2l-14.8 14.8c-0.267 0.267-0.667 0.4-1.067 0.4s-0.933-0.133-1.2-0.533l-2.4-2.267-6.267-6.267c-0.267-0.267-0.4-0.667-0.4-1.2s0.133-0.8 0.533-1.2l2.4-2.4c0.267-0.133 0.667-0.4 1.067-0.4s0.8 0.133 1.2 0.533l5.067 5.067 11.2-11.333c0.267-0.267 0.667-0.533 1.2-0.533 0.4 0 0.8 0.133 1.2 0.533l2.4 2.4c0.267 0.267 0.4 0.667 0.4 1.2z"></path></svg></div></div><span class="thrv-advanced-inline-text tve_editable tcb-styled-list-icon-text tcb-no-delete tcb-no-save" data-css="tve-u-173d375a102">Quali mezzi utilizzo (camera/webcam/microfoni)</span></li><li class="thrv-styled-list-item" data-css="tve-u-173d9225a5e"><div class="tcb-styled-list-icon"><div class="thrv_wrapper thrv_icon tve_no_drag tcb-no-delete tcb-no-clone tcb-no-save tcb-icon-inherit-style " data-css="tve-u-173d376153a"><svg class="tcb-icon" viewBox="0 0 32 32" data-id="icon-check" data-name=""><path d="M29.333 10.267c0 0.4-0.133 0.8-0.533 1.2l-14.8 14.8c-0.267 0.267-0.667 0.4-1.067 0.4s-0.933-0.133-1.2-0.533l-2.4-2.267-6.267-6.267c-0.267-0.267-0.4-0.667-0.4-1.2s0.133-0.8 0.533-1.2l2.4-2.4c0.267-0.133 0.667-0.4 1.067-0.4s0.8 0.133 1.2 0.533l5.067 5.067 11.2-11.333c0.267-0.267 0.667-0.533 1.2-0.533 0.4 0 0.8 0.133 1.2 0.533l2.4 2.4c0.267 0.267 0.4 0.667 0.4 1.2z"></path></svg></div></div><span class="thrv-advanced-inline-text tve_editable tcb-styled-list-icon-text tcb-no-delete tcb-no-save" data-css="tve-u-173d375a102">Metodi semplici per avere un’ottima luce senza acquistare o spendere troppo</span></li><li class="thrv-styled-list-item" data-css="tve-u-173d9225a5e"><div class="tcb-styled-list-icon"><div class="thrv_wrapper thrv_icon tve_no_drag tcb-no-delete tcb-no-clone tcb-no-save tcb-icon-inherit-style" data-css="tve-u-173d37618b7"><svg class="tcb-icon" viewBox="0 0 32 32" data-id="icon-check" data-name=""><path d="M29.333 10.267c0 0.4-0.133 0.8-0.533 1.2l-14.8 14.8c-0.267 0.267-0.667 0.4-1.067 0.4s-0.933-0.133-1.2-0.533l-2.4-2.267-6.267-6.267c-0.267-0.267-0.4-0.667-0.4-1.2s0.133-0.8 0.533-1.2l2.4-2.4c0.267-0.133 0.667-0.4 1.067-0.4s0.8 0.133 1.2 0.533l5.067 5.067 11.2-11.333c0.267-0.267 0.667-0.533 1.2-0.533 0.4 0 0.8 0.133 1.2 0.533l2.4 2.4c0.267 0.267 0.4 0.667 0.4 1.2z"></path></svg></div></div><span class="thrv-advanced-inline-text tve_editable tcb-styled-list-icon-text tcb-no-delete tcb-no-save" data-css="tve-u-173d375a102">Cosa uso per registrare lo schermo e fare le video lezioni</span></li><li class="thrv-styled-list-item" data-css="tve-u-173d9225a5e"><div class="tcb-styled-list-icon"><div class="thrv_wrapper thrv_icon tve_no_drag tcb-no-delete tcb-no-clone tcb-no-save tcb-icon-inherit-style" data-css="tve-u-173d376bc46"><svg class="tcb-icon" viewBox="0 0 32 32" data-id="icon-check" data-name=""><path d="M29.333 10.267c0 0.4-0.133 0.8-0.533 1.2l-14.8 14.8c-0.267 0.267-0.667 0.4-1.067 0.4s-0.933-0.133-1.2-0.533l-2.4-2.267-6.267-6.267c-0.267-0.267-0.4-0.667-0.4-1.2s0.133-0.8 0.533-1.2l2.4-2.4c0.267-0.133 0.667-0.4 1.067-0.4s0.8 0.133 1.2 0.533l5.067 5.067 11.2-11.333c0.267-0.267 0.667-0.533 1.2-0.533 0.4 0 0.8 0.133 1.2 0.533l2.4 2.4c0.267 0.267 0.4 0.667 0.4 1.2z"></path></svg></div></div><span class="thrv-advanced-inline-text tve_editable tcb-styled-list-icon-text tcb-no-delete tcb-no-save" data-css="tve-u-173d375a102">Come decidere se fare una live oppure una sessione registrata e perché</span></li><li class="thrv-styled-list-item" data-css="tve-u-173d9225a5e"><div class="tcb-styled-list-icon"><div class="thrv_wrapper thrv_icon tve_no_drag tcb-no-delete tcb-no-clone tcb-no-save tcb-icon-inherit-style " data-css="tve-u-173d376c180"><svg class="tcb-icon" viewBox="0 0 32 32" data-id="icon-check" data-name=""><path d="M29.333 10.267c0 0.4-0.133 0.8-0.533 1.2l-14.8 14.8c-0.267 0.267-0.667 0.4-1.067 0.4s-0.933-0.133-1.2-0.533l-2.4-2.267-6.267-6.267c-0.267-0.267-0.4-0.667-0.4-1.2s0.133-0.8 0.533-1.2l2.4-2.4c0.267-0.133 0.667-0.4 1.067-0.4s0.8 0.133 1.2 0.533l5.067 5.067 11.2-11.333c0.267-0.267 0.667-0.533 1.2-0.533 0.4 0 0.8 0.133 1.2 0.533l2.4 2.4c0.267 0.267 0.4 0.667 0.4 1.2z"></path></svg></div></div><span class="thrv-advanced-inline-text tve_editable tcb-styled-list-icon-text tcb-no-delete tcb-no-save" data-css="tve-u-173d375a102">Montaggio semplicissimo con PC o Smartphone</span></li><li class="thrv-styled-list-item" data-css="tve-u-173d9225a5e"><div class="tcb-styled-list-icon"><div class="thrv_wrapper thrv_icon tve_no_drag tcb-no-delete tcb-no-clone tcb-no-save tcb-icon-inherit-style " data-css="tve-u-173d376c778"><svg class="tcb-icon" viewBox="0 0 32 32" data-id="icon-check" data-name=""><path d="M29.333 10.267c0 0.4-0.133 0.8-0.533 1.2l-14.8 14.8c-0.267 0.267-0.667 0.4-1.067 0.4s-0.933-0.133-1.2-0.533l-2.4-2.267-6.267-6.267c-0.267-0.267-0.4-0.667-0.4-1.2s0.133-0.8 0.533-1.2l2.4-2.4c0.267-0.133 0.667-0.4 1.067-0.4s0.8 0.133 1.2 0.533l5.067 5.067 11.2-11.333c0.267-0.267 0.667-0.533 1.2-0.533 0.4 0 0.8 0.133 1.2 0.533l2.4 2.4c0.267 0.267 0.4 0.667 0.4 1.2z"></path></svg></div></div><span class="thrv-advanced-inline-text tve_editable tcb-styled-list-icon-text tcb-no-delete tcb-no-save" data-css="tve-u-173d375a102">Dove pubblicare e tutte le informazioni necessarie (lunghezza video, limiti dei social)</span></li><li class="thrv-styled-list-item" data-css="tve-u-173d9225a5e"><div class="tcb-styled-list-icon"><div class="thrv_wrapper thrv_icon tve_no_drag tcb-no-delete tcb-no-clone tcb-no-save tcb-icon-inherit-style " data-css="tve-u-173d3776414"><svg class="tcb-icon" viewBox="0 0 32 32" data-id="icon-check" data-name=""><path d="M29.333 10.267c0 0.4-0.133 0.8-0.533 1.2l-14.8 14.8c-0.267 0.267-0.667 0.4-1.067 0.4s-0.933-0.133-1.2-0.533l-2.4-2.267-6.267-6.267c-0.267-0.267-0.4-0.667-0.4-1.2s0.133-0.8 0.533-1.2l2.4-2.4c0.267-0.133 0.667-0.4 1.067-0.4s0.8 0.133 1.2 0.533l5.067 5.067 11.2-11.333c0.267-0.267 0.667-0.533 1.2-0.533 0.4 0 0.8 0.133 1.2 0.533l2.4 2.4c0.267 0.267 0.4 0.667 0.4 1.2z"></path></svg></div></div><span class="thrv-advanced-inline-text tve_editable tcb-styled-list-icon-text tcb-no-delete tcb-no-save" data-css="tve-u-173d375a102">Come porto interazioni sui miei video</span></li></ul></div></div>
-</div><div class="thrv_wrapper thrv_text_element" data-css="tve-u-173d374bad1"><p><!--EndFragment-->
-<!--EndFragment--></p></div></div>
-</div><div data-inherit-lp-settings="1" data-match-lp-colors="1" class="thrv_wrapper thrv-page-section thrv-lp-block tcb-local-vars-root" data-css="tve-u-5f2ff0f3414431" style="" tcb-template-name="Text Area Block 04" tcb-template-id="56112" data-keep-css_id="1"><div class="thrive-group-edit-config" style="display: none !important"></div><div class="thrive-local-colors-config" style="display: none !important"></div>
-	<div class="tve-page-section-out" data-css="tve-u-5f2ff0f3414455" style=""></div>
-	<div class="tve-page-section-in   tve_empty_dropzone" data-css="tve-u-5f2ff0f3414467" style=""><div class="thrv_wrapper thrv_text_element" style="" data-css="tve-u-5f2ff0f3414472"><h2 class="" style="text-align: center;"><strong>Un gruppo Telegram Privato</strong> dove <span style="text-decoration: underline;">fare i primi video senza vergogna</span>, in un luogo protetto.</h2></div><div class="thrv_wrapper thrv-columns" style="--tcb-col-el-width: 1400;" data-css="tve-u-5f2ff0f3414488"><div class="tcb-flex-row tcb--cols--2" style="" data-css="tve-u-5f2ff0f3414490"><div class="tcb-flex-col"><div class="tcb-col" style="" data-css="tve-u-5f2ff0f34144a1"><div class="thrv_wrapper thrv_text_element"><p><strong><br>Già dalla prima sessione</strong><br><br><strong><span style="text-decoration: underline;">Sarai chiamato a creare il tuo primo video in modo semplice</span></strong>, con quello che hai a disposizione.<br>Pubblicherai il tuo video all'interno del gruppo dove le altre persone <strong>ti daranno dei feedback</strong> (anche io) e <strong>ci aiuteremo a vicenda</strong> a superare questo blocco, <strong>mostrandoci per come siamo, accogliendo il timore.</strong></p></div></div></div><div class="tcb-flex-col"><div class="tcb-col" style="" data-css="tve-u-5f2ff0f34144b4"><div class="tcb-clear" data-css="tve-u-5f2ff0f34144c8"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad tcb-excluded-from-group-item" data-css="tve-u-5f2ff0f34144d8" style="">
-	<div class="tve-content-box-background" data-css="tve-u-5f2ff0f34144e9"></div>
-	<div class="tve-cb" data-css="tve-u-5f2ff0f34144f2"><div class="tcb-clear" data-css="tve-u-5f2ff0f3414507"><div class="thrv_wrapper thrv_icon tcb-icon-display" data-css="tve-u-5f2ff0f3414517" style="margin-left: 0px !important;"><svg class="tcb-icon" viewBox="0 0 512 512" data-id="icon-quote-left-light" data-name="">
-            <path d="M448 224h-64v-24c0-30.9 25.1-56 56-56h16c22.1 0 40-17.9 40-40V72c0-22.1-17.9-40-40-40h-16c-92.6 0-168 75.4-168 168v216c0 35.3 28.7 64 64 64h112c35.3 0 64-28.7 64-64V288c0-35.3-28.7-64-64-64zm32 192c0 17.7-14.3 32-32 32H336c-17.7 0-32-14.3-32-32V200c0-75.1 60.9-136 136-136h16c4.4 0 8 3.6 8 8v32c0 4.4-3.6 8-8 8h-16c-48.6 0-88 39.4-88 88v56h96c17.7 0 32 14.3 32 32v128zM176 224h-64v-24c0-30.9 25.1-56 56-56h16c22.1 0 40-17.9 40-40V72c0-22.1-17.9-40-40-40h-16C75.4 32 0 107.4 0 200v216c0 35.3 28.7 64 64 64h112c35.3 0 64-28.7 64-64V288c0-35.3-28.7-64-64-64zm32 192c0 17.7-14.3 32-32 32H64c-17.7 0-32-14.3-32-32V200c0-75.1 60.9-136 136-136h16c4.4 0 8 3.6 8 8v32c0 4.4-3.6 8-8 8h-16c-48.6 0-88 39.4-88 88v56h96c17.7 0 32 14.3 32 32v128z"></path>
-        </svg></div></div></div>
-</div></div><div class="thrv_wrapper thrv_text_element" style="" data-css="tve-u-5f2ff0f3414533"><p>Il metodo, spiegato da me ha grande valore e ti aiuterà molto, <strong>ma il vero "click interiore" lo farai solamente con la pratica</strong>, ascoltando, non solo me, ma anche gli altri corsisti e confrontandoti con loro all'interno del gruppo (e anche quelli che hanno già partecipato).</p></div></div></div></div></div><div class="thrv_wrapper thrv-button thrv-button-v2 tcb-local-vars-root" data-css="tve-u-5f2ff0f3414540" data-button-size="s">
-	<div class="thrive-colors-palette-config" style="display: none !important"></div>
-	<a href="#tve-jump-18ff220fb46" class="tcb-button-link tve-jump-scroll" jump-animation="smooth">
-		<span class="tcb-button-texts"><span class="tcb-button-text thrv-inline-text">inizia ora</span></span>
-	</a>
-</div></div>
-</div><div data-inherit-lp-settings="1" data-match-lp-colors="1" class="thrv_wrapper thrv-page-section thrv-lp-block tcb-local-vars-root" data-css="tve-u-5f2ff0f3414551" style="" tcb-template-name="Benefits Area Block 01" tcb-template-id="55917" data-keep-css_id="1"><div class="thrive-group-edit-config" style="display: none !important"></div><div class="thrive-local-colors-config" style="display: none !important"></div>
-	<div class="tve-page-section-out" data-css="tve-u-5f2ff0f3414564" data-ct-name="Offset Corner 02" data-ct="fancydivider-37962" data-element-name="Fancy Divider"></div>
-	<div class="tve-page-section-in   tve_empty_dropzone" data-css="tve-u-5f2ff0f3414577"><div class="thrv_wrapper thrv_text_element" data-tag="h2" data-css="tve-u-5f2ff0f3414589" style=""><h2 class="" style="text-align: center;"><!--StartFragment--><!--StartFragment--><!--StartFragment--><!--StartFragment-->È ideale per te <strong>SE:</strong><!--EndFragment--><!--EndFragment--><!--EndFragment--><!--EndFragment--></h2></div><div class="thrv_wrapper thrv-columns dynamic-group-k3fwgjvh" data-css="tve-u-5f2ff0f3414591" style="--tcb-col-el-width: 1400;"><div class="tcb-flex-row tcb--cols--2" data-css="tve-u-5f2ff0f34145a5"><div class="tcb-flex-col"><div class="tcb-col dynamic-group-k3fwgi1n"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad tve_evt_manager_listen tve_et_tve-viewport tve_ea_thrive_animation tve_anim_slide_left dynamic-group-k3fwgfeg" data-css="tve-u-5f2ff0f34145b1" data-tcb-events="__TCB_EVENT_[{&quot;t&quot;:&quot;tve-viewport&quot;,&quot;config&quot;:{&quot;anim&quot;:&quot;slide_left&quot;,&quot;loop&quot;:0},&quot;a&quot;:&quot;thrive_animation&quot;}]_TNEVE_BCT__" style="padding-right: 50px !important;">
-	<div class="tve-content-box-background" data-css="tve-u-5f2ff0f34145c8"></div>
-	<div class="tve-cb" data-css="tve-u-5f2ff0f34145d3" style=""><div class="tcb-clear" data-css="tve-u-5f2ff0f34145e9"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad dynamic-group-k3fwfuy2" data-css="tve-u-5f2ff0f34145f1">
-	<div class="tve-content-box-background" data-css="tve-u-5f2ff0f3414602"></div>
-	<div class="tve-cb" data-css="tve-u-5f2ff0f3414622"></div>
-</div></div><div class="thrv_wrapper thrv_text_element dynamic-group-k3fwfyjh" data-css="tve-u-5f2ff0f3414633" data-tag="h3"><h3 class=""><strong>Ti vergogni di mostrarti<!--EndFragment--></strong></h3></div><div class="thrv_wrapper thrv_text_element dynamic-group-k3fwg1vr" data-css="tve-u-5f2ff0f3414643"><p data-css="tve-u-5f2ff0f3414654"><!--StartFragment-->Hai un blocco e senti che non c'è modo di capire da dove venga o come "aggirarlo"<br><!--EndFragment--></p></div></div>
-</div><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad tve_evt_manager_listen tve_et_tve-viewport tve_ea_thrive_animation tve_anim_slide_top dynamic-group-k3fwgfeg" data-css="tve-u-5f2ff0f3414663" data-tcb-events="__TCB_EVENT_[{&quot;t&quot;:&quot;tve-viewport&quot;,&quot;config&quot;:{&quot;anim&quot;:&quot;slide_top&quot;,&quot;loop&quot;:0},&quot;a&quot;:&quot;thrive_animation&quot;}]_TNEVE_BCT__" style="padding-right: 50px !important;">
-	<div class="tve-content-box-background" data-css="tve-u-5f2ff0f34145c8"></div>
-	<div class="tve-cb" data-css="tve-u-5f2ff0f3414675" style=""><div class="tcb-clear" data-css="tve-u-5f2ff0f3414689"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad dynamic-group-k3fwfuy2" data-css="tve-u-5f2ff0f3414696">
-	<div class="tve-content-box-background" data-css="tve-u-5f2ff0f3414602"></div>
-	<div class="tve-cb" data-css="tve-u-5f2ff0f3414622"></div>
-</div></div><div class="thrv_wrapper thrv_text_element dynamic-group-k3fwfyjh" data-css="tve-u-5f2ff0f3414633" data-tag="h3"><h3 class=""><strong>Ti manca la continuità</strong></h3></div><div class="thrv_wrapper thrv_text_element dynamic-group-k3fwg1vr" data-css="tve-u-5f2ff0f34146b5"><p data-css="tve-u-5f2ff0f34146c0">Hai difficoltà ad essere continuativa/o nella creazione e, così facendo, l'algoritmo (di nessun social) non ti promuove.</p></div></div>
-</div></div></div><div class="tcb-flex-col"><div class="tcb-col dynamic-group-k3fwgi1n" data-css="tve-u-5f2ff0f34146d4"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad tve_evt_manager_listen tve_et_tve-viewport tve_ea_thrive_animation tve_anim_slide_top dynamic-group-k3fwgfeg" data-css="tve-u-5f2ff0f34146e7" data-tcb-events="__TCB_EVENT_[{&quot;t&quot;:&quot;tve-viewport&quot;,&quot;config&quot;:{&quot;anim&quot;:&quot;slide_top&quot;,&quot;loop&quot;:0},&quot;a&quot;:&quot;thrive_animation&quot;}]_TNEVE_BCT__" style="padding-right: 50px !important;">
-	<div class="tve-content-box-background" data-css="tve-u-5f2ff0f34145c8"></div>
-	<div class="tve-cb" data-css="tve-u-5f2ff0f34146f8" style=""><div class="tcb-clear" data-css="tve-u-5f2ff0f3414702"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad dynamic-group-k3fwfuy2" data-css="tve-u-5f2ff0f3414713">
-	<div class="tve-content-box-background" data-css="tve-u-5f2ff0f3414602"></div>
-	<div class="tve-cb" data-css="tve-u-5f2ff0f3414622"></div>
-</div></div><div class="thrv_wrapper thrv_text_element dynamic-group-k3fwfyjh" data-css="tve-u-5f2ff0f3414633" data-tag="h3"><h3 class=""><strong>Hai visto i miei video e ti piace l'autenticità che presento<!--EndFragment--></strong></h3></div><div class="thrv_wrapper thrv_text_element dynamic-group-k3fwg1vr" data-css="tve-u-5f2ff0f34146b5"><p data-css="tve-u-5f2ff0f34146c0"><!--StartFragment-->Spesso mi è stato chiesto "come faccio", chiaramente è tutto semplice, questo percorso è una risposta a questa domanda.<br><!--EndFragment--></p></div></div>
-</div><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad tve_evt_manager_listen tve_et_tve-viewport tve_ea_thrive_animation tve_anim_slide_left dynamic-group-k3fwgfeg" data-css="tve-u-5f2ff0f3414722" data-tcb-events="__TCB_EVENT_[{&quot;t&quot;:&quot;tve-viewport&quot;,&quot;config&quot;:{&quot;anim&quot;:&quot;slide_left&quot;,&quot;loop&quot;:0},&quot;a&quot;:&quot;thrive_animation&quot;}]_TNEVE_BCT__" style="padding-right: 50px !important;">
-	<div class="tve-content-box-background" data-css="tve-u-5f2ff0f34145c8"></div>
-	<div class="tve-cb" data-css="tve-u-5f2ff0f3414736" style=""><div class="tcb-clear" data-css="tve-u-5f2ff0f3414741"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad dynamic-group-k3fwfuy2" data-css="tve-u-5f2ff0f3414752">
-	<div class="tve-content-box-background" data-css="tve-u-5f2ff0f3414602"></div>
-	<div class="tve-cb" data-css="tve-u-5f2ff0f3414622"></div>
-</div></div><div class="thrv_wrapper thrv_text_element dynamic-group-k3fwfyjh" data-css="tve-u-5f2ff0f3414633" data-tag="h3"><h3 class=""><strong>Fare Video "per vendere" ti infastidisce<!--EndFragment--></strong></h3></div><div class="thrv_wrapper thrv_text_element dynamic-group-k3fwg1vr" data-css="tve-u-5f2ff0f3414770"><p data-css="tve-u-5f2ff0f3414787">Non sopporti l'idea di fare video per vendere perché lo senti come qualcosa di "disonesto" e "sbagliato" per il tuo settore, ti aiuterò a vedere un'altro angolo.</p></div></div>
-</div></div></div></div></div></div>
-</div><div data-inherit-lp-settings="1" data-match-lp-colors="1" class="thrv_wrapper thrv-page-section thrv-lp-block tcb-local-vars-root" style="margin-bottom: 0px !important;" data-css="tve-u-173d37ac2fe" tcb-template-name="Text Area Block 01" tcb-template-id="56089" data-keep-css_id="1"><div class="thrive-group-edit-config" style="display: none !important"></div><div class="thrive-local-colors-config" style="display: none !important"></div>
-	<div class="tve-page-section-out"></div>
-	<div class="tve-page-section-in   tve_empty_dropzone" data-css="tve-u-173d37ac2ff" style=""><div class="thrv_wrapper thrv_text_element" data-tag="h2" data-css="tve-u-173d37ac300"><h2 class="" style="text-align: center;"><!--StartFragment--><!--StartFragment--><!--StartFragment--><!--StartFragment--><strong>Parlerò anche di...</strong><!--EndFragment--><!--EndFragment--><!--EndFragment--><!--EndFragment--></h2></div><div class="thrv_wrapper thrv_text_element">	<p style="text-align: center;">Come superare la paura di fare i primi video in pubblico e come fare il mio primo video?</p><p style="text-align: center;">Come convertire il tuo video in un post scritto?</p><p style="text-align: center;">Come catturare subito l’attenzione nei primi 15 secondi?</p><p style="text-align: center;">Come ricordare cosa dire? (metodo infallibile)</p><p style="text-align: center;">Come gestire il nervosismo o l’ansia da prestazione iniziale?</p><p style="text-align: center;">Come fare video in movimento?</p><p style="text-align: center;">Quali sfondi professionali utilizzare?</p><p style="text-align: center;">Come considerare lo sfondo mentre parli e restare al centro dell’inquadratura?</p></div></div>
-</div><div data-match-lp-colors="1" class="thrv_wrapper thrv-page-section thrv-lp-block tcb-local-vars-root" style="" data-css="tve-u-5f2ff0f3414791" tcb-template-name="Call To Action Area Block 03" tcb-template-id="56143" data-keep-css_id="1" data-inherit-lp-settings="1" id="tve-jump-18ff220fb46"><div class="thrive-group-edit-config" style="display: none !important"></div><div class="thrive-local-colors-config" style="display: none !important"></div>
-	<div class="tve-page-section-out" data-css="tve-u-5f2ff0f34147a5" style="" data-ct-name="Waves 01" data-ct="fancydivider-36510" data-element-name="Fancy Divider"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 97.36" data-position="bottom" data-ct="37830" decoration-type="Offset Corner 01" class="svg-shape-bottom" width="100%" preserveAspectRatio="none" data-css="tve-u-5f2ff0f34147b2" data-changed-dir="1" style="height: 48px;"><defs><style></style></defs><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><path class="p16eb2b5ef98" d="M256.46,83.31a51,51,0,0,1-8,.47A52,52,0,0,1,233,81.92L0,17.32v80H1000V0Z"></path></g></g></svg><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 1000 78" preserveAspectRatio="none" data-position="top" data-ct="36510" decoration-type="Waves 01" class="svg-shape-top svg-shape-to-front" data-css="tve-u-5f2ff0f34147c2" style="">
-    <path d="M0,0v60c51.1-27,123.1-42,216-45c122-4,207.4,27.3,443,38c72.6,3.3,186.3-4.4,341-23V0H0z"></path>
-	<path opacity="0.6" d="M1,1v60c23.1-17,81.1-27,174-30c122-4,169.4,32.3,405,43c72.6,3.3,213-11,421-43V1H1z"></path>
-	<path opacity="0.2" d="M1,0v62c17.8-9,73.1-15,166-18c122-4,188,18,366,18c62,0,147.7-9,314-9     c32.1,0,83.4,6,154,18V0H1z"></path>
-</svg></div>
-	<div class="tve-page-section-in   tve_empty_dropzone" data-css="tve-u-5f2ff0f34147d0" style="z-index: auto;"><div class="thrv_wrapper thrv-columns" style="--tcb-col-el-width: 1400;" data-css="tve-u-5f2ff0f34147e4"><div class="tcb-flex-row tcb-resized tcb--cols--2" data-css="tve-u-5f2ff0f34147f3" style=""><div class="tcb-flex-col" data-css="tve-u-5f2ff0f3414805" style=""><div class="tcb-col"><div class="thrv_wrapper tve_image_caption tcb-mobile-hidden" data-css="tve-u-5f2ff0f3414818" style=""><span class="tve_image_frame" style=""><img data-opt-id=643567667  fetchpriority="high" decoding="async" class="tve_image wp-image-143" alt="Marco Munich Consulente Marketing per Coach, Operatori Olistici e Terapeuti" data-id="143" width="409" data-init-width="600" height="273" data-init-height="401" title="Marco Munich Consulente Marketing per Coach, Operatori Olistici e Terapeuti" src="https://mlfqwn4vwjlv.i.optimole.com/w:409/h:273/q:mauto/g:sm/f:best/ig:avif/https://marcomunich.com/wp-content/uploads/2019/04/foto_mia.jpg" data-width="409" data-height="273" style="aspect-ratio: auto 600 / 401;" ml-d="-132" data-css="tve-u-5f2ff0f3414827" center-h-d="true" ml-t="-60" ml-m="-43" loading="lazy" srcset="https://mlfqwn4vwjlv.i.optimole.com/w:600/h:401/q:mauto/g:sm/f:best/ig:avif/https://marcomunich.com/wp-content/uploads/2019/04/foto_mia.jpg 600w, https://mlfqwn4vwjlv.i.optimole.com/w:300/h:201/q:mauto/g:sm/f:best/ig:avif/https://marcomunich.com/wp-content/uploads/2019/04/foto_mia.jpg 300w" sizes="auto, (max-width: 409px) 100vw, 409px" /><span class="tve-image-overlay" style=""></span></span></div></div></div><div class="tcb-flex-col" data-css="tve-u-5f2ff0f3414848" style=""><div class="tcb-col" style="" data-css="tve-u-5f2ff0f3414851"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad" style="" data-css="tve-u-5f2ff0f3414864">
-	<div class="tve-content-box-background"></div>
-	<div class="tve-cb" data-css="tve-u-5f2ff0f3414876"><div class="thrv_wrapper thrv_text_element" style="" data-css="tve-u-5f2ff0f3414884"><h2 class="" data-css="tve-u-5f2ff0f3414898">Se senti che ti risuona,&nbsp;<strong>inizia ora</strong><strong>!</strong></h2></div><div class="thrv_wrapper thrv_text_element" data-css="tve-u-5f2ff0f34148a6"><p data-css="tve-u-5f2ff0f34148b1">Riceverai da me:</p><p data-css="tve-u-5f2ff0f34148c9">★ <strong>Più di 3 ore di Video lezioni</strong> incoraggianti e ispiranti - dove potrai fare le dovute pause, tornare indietro e riascoltare quante volte vorrai. <br><br>★ <strong>Una risorsa per la comprensione concreta</strong>, passo dopo passo - un elenco completo dei capoversi e capitoli del corso, per non perderti mai e avere tutti i link che servono, nel documento stesso. Oltre a questo, la possibilità di <span style="text-decoration: underline;" data-css="tve-u-1745118f74f">scrivere le tue domande nel documento stesso, dove non comprendi, dove ti rispondo entro 24H/48H. </span><br><br>★ <strong>Un gruppo Telegram dedicato</strong> a persone nella stessa situazione - per aiutarsi a vicenda, mostrare i video in un luogo sicuro, lasciare dei feedback e richiederli, e la possibilità di farmi domande e ricevere risposte entro 24/48H.</p></div><div class="thrv_wrapper thrv-button thrv-button-v2 tcb-local-vars-root tcb-with-icon" data-css="tve-u-174c55dbbe7">
-	<div class="thrive-colors-palette-config" style="display: none !important"></div>
-	<a href="https://youtube.com/playlist?list=PLKgzAWOyM8xvs-UytKUtY4wsgjbHxU4Ge&amp;si=HyjhohSav_uUHe91" class="tcb-button-link tcb-plain-text" target="_blank"><span class="tcb-button-icon">
-	<div class="thrv_wrapper thrv_icon tve_no_drag tve_no_icons tcb-icon-inherit-style tcb-local-vars-root tcb-icon-display" data-css="tve-u-18ff22056be" style=""><svg class="tcb-icon tcb-local-vars-root" viewBox="0 0 576 512" data-id="icon-youtube-brands" data-name=""><path d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"></path></svg></div>
-</span>
-
-		<span class="tcb-button-texts"><span class="tcb-button-text thrv-inline-text" data-css="tve-u-174c55ebf77" style=""><strong>Inizia ora su YouTube</strong></span><span class="tcb-secondary-text thrv-inline-text tve-froala fr-box fr-basic" style="" data-css="tve-u-174c55eaac9"></span></span>
-	</a>
-</div></div>
-</div></div></div></div></div></div>
-</div><div data-inherit-lp-settings="1" data-match-lp-colors="1" class="thrv_wrapper thrv-page-section thrv-lp-block tcb-local-vars-root" data-css="tve-u-5f2ff0f3414b65" tcb-template-name="Testimonials Area Block 02" tcb-template-id="55947" data-keep-css_id="1"><div class="thrive-group-edit-config" style="display: none !important"></div><div class="thrive-local-colors-config" style="display: none !important"></div>
-	<div class="tve-page-section-out" data-css="tve-u-5f2ff0f3414b74"></div>
-	<div class="tve-page-section-in   tve_empty_dropzone" data-css="tve-u-5f2ff0f3414b81"><div class="thrv_wrapper thrv_text_element" data-tag="h2" data-css="tve-u-5f2ff0f3414ba1"><h2 class="" style="text-align: center;"><!--StartFragment--><strong>Cosa dice chi ha già fatto un percorso con me</strong><!--EndFragment--></h2></div><div class="thrv_wrapper thrv_text_element" data-css="tve-u-5f2ff0f3414bb1"><h4 class="" style="text-align: center;"><!--StartFragment-->Ecco cosa ne pensa chi ha già scelto di creare un Messaggio Autentico<!--EndFragment--></h4></div><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box" style="" data-css="tve-u-5f2ff0f3414bc6" data-ct-name="Chic Photo Light" data-ct="testimonial-7321" data-element-name="Testimonial">
-<div class="tve-content-box-background" data-css="tve-u-5f2ff0f3414bd8"></div>
-<div class="tve-cb tve_empty_dropzone" data-css="tve-u-5f2ff0f3414be0"><div class="thrv_wrapper thrv-columns dynamic-group-k3h1ubxp" data-css="tve-u-5f2ff0f3414bf2" style="--tcb-col-el-width: 1400;"><div class="tcb-flex-row tcb--cols--3" data-css="tve-u-5f2ff0f3414c00"><div class="tcb-flex-col"><div class="tcb-col dynamic-group-k3h1ua04"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad dynamic-group-k3h1u79z" data-css="tve-u-5f2ff0f3414c15" style="">
-	<div class="tve-content-box-background " data-css="tve-u-5f2ff0f3414c26" style=""></div>
-	<div class="tve-cb " data-css="tve-u-5f2ff0f3414c35"><div class="thrv_wrapper thrv-columns dynamic-group-k3h1tzxy" data-css="tve-u-5f2ff0f3414c43" style="--tcb-col-el-width: 353.328;"><div class="tcb-flex-row tcb-resized tcb--cols--2 tcb-medium-wrap v-2 tcb-mobile-no-wrap m-edit" data-css="tve-u-5f2ff0f3414c63"><div class="tcb-flex-col" data-css="tve-u-5f2ff0f3414c78" style=""><div class="tcb-col dynamic-group-k3h1txk6" data-css="tve-u-5f2ff0f3414c83"><div class="thrv_wrapper tve_image_caption dynamic-group-k3h1tsj2 tcb-excluded-from-group-item" data-css="tve-u-5f2ff0f3414c95"><span class="tve_image_frame" style="width: 100%;"><img data-opt-id=80900860  data-opt-src="https://mlfqwn4vwjlv.i.optimole.com/w:102/h:132/q:mauto/g:sm/f:best/ig:avif/dpr:2/https://marcomunich.com/wp-content/uploads/2020/04/91424342_1245474829141868_5697654454677929984_o.jpg"  decoding="async" class="tve_image wp-image-1747" alt="" width="102" height="132" title="91424342_1245474829141868_5697654454677929984_o" data-id="1747" src="data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%20102%20132%22%20width%3D%22102%22%20height%3D%22132%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Crect%20width%3D%22102%22%20height%3D%22132%22%20fill%3D%22transparent%22%2F%3E%3C%2Fsvg%3E" style="aspect-ratio: auto 1434 / 1856;" data-width="102" data-height="132" data-init-width="1434" data-init-height="1856" mt-d="-4" data-css="tve-u-5f2ff0f3414ca6" center-v-d="false" mt-m="-16" mt-t="-26" /><noscript><img data-opt-id=80900860  decoding="async" class="tve_image wp-image-1747" alt="" width="102" height="132" title="91424342_1245474829141868_5697654454677929984_o" data-id="1747" src="https://mlfqwn4vwjlv.i.optimole.com/w:102/h:132/q:mauto/g:sm/f:best/ig:avif/dpr:2/https://marcomunich.com/wp-content/uploads/2020/04/91424342_1245474829141868_5697654454677929984_o.jpg" style="aspect-ratio: auto 1434 / 1856;" data-width="102" data-height="132" data-init-width="1434" data-init-height="1856" mt-d="-4" data-css="tve-u-5f2ff0f3414ca6" center-v-d="false" mt-m="-16" mt-t="-26"  srcset="https://mlfqwn4vwjlv.i.optimole.com/w:834/h:1080/q:mauto/g:sm/f:best/ig:avif/https://mlfqwn4vwjlv.i.optimole.com/w:102/h:132/q:mauto/g:sm/f:best/ig:avif/dpr:2/https://marcomunich.com/wp-content/uploads/2020/04/91424342_1245474829141868_5697654454677929984_o.jpg 1434w, https://mlfqwn4vwjlv.i.optimole.com/w:232/h:300/q:mauto/g:sm/f:best/ig:avif/https://mlfqwn4vwjlv.i.optimole.com/w:102/h:132/q:mauto/g:sm/f:best/ig:avif/dpr:2/https://marcomunich.com/wp-content/uploads/2020/04/91424342_1245474829141868_5697654454677929984_o.jpg 232w, https://mlfqwn4vwjlv.i.optimole.com/w:791/h:1024/q:mauto/g:sm/f:best/ig:avif/https://mlfqwn4vwjlv.i.optimole.com/w:102/h:132/q:mauto/g:sm/f:best/ig:avif/dpr:2/https://marcomunich.com/wp-content/uploads/2020/04/91424342_1245474829141868_5697654454677929984_o.jpg 791w, https://mlfqwn4vwjlv.i.optimole.com/w:768/h:994/q:mauto/g:sm/f:best/ig:avif/https://mlfqwn4vwjlv.i.optimole.com/w:102/h:132/q:mauto/g:sm/f:best/ig:avif/dpr:2/https://marcomunich.com/wp-content/uploads/2020/04/91424342_1245474829141868_5697654454677929984_o.jpg 768w, https://mlfqwn4vwjlv.i.optimole.com/w:834/h:1080/q:mauto/g:sm/f:best/ig:avif/https://mlfqwn4vwjlv.i.optimole.com/w:102/h:132/q:mauto/g:sm/f:best/ig:avif/dpr:2/https://marcomunich.com/wp-content/uploads/2020/04/91424342_1245474829141868_5697654454677929984_o.jpg 1187w" sizes="auto, (max-width: 102px) 100vw, 102px" /></noscript></span></div></div></div><div class="tcb-flex-col" data-css="tve-u-5f2ff0f3414cb3" style=""><div class="tcb-col dynamic-group-k3h1tv2u" data-css="tve-u-5f2ff0f3414cc4"><div class="thrv_wrapper thrv_text_element dynamic-group-k3h1tjoy" data-css="tve-u-5f2ff0f3414cd6" data-tag="h5" style=""><h5 class="" data-css="tve-u-5f2ff0f3414ce5"><strong>VERONICA veneziani</strong></h5></div><div class="thrv_wrapper thrv_text_element dynamic-group-k3h1tn1k" data-css="tve-u-5f2ff0f3414cf1"><p data-css="tve-u-5f2ff0f3414d01">Operatore Olistico</p></div><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad dynamic-group-k3h1tpwu" data-css="tve-u-5f2ff0f3414d23">
-	<div class="tve-content-box-background " data-css="tve-u-5f2ff0f3414d35"></div>
-	<div class="tve-cb " data-css="tve-u-5f2ff0f3414d44"></div>
-</div></div></div></div></div><div class="thrv_wrapper thrv_text_element dynamic-group-k3h1u2et" data-css="tve-u-5f2ff0f3414d54" data-tag="h5"><h5 class="" data-css="tve-u-5f2ff0f3414d62"><!--StartFragment--><strong>Partire da sé stessi</strong><!--EndFragment--></h5></div><div class="thrv_wrapper thrv_text_element dynamic-group-k3h1u596" data-css="tve-u-5f2ff0f3414d71"><p data-css="tve-u-5f2ff0f3414d80"><!--StartFragment--><!--StartFragment-->“Questo corso è illuminante, aiuta a fare marketing partendo da sé stessi, utilizzando il proprio potenziale per presentarsi al meglio di ciò che si è acquisendo un linguaggio più vicino al cliente per avere risultati.&nbsp;<br><br>Senza il percorso non avrei capito perché."<!--EndFragment-->
-<!--EndFragment--></p></div></div>
-</div></div></div><div class="tcb-flex-col"><div class="tcb-col dynamic-group-k3h1ua04" data-css="tve-u-5f2ff0f3414d99"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad dynamic-group-k3h1u79z" data-css="tve-u-5f2ff0f3414da3" style="">
-	<div class="tve-content-box-background " data-css="tve-u-5f2ff0f3414db9" style=""></div>
-	<div class="tve-cb " data-css="tve-u-5f2ff0f3414dc7"><div class="thrv_wrapper thrv-columns dynamic-group-k3h1tzxy" data-css="tve-u-5f2ff0f3414c43" style="--tcb-col-el-width: 353.328;"><div class="tcb-flex-row tcb-resized tcb--cols--2 tcb-medium-wrap v-2 tcb-mobile-no-wrap m-edit" data-css="tve-u-5f2ff0f3414de1"><div class="tcb-flex-col" data-css="tve-u-5f2ff0f3414c78" style=""><div class="tcb-col dynamic-group-k3h1txk6" data-css="tve-u-5f2ff0f3414c83"><div class="thrv_wrapper tve_image_caption dynamic-group-k3h1tsj2 tcb-excluded-from-group-item" data-css="tve-u-5f2ff0f3414df5"><span class="tve_image_frame" style="width: 100%;"><img data-opt-id=1798981398  data-opt-src="https://mlfqwn4vwjlv.i.optimole.com/w:103/h:102/q:mauto/g:sm/f:best/ig:avif/dpr:2/https://marcomunich.com/wp-content/uploads/2020/04/46482284_10156663790316217_8965647885693616128_o.jpg"  decoding="async" class="tve_image wp-image-1749" alt="" width="103" height="102" title="46482284_10156663790316217_8965647885693616128_o" data-id="1749" src="data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%20103%20102%22%20width%3D%22103%22%20height%3D%22102%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Crect%20width%3D%22103%22%20height%3D%22102%22%20fill%3D%22transparent%22%2F%3E%3C%2Fsvg%3E" style="aspect-ratio: auto 1440 / 1428;" data-width="103" data-height="102" data-init-width="1440" data-init-height="1428" mt-d="0" data-css="tve-u-5f2ff0f3414e08" center-v-d="false" mt-m="0" mt-t="-26" ml-m="0"  ml-d="-0.7189999999999941" /><noscript><img data-opt-id=1798981398  decoding="async" class="tve_image wp-image-1749" alt="" width="103" height="102" title="46482284_10156663790316217_8965647885693616128_o" data-id="1749" src="https://mlfqwn4vwjlv.i.optimole.com/w:103/h:102/q:mauto/g:sm/f:best/ig:avif/dpr:2/https://marcomunich.com/wp-content/uploads/2020/04/46482284_10156663790316217_8965647885693616128_o.jpg" style="aspect-ratio: auto 1440 / 1428;" data-width="103" data-height="102" data-init-width="1440" data-init-height="1428" mt-d="0" data-css="tve-u-5f2ff0f3414e08" center-v-d="false" mt-m="0" mt-t="-26" ml-m="0"  ml-d="-0.7189999999999941" srcset="https://mlfqwn4vwjlv.i.optimole.com/w:1089/h:1080/q:mauto/g:sm/f:best/ig:avif/https://mlfqwn4vwjlv.i.optimole.com/w:103/h:102/q:mauto/g:sm/f:best/ig:avif/dpr:2/https://marcomunich.com/wp-content/uploads/2020/04/46482284_10156663790316217_8965647885693616128_o.jpg 1440w, https://mlfqwn4vwjlv.i.optimole.com/w:300/h:298/q:mauto/g:sm/f:best/ig:avif/https://mlfqwn4vwjlv.i.optimole.com/w:103/h:102/q:mauto/g:sm/f:best/ig:avif/dpr:2/https://marcomunich.com/wp-content/uploads/2020/04/46482284_10156663790316217_8965647885693616128_o.jpg 300w, https://mlfqwn4vwjlv.i.optimole.com/w:1024/h:1015/q:mauto/g:sm/f:best/ig:avif/https://mlfqwn4vwjlv.i.optimole.com/w:103/h:102/q:mauto/g:sm/f:best/ig:avif/dpr:2/https://marcomunich.com/wp-content/uploads/2020/04/46482284_10156663790316217_8965647885693616128_o.jpg 1024w, https://mlfqwn4vwjlv.i.optimole.com/w:150/h:150/q:mauto/g:sm/f:best/ig:avif/https://mlfqwn4vwjlv.i.optimole.com/w:103/h:102/q:mauto/g:sm/f:best/ig:avif/dpr:2/https://marcomunich.com/wp-content/uploads/2020/04/46482284_10156663790316217_8965647885693616128_o.jpg 150w, https://mlfqwn4vwjlv.i.optimole.com/w:768/h:762/q:mauto/g:sm/f:best/ig:avif/https://mlfqwn4vwjlv.i.optimole.com/w:103/h:102/q:mauto/g:sm/f:best/ig:avif/dpr:2/https://marcomunich.com/wp-content/uploads/2020/04/46482284_10156663790316217_8965647885693616128_o.jpg 768w, https://mlfqwn4vwjlv.i.optimole.com/w:65/h:65/q:mauto/g:sm/f:best/ig:avif/dpr:2/https://mlfqwn4vwjlv.i.optimole.com/w:103/h:102/q:mauto/g:sm/f:best/ig:avif/dpr:2/https://marcomunich.com/wp-content/uploads/2020/04/46482284_10156663790316217_8965647885693616128_o.jpg 65w, https://mlfqwn4vwjlv.i.optimole.com/w:220/h:220/q:mauto/g:sm/f:best/ig:avif/https://mlfqwn4vwjlv.i.optimole.com/w:103/h:102/q:mauto/g:sm/f:best/ig:avif/dpr:2/https://marcomunich.com/wp-content/uploads/2020/04/46482284_10156663790316217_8965647885693616128_o.jpg 220w, https://mlfqwn4vwjlv.i.optimole.com/w:86/h:86/q:mauto/g:sm/f:best/ig:avif/dpr:2/https://mlfqwn4vwjlv.i.optimole.com/w:103/h:102/q:mauto/g:sm/f:best/ig:avif/dpr:2/https://marcomunich.com/wp-content/uploads/2020/04/46482284_10156663790316217_8965647885693616128_o.jpg 86w" sizes="auto, (max-width: 103px) 100vw, 103px" /></noscript></span></div></div></div><div class="tcb-flex-col" data-css="tve-u-5f2ff0f3414cb3" style=""><div class="tcb-col dynamic-group-k3h1tv2u" data-css="tve-u-5f2ff0f3414cc4"><div class="thrv_wrapper thrv_text_element dynamic-group-k3h1tjoy" data-css="tve-u-5f2ff0f3414e11" data-tag="h5" style=""><h5 class="" data-css="tve-u-5f2ff0f3413c18"><strong>Maria Cristina Andreoni</strong></h5></div><div class="thrv_wrapper thrv_text_element dynamic-group-k3h1tn1k" data-css="tve-u-5f2ff0f3414e29"><p data-css="tve-u-5f2ff0f3414e33">Health &amp; Life Coach</p></div><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad dynamic-group-k3h1tpwu" data-css="tve-u-5f2ff0f3414e40">
-	<div class="tve-content-box-background " data-css="tve-u-5f2ff0f3414e50"></div>
-	<div class="tve-cb " data-css="tve-u-5f2ff0f3414e60"></div>
-</div></div></div></div></div><div class="thrv_wrapper thrv_text_element dynamic-group-k3h1u2et" data-css="tve-u-5f2ff0f3414d54" data-tag="h5"><h5 class="" data-css="tve-u-5f2ff0f3414d62"><!--StartFragment--><strong>Non ci si sente mai sufficientemente pronti a partire</strong><!--EndFragment--></h5></div><div class="thrv_wrapper thrv_text_element dynamic-group-k3h1u596" data-css="tve-u-5f2ff0f3414d71"><p data-css="tve-u-5f2ff0f3414e73"><!--StartFragment--><!--StartFragment-->“Il percorso con Marco è stato il mio primo passo concreto per uscire allo scoperto come coach, questo grazie al suo modo di accompagnarmi attraverso i dubbi e le incertezze di chi come me non si sente mai sufficientemente pronto per partire."<!--EndFragment-->
-<!--EndFragment--></p></div></div>
-</div></div></div><div class="tcb-flex-col"><div class="tcb-col dynamic-group-k3h1ua04"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad dynamic-group-k3h1u79z" data-css="tve-u-5f2ff0f3414e89" style="">
-	<div class="tve-content-box-background " data-css="tve-u-5f2ff0f3414e95" style=""></div>
-	<div class="tve-cb " data-css="tve-u-5f2ff0f3414eb6"><div class="thrv_wrapper thrv-columns dynamic-group-k3h1tzxy" data-css="tve-u-5f2ff0f3414c43" style="--tcb-col-el-width: 353.328;"><div class="tcb-flex-row tcb-resized tcb--cols--2 tcb-medium-wrap v-2 tcb-mobile-no-wrap m-edit" data-css="tve-u-5f2ff0f3414ec2"><div class="tcb-flex-col" data-css="tve-u-5f2ff0f3414c78" style=""><div class="tcb-col dynamic-group-k3h1txk6" data-css="tve-u-5f2ff0f3414c83"><div class="thrv_wrapper tve_image_caption dynamic-group-k3h1tsj2 tcb-excluded-from-group-item" data-css="tve-u-5f2ff0f3414ed4"><span class="tve_image_frame" style="width: 100%;"><img data-opt-id=1454629303  data-opt-src="https://mlfqwn4vwjlv.i.optimole.com/w:107/h:107/q:mauto/g:sm/f:best/ig:avif/dpr:2/https://marcomunich.com/wp-content/uploads/2020/04/88157255_2770843336334644_5666516199479967744_n.jpg"  decoding="async" class="tve_image wp-image-1750" alt="" width="107" height="107" title="88157255_2770843336334644_5666516199479967744_n" data-id="1750" src="data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%20107%20107%22%20width%3D%22107%22%20height%3D%22107%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Crect%20width%3D%22107%22%20height%3D%22107%22%20fill%3D%22transparent%22%2F%3E%3C%2Fsvg%3E" style="aspect-ratio: auto 724 / 722;" data-width="107" data-height="107" data-init-width="724" data-init-height="722" mt-d="0" data-css="tve-u-5f2ff0f3414ee6" center-v-d="false" mt-m="-1" mt-t="-26" ml-m="0"  ml-d="-2.6410000000000053" /><noscript><img data-opt-id=1454629303  decoding="async" class="tve_image wp-image-1750" alt="" width="107" height="107" title="88157255_2770843336334644_5666516199479967744_n" data-id="1750" src="https://mlfqwn4vwjlv.i.optimole.com/w:107/h:107/q:mauto/g:sm/f:best/ig:avif/dpr:2/https://marcomunich.com/wp-content/uploads/2020/04/88157255_2770843336334644_5666516199479967744_n.jpg" style="aspect-ratio: auto 724 / 722;" data-width="107" data-height="107" data-init-width="724" data-init-height="722" mt-d="0" data-css="tve-u-5f2ff0f3414ee6" center-v-d="false" mt-m="-1" mt-t="-26" ml-m="0"  ml-d="-2.6410000000000053" srcset="https://mlfqwn4vwjlv.i.optimole.com/w:724/h:722/q:mauto/g:sm/f:best/ig:avif/https://mlfqwn4vwjlv.i.optimole.com/w:107/h:107/q:mauto/g:sm/f:best/ig:avif/dpr:2/https://marcomunich.com/wp-content/uploads/2020/04/88157255_2770843336334644_5666516199479967744_n.jpg 724w, https://mlfqwn4vwjlv.i.optimole.com/w:300/h:300/q:mauto/g:sm/f:best/ig:avif/https://mlfqwn4vwjlv.i.optimole.com/w:107/h:107/q:mauto/g:sm/f:best/ig:avif/dpr:2/https://marcomunich.com/wp-content/uploads/2020/04/88157255_2770843336334644_5666516199479967744_n.jpg 300w, https://mlfqwn4vwjlv.i.optimole.com/w:150/h:150/q:mauto/g:sm/f:best/ig:avif/https://mlfqwn4vwjlv.i.optimole.com/w:107/h:107/q:mauto/g:sm/f:best/ig:avif/dpr:2/https://marcomunich.com/wp-content/uploads/2020/04/88157255_2770843336334644_5666516199479967744_n.jpg 150w, https://mlfqwn4vwjlv.i.optimole.com/w:65/h:65/q:mauto/g:sm/f:best/ig:avif/dpr:2/https://mlfqwn4vwjlv.i.optimole.com/w:107/h:107/q:mauto/g:sm/f:best/ig:avif/dpr:2/https://marcomunich.com/wp-content/uploads/2020/04/88157255_2770843336334644_5666516199479967744_n.jpg 65w, https://mlfqwn4vwjlv.i.optimole.com/w:220/h:220/q:mauto/g:sm/f:best/ig:avif/https://mlfqwn4vwjlv.i.optimole.com/w:107/h:107/q:mauto/g:sm/f:best/ig:avif/dpr:2/https://marcomunich.com/wp-content/uploads/2020/04/88157255_2770843336334644_5666516199479967744_n.jpg 220w, https://mlfqwn4vwjlv.i.optimole.com/w:86/h:86/q:mauto/g:sm/f:best/ig:avif/dpr:2/https://mlfqwn4vwjlv.i.optimole.com/w:107/h:107/q:mauto/g:sm/f:best/ig:avif/dpr:2/https://marcomunich.com/wp-content/uploads/2020/04/88157255_2770843336334644_5666516199479967744_n.jpg 86w" sizes="auto, (max-width: 107px) 100vw, 107px" /></noscript></span></div></div></div><div class="tcb-flex-col" data-css="tve-u-5f2ff0f3414cb3" style=""><div class="tcb-col dynamic-group-k3h1tv2u" data-css="tve-u-5f2ff0f3414cc4"><div class="thrv_wrapper thrv_text_element dynamic-group-k3h1tjoy" data-css="tve-u-5f2ff0f3414ef8" data-tag="h5" style=""><h5 class="" data-css="tve-u-5f2ff0f3414f08"><strong>daniela capraro</strong></h5></div><div class="thrv_wrapper thrv_text_element dynamic-group-k3h1tn1k" data-css="tve-u-5f2ff0f3414f19"><p data-css="tve-u-5f2ff0f3414f25">Operatore Olistico</p></div><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad dynamic-group-k3h1tpwu" data-css="tve-u-5f2ff0f3414f37">
-	<div class="tve-content-box-background " data-css="tve-u-5f2ff0f3414f44"></div>
-	<div class="tve-cb " data-css="tve-u-5f2ff0f3414f63"></div>
-</div></div></div></div></div><div class="thrv_wrapper thrv_text_element dynamic-group-k3h1u2et" data-css="tve-u-5f2ff0f3414d54" data-tag="h5"><h5 class="" data-css="tve-u-5f2ff0f3414d62"><!--StartFragment--><strong>Metterci la faccia</strong><!--EndFragment--></h5></div><div class="thrv_wrapper thrv_text_element dynamic-group-k3h1u596" data-css="tve-u-5f2ff0f3414d71"><p data-css="tve-u-5f2ff0f3414f79"><!--StartFragment--><!--StartFragment-->“Questo corso mi sta stimolando a usare la mia creatività per mettere sempre di più la faccia in quello che pubblico. <br>Assieme a questo ho acquisito una struttura per poter costruire al meglio i miei articoli: è come avere un "canovaccio" all'interno del quale muovermi per essere più chiara e impattante possibile, per fare capire chi sono e cosa faccio. Mi dona conforto e mi sono già resa conto, dai feedback ricevuti, che, rispetto agli articoli che scrivevo prima, ora risulto molto più chiara e professionale."<!--EndFragment-->
-<!--EndFragment--></p></div></div>
-</div></div></div></div></div><div class="thrv_wrapper thrv-button thrv-button-v2 tcb-local-vars-root" data-css="tve-u-5f2ff0f3414f82" data-button-size="s">
-	<div class="thrive-colors-palette-config" style="display: none !important"></div>
-	<a href="#tve-jump-171ee6db546" class="tcb-button-link" jump-animation="smooth">
-		<span class="tcb-button-texts"><span class="tcb-button-text thrv-inline-text">Ok, voglio sapere il costo</span></span>
-	</a>
-</div></div>
-</div></div>
-</div><div data-inherit-lp-settings="1" data-match-lp-colors="1" class="thrv_wrapper thrv-page-section thrv-lp-block tcb-local-vars-root tcb-mobile-hidden" data-css="tve-u-5f2ff0f3414f98" tcb-template-name="Post List Area Block 01" tcb-template-id="55981" data-keep-css_id="1"><div class="thrive-group-edit-config" style="display: none !important"></div><div class="thrive-local-colors-config" style="display: none !important"></div>
-	<div class="tve-page-section-out" data-ct-name="Offset Corner 02" data-ct="fancydivider-37962" data-element-name="Fancy Divider" data-css="tve-u-5f2ff0f3414fa3"></div>
-	<div class="tve-page-section-in   tve_empty_dropzone" data-css="tve-u-5f2ff0f3414fb1" style=""><div class="thrv_wrapper thrv_text_element" data-css="tve-u-5f2ff0f3414fc0" data-tag="h3"><h3 class="" style="text-align: center;"><!--StartFragment--><strong>Questi articoli potrebbero aiutarti a valutare l'offerta<!--EndFragment--></strong></h3></div><div class="tcb-post-list tve-content-list thrv_wrapper tcb-mobile-hidden" data-type="grid" data-pagination-type="none" data-pages_near_current="2" data-css="tve-u-5f2ff0f3414fd6" data-no_posts_text="There are no posts to display." data-total_post_count="4" data-total_sticky_count="0" data-disabled-links="0" data-featured-list="tve-u-5f2ff0f3414fc0"><article id="post-1659" class="post-1659 post type-post status-publish format-standard has-post-thumbnail hentry category-mindset-autentico tag-essere-autentici post-wrapper thrv_wrapper thrive-animated-item " tcb_hover_state_parent="" data-id="1659" data-selector=".post-wrapper"><style class="tcb-post-list-dynamic-style" type="text/css">@media (min-width: 300px){[data-css="tve-u-5f2ff0f3414fd6"].tcb-post-list #post-1659 [data-css="tve-u-5f2ff0f3414fe7"]{background-image: url("https://mlfqwn4vwjlv.i.optimole.com/w:800/h:534/q:mauto/g:sm/f:best/ig:avif/https://marcomunich.com/wp-content/uploads/2020/04/Canva-Woman-Writing-on-Her-Notebook.jpg") !important;}[data-css="tve-u-5f2ff0f3414fd6"].tcb-post-list #post-1659 [data-css="tve-u-5f2ff0f3414ff0"]:hover [data-css="tve-u-5f2ff0f3414fe7"]{background-image: linear-gradient(rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08)), url("https://mlfqwn4vwjlv.i.optimole.com/w:800/h:534/q:mauto/g:sm/f:best/ig:avif/https://marcomunich.com/wp-content/uploads/2020/04/Canva-Woman-Writing-on-Her-Notebook.jpg") !important;}}</style>
-<a href="https://marcomunich.com/come-essere-autentici-quando-si-pubblica-contenuto/" class="tve-dynamic-link" dynamic-postlink="tcb_post_the_permalink" data-shortcode-id="2621"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad tcb-local-vars-root" data-css="tve-u-5f2ff0f3414ff0" style="" data-link-wrap="true">
-	<div class="tve-content-box-background" style="" data-css="tve-u-5f2ff0f3414fe7" data-tcb_hover_state_parent="1"></div>
-	<div class="tve-cb" style="" data-css="tve-u-5f2ff0f3415005"></div>
-</div></a>
-
-
-
-<div class="thrv_wrapper thrv_text_element tcb-local-vars-root tve-froala fr-box" style="" data-css="tve-u-5f2ff0f3415021"><h2 class="" data-css="tve-u-5f2ff0f3415038"><span class="thrive-shortcode-content" data-attr-css="tve-u-5f2ff0f3415041" data-attr-link="1" data-attr-rel="0" data-attr-static-link="{&quot;className&quot;:&quot;&quot;,&quot;href&quot;:&quot;https://marcomunich.com/come-essere-autentici-quando-si-pubblica-contenuto/&quot;,&quot;title&quot;:&quot;Come essere autentici quando si pubblica un contenuto?&quot;,&quot;data-css&quot;:&quot;tve-u-5f2ff0f3415041&quot;,&quot;class&quot;:&quot;&quot;}" data-attr-target="0" data-extra_key="" data-option-inline="1" data-shortcode="tcb_post_title" data-shortcode-name="Post title"><a href="https://marcomunich.com/come-essere-autentici-quando-si-pubblica-contenuto/" title="Come essere autentici quando si pubblica un contenuto?" data-css="tve-u-5f2ff0f3415041" class="">Come essere autentici quando si pubblica un contenuto?</a></span></h2></div>
-
-
-
-
-</article><article id="post-1082" class="post-1082 post type-post status-publish format-standard has-post-thumbnail hentry category-marketing-autentico tag-come-creare-contenuto-autentico post-wrapper thrv_wrapper thrive-animated-item " tcb_hover_state_parent="" data-id="1082" data-selector=".post-wrapper"><style class="tcb-post-list-dynamic-style" type="text/css">@media (min-width: 300px){[data-css="tve-u-5f2ff0f3414fd6"].tcb-post-list #post-1082 [data-css="tve-u-5f2ff0f3414fe7"]{background-image: url("https://mlfqwn4vwjlv.i.optimole.com/w:800/h:533/q:mauto/g:sm/f:best/ig:avif/https://marcomunich.com/wp-content/uploads/2020/01/1_fX5hYOrctcCFT9AZsIBejQ.jpg") !important;}[data-css="tve-u-5f2ff0f3414fd6"].tcb-post-list #post-1082 [data-css="tve-u-5f2ff0f3414ff0"]:hover [data-css="tve-u-5f2ff0f3414fe7"]{background-image: linear-gradient(rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08)), url("https://mlfqwn4vwjlv.i.optimole.com/w:800/h:533/q:mauto/g:sm/f:best/ig:avif/https://marcomunich.com/wp-content/uploads/2020/01/1_fX5hYOrctcCFT9AZsIBejQ.jpg") !important;}}</style>
-<a href="https://marcomunich.com/contenuti-autentici-coach-operatori-olistici/" class="tve-dynamic-link" dynamic-postlink="tcb_post_the_permalink" data-shortcode-id="2621"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad tcb-local-vars-root" data-css="tve-u-5f2ff0f3414ff0" style="" data-link-wrap="true">
-	<div class="tve-content-box-background" style="" data-css="tve-u-5f2ff0f3414fe7" data-tcb_hover_state_parent="1"></div>
-	<div class="tve-cb" style="" data-css="tve-u-5f2ff0f3415005"></div>
-</div></a>
-
-
-
-<div class="thrv_wrapper thrv_text_element tcb-local-vars-root tve-froala fr-box" style="" data-css="tve-u-5f2ff0f3415021"><h2 class="" data-css="tve-u-5f2ff0f3415038"><span class="thrive-shortcode-content" data-attr-css="tve-u-5f2ff0f3415041" data-attr-link="1" data-attr-rel="0" data-attr-static-link="{&quot;className&quot;:&quot;&quot;,&quot;href&quot;:&quot;https://marcomunich.com/come-essere-autentici-quando-si-pubblica-contenuto/&quot;,&quot;title&quot;:&quot;Come essere autentici quando si pubblica un contenuto?&quot;,&quot;data-css&quot;:&quot;tve-u-5f2ff0f3415041&quot;,&quot;class&quot;:&quot;&quot;}" data-attr-target="0" data-extra_key="" data-option-inline="1" data-shortcode="tcb_post_title" data-shortcode-name="Post title"><a href="https://marcomunich.com/contenuti-autentici-coach-operatori-olistici/" title="Come creare contenuti autentici in 3 fasi, se sei coach, counselor o operatore olistico" data-css="tve-u-5f2ff0f3415041" class="">Come creare contenuti autentici in 3 fasi, se sei coach, counselor o operatore olistico</a></span></h2></div>
-
-
-
-
-</article><article id="post-2621" class="post-2621 post type-post status-publish format-standard has-post-thumbnail hentry category-mindset-autentico category-marketing-autentico tag-creare-contenuto tag-divertirsi post-wrapper thrv_wrapper thrive-animated-item " tcb_hover_state_parent="" data-id="2621" data-selector=".post-wrapper"><style class="tcb-post-list-dynamic-style" type="text/css">@media (min-width: 300px){[data-css="tve-u-5f2ff0f3414fd6"].tcb-post-list #post-2621 [data-css="tve-u-5f2ff0f3414fe7"]{background-image: url("https://mlfqwn4vwjlv.i.optimole.com/w:1024/h:684/q:mauto/g:sm/f:best/ig:avif/https://marcomunich.com/wp-content/uploads/2020/07/happy-woman-at-music-festival.jpg") !important;}[data-css="tve-u-5f2ff0f3414fd6"].tcb-post-list #post-2621 [data-css="tve-u-5f2ff0f3414ff0"]:hover [data-css="tve-u-5f2ff0f3414fe7"]{background-image: linear-gradient(rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08)), url("https://mlfqwn4vwjlv.i.optimole.com/w:1024/h:684/q:mauto/g:sm/f:best/ig:avif/https://marcomunich.com/wp-content/uploads/2020/07/happy-woman-at-music-festival.jpg") !important;}}</style>
-<a href="https://marcomunich.com/divertirsi-quando-crei-contenuti/" class="tve-dynamic-link" dynamic-postlink="tcb_post_the_permalink" data-shortcode-id="2621"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad tcb-local-vars-root" data-css="tve-u-5f2ff0f3414ff0" style="" data-link-wrap="true">
-	<div class="tve-content-box-background" style="" data-css="tve-u-5f2ff0f3414fe7" data-tcb_hover_state_parent="1"></div>
-	<div class="tve-cb" style="" data-css="tve-u-5f2ff0f3415005"></div>
-</div></a>
-
-
-
-<div class="thrv_wrapper thrv_text_element tcb-local-vars-root tve-froala fr-box" style="" data-css="tve-u-5f2ff0f3415021"><h2 class="" data-css="tve-u-5f2ff0f3415038"><span class="thrive-shortcode-content" data-attr-css="tve-u-5f2ff0f3415041" data-attr-link="1" data-attr-rel="0" data-attr-static-link="{&quot;className&quot;:&quot;&quot;,&quot;href&quot;:&quot;https://marcomunich.com/come-essere-autentici-quando-si-pubblica-contenuto/&quot;,&quot;title&quot;:&quot;Come essere autentici quando si pubblica un contenuto?&quot;,&quot;data-css&quot;:&quot;tve-u-5f2ff0f3415041&quot;,&quot;class&quot;:&quot;&quot;}" data-attr-target="0" data-extra_key="" data-option-inline="1" data-shortcode="tcb_post_title" data-shortcode-name="Post title"><a href="https://marcomunich.com/divertirsi-quando-crei-contenuti/" title="Divertirsi quando crei contenuti" data-css="tve-u-5f2ff0f3415041" class="">Divertirsi quando crei contenuti</a></span></h2></div>
-
-
-
-
-</article><article id="post-1871" class="post-1871 post type-post status-publish format-standard has-post-thumbnail hentry category-mindset-autentico category-marketing-autentico tag-emergere tag-originale tag-spiccare post-wrapper thrv_wrapper thrive-animated-item " tcb_hover_state_parent="" data-id="1871" data-selector=".post-wrapper"><style class="tcb-post-list-dynamic-style" type="text/css">@media (min-width: 300px){[data-css="tve-u-5f2ff0f3414fd6"].tcb-post-list #post-1871 [data-css="tve-u-5f2ff0f3414fe7"]{background-image: url("https://mlfqwn4vwjlv.i.optimole.com/w:1000/h:665/q:mauto/g:sm/f:best/ig:avif/https://marcomunich.com/wp-content/uploads/2020/04/portrait-of-smiling-beautiful-sporty-young-woman-w-B6C25ZH_1000x665.jpg") !important;}[data-css="tve-u-5f2ff0f3414fd6"].tcb-post-list #post-1871 [data-css="tve-u-5f2ff0f3414ff0"]:hover [data-css="tve-u-5f2ff0f3414fe7"]{background-image: linear-gradient(rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08)), url("https://mlfqwn4vwjlv.i.optimole.com/w:1000/h:665/q:mauto/g:sm/f:best/ig:avif/https://marcomunich.com/wp-content/uploads/2020/04/portrait-of-smiling-beautiful-sporty-young-woman-w-B6C25ZH_1000x665.jpg") !important;}}</style>
-<a href="https://marcomunich.com/come-far-spiccare-il-tuo-contenuto-nel-mercato-del-counseling-coaching/" class="tve-dynamic-link" dynamic-postlink="tcb_post_the_permalink" data-shortcode-id="2621"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad tcb-local-vars-root" data-css="tve-u-5f2ff0f3414ff0" style="" data-link-wrap="true">
-	<div class="tve-content-box-background" style="" data-css="tve-u-5f2ff0f3414fe7" data-tcb_hover_state_parent="1"></div>
-	<div class="tve-cb" style="" data-css="tve-u-5f2ff0f3415005"></div>
-</div></a>
-
-
-
-<div class="thrv_wrapper thrv_text_element tcb-local-vars-root tve-froala fr-box" style="" data-css="tve-u-5f2ff0f3415021"><h2 class="" data-css="tve-u-5f2ff0f3415038"><span class="thrive-shortcode-content" data-attr-css="tve-u-5f2ff0f3415041" data-attr-link="1" data-attr-rel="0" data-attr-static-link="{&quot;className&quot;:&quot;&quot;,&quot;href&quot;:&quot;https://marcomunich.com/come-essere-autentici-quando-si-pubblica-contenuto/&quot;,&quot;title&quot;:&quot;Come essere autentici quando si pubblica un contenuto?&quot;,&quot;data-css&quot;:&quot;tve-u-5f2ff0f3415041&quot;,&quot;class&quot;:&quot;&quot;}" data-attr-target="0" data-extra_key="" data-option-inline="1" data-shortcode="tcb_post_title" data-shortcode-name="Post title"><a href="https://marcomunich.com/come-far-spiccare-il-tuo-contenuto-nel-mercato-del-counseling-coaching/" title="Come far spiccare il tuo contenuto nel mercato del Counseling/Coaching" data-css="tve-u-5f2ff0f3415041" class="">Come far spiccare il tuo contenuto nel mercato del Counseling/Coaching</a></span></h2></div>
-
-
-
-
-</article></div></div>
-</div><div class="thrv_wrapper thrv-page-section tve-height-update" data-inherit-lp-settings="1">
-	<div class="tve-page-section-out"></div>
-	<div class="tve-page-section-in"><div class="thrv_responsive_video thrv_wrapper" data-type="youtube" data-rel="1" data-modestbranding="0" data-aspect-ratio="16:9" data-aspect-ratio-default="0" data-float-visibility="mobile" data-float-position="top-left" data-float-width-d="300px" data-float-padding1-d="25px" data-float-padding2-d="25px" data-url="https://youtu.be/fYW0AXu8Mho" data-overlay="1" style="" data-css="tve-u-5f2ff0f3415059">
-	
-
-	<div class="tve_responsive_video_container" style="padding-bottom: 56.25%;">
-		<div class="video_overlay video_overlay_image" data-width="1024" data-height="576" style="background-image: url(&quot;https://mlfqwn4vwjlv.i.optimole.com/w:auto/h:auto/q:mauto/g:sm/f:best/ig:avif/https://marcomunich.com/wp-content/uploads/2020/05/Benvenuto-a-nel-mio-canale-mp3-image.jpg&quot;); background-repeat: no-repeat; background-size: cover; background-position: center center;"><span class="overlay_play_button"><div class="thrv_icon"><svg class="tcb-icon" viewBox="0 0 512 512" data-id="icon-play-circle-solid" data-name="" style="fill:#fff">
-            <path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm115.7 272l-176 101c-15.8 8.8-35.7-2.5-35.7-21V152c0-18.4 19.8-29.8 35.7-21l176 107c16.4 9.2 16.4 32.9 0 42z"></path>
-        </svg></div></span></div>
-	<iframe title="Responsive Video" class="tcb-responsive-video" data-code="fYW0AXu8Mho" data-provider="youtube" frameborder="0" allowfullscreen="" id="_dytid_5245" src="https://www.youtube.com/embed/fYW0AXu8Mho?rel=1&amp;modestbranding=0&amp;controls=1&amp;showinfo=1&amp;fs=1&amp;wmode=transparent&amp;enablejsapi=1"></iframe></div>
-</div></div>
-</div><div id="landingpage-bottom-section" class="landingpage-section bottom-section placeholder-section hide-section"><div class="section-background"></div><div class="section-content"></div></div><div id="thrive-footer" class="thrv_wrapper thrv_symbol thrive-shortcode thrv_footer tve_no_drag thrv_symbol_180" data-id="180" data-selector=".thrv_symbol_180" data-shortcode="thrive_footer" data-tcb-elem-type="footer" data-element-name="Footer"><div class="thrive-shortcode-html thrive-symbol-shortcode " data-symbol-id="180"><style type="text/css" id="tcb-style-base-tcb_symbol-180"  onLoad="typeof window.lightspeedOptimizeStylesheet === 'function' && window.lightspeedOptimizeStylesheet()" class="tcb-lightspeed-style">.tve-custom-menu-inside{z-index:8;}.thrv-page-section{position:relative;box-sizing:border-box !important;}.thrv-page-section .tve-page-section-out{position:absolute;width:100%;height:100%;left:0px;top:0px;box-sizing:border-box;transition:box-shadow 0.5s ease 0s,-webkit-box-shadow 0.5s ease 0s;overflow:hidden;}.thrv-page-section .tve-page-section-in{box-sizing:border-box;margin-right:auto;margin-left:auto;position:relative;z-index:1;min-height:40px;}.tve-page-section-in > .thrv_wrapper:first-child{margin-top:0px;}.tve-page-section-in > .thrv_wrapper:last-child{margin-bottom:0px;}.thrv_text_element a:not(.tcb-button-link){font-size:inherit;}.thrv_text_element{overflow-wrap:break-word;}.thrive-symbol-shortcode{position:relative;}.thrv_footer .thrive-symbol-shortcode{box-sizing:border-box;margin-right:auto;margin-left:auto;min-height:40px;}html{text-rendering:auto !important;}html body{text-rendering:auto !important;}body.tcb_symbol-template-default::before{content:none;}.thrv_wrapper{margin-top:20px;margin-bottom:20px;padding:1px;}.thrv_wrapper div{box-sizing:content-box;}.thrv_symbol .thrv_wrapper:not(.thrv_icon){box-sizing:border-box !important;}.thrv_wrapper.thrv_text_element,.thrv_wrapper.thrv-page-section{margin:0px;}p{font-size:1em;}.tvd-toast{-webkit-box-pack:justify;justify-content:space-between;}.tvd-toast.tve-fe-message{top:50px;width:60%;padding:0px;color:rgb(0,0,0);max-width:500px;position:fixed;z-index:9999993;left:50%;}.tvd-toast.tve-fe-message .tve-toast-message{position:relative;left:-50%;background:rgb(255,255,255);box-shadow:rgb(167,167,167) 0px 0px 15px 0px;}.tvd-toast.tve-fe-message .tve-toast-icon-container{display:inline-block;width:50px;background:green;color:rgb(255,255,255);height:100%;position:absolute;}.tvd-toast.tve-fe-message .tve-toast-message-container{padding:20px 10px 20px 70px;margin:auto 0px;font-family:Roboto,sans-serif;font-size:16px;}.tvd-toast.tve-fe-message span{text-align:center;display:flex;-webkit-box-pack:center;justify-content:center;-webkit-box-orient:vertical;-webkit-box-direction:normal;flex-direction:column;-webkit-box-align:center;align-items:center;min-height:50px;height:100%;width:100%;}.thrv_symbol.thrv_footer{width:100%;position:relative;box-sizing:border-box;}.thrv_symbol.thrv_footer .thrive-symbol-shortcode{margin:0px auto;position:relative;}.symbol-section-in{margin:0px auto;position:relative;z-index:1;box-sizing:border-box;}.symbol-section-in:empty::before{font-family:sans-serif;line-height:40px;}.symbol-section-in::after,.symbol-section-in::before{content:"";display:block;overflow:auto;}.thrive-shortcode-content a{color:inherit;}.symbol-section-out{position:absolute;width:100%;height:100%;left:0px;top:0px;overflow:hidden;box-sizing:border-box !important;}.thrv_wrapper.thrv_text_element{padding:1px;}@media (max-width:767px){html{overflow-x:hidden !important;}html,body{max-width:100vw !important;}}@media screen and (max-device-width:480px){body{text-size-adjust:none;}}</style><style class='tve-symbol-custom-style'>@media (min-width: 300px){.thrv_symbol_180 [data-css="tve-u-164d09209b1"]{max-width: 1069px;text-align: center;}.thrv_symbol_180 [data-css="tve-u-164d0923206"]{background-color: rgba(242,242,242,0) !important;}.thrv_symbol_180 [data-css="tve-u-164d0927213"]{display: block;padding: 30px 20px !important;z-index: 0 !important;}.thrv_symbol_180 [data-css="tve-u-164d09209b1"] p,.thrv_symbol_180 [data-css="tve-u-164d09209b1"] li,.thrv_symbol_180 [data-css="tve-u-164d09209b1"] blockquote,.thrv_symbol_180 [data-css="tve-u-164d09209b1"] address,.thrv_symbol_180 [data-css="tve-u-164d09209b1"] .tcb-plain-text,.thrv_symbol_180 [data-css="tve-u-164d09209b1"] label,.thrv_symbol_180 [data-css="tve-u-164d09209b1"] h1,.thrv_symbol_180 [data-css="tve-u-164d09209b1"] h2,.thrv_symbol_180 [data-css="tve-u-164d09209b1"] h3,.thrv_symbol_180 [data-css="tve-u-164d09209b1"] h4,.thrv_symbol_180 [data-css="tve-u-164d09209b1"] h5,.thrv_symbol_180 [data-css="tve-u-164d09209b1"] h6{color: rgb(131,134,139);}.thrv_symbol_180 [data-css="tve-u-164d0927213"] .tve-page-section-in{display: block;}.thrv_symbol_180 [data-css="tve-u-164d09209b1"] p{margin: 0px !important;padding: 0px !important;}.thrv_symbol_180 [data-css="tve-u-164d0d9fbe5"]{font-family: Arial,Helvetica,sans-serif !important;font-size: 15px !important;}.thrv_symbol_180 [data-css="tve-u-16a8a33d8b7"]{font-size: 12px !important;}.thrv_symbol_180 .thrive-symbol-shortcode{margin-top: 0px !important;}.thrv_symbol_180 [data-css="tve-u-1703918842e"]{float: none;margin-left: auto !important;margin-right: auto !important;}.thrv_symbol_180 [data-css="tve-u-1703918f40b"]{font-family: Arial,Helvetica,sans-serif !important;font-size: 15px !important;}:not(#tve) .thrv_symbol_180 [data-css="tve-u-1703918f40b"]{line-height: 1.25em !important;}.thrv_symbol_180 [data-css="tve-u-17090621d51"]{font-size: 12px !important;}:not(#tve) .thrv_symbol_180 [data-css="tve-u-164d0d9fbe5"]{line-height: 1.25em !important;}}@media (max-width: 1023px){:not(#tve) .thrv_symbol_180 [data-css="tve-u-1703918f40b"]{line-height: 1.3em !important;}}@media (max-width: 767px){.thrv_symbol_180 [data-css="tve-u-164d0927213"]{padding: 10px !important;}.thrv_symbol_180 [data-css="tve-u-164d0d9fbe5"]{font-size: 11px !important;}.thrv_symbol_180 [data-css="tve-u-1703918f40b"]{font-size: 11px !important;}:not(#tve) .thrv_symbol_180 [data-css="tve-u-1703918f40b"]{line-height: 1.4em !important;padding-top: 0px !important;margin-top: 0px !important;}:not(#tve) .thrv_symbol_180 [data-css="tve-u-164d0d9fbe5"]{line-height: 1.4em !important;padding-top: 0px !important;margin-top: 0px !important;}.thrv_symbol_180 [data-css="tve-u-1703918842e"]{margin-top: -12px !important;}}</style><div class="symbol-section-out"></div> <div class="symbol-section-in" style=""><div class="thrv_wrapper thrv-page-section tve-custom-menu-inside" data-css="tve-u-164d0927213" style=""> <div class="tve-page-section-out" data-css="tve-u-164d0923206"></div> <div class="tve-page-section-in tve_empty_dropzone" data-css="tve-u-164d09209b1" style=""><div class="thrv_wrapper thrv_text_element" style="" data-css="tve-u-1703918842e"><p data-css="tve-u-1703918f40b" style="font-size: 12px !important;"><span data-css="tve-u-17090621d51">This site is not a part of the Facebook website or Facebook Inc. Additionally, this site is not endorsed by Facebook in any way. FACEBOOK is a trademark of FACEBOOK, Inc.</span></p><p data-css="tve-u-164d0d9fbe5" style="font-size: 12px !important;"><span data-css="tve-u-16a8a33d8b7"><span class="thrive-shortcode-content" data-attr-id="15" data-extra_key="2" data-option-inline="1" data-shortcode="thrive_global_fields" data-shortcode-name="[Legal] Cookie Policy" data-attr-static-link="{&quot;className&quot;:&quot;&quot;,&quot;href&quot;:&quot;https://marcomunich.com/cookie-policy/&quot;,&quot;target&quot;:&quot;_blank&quot;,&quot;class&quot;:&quot;&quot;}" data-css="tve-u-17090621d55"><a href="https://marcomunich.com/cookie-policy/" target="_blank" class="">Cookie Policy</a></span> |&nbsp;<span class="thrive-shortcode-content" data-attr-id="6" data-extra_key="2" data-option-inline="1" data-shortcode="thrive_global_fields" data-shortcode-name="[Legal] Privacy policy" data-attr-static-link="{&quot;className&quot;:&quot;tve-froala&quot;,&quot;href&quot;:&quot;https://marcomunich.com/privacy-policy/&quot;,&quot;target&quot;:&quot;_blank&quot;,&quot;class&quot;:&quot;tve-froala&quot;}" data-css="tve-u-17090621d58"><a href="https://marcomunich.com/privacy-policy/" target="_blank" class="tve-froala">Privacy policy</a></span></span></p></div></div> </div></div></div></div></div></div>			</div>
-						<div class="fr-dropdown-holder tcb-style-wrap"></div>
-		</div>
-						<script type="speculationrules">
-{"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":["/wp-*.php","/wp-admin/*","/wp-content/uploads/*","/wp-content/*","/wp-content/plugins/*","/wp-content/themes/thrive-theme/*","/*\\?(.+)"]}},{"not":{"selector_matches":"a[rel~=\"nofollow\"]"}},{"not":{"selector_matches":".no-prefetch, .no-prefetch a"}}]},"eagerness":"conservative"}]}
-</script>
-<script type='text/javascript'>( $ => {
-	/**
-	 * Displays toast message from storage, it is used when the user is redirected after login
-	 */
-	if ( window.sessionStorage ) {
-		$( window ).on( 'tcb_after_dom_ready', () => {
-			const message = sessionStorage.getItem( 'tcb_toast_message' );
-
-			if ( message ) {
-				tcbToast( sessionStorage.getItem( 'tcb_toast_message' ), false );
-				sessionStorage.removeItem( 'tcb_toast_message' );
-			}
-		} );
-	}
-
-	/**
-	 * Displays toast message
-	 *
-	 * @param {string}   message  - message to display
-	 * @param {Boolean}  error    - whether the message is an error or not
-	 * @param {Function} callback - callback function to be called after the message is closed
-	 */
-	function tcbToast( message, error, callback ) {
-		/* Also allow "message" objects */
-		if ( typeof message !== 'string' ) {
-			message = message.message || message.error || message.success;
-		}
-		if ( ! error ) {
-			error = false;
-		}
-		TCB_Front.notificationElement.toggle( message, error ? 'error' : 'success', callback );
-	}
-} )( typeof ThriveGlobal === 'undefined' ? jQuery : ThriveGlobal.$j );
-</script>	`} />
-  </div>
-</BaseLayout>
-
-<style>
-  .thrive-page-wrap {
-    overflow-x: hidden;
+<style is:global>
+  :root {
+    --red: #DC2626;
+    --red-dark: #991B1B;
+    --red-light: #FEF2F2;
+    --dark: #0D0404;
+    --dark2: #1A0808;
   }
+
+  .video-page .btn-red {
+    display: inline-block;
+    background: var(--red);
+    color: #fff;
+    padding: 16px 36px;
+    font-weight: 700;
+    font-size: 15px;
+    text-decoration: none;
+    border-radius: 4px;
+    letter-spacing: .5px;
+    transition: background .2s;
+  }
+  .video-page .btn-red:hover { background: var(--red-dark); opacity: 1; }
+
+  .video-page .btn-outline-red {
+    display: inline-block;
+    background: transparent;
+    color: var(--red);
+    padding: 14px 32px;
+    font-weight: 700;
+    font-size: 15px;
+    text-decoration: none;
+    border-radius: 4px;
+    border: 2px solid var(--red);
+    transition: all .2s;
+  }
+  .video-page .btn-outline-red:hover { background: var(--red); color: #fff; opacity: 1; }
+
+  .rec-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(220,38,38,.15);
+    border: 1px solid rgba(220,38,38,.4);
+    color: #fca5a5;
+    padding: 6px 14px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+  }
+  .rec-dot {
+    width: 10px; height: 10px;
+    background: #DC2626;
+    border-radius: 50%;
+    animation: rec-blink 1.2s ease-in-out infinite;
+  }
+  @keyframes rec-blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+  .cam-frame {
+    border: 3px solid rgba(220,38,38,.5);
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cam-frame::before {
+    content: '';
+    position: absolute; top: 12px; right: 12px;
+    width: 12px; height: 12px;
+    background: #DC2626;
+    border-radius: 50%;
+    z-index: 2;
+    box-shadow: 0 0 0 3px rgba(220,38,38,.3);
+    animation: rec-blink 1.2s ease-in-out infinite;
+  }
+  .cam-frame::after {
+    content: '⬤ REC';
+    position: absolute; top: 10px; left: 14px;
+    font-size: 11px; font-weight: 800;
+    color: #DC2626; letter-spacing: 2px;
+    z-index: 2;
+  }
+
+  .feature-icon svg { width: 36px; height: 36px; color: var(--red); }
+  .topic-item { display: flex; gap: 12px; align-items: flex-start; padding: 13px 0; border-bottom: 1px solid rgba(255,255,255,.08); }
+  .topic-item:last-child { border: none; }
 </style>
+
+<div class="video-page">
+
+<!-- ── HERO ──────────────────────────────────────────────────────────────── -->
+<section style="background: #0D0404; color: #fff; padding: 80px 24px 0;">
+  <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;">
+
+    <div>
+      <div class="rec-badge" style="margin-bottom: 24px;">
+        <span class="rec-dot"></span> VIDEO CORSO
+      </div>
+      <h1 style="font-size: clamp(34px, 4.5vw, 54px); font-weight: 800; line-height: 1.1; color: #fff; margin-bottom: 20px;">
+        Come parlare in Video<br><span style="color: #DC2626;">restando sé stessi</span>
+      </h1>
+      <p style="font-size: 17px; line-height: 1.7; color: #bbb; margin-bottom: 36px;">
+        3 Video Lezioni per chi vuole iniziare a fare video superando il timore
+        del giudizio — in modo autentico, senza perfezione.
+      </p>
+      <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+        <a href="https://www.youtube.com/playlist?list=PLKgzAWOyM8xvs-UytKUtY4wsgjbHxU4Ge" target="_blank" rel="noopener" class="btn-red">Guarda il corso gratuitamente →</a>
+        <a href="#costi" class="btn-outline-red">Vuoi farlo con me?</a>
+      </div>
+    </div>
+
+    <div style="padding-bottom: 48px;">
+      <div class="cam-frame" style="aspect-ratio: 4/3; background: #1a0808;">
+        <img
+          src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=700&q=80&fit=crop"
+          alt="Professionista olistica che registra un video"
+          style="width:100%; height:100%; object-fit:cover; display:block; opacity:.75;"
+          loading="eager"
+        />
+        <div style="position:absolute; bottom:0; left:0; right:0; padding:14px 16px; background:linear-gradient(transparent,rgba(0,0,0,.7)); display:flex; justify-content:space-between; align-items:flex-end;">
+          <span style="color:#fff; font-size:12px; font-family:monospace;">00:03:24</span>
+          <span style="color:#DC2626; font-size:11px; font-weight:700; letter-spacing:1px;">● LIVE</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="max-width:1100px; margin:48px auto 0; display:flex; gap:32px; padding-bottom:40px; border-top:1px solid rgba(255,255,255,.07); padding-top:32px;">
+    {[
+      { n: "3", label: "Video lezioni" },
+      { n: "3h+", label: "di contenuto" },
+      { n: "1", label: "Gruppo Telegram privato" },
+    ].map(s => (
+      <div>
+        <p style="font-size:32px; font-weight:800; color:#DC2626; margin:0; line-height:1;">{s.n}</p>
+        <p style="font-size:13px; color:#888; margin:4px 0 0; letter-spacing:.5px;">{s.label}</p>
+      </div>
+    ))}
+  </div>
+</section>
+
+<!-- ── FARE IL PRIMO VIDEO ─────────────────────────────────────────────── -->
+<section style="padding: 80px 24px; background: #fff;">
+  <div style="max-width: 1080px; margin: 0 auto;">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; margin-bottom:60px;">
+      <div>
+        <p style="color:#DC2626; font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase; margin-bottom:12px;">Il percorso</p>
+        <h2 style="font-size:clamp(26px,3vw,38px); font-weight:800; margin-bottom:16px;">Fare il tuo Primo Video e Divertirti</h2>
+        <p style="color:#555; font-size:16px; line-height:1.8;">
+          Creare video semplici per condividere il tuo messaggio autentico,
+          rispettando chi sei veramente — perché metterci la faccia è molto meglio
+          di qualsiasi altra forma di marketing.
+        </p>
+      </div>
+      <div style="border-radius:12px; overflow:hidden; aspect-ratio:16/10; background:#111;">
+        <img
+          src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=700&q=80&fit=crop"
+          alt="Coach olistica che registra una sessione per i suoi clienti"
+          style="width:100%; height:100%; object-fit:cover; display:block;"
+          loading="lazy"
+        />
+      </div>
+    </div>
+
+    <h3 style="text-align:center; font-size:18px; font-weight:600; color:#555; margin-bottom:36px;">Nel corso imparerai a:</h3>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:20px;">
+      {features.map(f => (
+        <div style="border:1px solid #f0f0f0; border-top:3px solid #DC2626; border-radius:8px; padding:24px;">
+          <div class="feature-icon" style="margin-bottom:12px;" set:html={f.icon} />
+          <h4 style="font-size:15px; font-weight:700; text-transform:uppercase; letter-spacing:.5px; margin-bottom:8px;">{f.title}</h4>
+          <p style="color:#555; font-size:14px; line-height:1.6; margin:0;">{f.text}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- ── TI RISUONA ─────────────────────────────────────────────────────── -->
+<section style="padding: 80px 24px; background: #FEF2F2;">
+  <div style="max-width:1080px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;">
+    <div style="border-radius:12px; overflow:hidden; aspect-ratio:4/5; background:#111; position:relative;">
+      <img
+        src="https://images.unsplash.com/photo-1545389336-cf090694435e?w=600&q=80&fit=crop"
+        alt="Operatrice olistica in meditazione, ambiente sereno"
+        style="width:100%; height:100%; object-fit:cover; display:block;"
+        loading="lazy"
+      />
+      <div style="position:absolute; bottom:0; left:0; right:0; background:linear-gradient(transparent,rgba(13,4,4,.85)); padding:28px 24px;">
+        <p style="color:#fff; font-size:16px; font-style:italic; margin:0; line-height:1.5;">
+          "Sono me stesso al 100% — questo è il traguardo."
+        </p>
+        <p style="color:#fca5a5; font-size:13px; margin:8px 0 0;">— Marco Munich</p>
+      </div>
+    </div>
+    <div>
+      <p style="color:#DC2626; font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase; margin-bottom:12px;">Perché il video?</p>
+      <h2 style="font-size:clamp(26px,3vw,38px); font-weight:800; margin-bottom:20px;">Ti risuona?</h2>
+      <p style="font-size:16px; line-height:1.8; color:#333; margin-bottom:16px;">
+        Se sei in questa pagina, probabilmente hai già visto un mio video.
+        Non saranno perfetti, non avranno luci professionali — ma sono me stesso al 100%.
+      </p>
+      <p style="font-size:16px; line-height:1.8; color:#333; margin-bottom:24px;">
+        Il video è il miglior mezzo per ottenere credibilità e fiducia: trasmette mimica,
+        tonalità di voce, modo di essere — cose impossibili da comunicare solo con il testo.
+      </p>
+      <div style="background:#fff; border-left:4px solid #DC2626; padding:16px 20px; border-radius:0 8px 8px 0;">
+        <p style="margin:0; font-size:15px; color:#333; font-weight:500;">
+          Il problema è il <strong>perfezionismo</strong> — anche per me lo è stato.
+          Nel tempo ho imparato che la spontaneità vale più della perfezione.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ARGOMENTI ──────────────────────────────────────────────────────── -->
+<section style="padding: 80px 24px; background: #1A0808;">
+  <div style="max-width:1000px; margin:0 auto;">
+    <p style="color:#fca5a5; font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase; margin-bottom:12px;">Il programma</p>
+    <h2 style="font-size:clamp(26px,3vw,38px); font-weight:800; color:#fff; margin-bottom:12px;">Ecco di cosa parleremo</h2>
+    <p style="color:#999; margin-bottom:44px; font-size:16px;">Un elenco completo degli argomenti che affronteremo nel percorso.</p>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:0;">
+      {topics.map(item => (
+        <div class="topic-item">
+          <span style="color:#DC2626; font-weight:700; flex-shrink:0; font-size:16px; margin-top:1px;">▸</span>
+          <span style="color:#ddd; font-size:15px; line-height:1.5;">{item}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- ── TELEGRAM ───────────────────────────────────────────────────────── -->
+<section style="padding: 80px 24px; background: #fff;">
+  <div style="max-width:1080px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;">
+    <div>
+      <p style="color:#DC2626; font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase; margin-bottom:12px;">Community</p>
+      <h2 style="font-size:clamp(24px,2.5vw,34px); font-weight:800; margin-bottom:20px;">Un gruppo Telegram Privato dove fare i primi video senza vergogna</h2>
+      <p style="font-size:16px; line-height:1.8; color:#333; margin-bottom:16px;">
+        Già dalla prima sessione sarai chiamato a creare il tuo primo video con quello che hai.
+        Pubblicherai nel gruppo dove riceverai feedback — anche da me.
+      </p>
+      <p style="font-size:16px; line-height:1.8; color:#333;">
+        Il vero "click interiore" lo farai con la pratica, confrontandoti con gli altri corsisti
+        in un luogo sicuro e protetto.
+      </p>
+    </div>
+    <div style="border-radius:12px; overflow:hidden; aspect-ratio:4/3; background:#111;">
+      <img
+        src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=700&q=80&fit=crop"
+        alt="Counselor che si registra con lo smartphone per condividere il suo messaggio"
+        style="width:100%; height:100%; object-fit:cover; display:block;"
+        loading="lazy"
+      />
+    </div>
+  </div>
+</section>
+
+<!-- ── È IDEALE PER TE SE ─────────────────────────────────────────────── -->
+<section style="padding: 80px 24px; background: #FEF2F2;">
+  <div style="max-width:1000px; margin:0 auto;">
+    <h2 style="text-align:center; font-size:clamp(26px,3vw,38px); font-weight:800; margin-bottom:48px;">È ideale per te <span style="color:#DC2626;">se:</span></h2>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:20px;">
+      {ideals.map((item, i) => (
+        <div style="background:#fff; border-radius:8px; padding:28px; position:relative; overflow:hidden;">
+          <div style="font-size:42px; font-weight:900; color:rgba(220,38,38,.08); position:absolute; top:8px; right:16px; line-height:1;">{i+1}</div>
+          <h4 style="font-size:15px; font-weight:700; margin-bottom:10px; padding-right:20px;">{item.title}</h4>
+          <p style="color:#555; font-size:14px; line-height:1.6; margin:0;">{item.text}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- ── PARLERÒ ANCHE DI ────────────────────────────────────────────────── -->
+<section style="padding: 80px 24px; background: #fff;">
+  <div style="max-width:800px; margin:0 auto;">
+    <h3 style="font-size:24px; font-weight:800; margin-bottom:32px; border-bottom:3px solid #DC2626; display:inline-block; padding-bottom:8px;">Parlerò anche di…</h3>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:0;">
+      {[
+        "Come superare la paura dei primi video in pubblico",
+        "Come convertire il tuo video in un post scritto",
+        "Come catturare l'attenzione nei primi 15 secondi",
+        "Come ricordare cosa dire (metodo infallibile)",
+        "Come gestire il nervosismo iniziale",
+        "Come fare video in movimento",
+        "Quali sfondi professionali utilizzare",
+        "Come restare al centro dell'inquadratura",
+      ].map(item => (
+        <div style="display:flex; gap:12px; align-items:flex-start; padding:14px 12px; border-bottom:1px solid #f0f0f0;">
+          <span style="color:#DC2626; font-weight:700; flex-shrink:0; font-size:16px;">›</span>
+          <span style="font-size:15px; color:#333; line-height:1.5;">{item}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- ── COSTI ───────────────────────────────────────────────────────────── -->
+<section id="costi" style="padding: 80px 24px; background: #f7f7f7;">
+  <div style="max-width:1000px; margin:0 auto;">
+    <p style="color:#DC2626; font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase; text-align:center; margin-bottom:12px;">Costi</p>
+    <h2 style="text-align:center; font-size:clamp(26px,3vw,38px); font-weight:800; margin-bottom:12px;">Scegli come vuoi iniziare</h2>
+    <p style="text-align:center; color:#555; margin-bottom:48px; font-size:16px;">Il corso è gratuito su YouTube. Se preferisci farlo con me, c'è un percorso privato.</p>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
+
+      <div style="background:#fff; border-radius:12px; padding:36px; border:2px solid #eee;">
+        <p style="font-size:13px; font-weight:700; color:#888; text-transform:uppercase; letter-spacing:1px; margin-bottom:16px;">Autonomamente</p>
+        <div style="margin-bottom:20px;">
+          <span style="font-size:48px; font-weight:900; color:#0D0404;">Gratis</span>
+        </div>
+        <p style="color:#555; font-size:15px; line-height:1.7; margin-bottom:24px;">
+          Guarda le 3 video lezioni su YouTube, ai tuoi ritmi, quante volte vuoi.
+        </p>
+        <ul style="list-style:none; padding:0; margin-bottom:32px;">
+          {["3 Video Lezioni complete su YouTube", "Risorsa con tutti i link e gli strumenti", "Gruppo Telegram per confrontarsi"].map(i => (
+            <li style="display:flex; gap:10px; align-items:flex-start; padding:8px 0; border-bottom:1px solid #f0f0f0; font-size:15px; color:#333;">
+              <span style="color:#DC2626; font-weight:700; flex-shrink:0;">✓</span> {i}
+            </li>
+          ))}
+        </ul>
+        <a href="https://www.youtube.com/playlist?list=PLKgzAWOyM8xvs-UytKUtY4wsgjbHxU4Ge" target="_blank" rel="noopener"
+          style="display:block; text-align:center; padding:14px; border:2px solid #DC2626; color:#DC2626; font-weight:700; font-size:15px; text-decoration:none; border-radius:4px; transition:all .2s;">
+          Guarda su YouTube →
+        </a>
+      </div>
+
+      <div style="background:#0D0404; border-radius:12px; padding:36px; border:2px solid #DC2626; position:relative;">
+        <div style="position:absolute; top:-14px; left:50%; transform:translateX(-50%); background:#DC2626; color:#fff; font-size:12px; font-weight:700; letter-spacing:1px; padding:4px 16px; border-radius:100px; white-space:nowrap;">CONSIGLIATO</div>
+        <p style="font-size:13px; font-weight:700; color:#fca5a5; text-transform:uppercase; letter-spacing:1px; margin-bottom:16px;">Percorso Privato con Marco</p>
+        <div style="margin-bottom:4px;">
+          <span style="font-size:48px; font-weight:900; color:#fff;">€300</span>
+        </div>
+        <p style="color:#999; font-size:13px; margin-bottom:20px;">oppure 2 rate da €150</p>
+        <p style="color:#bbb; font-size:15px; line-height:1.7; margin-bottom:24px;">
+          Se non vuoi guardare i video da solo, facciamo insieme il lavoro — 3 sessioni private dove ti seguo passo dopo passo.
+        </p>
+        <ul style="list-style:none; padding:0; margin-bottom:32px;">
+          {[
+            "3 Sessioni private con Marco",
+            "Rivediamo e installiamo tutto insieme",
+            "Accesso alla risorsa completa",
+            "2 Video lezioni (quasi 2 ore)",
+            "60 min di Call in regalo",
+          ].map(i => (
+            <li style="display:flex; gap:10px; align-items:flex-start; padding:8px 0; border-bottom:1px solid rgba(255,255,255,.08); font-size:15px; color:#ddd;">
+              <span style="color:#DC2626; font-weight:700; flex-shrink:0;">✓</span> {i}
+            </li>
+          ))}
+        </ul>
+        <a href="https://wa.link/qracm2" target="_blank" rel="noopener" class="btn-red"
+          style="display:block; text-align:center; background:#DC2626;">
+          3 Sessioni — 300€ →
+        </a>
+        <p style="text-align:center; margin-top:12px; font-size:13px; color:#888;">
+          <a href="https://wa.link/wjlw58" target="_blank" rel="noopener" style="color:#fca5a5;">Scrivimi per pagare in 2 rate da 150€</a>
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIANZE ──────────────────────────────────────────────────── -->
+<section style="padding: 80px 24px; background: #f9f9f9;">
+  <div style="max-width:1000px; margin:0 auto;">
+    <h2 style="text-align:center; font-size:clamp(24px,3vw,36px); font-weight:800; margin-bottom:48px;">
+      Cosa dice chi ha già fatto un percorso con me
+    </h2>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:24px;">
+      {testimonials.map(t => (
+        <div style="background:#fff; border-radius:8px; padding:28px; border-top:3px solid #DC2626; box-shadow:0 2px 12px rgba(0,0,0,.05);">
+          <p style="font-size:13px; font-weight:700; color:#DC2626; text-transform:uppercase; letter-spacing:1px; margin-bottom:14px;">{t.title}</p>
+          <p style="font-size:15px; color:#444; line-height:1.7; font-style:italic; margin-bottom:20px;">"{t.quote}"</p>
+          <p style="font-size:14px; font-weight:700; margin:0;">{t.name}</p>
+          <p style="font-size:13px; color:#999; margin:2px 0 0;">{t.role}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+</div><!-- /video-page -->
+
+</BaseLayout>
