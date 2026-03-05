@@ -1,5 +1,5 @@
 Options -Indexes
-DirectoryIndex index.html
+DirectoryIndex index.html index.php
 
 # ── Security Headers ──────────────────────────────────────────────────────────
 <IfModule mod_headers.c>
@@ -71,15 +71,22 @@ Redirect 301 /150-domande/ /risorse/
 Redirect 301 /testimonianza/ /chi-sono/
 Redirect 301 /testimonianze/ /chi-sono/
 
-# ── Trailing slash: normalizza URL senza slash finale ─────────────────────────
+# ── Rewrite Rules ─────────────────────────────────────────────────────────────
 RewriteEngine On
 RewriteBase /
 
-# Salta file e directory esistenti
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-# Se esiste come directory con index.html, aggiungi trailing slash
-RewriteCond %{REQUEST_FILENAME} -d [OR]
+# Homepage → servi il file statico Astro
+RewriteRule ^$ index.html [L]
+
+# WordPress REST API → instrada a WordPress index.php
+RewriteRule ^wp-json(/.*)?$ /index.php [L]
+
+# File e directory esistenti → servili direttamente (pagine Astro, asset, wp-admin, ecc.)
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule . - [L]
+
+# Trailing slash: se l'URL senza slash corrisponde a una dir Astro con index.html, aggiungila
 RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI}/index.html -f
 RewriteRule ^(.+[^/])$ /$1/ [R=301,L]
 

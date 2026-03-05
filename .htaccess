@@ -32,8 +32,8 @@ Redirect 301 /blog-2/ /blog/
 # Chi sono (alias)
 Redirect 301 /la-mia-storia/ /chi-sono/
 Redirect 301 /chi-sono2/ /chi-sono/
-Redirect 301 /come-posso-aiutarti-2/ /percorsi-online/
-Redirect 301 /come-posso-aiutarti1/ /percorsi-online/
+Redirect 301 /come-posso-aiutarti-2/ /servizi/
+Redirect 301 /come-posso-aiutarti1/ /servizi/
 
 # Pagine di ringraziamento/conferma → homepage
 Redirect 302 /grazie/ /
@@ -46,10 +46,9 @@ Redirect 302 /consulenza-accettata/ /
 Redirect 302 /consulenza-non-accettata/ /
 Redirect 302 /conferma-registrazione-webinar-qa/ /
 
-# Servizi → Percorsi Online
-Redirect 301 /servizi/ /percorsi-online/
-Redirect 301 /sessione-introduttiva/ /percorsi-online/
-Redirect 301 /consulenza-introduttiva/ /percorsi-online/
+# Servizi
+Redirect 301 /sessione-introduttiva/ /servizi/
+Redirect 301 /consulenza-introduttiva/ /servizi/
 Redirect 302 /prenota-la-sessione/ https://wa.link/zva8dp
 Redirect 302 /prenotazione/ https://wa.link/zva8dp
 
@@ -72,27 +71,22 @@ Redirect 301 /150-domande/ /risorse/
 Redirect 301 /testimonianza/ /chi-sono/
 Redirect 301 /testimonianze/ /chi-sono/
 
-# ── Trailing slash: normalizza URL senza slash finale ─────────────────────────
+# ── Rewrite Rules ─────────────────────────────────────────────────────────────
 RewriteEngine On
 RewriteBase /
 
-# Homepage: servi sempre index.html (evita che Apache usi index.php di WordPress)
+# Homepage → servi il file statico Astro
 RewriteRule ^$ index.html [L]
 
-# Lascia passare WordPress (wp-admin, wp-login, wp-content, wp-includes, xmlrpc)
-RewriteRule ^wp-admin(/.*)?$ - [L]
-RewriteRule ^wp-login\.php$ - [L]
-RewriteRule ^wp-content(/.*)?$ - [L]
-RewriteRule ^wp-includes(/.*)?$ - [L]
-RewriteRule ^xmlrpc\.php$ - [L]
-RewriteRule ^wp-json(/.*)?$ - [L]
-RewriteRule ^wp-cron\.php$ - [L]
+# WordPress REST API → instrada a WordPress index.php
+RewriteRule ^wp-json(/.*)?$ /index.php [L]
 
-# Salta file e directory esistenti
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-# Se esiste come directory con index.html, aggiungi trailing slash
-RewriteCond %{REQUEST_FILENAME} -d [OR]
+# File e directory esistenti → servili direttamente (pagine Astro, asset, wp-admin, ecc.)
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule . - [L]
+
+# Trailing slash: se l'URL senza slash corrisponde a una dir Astro con index.html, aggiungila
 RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI}/index.html -f
 RewriteRule ^(.+[^/])$ /$1/ [R=301,L]
 
