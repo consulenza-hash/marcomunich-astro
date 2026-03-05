@@ -1,5 +1,5 @@
 Options -Indexes
-DirectoryIndex index.html
+Options +FollowSymLinks
 
 # ── Security Headers ──────────────────────────────────────────────────────────
 <IfModule mod_headers.c>
@@ -9,7 +9,7 @@ DirectoryIndex index.html
 </IfModule>
 
 # ── Cache lunga per asset Astro con hash nel nome ─────────────────────────────
-<FilesMatch "\.(js|css|woff2|woff|ttf|eot|svg|ico|png|jpg|jpeg|gif|webp|avif)$">
+<LocationMatch "^/_astro/">
   <IfModule mod_headers.c>
     Header set Cache-Control "public, max-age=31536000, immutable"
   </IfModule>
@@ -17,7 +17,7 @@ DirectoryIndex index.html
     ExpiresActive On
     ExpiresDefault "access plus 1 year"
   </IfModule>
-</FilesMatch>
+</LocationMatch>
 
 # ── Redirects ─────────────────────────────────────────────────────────────────
 
@@ -57,10 +57,8 @@ Redirect 301 /creazione-video-autentici-2/ /creazione-video-autentici/
 Redirect 301 /creazione-video-autentici-beta/ /creazione-video-autentici/
 Redirect 301 /corso-come-parlare-in-video/ /creazione-video-autentici/
 
-# Pagine rinominate (corso copywriting → nuovo slug)
-Redirect 301 /corso-copywriting-persone-autentiche/ /creazione-messaggio-autentico/
-
 # Percorsi → Percorsi Online
+Redirect 301 /creazione-messaggio-autentico/ /percorsi-online/
 Redirect 301 /creazione-sito-web-e-corso-online/ /percorsi-online/
 
 # Lead magnet → Risorse
@@ -74,9 +72,6 @@ Redirect 301 /testimonianze/ /chi-sono/
 # ── Trailing slash: normalizza URL senza slash finale ─────────────────────────
 RewriteEngine On
 RewriteBase /
-
-# Homepage: servi sempre index.html (evita che Apache usi index.php di WordPress)
-RewriteRule ^$ index.html [L]
 
 # Salta file e directory esistenti
 RewriteCond %{REQUEST_FILENAME} !-f
