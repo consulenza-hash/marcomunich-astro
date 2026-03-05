@@ -1,4 +1,5 @@
 Options -Indexes +FollowSymLinks
+DirectoryIndex index.html
 
 # ── Security Headers ──────────────────────────────────────────────────────────
 <IfModule mod_headers.c>
