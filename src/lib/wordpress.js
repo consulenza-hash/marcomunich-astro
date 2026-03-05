@@ -163,7 +163,8 @@ export function getFeaturedImageUrl(post, size = 'medium_large') {
 export function getPrimaryCategory(post) {
   try {
     const terms = post?._embedded?.['wp:term']?.[0];
-    return terms?.[0] ?? null;
+    if (!terms?.length) return null;
+    return terms.find(t => t.slug !== 'uncategorized') ?? terms[0];
   } catch {
     return null;
   }
