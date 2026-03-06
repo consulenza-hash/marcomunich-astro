@@ -154,7 +154,11 @@ const testimonials = [
   .video-page { overflow-x: hidden; }
 
   @media (max-width: 768px) {
-    .video-page .vp-grid { grid-template-columns: 1fr !important; }
+    .video-page .vp-grid {
+      grid-template-columns: 1fr !important;
+      gap: 32px !important;
+    }
+    .video-page .vp-hero-img { display: none; }
     .video-page .vp-talk { grid-template-columns: 1fr !important; }
     .video-page .vp-costs {
       grid-template-columns: 1fr !important;
@@ -192,7 +196,7 @@ const testimonials = [
     </div>
 
     <!-- Camera frame con immagine -->
-    <div style="padding-bottom: 48px;">
+    <div class="vp-hero-img" style="padding-bottom: 48px;">
       <div class="cam-frame" style="aspect-ratio: 4/3; background: #1a0808;">
         <img
           src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=700&q=80&fit=crop"
