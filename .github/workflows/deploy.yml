@@ -80,6 +80,7 @@ jobs:
           HTTP_CODE=$(curl -s -o /tmp/webhook_response.txt -w "%{http_code}" \
             -X POST \
             -H "X-Webhook-Secret: ${{ secrets.WEBHOOK_SECRET }}" \
+            -H "Content-Type: application/json" \
             "https://marcomunich.com/deploy-webhook.php")
           echo "HTTP $HTTP_CODE"
           cat /tmp/webhook_response.txt
