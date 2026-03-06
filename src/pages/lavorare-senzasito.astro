@@ -70,10 +70,15 @@ const ideals = [
   .green-page .step-item { display: flex; gap: 20px; align-items: flex-start; padding: 24px 0; border-bottom: 1px solid rgba(255,255,255,.08); }
   .green-page .step-item:last-child { border: none; }
 
+  .green-page { overflow-x: hidden; }
+
   @media (max-width: 768px) {
     .green-page .hero-grid,
     .green-page .two-col { grid-template-columns: 1fr !important; }
     .green-page .hero-image { display: none; }
+    .green-page section { padding-top: 48px !important; padding-bottom: 48px !important; }
+    .green-page .costs-grid { grid-template-columns: 1fr !important; max-width: 520px; margin-left: auto; margin-right: auto; }
+    .green-page .cost-card-featured { margin-top: 20px; }
   }
 </style>
 
@@ -250,7 +255,7 @@ const ideals = [
     <h2 style="text-align:center; font-size:clamp(26px,3vw,38px); font-weight:800; margin-bottom:12px;">Scegli come vuoi iniziare</h2>
     <p style="text-align:center; color:#555; margin-bottom:48px; font-size:16px;">Puoi guardare il corso gratuitamente su YouTube o farlo in privato con me.</p>
 
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
+    <div class="costs-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
 
       <!-- Card Gratuita -->
       <div style="background:#fff; border-radius:12px; padding:36px; border:2px solid #eee;">
@@ -280,7 +285,7 @@ const ideals = [
       </div>
 
       <!-- Card €300 -->
-      <div style="background:#052e1a; border-radius:12px; padding:36px; border:2px solid #16A34A; position:relative;">
+      <div class="cost-card-featured" style="background:#052e1a; border-radius:12px; padding:36px; border:2px solid #16A34A; position:relative;">
         <div style="position:absolute; top:-14px; left:50%; transform:translateX(-50%); background:#16A34A; color:#fff; font-size:12px; font-weight:700; letter-spacing:1px; padding:4px 16px; border-radius:100px; white-space:nowrap;">CONSIGLIATO</div>
         <p style="font-size:13px; font-weight:700; color:#86efac; text-transform:uppercase; letter-spacing:1px; margin-bottom:16px;">Percorso Privato con Marco</p>
         <div style="margin-bottom:4px;">
