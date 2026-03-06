@@ -194,27 +194,4 @@ import BaseLayout from '@layouts/BaseLayout.astro';
     font-family: 'Host Grotesk', system-ui, sans-serif !important;
   }
 
-  /* ── Fix: bottone Chi Sono non deve inglobare il video ── */
-  /* Forza il link chi-sono ad avere dimensioni solo del suo contenuto */
-  :global(a[href="/chi-sono/"]) {
-    display: block !important;
-    position: relative !important;
-    overflow: hidden !important;
-    z-index: 1 !important;
-  }
-
-  /* Assicura che il video stia sotto, separato */
-  :global(.thrv_responsive_video.rv_style_lifted_style2) {
-    position: relative !important;
-    z-index: 2 !important;
-    clear: both !important;
-    margin-top: 24px !important;
-    display: block !important;
-  }
-
-  /* Impedisce all'overlay Thrive (data-link-wrap) di espandersi oltre il box */
-  :global([data-link-wrap="true"]) {
-    position: relative !important;
-    overflow: hidden !important;
-  }
 </style>
