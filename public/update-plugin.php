@@ -68,7 +68,19 @@ add_action(\'before_delete_post\', function($post_id) {
 ';
 
 if (!file_exists($plugin_path)) {
-    exit("❌ Plugin file non trovato: $plugin_path\n");
+    // Lista tutte le cartelle plugin per trovare il path corretto
+    $plugins_dir = __DIR__ . '/wp-content/plugins/';
+    $dirs = glob($plugins_dir . '*', GLOB_ONLYDIR);
+    echo "❌ Plugin file non trovato: $plugin_path\n\n";
+    echo "📂 Plugin disponibili:\n";
+    foreach ($dirs as $d) {
+        $dirname = basename($d);
+        $files = glob($d . '/*.php');
+        foreach ($files as $f) {
+            echo "   $dirname/" . basename($f) . "\n";
+        }
+    }
+    exit();
 }
 
 $backup_path = $plugin_path . '.bak';
