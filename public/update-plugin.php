@@ -4,7 +4,7 @@
 define('ACCESS', 'mmu2026_plugin_upd_9z3w');
 if (($_GET['key'] ?? '') !== ACCESS) { http_response_code(403); exit("403\n"); }
 
-$plugin_path = __DIR__ . '/wp-content/plugins/marco-munich-auto-deploy/marco-munich-auto-deploy.php';
+$plugin_path = __DIR__ . '/wp-content/plugins/marcomunich-deploy/marcomunich-deploy.php';
 
 $new_code = '<?php
 /**
