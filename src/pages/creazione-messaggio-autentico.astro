@@ -96,6 +96,8 @@ const ideals = [
   .copy-page .topic-item { display: flex; gap: 12px; align-items: flex-start; padding: 13px 0; border-bottom: 1px solid rgba(255,255,255,.08); }
   .copy-page .topic-item:last-child { border: none; }
 
+  .copy-page { overflow-x: hidden; }
+
   @media (max-width: 768px) {
     .copy-page .hero-grid,
     .copy-page .two-col { grid-template-columns: 1fr !important; }
@@ -366,7 +368,7 @@ const ideals = [
     <h2 style="text-align:center; font-size:clamp(26px,3vw,38px); font-weight:800; margin-bottom:12px;">Scegli come vuoi iniziare</h2>
     <p style="text-align:center; color:#555; margin-bottom:48px; font-size:16px;">Puoi fare il percorso in autonomia o con il mio supporto diretto.</p>
 
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
+    <div style="display:grid; grid-template-columns:1fr; gap:24px; max-width:560px; margin:0 auto;">
 
       <!-- Card €90 -->
       <div style="background:#fff; border-radius:12px; padding:36px; border:2px solid #eee;">
