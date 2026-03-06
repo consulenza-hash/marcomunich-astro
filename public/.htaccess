@@ -84,10 +84,6 @@ RewriteRule ^$ index.html [L]
 # WordPress REST API → instrada a WordPress index.php
 RewriteRule ^wp-json(/.*)?$ /index.php [L]
 
-# Pagine WordPress con contenuto Thrive Architect (non presenti come pagine Astro statiche)
-RewriteRule ^cmfo-lezione1/?$ /index.php [L,QSA]
-RewriteRule ^cmfo-lezione2/?$ /index.php [L,QSA]
-
 # File e directory esistenti → servili direttamente (pagine Astro, asset, wp-admin, ecc.)
 RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d
