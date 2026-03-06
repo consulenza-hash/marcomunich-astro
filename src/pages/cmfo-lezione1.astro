@@ -1,0 +1,205 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Come Metterci la Faccia Online – Lezione 1"
+  description="Prima lezione gratuita del corso Come Metterci la Faccia Online: impara a costruire la tua presenza online in modo autentico."
+  currentPath="/cmfo-lezione1/"
+>
+
+<style>
+  .lesson-wrap {
+    background: #0f0f0f;
+    min-height: 100vh;
+    color: #fff;
+  }
+  .lesson-header {
+    background: #111;
+    border-bottom: 1px solid #222;
+    padding: 20px 24px;
+  }
+  .lesson-header-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .course-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #9DFF20;
+  }
+  .lesson-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(157,255,32,.12);
+    border: 1px solid rgba(157,255,32,.3);
+    color: #9DFF20;
+    padding: 5px 14px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+  .video-section {
+    padding: 48px 24px 32px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .lesson-title {
+    font-size: clamp(22px, 3vw, 32px);
+    font-weight: 800;
+    margin-bottom: 24px;
+    line-height: 1.2;
+    color: #fff;
+  }
+  .lesson-title span {
+    color: #9DFF20;
+  }
+  .video-wrapper {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    border-radius: 12px;
+    background: #000;
+    box-shadow: 0 8px 40px rgba(0,0,0,.6);
+  }
+  .video-wrapper iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: 0;
+  }
+  .lesson-content {
+    padding: 40px 24px 80px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .lesson-divider {
+    border: none;
+    border-top: 1px solid #222;
+    margin: 40px 0;
+  }
+  .next-lesson {
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-left: 4px solid #9DFF20;
+    border-radius: 0 12px 12px 0;
+    padding: 28px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    text-decoration: none;
+    color: inherit;
+    transition: background .2s, border-color .2s;
+  }
+  .next-lesson:hover {
+    background: #222;
+    border-color: #9DFF20;
+    opacity: 1;
+  }
+  .next-lesson-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #9DFF20;
+    margin-bottom: 6px;
+  }
+  .next-lesson-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+  .next-lesson-desc {
+    font-size: 14px;
+    color: #888;
+    line-height: 1.5;
+  }
+  .arrow-icon {
+    color: #9DFF20;
+    font-size: 28px;
+    flex-shrink: 0;
+  }
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #666;
+    font-size: 14px;
+    text-decoration: none;
+    margin-bottom: 40px;
+    transition: color .2s;
+  }
+  .back-link:hover {
+    color: #9DFF20;
+    opacity: 1;
+  }
+  @media (max-width: 600px) {
+    .next-lesson { flex-direction: column; align-items: flex-start; }
+    .arrow-icon { display: none; }
+  }
+</style>
+
+<div class="lesson-wrap">
+
+  <!-- Header corso -->
+  <div class="lesson-header">
+    <div class="lesson-header-inner">
+      <div>
+        <div class="course-label">Come Metterci la Faccia Online</div>
+        <div style="font-size:13px; color:#555; margin-top:2px;">Guida gratuita · Marco Munich</div>
+      </div>
+      <div class="lesson-badge">Lezione 1 di 2</div>
+    </div>
+  </div>
+
+  <!-- Video -->
+  <div class="video-section">
+    <a href="/metterci-la-faccia-online/" class="back-link">
+      ← Torna alla guida
+    </a>
+    <h1 class="lesson-title">
+      Lezione 1 — <span>Come iniziare a metterci la faccia</span>
+    </h1>
+    <div class="video-wrapper">
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/SHOnybFwvlc?rel=0&modestbranding=1"
+        title="Come Metterci la Faccia Online – Lezione 1"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+        loading="lazy"
+      ></iframe>
+    </div>
+  </div>
+
+  <!-- Contenuto + navigazione -->
+  <div class="lesson-content">
+
+    <hr class="lesson-divider" />
+
+    <!-- Prossima lezione -->
+    <a href="/cmfo-lezione2/" class="next-lesson">
+      <div>
+        <div class="next-lesson-label">Prossima lezione →</div>
+        <div class="next-lesson-title">Lezione 2 — Le 3 azioni specifiche nel dettaglio</div>
+        <div class="next-lesson-desc">Parleremo delle 3 azioni specifiche, viste nel dettaglio.</div>
+      </div>
+      <div class="arrow-icon">→</div>
+    </a>
+
+  </div>
+
+</div>
+
+</BaseLayout>
