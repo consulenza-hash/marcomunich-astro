@@ -1,10 +1,13 @@
 name: Build & Deploy
 
-# Trigger 1: WordPress pubblica un articolo → invia webhook a GitHub
-# Trigger 2: manuale da GitHub Actions tab (utile per test)
+# Trigger 1: WordPress pubblica/aggiorna/elimina un articolo → invia webhook a GitHub
+# Trigger 2: push di codice su main (aggiornamenti Astro/CSS/pagine)
+# Trigger 3: manuale da GitHub Actions tab (utile per test)
 on:
   repository_dispatch:
-    types: [wp_post_published]
+    types: [wp_content_changed, wp_post_published]
+  push:
+    branches: [main]
   workflow_dispatch:
 
 jobs:
