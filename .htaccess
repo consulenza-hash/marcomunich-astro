@@ -1,5 +1,5 @@
 Options -Indexes
-Options +FollowSymLinks
+DirectoryIndex index.html index.php
 
 # ── Security Headers ──────────────────────────────────────────────────────────
 <IfModule mod_headers.c>
@@ -9,7 +9,7 @@ Options +FollowSymLinks
 </IfModule>
 
 # ── Cache lunga per asset Astro con hash nel nome ─────────────────────────────
-<LocationMatch "^/_astro/">
+<FilesMatch "\.(js|css|woff2|woff|ttf|eot|svg|ico|png|jpg|jpeg|gif|webp|avif)$">
   <IfModule mod_headers.c>
     Header set Cache-Control "public, max-age=31536000, immutable"
   </IfModule>
@@ -17,7 +17,7 @@ Options +FollowSymLinks
     ExpiresActive On
     ExpiresDefault "access plus 1 year"
   </IfModule>
-</LocationMatch>
+</FilesMatch>
 
 # ── Redirects ─────────────────────────────────────────────────────────────────
 
@@ -57,8 +57,10 @@ Redirect 301 /creazione-video-autentici-2/ /creazione-video-autentici/
 Redirect 301 /creazione-video-autentici-beta/ /creazione-video-autentici/
 Redirect 301 /corso-come-parlare-in-video/ /creazione-video-autentici/
 
+# Pagine rinominate (corso copywriting → nuovo slug)
+Redirect 301 /corso-copywriting-persone-autentiche/ /creazione-messaggio-autentico/
+
 # Percorsi → Percorsi Online
-Redirect 301 /creazione-messaggio-autentico/ /percorsi-online/
 Redirect 301 /creazione-sito-web-e-corso-online/ /percorsi-online/
 
 # Lead magnet → Risorse
@@ -69,15 +71,29 @@ Redirect 301 /150-domande/ /risorse/
 Redirect 301 /testimonianza/ /chi-sono/
 Redirect 301 /testimonianze/ /chi-sono/
 
-# ── Trailing slash: normalizza URL senza slash finale ─────────────────────────
+# Video → Blog (sezione rimossa)
+Redirect 301 /video/ /blog/
+
+# ── Rewrite Rules ─────────────────────────────────────────────────────────────
 RewriteEngine On
 RewriteBase /
 
-# Salta file e directory esistenti
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-# Se esiste come directory con index.html, aggiungi trailing slash
-RewriteCond %{REQUEST_FILENAME} -d [OR]
+# Homepage → servi il file statico Astro
+RewriteRule ^$ index.html [L]
+
+# WordPress REST API → instrada a WordPress index.php
+RewriteRule ^wp-json(/.*)?$ /index.php [L]
+
+# Pagine WordPress con contenuto Thrive Architect (non presenti come pagine Astro statiche)
+RewriteRule ^cmfo-lezione1/?$ /index.php [L,QSA]
+RewriteRule ^cmfo-lezione2/?$ /index.php [L,QSA]
+
+# File e directory esistenti → servili direttamente (pagine Astro, asset, wp-admin, ecc.)
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule . - [L]
+
+# Trailing slash: se l'URL senza slash corrisponde a una dir Astro con index.html, aggiungila
 RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI}/index.html -f
 RewriteRule ^(.+[^/])$ /$1/ [R=301,L]
 
