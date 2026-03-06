@@ -12,6 +12,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
+    permissions:
+      contents: write   # necessario per git push sul branch deploy
+
     steps:
       # ── 1. Checkout branch main (sorgente Astro) ──────────────────────────
       - name: Checkout main
@@ -19,7 +22,7 @@ jobs:
         with:
           ref: main
           fetch-depth: 0
-          token: ${{ secrets.DEPLOY_TOKEN }}
+          # Usa GITHUB_TOKEN built-in (non serve PAT esterno)
 
       # ── 2. Setup Node.js ───────────────────────────────────────────────────
       - name: Setup Node.js 20
