@@ -164,7 +164,7 @@ export function getPrimaryCategory(post) {
   try {
     const terms = post?._embedded?.['wp:term']?.[0];
     if (!terms?.length) return null;
-    return terms.find(t => t.slug !== 'uncategorized') ?? terms[0];
+    return terms.find(t => t.slug !== 'uncategorized') ?? null;
   } catch {
     return null;
   }
