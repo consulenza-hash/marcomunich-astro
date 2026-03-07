@@ -154,20 +154,51 @@ const testimonials = [
   .video-page { overflow-x: hidden; }
 
   @media (max-width: 768px) {
+    /* Grid 2-col → 1 col */
     .video-page .vp-grid {
+      display: block !important;
       grid-template-columns: 1fr !important;
       gap: 32px !important;
     }
-    .video-page .vp-hero-img { display: none; }
-    .video-page .vp-talk { grid-template-columns: 1fr !important; }
-    .video-page .vp-costs {
+    .video-page .vp-grid > * {
+      width: 100% !important;
+      max-width: 100% !important;
+      margin-bottom: 32px;
+    }
+    .video-page .vp-grid > *:last-child { margin-bottom: 0; }
+
+    /* Nasconde immagine hero */
+    .video-page .vp-hero-img {
+      display: none !important;
+      visibility: hidden !important;
+    }
+
+    /* Sezione "Parlerò anche di" */
+    .video-page .vp-talk {
+      display: block !important;
       grid-template-columns: 1fr !important;
-      max-width: 520px;
+    }
+
+    /* Pricing */
+    .video-page .vp-costs {
+      display: block !important;
+      grid-template-columns: 1fr !important;
+      max-width: 520px !important;
       margin-left: auto !important;
       margin-right: auto !important;
     }
-    .video-page .vp-cost-featured { margin-top: 20px; }
-    .video-page section { padding-top: 48px !important; padding-bottom: 48px !important; }
+    .video-page .vp-costs > * {
+      width: 100% !important;
+      margin-bottom: 24px;
+    }
+    .video-page .vp-costs > *:last-child { margin-bottom: 0; }
+    .video-page .vp-cost-featured { margin-top: 20px !important; }
+
+    /* Padding sezioni */
+    .video-page section {
+      padding-top: 48px !important;
+      padding-bottom: 48px !important;
+    }
   }
 </style>
 
