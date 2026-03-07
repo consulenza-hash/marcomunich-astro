@@ -149,13 +149,40 @@ const testimonials = [
   .feature-icon svg { width: 36px; height: 36px; color: var(--red); }
   .topic-item { display: flex; gap: 12px; align-items: flex-start; padding: 13px 0; border-bottom: 1px solid rgba(255,255,255,.08); }
   .topic-item:last-child { border: none; }
+
+  .video-page { overflow-x: hidden; }
+
+  @media (max-width: 768px) {
+    .video-page .vp-grid {
+      display: block !important;
+      grid-template-columns: 1fr !important;
+    }
+    .video-page .vp-grid > * {
+      width: 100% !important;
+      max-width: 100% !important;
+      margin-bottom: 32px;
+    }
+    .video-page .vp-grid > *:last-child { margin-bottom: 0; }
+    .video-page .vp-hero-img { display: none !important; visibility: hidden !important; }
+    .video-page .vp-talk { display: block !important; }
+    .video-page .vp-costs {
+      display: block !important;
+      max-width: 520px !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+    .video-page .vp-costs > * { width: 100% !important; margin-bottom: 24px; }
+    .video-page .vp-costs > *:last-child { margin-bottom: 0; }
+    .video-page .vp-cost-featured { margin-top: 20px !important; }
+    .video-page section { padding-top: 48px !important; padding-bottom: 48px !important; }
+  }
 </style>
 
 <div class="video-page">
 
 <!-- ── HERO ──────────────────────────────────────────────────────────────── -->
 <section style="background: #0D0404; color: #fff; padding: 80px 24px 0;">
-  <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;">
+  <div class="vp-grid" style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;">
 
     <div>
       <div class="rec-badge" style="margin-bottom: 24px;">
@@ -174,7 +201,7 @@ const testimonials = [
       </div>
     </div>
 
-    <div style="padding-bottom: 48px;">
+    <div class="vp-hero-img" style="padding-bottom: 48px;">
       <div class="cam-frame" style="aspect-ratio: 4/3; background: #1a0808;">
         <img
           src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=700&q=80&fit=crop"
@@ -208,7 +235,7 @@ const testimonials = [
 <!-- ── FARE IL PRIMO VIDEO ─────────────────────────────────────────────── -->
 <section style="padding: 80px 24px; background: #fff;">
   <div style="max-width: 1080px; margin: 0 auto;">
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; margin-bottom:60px;">
+    <div class="vp-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; margin-bottom:60px;">
       <div>
         <p style="color:#DC2626; font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase; margin-bottom:12px;">Il percorso</p>
         <h2 style="font-size:clamp(26px,3vw,38px); font-weight:800; margin-bottom:16px;">Fare il tuo Primo Video e Divertirti</h2>
@@ -243,7 +270,7 @@ const testimonials = [
 
 <!-- ── TI RISUONA ─────────────────────────────────────────────────────── -->
 <section style="padding: 80px 24px; background: #FEF2F2;">
-  <div style="max-width:1080px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;">
+  <div class="vp-grid" style="max-width:1080px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;">
     <div style="border-radius:12px; overflow:hidden; aspect-ratio:4/5; background:#111; position:relative;">
       <img
         src="https://images.unsplash.com/photo-1545389336-cf090694435e?w=600&q=80&fit=crop"
@@ -298,7 +325,7 @@ const testimonials = [
 
 <!-- ── TELEGRAM ───────────────────────────────────────────────────────── -->
 <section style="padding: 80px 24px; background: #fff;">
-  <div style="max-width:1080px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;">
+  <div class="vp-grid" style="max-width:1080px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;">
     <div>
       <p style="color:#DC2626; font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase; margin-bottom:12px;">Community</p>
       <h2 style="font-size:clamp(24px,2.5vw,34px); font-weight:800; margin-bottom:20px;">Un gruppo Telegram Privato dove fare i primi video senza vergogna</h2>
@@ -342,7 +369,7 @@ const testimonials = [
 <section style="padding: 80px 24px; background: #fff;">
   <div style="max-width:800px; margin:0 auto;">
     <h3 style="font-size:24px; font-weight:800; margin-bottom:32px; border-bottom:3px solid #DC2626; display:inline-block; padding-bottom:8px;">Parlerò anche di…</h3>
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:0;">
+    <div class="vp-talk" style="display:grid; grid-template-columns:1fr 1fr; gap:0;">
       {[
         "Come superare la paura dei primi video in pubblico",
         "Come convertire il tuo video in un post scritto",
@@ -369,7 +396,7 @@ const testimonials = [
     <h2 style="text-align:center; font-size:clamp(26px,3vw,38px); font-weight:800; margin-bottom:12px;">Scegli come vuoi iniziare</h2>
     <p style="text-align:center; color:#555; margin-bottom:48px; font-size:16px;">Il corso è gratuito su YouTube. Se preferisci farlo con me, c'è un percorso privato.</p>
 
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
+    <div class="vp-costs" style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
 
       <div style="background:#fff; border-radius:12px; padding:36px; border:2px solid #eee;">
         <p style="font-size:13px; font-weight:700; color:#888; text-transform:uppercase; letter-spacing:1px; margin-bottom:16px;">Autonomamente</p>
@@ -392,7 +419,7 @@ const testimonials = [
         </a>
       </div>
 
-      <div style="background:#0D0404; border-radius:12px; padding:36px; border:2px solid #DC2626; position:relative;">
+      <div class="vp-cost-featured" style="background:#0D0404; border-radius:12px; padding:36px; border:2px solid #DC2626; position:relative;">
         <div style="position:absolute; top:-14px; left:50%; transform:translateX(-50%); background:#DC2626; color:#fff; font-size:12px; font-weight:700; letter-spacing:1px; padding:4px 16px; border-radius:100px; white-space:nowrap;">CONSIGLIATO</div>
         <p style="font-size:13px; font-weight:700; color:#fca5a5; text-transform:uppercase; letter-spacing:1px; margin-bottom:16px;">Percorso Privato con Marco</p>
         <div style="margin-bottom:4px;">
