@@ -73,12 +73,48 @@ const ideals = [
   .green-page { overflow-x: hidden; }
 
   @media (max-width: 768px) {
+    /* Grid 2-col → 1 col */
     .green-page .hero-grid,
-    .green-page .two-col { grid-template-columns: 1fr !important; gap: 32px !important; }
-    .green-page .hero-image { display: none; }
-    .green-page section { padding-top: 48px !important; padding-bottom: 48px !important; }
-    .green-page .costs-grid { grid-template-columns: 1fr !important; max-width: 520px; margin-left: auto; margin-right: auto; }
-    .green-page .cost-card-featured { margin-top: 20px; }
+    .green-page .two-col {
+      display: block !important;
+      grid-template-columns: 1fr !important;
+      gap: 32px !important;
+    }
+    .green-page .hero-grid > *,
+    .green-page .two-col > * {
+      width: 100% !important;
+      max-width: 100% !important;
+      margin-bottom: 32px;
+    }
+    .green-page .hero-grid > *:last-child,
+    .green-page .two-col > *:last-child { margin-bottom: 0; }
+
+    /* Nasconde video hero */
+    .green-page .hero-image {
+      display: none !important;
+      visibility: hidden !important;
+    }
+
+    /* Pricing */
+    .green-page .costs-grid {
+      display: block !important;
+      grid-template-columns: 1fr !important;
+      max-width: 520px !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+    .green-page .costs-grid > * {
+      width: 100% !important;
+      margin-bottom: 24px;
+    }
+    .green-page .costs-grid > *:last-child { margin-bottom: 0; }
+    .green-page .cost-card-featured { margin-top: 20px !important; }
+
+    /* Padding sezioni */
+    .green-page section {
+      padding-top: 48px !important;
+      padding-bottom: 48px !important;
+    }
   }
 </style>
 
