@@ -1,0 +1,215 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+
+const faq = [
+  {
+    q: "Non sono bravo a scrivere i testi, mi aiuti?",
+    a: "Assolutamente sì. Ti guiderò con domande mirate per far emergere il tuo messaggio autentico, senza forzature. Non dovrai affrontare il foglio bianco da solo."
+  },
+  {
+    q: "Dovrò pagare costi mensili per mantenere il sito?",
+    a: "No. A parte il normale costo annuale del dominio e del server (poche decine di euro), la tecnologia che uso non richiede contratti di assistenza o manutenzione continua. Paghi una volta, funziona per anni."
+  },
+  {
+    q: "E se non capisco nulla di tecnologia?",
+    a: "È esattamente per questo che ho creato questa soluzione. Il mio obiettivo è toglierti completamente il peso della tecnologia. Tu parli con le persone, al resto ci penso io."
+  },
+  {
+    q: "In quanto tempo va online il sito?",
+    a: "Dal momento in cui ho tutti i tuoi materiali, il sito è pronto in 2 settimane. Ti guido io nella raccolta di quello che serve."
+  }
+];
+---
+
+<BaseLayout
+  title="Siti Web per Coach, Counselor e Operatori Olistici — Marco Munich"
+  description="Un sito web professionale, veloce e senza manutenzione. Pensato per Coach, Counselor e Operatori Olistici che vogliono uno spazio online autentico. Pagabile a rate."
+  currentPath="/sviluppo-siti-web/"
+>
+  <div class="sw-page">
+
+    <!-- ── HERO ─────────────────────────────────────────────────────────── -->
+    <section style="background:#0D0404; color:#fff; padding:100px 24px 80px; text-align:center;">
+      <div style="max-width:760px; margin:0 auto;">
+        <p style="color:#DC2626; font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase; margin-bottom:20px;">
+          Per Coach, Counselor e Operatori Olistici
+        </p>
+        <h1 style="font-size:clamp(30px,5vw,56px); font-weight:900; line-height:1.1; margin-bottom:24px;">
+          Una casa digitale che risuona<br>con la <span style="color:#DC2626;">tua vera essenza</span>
+        </h1>
+        <p style="font-size:clamp(16px,2vw,19px); color:#ccc; line-height:1.75; margin-bottom:44px; max-width:600px; margin-left:auto; margin-right:auto;">
+          Uno spazio online professionale, veloce e che non ti prosciuga energia con problemi tecnici.
+          In totale armonia con il tuo messaggio, per accogliere le persone nel tuo mondo in modo autentico.
+        </p>
+        <a href="#offerta"
+          style="display:inline-block; background:#DC2626; color:#fff; font-weight:800; font-size:17px; padding:20px 44px; text-decoration:none; border-radius:4px; letter-spacing:0.3px;">
+          Scopri il percorso →
+        </a>
+      </div>
+    </section>
+
+    <!-- ── PROBLEMA ───────────────────────────────────────────────────── -->
+    <section style="background:#fff; padding:80px 24px;">
+      <div style="max-width:680px; margin:0 auto; text-align:center;">
+        <p style="color:#DC2626; font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase; margin-bottom:12px;">Il problema</p>
+        <h2 style="font-size:clamp(24px,3vw,36px); font-weight:800; margin-bottom:20px;">So quanto la tecnologia<br>possa farti sentire fuori centro</h2>
+        <p style="color:#555; font-size:17px; line-height:1.8; margin-bottom:40px;">
+          Hai fatto un lavoro profondo su te stesso e sui tuoi talenti. Eppure, quando si tratta di metterti online,
+          ti scontri con piattaforme complicate, siti lenti e aggiornamenti continui che ti creano ansia.
+        </p>
+        <ul style="list-style:none; padding:0; text-align:left; display:inline-block; width:100%;">
+          {[
+            "Senti che la tua presenza online non riflette l'anima del tuo lavoro",
+            "Temi che la tecnologia sia troppo fredda o complessa da gestire da solo",
+            "Perdi energia dietro a problemi tecnici invece di dedicarla a chi ha bisogno di te",
+            "Le email dei tuoi potenziali clienti finiscono nello spam senza che tu lo sappia"
+          ].map(item => (
+            <li style="display:flex; gap:14px; align-items:flex-start; padding:14px 0; border-bottom:1px solid #f0f0f0; font-size:16px; color:#333; line-height:1.6;">
+              <span style="color:#DC2626; font-weight:800; flex-shrink:0; margin-top:2px;">›</span>
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- ── BENEFICI ───────────────────────────────────────────────────── -->
+    <section style="background:#FEF2F2; padding:80px 24px;">
+      <div style="max-width:960px; margin:0 auto;">
+        <p style="text-align:center; color:#DC2626; font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase; margin-bottom:12px;">La soluzione</p>
+        <h2 style="text-align:center; font-size:clamp(24px,3vw,36px); font-weight:800; margin-bottom:12px;">Un'architettura invisibile<br>per proteggere la tua energia</h2>
+        <p style="text-align:center; color:#555; font-size:17px; line-height:1.8; margin-bottom:48px; max-width:600px; margin-left:auto; margin-right:auto;">
+          Non il classico sito prefabbricato. Il mio approccio al Personal Branding Autentico unito
+          a una tecnologia moderna, silenziosa, che lavora per te senza chiederti nulla in cambio.
+        </p>
+        <div class="sw-grid">
+          <div style="background:#fff; padding:40px 32px; border-radius:12px;">
+            <div style="font-size:36px; margin-bottom:16px;">🧘</div>
+            <h3 style="font-size:19px; font-weight:800; margin-bottom:12px;">Pace Mentale Assoluta</h3>
+            <p style="color:#555; font-size:15px; line-height:1.75;">Nessun plugin da aggiornare, nessun rischio di crash o hackeraggio. Una volta online, te ne puoi dimenticare completamente.</p>
+          </div>
+          <div style="background:#fff; padding:40px 32px; border-radius:12px;">
+            <div style="font-size:36px; margin-bottom:16px;">⚡</div>
+            <h3 style="font-size:19px; font-weight:800; margin-bottom:12px;">Fluidità e Leggerezza</h3>
+            <p style="color:#555; font-size:15px; line-height:1.75;">Pagine che si caricano in un istante. Un'esperienza senza attriti per chi ti legge, che rispetta il loro tempo e la loro attenzione.</p>
+          </div>
+          <div style="background:#fff; padding:40px 32px; border-radius:12px;">
+            <div style="font-size:36px; margin-bottom:16px;">🎨</div>
+            <h3 style="font-size:19px; font-weight:800; margin-bottom:12px;">Design Autentico</h3>
+            <p style="color:#555; font-size:15px; line-height:1.75;">Spazi, colori e font scelti su misura per tradurre visivamente la tua frequenza e il tuo tono di voce. Non un template — un vestito cucito addosso a te.</p>
+          </div>
+          <div style="background:#fff; padding:40px 32px; border-radius:12px;">
+            <div style="font-size:36px; margin-bottom:16px;">📬</div>
+            <h3 style="font-size:19px; font-weight:800; margin-bottom:12px;">Email che Arrivano</h3>
+            <p style="color:#555; font-size:15px; line-height:1.75;">Un sistema anti-spam integrato che garantisce che ogni richiesta di contatto ti arrivi direttamente. Zero messaggi persi nello spam.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── OFFERTA / PREZZO ──────────────────────────────────────────── -->
+    <section id="offerta" style="background:#0D0404; color:#fff; padding:80px 24px;">
+      <div style="max-width:680px; margin:0 auto;">
+        <p style="text-align:center; color:#DC2626; font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase; margin-bottom:12px;">L'investimento</p>
+        <h2 style="text-align:center; font-size:clamp(24px,3vw,38px); font-weight:800; margin-bottom:12px;">Il tuo nuovo Spazio Digitale</h2>
+        <p style="text-align:center; color:#999; font-size:16px; margin-bottom:48px;">Semplice, elegante, tuo. Senza costi nascosti, senza sorprese.</p>
+
+        <div style="background:#fff; color:#0D0404; border-radius:16px; padding:48px 40px; border:3px solid #DC2626;">
+
+          <div style="text-align:center; margin-bottom:32px;">
+            <div style="font-size:clamp(48px,6vw,72px); font-weight:900; line-height:1;">1.300€</div>
+            <p style="color:#666; font-size:15px; margin-top:8px;">Una tantum · Nessun canone mensile</p>
+          </div>
+
+          <div style="background:#FEF2F2; border-radius:10px; padding:24px; margin-bottom:32px; border-left:4px solid #DC2626;">
+            <p style="font-weight:700; font-size:15px; color:#DC2626; margin-bottom:8px;">Vuoi che sia leggero e sostenibile?</p>
+            <p style="color:#333; font-size:15px; line-height:1.7;">
+              Inizia con un anticipo di <strong>400€</strong> per avviare i lavori,
+              e salda il resto in <strong>3 rate mensili da 300€</strong>.
+            </p>
+          </div>
+
+          <p style="font-weight:700; font-size:15px; margin-bottom:16px; color:#333;">Cosa creeremo insieme:</p>
+          <ul style="list-style:none; padding:0; margin-bottom:40px;">
+            {[
+              "Intervista di allineamento per estrarre la tua vera essenza",
+              "Design visivo su misura (Palette, Tipografia, Spaziatura)",
+              "Sviluppo del sito con tecnologia ad alte prestazioni — Zero Manutenzione",
+              "Fino a 5 pagine (Es. Home, Chi Sono, Come ti aiuto, Contatti, Blog)",
+              "Sistema email protetto anti-spam",
+              "Ottimizzazione SEO di base e struttura AI-Ready"
+            ].map(item => (
+              <li style="display:flex; gap:12px; align-items:flex-start; padding:10px 0; border-bottom:1px solid #f0f0f0; font-size:15px; color:#333; line-height:1.6;">
+                <span style="color:#DC2626; font-weight:800; flex-shrink:0;">✓</span>
+                {item}
+              </li>
+            ))}
+          </ul>
+
+          <a href="https://wa.me/393337498922?text=Ciao%20Marco,%20sono%20interessato%20al%20servizio%20Sito%20Web%20Premium"
+            style="display:block; text-align:center; background:#DC2626; color:#fff; font-weight:800; font-size:17px; padding:20px; text-decoration:none; border-radius:8px;">
+            Fissiamo una chiacchierata →
+          </a>
+          <p style="text-align:center; color:#888; font-size:13px; margin-top:12px;">Nessun impegno. Solo per capire se siamo in sintonia.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── FAQ ───────────────────────────────────────────────────────── -->
+    <section style="background:#fff; padding:80px 24px;">
+      <div style="max-width:680px; margin:0 auto;">
+        <p style="text-align:center; color:#DC2626; font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase; margin-bottom:12px;">Dubbi o domande?</p>
+        <h2 style="text-align:center; font-size:clamp(24px,3vw,36px); font-weight:800; margin-bottom:48px;">Sono qui</h2>
+        <div>
+          {faq.map(item => (
+            <div style="border-bottom:2px solid #f0f0f0; padding:24px 0;">
+              <p style="font-weight:700; font-size:16px; color:#0D0404; margin-bottom:10px;">› {item.q}</p>
+              <p style="color:#555; font-size:15px; line-height:1.75;">{item.a}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ── CTA FINALE ─────────────────────────────────────────────────── -->
+    <section style="background:#0D0404; color:#fff; padding:80px 24px; text-align:center;">
+      <div style="max-width:560px; margin:0 auto;">
+        <h2 style="font-size:clamp(26px,3vw,40px); font-weight:900; margin-bottom:16px;">Pronto a farti trovare<br>nel tuo spazio autentico?</h2>
+        <p style="color:#999; font-size:16px; line-height:1.7; margin-bottom:44px;">
+          Prendo a cuore pochi progetti al mese per dedicare la giusta energia a ciascuno.
+          Scrivimi per capire se siamo in sintonia.
+        </p>
+        <a href="https://wa.me/393337498922?text=Ciao%20Marco,%20sono%20interessato%20al%20servizio%20Sito%20Web%20Premium"
+          style="display:inline-block; background:#DC2626; color:#fff; font-weight:800; font-size:17px; padding:20px 44px; text-decoration:none; border-radius:4px;">
+          Scrivimi su WhatsApp →
+        </a>
+      </div>
+    </section>
+
+  </div>
+</BaseLayout>
+
+<style>
+  .sw-page {
+    overflow-x: hidden;
+  }
+
+  .sw-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  @media (max-width: 768px) {
+    .sw-grid {
+      display: block !important;
+    }
+    .sw-grid > * {
+      width: 100% !important;
+      margin-bottom: 20px;
+    }
+    .sw-grid > *:last-child {
+      margin-bottom: 0;
+    }
+  }
+</style>
