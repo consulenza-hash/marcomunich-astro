@@ -34,6 +34,37 @@ const stack = [
   },
 ];
 
+const problems = [
+  {
+    title: "Cosa ci metto dentro?",
+    body: "Non sanno cosa scrivere nella pagina chi sono, nella pagina servizi, nell'about. Perché non hanno ancora chiarito il loro posizionamento. Il sito diventa lo specchio di quella confusione: pagine generiche, frasi vaghe, tono da depliant."
+  },
+  {
+    title: "Un sito uguale a mille altri.",
+    body: "Affidano il sito a qualcuno senza sapere cosa vogliono davvero. Il risultato è un sito che assomiglia a mille altri. Oppure usano un template bello graficamente ma che non dice nulla di specifico su di loro."
+  },
+  {
+    title: "Il cantiere permanente.",
+    body: "Il sito diventa un work in progress infinito. La palette non va bene, il font è da sistemare, la foto non convince. Passa un anno e il sito non è mai online — o è online ma non viene aggiornato perché «manca ancora qualcosa»."
+  },
+  {
+    title: "Il cliente non capisce cosa vendi.",
+    body: "Le pagine servizi elencano nomi di tecniche e approcci che il cliente non conosce: «sessioni di coaching sistemico», «percorsi di bioenergetica integrata». Il cliente cerca qualcuno che risolva il suo problema, non una nomenclatura di metodi."
+  },
+  {
+    title: "SEO come pensiero magico.",
+    body: "Credono che mettere su il sito faccia arrivare traffico automaticamente. Oppure si affidano a chi dice «ti posiziono su Google» senza capire che senza contenuti e senza traffico pregresso è una promessa vuota nel breve periodo."
+  },
+  {
+    title: "Il sito non vende al posto tuo.",
+    body: "Pensano che il sito «convinca» il cliente. Ma nel settore olistico funziona come conferma, non come primo contatto. Le persone arrivano al sito dopo aver già incontrato la persona da qualche altra parte — online o di persona."
+  },
+  {
+    title: "L'investimento nel momento sbagliato.",
+    body: "Spendono 3–5k in un sito prima di avere 30 contenuti scritti, una lista email, o anche solo una presenza social stabile. Il sito da solo non porta niente, e quando lo capiscono si sentono fregati."
+  },
+];
+
 const faq = [
   {
     q: "Non sono bravo a scrivere i testi, mi aiuti?",
@@ -93,25 +124,24 @@ const faq = [
     </section>
 
     <!-- ── PROBLEMA ───────────────────────────────────────────────────── -->
-    <section class="sw-section sw-warm">
-      <div class="sw-container sw-narrow sw-center-text">
-        <span class="sw-label">Il problema</span>
-        <h2 class="sw-h2">La tecnologia non dovrebbe<br>prosciugarti l'energia</h2>
-        <p class="sw-body-lg">
-          Hai fatto un lavoro profondo su te stesso e sui tuoi talenti. Eppure, quando si tratta
-          di metterti online, ti scontri con piattaforme lente, plugin da aggiornare e siti
-          che non rispecchiano davvero chi sei.
-        </p>
-        <ul class="sw-list">
-          {[
-            "La tua presenza online non riflette l'anima del tuo lavoro",
-            "Aggiornamenti continui e rischio di crash ti tolgono il focus",
-            "Email di potenziali clienti che finiscono nello spam senza che tu lo sappia",
-            "Un sito lento che allontana le persone prima ancora che leggano una riga",
-          ].map(item => (
-            <li><span class="sw-arrow">›</span>{item}</li>
+    <section class="sw-section sw-prob-section">
+      <div class="sw-container">
+        <div class="sw-prob-header">
+          <span class="sw-label">Il problema (vero)</span>
+          <h2 class="sw-h2">Non è un problema tecnico.<br><em style="font-style:italic; color:var(--sw-accent);">È un problema di chiarezza.</em></h2>
+          <p class="sw-body-lg sw-prob-intro">
+            Quasi nessuno che lavora nel settore olistico ha un problema di tecnologia. Il problema è a monte — e il sito lo amplifica.
+          </p>
+        </div>
+        <div class="sw-prob-grid">
+          {problems.map((p, i) => (
+            <div class="sw-prob-item">
+              <span class="sw-prob-num">0{i + 1}</span>
+              <h3 class="sw-prob-title">{p.title}</h3>
+              <p class="sw-prob-body">{p.body}</p>
+            </div>
           ))}
-        </ul>
+        </div>
       </div>
     </section>
 
@@ -596,7 +626,21 @@ const faq = [
   .sw-btn-dark      { display: block; text-align: center; background: var(--sw-accent); color: #fff; font-weight: 700; font-size: 17px; padding: 20px; text-decoration: none; border-radius: 8px; transition: background .2s; }
   .sw-btn-dark:hover { background: #4A6B4E; }
 
-  /* ── PROBLEM LIST ─────────────────────────────────────────────────── */
+  /* ── PROBLEMA ─────────────────────────────────────────────────────── */
+  .sw-prob-section  { background: #F0EDE6; padding: 80px 24px; }
+  .sw-prob-header   { max-width: 640px; margin-bottom: 56px; }
+  .sw-prob-intro    { max-width: 560px; }
+  .sw-prob-grid     { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+  .sw-prob-item     { padding: 32px 40px 32px 0; border-bottom: 1px solid var(--sw-warm-border); }
+  .sw-prob-item:nth-child(odd)  { padding-right: 48px; border-right: 1px solid var(--sw-warm-border); }
+  .sw-prob-item:nth-child(even) { padding-left: 48px; padding-right: 0; }
+  .sw-prob-item:nth-last-child(-n+2) { border-bottom: none; }
+  .sw-prob-item:last-child:nth-child(odd) { border-right: none; }
+  .sw-prob-num      { display: block; font-family: var(--ff-display); font-size: 13px; font-weight: 700; color: var(--sw-accent); letter-spacing: 2px; margin-bottom: 10px; opacity: .7; }
+  .sw-prob-title    { font-family: var(--ff-display); font-size: 21px; font-weight: 700; color: var(--sw-text); margin-bottom: 10px; line-height: 1.2; }
+  .sw-prob-body     { color: #5a5550; font-size: 14px; line-height: 1.8; }
+
+  /* ── LEGACY LIST (non più usato, lasciato per sicurezza) ───────────── */
   .sw-list          { list-style: none; padding: 0; text-align: left; }
   .sw-list li       { display: flex; gap: 14px; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid var(--sw-warm-border); font-size: 16px; color: #333; line-height: 1.6; }
   .sw-arrow         { color: var(--sw-accent); font-weight: 800; flex-shrink: 0; margin-top: 2px; }
@@ -685,6 +729,9 @@ const faq = [
 
   /* ── MOBILE ───────────────────────────────────────────────────────── */
   @media (max-width: 768px) {
+    .sw-prob-grid              { grid-template-columns: 1fr !important; }
+    .sw-prob-item              { padding: 32px 0 !important; border-right: none !important; border-bottom: 1px solid var(--sw-warm-border) !important; }
+    .sw-prob-item:last-child   { border-bottom: none !important; }
     .mock-featured-wrap        { grid-template-columns: 1fr !important; gap: 28px !important; padding: 24px !important; }
     .mock-grid                 { grid-template-columns: 1fr 1fr !important; gap: 20px !important; }
     .sw-tech-grid              { grid-template-columns: 1fr !important; }
