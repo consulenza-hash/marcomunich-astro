@@ -142,6 +142,18 @@ const faq = [
             </div>
           ))}
         </div>
+        </div>
+        
+        <!-- TRANSIZIONE: Il ponte tra Problema e Soluzione Tecnica -->
+        <div class="sw-prob-bridge">
+          <p class="sw-bridge-text">
+            <strong>La tecnologia serve solo a una cosa: proteggere il tuo messaggio.</strong><br>
+            Proprio perché il tuo vero lavoro è scavare in profondità e connetterti con le persone, non puoi permetterti di sprecare energia dietro a plugin da aggiornare, siti hackerati o caricamenti lenti.
+          </p>
+          <p class="sw-bridge-text">
+            Ho scelto uno stack tecnico estremo (senza database, senza CMS tradizionali) esattamente per questo motivo: costruire una casa digitale solida e silenziosa, che non ti chieda mai manutenzione. Tu lavori sul contenuto, il sito fa il resto.
+          </p>
+        </div>
       </div>
     </section>
 
@@ -639,6 +651,10 @@ const faq = [
   .sw-prob-num      { display: block; font-family: var(--ff-display); font-size: 13px; font-weight: 700; color: var(--sw-accent); letter-spacing: 2px; margin-bottom: 10px; opacity: .7; }
   .sw-prob-title    { font-family: var(--ff-display); font-size: 21px; font-weight: 700; color: var(--sw-text); margin-bottom: 10px; line-height: 1.2; }
   .sw-prob-body     { color: #5a5550; font-size: 14px; line-height: 1.8; }
+  .sw-prob-bridge   { max-width: 640px; margin: 48px auto 0; padding: 40px; background: rgba(255,255,255,0.7); border-radius: 12px; border: 1px solid var(--sw-warm-border); text-align: center; }
+  .sw-bridge-text   { color: var(--sw-text); font-size: 16px; line-height: 1.7; margin-bottom: 20px; }
+  .sw-bridge-text:last-child { margin-bottom: 0; }
+  .sw-bridge-text strong { font-family: var(--ff-display); font-size: 20px; font-weight: 700; color: var(--sw-accent); display: block; margin-bottom: 12px; }
 
   /* ── LEGACY LIST (non più usato, lasciato per sicurezza) ───────────── */
   .sw-list          { list-style: none; padding: 0; text-align: left; }
