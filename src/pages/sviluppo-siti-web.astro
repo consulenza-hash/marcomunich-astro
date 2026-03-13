@@ -483,6 +483,27 @@ const faq = [
             ))}
           </ul>
 
+          <!-- ADD-ON: AI Writing Assistant -->
+          <div class="sw-addon-box">
+            <div class="sw-addon-header">
+              <span class="sw-addon-badge">Add-on opzionale</span>
+              <span class="sw-addon-icon">🤖</span>
+            </div>
+            <p class="sw-addon-title">AI Writing Assistant</p>
+            <p class="sw-addon-desc">
+              Il sito può completare i tuoi articoli in automatico. Tu scrivi solo il nucleo
+              del tuo ragionamento — un'idea, un punto di vista, una frase — e l'AI lo sviluppa
+              nel tuo tono di voce in un articolo completo, pronto per la pubblicazione.
+            </p>
+            <ul class="sw-addon-list">
+              <li>✦ Addestrato sul tuo tono di voce e sul tuo pubblico</li>
+              <li>✦ Integrato direttamente nel pannello del sito</li>
+              <li>✦ Powered by Claude API (Anthropic)</li>
+              <li>✦ <strong>Costo a consumo</strong> — paghi solo i token usati, nessun abbonamento fisso</li>
+            </ul>
+            <p class="sw-addon-note">Disponibile come aggiunta al pacchetto base. Ne parliamo in chiamata.</p>
+          </div>
+
           <a href="https://wa.me/393337498922?text=Ciao%20Marco,%20sono%20interessato%20al%20servizio%20Sito%20Web%20Premium"
             class="sw-btn-dark">
             Fissiamo una chiacchierata →
@@ -618,6 +639,17 @@ const faq = [
   .sw-includes li   { display: flex; gap: 12px; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid #ede9e4; font-size: 15px; color: #333; line-height: 1.6; }
   .sw-check         { color: var(--sw-accent); font-weight: 800; flex-shrink: 0; }
   .sw-cta-note      { text-align: center; color: #888; font-size: 13px; margin-top: 12px; }
+
+  /* ── ADD-ON BOX ───────────────────────────────────────────────────── */
+  .sw-addon-box     { background: #F8F5F0; border: 1.5px dashed var(--sw-warm-border); border-radius: 12px; padding: 24px; margin-bottom: 32px; }
+  .sw-addon-header  { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+  .sw-addon-badge   { display: inline-block; background: #fff; border: 1px solid var(--sw-warm-border); color: var(--sw-muted); font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 3px 10px; border-radius: 100px; }
+  .sw-addon-icon    { font-size: 20px; }
+  .sw-addon-title   { font-family: var(--ff-display); font-size: 20px; font-weight: 700; color: var(--sw-text); margin-bottom: 10px; }
+  .sw-addon-desc    { color: #555; font-size: 14px; line-height: 1.75; margin-bottom: 14px; }
+  .sw-addon-list    { list-style: none; padding: 0; margin-bottom: 14px; }
+  .sw-addon-list li { color: #444; font-size: 13px; padding: 4px 0; line-height: 1.5; }
+  .sw-addon-note    { color: var(--sw-muted); font-size: 12px; font-style: italic; }
 
   /* ── FAQ ──────────────────────────────────────────────────────────── */
   .sw-faq-item      { border-bottom: 2px solid var(--sw-warm-border); padding: 24px 0; }
