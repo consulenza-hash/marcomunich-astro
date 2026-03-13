@@ -78,7 +78,8 @@ const faq = [
           <em>Costruiti per durare,<br class="sw-br-mobile"> progettati per te.</em>
         </h1>
         <p class="sw-hero-desc">
-          Sviluppo siti web statici con <strong>Astro 5</strong> — veloci, sicuri, senza manutenzione.
+          Sviluppo siti web ad alte prestazioni — <strong>Astro 5</strong> per siti statici puri,
+          <strong>Vite + CMS ibrido</strong> per chi vuole gestire i contenuti in autonomia.
           Non un template pre-fatto: ogni progetto è un design system su misura costruito
           intorno alla tua essenza e al tuo messaggio.
         </p>
@@ -120,8 +121,8 @@ const faq = [
         <span class="sw-label sw-center-text" style="display:block;">Come è costruito</span>
         <h2 class="sw-h2 sw-center-text">Lo Stack Tecnico</h2>
         <p class="sw-body-lg sw-center-text" style="max-width:580px; margin-left:auto; margin-right:auto; margin-bottom:48px;">
-          Non WordPress, non Wix. Un'architettura moderna costruita per performare,
-          resistere e farti trovare — sia dagli utenti che dalle AI.
+          Non WordPress, non Wix. La tecnologia si adatta al progetto — ma sempre
+          moderna, performante e costruita per durare nel tempo.
         </p>
         <div class="sw-tech-grid">
           {stack.map(s => (
@@ -163,13 +164,69 @@ const faq = [
     <!-- ── STILI / MOCKUP ────────────────────────────────────────────── -->
     <section class="sw-section" style="background:#fff;">
       <div class="sw-container">
-        <span class="sw-label sw-center-text" style="display:block;">Il design si adatta a te</span>
+        <span class="sw-label sw-center-text" style="display:block;">Stili e Progetti Reali</span>
         <h2 class="sw-h2 sw-center-text">Ogni progetto ha la sua frequenza</h2>
         <p class="sw-body-lg sw-center-text" style="max-width:560px; margin-left:auto; margin-right:auto; margin-bottom:56px;">
-          Non ho uno stile fisso. Lavoro con te per trovare l'estetica che risuona con il tuo
-          messaggio — questi sono quattro esempi di direzioni che posso realizzare.
+          Non ho uno stile fisso e non lavoro con un solo stack tecnologico.
+          Un esempio reale, e quattro direzioni estetiche che posso realizzare.
         </p>
 
+        <!-- CASO REALE: Valentina Russo BG5 -->
+        <div class="mock-featured-wrap">
+          <div class="mock-browser">
+            <div class="mock-chrome">
+              <span class="mock-dot" style="background:#ff5f57;"></span>
+              <span class="mock-dot" style="background:#febc2e;"></span>
+              <span class="mock-dot" style="background:#28c840;"></span>
+              <div class="mock-url">valentinarussobg5.com</div>
+            </div>
+            <div class="mock-screen" style="background:#FBF5F0;">
+              <div style="background:#fff; border-bottom:1px solid #ede8e4; padding:8px 14px; display:flex; align-items:center; gap:8px;">
+                <span style="font-family:Georgia,serif; font-size:11px; font-weight:700; color:#2C1810; letter-spacing:.5px;">Valentina Russo</span>
+                <span style="margin-left:auto; font-size:8px; color:#9B8EA6; font-weight:600; letter-spacing:.3px;">Privati · Aziende · Contatti</span>
+              </div>
+              <div style="display:grid; grid-template-columns:1fr 1fr;">
+                <div style="background:#FBF5F0; padding:18px 14px 20px;">
+                  <p style="color:#C77B8A; font-size:7px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:6px;">PERCORSO PRIVATI</p>
+                  <p style="color:#2C1810; font-size:12px; font-weight:700; line-height:1.3; margin-bottom:10px; font-family:Georgia,serif; font-style:italic;">Scopri il tuo<br>Human Design</p>
+                  <div style="display:inline-block; background:#C77B8A; color:#fff; font-size:7px; font-weight:700; padding:5px 10px; border-radius:20px;">Scopri →</div>
+                </div>
+                <div style="background:#1C2A4A; padding:18px 14px 20px;">
+                  <p style="color:#2A9E9E; font-size:7px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:6px;">PERCORSO AZIENDE</p>
+                  <p style="color:#fff; font-size:12px; font-weight:800; line-height:1.3; margin-bottom:10px;">Team<br>Engineering<br>BG5</p>
+                  <div style="display:inline-block; background:#C9A84C; color:#1C2A4A; font-size:7px; font-weight:700; padding:5px 10px; border-radius:2px; letter-spacing:.5px;">PRENOTA</div>
+                </div>
+              </div>
+              <div style="background:#fff; padding:8px 14px; display:flex; gap:8px; border-top:1px solid #ede8e4;">
+                <div style="height:4px; background:#9B8EA6; border-radius:2px; width:50px; opacity:.35;"></div>
+                <div style="height:4px; background:#C9A84C; border-radius:2px; width:35px; opacity:.35; margin-left:auto;"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mock-featured-info">
+            <span class="mock-case-badge">Caso Reale</span>
+            <h3 class="mock-case-title">Valentina Russo BG5</h3>
+            <p class="mock-case-desc">
+              Human Design Coach &amp; Business Strategist. Due percorsi utente completamente separati —
+              area <strong>Privati</strong> (Old Rose, Mauve, Gold) e area <strong>Corporate</strong>
+              (Navy, Teal, Antracite) — ognuno con il proprio design system "Mercury" dedicato.
+            </p>
+            <div class="mock-case-stack">
+              <span>Grav CMS</span>
+              <span>Vite MPA</span>
+              <span>GitHub Actions CI/CD</span>
+              <span>Schema.org AEO</span>
+              <span>Forensic Mailer</span>
+            </div>
+            <a href="https://valentinarussobg5.com" target="_blank" rel="noopener" class="mock-case-link">
+              Vedi il sito →
+            </a>
+          </div>
+        </div>
+
+        <!-- STILI PERSONALIZZABILI -->
+        <p class="sw-label sw-center-text" style="display:block; margin-bottom:32px;">Stili personalizzabili</p>
         <div class="mock-grid">
 
           <!-- STILE 1: Olistica/Calore -->
@@ -416,7 +473,7 @@ const faq = [
             {[
               "Intervista di allineamento per estrarre la tua vera essenza",
               "Design System su misura (Palette, Tipografia, Griglia 8pt)",
-              "Sviluppo con Astro 5 — statico, velocissimo, zero manutenzione",
+              "Sviluppo con tecnologia moderna — Astro 5 o Vite+CMS in base alle esigenze",
               "Fino a 5 pagine (Home, Chi Sono, Servizi, Contatti, Blog)",
               "Forensic Mailer — sistema email anti-spam costruito su misura",
               "SEO + AEO: Schema.org (Person, Service, FAQPage) per Google e AI",
@@ -567,6 +624,17 @@ const faq = [
   .sw-faq-q         { font-family: var(--ff-display); font-weight: 600; font-size: 18px; color: var(--sw-text); margin-bottom: 10px; }
   .sw-faq-a         { color: #555; font-size: 15px; line-height: 1.75; }
 
+  /* ── FEATURED CASE ────────────────────────────────────────────────── */
+  .mock-featured-wrap  { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; margin-bottom: 64px; padding: 40px; background: var(--sw-warm); border-radius: 16px; border: 1px solid var(--sw-warm-border); }
+  .mock-featured-info  { }
+  .mock-case-badge     { display: inline-block; background: var(--sw-accent-lt); color: var(--sw-accent); font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 12px; border-radius: 100px; margin-bottom: 16px; }
+  .mock-case-title     { font-family: var(--ff-display); font-size: 28px; font-weight: 700; color: var(--sw-text); margin-bottom: 12px; line-height: 1.2; }
+  .mock-case-desc      { color: #555; font-size: 15px; line-height: 1.75; margin-bottom: 20px; }
+  .mock-case-stack     { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+  .mock-case-stack span { background: #fff; border: 1px solid var(--sw-warm-border); color: var(--sw-text); font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 4px; }
+  .mock-case-link      { display: inline-block; color: var(--sw-accent); font-weight: 700; font-size: 15px; text-decoration: none; border-bottom: 2px solid var(--sw-accent); padding-bottom: 2px; transition: opacity .2s; }
+  .mock-case-link:hover { opacity: .7; }
+
   /* ── MOCKUP ───────────────────────────────────────────────────────── */
   .mock-grid        { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; align-items: start; }
   .mock-wrap        { display: flex; flex-direction: column; gap: 16px; }
@@ -585,6 +653,7 @@ const faq = [
 
   /* ── MOBILE ───────────────────────────────────────────────────────── */
   @media (max-width: 768px) {
+    .mock-featured-wrap        { grid-template-columns: 1fr !important; gap: 28px !important; padding: 24px !important; }
     .mock-grid                 { grid-template-columns: 1fr 1fr !important; gap: 20px !important; }
     .sw-tech-grid              { grid-template-columns: 1fr !important; }
     .sw-tech-grid > *          { width: 100% !important; }
