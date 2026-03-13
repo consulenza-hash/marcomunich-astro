@@ -448,6 +448,145 @@ const faq = [
           </div>
 
         </div><!-- /mock-grid -->
+
+        <!-- ALTRI AMBIENTI -->
+        <div class="sw-env-header">
+          <p class="sw-label" style="display:block; margin-bottom:8px;">Anche con altri ambienti</p>
+          <p class="sw-env-sub">Non ogni progetto ha bisogno della stessa tecnologia. Scelgo lo stack in base a chi sei e a come lavori.</p>
+        </div>
+        <div class="mock-env-grid">
+
+          <!-- ENV 1: Grav CMS + Vite MPA -->
+          <div class="mock-env-wrap">
+            <div class="mock-browser">
+              <div class="mock-chrome">
+                <span class="mock-dot" style="background:#ff5f57;"></span>
+                <span class="mock-dot" style="background:#febc2e;"></span>
+                <span class="mock-dot" style="background:#28c840;"></span>
+                <div class="mock-url">admin.iltuosito.com</div>
+              </div>
+              <div class="mock-screen" style="background:#F4F4F2; display:flex; gap:0; min-height:120px;">
+                <!-- CMS sidebar -->
+                <div style="width:38px; background:#1E2025; padding:8px 0; display:flex; flex-direction:column; gap:6px; align-items:center;">
+                  <div style="width:18px; height:18px; background:#4A9EFF; border-radius:4px;"></div>
+                  <div style="width:16px; height:3px; background:rgba(255,255,255,.15); border-radius:2px; margin-top:4px;"></div>
+                  {["#fff","rgba(255,255,255,.3)","rgba(255,255,255,.3)","rgba(255,255,255,.3)"].map(c => (
+                    <div style={`width:20px; height:20px; background:${c === "#fff" ? "rgba(74,158,255,.25)" : "transparent"}; border-radius:4px; display:flex; align-items:center; justify-content:center;`}>
+                      <div style={`width:10px; height:2px; background:${c}; border-radius:1px;`}></div>
+                    </div>
+                  ))}
+                </div>
+                <!-- Main content -->
+                <div style="flex:1; padding:10px 12px;">
+                  <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+                    <span style="font-size:8px; font-weight:700; color:#1E2025;">Articoli del Blog</span>
+                    <div style="background:#4A9EFF; color:#fff; font-size:6px; font-weight:700; padding:2px 7px; border-radius:3px;">+ Nuovo</div>
+                  </div>
+                  {[
+                    {t:"Come scegliere il tuo coach", d:"12 Mar"},
+                    {t:"I 5 errori del percorso", d:"8 Mar"},
+                    {t:"Cos'è il metodo BG5", d:"2 Mar"},
+                  ].map(r => (
+                    <div style="display:flex; align-items:center; gap:6px; padding:5px 0; border-bottom:1px solid #E8E8E4;">
+                      <div style="width:4px; height:4px; background:#4A9EFF; border-radius:50%; flex-shrink:0;"></div>
+                      <span style="font-size:7px; color:#333; flex:1;">{r.t}</span>
+                      <span style="font-size:6px; color:#999;">{r.d}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div class="mock-meta">
+              <p class="mock-style">Grav CMS + Vite MPA</p>
+              <p class="mock-env-when"><strong>Quando:</strong> Vuoi pubblicare contenuti in autonomia senza toccare codice, ma il sito deve restare veloce e senza database.</p>
+              <p class="mock-kw">Flat-file · Pannello admin · No database</p>
+            </div>
+          </div>
+
+          <!-- ENV 2: Ghost -->
+          <div class="mock-env-wrap">
+            <div class="mock-browser">
+              <div class="mock-chrome">
+                <span class="mock-dot" style="background:#ff5f57;"></span>
+                <span class="mock-dot" style="background:#febc2e;"></span>
+                <span class="mock-dot" style="background:#28c840;"></span>
+                <div class="mock-url">newsletter.iltuosito.com</div>
+              </div>
+              <div class="mock-screen" style="background:#fff;">
+                <div class="mock-nav" style="background:#15171A; color:#fff; padding-top:7px; padding-bottom:7px;">
+                  <span style="font-weight:800; font-size:10px; letter-spacing:.5px;">Marco M. · Newsletter</span>
+                  <span style="font-size:9px; margin-left:auto; background:#FF3366; color:#fff; padding:2px 8px; border-radius:20px; font-weight:700;">Iscriviti</span>
+                </div>
+                <div class="mock-body" style="background:#15171A; padding:14px 16px 16px;">
+                  <p style="color:#FF3366; font-size:7px; font-weight:700; letter-spacing:2px; text-transform:uppercase; margin-bottom:5px;">ULTIMA USCITA</p>
+                  <p style="color:#fff; font-size:11px; font-weight:700; line-height:1.3; margin-bottom:8px;">Il problema con<br>i siti "quasi pronti"</p>
+                  <div style="display:flex; gap:8px; align-items:center;">
+                    <div style="width:16px; height:16px; background:#FF3366; border-radius:50%;"></div>
+                    <span style="color:rgba(255,255,255,.5); font-size:7px;">847 lettori · Gratis</span>
+                  </div>
+                </div>
+                <div style="padding:10px 14px; display:flex; flex-direction:column; gap:6px;">
+                  {[1,2].map(() => (
+                    <div style="display:flex; gap:8px; align-items:center; padding:5px 0; border-bottom:1px solid #F0F0F0;">
+                      <div style="width:28px; height:20px; background:#F4F4F4; border-radius:3px; flex-shrink:0;"></div>
+                      <div style="flex:1;">
+                        <div style="height:4px; background:#E8E8E8; border-radius:2px; width:80%; margin-bottom:3px;"></div>
+                        <div style="height:3px; background:#F4F4F4; border-radius:2px; width:50%;"></div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div class="mock-meta">
+              <p class="mock-style">Ghost</p>
+              <p class="mock-env-when"><strong>Quando:</strong> Hai una newsletter attiva o vuoi costruirne una, vendi membership o accessi premium, e il contenuto è il cuore del tuo business.</p>
+              <p class="mock-kw">Newsletter · Membership · Publishing</p>
+            </div>
+          </div>
+
+          <!-- ENV 3: Framer -->
+          <div class="mock-env-wrap">
+            <div class="mock-browser">
+              <div class="mock-chrome">
+                <span class="mock-dot" style="background:#ff5f57;"></span>
+                <span class="mock-dot" style="background:#febc2e;"></span>
+                <span class="mock-dot" style="background:#28c840;"></span>
+                <div class="mock-url">iltuosito.com</div>
+              </div>
+              <div class="mock-screen" style="background:#0A0A0A; overflow:hidden; position:relative;">
+                <!-- Animated blobs suggestion -->
+                <div style="position:absolute; top:-20px; right:-20px; width:80px; height:80px; background:radial-gradient(circle, rgba(120,80,255,.4) 0%, transparent 70%); border-radius:50%;"></div>
+                <div style="position:absolute; bottom:10px; left:-10px; width:60px; height:60px; background:radial-gradient(circle, rgba(0,200,180,.3) 0%, transparent 70%); border-radius:50%;"></div>
+                <div class="mock-nav" style="background:transparent; border-bottom:1px solid rgba(255,255,255,.08); color:#fff;">
+                  <span style="font-weight:700; font-size:10px; background:linear-gradient(90deg,#7850FF,#00C8B4); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">Studio Ada</span>
+                  <span style="font-size:9px; margin-left:auto; color:rgba(255,255,255,.4);">Work · About · Contact</span>
+                </div>
+                <div class="mock-body" style="background:transparent; padding:16px 14px 14px; position:relative; z-index:1;">
+                  <div style="display:inline-block; border:1px solid rgba(120,80,255,.4); color:rgba(120,80,255,.9); font-size:6px; font-weight:700; padding:3px 8px; border-radius:20px; letter-spacing:1px; margin-bottom:8px; text-transform:uppercase;">Creative Studio</div>
+                  <p style="color:#fff; font-size:13px; font-weight:800; line-height:1.15; letter-spacing:-0.5px; margin-bottom:10px;">Identità visiva<br><span style="background:linear-gradient(90deg,#7850FF,#00C8B4); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">che si muove.</span></p>
+                  <div style="display:flex; gap:6px;">
+                    <div style="background:linear-gradient(90deg,#7850FF,#00C8B4); color:#fff; font-size:7px; font-weight:700; padding:5px 10px; border-radius:4px;">Vedi i progetti →</div>
+                  </div>
+                </div>
+                <div style="padding:8px 14px; display:flex; gap:8px;">
+                  {[
+                    {c1:"#7850FF",c2:"rgba(120,80,255,.1)"},
+                    {c1:"#00C8B4",c2:"rgba(0,200,180,.1)"},
+                  ].map(c => (
+                    <div style={`flex:1; background:${c.c2}; border:1px solid ${c.c1}22; border-radius:6px; height:28px;`}></div>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div class="mock-meta">
+              <p class="mock-style">Framer</p>
+              <p class="mock-env-when"><strong>Quando:</strong> L'identità visiva è il tuo prodotto, vuoi animazioni fluide e un sito che sembri un'esperienza interattiva — senza scrivere codice.</p>
+              <p class="mock-kw">Animazioni · Visual identity · No-code</p>
+            </div>
+          </div>
+
+        </div><!-- /mock-env-grid -->
       </div>
     </section>
 
@@ -734,6 +873,13 @@ const faq = [
 
   /* ── MOCKUP ───────────────────────────────────────────────────────── */
   .mock-grid        { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; align-items: start; }
+
+  /* ── ALTRI AMBIENTI ───────────────────────────────────────────────── */
+  .sw-env-header    { margin-top: 64px; margin-bottom: 32px; border-top: 1px solid var(--sw-warm-border); padding-top: 48px; }
+  .sw-env-sub       { color: var(--sw-muted); font-size: 15px; max-width: 480px; margin-top: 4px; }
+  .mock-env-grid    { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; align-items: start; }
+  .mock-env-wrap    { display: flex; flex-direction: column; gap: 16px; }
+  .mock-env-when    { font-size: 12px; color: #555; line-height: 1.65; }
   .mock-wrap        { display: flex; flex-direction: column; gap: 16px; }
   .mock-browser     { border-radius: 10px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,.12), 0 2px 8px rgba(0,0,0,.08); border: 1px solid rgba(0,0,0,.08); }
   .mock-chrome      { background: #E8E4E0; padding: 7px 10px; display: flex; align-items: center; gap: 5px; }
@@ -756,6 +902,7 @@ const faq = [
     .sw-prob-item:last-child   { border-bottom: none !important; }
     .mock-featured-wrap        { grid-template-columns: 1fr !important; gap: 28px !important; padding: 24px !important; }
     .mock-grid                 { grid-template-columns: 1fr 1fr !important; gap: 20px !important; }
+    .mock-env-grid             { grid-template-columns: 1fr !important; }
     .sw-tech-grid              { grid-template-columns: 1fr !important; }
     .sw-tech-grid > *          { width: 100% !important; }
     .sw-vs-wrap                { grid-template-columns: 1fr !important; }
