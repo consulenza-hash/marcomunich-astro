@@ -2,8 +2,10 @@ import { config, collection, fields } from '@keystatic/core';
 
 export default config({
   storage: {
-    kind: 'github',
-    repo: 'consulenza-hash/marcomunich-astro',
+    kind: 'cloud',
+  },
+  cloud: {
+    project: 'marcomunich/marcomunich-com',
   },
 
   collections: {
