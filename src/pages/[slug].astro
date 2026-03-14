@@ -17,7 +17,7 @@ const { slug } = Astro.params;
 
 if (!slug) return Astro.redirect('/404', 302);
 
-const token = import.meta.env.GITHUB_TOKEN;
+const token = import.meta.env.GITHUB_TOKEN ?? process.env.GITHUB_TOKEN;
 const art   = await fetchArticolo(slug as string, token ?? undefined);
 
 if (!art) {
