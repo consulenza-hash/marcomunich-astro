@@ -5,7 +5,7 @@ export default config({
     kind: 'cloud',
   },
   cloud: {
-    project: 'marcomunich/marcomunich-com',
+    project: 'marcomunich-com/marcomunich-com',
   },
 
   collections: {
