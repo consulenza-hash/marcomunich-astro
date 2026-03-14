@@ -42,51 +42,18 @@ jobs:
       - name: Build
         run: npm run build
 
-      # ── 5. Commit dist/ sul branch deploy ─────────────────────────────────
-      - name: Push to deploy branch
+      # ── 5. Trigger Vercel rebuild (solo per WordPress/manuale — push su main
+      #       è già auto-deployato da Vercel tramite GitHub integration) ────────
+      - name: Trigger Vercel rebuild
+        if: github.event_name != 'push'
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          # Salva il build in una cartella temporanea
-          # Con adapter Vercel i file statici sono in dist/client/
-          cp -r dist/client /tmp/astro-dist
-
-          # Passa al branch deploy
-          git checkout deploy
-
-          # Rimuove tutti i file tranne .git e .gitignore
-          find . -maxdepth 1 \
-            ! -name '.' \
-            ! -name '.git' \
-            ! -name '.gitignore' \
-            -exec rm -rf {} +
-
-          # Copia il build fresco
-          cp -r /tmp/astro-dist/. .
-
-          # Commit e push (solo se ci sono modifiche)
-          git add -A
-          if git diff --cached --quiet; then
-            echo "Nessuna modifica — skip commit"
-          else
-            git commit -m "Auto-deploy: $(date '+%Y-%m-%d %H:%M UTC') — triggered by WordPress"
-            git push origin deploy
-            echo "Deploy branch aggiornato ✓"
-          fi
-
-      # ── 6. Notifica il server via webhook HTTP (no SSH, funziona su Netsons) ──
-      - name: Pull on server
-        run: |
-          HTTP_CODE=$(curl -s -o /tmp/webhook_response.txt -w "%{http_code}" \
+          HTTP_CODE=$(curl -s -o /tmp/vercel_response.txt -w "%{http_code}" \
             -X POST \
-            -H "X-Webhook-Secret: ${{ secrets.WEBHOOK_SECRET }}" \
-            -H "Content-Type: application/json" \
-            "https://marcomunich.com/deploy-webhook.php")
+            "https://api.vercel.com/v1/integrations/deploy/prj_kVRUrVBfghaw1Ng51e3UcMKDWBU5/4eEbccdxYr")
           echo "HTTP $HTTP_CODE"
-          cat /tmp/webhook_response.txt
-          if [ "$HTTP_CODE" != "200" ]; then
-            echo "❌ Webhook fallito (HTTP $HTTP_CODE)"
+          cat /tmp/vercel_response.txt
+          if [ "$HTTP_CODE" != "200" ] && [ "$HTTP_CODE" != "201" ]; then
+            echo "❌ Vercel deploy hook fallito (HTTP $HTTP_CODE)"
             exit 1
           fi
-          echo "✅ Server aggiornato"
+          echo "✅ Vercel rebuild avviato"
