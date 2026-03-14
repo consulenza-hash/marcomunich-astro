@@ -68,7 +68,7 @@ function parseMdocRaw(raw: string, slug: string): Articolo {
     slug,
     titolo:          fm.titolo          ?? slug,
     descrizione:     fm.descrizione     ?? undefined,
-    data:            fm.data            ? String(fm.data) : undefined,
+    data:            fm.data            ? (fm.data instanceof Date ? fm.data.toISOString().split('T')[0] : String(fm.data)) : undefined,
     immagine:        fm.immagine        ?? undefined,
     seo_title:       fm.seo_title       ?? undefined,
     seo_description: fm.seo_description ?? undefined,

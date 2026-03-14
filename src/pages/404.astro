@@ -1,0 +1,21 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+export const prerender = true;
+---
+<BaseLayout
+  title="Pagina non trovata"
+  description="La pagina che stai cercando non esiste o è stata rimossa."
+  currentPath="/404/"
+  noIndex={true}
+>
+  <div style="text-align:center; padding: 80px 20px; max-width: 600px; margin: 0 auto;">
+    <h1 style="font-size: 5rem; font-weight: 900; margin: 0; line-height: 1;">404</h1>
+    <h2 style="font-size: 1.5rem; margin: 16px 0 24px;">Pagina non trovata</h2>
+    <p style="color: #666; margin-bottom: 32px;">
+      La pagina che stai cercando non esiste o è stata rimossa.
+    </p>
+    <a href="/" style="display:inline-block; padding: 12px 28px; background:#111; color:#fff; text-decoration:none; font-weight:700; letter-spacing:0.05em;">
+      TORNA ALLA HOME
+    </a>
+  </div>
+</BaseLayout>

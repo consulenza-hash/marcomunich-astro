@@ -22,7 +22,7 @@ const token = GITHUB_TOKEN;
 const art   = await fetchArticolo(slug as string, token ?? undefined);
 
 if (!art) {
-  return new Response(null, { status: 404 });
+  return Astro.redirect('/404', 302);
 }
 
 const title    = art.titolo;
