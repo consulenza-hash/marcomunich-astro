@@ -8,15 +8,21 @@
  */
 import imageMapping from '../data/imageMapping.json' assert { type: 'json' };
 
-const WP_API    = 'https://marcomunich.com/wp-json/wp/v2';
-const WP_SITE   = 'https://marcomunich.com';
+// DNS punta a Vercel → usiamo l'IP Netsons direttamente a build time
+const WP_IP     = '89.40.173.242';
+const WP_HOST   = 'marcomunich.com';
+const WP_API    = `http://${WP_IP}/wp-json/wp/v2`;
+const WP_SITE   = `http://${WP_IP}`;
 const RM_API    = `${WP_SITE}/wp-json/rankmath/v1/getHead`;
 
 // ── Utility: fetch con gestione errori ────────────────────────────────────────
 async function wpFetch(endpoint, fallback = []) {
   const url = `${WP_API}${endpoint}`;
   try {
-    const res = await fetch(url, { signal: AbortSignal.timeout(30000) });
+    const res = await fetch(url, {
+      signal: AbortSignal.timeout(30000),
+      headers: { 'Host': WP_HOST },
+    });
     if (!res.ok) {
       console.warn(`[WP API] ${res.status} — ${url}`);
       return fallback;
@@ -179,10 +185,14 @@ export function getPrimaryCategory(post) {
  * Restituisce l'HTML grezzo del <head> (string) oppure null se non disponibile.
  */
 export async function getRankMathHead(postSlug) {
-  const targetUrl = `${WP_SITE}/${postSlug}/`;
+  // Rank Math usa l'URL pubblico per lookup SEO: passiamo sempre https://marcomunich.com
+  const targetUrl = `https://marcomunich.com/${postSlug}/`;
   const apiUrl    = `${RM_API}?url=${encodeURIComponent(targetUrl)}`;
   try {
-    const res = await fetch(apiUrl, { signal: AbortSignal.timeout(15000) });
+    const res = await fetch(apiUrl, {
+      signal: AbortSignal.timeout(15000),
+      headers: { 'Host': WP_HOST },
+    });
     if (!res.ok) return null;
     const data = await res.json();
     return data?.success ? (data.head ?? null) : null;
