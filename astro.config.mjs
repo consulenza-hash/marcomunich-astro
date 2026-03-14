@@ -14,7 +14,7 @@ export default defineConfig({
   // Sito in produzione
   site: 'https://marcomunich.com',
 
-  // Static con server routes per Keystatic (Astro 5)
+  // Static (default Astro 5): supporta prerender=false su singole pagine (ex "hybrid")
   output: 'static',
   adapter: vercel(),
 

@@ -2,25 +2,38 @@
 /**
  * PostCard.astro
  * Card articolo usata nel blog e nella sezione "Ultimi Articoli" della homepage.
- * Replica lo stile originale: immagine in cima, titolo link colorato, bottone "LEGGI".
+ * Supporta sia il formato WordPress (legacy) che il formato mdoc (Keystatic).
  *
  * Props:
- *   post: oggetto articolo WP (con _embed=true)
+ *   post: WP post object  OPPURE  { slug, titolo, descrizione, immagine, data }
  */
 import { getFeaturedImageUrl, getPrimaryCategory } from '@lib/wordpress';
 
 const { post } = Astro.props;
 
-const imageUrl  = getFeaturedImageUrl(post, 'medium_large');
-const category  = getPrimaryCategory(post);
-const tags      = post._embedded?.['wp:term']?.[1] ?? [];
-const title     = post.title?.rendered ?? '';
-const slug      = post.slug ?? '';
-const excerpt   = post.excerpt?.rendered ?? '';
+// Formato mdoc: ha il campo "titolo"
+const isMdoc = !!post.titolo;
+
+const title    = isMdoc
+  ? String(post.titolo ?? '')
+  : (post.title?.rendered ?? '');
+
+const slug     = post.slug ?? '';
+
+const imageUrl = isMdoc
+  ? (post.immagine ?? null)                       // già percorso assoluto /images/articoli/...
+  : getFeaturedImageUrl(post, 'medium_large');
+
+const excerpt  = isMdoc
+  ? String(post.descrizione ?? '')
+  : (post.excerpt?.rendered ?? '');
+
+const category  = isMdoc ? null : getPrimaryCategory(post);
+const tags      = isMdoc ? [] : (post._embedded?.['wp:term']?.[1] ?? []);
 
 // Stringhe per la ricerca lato client
 const catNames  = category ? category.name.toLowerCase() : '';
-const tagNames  = tags.map(t => t.name.toLowerCase()).join(' ');
+const tagNames  = tags.map((t: any) => t.name.toLowerCase()).join(' ');
 ---
 
 <article 

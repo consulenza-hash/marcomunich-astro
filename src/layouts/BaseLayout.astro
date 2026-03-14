@@ -28,10 +28,11 @@ const {
   schemaType = 'WebPage',
   datePublished,
   dateModified,
+  canonicalOverride,
 } = Astro.props;
 
 const siteUrl = 'https://marcomunich.com';
-const canonicalUrl = `${siteUrl}${currentPath}`;
+const canonicalUrl = canonicalOverride || `${siteUrl}${currentPath}`;
 const fullTitle = title.includes('Marco Munich') ? title : `${title} - Marco Munich`;
 
 // JSON-LD Schema

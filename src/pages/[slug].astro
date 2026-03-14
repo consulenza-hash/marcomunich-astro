@@ -1,105 +1,77 @@
 ---
 /**
- * [slug].astro
- * Pagina dinamica per ogni articolo del blog.
- * Genera una pagina statica per ciascun articolo preso dalla WP REST API.
+ * [slug].astro  — SSR (prerender = false)
+ *
+ * Legge il file .mdoc direttamente da GitHub raw: l'articolo è online
+ * entro pochi secondi dal salvataggio su Keystatic, senza alcun rebuild.
  *
  * Layout: 2 colonne (contenuto + sidebar) — identico all'originale.
  */
+export const prerender = false;
+
 import BaseLayout from '@layouts/BaseLayout.astro';
-import PostCard from '@components/PostCard.astro';
-import {
-  getAllPosts,
-  getRelatedPosts,
-  getFeaturedImageUrl,
-  getPrimaryCategory,
-  formatDate,
-  getRankMathHead,
-  parseRankMathHead,
-} from '@lib/wordpress';
-import fs from 'node:fs';
-import path from 'node:path';
+import { fetchArticolo, formatDataIt } from '@lib/articoli';
 
-// ── Generazione pagine statiche ───────────────────────────────────────────────
-export async function getStaticPaths() {
-  const posts = await getAllPosts();
+// ── Dati del post ─────────────────────────────────────────────────────────────
+const { slug } = Astro.params;
 
-  // Pre-fetch Rank Math SEO in parallelo (batch da 15) invece di sequenziale
-  // Riduce il tempo di build da ~800s a ~30-60s
-  const BATCH = 15;
-  const rmHeads: (string | null)[] = [];
-  for (let i = 0; i < posts.length; i += BATCH) {
-    const slice = posts.slice(i, i + BATCH);
-    const results = await Promise.all(
-      slice.map((p: any) => getRankMathHead(p.slug).catch(() => null))
-    );
-    rmHeads.push(...results);
-  }
+if (!slug) return Astro.redirect('/404', 302);
 
-  // Correlati calcolati in-memory (0 fetch extra vs 200 fetch API)
-  function getRelatedInMemory(currentId: number, categoryIds: number[], allPosts: any[], count = 3) {
-    return allPosts
-      .filter((p: any) => p.id !== currentId && p.categories?.some((c: number) => categoryIds.includes(c)))
-      .slice(0, count);
-  }
+const token = import.meta.env.GITHUB_TOKEN;
+const art   = await fetchArticolo(slug as string, token ?? undefined);
 
-  return posts.map((post: any, idx: number) => ({
-    params: { slug: post.slug },
-    props:  {
-      post,
-      rmSeo:   parseRankMathHead(rmHeads[idx] ?? null),
-      related: getRelatedInMemory(post.id, post.categories ?? [], posts),
-    },
-  }));
+if (!art) {
+  return new Response(null, { status: 404 });
 }
 
-// ── Dati del post corrente ────────────────────────────────────────────────────
-const { post, rmSeo = {}, related: relatedFromProps = [] } = Astro.props;
+const title    = art.titolo;
+const date     = formatDataIt(art.data);
+const imageUrl = art.immagine ? `/images/articoli/${art.immagine}` : null;
 
-const title       = post.title?.rendered ?? '';
-const content     = post.content?.rendered ?? '';
-const excerpt     = post.excerpt?.rendered ?? '';
-const date        = formatDate(post.date);
-const imageUrl    = getFeaturedImageUrl(post, 'large');
-const category    = getPrimaryCategory(post);
-const tags        = post._embedded?.['wp:term']?.[1] ?? [];
-
-// Articoli correlati (pre-calcolati in getStaticPaths, 0 fetch aggiuntivi)
-const related = relatedFromProps;
-
-// Meta SEO da Rank Math (pre-fetchato in getStaticPaths in parallelo)
-const seoTitle = rmSeo.title       ?? title;
-const seoDesc  = rmSeo.description ?? post.excerpt?.rendered?.replace(/<[^>]+>/g, '').slice(0, 160) ?? '';
-const seoImage = rmSeo.ogImage     ?? imageUrl ?? '';
+const seoTitle = art.seo_title       || title;
+const seoDesc  = art.seo_description || art.descrizione || '';
+const seoImage = imageUrl ?? '';
 
 // BreadcrumbList JSON-LD
 const siteUrl = 'https://marcomunich.com';
-const breadcrumbItems = [
-  { "@type": "ListItem", "position": 1, "name": "Home",  "item": `${siteUrl}/`      },
-  { "@type": "ListItem", "position": 2, "name": "Blog",  "item": `${siteUrl}/blog/` },
-  ...(category
-    ? [{ "@type": "ListItem", "position": 3, "name": category.name, "item": `${siteUrl}/categoria/${category.slug}/` }]
-    : []
-  ),
-];
 const breadcrumbSchema = JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": breadcrumbItems,
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: `${siteUrl}/`      },
+    { '@type': 'ListItem', position: 2, name: 'Blog', item: `${siteUrl}/blog/` },
+    { '@type': 'ListItem', position: 3, name: title,  item: `${siteUrl}/${slug}/` },
+  ],
 });
+
+// FAQ Schema.org (AEO/GEO)
+const faqSchema = art.schema_faq?.length
+  ? JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: art.schema_faq.map((f) => ({
+        '@type': 'Question',
+        name: f.domanda,
+        acceptedAnswer: { '@type': 'Answer', text: f.risposta },
+      })),
+    })
+  : null;
 ---
 
 <BaseLayout
   title={seoTitle}
   description={seoDesc}
   image={seoImage}
-  currentPath={`/${post.slug}/`}
+  currentPath={`/${slug}/`}
   schemaType="Article"
-  datePublished={post.date}
-  dateModified={post.modified ?? post.date}
+  datePublished={art.data ?? ''}
+  dateModified={art.data ?? ''}
+  noIndex={art.seo_noindex}
+  canonicalOverride={art.canonical_url}
 >
-  <!-- BreadcrumbList schema per rich results Google -->
+  <!-- Structured data -->
   <script slot="head" type="application/ld+json" set:html={breadcrumbSchema} />
+  {faqSchema && <script slot="head" type="application/ld+json" set:html={faqSchema} />}
 
   <article class="article-page">
 
@@ -111,57 +83,17 @@ const breadcrumbSchema = JSON.stringify({
         <a href="/">Home</a>
         <span aria-hidden="true">/</span>
         <a href="/blog/">Blog</a>
-        {category && (
-          <>
-            <span aria-hidden="true">/</span>
-            <a href={`/categoria/${category.slug}/`}>{category.name}</a>
-          </>
-        )}
+        <span aria-hidden="true">/</span>
+        <span>{title}</span>
       </nav>
 
       <!-- Titolo -->
-      <h1 class="article-page__title">
-        <Fragment set:html={title} />
-      </h1>
+      <h1 class="article-page__title">{title}</h1>
 
-      <!-- Meta: data + categorie + tag -->
+      <!-- Meta: data -->
       <div class="article-page__meta">
-        <time datetime={post.date}>Ultimo aggiornamento il {date}</time>
-        {category && (
-          <span class="article-page__category">
-            in <a href={`/categoria/${category.slug}/`}>{category.name}</a>
-          </span>
-        )}
-        {tags.length > 0 && (
-          <span class="article-page__tags">
-            — Tag: {tags.map((tag, i) => (
-              <a href={`/tag/${tag.slug}/`}>{tag.name}{i < tags.length - 1 ? ', ' : ''}</a>
-            ))}
-          </span>
-        )}
+        {date && <time datetime={art.data}>Ultimo aggiornamento il {date}</time>}
       </div>
-
-      {/* Player audio TTS (MeMentor) — Mostrato solo se il file esiste localmente */}
-      {(() => {
-        const audioPath = path.join(process.cwd(), 'public', 'audio', `mementor-${post.id}-it.mp3`);
-        const hasAudio = fs.existsSync(audioPath);
-        
-        if (hasAudio) {
-          return (
-            <div class="tts-player" id={`tts-${post.id}`}>
-              <span class="tts-player__label">Ascolta l'articolo (AI):</span>
-              <audio
-                controls
-                preload="none"
-                class="tts-player__audio"
-              >
-                <source src={`/audio/mementor-${post.id}-it.mp3`} type="audio/mpeg" />
-              </audio>
-            </div>
-          );
-        }
-        return null;
-      })()}
 
       <!-- Immagine in evidenza -->
       {imageUrl && (
@@ -179,8 +111,21 @@ const breadcrumbSchema = JSON.stringify({
 
       <!-- Contenuto dell'articolo -->
       <div class="prose-marcomunich article-page__content">
-        <Fragment set:html={content} />
+        <Fragment set:html={art.htmlContent} />
       </div>
+
+      <!-- FAQ (se presenti) -->
+      {art.schema_faq?.length ? (
+        <div class="article-faq">
+          <h2 class="article-faq__title">Domande frequenti</h2>
+          {art.schema_faq.map((f) => (
+            <details class="article-faq__item">
+              <summary class="article-faq__question">{f.domanda}</summary>
+              <p class="article-faq__answer">{f.risposta}</p>
+            </details>
+          ))}
+        </div>
+      ) : null}
 
       <!-- Firma autore -->
       <div class="author-box">
@@ -221,14 +166,15 @@ const breadcrumbSchema = JSON.stringify({
           <svg width="28" height="28" viewBox="0 0 24 24" fill="url(#ig-gradient)" aria-hidden="true">
             <defs>
               <linearGradient id="ig-gradient" x1="0%" y1="100%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#f09433"/>
-                <stop offset="25%" stop-color="#e6683c"/>
-                <stop offset="50%" stop-color="#dc2743"/>
-                <stop offset="75%" stop-color="#cc2366"/>
+                <stop offset="0%"   stop-color="#f09433"/>
+                <stop offset="25%"  stop-color="#e6683c"/>
+                <stop offset="50%"  stop-color="#dc2743"/>
+                <stop offset="75%"  stop-color="#cc2366"/>
                 <stop offset="100%" stop-color="#bc1888"/>
               </linearGradient>
             </defs>
-            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
+          </svg>
         </a>
         <a href="https://www.linkedin.com/in/marco-munich/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="#0A66C2" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
@@ -261,33 +207,6 @@ const breadcrumbSchema = JSON.stringify({
           PRENOTA UNA CONSULENZA GRATUITA
         </a>
       </div>
-
-      <!-- Articoli correlati -->
-      {related.length > 0 && (
-        <div class="sidebar-widget--related">
-          <h4 class="sidebar-widget__title">Ti può interessare anche:</h4>
-          <ul class="sidebar-related__list">
-            {related.map((relPost) => {
-              const relImg = getFeaturedImageUrl(relPost, 'thumbnail');
-              return (
-                <li class="sidebar-related__item">
-                  {relImg && (
-                    <a href={`/${relPost.slug}/`} tabindex="-1" aria-hidden="true">
-                      <img src={relImg} alt={relPost.title?.rendered} width="80" height="60" loading="lazy" />
-                    </a>
-                  )}
-                  <div>
-                    <a href={`/${relPost.slug}/`} class="sidebar-related__link">
-                      <Fragment set:html={relPost.title?.rendered} />
-                    </a>
-                    <a href={`/${relPost.slug}/`} class="sidebar-related__read">Leggi l'articolo</a>
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      )}
 
     </aside>
   </article>
@@ -341,7 +260,7 @@ const breadcrumbSchema = JSON.stringify({
     display: flex;
     flex-direction: column;
     gap: 24px;
-    padding-top: 80px; /* allinea con il contenuto sotto titolo */
+    padding-top: 80px;
   }
 
   /* ── Widget sidebar ──────────────────────────────────────────────────────── */
@@ -443,76 +362,39 @@ const breadcrumbSchema = JSON.stringify({
     letter-spacing: 0.03em;
   }
 
-  .sidebar-widget__title {
-    font-size: 15px;
+  /* ── FAQ ─────────────────────────────────────────────────────────────────── */
+  .article-faq {
+    margin-top: 48px;
+    padding-top: 32px;
+    border-top: 1px solid #E5E5E5;
+  }
+  .article-faq__title {
+    font-size: 20px;
     font-weight: 700;
-    margin-bottom: 16px;
-    border-bottom: 2px solid #0A0A0A;
-    padding-bottom: 8px;
+    margin-bottom: 20px;
   }
-
-  .sidebar-related__list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+  .article-faq__item {
+    border-bottom: 1px solid #E5E5E5;
+    padding: 16px 0;
   }
-  .sidebar-related__item {
-    display: flex;
-    gap: 12px;
-    align-items: flex-start;
-  }
-  .sidebar-related__item img {
-    width: 70px !important;
-    min-width: 70px;
-    height: 70px !important;
-    object-fit: cover;
-    flex-shrink: 0;
-  }
-  .sidebar-related__link {
-    font-size: 13px;
+  .article-faq__question {
+    font-size: 15px;
     font-weight: 600;
-    line-height: 1.4;
-    color: #0A0A0A;
-    text-decoration: none;
-    display: block;
-    margin-bottom: 4px;
-  }
-  .sidebar-related__link:hover { opacity: 0.7; }
-  .sidebar-related__read {
-    font-size: 11px;
-    color: rgba(10,10,10,0.5);
-    text-decoration: underline;
-  }
-
-  /* ── Player audio TTS ───────────────────────────────────────────────────── */
-  .tts-player {
+    cursor: pointer;
+    list-style: none;
     display: flex;
+    justify-content: space-between;
     align-items: center;
     gap: 12px;
-    margin: 16px 0 24px;
-    padding: 12px 16px;
-    background: #F5F5F5;
-    border-left: 3px solid #0A0A0A;
   }
-  .tts-player__label {
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: rgba(10,10,10,0.55);
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-  .tts-player__audio {
-    width: 100%;
-    height: 32px;
-  }
-  @media (max-width: 600px) {
-    .tts-player { flex-direction: column; align-items: flex-start; }
-    .tts-player__audio { width: 100%; }
+  .article-faq__question::-webkit-details-marker { display: none; }
+  .article-faq__question::after { content: '+'; font-size: 20px; flex-shrink: 0; }
+  details[open] .article-faq__question::after { content: '−'; }
+  .article-faq__answer {
+    font-size: 14px;
+    line-height: 1.65;
+    color: rgba(10,10,10,0.75);
+    margin-top: 12px;
   }
 
   /* ── Tabelle negli articoli ──────────────────────────────────────────────── */
@@ -552,7 +434,6 @@ const breadcrumbSchema = JSON.stringify({
   .article-page__content :global(tbody tr:hover) {
     background-color: #F2F2F2;
   }
-  /* Wrap tabelle su mobile */
   @media (max-width: 680px) {
     .article-page__content :global(table) {
       display: block;

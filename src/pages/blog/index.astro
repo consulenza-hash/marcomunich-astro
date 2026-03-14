@@ -7,14 +7,26 @@
  */
 import BaseLayout from '@layouts/BaseLayout.astro';
 import PostCard from '@components/PostCard.astro';
-import { getAllPosts } from '@lib/wordpress';
+import jsYaml from 'js-yaml';
 
-const allPosts = await getAllPosts();
+// Legge tutti i .mdoc a build time tramite import.meta.glob (no fetch API)
+const rawFiles = import.meta.glob('/src/content/articoli/*/index.mdoc', {
+  eager: true,
+  as: 'raw',
+}) as Record<string, string>;
 
-// Ordina per data decrescente (più recenti prima)
-const posts = allPosts.sort(
-  (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-);
+const posts = Object.entries(rawFiles).map(([filePath, content]) => {
+  const slug   = filePath.match(/\/([^/]+)\/index\.mdoc$/)?.[1] ?? '';
+  const fmStr  = content.match(/^---\r?\n([\s\S]*?)\r?\n---/)?.[1] ?? '';
+  const fm     = (jsYaml.load(fmStr) as Record<string, any>) ?? {};
+  return {
+    slug,
+    titolo:     (fm.titolo     as string) ?? slug,
+    descrizione:(fm.descrizione as string) ?? '',
+    data:       fm.data ? String(fm.data) : '',
+    immagine:   fm.immagine ? `/images/articoli/${fm.immagine}` : null,
+  };
+}).sort((a, b) => new Date(b.data).getTime() - new Date(a.data).getTime());
 ---
 
 <BaseLayout
