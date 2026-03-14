@@ -38,6 +38,12 @@ export default config({
           description: 'Descrizione per Google e social (max 160 caratteri).',
           multiline: true,
         }),
+        seo_image: fields.image({
+          label: 'Immagine SEO/Social (OG Image)',
+          description: 'Per Facebook, LinkedIn, Twitter. Se vuota usa l\'immagine di copertina. Ideale: 1200×630px.',
+          directory: 'public/images/seo',
+          publicPath: '/images/seo/',
+        }),
         seo_noindex: fields.checkbox({
           label: 'Nascondi da Google (noindex)',
           defaultValue: false,

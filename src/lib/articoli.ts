@@ -21,6 +21,7 @@ export interface Articolo {
   immagine?:     string;   // solo filename, es. "slug.jpg"
   seo_title?:    string;
   seo_description?: string;
+  seo_image?:    string;   // URL assoluto immagine OG dedicata (opzionale)
   seo_noindex?:  boolean;
   canonical_url?: string;
   schema_faq?:   Array<{ domanda: string; risposta: string }>;
@@ -72,6 +73,7 @@ function parseMdocRaw(raw: string, slug: string): Articolo {
     immagine:        fm.immagine        ?? undefined,
     seo_title:       fm.seo_title       ?? undefined,
     seo_description: fm.seo_description ?? undefined,
+    seo_image:       fm.seo_image       ?? undefined,
     seo_noindex:     fm.seo_noindex     ?? false,
     canonical_url:   fm.canonical_url   ?? undefined,
     schema_faq:      fm.schema_faq      ?? undefined,
