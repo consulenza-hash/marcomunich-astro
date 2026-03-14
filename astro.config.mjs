@@ -1,6 +1,8 @@
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 import sitemap from '@astrojs/sitemap';
+import vercel from '@astrojs/vercel';
+import keystatic from '@keystatic/astro';
 import { fileURLToPath } from 'url';
 import path from 'path';
 
@@ -11,12 +13,14 @@ export default defineConfig({
   // Sito in produzione
   site: 'https://marcomunich.com',
 
-  // Genera sito statico puro (nessun JS lato client di default)
+  // Static con server routes per Keystatic (Astro 5)
   output: 'static',
+  adapter: vercel(),
 
   integrations: [
     tailwind(),
     sitemap(),
+    keystatic(),
   ],
 
   // Alias per import più puliti
