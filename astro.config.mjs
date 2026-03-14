@@ -3,6 +3,7 @@ import tailwind from '@astrojs/tailwind';
 import sitemap from '@astrojs/sitemap';
 import vercel from '@astrojs/vercel';
 import keystatic from '@keystatic/astro';
+import react from '@astrojs/react';
 import { fileURLToPath } from 'url';
 import path from 'path';
 
@@ -20,6 +21,7 @@ export default defineConfig({
   integrations: [
     tailwind(),
     sitemap(),
+    react(),
     keystatic(),
   ],
 

@@ -9,6 +9,7 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/react": "^5.0.0",
     "@astrojs/sitemap": "^3.7.0",
     "@astrojs/vercel": "^9.0.5",
     "@keystatic/astro": "^5.0.6",
