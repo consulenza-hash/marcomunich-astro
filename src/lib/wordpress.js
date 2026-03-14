@@ -7,31 +7,40 @@
  * ─────────────────────────────────────────────────────────────────────────────
  */
 import imageMapping from '../data/imageMapping.json' assert { type: 'json' };
+import http from 'node:http';
 
-// DNS punta a Vercel → usiamo l'IP Netsons direttamente a build time
-const WP_IP     = '89.40.173.242';
-const WP_HOST   = 'marcomunich.com';
-const WP_API    = `http://${WP_IP}/wp-json/wp/v2`;
-const WP_SITE   = `http://${WP_IP}`;
-const RM_API    = `${WP_SITE}/wp-json/rankmath/v1/getHead`;
+// DNS punta a Vercel → usiamo l'IP Netsons direttamente a build time.
+// NOTA: fetch() non consente di impostare l'header Host (forbidden header),
+// quindi usiamo node:http che non ha questa limitazione.
+const WP_IP   = '89.40.173.242';
+const WP_HOST = 'marcomunich.com';
 
-// ── Utility: fetch con gestione errori ────────────────────────────────────────
+// ── Utility: HTTP GET via IP con Host header esplicito ────────────────────────
+function httpGetJSON(path, fallback = []) {
+  return new Promise((resolve) => {
+    const req = http.get(
+      { hostname: WP_IP, port: 80, path, headers: { Host: WP_HOST } },
+      (res) => {
+        let raw = '';
+        res.on('data', c => raw += c);
+        res.on('end', () => {
+          if (res.statusCode < 200 || res.statusCode >= 300) {
+            console.warn(`[WP API] ${res.statusCode} — ${path}`);
+            resolve(fallback);
+            return;
+          }
+          try { resolve(JSON.parse(raw)); }
+          catch (e) { console.warn(`[WP API] JSON parse error — ${path}`); resolve(fallback); }
+        });
+      }
+    );
+    req.setTimeout(30000, () => { req.destroy(); resolve(fallback); });
+    req.on('error', (err) => { console.warn(`[WP API] error — ${path}: ${err.message}`); resolve(fallback); });
+  });
+}
+
 async function wpFetch(endpoint, fallback = []) {
-  const url = `${WP_API}${endpoint}`;
-  try {
-    const res = await fetch(url, {
-      signal: AbortSignal.timeout(30000),
-      headers: { 'Host': WP_HOST },
-    });
-    if (!res.ok) {
-      console.warn(`[WP API] ${res.status} — ${url}`);
-      return fallback;
-    }
-    return res.json();
-  } catch (err) {
-    console.warn(`[WP API] fetch failed — ${url}:`, err.message);
-    return fallback;
-  }
+  return httpGetJSON(`/wp-json/wp/v2${endpoint}`, fallback);
 }
 
 // ── ARTICOLI ──────────────────────────────────────────────────────────────────
@@ -185,16 +194,12 @@ export function getPrimaryCategory(post) {
  * Restituisce l'HTML grezzo del <head> (string) oppure null se non disponibile.
  */
 export async function getRankMathHead(postSlug) {
-  // Rank Math usa l'URL pubblico per lookup SEO: passiamo sempre https://marcomunich.com
+  // Rank Math usa l'URL pubblico per lookup SEO
   const targetUrl = `https://marcomunich.com/${postSlug}/`;
-  const apiUrl    = `${RM_API}?url=${encodeURIComponent(targetUrl)}`;
+  const path      = `/wp-json/rankmath/v1/getHead?url=${encodeURIComponent(targetUrl)}`;
   try {
-    const res = await fetch(apiUrl, {
-      signal: AbortSignal.timeout(15000),
-      headers: { 'Host': WP_HOST },
-    });
-    if (!res.ok) return null;
-    const data = await res.json();
+    const data = await httpGetJSON(path, null);
+    if (!data) return null;
     return data?.success ? (data.head ?? null) : null;
   } catch (err) {
     console.warn(`[Rank Math] fetch failed per /${postSlug}/:`, err.message);
