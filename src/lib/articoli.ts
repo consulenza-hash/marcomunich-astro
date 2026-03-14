@@ -30,13 +30,16 @@ export interface Articolo {
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
 function authHeaders(token?: string): Record<string, string> {
-  const h: Record<string, string> = { 'User-Agent': 'marcomunich-astro' };
-  if (token) h['Authorization'] = `token ${token}`;
+  const h: Record<string, string> = {
+    'User-Agent': 'marcomunich-astro',
+    'Accept': 'application/vnd.github.raw+json',
+  };
+  if (token) h['Authorization'] = `Bearer ${token}`;
   return h;
 }
 
 function rawUrl(slug: string): string {
-  return `https://raw.githubusercontent.com/${REPO}/${BRANCH}/src/content/articoli/${encodeURIComponent(slug)}/index.mdoc`;
+  return `https://api.github.com/repos/${REPO}/contents/src/content/articoli/${encodeURIComponent(slug)}/index.mdoc?ref=${BRANCH}`;
 }
 
 function markdownToHtml(md: string): string {
