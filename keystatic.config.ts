@@ -1,4 +1,4 @@
-import { config, collection, fields } from '@keystatic/core';
+import { config, collection, fields, singleton } from '@keystatic/core';
 
 export default config({
   storage: {
@@ -27,7 +27,70 @@ export default config({
           directory: 'public/images/articoli',
           publicPath: '/images/articoli/',
         }),
+
+        // ── SEO / AEO / GEO ───────────────────────────────────────────────
+        seo_title: fields.text({
+          label: 'SEO Title',
+          description: 'Titolo per Google (max 60 caratteri). Se vuoto usa il Titolo.',
+        }),
+        seo_description: fields.text({
+          label: 'Meta Description',
+          description: 'Descrizione per Google e social (max 160 caratteri).',
+          multiline: true,
+        }),
+        seo_noindex: fields.checkbox({
+          label: 'Nascondi da Google (noindex)',
+          defaultValue: false,
+        }),
+        canonical_url: fields.url({
+          label: 'Canonical URL',
+          description: 'Solo se l\'articolo è una copia di un\'altra pagina.',
+        }),
+        schema_faq: fields.array(
+          fields.object({
+            domanda: fields.text({ label: 'Domanda' }),
+            risposta: fields.text({ label: 'Risposta', multiline: true }),
+          }),
+          {
+            label: 'FAQ (Schema.org — AEO/GEO)',
+            description: 'Domande e risposte per Google AI Overviews e featured snippets.',
+            itemLabel: (props) => props.fields.domanda.value || 'Nuova FAQ',
+          }
+        ),
+
         contenuto: fields.markdoc({ label: 'Contenuto' }),
+      },
+    }),
+  },
+
+  singletons: {
+    // ── HOMEPAGE ──────────────────────────────────────────────────────────
+    homepage: singleton({
+      label: 'Homepage',
+      path: 'src/content/singletons/homepage',
+      format: { data: 'json' },
+      schema: {
+        hero_titolo: fields.text({ label: 'Hero — Titolo principale' }),
+        hero_sottotitolo: fields.text({ label: 'Hero — Sottotitolo', multiline: true }),
+        hero_cta_testo: fields.text({ label: 'Hero — Testo bottone CTA' }),
+        hero_cta_url: fields.url({ label: 'Hero — URL bottone CTA' }),
+        sezione_chi_sono: fields.text({ label: 'Chi sono — Testo breve', multiline: true }),
+      },
+    }),
+
+    // ── IMPOSTAZIONI GLOBALI ───────────────────────────────────────────────
+    impostazioni: singleton({
+      label: 'Impostazioni sito',
+      path: 'src/content/singletons/impostazioni',
+      format: { data: 'json' },
+      schema: {
+        site_name: fields.text({ label: 'Nome sito' }),
+        site_description: fields.text({ label: 'Descrizione sito (SEO)', multiline: true }),
+        facebook_url: fields.url({ label: 'URL Facebook' }),
+        instagram_url: fields.url({ label: 'URL Instagram' }),
+        linkedin_url: fields.url({ label: 'URL LinkedIn' }),
+        youtube_url: fields.url({ label: 'URL YouTube' }),
+        email_contatto: fields.text({ label: 'Email di contatto' }),
       },
     }),
   },
