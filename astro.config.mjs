@@ -1,4 +1,4 @@
-import { defineConfig } from 'astro/config';
+import { defineConfig, envField } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 import sitemap from '@astrojs/sitemap';
 import vercel from '@astrojs/vercel';
@@ -24,6 +24,13 @@ export default defineConfig({
     react(),
     keystatic(),
   ],
+
+  // Variabili d'ambiente server-side (lette a runtime, non inlined da Vite)
+  env: {
+    schema: {
+      GITHUB_TOKEN: envField.string({ context: 'server', access: 'secret', optional: true }),
+    },
+  },
 
   // Alias per import più puliti
   vite: {

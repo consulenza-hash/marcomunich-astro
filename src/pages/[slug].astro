@@ -11,13 +11,14 @@ export const prerender = false;
 
 import BaseLayout from '@layouts/BaseLayout.astro';
 import { fetchArticolo, formatDataIt } from '@lib/articoli';
+import { GITHUB_TOKEN } from 'astro:env/server';
 
 // ── Dati del post ─────────────────────────────────────────────────────────────
 const { slug } = Astro.params;
 
 if (!slug) return Astro.redirect('/404', 302);
 
-const token = process.env.GITHUB_TOKEN;
+const token = GITHUB_TOKEN;
 const art   = await fetchArticolo(slug as string, token ?? undefined);
 
 if (!art) {
