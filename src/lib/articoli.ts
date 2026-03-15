@@ -43,11 +43,36 @@ function rawUrl(slug: string): string {
   return `https://api.github.com/repos/${REPO}/contents/src/content/articoli/${encodeURIComponent(slug)}/index.mdoc?ref=${BRANCH}`;
 }
 
+/**
+ * Converte i pattern YouTube (SVG placeholder + thumbnail + testo) in veri iframe.
+ * I file .mdoc migrati da WordPress contengono il pattern:
+ *   <p><img src="data:image/svg+xml,..." alt="YouTube video thumbnail"></p>
+ *   <p><img src="http://i.ytimg.com/vi/VIDEO_ID/0.jpg" alt="YouTube video thumbnail"></p>
+ *   <p>Watch this video on YouTube</p>
+ */
+function fixYouTubeEmbeds(html: string): string {
+  // 1. Rimuovi i placeholder SVG trasparenti
+  html = html.replace(
+    /<p>\s*<img[^>]*src="data:image\/svg\+xml,[^"]*"[^>]*alt="YouTube video thumbnail"[^>]*\/?>\s*<\/p>\s*/gi,
+    ''
+  );
+
+  // 2. Sostituisci thumbnail + "Watch this video on YouTube" con iframe
+  html = html.replace(
+    /<p>\s*<img[^>]*src="https?:\/\/i\.ytimg\.com\/vi\/([A-Za-z0-9_-]+)\/0\.jpg"[^>]*\/?>\s*<\/p>\s*<p>\s*Watch this video on YouTube\s*<\/p>/gi,
+    (_, videoId) =>
+      `<div class="yt-embed"><iframe src="https://www.youtube-nocookie.com/embed/${videoId}" title="Video YouTube" loading="lazy" allowfullscreen></iframe></div>`
+  );
+
+  return html;
+}
+
 function markdownToHtml(md: string): string {
   try {
     const ast  = Markdoc.parse(md);
     const tree = Markdoc.transform(ast, {});
-    return Markdoc.renderers.html(tree) as string;
+    const html = Markdoc.renderers.html(tree) as string;
+    return fixYouTubeEmbeds(html);
   } catch {
     // fallback: restituisci testo preformattato se markdoc fallisce
     return `<pre>${md.replace(/</g, '&lt;')}</pre>`;

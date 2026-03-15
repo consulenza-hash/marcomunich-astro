@@ -154,6 +154,23 @@
   .prose-marcomunich img {
     @apply my-6 w-full;
   }
+  /* YouTube embed responsive */
+  .yt-embed {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 */
+    height: 0;
+    overflow: hidden;
+    margin: 2rem 0;
+    background: #000;
+  }
+  .yt-embed iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
   .prose-marcomunich hr {
     @apply my-8 border-brand-border;
   }

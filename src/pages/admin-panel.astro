@@ -1,0 +1,228 @@
+---
+/**
+ * /admin-panel  —  Quick-links per la gestione del sito.
+ * Mettila nei segnalibri del browser.
+ */
+export const prerender = true;
+---
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Panel — marcomunich.com</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;800&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0A0A0A;
+      --white: #ffffff;
+      --gold: #C58A37;
+      --gold-dim: rgba(197,138,55,0.12);
+      --gray: #1C1C1C;
+      --border: rgba(255,255,255,0.08);
+    }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Syne', system-ui, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 3rem 1.5rem 4rem;
+    }
+
+    header {
+      width: 100%;
+      max-width: 800px;
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 3rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    header h1 {
+      font-size: clamp(1.2rem, 3vw, 1.6rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    header span {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.3);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .grid {
+      width: 100%;
+      max-width: 800px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+
+    .card {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      padding: 1.5rem;
+      background: var(--gray);
+      border: 1px solid var(--border);
+      text-decoration: none;
+      color: var(--white);
+      transition: border-color 0.2s, background 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card:hover {
+      background: #242424;
+      border-color: rgba(255,255,255,0.18);
+    }
+
+    .card--primary {
+      background: var(--gold-dim);
+      border-color: rgba(197,138,55,0.35);
+    }
+
+    .card--primary:hover {
+      background: rgba(197,138,55,0.2);
+      border-color: var(--gold);
+    }
+
+    .card__icon {
+      font-size: 1.5rem;
+      line-height: 1;
+    }
+
+    .card__label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+    }
+
+    .card--primary .card__label {
+      color: var(--gold);
+    }
+
+    .card__title {
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+    }
+
+    .card__desc {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.4;
+      margin-top: 0.25rem;
+    }
+
+    .card__arrow {
+      margin-top: auto;
+      padding-top: 1rem;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.25);
+      transition: color 0.2s;
+    }
+
+    .card--primary .card__arrow {
+      color: var(--gold);
+    }
+
+    .card:hover .card__arrow {
+      color: var(--white);
+    }
+
+    .card--primary:hover .card__arrow {
+      color: var(--gold);
+    }
+
+    footer {
+      margin-top: 3rem;
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.2);
+      letter-spacing: 0.08em;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>marcomunich.com</h1>
+    <span>pannello admin</span>
+  </header>
+
+  <div class="grid">
+
+    <!-- AI Articles — primary CTA -->
+    <a href="/tag/ai/" target="_blank" class="card card--primary">
+      <span class="card__icon">🤖</span>
+      <span class="card__label">Sul sito</span>
+      <span class="card__title">Articoli AI</span>
+      <p class="card__desc">Visualizza tutti gli articoli con tag AI sul sito pubblico.</p>
+      <span class="card__arrow">Apri ↗</span>
+    </a>
+
+    <!-- Keystatic CMS -->
+    <a href="/keystatic" class="card">
+      <span class="card__icon">✏️</span>
+      <span class="card__label">CMS</span>
+      <span class="card__title">Keystatic</span>
+      <p class="card__desc">Gestisci articoli, homepage e impostazioni del sito.</p>
+      <span class="card__arrow">Apri →</span>
+    </a>
+
+    <!-- Blog -->
+    <a href="/blog/" target="_blank" class="card">
+      <span class="card__icon">📝</span>
+      <span class="card__label">Sul sito</span>
+      <span class="card__title">Blog</span>
+      <p class="card__desc">Tutti gli articoli pubblicati.</p>
+      <span class="card__arrow">Apri ↗</span>
+    </a>
+
+    <!-- Homepage -->
+    <a href="/" target="_blank" class="card">
+      <span class="card__icon">🏠</span>
+      <span class="card__label">Sul sito</span>
+      <span class="card__title">Homepage</span>
+      <p class="card__desc">Visualizza la homepage pubblica.</p>
+      <span class="card__arrow">Apri ↗</span>
+    </a>
+
+    <!-- GitHub repo -->
+    <a href="https://github.com/consulenza-hash/marcomunich-astro" target="_blank" class="card">
+      <span class="card__icon">⚙️</span>
+      <span class="card__label">Codice</span>
+      <span class="card__title">Repository GitHub</span>
+      <p class="card__desc">Codice sorgente del sito Astro.</p>
+      <span class="card__arrow">Apri ↗</span>
+    </a>
+
+    <!-- Vercel -->
+    <a href="https://vercel.com/marcos-projects-7b8eef8c/marcomunich-com" target="_blank" class="card">
+      <span class="card__icon">🚀</span>
+      <span class="card__label">Deploy</span>
+      <span class="card__title">Vercel</span>
+      <p class="card__desc">Dashboard deploy, log e performance.</p>
+      <span class="card__arrow">Apri ↗</span>
+    </a>
+
+  </div>
+
+  <footer>segnalibro consigliato: marcomunich.com/admin-panel</footer>
+
+</body>
+</html>

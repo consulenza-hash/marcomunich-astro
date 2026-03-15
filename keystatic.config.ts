@@ -1,17 +1,6 @@
 import { config, collection, fields, singleton } from '@keystatic/core';
 
 export default config({
-  ui: {
-    navigation: {
-      'Contenuto': ['articoli'],
-      'Impostazioni': ['homepage', 'impostazioni'],
-      'Vedi sul sito': [
-        { label: '🤖 Articoli AI', href: '/tag/ai/' },
-        { label: '📝 Blog', href: '/blog/' },
-        { label: '🏠 Homepage', href: '/' },
-      ],
-    },
-  },
   storage: {
     kind: 'cloud',
   },
