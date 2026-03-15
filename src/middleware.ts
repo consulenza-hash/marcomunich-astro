@@ -14,7 +14,10 @@ export const onRequest = defineMiddleware(async (ctx, next) => {
   if (url.pathname.startsWith('/keystatic')) {
     const html = await response.text();
     const script = `<script src="/admin-stats-btn.js"></script>`;
-    const patched = html.replace('</body>', `${script}</body>`);
+    // Keystatic non ha </body> — appendi alla fine
+    const patched = html.includes('</body>')
+      ? html.replace('</body>', `${script}</body>`)
+      : html + script;
     return new Response(patched, {
       status: response.status,
       headers: response.headers,
