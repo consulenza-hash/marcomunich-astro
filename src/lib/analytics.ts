@@ -103,6 +103,7 @@ export interface AnalyticsData {
   sources:     TrafficSrc[];
   keywords:    Keyword[];
   gscPages:    GscPage[];
+  gscError?:   string;
   period:      { start: string; end: string };
   gscPeriod:   { start: string; end: string };
 }
@@ -218,6 +219,7 @@ export async function fetchAnalyticsData(days = 30, from?: string, to?: string):
   // GSC opzionale — se l'API non è abilitata non blocca tutto
   let rKeywords: any = { rows: [] };
   let rGscPages: any = { rows: [] };
+  let gscError: string | undefined;
   if (gscToken) {
     try {
       [rKeywords, rGscPages] = await Promise.all([
@@ -232,7 +234,7 @@ export async function fetchAnalyticsData(days = 30, from?: string, to?: string):
           orderBy: [{ fieldName: 'clicks', sortOrder: 'DESCENDING' }],
         }),
       ]);
-    } catch (e: any) { console.error('[GSC ERROR]', e?.message ?? e); }
+    } catch (e: any) { gscError = String(e?.message ?? e); console.error('[GSC ERROR]', gscError); }
   }
 
   // Overview
@@ -297,7 +299,7 @@ export async function fetchAnalyticsData(days = 30, from?: string, to?: string):
   }
 
   return {
-    overview, daily, topPages, sources, keywords, gscPages,
+    overview, daily, topPages, sources, keywords, gscPages, gscError,
     period:    { start: fmt(periodStartD), end: fmt(periodEndD) },
     gscPeriod: { start: fmtShort(new Date(gscStart)), end: fmtShort(new Date(gscEnd)) },
   };
