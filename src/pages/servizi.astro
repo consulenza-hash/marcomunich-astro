@@ -1,5 +1,36 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
+
+const corsi = [
+  {
+    n: '01', tag: "Se sei all'inizio",
+    titolo: 'Metterci la faccia online',
+    desc: 'Il punto di partenza per promuoverti online in modo autentico, senza vergogna e senza fingere di essere qualcun altro.',
+    href: '/metterci-la-faccia-online/', cta: 'Video-Corso Gratuito',
+    color: '#D4840A', bg: '#FEF6EC', border: '#F0A040',
+  },
+  {
+    n: '02', tag: 'Il corso fondamentale',
+    titolo: 'Creazione del Messaggio Autentico',
+    desc: 'Trova il tuo punto di vista unico e struttura un messaggio che rispecchi chi sei davvero.',
+    href: '/creazione-messaggio-autentico/', cta: 'Scopri il Corso',
+    color: '#5551D3', bg: '#EEEEFF', border: '#5551D3',
+  },
+  {
+    n: '03', tag: 'Dopo aver iniziato a scrivere',
+    titolo: 'Creazione Video Autentici',
+    desc: 'Supera la vergogna di fare video e impara a parlare davanti alla camera in modo naturale.',
+    href: '/creazione-video-autentici/', cta: 'Video-Corso Gratuito',
+    color: '#C0292A', bg: '#FEF0F0', border: '#C0292A',
+  },
+  {
+    n: '04', tag: 'Dopo almeno 30 video',
+    titolo: 'Lavorare Senza Sito Web',
+    desc: 'Costruisci un sistema di acquisizione clienti parlando dal tuo centro, senza dipendere da un sito.',
+    href: '/lavorare-senzasito/', cta: 'Guarda il Corso',
+    color: '#1A7A4E', bg: '#EBF7EF', border: '#1A7A4E',
+  },
+];
 ---
 
 <BaseLayout
@@ -89,10 +120,20 @@ import BaseLayout from '@layouts/BaseLayout.astro';
         promuoverti senza dipendere da un sito e fare video senza vergogna.
       </p>
     </div>
-    <a href="/percorsi-online/" class="sv-btn sv-btn--gold">
-      Vai ai percorsi online
-    </a>
-    <a href="/risorse/" class="sv-btn sv-btn--ghost">
+    <div class="sv-steps">
+      {corsi.map((c) => (
+        <div class="sv-step" style={`background:${c.bg};border-top:3px solid ${c.border};`}>
+          <span class="sv-step__n" style={`color:${c.color};`}>{c.n}</span>
+          <div class="sv-step__content">
+            <span class="sv-step__tag" style={`color:${c.color};`}>{c.tag}</span>
+            <h3 class="sv-step__title">{c.titolo}</h3>
+            <p class="sv-step__desc">{c.desc}</p>
+            <a href={c.href} class="sv-btn" style={`background:${c.color};color:#fff;`}>{c.cta} →</a>
+          </div>
+        </div>
+      ))}
+    </div>
+    <a href="/risorse/" class="sv-btn sv-btn--ghost" style="margin-top:1.5rem;">
       Tutte le risorse gratuite →
     </a>
   </div>
@@ -249,7 +290,41 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 .sv-corsi__sub {
   font: 300 0.95rem/1.7 var(--sans);
   color: var(--muted);
-  margin-bottom: 2.5rem;
+  margin-bottom: 2rem;
+}
+.sv-steps { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 0; }
+.sv-step {
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+  gap: 0 1.75rem;
+  padding: 2rem 1.5rem;
+  border-radius: 8px;
+  align-items: start;
+}
+.sv-step__n {
+  font: 300 2.2rem/0.9 var(--serif);
+  font-style: italic;
+  opacity: 0.6;
+  letter-spacing: -0.04em;
+  padding-top: 0.2rem;
+}
+.sv-step__tag {
+  display: block;
+  font: 700 0.58rem/1 var(--sans);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+.sv-step__title {
+  font: 700 1.1rem/1.25 var(--sans);
+  color: var(--black);
+  margin-bottom: 0.5rem;
+}
+.sv-step__desc {
+  font: 300 0.88rem/1.65 var(--sans);
+  color: rgba(10,10,10,0.6);
+  margin-bottom: 1.1rem;
+  max-width: 480px;
 }
 
 /* ══ CTA ════════════════════════════════════════════════════════════════════ */

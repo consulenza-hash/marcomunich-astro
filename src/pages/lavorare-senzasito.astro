@@ -41,7 +41,7 @@ const ideals = [
 <style is:global>
   .green-page .btn-green {
     display: inline-block;
-    background: #16A34A;
+    background: #1A7A4E;
     color: #fff;
     padding: 16px 36px;
     font-weight: 700;
@@ -56,16 +56,16 @@ const ideals = [
   .green-page .btn-outline-green {
     display: inline-block;
     background: transparent;
-    color: #16A34A;
+    color: #1A7A4E;
     padding: 14px 32px;
     font-weight: 700;
     font-size: 15px;
     text-decoration: none;
     border-radius: 4px;
-    border: 2px solid #16A34A;
+    border: 2px solid #1A7A4E;
     transition: all .2s;
   }
-  .green-page .btn-outline-green:hover { background: #16A34A; color: #fff; opacity: 1; }
+  .green-page .btn-outline-green:hover { background: #1A7A4E; color: #fff; opacity: 1; }
 
   .green-page .step-item { display: flex; gap: 20px; align-items: flex-start; padding: 24px 0; border-bottom: 1px solid rgba(255,255,255,.08); }
   .green-page .step-item:last-child { border: none; }
@@ -121,47 +121,27 @@ const ideals = [
 <div class="green-page">
 
 <!-- ── HERO ──────────────────────────────────────────────────────────────── -->
-<section style="background: #052e1a; color: #fff; padding: 80px 24px 0;">
-  <div class="hero-grid" style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;">
-
-    <!-- Testo -->
-    <div>
-      <div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(22,163,74,.15); border: 1px solid rgba(22,163,74,.4); color: #86efac; padding: 6px 14px; border-radius: 100px; font-size: 13px; font-weight: 700; letter-spacing: 2px; margin-bottom: 16px;">
-        ★ MINI PERCORSO
-      </div>
-      <p style="font-size: 14px; color: #86efac; font-weight: 600; margin-bottom: 8px; letter-spacing: .5px;">Per Coach, Counselor e Terapeuti</p>
-      <h1 style="font-size: clamp(34px, 4.5vw, 52px); font-weight: 800; line-height: 1.1; color: #fff; margin-bottom: 20px;">
-        Iniziare a Lavorare<br><span style="color: #16A34A;">Senza sito Web</span>
-      </h1>
-      <p style="font-size: 17px; line-height: 1.7; color: #bbb; margin-bottom: 36px;">
-        <strong style="color:#fff;">Due ore di lezione</strong> dove scopriamo tutto ciò che serve
-        ad un Counselor, Coach o Terapeuta per <strong style="color:#fff;">iniziare a lavorare subito</strong>
-        — preoccupandosi solo di creare contenuti e gestire il proprio lavoro.
-      </p>
-      <div style="display: flex; gap: 16px; flex-wrap: wrap;">
-        <a href="#programma" class="btn-green">Scopri il programma →</a>
-        <a href="#costi" class="btn-outline-green">Costi e informazioni</a>
-      </div>
+<section style="background: var(--black,#0A0A0A); color: #fff; padding: 7rem 24px 6rem; text-align: center;">
+  <div style="max-width: 720px; margin: 0 auto;">
+    <p style="color: #1A7A4E; font: 700 0.72rem/1 var(--sans,sans-serif); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1.5rem;">
+      Mini Percorso · Per Coach, Counselor e Terapeuti
+    </p>
+    <h1 style="font: 800 clamp(2.8rem,6vw,5.5rem)/1.05 var(--display,sans-serif); letter-spacing: -0.03em; margin-bottom: 1.5rem;">
+      Iniziare a Lavorare<br><span style="color: #1A7A4E;">Senza sito Web</span>
+    </h1>
+    <p style="font: 300 clamp(1.1rem,2vw,1.5rem)/1.6 var(--serif,serif); font-style: italic; color: rgba(255,255,255,0.7); margin-bottom: 2.75rem; max-width: 560px; margin-left: auto; margin-right: auto;">
+      <strong style="color:#fff; font-weight:600;">Due ore di lezione</strong> dove scopriamo tutto ciò che serve
+      ad un Counselor, Coach o Terapeuta per <strong style="color:#fff; font-weight:600;">iniziare a lavorare subito</strong>
+      — preoccupandosi solo di creare contenuti e gestire il proprio lavoro.
+    </p>
+    <div style="display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;">
+      <a href="#programma" class="btn-green">Scopri il programma →</a>
+      <a href="#costi" class="btn-outline-green">Costi e informazioni</a>
     </div>
-
-    <!-- Video Hero -->
-    <div class="hero-image" style="padding-bottom: 48px;">
-      <div style="border-radius: 12px; overflow: hidden; aspect-ratio: 16/10; background: #064e29; position: relative;">
-        <iframe
-          src="https://www.youtube-nocookie.com/embed/lo1Ji3OkYCg?rel=0&modestbranding=1"
-          title="Iniziare a Lavorare Senza sito Web"
-          frameborder="0"
-          allowfullscreen
-          loading="eager"
-          style="position:absolute; top:0; left:0; width:100%; height:100%;"
-        ></iframe>
-      </div>
-    </div>
-
   </div>
 
   <!-- Striscia statistiche -->
-  <div style="max-width:1100px; margin:48px auto 0; display:flex; gap:32px; flex-wrap:wrap; padding-bottom:40px; border-top:1px solid rgba(255,255,255,.07); padding-top:32px;">
+  <div style="max-width:1100px; margin:64px auto 0; display:flex; gap:32px; flex-wrap:wrap; justify-content:center; padding-bottom:40px; border-top:1px solid rgba(255,255,255,.07); padding-top:32px;">
     {[
       { n: "2", label: "Video lezioni" },
       { n: "~2h", label: "di contenuto" },
@@ -169,7 +149,7 @@ const ideals = [
       { n: "0€", label: "Costo base (gratuito su YouTube)" },
     ].map(s => (
       <div>
-        <p style="font-size:32px; font-weight:800; color:#16A34A; margin:0; line-height:1;">{s.n}</p>
+        <p style="font-size:32px; font-weight:800; color:#1A7A4E; margin:0; line-height:1;">{s.n}</p>
         <p style="font-size:13px; color:#888; margin:4px 0 0; letter-spacing:.5px;">{s.label}</p>
       </div>
     ))}
@@ -180,7 +160,7 @@ const ideals = [
 <section style="padding: 80px 24px; background: #fff;">
   <div class="two-col" style="max-width: 1080px; margin: 0 auto; display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;">
     <div>
-      <p style="color:#16A34A; font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase; margin-bottom:12px;">Il vantaggio</p>
+      <p style="color:#1A7A4E; font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase; margin-bottom:12px;">Il vantaggio</p>
       <h2 style="font-size:clamp(26px,3vw,38px); font-weight:800; margin-bottom:16px;">Scaricare gran parte del lavoro</h2>
       <p style="color:#555; font-size:16px; line-height:1.8; margin-bottom:16px;">
         Ricordarsi l'appuntamento e ricordarlo al cliente, <strong>mandargli gli estremi di pagamento</strong>,
@@ -200,22 +180,22 @@ const ideals = [
         loading="lazy"
       />
       <div style="position:absolute; bottom:0; left:0; right:0; background:linear-gradient(transparent,rgba(5,46,26,.85)); padding:20px 24px;">
-        <p style="color:#86efac; font-size:13px; font-style:italic; margin:0;">"Non serve un sito web per iniziare. Serve solo il sistema giusto."</p>
+        <p style="color:#a7d9c3; font-size:13px; font-style:italic; margin:0;">"Non serve un sito web per iniziare. Serve solo il sistema giusto."</p>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ── DI COSA PARLEREMO ──────────────────────────────────────────────── -->
-<section id="programma" style="padding: 80px 24px; background: #064e29;">
+<section id="programma" style="padding: 80px 24px; background: #0a1f14;">
   <div style="max-width:1000px; margin:0 auto;">
-    <p style="color:#86efac; font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase; margin-bottom:12px;">Il programma</p>
+    <p style="color:#a7d9c3; font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase; margin-bottom:12px;">Il programma</p>
     <h2 style="font-size:clamp(26px,3vw,38px); font-weight:800; color:#fff; margin-bottom:12px;">Di cosa parleremo nel Corso</h2>
     <p style="color:#aaa; margin-bottom:48px; font-size:16px;">Prenotazione e pagamento degli appuntamenti, grafiche, creazione degli articoli e strumenti di base da utilizzare.</p>
     <div>
       {steps.map(s => (
         <div class="step-item">
-          <div style="flex-shrink:0; width:44px; height:44px; background:#16A34A; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:20px; font-weight:900; color:#fff;">{s.n}</div>
+          <div style="flex-shrink:0; width:44px; height:44px; background:#1A7A4E; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:20px; font-weight:900; color:#fff;">{s.n}</div>
           <div>
             <h4 style="font-size:16px; font-weight:700; color:#fff; margin-bottom:8px;">{s.title}</h4>
             <p style="color:#aaa; font-size:15px; line-height:1.6; margin:0;">{s.text}</p>
@@ -232,12 +212,12 @@ const ideals = [
 <!-- ── È IDEALE PER TE SE ─────────────────────────────────────────────── -->
 <section style="padding: 80px 24px; background: #f0fdf4;">
   <div style="max-width:1000px; margin:0 auto;">
-    <h2 style="text-align:center; font-size:clamp(26px,3vw,38px); font-weight:800; margin-bottom:48px;">È ideale per te <span style="color:#16A34A;">SE:</span></h2>
+    <h2 style="text-align:center; font-size:clamp(26px,3vw,38px); font-weight:800; margin-bottom:48px;">È ideale per te <span style="color:#1A7A4E;">SE:</span></h2>
     <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:20px;">
       {ideals.map((item, i) => (
-        <div style="background:#fff; border-radius:8px; padding:28px; position:relative; overflow:hidden; border-top:3px solid #16A34A;">
+        <div style="background:#fff; border-radius:8px; padding:28px; position:relative; overflow:hidden; border-top:3px solid #1A7A4E;">
           <div style="font-size:42px; font-weight:900; color:rgba(22,163,74,.08); position:absolute; top:8px; right:16px; line-height:1;">{i+1}</div>
-          <h4 style="font-size:15px; font-weight:700; margin-bottom:10px; padding-right:20px; color:#052e1a;">{item.title}</h4>
+          <h4 style="font-size:15px; font-weight:700; margin-bottom:10px; padding-right:20px; color:var(--black,#0A0A0A);">{item.title}</h4>
           <p style="color:#555; font-size:14px; line-height:1.6; margin:0;">{item.text}</p>
         </div>
       ))}
@@ -246,9 +226,9 @@ const ideals = [
 </section>
 
 <!-- ── CORSO GRATUITO ─────────────────────────────────────────────────── -->
-<section style="padding: 80px 24px; background: #052e1a;">
+<section style="padding: 80px 24px; background: var(--black,#0A0A0A);">
   <div class="two-col" style="max-width:1080px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;">
-    <div style="border-radius:12px; overflow:hidden; aspect-ratio:4/5; background:#064e29; position:relative;">
+    <div style="border-radius:12px; overflow:hidden; aspect-ratio:4/5; background:#0a1f14; position:relative;">
       <img
         src="https://marcomunich.com/wp-content/uploads/2019/04/foto_mia.jpg"
         alt="Marco Munich"
@@ -257,7 +237,7 @@ const ideals = [
       />
     </div>
     <div>
-      <p style="color:#86efac; font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase; margin-bottom:16px;">Il corso è gratuito</p>
+      <p style="color:#a7d9c3; font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase; margin-bottom:16px;">Il corso è gratuito</p>
       <h2 style="font-size:clamp(24px,2.5vw,36px); font-weight:800; color:#fff; margin-bottom:20px;">
         Se senti che ti risuona,<br><strong style="text-decoration:underline;">IL CORSO è GRATUITO</strong>
       </h2>
@@ -271,7 +251,7 @@ const ideals = [
           "Tutto il materiale è in descrizione sul video YouTube",
         ].map(i => (
           <li style="display:flex; gap:10px; align-items:flex-start; padding:8px 0; border-bottom:1px solid rgba(255,255,255,.08); font-size:15px; color:#ddd;">
-            <span style="color:#16A34A; font-weight:700; flex-shrink:0;">✓</span> {i}
+            <span style="color:#1A7A4E; font-weight:700; flex-shrink:0;">✓</span> {i}
           </li>
         ))}
       </ul>
@@ -287,7 +267,7 @@ const ideals = [
 <!-- ── COSTI PRIVATO ───────────────────────────────────────────────────── -->
 <section id="costi" style="padding: 80px 24px; background: #f7f7f7;">
   <div style="max-width:1000px; margin:0 auto;">
-    <p style="color:#16A34A; font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase; text-align:center; margin-bottom:12px;">Costi</p>
+    <p style="color:#1A7A4E; font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase; text-align:center; margin-bottom:12px;">Costi</p>
     <h2 style="text-align:center; font-size:clamp(26px,3vw,38px); font-weight:800; margin-bottom:12px;">Scegli come vuoi iniziare</h2>
     <p style="text-align:center; color:#555; margin-bottom:48px; font-size:16px;">Puoi guardare il corso gratuitamente su YouTube o farlo in privato con me.</p>
 
@@ -297,7 +277,7 @@ const ideals = [
       <div style="background:#fff; border-radius:12px; padding:36px; border:2px solid #eee;">
         <p style="font-size:13px; font-weight:700; color:#888; text-transform:uppercase; letter-spacing:1px; margin-bottom:16px;">In autonomia</p>
         <div style="margin-bottom:4px;">
-          <span style="font-size:48px; font-weight:900; color:#052e1a;">Gratis</span>
+          <span style="font-size:48px; font-weight:900; color:var(--black,#0A0A0A);">Gratis</span>
         </div>
         <p style="color:#999; font-size:13px; margin-bottom:20px;">su YouTube, quando vuoi</p>
         <p style="color:#555; font-size:15px; line-height:1.7; margin-bottom:24px;">
@@ -310,20 +290,20 @@ const ideals = [
             "Possibilità di fare domande nella risorsa",
           ].map(i => (
             <li style="display:flex; gap:10px; align-items:flex-start; padding:8px 0; border-bottom:1px solid #f0f0f0; font-size:15px; color:#333;">
-              <span style="color:#16A34A; font-weight:700; flex-shrink:0;">✓</span> {i}
+              <span style="color:#1A7A4E; font-weight:700; flex-shrink:0;">✓</span> {i}
             </li>
           ))}
         </ul>
         <a href="https://www.youtube.com/playlist?list=PLKgzAWOyM8xtciXhSPbj32fMzEXbYPUuC" target="_blank" rel="noopener"
-          style="display:block; text-align:center; padding:14px; border:2px solid #16A34A; color:#16A34A; font-weight:700; font-size:15px; text-decoration:none; border-radius:4px;">
+          style="display:block; text-align:center; padding:14px; border:2px solid #1A7A4E; color:#1A7A4E; font-weight:700; font-size:15px; text-decoration:none; border-radius:4px;">
           Guarda su YouTube →
         </a>
       </div>
 
       <!-- Card €300 -->
-      <div class="cost-card-featured" style="background:#052e1a; border-radius:12px; padding:36px; border:2px solid #16A34A; position:relative;">
-        <div style="position:absolute; top:-14px; left:50%; transform:translateX(-50%); background:#16A34A; color:#fff; font-size:12px; font-weight:700; letter-spacing:1px; padding:4px 16px; border-radius:100px; white-space:nowrap;">CONSIGLIATO</div>
-        <p style="font-size:13px; font-weight:700; color:#86efac; text-transform:uppercase; letter-spacing:1px; margin-bottom:16px;">Percorso Privato con Marco</p>
+      <div class="cost-card-featured" style="background:var(--black,#0A0A0A); border-radius:12px; padding:36px; border:2px solid #1A7A4E; position:relative;">
+        <div style="position:absolute; top:-14px; left:50%; transform:translateX(-50%); background:#1A7A4E; color:#fff; font-size:12px; font-weight:700; letter-spacing:1px; padding:4px 16px; border-radius:100px; white-space:nowrap;">CONSIGLIATO</div>
+        <p style="font-size:13px; font-weight:700; color:#a7d9c3; text-transform:uppercase; letter-spacing:1px; margin-bottom:16px;">Percorso Privato con Marco</p>
         <div style="margin-bottom:4px;">
           <span style="font-size:48px; font-weight:900; color:#fff;">€300</span>
         </div>
@@ -340,7 +320,7 @@ const ideals = [
             "60 min di Call in regalo (Messaggio Autentico)",
           ].map(i => (
             <li style="display:flex; gap:10px; align-items:flex-start; padding:8px 0; border-bottom:1px solid rgba(255,255,255,.08); font-size:15px; color:#ddd;">
-              <span style="color:#16A34A; font-weight:700; flex-shrink:0;">✓</span> {i}
+              <span style="color:#1A7A4E; font-weight:700; flex-shrink:0;">✓</span> {i}
             </li>
           ))}
         </ul>
@@ -349,7 +329,7 @@ const ideals = [
           3 Sessioni — 300€ →
         </a>
         <p style="text-align:center; margin-top:12px; font-size:13px; color:#888;">
-          <a href="https://wa.link/qracm2" target="_blank" rel="noopener" style="color:#86efac;">Scrivimi per pagare in 2 rate da 150€</a>
+          <a href="https://wa.link/qracm2" target="_blank" rel="noopener" style="color:#a7d9c3;">Scrivimi per pagare in 2 rate da 150€</a>
         </p>
       </div>
 

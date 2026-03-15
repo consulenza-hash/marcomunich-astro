@@ -66,7 +66,7 @@ const testimonials = [
 
 <style is:global>
   :root {
-    --red: #DC2626;
+    --red: #C0292A;
     --red-dark: #991B1B;
     --red-light: #FEF2F2;
     --dark: #0D0404;
@@ -107,7 +107,7 @@ const testimonials = [
     gap: 8px;
     background: rgba(220,38,38,.15);
     border: 1px solid rgba(220,38,38,.4);
-    color: #fca5a5;
+    color: #f4a0a0;
     padding: 6px 14px;
     border-radius: 100px;
     font-size: 13px;
@@ -116,7 +116,7 @@ const testimonials = [
   }
   .rec-dot {
     width: 10px; height: 10px;
-    background: #DC2626;
+    background: #C0292A;
     border-radius: 50%;
     animation: rec-blink 1.2s ease-in-out infinite;
   }
@@ -132,7 +132,7 @@ const testimonials = [
     content: '';
     position: absolute; top: 12px; right: 12px;
     width: 12px; height: 12px;
-    background: #DC2626;
+    background: #C0292A;
     border-radius: 50%;
     z-index: 2;
     box-shadow: 0 0 0 3px rgba(220,38,38,.3);
@@ -142,7 +142,7 @@ const testimonials = [
     content: '⬤ REC';
     position: absolute; top: 10px; left: 14px;
     font-size: 11px; font-weight: 800;
-    color: #DC2626; letter-spacing: 2px;
+    color: #C0292A; letter-spacing: 2px;
     z-index: 2;
   }
 
@@ -181,51 +181,32 @@ const testimonials = [
 <div class="video-page">
 
 <!-- ── HERO ──────────────────────────────────────────────────────────────── -->
-<section style="background: #0D0404; color: #fff; padding: 80px 24px 0;">
-  <div class="vp-grid" style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;">
-
-    <div>
-      <div class="rec-badge" style="margin-bottom: 24px;">
-        <span class="rec-dot"></span> VIDEO CORSO
-      </div>
-      <h1 style="font-size: clamp(34px, 4.5vw, 54px); font-weight: 800; line-height: 1.1; color: #fff; margin-bottom: 20px;">
-        Come parlare in Video<br><span style="color: #DC2626;">restando sé stessi</span>
-      </h1>
-      <p style="font-size: 17px; line-height: 1.7; color: #bbb; margin-bottom: 36px;">
-        3 Video Lezioni per chi vuole iniziare a fare video superando il timore
-        del giudizio — in modo autentico, senza perfezione.
-      </p>
-      <div style="display: flex; gap: 16px; flex-wrap: wrap;">
-        <a href="https://www.youtube.com/playlist?list=PLKgzAWOyM8xvs-UytKUtY4wsgjbHxU4Ge" target="_blank" rel="noopener" class="btn-red">Guarda il corso gratuitamente →</a>
-        <a href="#costi" class="btn-outline-red">Vuoi farlo con me?</a>
-      </div>
+<section style="background: var(--black,#0A0A0A); color: #fff; padding: 7rem 24px 6rem; text-align: center;">
+  <div style="max-width: 720px; margin: 0 auto;">
+    <p style="color: #C0292A; font: 700 0.72rem/1 var(--sans,sans-serif); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1.5rem;">
+      Video Corso · Autentico &amp; Senza Filtri
+    </p>
+    <h1 style="font: 800 clamp(2.8rem,6vw,5.5rem)/1.05 var(--display,sans-serif); letter-spacing: -0.03em; margin-bottom: 1.5rem;">
+      Come parlare in Video<br><span style="color: #C0292A;">restando sé stessi</span>
+    </h1>
+    <p style="font: 300 clamp(1.1rem,2vw,1.5rem)/1.6 var(--serif,serif); font-style: italic; color: rgba(255,255,255,0.7); margin-bottom: 2.75rem; max-width: 560px; margin-left: auto; margin-right: auto;">
+      3 Video Lezioni per chi vuole iniziare a fare video superando il timore
+      del giudizio — in modo autentico, senza perfezione.
+    </p>
+    <div style="display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;">
+      <a href="https://www.youtube.com/playlist?list=PLKgzAWOyM8xvs-UytKUtY4wsgjbHxU4Ge" target="_blank" rel="noopener" class="btn-red">Guarda il corso gratuitamente →</a>
+      <a href="#costi" class="btn-outline-red">Vuoi farlo con me?</a>
     </div>
-
-    <div class="vp-hero-img" style="padding-bottom: 48px;">
-      <div class="cam-frame" style="aspect-ratio: 4/3; background: #1a0808;">
-        <img
-          src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=700&q=80&fit=crop"
-          alt="Professionista olistica che registra un video"
-          style="width:100%; height:100%; object-fit:cover; display:block; opacity:.75;"
-          loading="eager"
-        />
-        <div style="position:absolute; bottom:0; left:0; right:0; padding:14px 16px; background:linear-gradient(transparent,rgba(0,0,0,.7)); display:flex; justify-content:space-between; align-items:flex-end;">
-          <span style="color:#fff; font-size:12px; font-family:monospace;">00:03:24</span>
-          <span style="color:#DC2626; font-size:11px; font-weight:700; letter-spacing:1px;">● LIVE</span>
-        </div>
-      </div>
-    </div>
-
   </div>
 
-  <div style="max-width:1100px; margin:48px auto 0; display:flex; gap:32px; padding-bottom:40px; border-top:1px solid rgba(255,255,255,.07); padding-top:32px;">
+  <div style="max-width:1100px; margin:64px auto 0; display:flex; gap:32px; justify-content:center; flex-wrap:wrap; padding-bottom:40px; border-top:1px solid rgba(255,255,255,.07); padding-top:32px;">
     {[
       { n: "3", label: "Video lezioni" },
       { n: "3h+", label: "di contenuto" },
       { n: "1", label: "Gruppo Telegram privato" },
     ].map(s => (
       <div>
-        <p style="font-size:32px; font-weight:800; color:#DC2626; margin:0; line-height:1;">{s.n}</p>
+        <p style="font-size:32px; font-weight:800; color:#C0292A; margin:0; line-height:1;">{s.n}</p>
         <p style="font-size:13px; color:#888; margin:4px 0 0; letter-spacing:.5px;">{s.label}</p>
       </div>
     ))}
@@ -237,7 +218,7 @@ const testimonials = [
   <div style="max-width: 1080px; margin: 0 auto;">
     <div class="vp-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; margin-bottom:60px;">
       <div>
-        <p style="color:#DC2626; font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase; margin-bottom:12px;">Il percorso</p>
+        <p style="color:#C0292A; font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase; margin-bottom:12px;">Il percorso</p>
         <h2 style="font-size:clamp(26px,3vw,38px); font-weight:800; margin-bottom:16px;">Fare il tuo Primo Video e Divertirti</h2>
         <p style="color:#555; font-size:16px; line-height:1.8;">
           Creare video semplici per condividere il tuo messaggio autentico,
@@ -258,7 +239,7 @@ const testimonials = [
     <h3 style="text-align:center; font-size:18px; font-weight:600; color:#555; margin-bottom:36px;">Nel corso imparerai a:</h3>
     <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:20px;">
       {features.map(f => (
-        <div style="border:1px solid #f0f0f0; border-top:3px solid #DC2626; border-radius:8px; padding:24px;">
+        <div style="border:1px solid #f0f0f0; border-top:3px solid #C0292A; border-radius:8px; padding:24px;">
           <div class="feature-icon" style="margin-bottom:12px;" set:html={f.icon} />
           <h4 style="font-size:15px; font-weight:700; text-transform:uppercase; letter-spacing:.5px; margin-bottom:8px;">{f.title}</h4>
           <p style="color:#555; font-size:14px; line-height:1.6; margin:0;">{f.text}</p>
@@ -282,11 +263,11 @@ const testimonials = [
         <p style="color:#fff; font-size:16px; font-style:italic; margin:0; line-height:1.5;">
           "Sono me stesso al 100% — questo è il traguardo."
         </p>
-        <p style="color:#fca5a5; font-size:13px; margin:8px 0 0;">— Marco Munich</p>
+        <p style="color:#f4a0a0; font-size:13px; margin:8px 0 0;">— Marco Munich</p>
       </div>
     </div>
     <div>
-      <p style="color:#DC2626; font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase; margin-bottom:12px;">Perché il video?</p>
+      <p style="color:#C0292A; font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase; margin-bottom:12px;">Perché il video?</p>
       <h2 style="font-size:clamp(26px,3vw,38px); font-weight:800; margin-bottom:20px;">Ti risuona?</h2>
       <p style="font-size:16px; line-height:1.8; color:#333; margin-bottom:16px;">
         Se sei in questa pagina, probabilmente hai già visto un mio video.
@@ -296,7 +277,7 @@ const testimonials = [
         Il video è il miglior mezzo per ottenere credibilità e fiducia: trasmette mimica,
         tonalità di voce, modo di essere — cose impossibili da comunicare solo con il testo.
       </p>
-      <div style="background:#fff; border-left:4px solid #DC2626; padding:16px 20px; border-radius:0 8px 8px 0;">
+      <div style="background:#fff; border-left:4px solid #C0292A; padding:16px 20px; border-radius:0 8px 8px 0;">
         <p style="margin:0; font-size:15px; color:#333; font-weight:500;">
           Il problema è il <strong>perfezionismo</strong> — anche per me lo è stato.
           Nel tempo ho imparato che la spontaneità vale più della perfezione.
@@ -309,13 +290,13 @@ const testimonials = [
 <!-- ── ARGOMENTI ──────────────────────────────────────────────────────── -->
 <section style="padding: 80px 24px; background: #1A0808;">
   <div style="max-width:1000px; margin:0 auto;">
-    <p style="color:#fca5a5; font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase; margin-bottom:12px;">Il programma</p>
+    <p style="color:#f4a0a0; font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase; margin-bottom:12px;">Il programma</p>
     <h2 style="font-size:clamp(26px,3vw,38px); font-weight:800; color:#fff; margin-bottom:12px;">Ecco di cosa parleremo</h2>
     <p style="color:#999; margin-bottom:44px; font-size:16px;">Un elenco completo degli argomenti che affronteremo nel percorso.</p>
     <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:0;">
       {topics.map(item => (
         <div class="topic-item">
-          <span style="color:#DC2626; font-weight:700; flex-shrink:0; font-size:16px; margin-top:1px;">▸</span>
+          <span style="color:#C0292A; font-weight:700; flex-shrink:0; font-size:16px; margin-top:1px;">▸</span>
           <span style="color:#ddd; font-size:15px; line-height:1.5;">{item}</span>
         </div>
       ))}
@@ -327,7 +308,7 @@ const testimonials = [
 <section style="padding: 80px 24px; background: #fff;">
   <div class="vp-grid" style="max-width:1080px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;">
     <div>
-      <p style="color:#DC2626; font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase; margin-bottom:12px;">Community</p>
+      <p style="color:#C0292A; font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase; margin-bottom:12px;">Community</p>
       <h2 style="font-size:clamp(24px,2.5vw,34px); font-weight:800; margin-bottom:20px;">Un gruppo Telegram Privato dove fare i primi video senza vergogna</h2>
       <p style="font-size:16px; line-height:1.8; color:#333; margin-bottom:16px;">
         Già dalla prima sessione sarai chiamato a creare il tuo primo video con quello che hai.
@@ -352,7 +333,7 @@ const testimonials = [
 <!-- ── È IDEALE PER TE SE ─────────────────────────────────────────────── -->
 <section style="padding: 80px 24px; background: #FEF2F2;">
   <div style="max-width:1000px; margin:0 auto;">
-    <h2 style="text-align:center; font-size:clamp(26px,3vw,38px); font-weight:800; margin-bottom:48px;">È ideale per te <span style="color:#DC2626;">se:</span></h2>
+    <h2 style="text-align:center; font-size:clamp(26px,3vw,38px); font-weight:800; margin-bottom:48px;">È ideale per te <span style="color:#C0292A;">se:</span></h2>
     <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:20px;">
       {ideals.map((item, i) => (
         <div style="background:#fff; border-radius:8px; padding:28px; position:relative; overflow:hidden;">
@@ -368,7 +349,7 @@ const testimonials = [
 <!-- ── PARLERÒ ANCHE DI ────────────────────────────────────────────────── -->
 <section style="padding: 80px 24px; background: #fff;">
   <div style="max-width:800px; margin:0 auto;">
-    <h3 style="font-size:24px; font-weight:800; margin-bottom:32px; border-bottom:3px solid #DC2626; display:inline-block; padding-bottom:8px;">Parlerò anche di…</h3>
+    <h3 style="font-size:24px; font-weight:800; margin-bottom:32px; border-bottom:3px solid #C0292A; display:inline-block; padding-bottom:8px;">Parlerò anche di…</h3>
     <div class="vp-talk" style="display:grid; grid-template-columns:1fr 1fr; gap:0;">
       {[
         "Come superare la paura dei primi video in pubblico",
@@ -381,7 +362,7 @@ const testimonials = [
         "Come restare al centro dell'inquadratura",
       ].map(item => (
         <div style="display:flex; gap:12px; align-items:flex-start; padding:14px 12px; border-bottom:1px solid #f0f0f0;">
-          <span style="color:#DC2626; font-weight:700; flex-shrink:0; font-size:16px;">›</span>
+          <span style="color:#C0292A; font-weight:700; flex-shrink:0; font-size:16px;">›</span>
           <span style="font-size:15px; color:#333; line-height:1.5;">{item}</span>
         </div>
       ))}
@@ -392,7 +373,7 @@ const testimonials = [
 <!-- ── COSTI ───────────────────────────────────────────────────────────── -->
 <section id="costi" style="padding: 80px 24px; background: #f7f7f7;">
   <div style="max-width:1000px; margin:0 auto;">
-    <p style="color:#DC2626; font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase; text-align:center; margin-bottom:12px;">Costi</p>
+    <p style="color:#C0292A; font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase; text-align:center; margin-bottom:12px;">Costi</p>
     <h2 style="text-align:center; font-size:clamp(26px,3vw,38px); font-weight:800; margin-bottom:12px;">Scegli come vuoi iniziare</h2>
     <p style="text-align:center; color:#555; margin-bottom:48px; font-size:16px;">Il corso è gratuito su YouTube. Se preferisci farlo con me, c'è un percorso privato.</p>
 
@@ -409,19 +390,19 @@ const testimonials = [
         <ul style="list-style:none; padding:0; margin-bottom:32px;">
           {["3 Video Lezioni complete su YouTube", "Risorsa con tutti i link e gli strumenti", "Gruppo Telegram per confrontarsi"].map(i => (
             <li style="display:flex; gap:10px; align-items:flex-start; padding:8px 0; border-bottom:1px solid #f0f0f0; font-size:15px; color:#333;">
-              <span style="color:#DC2626; font-weight:700; flex-shrink:0;">✓</span> {i}
+              <span style="color:#C0292A; font-weight:700; flex-shrink:0;">✓</span> {i}
             </li>
           ))}
         </ul>
         <a href="https://www.youtube.com/playlist?list=PLKgzAWOyM8xvs-UytKUtY4wsgjbHxU4Ge" target="_blank" rel="noopener"
-          style="display:block; text-align:center; padding:14px; border:2px solid #DC2626; color:#DC2626; font-weight:700; font-size:15px; text-decoration:none; border-radius:4px; transition:all .2s;">
+          style="display:block; text-align:center; padding:14px; border:2px solid #C0292A; color:#C0292A; font-weight:700; font-size:15px; text-decoration:none; border-radius:4px; transition:all .2s;">
           Guarda su YouTube →
         </a>
       </div>
 
-      <div class="vp-cost-featured" style="background:#0D0404; border-radius:12px; padding:36px; border:2px solid #DC2626; position:relative;">
-        <div style="position:absolute; top:-14px; left:50%; transform:translateX(-50%); background:#DC2626; color:#fff; font-size:12px; font-weight:700; letter-spacing:1px; padding:4px 16px; border-radius:100px; white-space:nowrap;">CONSIGLIATO</div>
-        <p style="font-size:13px; font-weight:700; color:#fca5a5; text-transform:uppercase; letter-spacing:1px; margin-bottom:16px;">Percorso Privato con Marco</p>
+      <div class="vp-cost-featured" style="background:#0D0404; border-radius:12px; padding:36px; border:2px solid #C0292A; position:relative;">
+        <div style="position:absolute; top:-14px; left:50%; transform:translateX(-50%); background:#C0292A; color:#fff; font-size:12px; font-weight:700; letter-spacing:1px; padding:4px 16px; border-radius:100px; white-space:nowrap;">CONSIGLIATO</div>
+        <p style="font-size:13px; font-weight:700; color:#f4a0a0; text-transform:uppercase; letter-spacing:1px; margin-bottom:16px;">Percorso Privato con Marco</p>
         <div style="margin-bottom:4px;">
           <span style="font-size:48px; font-weight:900; color:#fff;">€300</span>
         </div>
@@ -438,16 +419,16 @@ const testimonials = [
             "60 min di Call in regalo",
           ].map(i => (
             <li style="display:flex; gap:10px; align-items:flex-start; padding:8px 0; border-bottom:1px solid rgba(255,255,255,.08); font-size:15px; color:#ddd;">
-              <span style="color:#DC2626; font-weight:700; flex-shrink:0;">✓</span> {i}
+              <span style="color:#C0292A; font-weight:700; flex-shrink:0;">✓</span> {i}
             </li>
           ))}
         </ul>
         <a href="https://wa.link/qracm2" target="_blank" rel="noopener" class="btn-red"
-          style="display:block; text-align:center; background:#DC2626;">
+          style="display:block; text-align:center; background:#C0292A;">
           3 Sessioni — 300€ →
         </a>
         <p style="text-align:center; margin-top:12px; font-size:13px; color:#888;">
-          <a href="https://wa.link/wjlw58" target="_blank" rel="noopener" style="color:#fca5a5;">Scrivimi per pagare in 2 rate da 150€</a>
+          <a href="https://wa.link/wjlw58" target="_blank" rel="noopener" style="color:#f4a0a0;">Scrivimi per pagare in 2 rate da 150€</a>
         </p>
       </div>
 
@@ -463,8 +444,8 @@ const testimonials = [
     </h2>
     <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:24px;">
       {testimonials.map(t => (
-        <div style="background:#fff; border-radius:8px; padding:28px; border-top:3px solid #DC2626; box-shadow:0 2px 12px rgba(0,0,0,.05);">
-          <p style="font-size:13px; font-weight:700; color:#DC2626; text-transform:uppercase; letter-spacing:1px; margin-bottom:14px;">{t.title}</p>
+        <div style="background:#fff; border-radius:8px; padding:28px; border-top:3px solid #C0292A; box-shadow:0 2px 12px rgba(0,0,0,.05);">
+          <p style="font-size:13px; font-weight:700; color:#C0292A; text-transform:uppercase; letter-spacing:1px; margin-bottom:14px;">{t.title}</p>
           <p style="font-size:15px; color:#444; line-height:1.7; font-style:italic; margin-bottom:20px;">"{t.quote}"</p>
           <p style="font-size:14px; font-weight:700; margin:0;">{t.name}</p>
           <p style="font-size:13px; color:#999; margin:2px 0 0;">{t.role}</p>

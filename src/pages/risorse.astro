@@ -10,6 +10,9 @@ const steps = [
     href: '/metterci-la-faccia-online/',
     cta: 'Video-Corso Gratuito',
     secondary: { href: '/libri/', cta: 'I miei libri' },
+    color: '#D4840A',
+    bg: '#FEF6EC',
+    border: '#F0A040',
   },
   {
     n: '02',
@@ -18,6 +21,9 @@ const steps = [
     desc: 'Quando senti di avere qualcosa da dire, questo corso ti aiuta a trovare il tuo punto di vista unico e a strutturare un messaggio che rispecchi chi sei davvero.',
     href: '/creazione-messaggio-autentico/',
     cta: 'Scopri il Corso',
+    color: '#5551D3',
+    bg: '#EEEEFF',
+    border: '#5551D3',
   },
   {
     n: '03',
@@ -26,6 +32,9 @@ const steps = [
     desc: 'Quando hai già iniziato a scrivere e creare contenuti, questo corso ti aiuta a superare la vergogna di fare video e a parlare davanti alla camera in modo naturale.',
     href: '/creazione-video-autentici/',
     cta: 'Video-Corso Gratuito',
+    color: '#C0292A',
+    bg: '#FEF0F0',
+    border: '#C0292A',
   },
   {
     n: '04',
@@ -34,6 +43,9 @@ const steps = [
     desc: 'Quando avrai fatto almeno trenta video parlando dal tuo centro, questo corso ti mostra come costruire un sistema di acquisizione clienti senza dipendere da un sito.',
     href: '/lavorare-senzasito/',
     cta: 'Guarda il Corso',
+    color: '#1A7A4E',
+    bg: '#EBF7EF',
+    border: '#1A7A4E',
   },
 ];
 
@@ -125,14 +137,14 @@ const socials = [
 
     <div class="rs-steps">
       {steps.map((step) => (
-        <div class="rs-step">
-          <span class="rs-step__n">{step.n}</span>
+        <div class="rs-step" style={`background:${step.bg};border-top:3px solid ${step.border};`}>
+          <span class="rs-step__n" style={`color:${step.color};`}>{step.n}</span>
           <div class="rs-step__content">
-            <span class="rs-step__tag">{step.tag}</span>
+            <span class="rs-step__tag" style={`color:${step.color};`}>{step.tag}</span>
             <h3 class="rs-step__title">{step.titolo}</h3>
             <p class="rs-step__desc">{step.desc}</p>
             <div class="rs-step__actions">
-              <a href={step.href} class="rs-btn rs-btn--dark">{step.cta} →</a>
+              <a href={step.href} class="rs-btn" style={`background:${step.color};color:#fff;`}>{step.cta} →</a>
               {step.secondary && (
                 <a href={step.secondary.href} class="rs-btn rs-btn--ghost">{step.secondary.cta}</a>
               )}
@@ -349,16 +361,15 @@ const socials = [
   display: grid;
   grid-template-columns: 3rem 1fr;
   gap: 0 1.75rem;
-  padding: 2.5rem 0;
-  border-bottom: 1px solid rgba(10,10,10,0.07);
+  padding: 2rem 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
   align-items: start;
 }
-.rs-step:first-child { border-top: 1px solid rgba(10,10,10,0.07); }
 .rs-step__n {
   font: 300 2.2rem/0.9 var(--serif);
   font-style: italic;
-  color: var(--gold);
-  opacity: 0.3;
+  opacity: 0.6;
   letter-spacing: -0.04em;
   padding-top: 0.2rem;
 }
@@ -367,7 +378,6 @@ const socials = [
   font: 700 0.58rem/1 var(--sans);
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--gold);
   margin-bottom: 0.6rem;
 }
 .rs-step__title {
