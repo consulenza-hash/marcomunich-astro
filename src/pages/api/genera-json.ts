@@ -3,7 +3,37 @@ import Anthropic from '@anthropic-ai/sdk';
 
 export const prerender = false;
 
-// ── Sistema: stesso stile di genera.ts + vincolo JSON ────────────────────────
+// ── Tool definition — garantisce JSON valido via function calling ─────────────
+const TOOL_DEF: Anthropic.Tool = {
+  name: 'salva_articolo',
+  description: 'Salva il contenuto generato dell\'articolo con tutti i campi richiesti.',
+  input_schema: {
+    type: 'object' as const,
+    properties: {
+      titolo:          { anyOf: [{ type: 'string' }, { type: 'null' }], description: 'Titolo dell\'articolo. Null se si generano solo metadati.' },
+      slug:            { anyOf: [{ type: 'string' }, { type: 'null' }], description: 'Slug URL-friendly (lettere minuscole, trattini, no spazi). Null se solo metadati.' },
+      descrizione:     { anyOf: [{ type: 'string' }, { type: 'null' }], description: 'Descrizione breve, max 160 caratteri.' },
+      corpo:           { anyOf: [{ type: 'string' }, { type: 'null' }], description: 'Corpo articolo in markdown con ### sottotitoli. Null se si generano solo metadati.' },
+      seo_title:       { anyOf: [{ type: 'string' }, { type: 'null' }], description: 'Titolo SEO ottimizzato, max 60 caratteri. Null se solo articolo.' },
+      seo_description: { anyOf: [{ type: 'string' }, { type: 'null' }], description: 'Meta description SEO, max 155 caratteri. Null se solo articolo.' },
+      schema_faq: {
+        type: 'array',
+        description: 'Domande e risposte per lo schema FAQ (AEO/GEO)',
+        items: {
+          type: 'object',
+          properties: {
+            domanda:  { type: 'string' },
+            risposta: { type: 'string' },
+          },
+          required: ['domanda', 'risposta'],
+        },
+      },
+    },
+    required: ['titolo', 'slug', 'descrizione', 'corpo', 'seo_title', 'seo_description', 'schema_faq'],
+  },
+};
+
+// ── Prompt di sistema ─────────────────────────────────────────────────────────
 const SISTEMA = `Sei un ghostwriter italiano esperto. Scrivi sempre in italiano naturale seguendo queste regole assolute:
 
 Genera testo in italiano naturale, senza strutture "non X ma Y" e senza "non è… è…". Qualsiasi frase che definisca qualcosa negando prima il suo opposto va eliminata e riscritta affermando direttamente ciò che si vuole dire.
@@ -12,36 +42,23 @@ Evita triplette (tre aggettivi, tre verbi, tre stati). Elimina meta-frasi che co
 
 Il ritmo del testo deve essere discorsivo e fluido: ogni pensiero si sviluppa per almeno tre o quattro righe prima di chiudersi. Evita il ritmo telegrafico dove ogni frase breve finisce con un punto.
 
-Risultato: testo specifico, asciutto, credibile, con pochi aggettivi, zero enfasi artificiale, ritmo disteso e niente emdash.
-
-FORMATO OUTPUT: Rispondi SOLO con un oggetto JSON valido, senza markdown, senza testo prima o dopo il JSON. Inizia direttamente con { e finisci con }.`;
-
-const FAQ_EXAMPLE = `[{"domanda":"Prima domanda?","risposta":"Prima risposta concreta."},{"domanda":"Seconda domanda?","risposta":"Seconda risposta concreta."},{"domanda":"Terza domanda?","risposta":"Terza risposta concreta."}]`;
+Risultato: testo specifico, asciutto, credibile, con pochi aggettivi, zero enfasi artificiale, ritmo disteso e niente emdash.`;
 
 function buildPrompt(modo: string, input: string, isNew: boolean): string {
   if (modo === 'solo-articolo') {
     if (isNew) {
-      return `Genera un articolo completo in italiano su questo tema. Almeno 600 parole, con ### per i sottotitoli.
-
-JSON da restituire (SOLO questo, nient'altro):
-{"titolo":"...","slug":"slug-url-friendly","descrizione":"1-2 frasi max 160 caratteri","corpo":"articolo completo in markdown","seo_title":null,"seo_description":null,"schema_faq":[]}
+      return `Genera un articolo completo in italiano su questo tema. Almeno 600 parole, usa ### per i sottotitoli. Compila tutti i campi del tool.
 
 TEMA: ${input}`;
     }
-    return `Riscrivi completamente questo articolo sullo stesso tema ma con testo nuovo. Almeno 600 parole.
-
-JSON da restituire (SOLO questo, nient'altro):
-{"titolo":"...","slug":"slug-url-friendly","descrizione":"1-2 frasi max 160 caratteri","corpo":"articolo riscritto in markdown","seo_title":null,"seo_description":null,"schema_faq":[]}
+    return `Riscrivi completamente questo articolo sullo stesso tema ma con testo nuovo. Almeno 600 parole, usa ### per i sottotitoli. Compila tutti i campi del tool.
 
 ARTICOLO ORIGINALE:
 ${input}`;
   }
 
   if (modo === 'solo-metadati') {
-    return `Analizza questo articolo e genera SOLO i metadati SEO/AEO/GEO. Non riscrivere il testo.
-
-JSON da restituire (SOLO questo, nient'altro):
-{"titolo":null,"slug":null,"descrizione":"descrizione ottimizzata per SEO","corpo":null,"seo_title":"max 60 caratteri","seo_description":"max 155 caratteri","schema_faq":${FAQ_EXAMPLE}}
+    return `Analizza questo articolo e genera SOLO i metadati SEO/AEO/GEO. Non riscrivere il testo: nel campo "corpo" metti null. Genera almeno 3 domande/risposte per schema_faq.
 
 ARTICOLO:
 ${input}`;
@@ -49,17 +66,11 @@ ${input}`;
 
   if (modo === 'tutto-completo') {
     if (isNew) {
-      return `Genera un articolo completo con tutti i metadati SEO/AEO/GEO. Almeno 800 parole, con ### per i sottotitoli.
-
-JSON da restituire (SOLO questo, nient'altro):
-{"titolo":"...","slug":"slug-url-friendly","descrizione":"1-2 frasi","corpo":"articolo completo in markdown con ### sottotitoli e almeno 800 parole","seo_title":"max 60 caratteri","seo_description":"max 155 caratteri","schema_faq":${FAQ_EXAMPLE}}
+      return `Genera un articolo completo con tutti i metadati SEO/AEO/GEO. Almeno 800 parole, usa ### per i sottotitoli. Genera almeno 3 domande/risposte per schema_faq. Compila tutti i campi del tool.
 
 TEMA/PROMPT: ${input}`;
     }
-    return `Riscrivi completamente questo articolo e genera tutti i metadati SEO/AEO/GEO.
-
-JSON da restituire (SOLO questo, nient'altro):
-{"titolo":"...","slug":"slug-url-friendly","descrizione":"1-2 frasi","corpo":"articolo completo riscritto in markdown","seo_title":"max 60 caratteri","seo_description":"max 155 caratteri","schema_faq":${FAQ_EXAMPLE}}
+    return `Riscrivi completamente questo articolo e genera tutti i metadati SEO/AEO/GEO. Almeno 800 parole, usa ### per i sottotitoli. Genera almeno 3 domande/risposte per schema_faq. Compila tutti i campi del tool.
 
 ARTICOLO ORIGINALE:
 ${input}`;
@@ -68,7 +79,7 @@ ${input}`;
   throw new Error(`Modalità non valida: ${modo}`);
 }
 
-// ── API Route (streaming) ─────────────────────────────────────────────────────
+// ── API Route (streaming con tool use) ───────────────────────────────────────
 export const POST: APIRoute = async ({ request }) => {
   // Auth
   const cookie      = request.headers.get('cookie') ?? '';
@@ -100,16 +111,26 @@ export const POST: APIRoute = async ({ request }) => {
           max_tokens: 8000,
           system: SISTEMA,
           messages: [{ role: 'user', content: prompt }],
+          tools: [TOOL_DEF],
+          // Forza sempre la chiamata al tool — garantisce JSON valido
+          tool_choice: { type: 'tool', name: 'salva_articolo' },
         });
 
         for await (const event of stream) {
-          if (event.type === 'content_block_delta' && event.delta.type === 'text_delta') {
-            controller.enqueue(new TextEncoder().encode(event.delta.text));
+          // input_json_delta = frammento del JSON del tool input (sempre valido quando concatenato)
+          if (
+            event.type === 'content_block_delta' &&
+            event.delta.type === 'input_json_delta'
+          ) {
+            controller.enqueue(new TextEncoder().encode(event.delta.partial_json));
           }
         }
         controller.close();
       } catch (err: any) {
-        controller.enqueue(new TextEncoder().encode(`\n\n{"__error":"${err?.message ?? 'Errore'}"}`));
+        // In caso di errore, invia un JSON valido con __error
+        controller.enqueue(
+          new TextEncoder().encode(JSON.stringify({ __error: err?.message ?? 'Errore sconosciuto' }))
+        );
         controller.close();
       }
     },

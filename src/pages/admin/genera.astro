@@ -613,13 +613,13 @@ if (isAuth) {
           }
 
           // ── STEP 3: Parsa JSON ────────────────────────────────────────────
+          // Con tool_use, rawJson è già JSON valido (l'escaping lo gestisce Claude)
           setStatus('🔧 Parsing e salvataggio su GitHub…');
           let art;
           try {
-            const start = rawJson.indexOf('{');
-            const end   = rawJson.lastIndexOf('}');
-            if (start === -1 || end === -1) throw new Error('Nessun JSON trovato nella risposta');
-            art = JSON.parse(rawJson.slice(start, end + 1));
+            const trimmed = rawJson.trim();
+            if (!trimmed) throw new Error('Risposta vuota dal server');
+            art = JSON.parse(trimmed);
           } catch (parseErr) {
             throw new Error(`Impossibile parsare il JSON: ${parseErr.message}. Riprova.`);
           }
