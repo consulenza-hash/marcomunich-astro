@@ -18,6 +18,9 @@ export default defineConfig({
   output: 'static',
   adapter: vercel(),
 
+  // Disabilita CSRF check per le pagine SSR (es. /admin/statistiche login form)
+  security: { checkOrigin: false },
+
   integrations: [
     tailwind(),
     sitemap(),
