@@ -117,7 +117,7 @@ export interface AnalyticsData {
 export async function fetchAnalyticsData(days = 30, from?: string, to?: string): Promise<AnalyticsData> {
   const saJson      = getSaJson();
   const propertyId  = import.meta.env.GA4_PROPERTY_ID ?? '';
-  const siteUrl     = import.meta.env.GSC_SITE_URL ?? 'https://marcomunich.com/';
+  const siteUrl     = (import.meta.env.GSC_SITE_URL ?? 'https://marcomunich.com/').trim();
   if (!propertyId)  throw new Error('GA4_PROPERTY_ID mancante');
 
   const GA4_SCOPE = ['https://www.googleapis.com/auth/analytics.readonly'];
