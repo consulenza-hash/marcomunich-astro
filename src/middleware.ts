@@ -13,11 +13,11 @@ export const onRequest = defineMiddleware(async (ctx, next) => {
   // Inietta floating button 📊 in tutte le pagine /keystatic/*
   if (url.pathname.startsWith('/keystatic')) {
     const html = await response.text();
-    const script = `<script src="/admin-stats-btn.js"></script>`;
+    const scripts = `<script src="/admin-stats-btn.js"></script><script src="/admin-ai-btn.js"></script>`;
     // Keystatic non ha </body> — appendi alla fine
     const patched = html.includes('</body>')
-      ? html.replace('</body>', `${script}</body>`)
-      : html + script;
+      ? html.replace('</body>', `${scripts}</body>`)
+      : html + scripts;
     return new Response(patched, {
       status: response.status,
       headers: response.headers,

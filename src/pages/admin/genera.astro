@@ -15,6 +15,13 @@ if (Astro.request.method === 'POST' && !isAuth) {
   }
 }
 
+// ── Params da URL (?slug=...&modo=...&autostart=1) ────────────────────────────
+const MODI_VALIDI = ['solo-articolo', 'solo-metadati', 'tutto-completo'];
+const paramSlug      = isAuth ? (Astro.url.searchParams.get('slug') ?? '') : '';
+const paramModoRaw   = isAuth ? (Astro.url.searchParams.get('modo')  ?? '') : '';
+const paramModo      = MODI_VALIDI.includes(paramModoRaw) ? paramModoRaw : 'solo-articolo';
+const paramAutostart = isAuth && Astro.url.searchParams.get('autostart') === '1';
+
 // ── Lista articoli da GitHub ──────────────────────────────────────────────────
 type ArticoloItem = { slug: string; label: string };
 let articoli: ArticoloItem[] = [];
@@ -371,12 +378,12 @@ if (isAuth) {
           <div class="step-label"><span class="step-num">1</span> Sorgente</div>
 
           <div class="source-tabs">
-            <button class="source-tab active" onclick="switchSource('nuovo', this)">✨ Nuovo Articolo</button>
-            <button class="source-tab" onclick="switchSource('esistente', this)">📋 Articolo Esistente</button>
+            <button class={`source-tab${!paramSlug ? ' active' : ''}`} onclick="switchSource('nuovo', this)">✨ Nuovo Articolo</button>
+            <button class={`source-tab${paramSlug ? ' active' : ''}`} onclick="switchSource('esistente', this)">📋 Articolo Esistente</button>
           </div>
 
           <!-- Nuovo: prompt libero -->
-          <div id="sorgente-nuovo">
+          <div id="sorgente-nuovo" style={paramSlug ? 'display:none;' : ''}>
             <textarea
               class="prompt-input"
               id="prompt-nuovo"
@@ -385,12 +392,12 @@ if (isAuth) {
           </div>
 
           <!-- Esistente: dropdown -->
-          <div id="sorgente-esistente" style="display:none;">
+          <div id="sorgente-esistente" style={paramSlug ? '' : 'display:none;'}>
             <div class="select-wrap">
               <select id="articolo-select">
                 <option value="">— Scegli un articolo dalla lista —</option>
                 {articoli.map(a => (
-                  <option value={a.slug}>{a.label}</option>
+                  <option value={a.slug} selected={a.slug === paramSlug}>{a.label}</option>
                 ))}
               </select>
             </div>
@@ -402,17 +409,17 @@ if (isAuth) {
         <div class="card">
           <div class="step-label"><span class="step-num">2</span> Cosa generare</div>
           <div class="modi">
-            <button class="modo-btn active" data-modo="solo-articolo" onclick="setModo(this)">
+            <button class={`modo-btn${paramModo === 'solo-articolo' ? ' active' : ''}`} data-modo="solo-articolo" onclick="setModo(this)">
               <div class="modo-icon">📝</div>
               <div class="modo-label">Solo Articolo</div>
               <div class="modo-desc">Scrive solo il corpo del testo</div>
             </button>
-            <button class="modo-btn" data-modo="solo-metadati" onclick="setModo(this)">
+            <button class={`modo-btn${paramModo === 'solo-metadati' ? ' active' : ''}`} data-modo="solo-metadati" onclick="setModo(this)">
               <div class="modo-icon">🏷️</div>
               <div class="modo-label">Solo Metadati</div>
               <div class="modo-desc">Genera SEO, GEO, AEO, FAQ schema</div>
             </button>
-            <button class="modo-btn" data-modo="tutto-completo" onclick="setModo(this)">
+            <button class={`modo-btn${paramModo === 'tutto-completo' ? ' active' : ''}`} data-modo="tutto-completo" onclick="setModo(this)">
               <div class="modo-icon">🚀</div>
               <div class="modo-label">Tutto Completo</div>
               <div class="modo-desc">Articolo + tutti i metadati da zero</div>
@@ -434,9 +441,15 @@ if (isAuth) {
           </div>
           <div id="progress-done" style="display:none;">
             <span class="success-icon">✅</span>
-            <div class="success-title">Articolo salvato!</div>
+            <div class="success-title">Contenuto generato!</div>
             <div class="success-sub" id="success-slug"></div>
-            <div class="success-sub" style="margin-top:.25rem;">Reindirizzamento all'editor…</div>
+            <button
+              id="btn-applica"
+              onclick="applicaArticolo()"
+              style="margin-top:1.25rem;background:#4f46e5;color:#fff;border:none;padding:.85rem 1.75rem;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer;box-shadow:0 4px 14px rgba(79,70,229,.4);transition:transform .15s,box-shadow .15s;"
+              onmouseenter="this.style.transform='scale(1.03)';this.style.boxShadow='0 6px 20px rgba(79,70,229,.6)'"
+              onmouseleave="this.style.transform='scale(1)';this.style.boxShadow='0 4px 14px rgba(79,70,229,.4)'"
+            >✅ Applica all'articolo</button>
           </div>
         </div>
 
@@ -453,10 +466,15 @@ if (isAuth) {
 
   {isAuth && (
     <script is:inline>
-      let sorgenteCorrente = 'nuovo';
-      let modoCorrente     = 'solo-articolo';
+      let sorgenteCorrente = `${paramSlug ? 'esistente' : 'nuovo'}`;
+      let modoCorrente     = `${paramModo}`;
       let timerInterval    = null;
       let startTime        = 0;
+      let _keystatic_url   = '';
+
+      function applicaArticolo() {
+        if (_keystatic_url) window.location.href = _keystatic_url;
+      }
 
       // ── Switch sorgente ───────────────────────────────────────────────────
       function switchSource(tipo, btn) {
@@ -617,19 +635,31 @@ if (isAuth) {
             throw new Error(saveData.error || `GitHub error ${saveRes.status}`);
           }
 
-          // ── Successo → redirect ───────────────────────────────────────────
+          // ── Successo → mostra bottone Applica ────────────────────────────
           stopTimer();
+          _keystatic_url = saveData.keystatic_url;
           const secs = ((Date.now() - startTime) / 1000).toFixed(1);
           document.getElementById('progress-idle').style.display = 'none';
           document.getElementById('progress-done').style.display = '';
           document.getElementById('success-slug').textContent = `/${saveData.slug} — ${secs}s`;
-
-          setTimeout(() => { window.location.href = saveData.keystatic_url; }, 1500);
+          // Aggiorna etichetta bottone con nome articolo
+          const articoloLabel = (slug_esistente || (art.titolo || saveData.slug || 'articolo'))
+            .replace(/-/g, ' ').substring(0, 40);
+          document.getElementById('btn-applica').textContent = `✅ Applica a "${articoloLabel}"`;
 
         } catch (err) {
           showError(err.message || 'Errore sconosciuto');
         }
       }
+    </script>
+  )}
+
+  {isAuth && paramAutostart && (
+    <script is:inline>
+      // Autostart: parte automaticamente se ?autostart=1 è nell'URL
+      window.addEventListener('load', function() {
+        setTimeout(genera, 500);
+      });
     </script>
   )}
 </body>
