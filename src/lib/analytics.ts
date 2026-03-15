@@ -70,7 +70,7 @@ async function ga4(propertyId: string, token: string, body: object): Promise<any
 
 async function gsc(siteUrl: string, token: string, body: object): Promise<any> {
   const r = await fetch(
-    `https://www.googleapis.com/webmasters/v3/sites/${encodeURIComponent(siteUrl)}/searchAnalytics/query`,
+    `https://searchconsole.googleapis.com/webmasters/v3/sites/${encodeURIComponent(siteUrl)}/searchAnalytics/query`,
     { method: 'POST', headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }, body: JSON.stringify(body) }
   );
   if (!r.ok) throw new Error(`GSC ${r.status}: ${await r.text()}`);
