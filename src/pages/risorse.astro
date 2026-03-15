@@ -102,7 +102,7 @@ import BaseLayout from '@layouts/BaseLayout.astro';
         </div>
       </div>
 
-      <div class="step">
+      <div class="step step--04">
         <div class="step__number">04</div>
         <div class="step__content">
           <span class="step__tag">Dopo almeno 30 video</span>
@@ -407,6 +407,19 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 .step--02 .step__btn--primary:hover { background: #1F458A; }
 
 .step--03 {
+  background: #FEF0F0;
+  border-top-color: #C0292A;
+  border-radius: 8px;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  margin-bottom: 0.75rem;
+  border-top-width: 3px;
+}
+.step--03 .step__number { color: #C0292A; }
+.step--03 .step__btn--primary { background: #C0292A; }
+.step--03 .step__btn--primary:hover { background: #9B2020; }
+
+.step--04 {
   background: #EBF7EF;
   border-top-color: #1A7A4E;
   border-radius: 8px;
@@ -415,9 +428,9 @@ import BaseLayout from '@layouts/BaseLayout.astro';
   margin-bottom: 0.75rem;
   border-top-width: 3px;
 }
-.step--03 .step__number { color: #1A7A4E; }
-.step--03 .step__btn--primary { background: #1A7A4E; }
-.step--03 .step__btn--primary:hover { background: #145E3B; }
+.step--04 .step__number { color: #1A7A4E; }
+.step--04 .step__btn--primary { background: #1A7A4E; }
+.step--04 .step__btn--primary:hover { background: #145E3B; }
 
 /* ── VIDEO ────────────────────────────────────────────────────────────── */
 .video-section { background: #F7F7F5; padding: 4rem 1.5rem; }
@@ -577,7 +590,8 @@ import BaseLayout from '@layouts/BaseLayout.astro';
   .step__number { font-size: 1.4rem; }
   .step--01 .step__number { color: #D4840A; }
   .step--02 .step__number { color: #2A5CB5; }
-  .step--03 .step__number { color: #1A7A4E; }
+  .step--03 .step__number { color: #C0292A; }
+  .step--04 .step__number { color: #1A7A4E; }
   .quicklinks__inner { grid-template-columns: 1fr; }
   .percorso, .delegate { padding: 3rem 1.25rem; }
   .delegate__services { grid-template-columns: 1fr; }
