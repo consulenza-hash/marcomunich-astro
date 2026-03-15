@@ -487,81 +487,147 @@ if (isAuth) {
         if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
       }
 
-      // ── Reset error ───────────────────────────────────────────────────────
-      function resetError() {
-        document.getElementById('error-box').classList.remove('visible');
-        document.getElementById('btn-genera').disabled = false;
-        document.getElementById('btn-genera').textContent = '✨ Genera con Claude — Salva in Keystatic';
+      // ── Stato UI ─────────────────────────────────────────────────────────
+      function setStatus(msg) {
+        document.getElementById('progress-status').textContent = msg;
       }
 
-      // ── Genera ─────────────────────────────────────────────────────────────
+      function resetError() {
+        document.getElementById('error-box').classList.remove('visible');
+        const btn = document.getElementById('btn-genera');
+        btn.disabled    = false;
+        btn.textContent = '✨ Genera con Claude — Salva in Keystatic';
+      }
+
+      function showError(msg) {
+        stopTimer();
+        document.getElementById('progress-wrap').classList.remove('visible');
+        document.getElementById('error-box').classList.add('visible');
+        document.getElementById('error-msg').textContent = msg;
+        const btn = document.getElementById('btn-genera');
+        btn.disabled    = false;
+        btn.textContent = '✨ Genera con Claude — Salva in Keystatic';
+      }
+
+      // ── Flusso principale a 3 step ────────────────────────────────────────
       async function genera() {
         // Raccogli input
-        let prompt        = null;
+        let promptInput    = null;
         let slug_esistente = null;
 
         if (sorgenteCorrente === 'nuovo') {
-          prompt = document.getElementById('prompt-nuovo').value.trim();
-          if (!prompt) { alert('Inserisci il tema/prompt per il nuovo articolo.'); return; }
+          promptInput = document.getElementById('prompt-nuovo').value.trim();
+          if (!promptInput) { alert('Inserisci il tema/prompt per il nuovo articolo.'); return; }
         } else {
           slug_esistente = document.getElementById('articolo-select').value;
           if (!slug_esistente) { alert('Seleziona un articolo dalla lista.'); return; }
         }
 
-        // Validazione modo-metadati
         if (modoCorrente === 'solo-metadati' && sorgenteCorrente === 'nuovo') {
-          alert('"Solo Metadati" funziona solo con un articolo esistente.\nScegli "Articolo Esistente" oppure cambia modalità.');
+          alert('"Solo Metadati" richiede un articolo esistente.\nScegli "Articolo Esistente" oppure cambia modalità.');
           return;
         }
 
-        // UI: avvia
+        // UI: avvia progress
         const btn = document.getElementById('btn-genera');
         btn.disabled    = true;
         btn.textContent = '⏳ Generazione in corso…';
-
         document.getElementById('error-box').classList.remove('visible');
         document.getElementById('progress-idle').style.display = '';
         document.getElementById('progress-done').style.display = 'none';
         document.getElementById('progress-wrap').classList.add('visible');
-
-        // Aggiorna status step
-        const steps = { 'solo-articolo': 'Scrittura articolo', 'solo-metadati': 'Generazione metadati SEO/AEO/GEO', 'tutto-completo': 'Generazione articolo + metadati completi' };
-        document.getElementById('progress-status').textContent = steps[modoCorrente] || 'Elaborazione…';
-
         startTimer();
 
         try {
-          const res = await fetch('/api/crea-articolo', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ modo: modoCorrente, prompt, slug_esistente }),
-          });
+          // ── STEP 1: Carica articolo esistente (se necessario) ────────────
+          let testoSorgente  = promptInput ?? '';
+          let existing_titolo = '';
+          let existing_corpo  = '';
 
-          const data = await res.json();
-          stopTimer();
+          if (slug_esistente) {
+            setStatus('📥 Caricamento articolo…');
+            const loadRes = await fetch(`/api/articolo?slug=${encodeURIComponent(slug_esistente)}`);
+            if (!loadRes.ok) throw new Error(`Errore caricamento articolo: ${loadRes.status}`);
+            const { testo } = await loadRes.json();
+            testoSorgente = testo;
 
-          if (!res.ok || !data.success) {
-            throw new Error(data.error || `HTTP ${res.status}`);
+            // Estrai titolo e corpo dall'mdoc
+            const titleMatch = testo.match(/^titolo:\s*"?([^"\n]+)"?/m);
+            existing_titolo  = titleMatch?.[1]?.replace(/\\"/g, '"') ?? slug_esistente;
+            const parts = testo.split(/^---$/m);
+            existing_corpo   = parts.length >= 3 ? parts.slice(2).join('---').trim() : '';
           }
 
-          // Successo → mostra feedback e redirect
+          // ── STEP 2: Genera con Claude (streaming) ────────────────────────
+          const modeLabels = {
+            'solo-articolo':   '✍️ Scrittura articolo con Claude…',
+            'solo-metadati':   '🏷️ Generazione metadati SEO/AEO/GEO…',
+            'tutto-completo':  '🚀 Generazione articolo + metadati completi…',
+          };
+          setStatus(modeLabels[modoCorrente] || 'Elaborazione…');
+
+          const genRes = await fetch('/api/genera-json', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ testo: testoSorgente, modo: modoCorrente, isNew: !slug_esistente }),
+          });
+          if (!genRes.ok) throw new Error(`Errore API generazione: ${genRes.status}`);
+
+          // Accumula stream con contatore live
+          const reader  = genRes.body.getReader();
+          const decoder = new TextDecoder();
+          let rawJson = '';
+          let chars   = 0;
+
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            const chunk = decoder.decode(value, { stream: true });
+            rawJson += chunk;
+            chars   += chunk.length;
+            setStatus(`${modeLabels[modoCorrente] || 'Generazione…'} ${chars.toLocaleString('it')} caratteri`);
+          }
+
+          // Controlla errore nel JSON stream
+          if (rawJson.includes('"__error"')) {
+            const m = rawJson.match(/"__error":"([^"]+)"/);
+            throw new Error(m?.[1] ?? 'Errore Claude durante la generazione');
+          }
+
+          // ── STEP 3: Parsa JSON ────────────────────────────────────────────
+          setStatus('🔧 Parsing e salvataggio su GitHub…');
+          let art;
+          try {
+            const start = rawJson.indexOf('{');
+            const end   = rawJson.lastIndexOf('}');
+            if (start === -1 || end === -1) throw new Error('Nessun JSON trovato nella risposta');
+            art = JSON.parse(rawJson.slice(start, end + 1));
+          } catch (parseErr) {
+            throw new Error(`Impossibile parsare il JSON: ${parseErr.message}. Riprova.`);
+          }
+
+          // ── STEP 4: Salva su GitHub ───────────────────────────────────────
+          const saveRes = await fetch('/api/salva-bozza', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ art, modo: modoCorrente, slug_esistente, existing_titolo, existing_corpo }),
+          });
+          const saveData = await saveRes.json();
+          if (!saveRes.ok || !saveData.success) {
+            throw new Error(saveData.error || `GitHub error ${saveRes.status}`);
+          }
+
+          // ── Successo → redirect ───────────────────────────────────────────
+          stopTimer();
           const secs = ((Date.now() - startTime) / 1000).toFixed(1);
           document.getElementById('progress-idle').style.display = 'none';
           document.getElementById('progress-done').style.display = '';
-          document.getElementById('success-slug').textContent = `/${data.slug} — completato in ${secs}s`;
+          document.getElementById('success-slug').textContent = `/${saveData.slug} — ${secs}s`;
 
-          // Redirect a Keystatic dopo 1.5s
-          setTimeout(() => {
-            window.location.href = data.keystatic_url;
-          }, 1500);
+          setTimeout(() => { window.location.href = saveData.keystatic_url; }, 1500);
 
         } catch (err) {
-          stopTimer();
-          document.getElementById('progress-wrap').classList.remove('visible');
-          document.getElementById('error-box').classList.add('visible');
-          document.getElementById('error-msg').textContent = err.message || 'Errore sconosciuto';
-          btn.disabled    = false;
-          btn.textContent = '✨ Genera con Claude — Salva in Keystatic';
+          showError(err.message || 'Errore sconosciuto');
         }
       }
     </script>
