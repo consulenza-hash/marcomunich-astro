@@ -4,33 +4,309 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 
 <BaseLayout
   title="Servizi - Marco Munich"
-  description="Servizi di Personal Branding Olistico di Marco Munich per coach, counselor e operatori olistici."
+  description="Servizi di Personal Branding Olistico e Sviluppo Siti Web di Marco Munich per coach, counselor e operatori olistici."
   currentPath="/servizi/"
 >
-  <link slot="head" rel="stylesheet" href="/thrive/servizi.css" />
 
-  <div class="thrive-page-wrap">
-    <Fragment set:html={`<div id="landingpage-top-section" class="landingpage-section top-section placeholder-section hide-section"><div class="section-background"></div><div class="section-content"></div></div>
-<div data-inherit-lp-settings="1" data-match-lp-colors="1" class="thrv_wrapper thrv-page-section tcb-local-vars-root" style="" data-css="tve-u-17d520d63e6" tcb-template-name="Illustrated List Area Block 01" tcb-template-id="2766" data-keep-css_id="1"><div class="thrive-group-edit-config" style="display: none !important">__CONFIG_group_edit__{"k7g2ztnu":{"name":"All Features Title(s)","singular":"-- Text %s"},"k7g3056x":{"name":"All Features Paragraph(s)","singular":"-- Text %s"},"k7g30xg2":{"name":"All Text Content Box(s)","singular":"-- Content Box %s"},"k7g31463":{"name":"All Text Column(s)","singular":"-- Column %s"}}__CONFIG_group_edit__</div><div class="thrive-local-colors-config" style="display: none !important">__CONFIG_local_colors__{"colors":{"dab8e":"Royal Blue"},"gradients":{}}__CONFIG_local_colors__</div>
-<div class="tve-page-section-out"></div>
-<div class="tve-page-section-in   tve_empty_dropzone" data-css="tve-u-17d520d63fd" style=""><div class="thrv_wrapper thrv_text_element" style="" data-css="tve-u-17d520d63ea"><h2 class="" data-css="tve-u-17d520d63e8" style="text-align: center;">Servizi e Offerte</h2></div><div class="thrv_wrapper thrv_text_element" data-css="tve-u-17d520d63eb" style=""><p data-css="tve-u-17d520d63e9" style="text-align: center;">Cerco sempre di puntare al metterti nelle condizioni ideali per poter operare da solo, non ami il fatto di rendere le persone dipendenti dal loro stesso sistema, non lo trovo naturale.</p></div><div class="thrv_wrapper thrv-columns" style="--tcb-col-el-width:1080;" data-css="tve-u-17d520d63fc"><div class="tcb-flex-row tcb--cols--2" style="" data-css="tve-u-17d520d63ed"><div class="tcb-flex-col"><div class="tcb-col" style=""><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad" style="" data-css="tve-u-17d520d63f4">
-<div class="tve-content-box-background" style="" data-css="tve-u-17d520d63f6"></div>
-<div class="tve-cb" style="" data-css="tve-u-17d520d63fb"></div>
-</div></div></div><div class="tcb-flex-col"><div class="tcb-col dynamic-group-k7g31463" style="" data-css="tve-u-1763d0fce95"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad dynamic-group-k7g30xg2" style="" data-css="tve-u-17d520d63ef">
-<div class="tve-content-box-background"></div>
-<div class="tve-cb"><div class="thrv_wrapper thrv_text_element dynamic-group-k7g2ztnu" style="" data-css="tve-u-17d520d63f2"><h4 class="" data-css="tve-u-17d520d63f0">I miei Percorsi Online</h4></div><div class="thrv_wrapper thrv_text_element dynamic-group-k7g3056x" data-css="tve-u-17d520d63fe" style=""><p data-css="tve-u-17d520d63f1">Lezioni Video attraverso il quale impariamo a <strong>creare un messaggio autentico</strong>, a promuoverci senza avere un sito web (cosa fondamentale all'inizio, visto che non serve averlo da subito) e creare contenuti video in modo autentico, <strong>senza paura della vergogna</strong>, esponendosi per quello che si è.</p></div><div class="thrv_wrapper thrv-button thrv-button-v2 tcb-local-vars-root" data-css="tve-u-17d520d63ff">
-	<div class="thrive-colors-palette-config" style="display: none !important">__CONFIG_colors_palette__{"active_palette":0,"config":{"colors":{"62516":{"name":"Main Accent","parent":-1}},"gradients":[]},"palettes":[{"name":"Default Palette","value":{"colors":{"62516":{"val":"var(--tcb-skin-color-30)"}},"gradients":[]}}]}__CONFIG_colors_palette__</div>
-	<a href="https://marcomunich.com/percorsi-online/" class="tcb-button-link tcb-plain-text" target="_blank">
-		<span class="tcb-button-texts"><span class="tcb-button-text thrv-inline-text">Vai ai Percorsi Online</span></span>
-	</a>
-</div></div>
-</div></div></div></div></div></div>
-</div><div id="landingpage-bottom-section" class="landingpage-section bottom-section placeholder-section hide-section"><div class="section-background"></div><div class="section-content"></div></div>`} />
+<!-- ══ HERO ═══════════════════════════════════════════════════════════════ -->
+<section class="sv-hero">
+  <div class="sv-hero__inner">
+    <span class="sv-label sv-label--gold">Di cosa mi occupo</span>
+    <h1 class="sv-hero__title">
+      <span class="sv-hl-plain">Servizi</span>
+      <em class="sv-hl-gold">e offerte.</em>
+    </h1>
+    <p class="sv-hero__sub">
+      Cerco sempre di mettere le persone nelle condizioni ideali per operare da soli.
+      Non mi piace rendere i clienti dipendenti dal proprio sistema — non lo trovo naturale.
+    </p>
   </div>
+</section>
+
+<!-- ══ SERVIZI ════════════════════════════════════════════════════════════ -->
+<section class="sv-services">
+  <div class="sv-services__inner">
+
+    <!-- Personal Branding -->
+    <article class="sv-service">
+      <div class="sv-service__bar" aria-hidden="true"></div>
+      <div class="sv-service__content">
+        <span class="sv-label sv-label--gold">01</span>
+        <h2 class="sv-service__title">
+          Personal Branding<br /><em>Olistico</em>
+        </h2>
+        <p class="sv-service__desc">
+          Per coach, counselor e operatori olistici che vogliono promuoversi
+          online in modo autentico, senza funnel aggressivi e senza maschere.
+          Sviluppiamo insieme il tuo punto di vista unico e la tua voce.
+        </p>
+        <div class="sv-service__tags">
+          <span>Messaggio Autentico</span>
+          <span>Contenuti</span>
+          <span>Strategia</span>
+          <span>Personal Branding</span>
+        </div>
+        <a href="/percorsi-online/" class="sv-service__link">Scopri i percorsi online →</a>
+      </div>
+    </article>
+
+    <div class="sv-divider" aria-hidden="true"></div>
+
+    <!-- Siti Web -->
+    <article class="sv-service">
+      <div class="sv-service__bar" aria-hidden="true"></div>
+      <div class="sv-service__content">
+        <span class="sv-label sv-label--gold">02</span>
+        <h2 class="sv-service__title">
+          Siti Web<br /><em>ad Alte Prestazioni</em>
+        </h2>
+        <p class="sv-service__desc">
+          Siti veloci, accessibili e ottimizzati per la ricerca semantica.
+          Progettati per riflettere davvero chi sei — non template generici
+          ma identità digitali costruite su misura.
+        </p>
+        <div class="sv-service__tags">
+          <span>Astro + Vercel</span>
+          <span>SEO Tecnico</span>
+          <span>AEO / GEO</span>
+          <span>Design Editoriale</span>
+        </div>
+        <a href="/sviluppo-siti-web/" class="sv-service__link">Come lavoro →</a>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ══ PERCORSI ═══════════════════════════════════════════════════════════ -->
+<section class="sv-corsi">
+  <div class="sv-corsi__inner">
+    <div class="sv-corsi__header">
+      <span class="sv-label sv-label--muted">Formazione</span>
+      <h2 class="sv-corsi__title">I miei <em>percorsi online</em></h2>
+      <p class="sv-corsi__sub">
+        Lezioni video per imparare a creare un messaggio autentico,
+        promuoverti senza dipendere da un sito e fare video senza vergogna.
+      </p>
+    </div>
+    <a href="/percorsi-online/" class="sv-btn sv-btn--gold">
+      Vai ai percorsi online
+    </a>
+    <a href="/risorse/" class="sv-btn sv-btn--ghost">
+      Tutte le risorse gratuite →
+    </a>
+  </div>
+</section>
+
+<!-- ══ CTA ════════════════════════════════════════════════════════════════ -->
+<section class="sv-cta">
+  <div class="sv-cta__inner">
+    <p class="sv-cta__eyebrow">Hai domande?</p>
+    <h2 class="sv-cta__title">Inizia con una <em>chiacchierata gratuita.</em></h2>
+    <a href="https://wa.link/zva8dp" class="sv-btn sv-btn--gold sv-btn--lg">
+      <svg viewBox="0 0 448 512" width="16" height="16" fill="currentColor" aria-hidden="true">
+        <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
+      </svg>
+      Scrivimi su WhatsApp
+    </a>
+  </div>
+</section>
+
 </BaseLayout>
 
 <style>
-  .thrive-page-wrap {
-    overflow-x: hidden;
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── Labels ─────────────────────────────────────────────────────────────── */
+.sv-label {
+  font: 700 0.62rem/1 var(--sans);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 1.5rem;
+}
+.sv-label--gold  { color: var(--gold); }
+.sv-label--muted { color: var(--muted); }
+
+/* ══ HERO ══════════════════════════════════════════════════════════════════ */
+.sv-hero {
+  background: var(--black);
+  padding: 7rem var(--pad) 6rem;
+}
+.sv-hero__inner {
+  max-width: var(--max);
+  margin: 0 auto;
+  max-width: 800px;
+}
+.sv-hero__title {
+  display: flex;
+  flex-direction: column;
+  line-height: 0.92;
+  margin-bottom: 2.5rem;
+}
+.sv-hl-plain {
+  font: 800 clamp(3.2rem, 6vw, 6.5rem)/1 var(--display);
+  color: var(--white);
+  display: block;
+  letter-spacing: -0.03em;
+}
+.sv-hl-gold {
+  font: 300 clamp(3.6rem, 7vw, 7.5rem)/1 var(--serif);
+  font-style: italic;
+  color: var(--gold);
+  display: block;
+  letter-spacing: -0.02em;
+  margin-top: 0.05em;
+}
+.sv-hero__sub {
+  font: 300 1rem/1.75 var(--sans);
+  color: rgba(255,255,255,0.45);
+  max-width: 520px;
+}
+
+/* ══ SERVIZI ════════════════════════════════════════════════════════════════ */
+.sv-services {
+  background: var(--ink);
+  padding: 6rem var(--pad);
+}
+.sv-services__inner {
+  max-width: var(--max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;
+  gap: 0;
+  align-items: start;
+}
+.sv-service {
+  padding: 2rem 3.5rem 2rem 0;
+}
+.sv-services__inner > .sv-service:last-child {
+  padding: 2rem 0 2rem 3.5rem;
+}
+.sv-service__bar {
+  width: 2rem;
+  height: 2px;
+  background: var(--gold);
+  margin-bottom: 2rem;
+}
+.sv-service__title {
+  font: 300 clamp(1.8rem, 3vw, 2.6rem)/1.1 var(--serif);
+  color: var(--white);
+  margin-bottom: 1.25rem;
+  letter-spacing: -0.01em;
+}
+.sv-service__title em { font-style: italic; color: var(--gold); }
+.sv-service__desc {
+  font: 300 0.92rem/1.75 var(--sans);
+  color: rgba(255,255,255,0.45);
+  margin-bottom: 1.5rem;
+}
+.sv-service__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+.sv-service__tags span {
+  font: 700 0.6rem/1 var(--sans);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(197,138,55,0.7);
+  border: 1px solid rgba(197,138,55,0.25);
+  padding: 0.35rem 0.65rem;
+  border-radius: 1px;
+}
+.sv-service__link {
+  font: 600 0.8rem/1 var(--sans);
+  color: rgba(255,255,255,0.35);
+  text-decoration: none;
+  letter-spacing: 0.03em;
+  transition: color 0.15s;
+}
+.sv-service__link:hover { color: var(--gold); opacity: 1; }
+.sv-divider {
+  background: rgba(255,255,255,0.06);
+  align-self: stretch;
+}
+
+/* ══ CORSI ══════════════════════════════════════════════════════════════════ */
+.sv-corsi {
+  background: var(--paper);
+  padding: 6rem var(--pad);
+}
+.sv-corsi__inner {
+  max-width: var(--max);
+  margin: 0 auto;
+  max-width: 700px;
+}
+.sv-corsi__title {
+  font: 300 clamp(2rem, 3.5vw, 3rem)/1.15 var(--serif);
+  color: var(--black);
+  margin-bottom: 1rem;
+  letter-spacing: -0.01em;
+}
+.sv-corsi__title em { font-style: italic; color: var(--gold); }
+.sv-corsi__sub {
+  font: 300 0.95rem/1.7 var(--sans);
+  color: var(--muted);
+  margin-bottom: 2.5rem;
+}
+
+/* ══ CTA ════════════════════════════════════════════════════════════════════ */
+.sv-cta {
+  background: var(--black);
+  padding: 7rem var(--pad);
+  text-align: center;
+}
+.sv-cta__inner {
+  max-width: 600px;
+  margin: 0 auto;
+}
+.sv-cta__eyebrow {
+  font: 700 0.62rem/1 var(--sans);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+  margin-bottom: 1.5rem;
+}
+.sv-cta__title {
+  font: 300 clamp(2rem, 4vw, 3.2rem)/1.2 var(--serif);
+  color: var(--white);
+  margin-bottom: 3rem;
+}
+.sv-cta__title em { font-style: italic; color: var(--gold); }
+
+/* ── Buttons ─────────────────────────────────────────────────────────────── */
+.sv-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font: 700 0.78rem/1 var(--sans);
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  padding: 0.9rem 1.75rem;
+  border-radius: 1px;
+  transition: background 0.15s, color 0.15s, transform 0.12s;
+  white-space: nowrap;
+  margin-right: 1rem;
+  margin-bottom: 0.75rem;
+}
+.sv-btn--gold { background: var(--gold); color: var(--black); }
+.sv-btn--gold:hover { background: var(--gold-d); transform: translateY(-1px); opacity: 1; }
+.sv-btn--ghost { background: transparent; color: var(--muted); padding-left: 0; }
+.sv-btn--ghost:hover { color: var(--black); opacity: 1; }
+.sv-btn--lg { padding: 1.1rem 2.25rem; font-size: 0.85rem; }
+
+/* ── Responsive ─────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .sv-services__inner {
+    grid-template-columns: 1fr;
   }
+  .sv-divider { display: none; }
+  .sv-service,
+  .sv-services__inner > .sv-service:last-child {
+    padding: 2.5rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+}
 </style>

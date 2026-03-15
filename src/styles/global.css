@@ -2,8 +2,8 @@
    global.css — Stili base per marcomunich.com (Astro + Tailwind)
    ────────────────────────────────────────────────────────────────────────────── */
 
-/* Font: Host Grotesk da Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300..800;1,300..800&display=swap');
+/* Font: Host Grotesk + Design System v2 (Bricolage Grotesque, Cormorant, Syne) */
+@import url('https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300..800;1,300..800&family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Cormorant:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Syne:wght@400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -184,11 +184,23 @@
   }
 }
 
-/* ── Variabili CSS Thrive Architect ──────────────────────────────────────────
-   Thrive imposta queste variabili via JS in WP; le definiamo qui per Astro.
-   Senza di esse i layout Thrive usano max-width: none e le colonne si
-   ridimensionano in modo errato. */
+/* ── Design System v2 — token globali ────────────────────────────────────────
+   Usati da tutte le pagine che adottano lo stile della homepage.
+   La homepage li ridefinisce localmente (nessun conflitto). */
 :root {
+  --gold:    #C58A37;
+  --gold-d:  #A06E22;
+  --black:   #0A0A0A;
+  --white:   #FFFFFF;
+  --ink:     #1C1C1C;
+  --paper:   #F2EFE9;
+  --muted:   rgba(10,10,10,0.42);
+  --serif:   'Cormorant', Georgia, serif;
+  --sans:    'Syne', system-ui, sans-serif;
+  --display: 'Bricolage Grotesque', system-ui, sans-serif;
+  --max:     1200px;
+  --pad:     clamp(1.5rem, 5vw, 5rem);
+  /* Thrive Architect compat */
   --page-section-max-width: 1080px;
 }
 

@@ -1,5 +1,78 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
+
+const AMAZON_ICON = `<svg viewBox="0 0 448 512" fill="currentColor" width="14" height="14" aria-hidden="true"><path d="M257.2 162.7c-48.7 1.8-169.5 15.5-169.5 117.5 0 109.5 138.3 114 183.5 43.2 6.5 10.2 35.4 37.5 45.3 46.8l56.8-56S341 288.9 341 261.4V114.3C341 89 316.5 32 228.7 32 140.7 32 94 87 94 136.3l73.5 6.8c16.3-49.5 54.2-49.5 54.2-49.5 40.7-.1 35.5 29.8 35.5 69.1zm0 86.8c0 80-84.2 68-84.2 17.2 0-47.2 50.5-56.7 84.2-57.8v40.6zm136 163.5c-7.7 10-70 67-174.5 67S34.2 408.5 9.7 379c-6.8-7.7 1-11.3 5.5-8.3C88.5 415.2 203 488.5 387.7 401c7.5-3.7 13.3 2 5.5 12zm39.8 2.2c-6.5 15.8-16 26.8-21.2 31-5.5 4.5-9.5 2.7-6.5-3.8s19.3-46.5 12.7-55c-6.5-8.3-37-4.3-48-3.2-10.8 1-13 2-14-.3-2.3-5.7 21.7-15.5 37.5-17.5 15.7-1.8 41-.8 46 5.7 3.7 5.1 0 27.1-6.5 43.1z"/></svg>`;
+
+const libri = [
+  {
+    n: '01',
+    href: 'https://www.amazon.it/dp/B0BW28MMWL',
+    img: 'https://m.media-amazon.com/images/I/61qgDt7YdlL._SY466_.jpg',
+    alt: 'Copertina Content Marketing Olistico',
+    tag: 'Personal Branding · 2023',
+    titolo: 'Content Marketing Olistico',
+    sub: 'Come promuoversi online in modo autentico nel settore olistico se sei Counselor, Coach o Operatore',
+    rating: '4,3',
+    stars: 4,
+    recensioni: 12,
+    desc: 'Per chi si è già scontrato con la sensazione fastidiosa di doversi "vendere". Riflessioni, domande, esercizi e un diario di 21 giorni per tornare a scrivere da un luogo più vicino a te. Non tecniche aggressive, non strategie di manipolazione: una presenza coerente, rispettosa, vera.',
+    pagine: '85 pagine',
+    data: 'Febbraio 2023',
+    kindle: '5,98 €',
+    print: '13,90 €',
+  },
+  {
+    n: '02',
+    href: 'https://www.amazon.it/dp/B0F4MPN3GS',
+    img: 'https://m.media-amazon.com/images/I/6134ncB9yjL._SY425_.jpg',
+    alt: 'Copertina Scrivere per Restare',
+    tag: 'Personal Branding · Aprile 2025',
+    titolo: 'Scrivere per Restare',
+    sub: 'Il personal branding olistico spiegato attraverso piccoli spaccati di vita',
+    rating: '5,0',
+    stars: 5,
+    recensioni: 4,
+    desc: 'Questo non è un libro per "venderti meglio". È un libro per smettere di venderti del tutto. Il racconto di una strada diversa, tracciata da dentro. Per counselor, coach, operatori olistici che sentono il bisogno di essere visibili, ma non vogliono snaturarsi per farlo.',
+    pagine: '156 pagine',
+    data: 'Aprile 2025',
+    kindle: '5,98 €',
+    print: '14,90 €',
+  },
+  {
+    n: '03',
+    href: 'https://www.amazon.it/dp/B0FQ57R899',
+    img: 'https://m.media-amazon.com/images/I/61USebxXAkL._SY425_.jpg',
+    alt: "Copertina Restare Autentici Scrivendo con l'AI",
+    tag: 'Intelligenza Artificiale · Settembre 2025',
+    titolo: "Restare Autentici Scrivendo con l'AI",
+    sub: 'Guida pratica per counselor, coach e operatori olistici che guardano l\'AI con diffidenza',
+    rating: '5,0',
+    stars: 5,
+    recensioni: 1,
+    desc: "Questo non è un manuale tecnico. È una guida pratica per chi lavora con le persone e sente il bisogno di comunicare senza perdere autenticità. L'AI non sostituisce la tua voce: la amplifica. Se porti dentro la tua esperienza, l'AI diventa un segretario invisibile che restituisce una voce più nitida e fedele a ciò che sei.",
+    pagine: '140 pagine',
+    data: 'Settembre 2025',
+    kindle: '5,97 €',
+    print: '17,58 €',
+  },
+  {
+    n: '04',
+    href: 'https://www.amazon.it/dp/B0FPB8NBQW',
+    img: 'https://m.media-amazon.com/images/I/31J4xWp14TL._SY445_SX342_ML2_.jpg',
+    alt: 'Copertina Un Anno di Scrittura per Scoprire Chi Sei Davvero',
+    tag: 'Scrittura · Agosto 2025',
+    titolo: 'Un Anno di Scrittura per Scoprire Chi Sei Davvero',
+    sub: 'Un esercizio di costanza per smettere di fingere',
+    rating: null,
+    stars: 0,
+    recensioni: 0,
+    desc: 'Un percorso concreto, settimana dopo settimana, che ti accompagna a guardarti dentro con sincerità e a portare fuori la tua voce senza maschere. 52 capitoli, uno per settimana, ognuno con domande pratiche e tre finestre di esercizio. Non servono doti letterarie. Ti bastano dieci minuti al giorno e la volontà di restare.',
+    pagine: '154 pagine',
+    data: 'Agosto 2025',
+    kindle: '6,99 €',
+    print: '17,58 €',
+  },
+];
 ---
 
 <BaseLayout
@@ -8,182 +81,87 @@ import BaseLayout from '@layouts/BaseLayout.astro';
   currentPath="/libri/"
 >
 
-<!-- ══ HERO ════════════════════════════════════════════════════════════════ -->
-<section class="hero">
-  <div class="hero__inner">
-    <span class="hero__label">Marco Munich</span>
-    <h1 class="hero__title">I miei libri</h1>
-    <p class="hero__sub">Quattro libri per chi vuole promuoversi online restando se stesso. Tutti disponibili su Amazon in formato Kindle e cartaceo.</p>
+<!-- ══ HERO ═══════════════════════════════════════════════════════════════ -->
+<section class="lb-hero">
+  <div class="lb-hero__inner">
+    <span class="lb-label">Marco Munich</span>
+    <h1 class="lb-hero__title">
+      <span class="lb-hl-plain">I miei</span>
+      <em class="lb-hl-gold">libri.</em>
+    </h1>
+    <p class="lb-hero__sub">
+      Quattro libri per chi vuole promuoversi online restando se stesso.
+      Tutti disponibili su Amazon in formato Kindle e cartaceo.
+    </p>
   </div>
 </section>
 
 <!-- ══ LIBRI ═══════════════════════════════════════════════════════════════ -->
-<section class="libri">
-  <div class="libri__inner">
-
-    <!-- LIBRO 1 -->
-    <article class="libro libro--01">
-      <div class="libro__cover-wrap">
-        <a href="https://www.amazon.it/dp/B0BW28MMWL" target="_blank" rel="nofollow noopener" class="libro__cover-link">
-          <img
-            class="libro__cover"
-            src="https://m.media-amazon.com/images/I/61qgDt7YdlL._SY466_.jpg"
-            alt="Copertina Content Marketing Olistico"
-            width="160" height="230"
-            loading="lazy"
-          />
-        </a>
-      </div>
-      <div class="libro__content">
-        <span class="libro__tag">Personal Branding · 2023</span>
-        <h2 class="libro__title">Content Marketing Olistico</h2>
-        <p class="libro__subtitle">Come promuoversi online in modo autentico nel settore olistico se sei Counselor, Coach o Operatore</p>
-        <div class="libro__rating">
-          <span class="stars">★★★★☆</span>
-          <span class="rating-val">4,3</span>
-          <span class="rating-count">(12 recensioni)</span>
+<section class="lb-section">
+  <div class="lb-section__inner">
+    {libri.map((libro) => (
+      <article class="lb-libro">
+        <div class="lb-libro__n-col">
+          <span class="lb-libro__n">{libro.n}</span>
         </div>
-        <p class="libro__desc">Per chi si è già scontrato con la sensazione fastidiosa di doversi "vendere". Riflessioni, domande, esercizi e un diario di 21 giorni per tornare a scrivere da un luogo più vicino a te. Non tecniche aggressive, non strategie di manipolazione: una presenza coerente, rispettosa, vera.</p>
-        <div class="libro__meta">
-          <span class="libro__pages">85 pagine</span>
-          <span class="libro__sep">·</span>
-          <span class="libro__date">Febbraio 2023</span>
+        <div class="lb-libro__cover-col">
+          <a href={libro.href} target="_blank" rel="nofollow noopener" class="lb-libro__cover-link" tabindex="-1" aria-hidden="true">
+            <img
+              class="lb-libro__cover"
+              src={libro.img}
+              alt={libro.alt}
+              width="150" height="215"
+              loading="lazy"
+            />
+          </a>
         </div>
-        <div class="libro__prices">
-          <span class="libro__price libro__price--kindle">Kindle <strong>5,98 €</strong></span>
-          <span class="libro__price libro__price--print">Cartaceo <strong>13,90 €</strong></span>
+        <div class="lb-libro__content">
+          <span class="lb-libro__tag">{libro.tag}</span>
+          <h2 class="lb-libro__title">{libro.titolo}</h2>
+          <p class="lb-libro__sub">{libro.sub}</p>
+          {libro.rating && (
+            <div class="lb-libro__rating">
+              <span class="lb-stars" aria-label={`${libro.rating} stelle su 5`}>
+                {'★'.repeat(libro.stars)}{'☆'.repeat(5 - libro.stars)}
+              </span>
+              <span class="lb-rating-val">{libro.rating}</span>
+              <span class="lb-rating-count">({libro.recensioni} {libro.recensioni === 1 ? 'recensione' : 'recensioni'})</span>
+            </div>
+          )}
+          <p class="lb-libro__desc">{libro.desc}</p>
+          <div class="lb-libro__meta">
+            <span>{libro.pagine}</span>
+            <span class="lb-sep" aria-hidden="true">·</span>
+            <span>{libro.data}</span>
+          </div>
+          <div class="lb-libro__prices">
+            <span class="lb-price lb-price--kindle">Kindle <strong>{libro.kindle}</strong></span>
+            <span class="lb-price lb-price--print">Cartaceo <strong>{libro.print}</strong></span>
+          </div>
+          <a href={libro.href} target="_blank" rel="nofollow noopener" class="lb-btn">
+            <Fragment set:html={AMAZON_ICON} />
+            Acquista su Amazon
+          </a>
         </div>
-        <a href="https://www.amazon.it/dp/B0BW28MMWL" target="_blank" rel="nofollow noopener" class="libro__cta">
-          <svg viewBox="0 0 448 512" fill="currentColor" class="libro__cta-icon"><path d="M257.2 162.7c-48.7 1.8-169.5 15.5-169.5 117.5 0 109.5 138.3 114 183.5 43.2 6.5 10.2 35.4 37.5 45.3 46.8l56.8-56S341 288.9 341 261.4V114.3C341 89 316.5 32 228.7 32 140.7 32 94 87 94 136.3l73.5 6.8c16.3-49.5 54.2-49.5 54.2-49.5 40.7-.1 35.5 29.8 35.5 69.1zm0 86.8c0 80-84.2 68-84.2 17.2 0-47.2 50.5-56.7 84.2-57.8v40.6zm136 163.5c-7.7 10-70 67-174.5 67S34.2 408.5 9.7 379c-6.8-7.7 1-11.3 5.5-8.3C88.5 415.2 203 488.5 387.7 401c7.5-3.7 13.3 2 5.5 12zm39.8 2.2c-6.5 15.8-16 26.8-21.2 31-5.5 4.5-9.5 2.7-6.5-3.8s19.3-46.5 12.7-55c-6.5-8.3-37-4.3-48-3.2-10.8 1-13 2-14-.3-2.3-5.7 21.7-15.5 37.5-17.5 15.7-1.8 41-.8 46 5.7 3.7 5.1 0 27.1-6.5 43.1z"/></svg>
-          Acquista su Amazon
-        </a>
-      </div>
-    </article>
-
-    <!-- LIBRO 2 -->
-    <article class="libro libro--02">
-      <div class="libro__cover-wrap">
-        <a href="https://www.amazon.it/dp/B0F4MPN3GS" target="_blank" rel="nofollow noopener" class="libro__cover-link">
-          <img
-            class="libro__cover"
-            src="https://m.media-amazon.com/images/I/6134ncB9yjL._SY425_.jpg"
-            alt="Copertina Scrivere per Restare"
-            width="160" height="230"
-            loading="lazy"
-          />
-        </a>
-      </div>
-      <div class="libro__content">
-        <span class="libro__tag">Personal Branding · Aprile 2025</span>
-        <h2 class="libro__title">Scrivere per Restare</h2>
-        <p class="libro__subtitle">Il personal branding olistico spiegato attraverso piccoli spaccati di vita</p>
-        <div class="libro__rating">
-          <span class="stars">★★★★★</span>
-          <span class="rating-val">5,0</span>
-          <span class="rating-count">(4 recensioni)</span>
-        </div>
-        <p class="libro__desc">Questo non è un libro per "venderti meglio". È un libro per smettere di venderti del tutto. Il racconto di una strada diversa, tracciata da dentro. Per counselor, coach, operatori olistici che sentono il bisogno di essere visibili, ma non vogliono snaturarsi per farlo. Con prefazione di Luca d'Alessandro.</p>
-        <div class="libro__meta">
-          <span class="libro__pages">156 pagine</span>
-          <span class="libro__sep">·</span>
-          <span class="libro__date">Aprile 2025</span>
-        </div>
-        <div class="libro__prices">
-          <span class="libro__price libro__price--kindle">Kindle <strong>5,98 €</strong></span>
-          <span class="libro__price libro__price--print">Cartaceo <strong>14,90 €</strong></span>
-        </div>
-        <a href="https://www.amazon.it/dp/B0F4MPN3GS" target="_blank" rel="nofollow noopener" class="libro__cta">
-          <svg viewBox="0 0 448 512" fill="currentColor" class="libro__cta-icon"><path d="M257.2 162.7c-48.7 1.8-169.5 15.5-169.5 117.5 0 109.5 138.3 114 183.5 43.2 6.5 10.2 35.4 37.5 45.3 46.8l56.8-56S341 288.9 341 261.4V114.3C341 89 316.5 32 228.7 32 140.7 32 94 87 94 136.3l73.5 6.8c16.3-49.5 54.2-49.5 54.2-49.5 40.7-.1 35.5 29.8 35.5 69.1zm0 86.8c0 80-84.2 68-84.2 17.2 0-47.2 50.5-56.7 84.2-57.8v40.6zm136 163.5c-7.7 10-70 67-174.5 67S34.2 408.5 9.7 379c-6.8-7.7 1-11.3 5.5-8.3C88.5 415.2 203 488.5 387.7 401c7.5-3.7 13.3 2 5.5 12zm39.8 2.2c-6.5 15.8-16 26.8-21.2 31-5.5 4.5-9.5 2.7-6.5-3.8s19.3-46.5 12.7-55c-6.5-8.3-37-4.3-48-3.2-10.8 1-13 2-14-.3-2.3-5.7 21.7-15.5 37.5-17.5 15.7-1.8 41-.8 46 5.7 3.7 5.1 0 27.1-6.5 43.1z"/></svg>
-          Acquista su Amazon
-        </a>
-      </div>
-    </article>
-
-    <!-- LIBRO 3 -->
-    <article class="libro libro--03">
-      <div class="libro__cover-wrap">
-        <a href="https://www.amazon.it/dp/B0FQ57R899" target="_blank" rel="nofollow noopener" class="libro__cover-link">
-          <img
-            class="libro__cover"
-            src="https://m.media-amazon.com/images/I/61USebxXAkL._SY425_.jpg"
-            alt="Copertina Restare Autentici Scrivendo con l'AI"
-            width="160" height="230"
-            loading="lazy"
-          />
-        </a>
-      </div>
-      <div class="libro__content">
-        <span class="libro__tag">Intelligenza Artificiale · Settembre 2025</span>
-        <h2 class="libro__title">Restare Autentici Scrivendo con l'AI</h2>
-        <p class="libro__subtitle">Guida pratica per counselor, coach e operatori olistici che guardano l'AI con diffidenza</p>
-        <div class="libro__rating">
-          <span class="stars">★★★★★</span>
-          <span class="rating-val">5,0</span>
-          <span class="rating-count">(1 recensione)</span>
-        </div>
-        <p class="libro__desc">Questo non è un manuale tecnico. È una guida pratica per chi lavora con le persone e sente il bisogno di comunicare senza perdere autenticità. L'AI non sostituisce la tua voce: la amplifica. Se porti dentro la tua esperienza, l'AI diventa un segretario invisibile che restituisce una voce più nitida e fedele a ciò che sei.</p>
-        <div class="libro__meta">
-          <span class="libro__pages">140 pagine</span>
-          <span class="libro__sep">·</span>
-          <span class="libro__date">Settembre 2025</span>
-        </div>
-        <div class="libro__prices">
-          <span class="libro__price libro__price--kindle">Kindle <strong>5,97 €</strong></span>
-          <span class="libro__price libro__price--print">Cartaceo <strong>17,58 €</strong></span>
-        </div>
-        <a href="https://www.amazon.it/dp/B0FQ57R899" target="_blank" rel="nofollow noopener" class="libro__cta">
-          <svg viewBox="0 0 448 512" fill="currentColor" class="libro__cta-icon"><path d="M257.2 162.7c-48.7 1.8-169.5 15.5-169.5 117.5 0 109.5 138.3 114 183.5 43.2 6.5 10.2 35.4 37.5 45.3 46.8l56.8-56S341 288.9 341 261.4V114.3C341 89 316.5 32 228.7 32 140.7 32 94 87 94 136.3l73.5 6.8c16.3-49.5 54.2-49.5 54.2-49.5 40.7-.1 35.5 29.8 35.5 69.1zm0 86.8c0 80-84.2 68-84.2 17.2 0-47.2 50.5-56.7 84.2-57.8v40.6zm136 163.5c-7.7 10-70 67-174.5 67S34.2 408.5 9.7 379c-6.8-7.7 1-11.3 5.5-8.3C88.5 415.2 203 488.5 387.7 401c7.5-3.7 13.3 2 5.5 12zm39.8 2.2c-6.5 15.8-16 26.8-21.2 31-5.5 4.5-9.5 2.7-6.5-3.8s19.3-46.5 12.7-55c-6.5-8.3-37-4.3-48-3.2-10.8 1-13 2-14-.3-2.3-5.7 21.7-15.5 37.5-17.5 15.7-1.8 41-.8 46 5.7 3.7 5.1 0 27.1-6.5 43.1z"/></svg>
-          Acquista su Amazon
-        </a>
-      </div>
-    </article>
-
-    <!-- LIBRO 4 -->
-    <article class="libro libro--04">
-      <div class="libro__cover-wrap">
-        <a href="https://www.amazon.it/dp/B0FPB8NBQW" target="_blank" rel="nofollow noopener" class="libro__cover-link">
-          <img
-            class="libro__cover"
-            src="https://m.media-amazon.com/images/I/31J4xWp14TL._SY445_SX342_ML2_.jpg"
-            alt="Copertina Un Anno di Scrittura per Scoprire Chi Sei Davvero"
-            width="160" height="230"
-            loading="lazy"
-          />
-        </a>
-      </div>
-      <div class="libro__content">
-        <span class="libro__tag">Scrittura · Agosto 2025</span>
-        <h2 class="libro__title">Un Anno di Scrittura per Scoprire Chi Sei Davvero</h2>
-        <p class="libro__subtitle">Un esercizio di costanza per smettere di fingere</p>
-        <p class="libro__desc">Un percorso concreto, settimana dopo settimana, che ti accompagna a guardarti dentro con sincerità e a portare fuori la tua voce senza maschere. 52 capitoli, uno per settimana, ognuno con domande pratiche e tre finestre di esercizio. Non servono doti letterarie. Ti bastano dieci minuti al giorno e la volontà di restare.</p>
-        <div class="libro__meta">
-          <span class="libro__pages">154 pagine</span>
-          <span class="libro__sep">·</span>
-          <span class="libro__date">Agosto 2025</span>
-        </div>
-        <div class="libro__prices">
-          <span class="libro__price libro__price--kindle">Kindle <strong>6,99 €</strong></span>
-          <span class="libro__price libro__price--print">Cartaceo <strong>17,58 €</strong></span>
-        </div>
-        <a href="https://www.amazon.it/dp/B0FPB8NBQW" target="_blank" rel="nofollow noopener" class="libro__cta">
-          <svg viewBox="0 0 448 512" fill="currentColor" class="libro__cta-icon"><path d="M257.2 162.7c-48.7 1.8-169.5 15.5-169.5 117.5 0 109.5 138.3 114 183.5 43.2 6.5 10.2 35.4 37.5 45.3 46.8l56.8-56S341 288.9 341 261.4V114.3C341 89 316.5 32 228.7 32 140.7 32 94 87 94 136.3l73.5 6.8c16.3-49.5 54.2-49.5 54.2-49.5 40.7-.1 35.5 29.8 35.5 69.1zm0 86.8c0 80-84.2 68-84.2 17.2 0-47.2 50.5-56.7 84.2-57.8v40.6zm136 163.5c-7.7 10-70 67-174.5 67S34.2 408.5 9.7 379c-6.8-7.7 1-11.3 5.5-8.3C88.5 415.2 203 488.5 387.7 401c7.5-3.7 13.3 2 5.5 12zm39.8 2.2c-6.5 15.8-16 26.8-21.2 31-5.5 4.5-9.5 2.7-6.5-3.8s19.3-46.5 12.7-55c-6.5-8.3-37-4.3-48-3.2-10.8 1-13 2-14-.3-2.3-5.7 21.7-15.5 37.5-17.5 15.7-1.8 41-.8 46 5.7 3.7 5.1 0 27.1-6.5 43.1z"/></svg>
-          Acquista su Amazon
-        </a>
-      </div>
-    </article>
-
+      </article>
+    ))}
   </div>
 </section>
 
-<!-- ══ CTA FINALE ══════════════════════════════════════════════════════════ -->
-<section class="cta-finale">
-  <div class="cta-finale__inner">
-    <span class="section-label section-label--light">Hai domande?</span>
-    <h2 class="cta-finale__title">Vuoi sapere da dove iniziare?</h2>
-    <p class="cta-finale__desc">Se non sai quale libro fa più al caso tuo, scrivimi su WhatsApp. Ti dico in due righe quale dei quattro si adatta meglio a dove sei adesso.</p>
-    <a href="https://wa.link/eemovr" target="_blank" class="cta-finale__btn">
-      <svg viewBox="0 0 448 512"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
-      Chiacchierata Introduttiva
+<!-- ══ CTA ════════════════════════════════════════════════════════════════ -->
+<section class="lb-cta">
+  <div class="lb-cta__inner">
+    <span class="lb-label lb-label--light">Hai domande?</span>
+    <h2 class="lb-cta__title">Vuoi sapere da dove <em>iniziare?</em></h2>
+    <p class="lb-cta__desc">
+      Se non sai quale libro fa più al caso tuo, scrivimi su WhatsApp.
+      Ti dico in due righe quale dei quattro si adatta meglio a dove sei adesso.
+    </p>
+    <a href="https://wa.link/eemovr" target="_blank" class="lb-btn lb-btn--lg">
+      <svg viewBox="0 0 448 512" width="16" height="16" fill="currentColor" aria-hidden="true">
+        <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
+      </svg>
+      Chiacchierata su WhatsApp
     </a>
   </div>
 </section>
@@ -191,260 +169,204 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 </BaseLayout>
 
 <style>
-*, *::before, *::after { box-sizing: border-box; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-.section-label {
-  display: inline-block;
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.15em;
+.lb-label {
+  font: 700 0.62rem/1 var(--sans);
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: #858585;
-  margin-bottom: 0.75rem;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 1.5rem;
 }
-.section-label--light { color: rgba(255,255,255,0.45); }
+.lb-label--light { color: rgba(255,255,255,0.35); }
 
-/* ── HERO ─────────────────────────────────────────────────────────────── */
-.hero { background: #0A0A0A; padding: 5rem 1.5rem 4rem; }
-.hero__inner {
-  max-width: 660px;
+/* ══ HERO ══════════════════════════════════════════════════════════════════ */
+.lb-hero {
+  background: var(--black);
+  padding: 7rem var(--pad) 6rem;
+}
+.lb-hero__inner {
+  max-width: var(--max);
   margin: 0 auto;
-  text-align: center;
+  max-width: 700px;
 }
-.hero__label {
-  display: inline-block;
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.35);
-  margin-bottom: 1rem;
+.lb-hero__title {
+  display: flex;
+  flex-direction: column;
+  line-height: 0.92;
+  margin-bottom: 2rem;
 }
-.hero__title {
-  font-size: clamp(2.2rem, 5vw, 3.5rem);
-  font-weight: 800;
-  color: #fff;
-  line-height: 1.1;
-  margin: 0 0 1.25rem;
+.lb-hl-plain {
+  font: 800 clamp(3.2rem, 6vw, 6.5rem)/1 var(--display);
+  color: var(--white);
+  display: block;
+  letter-spacing: -0.03em;
+}
+.lb-hl-gold {
+  font: 300 clamp(3.6rem, 7vw, 7.5rem)/1 var(--serif);
+  font-style: italic;
+  color: var(--gold);
+  display: block;
   letter-spacing: -0.02em;
+  margin-top: 0.05em;
 }
-.hero__sub {
-  font-size: 1rem;
-  color: rgba(255,255,255,0.5);
-  line-height: 1.65;
-  margin: 0;
-  max-width: 480px;
-  margin-inline: auto;
+.lb-hero__sub {
+  font: 300 1rem/1.7 var(--sans);
+  color: rgba(255,255,255,0.38);
+  max-width: 500px;
 }
 
-/* ── LIBRI ────────────────────────────────────────────────────────────── */
-.libri { background: #fff; padding: 4rem 1.5rem 5rem; }
-.libri__inner {
-  max-width: 820px;
+/* ══ LIBRI ══════════════════════════════════════════════════════════════════ */
+.lb-section {
+  background: var(--white);
+  padding: 5rem var(--pad) 6rem;
+}
+.lb-section__inner {
+  max-width: 880px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: 0;
 }
-
-.libro {
+.lb-libro {
   display: grid;
-  grid-template-columns: 160px 1fr;
-  gap: 0 2.5rem;
-  padding: 2.75rem 1.5rem;
-  border-top: 1px solid #E5E5E5;
-  border-radius: 10px;
-  transition: background 0.2s;
+  grid-template-columns: 2.5rem 160px 1fr;
+  gap: 0 2rem;
+  padding: 3rem 0;
+  border-bottom: 1px solid rgba(10,10,10,0.07);
+  align-items: start;
 }
-.libro:last-child { border-bottom: 1px solid #E5E5E5; }
-.libro:hover { background: #FAFAFA; }
-
-/* Accent left border per ciascun libro */
-.libro--01 { border-top-color: #D4840A; border-top-width: 3px; }
-.libro--02 { border-top-color: #2A5CB5; border-top-width: 3px; }
-.libro--03 { border-top-color: #1A7A4E; border-top-width: 3px; }
-.libro--04 { border-top-color: #8B3FC0; border-top-width: 3px; }
-
-.libro__cover-wrap {
-  display: flex;
-  align-items: flex-start;
-  padding-top: 0.25rem;
-}
-.libro__cover-link { display: block; }
-.libro__cover {
-  width: 150px;
-  height: auto;
-  border-radius: 4px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.12);
-  transition: transform 0.2s, box-shadow 0.2s;
+.lb-libro:first-child { border-top: 1px solid rgba(10,10,10,0.07); }
+.lb-libro__n-col { padding-top: 0.5rem; }
+.lb-libro__n {
   display: block;
-}
-.libro__cover:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 28px rgba(0,0,0,0.18);
-}
-
-.libro__content {
-  display: flex;
-  flex-direction: column;
-  gap: 0.55rem;
-}
-
-.libro__tag {
-  font-size: 0.67rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #858585;
-}
-.libro--01 .libro__tag { color: #D4840A; }
-.libro--02 .libro__tag { color: #2A5CB5; }
-.libro--03 .libro__tag { color: #1A7A4E; }
-.libro--04 .libro__tag { color: #8B3FC0; }
-
-.libro__title {
-  font-size: 1.3rem;
-  font-weight: 800;
-  color: #0A0A0A;
-  line-height: 1.2;
-  margin: 0;
-}
-.libro__subtitle {
-  font-size: 0.88rem;
-  color: #555;
-  line-height: 1.5;
-  margin: 0;
+  font: 300 2.5rem/0.9 var(--serif);
   font-style: italic;
+  color: var(--gold);
+  opacity: 0.25;
+  letter-spacing: -0.04em;
 }
-.libro__rating {
+.lb-libro__cover-link { display: block; }
+.lb-libro__cover {
+  width: 140px;
+  height: auto;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.12);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.lb-libro__cover:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,0.18); }
+
+.lb-libro__tag {
+  display: block;
+  font: 700 0.58rem/1 var(--sans);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.75rem;
+}
+.lb-libro__title {
+  font: 400 clamp(1.3rem, 2vw, 1.65rem)/1.2 var(--serif);
+  color: var(--black);
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.01em;
+}
+.lb-libro__sub {
+  font: 300 0.88rem/1.5 var(--sans);
+  color: var(--muted);
+  margin-bottom: 0.75rem;
+}
+.lb-libro__rating {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
-  margin: 0.1rem 0;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
 }
-.stars {
-  color: #F5A623;
-  font-size: 0.9rem;
+.lb-stars {
+  color: var(--gold);
+  font-size: 0.85rem;
   letter-spacing: 0.05em;
 }
-.rating-val {
-  font-size: 0.82rem;
-  font-weight: 700;
-  color: #0A0A0A;
+.lb-rating-val {
+  font: 700 0.78rem/1 var(--sans);
+  color: var(--black);
 }
-.rating-count {
-  font-size: 0.78rem;
-  color: #858585;
+.lb-rating-count {
+  font: 400 0.75rem/1 var(--sans);
+  color: var(--muted);
 }
-.libro__desc {
-  font-size: 0.9rem;
-  color: #555;
-  line-height: 1.65;
-  margin: 0;
-  max-width: 520px;
+.lb-libro__desc {
+  font: 300 0.88rem/1.7 var(--sans);
+  color: rgba(10,10,10,0.6);
+  margin-bottom: 1.25rem;
 }
-.libro__meta {
+.lb-libro__meta {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
-  font-size: 0.75rem;
-  color: #888;
+  gap: 0.5rem;
+  font: 400 0.75rem/1 var(--sans);
+  color: var(--muted);
+  margin-bottom: 1rem;
 }
-.libro__sep { color: #ccc; }
-
-.libro__prices {
+.lb-sep { opacity: 0.4; }
+.lb-libro__prices {
   display: flex;
-  gap: 0.65rem;
-  flex-wrap: wrap;
-  margin-top: 0.1rem;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
 }
-.libro__price {
-  font-size: 0.78rem;
-  padding: 0.3rem 0.7rem;
-  border-radius: 20px;
-  border: 1.5px solid #E5E5E5;
-  color: #555;
+.lb-price {
+  font: 400 0.78rem/1 var(--sans);
+  color: var(--muted);
 }
-.libro__price strong { color: #0A0A0A; font-weight: 800; }
-.libro__price--kindle { background: #FFF8F0; border-color: #FDDBA3; }
-.libro__price--print  { background: #F5F8FF; border-color: #C3D1F0; }
+.lb-price strong { font-weight: 700; color: var(--black); }
 
-.libro__cta {
+/* ── Button ──────────────────────────────────────────────────────────────── */
+.lb-btn {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: #0A0A0A;
-  color: #fff;
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.03em;
-  padding: 0.65rem 1.25rem;
-  border-radius: 3px;
+  font: 700 0.75rem/1 var(--sans);
+  letter-spacing: 0.04em;
   text-decoration: none;
-  transition: background 0.18s, transform 0.15s;
-  align-self: flex-start;
-  margin-top: 0.35rem;
-}
-.libro__cta:hover { background: #1E1E1F; transform: translateY(-1px); }
-.libro__cta-icon { width: 18px; height: 18px; fill: currentColor; flex-shrink: 0; }
-
-.libro--01 .libro__cta { background: #D4840A; }
-.libro--01 .libro__cta:hover { background: #B8700A; }
-.libro--02 .libro__cta { background: #2A5CB5; }
-.libro--02 .libro__cta:hover { background: #1F458A; }
-.libro--03 .libro__cta { background: #1A7A4E; }
-.libro--03 .libro__cta:hover { background: #145E3B; }
-.libro--04 .libro__cta { background: #8B3FC0; }
-.libro--04 .libro__cta:hover { background: #6D2F98; }
-
-/* ── CTA FINALE ───────────────────────────────────────────────────────── */
-.cta-finale { background: #1E1E1F; padding: 5rem 1.5rem; }
-.cta-finale__inner { max-width: 560px; margin: 0 auto; }
-.cta-finale__title {
-  font-size: clamp(1.55rem, 3vw, 2rem);
-  font-weight: 800;
-  color: #fff;
-  line-height: 1.2;
-  margin-bottom: 1rem;
-}
-.cta-finale__desc {
-  font-size: 0.97rem;
-  color: rgba(255,255,255,0.55);
-  line-height: 1.7;
-  margin-bottom: 2rem;
-  max-width: 440px;
-}
-.cta-finale__btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.55rem;
-  background: #25D366;
-  color: #fff;
-  font-size: 0.85rem;
-  font-weight: 700;
   padding: 0.8rem 1.5rem;
-  border-radius: 3px;
-  text-decoration: none;
-  transition: background 0.18s, transform 0.15s;
+  border-radius: 1px;
+  background: var(--gold);
+  color: var(--black);
+  transition: background 0.15s, transform 0.12s;
+  white-space: nowrap;
 }
-.cta-finale__btn:hover { background: #128C7E; transform: translateY(-1px); }
-.cta-finale__btn svg { width: 17px; height: 17px; fill: currentColor; flex-shrink: 0; }
+.lb-btn:hover { background: var(--gold-d); transform: translateY(-1px); opacity: 1; }
+.lb-btn--lg { padding: 1.05rem 2rem; font-size: 0.82rem; }
 
-/* ── MOBILE ───────────────────────────────────────────────────────────── */
-@media (max-width: 620px) {
-  .hero { padding: 3.5rem 1.25rem 3rem; }
-  .libro {
+/* ══ CTA ════════════════════════════════════════════════════════════════════ */
+.lb-cta {
+  background: var(--black);
+  padding: 7rem var(--pad);
+  text-align: center;
+}
+.lb-cta__inner {
+  max-width: 580px;
+  margin: 0 auto;
+}
+.lb-cta__title {
+  font: 300 clamp(2rem, 4vw, 3.2rem)/1.2 var(--serif);
+  color: var(--white);
+  margin-bottom: 1.25rem;
+}
+.lb-cta__title em { font-style: italic; color: var(--gold); }
+.lb-cta__desc {
+  font: 300 0.92rem/1.7 var(--sans);
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 2.5rem;
+}
+
+/* ── Responsive ─────────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .lb-libro {
     grid-template-columns: 1fr;
-    gap: 1.25rem 0;
-    padding: 2rem 0;
+    gap: 1.5rem;
   }
-  .libro--01, .libro--02, .libro--03, .libro--04 {
-    border-top-width: 3px;
-    padding-left: 0;
-    padding-right: 0;
-  }
-  .libro__cover { width: 130px; }
-  .libri { padding: 2.5rem 1.25rem 3.5rem; }
-  .cta-finale { padding: 3rem 1.25rem; }
+  .lb-libro__n-col { display: none; }
+  .lb-libro__cover-link { display: inline-block; }
+  .lb-libro__cover { width: 110px; }
 }
 </style>
