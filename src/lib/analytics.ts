@@ -125,7 +125,7 @@ export async function fetchAnalyticsData(days = 30, from?: string, to?: string):
 
   const ga4Token = await getAccessToken(saJson, GA4_SCOPE);
   let gscToken = '';
-  try { gscToken = await getAccessToken(saJson, GSC_SCOPE); } catch { /* GSC opzionale */ }
+  try { gscToken = await getAccessToken(saJson, GSC_SCOPE); } catch (e: any) { console.error('[GSC TOKEN ERROR]', e?.message ?? e); }
 
   const todayStr = new Date().toISOString().split('T')[0];
 
@@ -232,7 +232,7 @@ export async function fetchAnalyticsData(days = 30, from?: string, to?: string):
           orderBy: [{ fieldName: 'clicks', sortOrder: 'DESCENDING' }],
         }),
       ]);
-    } catch { /* GSC non disponibile — mostra solo dati GA4 */ }
+    } catch (e: any) { console.error('[GSC ERROR]', e?.message ?? e); }
   }
 
   // Overview
