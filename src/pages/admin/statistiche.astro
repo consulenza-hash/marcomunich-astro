@@ -380,7 +380,7 @@ function srcColor(ch: string): string {
     <div class="section">
       <div class="section-title">Parole chiave su Google (Search Console) — {data.gscPeriod.start} → {data.gscPeriod.end}</div>
       {data.keywords.length === 0
-        ? <p class="empty">Nessun dato GSC. {data.gscError ? `Errore: ${data.gscError}` : 'Verifica che il Service Account abbia accesso a Search Console.'}</p>
+        ? <p class="empty">{data.gscError ? `⚠️ Errore GSC: ${data.gscError}` : '⏳ Proprietà Search Console verificata oggi — i dati keyword appaiono entro 2-3 giorni.'}</p>
         : (
           <table>
             <thead><tr>
