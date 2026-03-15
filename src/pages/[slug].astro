@@ -251,13 +251,18 @@ const faqSchema = art.schema_faq?.length
   .article-page__meta a { color: inherit; }
 
   /* ── Immagine cover ──────────────────────────────────────────────────────── */
+  .article-page__main {
+    min-width: 0;
+  }
   .article-page__cover {
     margin: 0 0 32px;
   }
   .article-page__cover img {
     width: 100%;
+    max-width: 100%;
     height: auto;
     display: block;
+    border-radius: 8px;
   }
 
   /* ── Sidebar ─────────────────────────────────────────────────────────────── */
