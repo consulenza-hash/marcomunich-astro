@@ -1,0 +1,47 @@
+---
+export const prerender = false;
+// Redirect semplice a /keystatic con link rapido alle statistiche
+---
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — marcomunich.com</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #0f0f1a; color: #e2e8f0; font-family: system-ui, sans-serif;
+           display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+    .hub { text-align: center; }
+    h1 { font-size: 1.2rem; color: #64748b; margin-bottom: 2rem; letter-spacing: .1em; text-transform: uppercase; }
+    .links { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+    a { display: flex; flex-direction: column; align-items: center; gap: .5rem;
+        padding: 2rem 2.5rem; border-radius: 14px; text-decoration: none;
+        border: 1px solid #2d2d3d; transition: all .2s; }
+    a:hover { transform: translateY(-2px); border-color: #6366f1; }
+    .icon { font-size: 2.5rem; }
+    .label { font-size: 1rem; font-weight: 600; color: #fff; }
+    .sub { font-size: .75rem; color: #64748b; }
+    .cms { background: #1e1e2e; }
+    .stats { background: #1a1a2e; }
+  </style>
+</head>
+<body>
+  <div class="hub">
+    <h1>marcomunich.com — Admin</h1>
+    <div class="links">
+      <a href="/keystatic" class="cms">
+        <span class="icon">✏️</span>
+        <span class="label">CMS</span>
+        <span class="sub">Articoli & contenuti</span>
+      </a>
+      <a href="/admin/statistiche" class="stats">
+        <span class="icon">📊</span>
+        <span class="label">Statistiche</span>
+        <span class="sub">GA4 + Search Console</span>
+      </a>
+    </div>
+  </div>
+</body>
+</html>
