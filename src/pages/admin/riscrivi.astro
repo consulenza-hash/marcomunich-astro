@@ -416,13 +416,12 @@ if (isAuth) {
 
         info.textContent = '⏳ Caricamento…';
         try {
-          const url = `https://api.github.com/repos/consulenza-hash/marcomunich-astro/contents/src/content/articoli/${encodeURIComponent(slug)}/index.mdoc?ref=main`;
-          const res = await fetch(url, { headers: { Accept: 'application/vnd.github.v3+json' } });
-          if (!res.ok) throw new Error('Articolo non trovato');
+          const res = await fetch(`/api/articolo?slug=${encodeURIComponent(slug)}`);
+          if (!res.ok) throw new Error(`Errore ${res.status}: ${await res.text()}`);
           const json = await res.json();
-          testoCaricato = atob(json.content.replace(/\n/g, ''));
+          testoCaricato = json.testo;
           const righe   = testoCaricato.split('\n').length;
-          info.textContent = `✅ Caricato — ${righe} righe, ${Math.round(testoCaricato.length / 4)} token stimati`;
+          info.textContent = `✅ Caricato — ${righe} righe, ~${Math.round(testoCaricato.length / 4)} token`;
         } catch (e) {
           info.textContent = `❌ Errore: ${e.message}`;
           testoCaricato = '';
