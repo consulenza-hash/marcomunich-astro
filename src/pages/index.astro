@@ -1041,8 +1041,8 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
     padding: 5rem clamp(1.5rem, 5vw, 3rem) 4rem;
     max-width: 100%;
   }
-  .v2-hero__photo-col { height: 65vw; max-height: 480px; min-height: 300px; position: relative; display: block; width: 100%; }
-  .v2-hero__photo-frame { position: relative; inset: auto; height: 100%; width: 100%; display: block; }
+  .v2-hero__photo-col { height: 65vw; max-height: 480px; min-height: 280px; position: relative; overflow: hidden; display: block; width: 100%; }
+  .v2-hero__photo-frame { position: absolute; inset: 0; height: 100%; width: 100%; }
 
   .v2-manifesto__body { grid-template-columns: 1fr; }
   .v2-manifesto__aside { position: static; margin-top: 2.5rem; }
@@ -1075,8 +1075,8 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
   .v2-articles { padding: 4rem 1.25rem; }
 
   .v2-hero__ctas { flex-direction: column; align-items: flex-start; gap: 1rem; }
-  .v2-hero__photo-col { height: 60vw !important; min-height: 260px !important; display: block !important; width: 100% !important; }
-  .v2-hero__photo-frame img { display: block !important; visibility: visible !important; }
+  
+  
   .v2-articles__header { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
   .v2-articles__grid { grid-template-columns: 1fr; gap: 2px; }
 }
