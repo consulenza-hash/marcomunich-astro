@@ -122,6 +122,7 @@ const schemaGraph = [
   <meta property="og:site_name" content="Marco Munich - Personal Branding Olistico" />
   {datePublished && <meta property="article:published_time" content={datePublished} />}
   {dateModified  && <meta property="article:modified_time"  content={dateModified}  />}
+  {dateModified && <meta property="og:updated_time" content={dateModified} />}
   {schemaType === 'Article' && <meta property="article:author" content="Marco Munich" />}
 
   <!-- Twitter / X Card -->
@@ -132,9 +133,10 @@ const schemaGraph = [
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={image} />
 
-  <!-- Bing / Microsoft Copilot discoverability -->
+  <!-- Bing / Microsoft Copilot discoverability + IndexNow -->
   <meta name="robots" content="max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
   <meta name="bingbot" content="max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="indexnow-verification" content="marcomunich2024indexnow" />
 
   <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="/favicon.ico" />
