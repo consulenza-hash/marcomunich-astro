@@ -123,10 +123,9 @@ export async function fetchAnalyticsData(days = 30, from?: string, to?: string):
   const GA4_SCOPE = ['https://www.googleapis.com/auth/analytics.readonly'];
   const GSC_SCOPE = ['https://www.googleapis.com/auth/webmasters.readonly'];
 
-  const [ga4Token, gscToken] = await Promise.all([
-    getAccessToken(saJson, GA4_SCOPE),
-    getAccessToken(saJson, GSC_SCOPE),
-  ]);
+  const ga4Token = await getAccessToken(saJson, GA4_SCOPE);
+  let gscToken = '';
+  try { gscToken = await getAccessToken(saJson, GSC_SCOPE); } catch { /* GSC opzionale */ }
 
   const todayStr = new Date().toISOString().split('T')[0];
 
@@ -183,7 +182,7 @@ export async function fetchAnalyticsData(days = 30, from?: string, to?: string):
   const gscEnd   = gscEndDate;
   const gscStart = gscStartDate;
 
-  const [rCur, rPrev, rDaily, rPages, rSources, rKeywords, rGscPages] = await Promise.all([
+  const [rCur, rPrev, rDaily, rPages, rSources] = await Promise.all([
     ga4(propertyId, ga4Token, {
       dateRanges: [{ startDate, endDate }],
       metrics: [
@@ -214,17 +213,27 @@ export async function fetchAnalyticsData(days = 30, from?: string, to?: string):
       metrics: [{ name: 'sessions' }],
       orderBys: [{ metric: { metricName: 'sessions' }, desc: true }],
     }),
-    gsc(siteUrl, gscToken, {
-      startDate: gscStart, endDate: gscEnd,
-      dimensions: ['query'], rowLimit: 25,
-      orderBy: [{ fieldName: 'clicks', sortOrder: 'DESCENDING' }],
-    }),
-    gsc(siteUrl, gscToken, {
-      startDate: gscStart, endDate: gscEnd,
-      dimensions: ['page'], rowLimit: 10,
-      orderBy: [{ fieldName: 'clicks', sortOrder: 'DESCENDING' }],
-    }),
   ]);
+
+  // GSC opzionale — se l'API non è abilitata non blocca tutto
+  let rKeywords: any = { rows: [] };
+  let rGscPages: any = { rows: [] };
+  if (gscToken) {
+    try {
+      [rKeywords, rGscPages] = await Promise.all([
+        gsc(siteUrl, gscToken, {
+          startDate: gscStart, endDate: gscEnd,
+          dimensions: ['query'], rowLimit: 25,
+          orderBy: [{ fieldName: 'clicks', sortOrder: 'DESCENDING' }],
+        }),
+        gsc(siteUrl, gscToken, {
+          startDate: gscStart, endDate: gscEnd,
+          dimensions: ['page'], rowLimit: 10,
+          orderBy: [{ fieldName: 'clicks', sortOrder: 'DESCENDING' }],
+        }),
+      ]);
+    } catch { /* GSC non disponibile — mostra solo dati GA4 */ }
+  }
 
   // Overview
   const curTot  = rCur.totals?.[0]  ?? rCur.rows?.[0];
