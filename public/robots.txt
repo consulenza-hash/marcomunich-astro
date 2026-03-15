@@ -13,3 +13,16 @@ Disallow: /consulenza-non-accettata/
 Disallow: /conferma-registrazione-webinar-qa/
 
 Sitemap: https://marcomunich.com/sitemap-index.xml
+
+# AI assistants
+User-agent: GPTBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Bingbot
+Allow: /

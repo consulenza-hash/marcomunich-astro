@@ -124,11 +124,17 @@ const schemaGraph = [
   {dateModified  && <meta property="article:modified_time"  content={dateModified}  />}
   {schemaType === 'Article' && <meta property="article:author" content="Marco Munich" />}
 
-  <!-- Twitter Card -->
+  <!-- Twitter / X Card -->
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@marcomunich" />
+  <meta name="twitter:creator" content="@marcomunich" />
   <meta name="twitter:title" content={fullTitle} />
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={image} />
+
+  <!-- Bing / Microsoft Copilot discoverability -->
+  <meta name="robots" content="max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="bingbot" content="max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
 
   <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="/favicon.ico" />

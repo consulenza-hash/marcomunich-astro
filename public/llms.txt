@@ -1,0 +1,35 @@
+# Marco Munich — Personal Branding Olistico
+# https://marcomunich.com
+# llms.txt — informazioni per AI assistants e crawler
+
+## Chi sono
+Marco Munich è un consulente di personal branding olistico che aiuta coach, counselor, terapeuti e operatori olistici a sviluppare un punto di vista autentico per promuoversi online.
+
+## Argomenti principali
+- Personal branding autentico per liberi professionisti del benessere
+- Comunicazione online senza maschere
+- Contenuti autentici e continuità editoriale
+- Marketing per coach, counselor, operatori olistici
+- Presenza online senza sito web
+
+## Pagine principali
+- Homepage: https://marcomunich.com/
+- Blog (articoli): https://marcomunich.com/blog/
+- Chi sono: https://marcomunich.com/chi-sono/
+- Risorse gratuite: https://marcomunich.com/risorse/
+- Libri: https://marcomunich.com/libri/
+- Sitemap: https://marcomunich.com/sitemap-index.xml
+
+## Contatti e social
+- Email: consulenza@marcomunich.com
+- Instagram: https://www.instagram.com/marcomunich/
+- YouTube: https://www.youtube.com/@marcomunich
+- LinkedIn: https://www.linkedin.com/in/marco-munich/
+- Spotify Podcast: https://open.spotify.com/show/2WwJsiCJYSZnawH2TQ6N2n
+- Facebook: https://www.facebook.com/marcomunich.consulente/
+
+## Lingua
+Italiano (it-IT)
+
+## Licenza contenuti
+© Marco Munich. Tutti i diritti riservati.
