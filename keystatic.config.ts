@@ -84,6 +84,19 @@ export default config({
       },
     }),
 
+    // ── ARTICOLI AI — quick-link al tag sul sito ──────────────────────────
+    articoli_ai: singleton({
+      label: '🤖 Articoli AI',
+      path: 'src/content/singletons/articoli-ai',
+      format: { data: 'json' },
+      schema: {
+        url: fields.url({
+          label: '↗ Vai alla sezione AI sul sito',
+          defaultValue: 'https://marcomunich.com/tag/ai/',
+        }),
+      },
+    }),
+
     // ── IMPOSTAZIONI GLOBALI ───────────────────────────────────────────────
     impostazioni: singleton({
       label: 'Impostazioni sito',
