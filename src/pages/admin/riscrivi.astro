@@ -1,0 +1,531 @@
+---
+export const prerender = false;
+
+// ── Auth ──────────────────────────────────────────────────────────────────────
+const cookie     = Astro.cookies.get('stats_auth')?.value ?? '';
+const expectedPwd = import.meta.env.STATS_PASSWORD || 'stats2024';
+const isAuth     = cookie === expectedPwd;
+
+if (Astro.request.method === 'POST' && !isAuth) {
+  const form = await Astro.request.formData();
+  const pwd  = form.get('password')?.toString() ?? '';
+  if (pwd === expectedPwd) {
+    Astro.cookies.set('stats_auth', pwd, { path: '/', maxAge: 86400 * 7 });
+    return Astro.redirect('/admin/riscrivi');
+  }
+}
+
+// ── Lista articoli da GitHub ──────────────────────────────────────────────────
+type ArticoloItem = { slug: string; label: string };
+let articoli: ArticoloItem[] = [];
+
+if (isAuth) {
+  try {
+    const token   = import.meta.env.GITHUB_TOKEN ?? '';
+    const headers: Record<string, string> = { Accept: 'application/vnd.github.v3+json' };
+    if (token) headers['Authorization'] = `token ${token}`;
+
+    const res = await fetch(
+      'https://api.github.com/repos/consulenza-hash/marcomunich-astro/contents/src/content/articoli?ref=main',
+      { headers }
+    );
+    if (res.ok) {
+      const list = (await res.json()) as { name: string; type: string }[];
+      articoli = list
+        .filter(f => f.type === 'dir')
+        .map(f => ({ slug: f.name, label: f.name.replace(/-/g, ' ') }))
+        .sort((a, b) => a.label.localeCompare(b.label, 'it'));
+    }
+  } catch { /* silenzioso */ }
+}
+---
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Riscrivi Articolo — Admin</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #0f0f13;
+      color: #e2e8f0;
+      min-height: 100vh;
+      padding: 2rem 1rem;
+    }
+
+    .wrap { max-width: 900px; margin: 0 auto; }
+
+    /* ── Header ── */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    header h1 { font-size: 1.4rem; font-weight: 700; }
+    header h1 span { color: #818cf8; }
+    .nav-links { display: flex; gap: 1rem; }
+    .nav-links a {
+      color: #64748b;
+      text-decoration: none;
+      font-size: .85rem;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: #818cf8; }
+
+    /* ── Login ── */
+    .login-box {
+      background: #1a1a2e;
+      border: 1px solid #2d2d4e;
+      border-radius: 12px;
+      padding: 3rem;
+      max-width: 400px;
+      margin: 8rem auto;
+      text-align: center;
+    }
+    .login-box h2 { margin-bottom: 1.5rem; font-size: 1.2rem; }
+    .login-box input {
+      width: 100%;
+      background: #0f0f1a;
+      border: 1px solid #2d2d4e;
+      border-radius: 8px;
+      padding: .75rem 1rem;
+      color: #e2e8f0;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+    .login-box button {
+      width: 100%;
+      background: #6366f1;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: .75rem;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    /* ── Card ── */
+    .card {
+      background: #1a1a2e;
+      border: 1px solid #2d2d4e;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .card-title {
+      font-size: .75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: #64748b;
+      margin-bottom: 1rem;
+    }
+
+    /* ── Select articolo ── */
+    .select-wrap { position: relative; }
+    .select-wrap select {
+      width: 100%;
+      background: #0f0f1a;
+      border: 1px solid #2d2d4e;
+      border-radius: 8px;
+      padding: .75rem 1rem;
+      color: #e2e8f0;
+      font-size: .95rem;
+      appearance: none;
+      cursor: pointer;
+    }
+    .select-wrap::after {
+      content: '▾';
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #64748b;
+      pointer-events: none;
+    }
+
+    /* ── Testo manuale ── */
+    textarea.testo-input {
+      width: 100%;
+      background: #0f0f1a;
+      border: 1px solid #2d2d4e;
+      border-radius: 8px;
+      padding: .75rem 1rem;
+      color: #e2e8f0;
+      font-size: .9rem;
+      font-family: inherit;
+      resize: vertical;
+      min-height: 200px;
+      line-height: 1.6;
+    }
+    textarea.testo-input:focus { outline: none; border-color: #6366f1; }
+
+    /* ── Toggle sorgente ── */
+    .source-tabs {
+      display: flex;
+      gap: .5rem;
+      margin-bottom: 1rem;
+    }
+    .source-tab {
+      background: transparent;
+      border: 1px solid #2d2d4e;
+      border-radius: 6px;
+      padding: .4rem .9rem;
+      color: #64748b;
+      font-size: .85rem;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .source-tab.active {
+      background: #1e1b4b;
+      border-color: #6366f1;
+      color: #818cf8;
+    }
+
+    /* ── Modalità ── */
+    .modi { display: flex; gap: .75rem; flex-wrap: wrap; }
+    .modo-btn {
+      flex: 1;
+      min-width: 160px;
+      background: #0f0f1a;
+      border: 2px solid #2d2d4e;
+      border-radius: 10px;
+      padding: 1rem 1.2rem;
+      cursor: pointer;
+      transition: all .2s;
+      text-align: left;
+    }
+    .modo-btn:hover { border-color: #4f46e5; }
+    .modo-btn.active { border-color: #6366f1; background: #1e1b4b; }
+    .modo-btn .modo-icon { font-size: 1.4rem; margin-bottom: .4rem; }
+    .modo-btn .modo-label { font-size: .95rem; font-weight: 600; color: #e2e8f0; }
+    .modo-btn .modo-desc { font-size: .78rem; color: #64748b; margin-top: .2rem; line-height: 1.4; }
+    .modo-btn.active .modo-desc { color: #94a3b8; }
+
+    /* ── Genera button ── */
+    #btn-genera {
+      width: 100%;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 1rem;
+      font-size: 1.05rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity .2s, transform .1s;
+      margin-bottom: 1.5rem;
+    }
+    #btn-genera:hover { opacity: .9; }
+    #btn-genera:active { transform: scale(.99); }
+    #btn-genera:disabled { opacity: .5; cursor: not-allowed; }
+
+    /* ── Output ── */
+    #output-wrap { display: none; }
+    #output-wrap.visible { display: block; }
+
+    .output-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: .75rem;
+    }
+    .output-header .card-title { margin-bottom: 0; }
+
+    .output-actions { display: flex; gap: .5rem; }
+    .action-btn {
+      background: #1e293b;
+      border: 1px solid #2d2d4e;
+      border-radius: 6px;
+      padding: .35rem .85rem;
+      color: #94a3b8;
+      font-size: .8rem;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .action-btn:hover { background: #2d3748; color: #e2e8f0; }
+    .action-btn.copied { background: #14532d; border-color: #166534; color: #86efac; }
+
+    #output-text {
+      width: 100%;
+      background: #080810;
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      padding: 1.25rem;
+      color: #e2e8f0;
+      font-size: .9rem;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      line-height: 1.7;
+      min-height: 300px;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      resize: vertical;
+    }
+
+    /* ── Stato ── */
+    #status {
+      font-size: .8rem;
+      color: #64748b;
+      margin-bottom: .5rem;
+      min-height: 1.2rem;
+    }
+    #status.running { color: #818cf8; }
+    #status.done { color: #4ade80; }
+    #status.error { color: #f87171; }
+
+    /* ── Loading dots ── */
+    .dots::after {
+      content: '';
+      animation: dots 1.5s steps(4, end) infinite;
+    }
+    @keyframes dots {
+      0%   { content: ''; }
+      25%  { content: '.'; }
+      50%  { content: '..'; }
+      75%  { content: '...'; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    {!isAuth ? (
+      <!-- Login -->
+      <div class="login-box">
+        <h2>🔐 Admin — Accesso</h2>
+        <form method="POST">
+          <input type="password" name="password" placeholder="Password" autofocus />
+          <button type="submit">Accedi</button>
+        </form>
+      </div>
+    ) : (
+      <>
+        <!-- Header -->
+        <header>
+          <h1>✍️ Riscrivi con <span>Claude Opus</span></h1>
+          <nav class="nav-links">
+            <a href="/admin/">← Admin</a>
+            <a href="/keystatic">CMS</a>
+            <a href="/admin/statistiche">Statistiche</a>
+          </nav>
+        </header>
+
+        <!-- 1. Sorgente articolo -->
+        <div class="card">
+          <div class="card-title">1 — Articolo da riscrivere</div>
+
+          <div class="source-tabs">
+            <button class="source-tab active" onclick="switchSource('lista', this)">📋 Seleziona dalla lista</button>
+            <button class="source-tab" onclick="switchSource('testo', this)">✏️ Incolla testo</button>
+          </div>
+
+          <!-- Lista GitHub -->
+          <div id="sorgente-lista">
+            <div class="select-wrap">
+              <select id="articolo-select" onchange="loadArticolo(this.value)">
+                <option value="">— Scegli un articolo —</option>
+                {articoli.map(a => (
+                  <option value={a.slug}>{a.label}</option>
+                ))}
+              </select>
+            </div>
+            <div id="anteprima-slug" style="font-size:.75rem;color:#64748b;margin-top:.5rem;min-height:1rem;"></div>
+          </div>
+
+          <!-- Testo libero -->
+          <div id="sorgente-testo" style="display:none;">
+            <textarea
+              class="testo-input"
+              id="testo-manuale"
+              placeholder="Incolla qui il testo dell'articolo da riscrivere..."
+            ></textarea>
+          </div>
+        </div>
+
+        <!-- 2. Modalità -->
+        <div class="card">
+          <div class="card-title">2 — Modalità di generazione</div>
+          <div class="modi">
+            <button class="modo-btn active" data-modo="solo-articolo" onclick="setModo(this)">
+              <div class="modo-icon">📝</div>
+              <div class="modo-label">Solo Articolo</div>
+              <div class="modo-desc">Riscrittura completa + prompt immagine di copertina</div>
+            </button>
+            <button class="modo-btn" data-modo="articolo-metadati" onclick="setModo(this)">
+              <div class="modo-icon">🚀</div>
+              <div class="modo-label">Articolo + Metadati</div>
+              <div class="modo-desc">Riscrittura + SEO, GEO/AEO, FAQ schema, OG description</div>
+            </button>
+            <button class="modo-btn" data-modo="solo-metadati" onclick="setModo(this)">
+              <div class="modo-icon">🏷️</div>
+              <div class="modo-label">Solo Metadati</div>
+              <div class="modo-desc">Analizza il testo originale e genera solo i metadati SEO/GEO/AEO</div>
+            </button>
+          </div>
+        </div>
+
+        <!-- 3. Genera -->
+        <button id="btn-genera" onclick="genera()">✨ Genera con Claude Opus 4.6</button>
+
+        <!-- Output -->
+        <div id="output-wrap">
+          <div class="card">
+            <div class="output-header">
+              <div class="card-title">Risultato</div>
+              <div class="output-actions">
+                <button class="action-btn" onclick="copyOutput()">📋 Copia tutto</button>
+                <button class="action-btn" onclick="clearOutput()">🗑 Pulisci</button>
+              </div>
+            </div>
+            <div id="status"></div>
+            <textarea id="output-text" readonly></textarea>
+          </div>
+        </div>
+      </>
+    )}
+
+  </div>
+
+  {isAuth && (
+    <script is:inline>
+      // ── Stato ────────────────────────────────────────────────────────────────
+      let modoCorrente     = 'solo-articolo';
+      let sorgente         = 'lista';          // 'lista' | 'testo'
+      let testoCaricato    = '';               // testo dall'articolo selezionato
+
+      // ── Sorgente ─────────────────────────────────────────────────────────────
+      function switchSource(tipo, btn) {
+        sorgente = tipo;
+        document.querySelectorAll('.source-tab').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('sorgente-lista').style.display = tipo === 'lista' ? '' : 'none';
+        document.getElementById('sorgente-testo').style.display = tipo === 'testo' ? '' : 'none';
+      }
+
+      // ── Carica articolo da GitHub ─────────────────────────────────────────────
+      async function loadArticolo(slug) {
+        const info = document.getElementById('anteprima-slug');
+        if (!slug) { info.textContent = ''; testoCaricato = ''; return; }
+
+        info.textContent = '⏳ Caricamento…';
+        try {
+          const url = `https://api.github.com/repos/consulenza-hash/marcomunich-astro/contents/src/content/articoli/${encodeURIComponent(slug)}/index.mdoc?ref=main`;
+          const res = await fetch(url, { headers: { Accept: 'application/vnd.github.v3+json' } });
+          if (!res.ok) throw new Error('Articolo non trovato');
+          const json = await res.json();
+          testoCaricato = atob(json.content.replace(/\n/g, ''));
+          const righe   = testoCaricato.split('\n').length;
+          info.textContent = `✅ Caricato — ${righe} righe, ${Math.round(testoCaricato.length / 4)} token stimati`;
+        } catch (e) {
+          info.textContent = `❌ Errore: ${e.message}`;
+          testoCaricato = '';
+        }
+      }
+
+      // ── Modalità ─────────────────────────────────────────────────────────────
+      function setModo(btn) {
+        document.querySelectorAll('.modo-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        modoCorrente = btn.dataset.modo;
+      }
+
+      // ── Genera ───────────────────────────────────────────────────────────────
+      async function genera() {
+        // Determina testo sorgente
+        let testo = '';
+        if (sorgente === 'lista') {
+          testo = testoCaricato;
+          if (!testo) {
+            alert('Seleziona un articolo prima di generare.');
+            return;
+          }
+        } else {
+          testo = document.getElementById('testo-manuale').value.trim();
+          if (!testo) {
+            alert('Incolla il testo da riscrivere.');
+            return;
+          }
+        }
+
+        const btn    = document.getElementById('btn-genera');
+        const output = document.getElementById('output-text');
+        const status = document.getElementById('status');
+        const wrap   = document.getElementById('output-wrap');
+
+        btn.disabled    = true;
+        btn.textContent = '⏳ Generazione in corso…';
+        wrap.classList.add('visible');
+        output.value = '';
+        status.className = 'running';
+        status.innerHTML = '<span class="dots">Elaborazione con Claude Opus 4.6</span>';
+
+        const start = Date.now();
+
+        try {
+          const res = await fetch('/api/genera', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ testo, modo: modoCorrente }),
+          });
+
+          if (!res.ok) {
+            const err = await res.text();
+            throw new Error(err || `HTTP ${res.status}`);
+          }
+
+          const reader = res.body.getReader();
+          const decoder = new TextDecoder();
+          let chars = 0;
+
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            const chunk = decoder.decode(value, { stream: true });
+            output.value += chunk;
+            chars += chunk.length;
+            output.scrollTop = output.scrollHeight;
+            status.innerHTML = `<span class="dots">Generazione</span> — ${chars.toLocaleString()} caratteri`;
+          }
+
+          const secs = ((Date.now() - start) / 1000).toFixed(1);
+          status.className = 'done';
+          status.textContent = `✅ Completato in ${secs}s — ${chars.toLocaleString()} caratteri`;
+          btn.textContent    = '✨ Genera di nuovo';
+
+        } catch (err) {
+          status.className = 'error';
+          status.textContent = `❌ Errore: ${err.message}`;
+          btn.textContent = '✨ Genera con Claude Opus 4.6';
+        } finally {
+          btn.disabled = false;
+        }
+      }
+
+      // ── Copy / Clear ─────────────────────────────────────────────────────────
+      function copyOutput() {
+        const text = document.getElementById('output-text').value;
+        if (!text) return;
+        navigator.clipboard.writeText(text).then(() => {
+          const btn = event.target;
+          btn.textContent = '✅ Copiato!';
+          btn.classList.add('copied');
+          setTimeout(() => { btn.textContent = '📋 Copia tutto'; btn.classList.remove('copied'); }, 2000);
+        });
+      }
+
+      function clearOutput() {
+        document.getElementById('output-text').value = '';
+        document.getElementById('status').textContent = '';
+        document.getElementById('output-wrap').classList.remove('visible');
+      }
+    </script>
+  )}
+</body>
+</html>
