@@ -92,7 +92,7 @@ export default config({
       schema: {
         url: fields.url({
           label: '↗ Apri il pannello AI',
-          defaultValue: 'https://marcomunich.com/admin/riscrivi',
+          defaultValue: 'https://marcomunich.com/admin/genera',
         }),
       },
     }),

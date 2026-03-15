@@ -25,6 +25,8 @@ export const prerender = false;
     .sub { font-size: .75rem; color: #64748b; }
     .cms { background: #1e1e2e; }
     .stats { background: #1a1a2e; }
+    .ai { background: #1a1a2e; border-color: #3d2d4e; }
+    .ai:hover { border-color: #8b5cf6; }
   </style>
 </head>
 <body>
@@ -35,6 +37,11 @@ export const prerender = false;
         <span class="icon">✏️</span>
         <span class="label">CMS</span>
         <span class="sub">Articoli & contenuti</span>
+      </a>
+      <a href="/admin/genera" class="ai">
+        <span class="icon">🤖</span>
+        <span class="label">Genera con AI</span>
+        <span class="sub">Crea articoli con Claude</span>
       </a>
       <a href="/admin/statistiche" class="stats">
         <span class="icon">📊</span>

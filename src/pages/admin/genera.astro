@@ -1,0 +1,570 @@
+---
+export const prerender = false;
+
+// ── Auth ──────────────────────────────────────────────────────────────────────
+const cookie      = Astro.cookies.get('stats_auth')?.value ?? '';
+const expectedPwd = import.meta.env.STATS_PASSWORD || 'stats2024';
+const isAuth      = cookie === expectedPwd;
+
+if (Astro.request.method === 'POST' && !isAuth) {
+  const form = await Astro.request.formData();
+  const pwd  = form.get('password')?.toString() ?? '';
+  if (pwd === expectedPwd) {
+    Astro.cookies.set('stats_auth', pwd, { path: '/', maxAge: 86400 * 7 });
+    return Astro.redirect('/admin/genera');
+  }
+}
+
+// ── Lista articoli da GitHub ──────────────────────────────────────────────────
+type ArticoloItem = { slug: string; label: string };
+let articoli: ArticoloItem[] = [];
+
+if (isAuth) {
+  try {
+    const token   = import.meta.env.GITHUB_TOKEN ?? '';
+    const ghHeaders: Record<string, string> = { Accept: 'application/vnd.github.v3+json' };
+    if (token) ghHeaders['Authorization'] = `token ${token}`;
+
+    const res = await fetch(
+      'https://api.github.com/repos/consulenza-hash/marcomunich-astro/contents/src/content/articoli?ref=main',
+      { headers: ghHeaders }
+    );
+    if (res.ok) {
+      const list = (await res.json()) as { name: string; type: string }[];
+      articoli = list
+        .filter(f => f.type === 'dir')
+        .map(f => ({ slug: f.name, label: f.name.replace(/-/g, ' ') }))
+        .sort((a, b) => a.label.localeCompare(b.label, 'it'));
+    }
+  } catch { /* silenzioso */ }
+}
+---
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Generatore AI — Admin</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #0f0f13;
+      color: #e2e8f0;
+      min-height: 100vh;
+      padding: 2rem 1rem;
+    }
+
+    .wrap { max-width: 900px; margin: 0 auto; }
+
+    /* ── Header ── */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    header h1 { font-size: 1.4rem; font-weight: 700; }
+    header h1 span { color: #818cf8; }
+    .nav-links { display: flex; gap: 1rem; }
+    .nav-links a {
+      color: #64748b;
+      text-decoration: none;
+      font-size: .85rem;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: #818cf8; }
+
+    /* ── Login ── */
+    .login-box {
+      background: #1a1a2e;
+      border: 1px solid #2d2d4e;
+      border-radius: 12px;
+      padding: 3rem;
+      max-width: 400px;
+      margin: 8rem auto;
+      text-align: center;
+    }
+    .login-box h2 { margin-bottom: 1.5rem; font-size: 1.2rem; }
+    .login-box input {
+      width: 100%;
+      background: #0f0f1a;
+      border: 1px solid #2d2d4e;
+      border-radius: 8px;
+      padding: .75rem 1rem;
+      color: #e2e8f0;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+    .login-box button {
+      width: 100%;
+      background: #6366f1;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: .75rem;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    /* ── Step label ── */
+    .step-label {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      font-size: .7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: #6366f1;
+      margin-bottom: .75rem;
+    }
+    .step-num {
+      width: 20px;
+      height: 20px;
+      background: #1e1b4b;
+      border: 1px solid #6366f1;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .65rem;
+      font-weight: 700;
+      color: #818cf8;
+    }
+
+    /* ── Card ── */
+    .card {
+      background: #1a1a2e;
+      border: 1px solid #2d2d4e;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    /* ── Source tabs ── */
+    .source-tabs {
+      display: flex;
+      gap: .5rem;
+      margin-bottom: 1rem;
+    }
+    .source-tab {
+      background: transparent;
+      border: 1px solid #2d2d4e;
+      border-radius: 6px;
+      padding: .4rem .9rem;
+      color: #64748b;
+      font-size: .85rem;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .source-tab.active {
+      background: #1e1b4b;
+      border-color: #6366f1;
+      color: #818cf8;
+    }
+
+    /* ── Select ── */
+    .select-wrap { position: relative; }
+    .select-wrap select {
+      width: 100%;
+      background: #0f0f1a;
+      border: 1px solid #2d2d4e;
+      border-radius: 8px;
+      padding: .75rem 1rem;
+      color: #e2e8f0;
+      font-size: .95rem;
+      appearance: none;
+      cursor: pointer;
+    }
+    .select-wrap::after {
+      content: '▾';
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #64748b;
+      pointer-events: none;
+    }
+
+    /* ── Textarea ── */
+    textarea.prompt-input {
+      width: 100%;
+      background: #0f0f1a;
+      border: 1px solid #2d2d4e;
+      border-radius: 8px;
+      padding: .75rem 1rem;
+      color: #e2e8f0;
+      font-size: .9rem;
+      font-family: inherit;
+      resize: vertical;
+      min-height: 120px;
+      line-height: 1.6;
+      transition: border-color .2s;
+    }
+    textarea.prompt-input:focus { outline: none; border-color: #6366f1; }
+
+    /* ── Modalità ── */
+    .modi { display: flex; gap: .75rem; flex-wrap: wrap; }
+    .modo-btn {
+      flex: 1;
+      min-width: 200px;
+      background: #0f0f1a;
+      border: 2px solid #2d2d4e;
+      border-radius: 10px;
+      padding: 1rem 1.2rem;
+      cursor: pointer;
+      transition: all .2s;
+      text-align: left;
+    }
+    .modo-btn:hover { border-color: #4f46e5; }
+    .modo-btn.active { border-color: #6366f1; background: #1e1b4b; }
+    .modo-btn .modo-icon { font-size: 1.4rem; margin-bottom: .4rem; }
+    .modo-btn .modo-label { font-size: .95rem; font-weight: 600; color: #e2e8f0; }
+    .modo-btn .modo-desc { font-size: .78rem; color: #64748b; margin-top: .2rem; line-height: 1.4; }
+    .modo-btn.active .modo-desc { color: #94a3b8; }
+
+    /* ── Genera button ── */
+    #btn-genera {
+      width: 100%;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 1.1rem;
+      font-size: 1.05rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity .2s, transform .1s;
+      margin-bottom: 1.5rem;
+    }
+    #btn-genera:hover { opacity: .9; }
+    #btn-genera:active { transform: scale(.99); }
+    #btn-genera:disabled { opacity: .5; cursor: not-allowed; }
+
+    /* ── Progress ── */
+    #progress-wrap {
+      display: none;
+      background: #1a1a2e;
+      border: 1px solid #2d2d4e;
+      border-radius: 12px;
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    #progress-wrap.visible { display: block; }
+
+    .progress-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .progress-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: .5rem;
+    }
+    #progress-status {
+      font-size: .85rem;
+      color: #64748b;
+      min-height: 1.4rem;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Spinner */
+    .spinner {
+      width: 36px;
+      height: 36px;
+      border: 3px solid #2d2d4e;
+      border-top-color: #6366f1;
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+      margin: 0 auto 1rem;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Progress bar */
+    .progress-bar-wrap {
+      background: #0f0f1a;
+      border-radius: 6px;
+      height: 4px;
+      overflow: hidden;
+      max-width: 300px;
+      margin: 0 auto;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #6366f1, #8b5cf6);
+      border-radius: 6px;
+      animation: progress-indeterminate 2s ease-in-out infinite;
+      transform-origin: left;
+    }
+    @keyframes progress-indeterminate {
+      0%   { width: 0%; margin-left: 0%; }
+      50%  { width: 70%; margin-left: 15%; }
+      100% { width: 0%; margin-left: 100%; }
+    }
+
+    /* Success state */
+    .success-icon { font-size: 3rem; margin-bottom: .75rem; display: block; }
+    .success-title { font-size: 1.1rem; font-weight: 600; color: #4ade80; margin-bottom: .5rem; }
+    .success-sub { font-size: .85rem; color: #64748b; }
+
+    /* Error state */
+    .error-box {
+      display: none;
+      background: #1c0e0e;
+      border: 1px solid #7f1d1d;
+      border-radius: 10px;
+      padding: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+    .error-box.visible { display: block; }
+    .error-box .error-title { font-weight: 600; color: #f87171; margin-bottom: .4rem; }
+    .error-box .error-msg { font-size: .85rem; color: #fca5a5; font-family: monospace; }
+    .error-box button {
+      margin-top: .75rem;
+      background: transparent;
+      border: 1px solid #7f1d1d;
+      border-radius: 6px;
+      padding: .35rem .75rem;
+      color: #f87171;
+      font-size: .8rem;
+      cursor: pointer;
+    }
+
+    /* ── Timer ── */
+    #timer { font-size: .75rem; color: #475569; margin-top: .5rem; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    {!isAuth ? (
+      <div class="login-box">
+        <h2>🔐 Admin — Accesso</h2>
+        <form method="POST">
+          <input type="password" name="password" placeholder="Password" autofocus />
+          <button type="submit">Accedi</button>
+        </form>
+      </div>
+    ) : (
+      <>
+        <!-- Header -->
+        <header>
+          <h1>🤖 Generatore <span>AI</span></h1>
+          <nav class="nav-links">
+            <a href="/admin/">← Admin</a>
+            <a href="/keystatic">CMS</a>
+            <a href="/admin/riscrivi">Riscrivi</a>
+            <a href="/admin/statistiche">Statistiche</a>
+          </nav>
+        </header>
+
+        <!-- STEP 1: Sorgente -->
+        <div class="card">
+          <div class="step-label"><span class="step-num">1</span> Sorgente</div>
+
+          <div class="source-tabs">
+            <button class="source-tab active" onclick="switchSource('nuovo', this)">✨ Nuovo Articolo</button>
+            <button class="source-tab" onclick="switchSource('esistente', this)">📋 Articolo Esistente</button>
+          </div>
+
+          <!-- Nuovo: prompt libero -->
+          <div id="sorgente-nuovo">
+            <textarea
+              class="prompt-input"
+              id="prompt-nuovo"
+              placeholder="Descrivi il tema dell'articolo. Es: Come i coach nel settore olistico possono alzare i prezzi senza perdere clienti..."
+            ></textarea>
+          </div>
+
+          <!-- Esistente: dropdown -->
+          <div id="sorgente-esistente" style="display:none;">
+            <div class="select-wrap">
+              <select id="articolo-select">
+                <option value="">— Scegli un articolo dalla lista —</option>
+                {articoli.map(a => (
+                  <option value={a.slug}>{a.label}</option>
+                ))}
+              </select>
+            </div>
+            <div id="anteprima-slug" style="font-size:.75rem;color:#64748b;margin-top:.5rem;min-height:1rem;"></div>
+          </div>
+        </div>
+
+        <!-- STEP 2: Modalità -->
+        <div class="card">
+          <div class="step-label"><span class="step-num">2</span> Cosa generare</div>
+          <div class="modi">
+            <button class="modo-btn active" data-modo="solo-articolo" onclick="setModo(this)">
+              <div class="modo-icon">📝</div>
+              <div class="modo-label">Solo Articolo</div>
+              <div class="modo-desc">Scrive solo il corpo del testo</div>
+            </button>
+            <button class="modo-btn" data-modo="solo-metadati" onclick="setModo(this)">
+              <div class="modo-icon">🏷️</div>
+              <div class="modo-label">Solo Metadati</div>
+              <div class="modo-desc">Genera SEO, GEO, AEO, FAQ schema</div>
+            </button>
+            <button class="modo-btn" data-modo="tutto-completo" onclick="setModo(this)">
+              <div class="modo-icon">🚀</div>
+              <div class="modo-label">Tutto Completo</div>
+              <div class="modo-desc">Articolo + tutti i metadati da zero</div>
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 3: Genera -->
+        <button id="btn-genera" onclick="genera()">✨ Genera con Claude — Salva in Keystatic</button>
+
+        <!-- Progress -->
+        <div id="progress-wrap">
+          <div id="progress-idle">
+            <div class="spinner"></div>
+            <div class="progress-title" id="progress-title">Generazione in corso…</div>
+            <div id="progress-status">Elaborazione con Claude Sonnet 4.6</div>
+            <div class="progress-bar-wrap"><div class="progress-bar-fill"></div></div>
+            <div id="timer">0s</div>
+          </div>
+          <div id="progress-done" style="display:none;">
+            <span class="success-icon">✅</span>
+            <div class="success-title">Articolo salvato!</div>
+            <div class="success-sub" id="success-slug"></div>
+            <div class="success-sub" style="margin-top:.25rem;">Reindirizzamento all'editor…</div>
+          </div>
+        </div>
+
+        <!-- Error -->
+        <div class="error-box" id="error-box">
+          <div class="error-title">❌ Errore</div>
+          <div class="error-msg" id="error-msg"></div>
+          <button onclick="resetError()">Riprova</button>
+        </div>
+      </>
+    )}
+
+  </div>
+
+  {isAuth && (
+    <script is:inline>
+      let sorgenteCorrente = 'nuovo';
+      let modoCorrente     = 'solo-articolo';
+      let timerInterval    = null;
+      let startTime        = 0;
+
+      // ── Switch sorgente ───────────────────────────────────────────────────
+      function switchSource(tipo, btn) {
+        sorgenteCorrente = tipo;
+        document.querySelectorAll('.source-tab').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('sorgente-nuovo').style.display     = tipo === 'nuovo' ? '' : 'none';
+        document.getElementById('sorgente-esistente').style.display = tipo === 'esistente' ? '' : 'none';
+      }
+
+      // ── Switch modo ───────────────────────────────────────────────────────
+      function setModo(btn) {
+        document.querySelectorAll('.modo-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        modoCorrente = btn.dataset.modo;
+      }
+
+      // ── Timer ─────────────────────────────────────────────────────────────
+      function startTimer() {
+        startTime = Date.now();
+        timerInterval = setInterval(() => {
+          const s = ((Date.now() - startTime) / 1000).toFixed(0);
+          const el = document.getElementById('timer');
+          if (el) el.textContent = `${s}s`;
+        }, 1000);
+      }
+      function stopTimer() {
+        if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+      }
+
+      // ── Reset error ───────────────────────────────────────────────────────
+      function resetError() {
+        document.getElementById('error-box').classList.remove('visible');
+        document.getElementById('btn-genera').disabled = false;
+        document.getElementById('btn-genera').textContent = '✨ Genera con Claude — Salva in Keystatic';
+      }
+
+      // ── Genera ─────────────────────────────────────────────────────────────
+      async function genera() {
+        // Raccogli input
+        let prompt        = null;
+        let slug_esistente = null;
+
+        if (sorgenteCorrente === 'nuovo') {
+          prompt = document.getElementById('prompt-nuovo').value.trim();
+          if (!prompt) { alert('Inserisci il tema/prompt per il nuovo articolo.'); return; }
+        } else {
+          slug_esistente = document.getElementById('articolo-select').value;
+          if (!slug_esistente) { alert('Seleziona un articolo dalla lista.'); return; }
+        }
+
+        // Validazione modo-metadati
+        if (modoCorrente === 'solo-metadati' && sorgenteCorrente === 'nuovo') {
+          alert('"Solo Metadati" funziona solo con un articolo esistente.\nScegli "Articolo Esistente" oppure cambia modalità.');
+          return;
+        }
+
+        // UI: avvia
+        const btn = document.getElementById('btn-genera');
+        btn.disabled    = true;
+        btn.textContent = '⏳ Generazione in corso…';
+
+        document.getElementById('error-box').classList.remove('visible');
+        document.getElementById('progress-idle').style.display = '';
+        document.getElementById('progress-done').style.display = 'none';
+        document.getElementById('progress-wrap').classList.add('visible');
+
+        // Aggiorna status step
+        const steps = { 'solo-articolo': 'Scrittura articolo', 'solo-metadati': 'Generazione metadati SEO/AEO/GEO', 'tutto-completo': 'Generazione articolo + metadati completi' };
+        document.getElementById('progress-status').textContent = steps[modoCorrente] || 'Elaborazione…';
+
+        startTimer();
+
+        try {
+          const res = await fetch('/api/crea-articolo', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ modo: modoCorrente, prompt, slug_esistente }),
+          });
+
+          const data = await res.json();
+          stopTimer();
+
+          if (!res.ok || !data.success) {
+            throw new Error(data.error || `HTTP ${res.status}`);
+          }
+
+          // Successo → mostra feedback e redirect
+          const secs = ((Date.now() - startTime) / 1000).toFixed(1);
+          document.getElementById('progress-idle').style.display = 'none';
+          document.getElementById('progress-done').style.display = '';
+          document.getElementById('success-slug').textContent = `/${data.slug} — completato in ${secs}s`;
+
+          // Redirect a Keystatic dopo 1.5s
+          setTimeout(() => {
+            window.location.href = data.keystatic_url;
+          }, 1500);
+
+        } catch (err) {
+          stopTimer();
+          document.getElementById('progress-wrap').classList.remove('visible');
+          document.getElementById('error-box').classList.add('visible');
+          document.getElementById('error-msg').textContent = err.message || 'Errore sconosciuto';
+          btn.disabled    = false;
+          btn.textContent = '✨ Genera con Claude — Salva in Keystatic';
+        }
+      }
+    </script>
+  )}
+</body>
+</html>
