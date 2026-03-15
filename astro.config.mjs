@@ -21,6 +21,15 @@ export default defineConfig({
   // Disabilita CSRF check per le pagine SSR (es. /admin/statistiche login form)
   security: { checkOrigin: false },
 
+  // Inietta floating button statistiche su pagine Keystatic
+  vite: {
+    plugins: [{
+      name: 'inject-admin-btn',
+      transformIndexHtml: (html) =>
+        html.replace('</head>', '<script src="/admin-stats-btn.js"></script></head>'),
+    }],
+  },
+
   integrations: [
     tailwind(),
     sitemap(),
