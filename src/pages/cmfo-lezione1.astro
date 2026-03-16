@@ -9,17 +9,18 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 >
 
 <style>
-  .lesson-wrap {
-    background: #0f0f0f;
+  .lz-wrap {
+    background: var(--black, #0A0A0A);
     min-height: 100vh;
-    color: #fff;
+    color: var(--white, #fff);
+    font-family: var(--sans, 'Syne', sans-serif);
   }
-  .lesson-header {
-    background: #111;
-    border-bottom: 1px solid #222;
-    padding: 20px 24px;
+  .lz-header {
+    background: rgba(255,255,255,.04);
+    border-bottom: 1px solid rgba(255,255,255,.08);
+    padding: 18px 24px;
   }
-  .lesson-header-inner {
+  .lz-header-inner {
     max-width: 900px;
     margin: 0 auto;
     display: flex;
@@ -28,151 +29,152 @@ import BaseLayout from '@layouts/BaseLayout.astro';
     gap: 16px;
     flex-wrap: wrap;
   }
-  .course-label {
-    font-size: 12px;
+  .lz-course-label {
+    font-family: var(--sans, 'Syne', sans-serif);
+    font-size: 11px;
     font-weight: 700;
-    letter-spacing: 2px;
+    letter-spacing: 2.5px;
     text-transform: uppercase;
-    color: #9DFF20;
+    color: #D4840A;
   }
-  .lesson-badge {
+  .lz-course-sub {
+    font-size: 12px;
+    color: rgba(255,255,255,.35);
+    margin-top: 3px;
+  }
+  .lz-badge {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    background: rgba(157,255,32,.12);
-    border: 1px solid rgba(157,255,32,.3);
-    color: #9DFF20;
-    padding: 5px 14px;
+    background: rgba(212,132,10,.12);
+    border: 1px solid rgba(212,132,10,.35);
+    color: #D4840A;
+    padding: 5px 16px;
     border-radius: 100px;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 700;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
+    font-family: var(--sans, 'Syne', sans-serif);
   }
-  .video-section {
-    padding: 48px 24px 32px;
+  .lz-video-section {
+    padding: 52px 24px 36px;
     max-width: 900px;
     margin: 0 auto;
   }
-  .lesson-title {
-    font-size: clamp(22px, 3vw, 32px);
+  .lz-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: rgba(255,255,255,.4);
+    font-size: 13px;
+    text-decoration: none;
+    margin-bottom: 36px;
+    transition: color .2s;
+    font-family: var(--sans, 'Syne', sans-serif);
+  }
+  .lz-back:hover { color: #D4840A; opacity: 1; }
+  .lz-title {
+    font-family: var(--display, 'Bricolage Grotesque', sans-serif);
+    font-size: clamp(22px, 3.5vw, 36px);
     font-weight: 800;
-    margin-bottom: 24px;
-    line-height: 1.2;
-    color: #fff;
+    margin-bottom: 28px;
+    line-height: 1.15;
+    color: var(--white, #fff);
   }
-  .lesson-title span {
-    color: #9DFF20;
+  .lz-title em {
+    font-style: italic;
+    font-family: var(--serif, 'Cormorant', serif);
+    font-size: 1.15em;
+    color: #D4840A;
+    font-weight: 600;
   }
-  .video-wrapper {
+  .lz-video-wrapper {
     position: relative;
     padding-bottom: 56.25%;
     height: 0;
     overflow: hidden;
-    border-radius: 12px;
+    border-radius: 4px;
     background: #000;
-    box-shadow: 0 8px 40px rgba(0,0,0,.6);
+    box-shadow: 0 12px 60px rgba(0,0,0,.7);
   }
-  .video-wrapper iframe {
+  .lz-video-wrapper iframe {
     position: absolute;
     top: 0; left: 0;
     width: 100%; height: 100%;
     border: 0;
   }
-  .lesson-content {
-    padding: 40px 24px 80px;
+  .lz-content {
+    padding: 44px 24px 100px;
     max-width: 900px;
     margin: 0 auto;
   }
-  .lesson-divider {
+  .lz-divider {
     border: none;
-    border-top: 1px solid #222;
-    margin: 40px 0;
+    border-top: 1px solid rgba(255,255,255,.08);
+    margin: 44px 0;
   }
-  .next-lesson {
-    background: #1a1a1a;
-    border: 1px solid #333;
-    border-left: 4px solid #9DFF20;
-    border-radius: 0 12px 12px 0;
-    padding: 28px 32px;
+  .lz-next {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 24px;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.1);
+    border-left: 3px solid #D4840A;
+    border-radius: 0 4px 4px 0;
+    padding: 28px 32px;
     text-decoration: none;
     color: inherit;
-    transition: background .2s, border-color .2s;
+    transition: background .2s;
   }
-  .next-lesson:hover {
-    background: #222;
-    border-color: #9DFF20;
-    opacity: 1;
-  }
-  .next-lesson-label {
-    font-size: 11px;
+  .lz-next:hover { background: rgba(255,255,255,.07); opacity: 1; }
+  .lz-next-label {
+    font-size: 10px;
     font-weight: 700;
-    letter-spacing: 2px;
+    letter-spacing: 2.5px;
     text-transform: uppercase;
-    color: #9DFF20;
-    margin-bottom: 6px;
+    color: #D4840A;
+    margin-bottom: 8px;
+    font-family: var(--sans, 'Syne', sans-serif);
   }
-  .next-lesson-title {
+  .lz-next-title {
+    font-family: var(--display, 'Bricolage Grotesque', sans-serif);
     font-size: 17px;
     font-weight: 700;
-    color: #fff;
+    color: var(--white, #fff);
     margin-bottom: 6px;
   }
-  .next-lesson-desc {
+  .lz-next-desc {
     font-size: 14px;
-    color: #888;
+    color: rgba(255,255,255,.45);
     line-height: 1.5;
   }
-  .arrow-icon {
-    color: #9DFF20;
-    font-size: 28px;
+  .lz-next-arrow {
+    color: #D4840A;
+    font-size: 26px;
     flex-shrink: 0;
   }
-  .back-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    color: #666;
-    font-size: 14px;
-    text-decoration: none;
-    margin-bottom: 40px;
-    transition: color .2s;
-  }
-  .back-link:hover {
-    color: #9DFF20;
-    opacity: 1;
-  }
   @media (max-width: 600px) {
-    .next-lesson { flex-direction: column; align-items: flex-start; }
-    .arrow-icon { display: none; }
+    .lz-next { flex-direction: column; align-items: flex-start; }
+    .lz-next-arrow { display: none; }
   }
 </style>
 
-<div class="lesson-wrap">
+<div class="lz-wrap">
 
-  <!-- Header corso -->
-  <div class="lesson-header">
-    <div class="lesson-header-inner">
+  <div class="lz-header">
+    <div class="lz-header-inner">
       <div>
-        <div class="course-label">Come Metterci la Faccia Online</div>
-        <div style="font-size:13px; color:#555; margin-top:2px;">Guida gratuita · Marco Munich</div>
+        <div class="lz-course-label">Come Metterci la Faccia Online</div>
+        <div class="lz-course-sub">Guida gratuita · Marco Munich</div>
       </div>
-      <div class="lesson-badge">Lezione 1 di 2</div>
+      <div class="lz-badge">Lezione 1 di 2</div>
     </div>
   </div>
 
-  <!-- Video -->
-  <div class="video-section">
-    <a href="/metterci-la-faccia-online/" class="back-link">
-      ← Torna alla guida
-    </a>
-    <h1 class="lesson-title">
-      Lezione 1 — <span>Come iniziare a metterci la faccia</span>
-    </h1>
-    <div class="video-wrapper">
+  <div class="lz-video-section">
+    <a href="/metterci-la-faccia-online/" class="lz-back">← Torna alla guida</a>
+    <h1 class="lz-title">Lezione 1 — <em>Come iniziare a metterci la faccia</em></h1>
+    <div class="lz-video-wrapper">
       <iframe
         src="https://www.youtube-nocookie.com/embed/SHOnybFwvlc?rel=0&modestbranding=1"
         title="Come Metterci la Faccia Online – Lezione 1"
@@ -183,21 +185,16 @@ import BaseLayout from '@layouts/BaseLayout.astro';
     </div>
   </div>
 
-  <!-- Contenuto + navigazione -->
-  <div class="lesson-content">
-
-    <hr class="lesson-divider" />
-
-    <!-- Prossima lezione -->
-    <a href="/cmfo-lezione2/" class="next-lesson">
+  <div class="lz-content">
+    <hr class="lz-divider" />
+    <a href="/cmfo-lezione2/" class="lz-next">
       <div>
-        <div class="next-lesson-label">Prossima lezione →</div>
-        <div class="next-lesson-title">Lezione 2 — Le 3 azioni specifiche nel dettaglio</div>
-        <div class="next-lesson-desc">Parleremo delle 3 azioni specifiche, viste nel dettaglio.</div>
+        <div class="lz-next-label">Prossima lezione →</div>
+        <div class="lz-next-title">Lezione 2 — Le 3 azioni specifiche nel dettaglio</div>
+        <div class="lz-next-desc">Parleremo delle 3 azioni specifiche, viste nel dettaglio.</div>
       </div>
-      <div class="arrow-icon">→</div>
+      <div class="lz-next-arrow">→</div>
     </a>
-
   </div>
 
 </div>

@@ -9,17 +9,18 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 >
 
 <style>
-  .lesson-wrap {
-    background: #0f0f0f;
+  .lz-wrap {
+    background: var(--black, #0A0A0A);
     min-height: 100vh;
-    color: #fff;
+    color: var(--white, #fff);
+    font-family: var(--sans, 'Syne', sans-serif);
   }
-  .lesson-header {
-    background: #111;
-    border-bottom: 1px solid #222;
-    padding: 20px 24px;
+  .lz-header {
+    background: rgba(255,255,255,.04);
+    border-bottom: 1px solid rgba(255,255,255,.08);
+    padding: 18px 24px;
   }
-  .lesson-header-inner {
+  .lz-header-inner {
     max-width: 900px;
     margin: 0 auto;
     display: flex;
@@ -28,157 +29,231 @@ import BaseLayout from '@layouts/BaseLayout.astro';
     gap: 16px;
     flex-wrap: wrap;
   }
-  .course-label {
-    font-size: 12px;
+  .lz-course-label {
+    font-family: var(--sans, 'Syne', sans-serif);
+    font-size: 11px;
     font-weight: 700;
-    letter-spacing: 2px;
+    letter-spacing: 2.5px;
     text-transform: uppercase;
-    color: #9DFF20;
+    color: #D4840A;
   }
-  .lesson-badge {
+  .lz-course-sub {
+    font-size: 12px;
+    color: rgba(255,255,255,.35);
+    margin-top: 3px;
+  }
+  .lz-badge {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    background: rgba(157,255,32,.12);
-    border: 1px solid rgba(157,255,32,.3);
-    color: #9DFF20;
-    padding: 5px 14px;
+    background: rgba(212,132,10,.12);
+    border: 1px solid rgba(212,132,10,.35);
+    color: #D4840A;
+    padding: 5px 16px;
     border-radius: 100px;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 700;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
+    font-family: var(--sans, 'Syne', sans-serif);
   }
-  .video-section {
-    padding: 48px 24px 32px;
+  .lz-video-section {
+    padding: 52px 24px 36px;
     max-width: 900px;
     margin: 0 auto;
   }
-  .lesson-title {
-    font-size: clamp(22px, 3vw, 32px);
+  .lz-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: rgba(255,255,255,.4);
+    font-size: 13px;
+    text-decoration: none;
+    margin-bottom: 36px;
+    transition: color .2s;
+    font-family: var(--sans, 'Syne', sans-serif);
+  }
+  .lz-back:hover { color: #D4840A; opacity: 1; }
+  .lz-title {
+    font-family: var(--display, 'Bricolage Grotesque', sans-serif);
+    font-size: clamp(22px, 3.5vw, 36px);
     font-weight: 800;
-    margin-bottom: 24px;
-    line-height: 1.2;
-    color: #fff;
+    margin-bottom: 28px;
+    line-height: 1.15;
+    color: var(--white, #fff);
   }
-  .lesson-title span {
-    color: #9DFF20;
+  .lz-title em {
+    font-style: italic;
+    font-family: var(--serif, 'Cormorant', serif);
+    font-size: 1.15em;
+    color: #D4840A;
+    font-weight: 600;
   }
-  .video-wrapper {
+  .lz-video-wrapper {
     position: relative;
     padding-bottom: 56.25%;
     height: 0;
     overflow: hidden;
-    border-radius: 12px;
+    border-radius: 4px;
     background: #000;
-    box-shadow: 0 8px 40px rgba(0,0,0,.6);
+    box-shadow: 0 12px 60px rgba(0,0,0,.7);
   }
-  .video-wrapper iframe {
+  .lz-video-wrapper iframe {
     position: absolute;
     top: 0; left: 0;
     width: 100%; height: 100%;
     border: 0;
   }
-  .lesson-content {
-    padding: 40px 24px 80px;
+  .lz-content {
+    padding: 44px 24px 100px;
     max-width: 900px;
     margin: 0 auto;
   }
-  .lesson-divider {
+  .lz-divider {
     border: none;
-    border-top: 1px solid #222;
-    margin: 40px 0;
+    border-top: 1px solid rgba(255,255,255,.08);
+    margin: 44px 0;
   }
-  .completed-box {
-    background: #1a1a1a;
-    border: 1px solid #333;
-    border-left: 4px solid #9DFF20;
-    border-radius: 0 12px 12px 0;
-    padding: 28px 32px;
-    margin-bottom: 32px;
+  /* Completato */
+  .lz-completed {
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.1);
+    border-left: 3px solid #D4840A;
+    border-radius: 0 4px 4px 0;
+    padding: 24px 28px;
+    margin-bottom: 40px;
   }
-  .completed-label {
-    font-size: 11px;
+  .lz-completed-label {
+    font-size: 10px;
     font-weight: 700;
-    letter-spacing: 2px;
+    letter-spacing: 2.5px;
     text-transform: uppercase;
-    color: #9DFF20;
+    color: #D4840A;
     margin-bottom: 8px;
+    font-family: var(--sans, 'Syne', sans-serif);
   }
-  .completed-text {
+  .lz-completed-text {
     font-size: 15px;
-    color: #aaa;
-    line-height: 1.6;
+    color: rgba(255,255,255,.55);
+    line-height: 1.65;
     margin: 0;
   }
-  .cta-section {
-    background: linear-gradient(135deg, #111 0%, #1a2a00 100%);
-    border: 1px solid rgba(157,255,32,.2);
-    border-radius: 12px;
-    padding: 36px 32px;
+  /* CTA percorso */
+  .lz-cta {
+    background: rgba(255,255,255,.03);
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 4px;
+    padding: 40px 36px;
     text-align: center;
+    margin-bottom: 24px;
   }
-  .cta-title {
-    font-size: 22px;
+  .lz-cta-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #D4840A;
+    margin-bottom: 16px;
+    font-family: var(--sans, 'Syne', sans-serif);
+  }
+  .lz-cta-title {
+    font-family: var(--display, 'Bricolage Grotesque', sans-serif);
+    font-size: clamp(20px, 2.5vw, 26px);
     font-weight: 800;
     margin-bottom: 12px;
-    color: #fff;
+    color: var(--white, #fff);
   }
-  .cta-desc {
+  .lz-cta-desc {
     font-size: 15px;
-    color: #999;
-    margin-bottom: 24px;
-    line-height: 1.6;
+    color: rgba(255,255,255,.5);
+    margin-bottom: 28px;
+    line-height: 1.65;
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
   }
-  .cta-btn {
+  .lz-btn {
     display: inline-block;
-    background: #9DFF20;
-    color: #0f0f0f;
     padding: 14px 32px;
-    font-weight: 800;
-    font-size: 15px;
+    font-family: var(--sans, 'Syne', sans-serif);
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: .5px;
     text-decoration: none;
-    border-radius: 6px;
-    transition: opacity .2s;
+    border-radius: 3px;
+    transition: opacity .2s, transform .15s;
   }
-  .cta-btn:hover { opacity: .85; }
-  .prev-link {
+  .lz-btn:hover { opacity: .85; transform: translateY(-1px); }
+  .lz-btn--amber { background: #D4840A; color: #fff; }
+  .lz-btn--outline {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,.25);
+    color: rgba(255,255,255,.75);
+  }
+  .lz-btn--outline:hover { border-color: rgba(255,255,255,.5); color: #fff; }
+  /* CTA consulenza */
+  .lz-consulenza {
+    background: var(--black, #0A0A0A);
+    border: 1px solid rgba(212,132,10,.3);
+    border-radius: 4px;
+    padding: 40px 36px;
+    text-align: center;
+  }
+  .lz-consulenza-claim {
+    font-family: var(--serif, 'Cormorant', serif);
+    font-style: italic;
+    font-size: clamp(22px, 2.8vw, 30px);
+    font-weight: 600;
+    color: #D4840A;
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+  .lz-consulenza-desc {
+    font-size: 15px;
+    color: rgba(255,255,255,.5);
+    margin-bottom: 28px;
+    line-height: 1.65;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .lz-btn-wa {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    color: #666;
+    gap: 10px;
+    background: #25D366;
+    color: #fff;
+    padding: 14px 28px;
+    font-family: var(--sans, 'Syne', sans-serif);
+    font-weight: 700;
     font-size: 14px;
     text-decoration: none;
-    margin-bottom: 40px;
-    transition: color .2s;
+    border-radius: 3px;
+    transition: opacity .2s;
   }
-  .prev-link:hover {
-    color: #9DFF20;
-    opacity: 1;
+  .lz-btn-wa:hover { opacity: .88; }
+  .lz-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
   }
 </style>
 
-<div class="lesson-wrap">
+<div class="lz-wrap">
 
-  <!-- Header corso -->
-  <div class="lesson-header">
-    <div class="lesson-header-inner">
+  <div class="lz-header">
+    <div class="lz-header-inner">
       <div>
-        <div class="course-label">Come Metterci la Faccia Online</div>
-        <div style="font-size:13px; color:#555; margin-top:2px;">Guida gratuita · Marco Munich</div>
+        <div class="lz-course-label">Come Metterci la Faccia Online</div>
+        <div class="lz-course-sub">Guida gratuita · Marco Munich</div>
       </div>
-      <div class="lesson-badge">Lezione 2 di 2</div>
+      <div class="lz-badge">Lezione 2 di 2</div>
     </div>
   </div>
 
-  <!-- Video -->
-  <div class="video-section">
-    <a href="/cmfo-lezione1/" class="prev-link">
-      ← Torna alla Lezione 1
-    </a>
-    <h1 class="lesson-title">
-      Lezione 2 — <span>Le 3 azioni specifiche nel dettaglio</span>
-    </h1>
-    <div class="video-wrapper">
+  <div class="lz-video-section">
+    <a href="/cmfo-lezione1/" class="lz-back">← Torna alla Lezione 1</a>
+    <h1 class="lz-title">Lezione 2 — <em>Le 3 azioni specifiche nel dettaglio</em></h1>
+    <div class="lz-video-wrapper">
       <iframe
         src="https://www.youtube-nocookie.com/embed/lxXmigUqAM8?rel=0&modestbranding=1"
         title="Come Metterci la Faccia Online – Lezione 2"
@@ -189,26 +264,33 @@ import BaseLayout from '@layouts/BaseLayout.astro';
     </div>
   </div>
 
-  <!-- Contenuto + CTA -->
-  <div class="lesson-content">
+  <div class="lz-content">
+    <hr class="lz-divider" />
 
-    <hr class="lesson-divider" />
-
-    <!-- Completato -->
-    <div class="completed-box">
-      <div class="completed-label">✓ Corso completato</div>
-      <p class="completed-text">Hai visto entrambe le lezioni di "Come Metterci la Faccia Online". Ora sai da dove iniziare per costruire la tua presenza online in modo autentico.</p>
+    <div class="lz-completed">
+      <div class="lz-completed-label">✓ Corso completato</div>
+      <p class="lz-completed-text">Hai visto entrambe le lezioni di "Come Metterci la Faccia Online". Ora sai da dove iniziare per costruire la tua presenza online in modo autentico.</p>
     </div>
 
-    <!-- CTA -->
-    <div class="cta-section">
-      <div class="cta-title">Vuoi approfondire?</div>
-      <p class="cta-desc">
-        Scopri il percorso completo per imparare a fare video e costruire la tua presenza online restando te stesso.
-      </p>
-      <a href="/metterci-la-faccia-online/" class="cta-btn">
-        Torna alla guida completa →
-      </a>
+    <!-- CTA 1: percorso completo -->
+    <div class="lz-cta">
+      <div class="lz-cta-label">Passo successivo</div>
+      <div class="lz-cta-title">Vuoi andare più in profondità?</div>
+      <p class="lz-cta-desc">Scopri il percorso completo per imparare a fare video e costruire la tua presenza online restando te stesso.</p>
+      <a href="/metterci-la-faccia-online/" class="lz-btn lz-btn--amber">Scopri il percorso completo →</a>
+    </div>
+
+    <!-- CTA 2: consulenza -->
+    <div class="lz-consulenza">
+      <div class="lz-consulenza-claim">Preferisci un confronto diretto?</div>
+      <p class="lz-consulenza-desc">Se hai già un'idea di dove vuoi arrivare e vuoi capire come muoverti in modo concreto, possiamo parlarne insieme in una chiacchierata introduttiva gratuita.</p>
+      <div class="lz-actions">
+        <a href="https://wa.link/eemovr" target="_blank" rel="noopener" class="lz-btn-wa">
+          <svg viewBox="0 0 448 512" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
+          Scrivimi su WhatsApp
+        </a>
+        <a href="/contatti/" class="lz-btn lz-btn--outline">Vai ai contatti</a>
+      </div>
     </div>
 
   </div>
