@@ -24,3 +24,14 @@ Thumbs.db
 .env.deploy
 .vercel
 .env*.local
+
+# Claude worktrees & tmp
+.claude/worktrees/
+tmp_*.jpg
+tmp_*.png
+null
+*.txt
+!package*.json
+scripts/redownload-images.mjs
+"Gemini-Specifiche Tecniche Sito Web Spiegate.md"
+"chat 13 mm2.txt"
