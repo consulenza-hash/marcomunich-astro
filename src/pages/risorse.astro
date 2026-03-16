@@ -185,9 +185,9 @@ const socials = [
 
     <div class="rs-delegate__grid">
       <div class="rs-delegate__item rs-delegate__item--highlight">
-        <span class="rs-delegate__badge">In evidenza</span>
         <h3 class="rs-delegate__item-title">Sviluppo Siti Web ad Alte Prestazioni</h3>
         <p class="rs-delegate__item-desc">Siti veloci, ottimizzati per i motori di ricerca e costruiti per convertire. Niente template generici: ogni progetto viene pensato attorno al tuo messaggio.</p>
+        <a href="/sviluppo-siti-web" class="rs-delegate__cta">Scopri →</a>
       </div>
       <div class="rs-delegate__item">
         <h3 class="rs-delegate__item-title">Sistema di Prenotazione Appuntamenti</h3>
@@ -329,7 +329,7 @@ const socials = [
 .rs-social-link {
   width: 32px; height: 32px;
   display: flex; align-items: center; justify-content: center;
-  color: rgba(255,255,255,0.28);
+  color: rgba(255,255,255,0.7);
   transition: color 0.15s;
 }
 .rs-social-link:hover { color: var(--gold); opacity: 1; }
@@ -456,17 +456,23 @@ const socials = [
 }
 .rs-delegate__item:last-child { padding-right: 0; }
 .rs-delegate__item--highlight {
-  border-left: 2px solid var(--gold);
+  border-left: 3px solid var(--gold);
   padding-left: 1.5rem;
+  background: rgba(197,138,55,0.06);
+  border-radius: 0 4px 4px 0;
 }
-.rs-delegate__badge {
+.rs-delegate__cta {
   display: inline-block;
-  font: 700 0.56rem/1 var(--sans);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  margin-top: 1rem;
+  font: 600 0.78rem/1 var(--sans);
+  letter-spacing: 0.06em;
   color: var(--gold);
-  margin-bottom: 0.75rem;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(197,138,55,0.4);
+  padding-bottom: 2px;
+  transition: border-color 0.2s, color 0.2s;
 }
+.rs-delegate__cta:hover { color: #fff; border-color: #fff; }
 .rs-delegate__item-title {
   font: 600 0.95rem/1.3 var(--sans);
   color: var(--white);

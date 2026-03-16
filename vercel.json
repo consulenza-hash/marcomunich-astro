@@ -2,6 +2,8 @@
   "ignoreCommand": "[ \"$VERCEL_GIT_COMMIT_REF\" = \"deploy\" ] && exit 1 || exit 0",
   "redirects": [
     { "source": "/inizia-da-qui", "destination": "/risorse/", "permanent": true },
-    { "source": "/inizia-da-qui/", "destination": "/risorse/", "permanent": true }
+    { "source": "/inizia-da-qui/", "destination": "/risorse/", "permanent": true },
+    { "source": "/percorsi-online", "destination": "/servizi/", "permanent": true },
+    { "source": "/percorsi-online/", "destination": "/servizi/", "permanent": true }
   ]
 }
