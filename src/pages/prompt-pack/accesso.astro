@@ -12,7 +12,6 @@ import {
 
 // ── Auth gate ────────────────────────────────────────────────────────────────
 let user: AccessTokenData | null = null;
-let setCookieHeader: string | null = null;
 
 if (isDevBypass()) {
   // Sviluppo locale: bypass auth se PROMPT_PACK_DEV_BYPASS=true nel .env
@@ -32,9 +31,15 @@ if (isDevBypass()) {
   if (token) {
     user = await validateToken(token);
     if (user && tokenFromUrl && !tokenFromCookie) {
-      // Prima visita via link email: imposta il cookie
-      setCookieHeader = buildAccessCookie(token);
-      Astro.response.headers.set('Set-Cookie', setCookieHeader);
+      // Prima visita via link email: imposta il cookie e redirect a URL pulito.
+      // Rimuove il token dalla URL bar → niente leak via history / referrer / GA4.
+      return new Response(null, {
+        status: 302,
+        headers: {
+          'Location': '/prompt-pack/accesso',
+          'Set-Cookie': buildAccessCookie(token),
+        },
+      });
     }
   }
 

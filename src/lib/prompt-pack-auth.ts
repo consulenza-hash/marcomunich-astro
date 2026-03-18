@@ -54,7 +54,18 @@ export async function createAccessToken(token: string, data: AccessTokenData): P
   const store = await readTokenStore();
   store[`token:${token}`] = data;
   store[`email:${data.email.toLowerCase()}`] = token;
+  store[`session:${data.stripeSessionId}`] = token; // idempotency key
   await writeTokenStore(store);
+}
+
+/** Controlla se una sessione Stripe è già stata processata (anti-replay webhook) */
+export async function hasProcessedSession(stripeSessionId: string): Promise<boolean> {
+  try {
+    const store = await readTokenStore();
+    return !!store[`session:${stripeSessionId}`];
+  } catch {
+    return false;
+  }
 }
 
 /** Valida un token e ritorna i dati utente, o null se invalido */

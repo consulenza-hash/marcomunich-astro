@@ -11,7 +11,7 @@
 import type { APIRoute } from 'astro';
 import Stripe from 'stripe';
 import { Resend } from 'resend';
-import { createAccessToken } from '@lib/prompt-pack-auth';
+import { createAccessToken, hasProcessedSession } from '@lib/prompt-pack-auth';
 import { randomUUID } from 'crypto';
 
 export const prerender = false;
@@ -69,6 +69,12 @@ export const POST: APIRoute = async ({ request }) => {
     } catch {
       // Non bloccante
     }
+  }
+
+  // Idempotency: se il webhook è già stato processato per questa sessione, non ricreare il token
+  if (await hasProcessedSession(session.id)) {
+    console.log(`[webhook] Sessione già processata (retry Stripe): ${session.id}`);
+    return new Response('OK (già processato)', { status: 200 });
   }
 
   // Genera token univoco
