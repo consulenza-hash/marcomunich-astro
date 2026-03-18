@@ -110,6 +110,13 @@ export async function getAllPurchasers(): Promise<Array<{ token: string } & Acce
     .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 }
 
+/** Recupera il token associato a un'email (per re-invio link) */
+export async function getTokenByEmail(email: string): Promise<string | null> {
+  const store = await readTokenStore();
+  const token = store[`email:${email.toLowerCase()}`];
+  return typeof token === 'string' ? token : null;
+}
+
 /** Revoca un token di accesso (rimuove token:* e email:* dal Gist) */
 export async function revokeToken(token: string): Promise<void> {
   const store = await readTokenStore();
