@@ -46,8 +46,8 @@ export const GET: APIRoute = async ({ redirect }) => {
     }
 
     return redirect(session.url, 303);
-  } catch (err) {
+  } catch (err: any) {
     console.error('[checkout] Stripe error:', err);
-    return new Response('Errore interno', { status: 500 });
+    return new Response(`Errore: ${err.message}`, { status: 500 });
   }
 };
