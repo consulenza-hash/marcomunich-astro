@@ -558,6 +558,18 @@ export const prerender = true;
   }
 </style>
 
+<style is:global>
+  /* Forza il colore del testo nei checkbox del Prompt Pack — bypassa scoping Astro */
+  .pp-consent span,
+  .pp-consent--newsletter span {
+    color: #0A0A0A !important;
+  }
+  .pp-consent a {
+    color: #0A0A0A !important;
+    text-decoration: underline !important;
+  }
+</style>
+
 <!-- ── HERO ─────────────────────────────────────────────────────────────────── -->
 <div class="pp">
 
