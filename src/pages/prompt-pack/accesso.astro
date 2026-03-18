@@ -1,0 +1,1357 @@
+---
+export const prerender = false;
+
+import {
+  validateToken,
+  getTokenFromCookie,
+  getTokenFromUrl,
+  buildAccessCookie,
+  isDevBypass,
+  type AccessTokenData,
+} from '@lib/prompt-pack-auth';
+
+// ── Auth gate ────────────────────────────────────────────────────────────────
+let user: AccessTokenData | null = null;
+let setCookieHeader: string | null = null;
+
+if (isDevBypass()) {
+  // Sviluppo locale: bypass auth se PROMPT_PACK_DEV_BYPASS=true nel .env
+  user = {
+    email: 'dev@localhost',
+    name: 'Dev User',
+    createdAt: new Date().toISOString(),
+    stripeSessionId: 'dev_session',
+    stripeReceiptUrl: null,
+  };
+} else {
+  const url = new URL(Astro.request.url);
+  const tokenFromUrl = getTokenFromUrl(url);
+  const tokenFromCookie = getTokenFromCookie(Astro.request);
+  const token = tokenFromUrl || tokenFromCookie;
+
+  if (token) {
+    user = await validateToken(token);
+    if (user && tokenFromUrl && !tokenFromCookie) {
+      // Prima visita via link email: imposta il cookie
+      setCookieHeader = buildAccessCookie(token);
+      Astro.response.headers.set('Set-Cookie', setCookieHeader);
+    }
+  }
+
+  if (!user) {
+    // Nessun token valido → redirect alla landing
+    return Astro.redirect('/prompt-pack?accesso=negato', 302);
+  }
+}
+
+const categorie = [
+  {
+    id: 'cat01', num: '01',
+    title: 'Scrivere dal vissuto reale',
+    sub: 'Tirare fuori le esperienze concrete invece dei consigli generici',
+    count: 10,
+    prompts: [
+      {n:1, text:`Ho fallito completamente nel mio lavoro in un momento specifico. Chiedimi di raccontartelo — non la versione "crescita personale", quella vera e cruda. Poi aiutami a trasformare quella lezione in un contenuto che parla direttamente a chi sta attraversando lo stesso fallimento adesso.`},
+      {n:2, text:`Chiedimi di descriverti il momento esatto in cui ho capito perché faccio questo lavoro. Non la versione da bio Instagram. Quella con l'ora del giorno, dove ero, cosa provavo nel corpo. Poi estrai da lì una cosa che posso dire al mio pubblico.`},
+      {n:3, text:`Prendi l'ultima volta che ho detto a un cliente "lo so, ci sono passato anch'io" e scrivici sopra un post. Parti da quella frase, non dai consigli generici.`},
+      {n:4, text:`Chiedimi quali sono le 3 cose che ho creduto sul mio lavoro nei primi anni e che si sono rivelate completamente false. Poi aiutami a scrivere cosa ho scoperto al loro posto.`},
+      {n:5, text:`Chiedimi di raccontarti una conversazione recente con un cliente che mi ha sorpreso: una domanda inaspettata, una reazione che non mi aspettavo. Quando te la racconto, aiutami a costruirci un contenuto sopra.`},
+      {n:6, text:`Qual è la cosa che i miei colleghi di settore non dicono mai? Quella che so essere vera ma che crea fastidio dirla. Aiutami a scriverla senza filtri, poi decidiamo insieme se e come pubblicarla.`},
+      {n:7, text:`Scrivi un post partendo da questa frase: "Nessuno me lo aveva detto che [completa]." Riempi il vuoto con qualcosa che ho scoperto sulla strada, non nei libri.`},
+      {n:8, text:`Inizia chiedendomi di raccontarti la prima sessione o consulenza che ho fatto: com'era andata, cosa ricordo di preciso, cosa mi aveva sorpreso. Poi, da quello che ti racconto, aiutami a costruire un contenuto per chi sta iniziando adesso in questo lavoro.`},
+      {n:9, text:`Chiedimi qual è la cosa che faccio meglio nel mio lavoro — il mio cavallo di battaglia. Poi aiutami a scrivere la storia di come l'ho scoperto.`},
+      {n:10, text:`C'è una cosa che ho fatto per anni convinto fosse giusta e poi ho cambiato idea completamente. Chiedimi di raccontartela, poi scrivi il prima e il dopo senza abbellirlo.`},
+    ]
+  },
+  {
+    id: 'cat02', num: '02',
+    title: 'Trovare il tuo paradigma',
+    sub: 'Articolare il punto di vista unico che solo tu puoi avere',
+    count: 10,
+    prompts: [
+      {n:11, text:`Aiutami a completare questa frase 10 volte di fila senza filtrarla: "Io credo che nel mio settore la maggior parte delle persone si sbagli su [completa]." Fammele fare una alla volta, poi aiutami a trovare quella che vale la pena approfondire.`},
+      {n:12, text:`Qual è la cosa che vedo fare continuamente nel mio settore e che mi fa pensare "ma perché nessuno parla di questo"? Aiutami a scriverla come presa di posizione, non come domanda.`},
+      {n:13, text:`Aiutami a trovare le mie credenze fondamentali sul lavoro che faccio. Chiedimele una alla volta, incluse quelle scomode o in contrasto con quello che dicono i guru del settore. Quando ne abbiamo identificata una che mi sembra forte, aiutami a costruirci un post sopra.`},
+      {n:14, text:`Chiedimi del cliente con cui ho lavorato meglio in assoluto. Cosa aveva di diverso dagli altri? Cosa capiva che gli altri faticavano a capire? Da quella comprensione, aiutami a estrarre il mio punto di vista distintivo e a scriverlo.`},
+      {n:15, text:`Aiutami a completare questa frase: "Il vero problema di [il mio target] non è [il problema ovvio che tutti nominano]. È [il problema che nessuno nomina]." Aiutami a scriverla in un post senza smussare gli angoli.`},
+      {n:16, text:`Se dovessi spiegare il mio approccio a qualcuno che non conosce il mio settore, senza usare nessun termine tecnico o spirituale, come lo faresti? Scrivi quella spiegazione.`},
+      {n:17, text:`Qual è la domanda che vorrei che i miei clienti mi facessero più spesso, ma che non fanno mai? Scrivila e poi rispondici pubblicamente.`},
+      {n:18, text:`Cosa so sul mio lavoro che non si trova in nessun libro, corso o formazione? Solo nella pratica reale con le persone. Scrivilo.`},
+      {n:19, text:`Aiutami a prendere il concetto più importante del mio lavoro e tradurlo in una metafora della vita quotidiana, non del settore olistico. Niente "viaggio interiore", niente "processo di trasformazione". Una metafora concreta e visiva che chiunque capirebbe al primo colpo.`},
+      {n:20, text:`Scrivi la versione eretica del consiglio più comune nel mio settore. Quel consiglio che tutti danno e che io, nella pratica reale, non darei mai. Poi spiega perché, con un esempio specifico.`},
+    ]
+  },
+  {
+    id: 'cat03', num: '03',
+    title: 'Video e contenuto parlato',
+    sub: 'Strutturare video e yapping che tengono l\'attenzione',
+    count: 10,
+    prompts: [
+      {n:21, text:`Aiutami a rispondere a questa domanda per un video breve: "Qual è la cosa che questa settimana un cliente mi ha fatto capire che non avevo ancora spiegato bene?" Chiedimi i dettagli e poi aiutami a strutturare una risposta di 2 minuti.`},
+      {n:22, text:`Ho 60 secondi. Aiutami a spiegare cos'è il mio lavoro a mia nonna. Senza termini tecnici, senza "percorso", senza "consapevolezza". Se lei capisce, il messaggio funziona.`},
+      {n:23, text:`Aiutami a costruire un'apertura video in cui dico subito, nei primi 5 secondi, una cosa che nella mia nicchia non dice nessuno. Niente suspense, niente giri di parole. Prima la cosa, poi il contesto.`},
+      {n:24, text:`Chiedimi di raccontarti un episodio di questa settimana che mi ha fatto pensare. Non deve essere una lezione, non deve avere una morale perfetta. Poi aiutami a strutturarlo come video partendo da "Ieri è successa una cosa strana…"`},
+      {n:25, text:`Prendi il commento o il messaggio DM più interessante che ho ricevuto nell'ultimo mese. Aiutami a strutturare una risposta video pubblica. È il contenuto più autentico che posso fare: nasce da una domanda reale di una persona reale.`},
+      {n:26, text:`Aiutami a fare un video su una cosa che ho cambiato idea negli ultimi 12 mesi riguardo al mio lavoro. Chiedimi di cosa si tratta, poi aiutami a strutturarlo come: "Mi sbagliavo. Ecco perché."`},
+      {n:27, text:`Voglio fare un video sul dietro le quinte del mio lavoro. Aiutami a strutturare un contenuto che mostri una cosa ordinaria che faccio: una preparazione, una riflessione pre-sessione, qualcosa di normale per me ma invisibile al mio pubblico.`},
+      {n:28, text:`Ho una credenza sul mio settore che mi crea frizione con i colleghi. Aiutami a strutturare un video in cui la spiego con calma. La frizione è il contenuto, non il problema.`},
+      {n:29, text:`Aiutami a costruire un'apertura video diretta: "Si può fare [X] senza [Y]? Sì. Ti spiego come." Chiedimi qual è la domanda, poi strutturiamo la risposta senza ganci artificiali.`},
+      {n:30, text:`Aiutami a fare un video di smontaggio: prendi un consiglio comune nel mio settore e spiega perché, nella mia esperienza concreta, non funziona così. Chiedimi qual è il consiglio, poi aiutami a strutturare l'argomentazione.`},
+    ]
+  },
+  {
+    id: 'cat04', num: '04',
+    title: 'Tono e voce autentica',
+    sub: 'Calibrare il tono su ciò che sei, non su come pensi si debba parlare',
+    count: 8,
+    prompts: [
+      {n:31, text:`Prendi l'ultimo post che ho pubblicato [incolla] e riscrivilo come se lo stessi raccontando a voce a un amico al bar. Poi confronta le due versioni. Quella al bar è la mia voce.`},
+      {n:32, text:`Fai una lista di 10 parole che uso spesso nei miei contenuti [incolla un post recente]. Poi dimmi: quante di queste le userei in una conversazione reale? Elimina quelle che non uscirebbero mai dalla mia bocca e riscrivi il testo con quello che resta.`},
+      {n:33, text:`Leggi questi miei contenuti recenti [incolla] e segnami quante volte compaiono: "lasciare andare", "rispetta i tuoi tempi", "percorso", "trasformazione", "energia", "consapevolezza", "viaggio interiore". Per ognuna che ho usato, scrivimi la versione concreta: cosa significa davvero, in parole che non si trovano nei libri del settore.`},
+      {n:34, text:`Scrivi un post su un argomento del mio lavoro [indica tema] usando solo parole di massimo due sillabe. Se non riesci a spiegarlo in questo modo, è probabile che stia nascondendo l'idea dietro il linguaggio tecnico.`},
+      {n:35, text:`Come spiegheresti il mio approccio a un bambino di 10 anni? Scrivilo. Poi usa quella spiegazione come base per un contenuto adulto.`},
+      {n:36, text:`Ecco la trascrizione di un mio voice memo spontaneo: [incolla]. E questo è un mio post scritto: [incolla]. Confrontali e dimmi: dove il tono è diverso, quale suona più come me, cosa salvare del parlato nel contenuto scritto.`},
+      {n:37, text:`Scrivi un post su un tema che conosco bene [indica tema] iniziando con "Mi fa girare le scatole quando…" oppure "Non reggo quando…". Se suona come me, abbiamo trovato la mia voce.`},
+      {n:38, text:`Prendi una cosa complessa del mio lavoro [indica cosa] e spiegala con una storia di 3 frasi. Non usare il termine tecnico neanche una volta. Chi legge deve capire di cosa si tratta senza conoscere il settore.`},
+    ]
+  },
+  {
+    id: 'cat05', num: '05',
+    title: 'Punto di vista scomodo',
+    sub: 'Dire quelle cose che gli altri nel tuo settore evitano',
+    count: 8,
+    prompts: [
+      {n:39, text:`Qual è la cosa che tutti nel mio settore consigliano e che io non consiglierei mai? Scrivila come presa di posizione chiara. Non come domanda, non come "dipende". Una posizione netta.`},
+      {n:40, text:`Scrivi il post che ho paura di pubblicare. Quella cosa che penso e non dico perché "potrebbero fraintendere" o "perderei follower".`},
+      {n:41, text:`Aiutami a completare questa frase: "Nel mio settore siamo tutti d'accordo su [X]. Io non lo sono. Ecco perché." Non devo avere ragione universale: devo avere un punto di vista reale.`},
+      {n:42, text:`C'è un consiglio che ho dato per anni e che ora non darei più. Scrivilo come evoluzione onesta, non come scusa.`},
+      {n:43, text:`C'è qualcosa che il mio target crede fermamente e che secondo me gli fa male. Aiutami a scrivere la risposta onesta, non quella del professionista gentile e rassicurante.`},
+      {n:44, text:`Scrivi un post che inizia con "Nessuno lo dice, ma…" e finisce con una cosa che penso davvero sul mio settore, non con un consiglio soft. Se non crea un minimo di frizione, non è abbastanza onesto.`},
+      {n:45, text:`Prendi la promessa più comune del mio settore: "trasformati in X settimane", "trova il tuo scopo", "sblocca il tuo potenziale". Smontala con dati della mia esperienza reale. Non per smontare per sport — per dire cosa succede davvero.`},
+      {n:46, text:`Scrivi un post diretto a chi non voglio come cliente. Non come attacco, come chiarimento onesto su con chi lavoro e con chi no.`},
+    ]
+  },
+  {
+    id: 'cat06', num: '06',
+    title: 'Immagini realistiche',
+    sub: 'Prompt Midjourney per fotorealistiche professionali',
+    count: 12,
+    isImage: true,
+    prompts: [
+      {n:47, title:'Ritratto professionale in ambiente naturale', text:`Foto ritratto professionale di [descrivi soggetto], luce naturale calda da una grande finestra, seduto a una scrivania di legno con libri, espressione autentica e rilassata, profondità di campo ridotta, qualità Sony A7III, non in posa, vestiti semplici scuri, toni caldi, fotorealistico --ar 4:5`},
+      {n:48, title:'Sessione di coaching autentica', text:`Foto in stile documentario autentico di due persone in una sessione di coaching, luce interna calda, una persona ascolta con attenzione mentre l'altra parla, espressioni genuine, nessun effetto foto stock, profondità di campo ridotta, palette calda e desaturata, estetica pellicola 35mm, fotorealistico --ar 16:9`},
+      {n:49, title:'Sfondo professionale per videocall', text:`Sfondo ufficio professionale pulito per videochiamate, librerie piene di libri, luce serale calda, bokeh leggermente sfocato, nessun disordine, atmosfera accogliente, fotorealistico, toni naturali --ar 16:9`},
+      {n:50, title:'Scrivania di lavoro autentica', text:`Postazione home office autentica, luce naturale diurna, quaderno e penna su scrivania di legno, tazza di caffè, spazio di lavoro reale non allestito, toni caldi, ripresa dall'alto flat lay, fotorealistico --ar 1:1`},
+      {n:51, title:'Persona in riflessione', text:`Persona che guarda fuori da una grande finestra immersa in profondi pensieri, luce pomeridiana calda, espressione autentica di riflessione profonda, non in posa, vestiti normali, sfondo urbano visibile attraverso la finestra, fotorealistico, stile documentario --ar 4:5`},
+      {n:52, title:'Workshop o corso dal vivo', text:`Foto professionale di persona che parla a un piccolo gruppo in un contesto workshop, coinvolgimento autentico, luce naturale, non da foto stock corporate, espressioni genuine reali, toni caldi, fotorealistico --ar 16:9`},
+      {n:53, title:'Scrittura per articoli e newsletter', text:`Persona che scrive su un quaderno in un bar, luce naturale dalla finestra, espressione di concentrazione autentica, laptop vicino, non in posa, fotorealistico, atmosfera calda e suggestiva, look pellicola 35mm --ar 4:5`},
+      {n:54, title:'Headshot per testimonianze e profili', text:`Headshot professionale sorridente autentico, luce naturale calda, espressione genuina non un sorriso forzato, sfondo pulito e semplice, look obiettivo ritratto 50mm, persona reale non modello, fotorealistico --ar 1:1`},
+      {n:55, title:'Hero image per landing page servizi', text:`Professionista sicuro di sé in piedi in uno spazio minimalista luminoso, luce naturale diurna, presenza autentica e rilassata, non corporate, postura naturale, sguardo diretto e genuino, fotorealistico, stile editoriale --ar 16:9`},
+      {n:56, title:'Flat lay per stories e contenuti', text:`Flat lay dall'alto degli elementi essenziali della scrivania: quaderno con note scritte a mano, penna, telefono, tazza di caffè, composizione minimale e intenzionale, toni naturali caldi, fotorealistico, luce naturale --ar 1:1`},
+      {n:57, title:'Immagine mattutina per contenuti di routine', text:`Persona nella tranquilla routine mattutina, luce naturale morbida, espressione autentica e serena, ambiente reale minimale, non allestito, fotorealistico, stile documentario intimo, toni caldi --ar 4:5`},
+      {n:58, title:'Ritratto in contesto urbano', text:`Ritratto professionale in contesto urbano, luce naturale dell'ora d'oro, fiducia autentica e rilassata, non in posa, sfondo di strada reale leggermente sfocato, fotorealistico, stile fotografia editoriale --ar 4:5`},
+    ]
+  },
+  {
+    id: 'cat07', num: '07',
+    title: 'Immagini creative',
+    sub: 'Prompt per visual artistici, copertine, grafica editoriale',
+    count: 12,
+    isImage: true,
+    prompts: [
+      {n:59, title:'Autenticità vs maschera', text:`Ritratto sdoppiato, un lato mostra una maschera veneziana teatrale, l'altro un volto umano reale con emozione genuina, illuminazione drammatica stile Rembrandt, bianco e nero con accenti dorati, stile fotografia concettuale fine art --ar 1:1`},
+      {n:60, title:'Il punto di vista unico', text:`Persona al centro di molteplici percorsi di luce divergenti, ogni percorso di un colore caldo diverso, sfondo scuro e atmosferico, la persona illuminata dall'interno, concept art cinematografico, pittura digitale --ar 16:9`},
+      {n:61, title:'Il faro eretico', text:`Faro solitario in un mare scuro che illumina una direzione specifica lontano dalla folla, onde oceaniche suggestive, nuvole di tempesta che si aprono in modo drammatico, arte digitale pittorica, palette di indaco profondo e oro brunito --ar 16:9`},
+      {n:62, title:'Il pensiero che diventa voce', text:`Visualizzazione astratta di pensieri che diventano parole, tipografia italiana che fluisce come fumo dal profilo di una silhouette umana, sfondo scuro, tipografia oro e crema, direzione artistica editoriale moderna --ar 4:5`},
+      {n:63, title:'Unicità vs omologazione', text:`Una persona che si distingue da una folla di silhouette grigie identiche, la figura unica in toni caldi dorati, le altre in grigio freddo e desaturato, spotlight drammatico, illustrazione minimalista concettuale --ar 16:9`},
+      {n:64, title:'Trasformazione non spirituale', text:`Farfalla che emerge non da una crisalide ma da una mano umana, come se la mano stessa la stesse creando, sfondo bianco pulito, farfalla fotorealistica, ali iper-dettagliate, fotografia concettuale surrealista --ar 1:1`},
+      {n:65, title:'Il paradigma personale', text:`Persona che avvicina un obiettivo vintage all'occhio, attraverso l'obiettivo il mondo appare in colori vividi e saturi mentre tutto fuori è grigio desaturato, fotografia concettuale, montaggio cinematografico --ar 4:5`},
+      {n:66, title:'Connessione autentica tra persone', text:`Due silhouette umane una di fronte all'altra, tra di loro intricati fili di luce dorata che intrecciano un pattern complesso, sfondo scuro e atmosferico, atmosfera intima, fine art digitale, toni metallici caldi --ar 1:1`},
+      {n:67, title:'Il muro comunicativo', text:`Due persone che cercano di comunicare attraverso pareti di vetro trasparente, le loro parole visibili come fumetti ma distorte e frammentate dall'altro lato, illustrazione editoriale pulita, simbolica, arte grafica moderna --ar 16:9`},
+      {n:68, title:'Voce come forza', text:`Figura umana la cui intera forma è composta da testo tipografico italiano fluente, testo che sale a spirale come una forza vivente, sfondo scuro ed elegante, toni oro e bianco, concept art rendering 3D --ar 4:5`},
+      {n:69, title:'Texture premium per landing page', text:`Texture di lusso astratta, nero opaco profondo con sottili pattern geometrici in oro brunito, composizione elegante e minimale, adatta come sfondo digitale premium, estetica design editoriale, senza testo --ar 16:9`},
+      {n:70, title:'Cover creativa per prodotto digitale', text:`Macchina da scrivere meccanica vintage con elementi digitali moderni che fluttuano sopra di essa, pattern di circuiti dorati, particelle di luce, toni caldi dorati e ombre profonde, fotografia di prodotto concettuale con compositing digitale --ar 1:1`},
+    ]
+  },
+  {
+    id: 'cat08', num: '08',
+    title: 'Utilità quotidiana',
+    sub: 'Email, bio, proposte, follow-up, FAQ, newsletter, piano editoriale',
+    count: 50,
+    prompts: [
+      {n:71, title:'Email professionale diretta', text:`Scrivi un'email per [obiettivo] da inviare a [destinatario]. Massimo 150 parole. Vai subito al punto: spiega perché scrivo, cosa chiedo, cosa succede dopo. Niente "spero che questo messaggio la trovi bene", niente "non esiti a contattarmi per qualsiasi cosa". Solo quello che serve.`},
+      {n:72, title:'Bio Instagram sintetica ed efficace', text:`Scrivi una bio Instagram di massimo 150 caratteri per un/una [professione]. Chi sei, chi aiuti, cosa ottengono — in parole concrete. Niente hashtag, niente emoji eccessive, niente "aiuto le persone a trasformarsi", niente "mindset", niente "potenziale illimitato". Quello che fai, per chi, in termini che esistono nella vita reale.`},
+      {n:73, title:'Summary LinkedIn autentico', text:`Scrivi il summary LinkedIn per un/una [professione] che lavora con [target]. Max 300 parole. Prima persona. Tono autentico, non corporate. Includi: cosa fai di concreto, per chi, perché sei diverso/a, come contattarti.`},
+      {n:74, title:'Proposta commerciale in 400 parole', text:`Scrivi una proposta per [servizio] da inviare a [tipo di cliente]. Include: il problema che risolvi in parole del cliente, la soluzione, come funziona in pratica, investimento, prossimo passo. Max 400 parole. Niente aggettivi vuoti.`},
+      {n:75, title:'Risposta all\'obiezione "è troppo caro"', text:`Scrivi una risposta professionale e non difensiva all'obiezione "è troppo caro" per un servizio di [tipo]. Non giustificare il prezzo. Sposta il focus sul valore reale e sul costo del non agire.`},
+      {n:76, title:'Email di follow-up dopo una call', text:`Scrivi un'email di follow-up dopo una call conoscitiva con [tipo di prospect]. Riassumi i punti chiave che abbiamo discusso, il passo successivo concordato, e una cosa specifica che ho notato nella loro situazione che mi fa pensare di poterli aiutare. Tono diretto e umano, senza sembrare un funnel di vendita.`},
+      {n:77, title:'Prima newsletter: presentati davvero', text:`Scrivi il primo numero di una newsletter per [tipo di professionista] che parla a [target]. Non la solita "benvenuto in questo spazio". Inizia da un momento concreto: qualcosa che è successo, una cosa che ho capito, una domanda che mi faccio. Il lettore deve capire in 30 secondi se questa è la newsletter che cercava. Max 300 parole.`},
+      {n:78, title:'10 titoli per articolo o post', text:`Genera 10 titoli per un contenuto su [argomento] scritti per [target]. Evita formule clickbait. Niente "X cose che non sai su...", niente "...e non te lo aspetti", niente "la guida definitiva". Ogni titolo deve comunicare chiaramente cosa c'è dentro e creare curiosità autentica senza promesse che il contenuto non mantiene.`},
+      {n:79, title:'FAQ per pagina servizi', text:`Crea 8 domande frequenti con risposte per il servizio [nome]. Le domande devono essere quelle vere che fanno i clienti prima di comprare, obiezioni incluse. Risposte dirette, max 80 parole ciascuna.`},
+      {n:80, title:'Descrizione servizio per sito web', text:`Scrivi la descrizione del servizio [nome] per il sito web. Struttura: 1) problema del cliente in parole sue, 2) cosa offri, 3) come funziona in pratica, 4) per chi è e per chi non è, 5) CTA. Max 400 parole.`},
+      {n:81, title:'Post LinkedIn da articolo esistente', text:`Trasforma questo articolo [incolla testo] in un post LinkedIn di massimo 1300 caratteri. Inizia con la frase più interessante o provocatoria del pezzo. Nessun hook generico. Mantieni il tono originale.`},
+      {n:82, title:'Thread per X/Twitter', text:`Trasforma questo contenuto [incolla] in un thread di 7-10 tweet. Il primo tweet dice la cosa più importante — non fa aspettare. Ogni tweet: una sola idea che regge da sola. Niente "thread 🧵", niente "se sei arrivato fin qui...". Concludi con il takeaway principale, senza suspense artificiale.`},
+      {n:83, title:'Script per video YouTube', text:`Scrivi uno script per un video YouTube di [durata] su [argomento]. Struttura: hook diretto senza suspense artificiale, 3-4 punti principali con esempi concreti, conclusione con azione specifica. Tono conversazionale.`},
+      {n:84, title:'Testo di vendita per prodotto digitale', text:`Scrivi il testo di vendita per [nome prodotto] al prezzo di €[X]. Struttura: problema che risolve, cosa contiene esattamente, per chi è e per chi no, cosa ottengono dopo averlo usato. Niente promesse irrealistiche.`},
+      {n:85, title:'Risposta a commento negativo online', text:`Scrivi una risposta professionale e non difensiva a questo commento [incolla] su [piattaforma]. Mantieni il tuo punto di vista se è fondato.`},
+      {n:86, title:'Caption Instagram da un pensiero', text:`Trasforma questo pensiero [incolla] in una caption Instagram di massimo 200 parole. Espandi con un esempio concreto dalla mia esperienza reale o una domanda che spinge il lettore a pensare. Niente aperture tipo "Oggi voglio condividere con voi...", niente "questo post potrebbe cambiare il tuo modo di vedere le cose". Diretto, senza hashtag motivazionali.`},
+      {n:87, title:'Piano editoriale mensile su misura', text:`Crea un piano editoriale per [mese] per un/una [professione] su Instagram. 20 contenuti divisi tra: educativi, esperienziali, opinion, dietro le quinte. Per ogni contenuto: tema, formato, angolo specifico. Nessun tema generico che potrebbe scrivere chiunque del settore — ogni idea deve avere un punto di partenza concreto dalla mia esperienza o dal mio punto di vista.`},
+      {n:88, title:'Descrizione episodio podcast', text:`Scrivi la descrizione di un episodio podcast su [argomento] con [tipo di ospite]. Max 150 parole. Include: tema principale, 2-3 cose concrete che si imparano, a chi è utile questo episodio.`},
+      {n:89, title:'10 oggetti email ad alta apertura', text:`Scrivi 10 oggetti email per una newsletter su [tema]. Evita "Non perdere questa opportunità". Ogni oggetto deve essere specifico, curioso o leggermente spiazzante. Max 50 caratteri ciascuno.`},
+      {n:90, title:'Bio da speaker/relatore', text:`Scrivi una bio da speaker per [nome] che parla di [tema]. Max 100 parole. Terza persona. Include: credenziali reali, a chi si rivolge il messaggio, cosa rende unico il punto di vista. Niente aggettivi vuoti.`},
+      {n:91, title:'Testi per presentazione slide', text:`Scrivi i testi per una presentazione di [X slide] su [argomento] per [audience]. Per ogni slide: titolo breve max 6 parole, testo di supporto max 30 parole, eventuale dato o domanda concreta. Stile minimalista e diretto. Nessuna slide con "i miei valori" in astratto o elenchi di bullet point ovvi. Ogni slide deve dire una cosa che vale la pena leggere.`},
+      {n:92, title:'Email di onboarding per nuovi clienti', text:`Scrivi l'email di benvenuto per un nuovo cliente che ha acquistato [servizio]. Niente "benvenuto in questa meravigliosa avventura". Una email pratica che risponde alle domande che ha già in testa: cosa succede adesso passo per passo, come mi contatta, cosa aspettarsi nella prima settimana. Conferma la scelta senza entusiasmo forzato.`},
+      {n:93, title:'Richiesta recensione naturale', text:`Scrivi un messaggio per chiedere una recensione a un cliente soddisfatto dopo [servizio]. Tono naturale, non insistente. Include 2-3 domande guida per aiutarli a scrivere qualcosa di specifico e utile.`},
+      {n:94, title:'Pagina Chi Sono per sito web', text:`Scrivi la pagina "Chi sono" per me: [professione], lavoro con [target]. Struttura: storia personale autentica, cosa ho imparato sul campo, in cosa sono diverso/a, a chi mi rivolgo, come iniziare. Max 500 parole. Niente bio da curriculum: voglio che chi legge capisca perché faccio questo lavoro davvero.`},
+      {n:95, title:'Risposta DM a richiesta info', text:`Scrivi una risposta a un DM in cui qualcuno chiede informazioni su [servizio]. Non incollare la pagina vendita. Fai una domanda per capire meglio la loro situazione e proponi un passo successivo concreto.`},
+      {n:96, title:'Accordo semplice per sessioni', text:`Scrivi un accordo chiaro (non legale) tra professionista e cliente per sessioni di [tipo]. Include: obiettivo del percorso, numero di sessioni, modalità, pagamento, cancellazioni, cosa non è incluso.`},
+      {n:97, title:'Sommario settimanale per newsletter', text:`Scrivi un sommario della settimana partendo da questi appunti: [incolla note]. Struttura: 1 cosa appresa, 1 cosa condivisa online, 1 domanda aperta per i lettori. Max 250 parole.`},
+      {n:98, title:'Proposta di collaborazione', text:`Scrivi una proposta di collaborazione da inviare a [tipo di persona/brand] per [tipo di collaborazione]. Tono: diretto, non adulatorio. Spiega perché ha senso per entrambi, cosa porti tu, cosa chiedi. Max 200 parole.`},
+      {n:99, title:'Annuncio lancio prodotto', text:`Scrivi un annuncio per il lancio di [prodotto] su [piattaforma]. Struttura: il problema che risolve partendo da un'esperienza concreta, cos'è esattamente, come funziona, prezzo, passo successivo. Scrivi come se stessi spiegando il prodotto a qualcuno che chiede cos'è.`},
+      {n:100, title:'Risposta professionale a email difficile', text:`Riscrivi questa email [incolla] in modo professionale ma diretto. Mantieni il messaggio essenziale, elimina ambiguità, esprimi la posizione chiaramente senza essere aggressivo/a.`},
+      {n:101, title:'Post lista per LinkedIn o Instagram', text:`Scrivi un post in formato lista su [argomento] per [target]. Max 10 punti. Ogni punto deve essere specifico e non ovvio. Evita i consigli che si trovano su qualsiasi blog. Inizia con il punto più sorprendente.`},
+      {n:102, title:'5 headline per landing page', text:`Scrivi 5 headline per la landing page di [prodotto/servizio]. Ogni headline deve comunicare il beneficio principale in max 10 parole. Evita aggettivi generici come "incredibile", "rivoluzionario", "trasformativo".`},
+      {n:103, title:'Outline per diretta live', text:`Crea un outline per una diretta Instagram o YouTube di 30 minuti su [argomento]. Struttura: apertura 2 min, contesto 5 min, 3 punti principali con esempi concreti 15 min, Q&A 5 min, chiusura con CTA 3 min. L'apertura non è "ciao a tutti, benvenuti, condividete se siete con me". Inizia con la cosa più interessante: un caso reale, una domanda che lascia aperta la risposta, un'affermazione netta.`},
+      {n:104, title:'Messaggio per riattivare una community', text:`Scrivi un messaggio per i membri di una community [tipo] diventati silenziosi. Non chiedere "ci sei ancora?". Porta un valore concreto e poni una domanda specifica a cui sia facile rispondere.`},
+      {n:105, title:'Analisi comunicazione di un competitor', text:`Analizza la comunicazione di questo competitor [incolla URL o descrizione profilo] e dimmi: cosa fanno bene, cosa manca, quale angolo comunicativo stanno lasciando scoperto che potrei occupare io.`},
+      {n:106, title:'Trascrizione audio in articolo leggibile', text:`Trascrivi e struttura questo testo parlato [incolla trascrizione grezza] in un articolo leggibile. Mantieni il tono originale del parlato, aggiungi titoli intermedi, elimina i riempitivi verbali, non aggiungere contenuto.`},
+      {n:107, title:'Risposta pubblica a domanda frequente', text:`Scrivi una risposta pubblica a questa domanda frequente: [domanda]. Stile: articolo breve, tono diretto, include un esempio pratico dalla mia esperienza concreta. Max 300 parole. Niente risposte generiche che potrebbe scrivere chiunque.`},
+      {n:108, title:'Offerta chiara e onesta', text:`Struttura un'offerta per [servizio] al prezzo €[X] che sia chiara e convincente senza manipolare. Include: cosa ottieni esattamente, in quanto tempo, passo successivo, cosa non include, garanzia se prevista.`},
+      {n:109, title:'I 5 concetti più applicabili da un libro', text:`Dammi i 5 concetti più applicabili di [titolo libro/corso] per qualcuno che lavora come [professione]. Non la sintesi generica. Solo le cose che cambiano davvero il modo di lavorare nella pratica.`},
+      {n:110, title:'20 idee contenuto su misura', text:`Genera 20 idee di contenuto per [professione] che parla a [target] in [mese/stagione]. Per ogni idea: piattaforma consigliata, formato, angolo specifico non ovvio. Evita idee generiche del settore.`},
+      {n:111, title:'Trasforma un post in un articolo', text:`Espandi questo post [incolla] in un articolo di blog di 600-800 parole. Mantieni lo stesso tono e punto di vista. Aggiungi: contesto iniziale, 2-3 esempi concreti, conclusione con riflessione aperta.`},
+      {n:112, title:'Revisione testo: solo analisi', text:`Rivedi questo testo [incolla] e dimmi: 1) dove il tono cambia e suona forzato, 2) le frasi che potrei togliere senza perdere senso, 3) il punto più forte che dovrebbe venire prima. Analizza senza riscrivere.`},
+      {n:113, title:'Email per recuperare un cliente inattivo', text:`Scrivi un'email per ricontattare un cliente con cui non lavori da [periodo]. Tono genuino, non commerciale. Non citare subito un'offerta. Mostra che ti ricordi di loro specificamente e fai una domanda reale.`},
+      {n:114, title:'Caption per immagine', text:`Scrivi una caption per questa immagine [descrivi immagine] da pubblicare su Instagram. Non descrivere l'immagine: usala come punto di partenza per un pensiero originale. Max 150 parole.`},
+      {n:115, title:'3 obiettivi trimestrali concreti', text:`Aiutami a definire 3 obiettivi reali per il prossimo trimestre per [tipo di attività]. Non voglio "aumentare la presenza online" o "rafforzare il brand". Voglio: cosa faccio esattamente, quante volte, entro quando, come so che ha funzionato. Per ogni obiettivo: azione specifica, metrica di successo, le due cose da fare questa settimana per iniziare.`},
+      {n:116, title:'Struttura sessione individuale', text:`Crea un outline per una sessione individuale di [durata] con [tipo di cliente] su [tema]. Include: accoglienza e check-in, esplorazione del tema, lavoro pratico, chiusura e passo successivo con tempi indicativi. Il check-in non è "come stai oggi". Dimmi anche quale domanda potrei usare per aprire davvero la sessione a partire da dove il cliente era rimasto l'ultima volta.`},
+      {n:117, title:'Risposte ai commenti che suonano vere', text:`Riscrivi queste risposte ai commenti [incolla esempi] in modo che suonino come una conversazione vera, non come gestione PR. Sii diretto, fai domande reali, non rispondere con soli emoji e "grazie mille".`},
+      {n:118, title:'Analisi del proprio profilo social', text:`Analizza il mio profilo [incolla bio + ultimi 10 post] e dimmi: 1) il messaggio che emerge davvero vs quello che intendo trasmettere, 2) i contenuti che mi rappresentano di più, 3) quelli che sembrano scritti da qualcun altro.`},
+      {n:119, title:'Riassunto strutturato di sessione o riunione', text:`Trasforma questi appunti [incolla] in un riassunto strutturato. Include: decisioni prese, azioni da intraprendere con responsabile e scadenza, domande aperte ancora irrisolte. Max 200 parole.`},
+      {n:120, title:'Sbloccarsi quando non sai da dove iniziare', text:`Non so da dove iniziare. Voglio scrivere su [tema] per [target]. Fai 5 domande a cui rispondo liberamente, senza pensare a come suonano, per trovare il punto di vista autentico da cui partire. Fai solo domande, non suggerire contenuto.`},
+    ]
+  },
+  {
+    id: 'cat09', num: '09',
+    title: 'Ampliare il punto di vista',
+    sub: 'L\'AI come interlocutore che mette in discussione te, le tue credenze e i tuoi punti ciechi',
+    count: 15,
+    prompts: [
+      {n:121, text:`Scegli una convinzione che ho sul mio lavoro e trovami tre argomenti seri contro di essa. Poi chiedimi cosa penso di quegli argomenti, uno alla volta, senza anticipare la risposta successiva.`},
+      {n:122, text:`Chiedimi di descriverti il tipo di cliente con cui lavoro meglio. Ascolta la risposta, poi dimmi cosa dice di me: di come mi vedo, di cosa evito, di cosa cerco nelle persone che aiuto.`},
+      {n:123, text:`Chiedimi qual è la cosa che trovo più difficile nel mio lavoro. Poi aiutami a capire se quella difficoltà viene da un limite reale o da una storia che mi racconto su me stesso.`},
+      {n:124, text:`Fai finta di essere un professionista del mio settore con un approccio completamente opposto al mio. Presentati e spiegami perché il tuo metodo funziona meglio. Poi aspetta la mia risposta e discutiamo.`},
+      {n:125, text:`Chiedimi cosa mi ha spinto a scegliere questo lavoro. Ascolta la risposta, poi chiedimi cosa di quella storia è ancora vero oggi e cosa invece è cambiato senza che me ne sia accorto.`},
+      {n:126, text:`Chiedimi qual è il consiglio che do più spesso ai miei clienti. Poi chiedimi perché quello stesso consiglio per me è più difficile da seguire.`},
+      {n:127, text:`Dimmi tre cose che potrebbe dire un critico severo del modo in cui faccio il mio lavoro. Poi chiedimi quale di queste mi disturba di più, e aspetta che risponda prima di continuare.`},
+      {n:128, text:`Chiedimi di raccontarti una sessione o consulenza che è andata particolarmente bene. Poi aiutami a capire cosa ho fatto io di specifico che ha contribuito a quel risultato, al di là delle circostanze favorevoli.`},
+      {n:129, text:`Chiedimi qual è la credenza sul cambiamento delle persone che guida il mio lavoro. Poi chiedi di dove viene quella credenza, quando l'ho costruita, se ho mai visto qualcosa che la mettesse in discussione.`},
+      {n:130, text:`Chiedimi di identificare il tipo di cliente con cui faccio più fatica. Poi aiutami a esplorare se quella fatica dice qualcosa su di me che non ho ancora esaminato.`},
+      {n:131, text:`Chiedimi come spiego il mio lavoro a qualcuno che non lo conosce. Poi dimmi quali parole ho usato che rivelano come mi vedo in questo ruolo, e quali aspetti del mio lavoro ho tralasciato.`},
+      {n:132, text:`Chiedimi qual è la cosa del mio settore che mi fa arrabbiare. Poi aiutami a capire se quella rabbia protegge qualcosa di importante per me o se è solo abitudine.`},
+      {n:133, text:`Chiedimi dove mi vedo tra cinque anni. Poi analizza la risposta: cosa è concreto, cosa è vago, cosa ho evitato di dire.`},
+      {n:134, text:`Fai finta di essere il mio cliente più difficile degli ultimi anni. Raccontami com'è stata la nostra relazione dal suo punto di vista. Poi usciamo dal personaggio e ne parliamo.`},
+      {n:135, text:`Chiedimi qual è la domanda sul mio lavoro a cui faccio più fatica a rispondere. Poi aiutami a stare con quella domanda invece di risolverla subito.`},
+    ]
+  },
+  {
+    id: 'cat10', num: '10',
+    title: 'Domande in profondità',
+    sub: 'Auto-coaching, sessioni, esercizi, debriefing, simulazioni e contenuti',
+    count: 12,
+    prompts: [
+      {n:136, title:'Auto-coaching su un blocco', text:`Ho [descrivi il blocco o la situazione]. Usando una domanda alla volta, fai il coach con me. Pone una domanda, aspetta la mia risposta, poi scegli la prossima in base a quello che ho detto. Portami verso quello che c'è sotto, senza darmi risposte.`},
+      {n:137, title:'Preparare la sessione successiva', text:`Il mio prossimo cliente sta attraversando [descrivi la situazione]. Scegli 4-5 domande che potrebbero essere utili per questa sessione e spiegami il ragionamento dietro ognuna: perché quella domanda, in quel momento.`},
+      {n:138, title:'Trovare la domanda giusta', text:`Il mio cliente è in questo punto del percorso: [descrivi]. Sembra che stia evitando [descrivi]. Quale domanda potrebbe spostare qualcosa senza essere invasiva per la fase in cui è?`},
+      {n:139, title:'Costruire un esercizio scritto', text:`Prendi questa domanda: [incolla]. Trasformala in un esercizio scritto che il cliente può fare da solo tra una sessione e l'altra. Aggiungi istruzioni su come usarla: quando farlo, quanto tempo dedicargli, come riportare la risposta alla sessione successiva.`},
+      {n:140, title:'Debriefing post-sessione', text:`Ho fatto questa domanda al cliente: [incolla]. Ha risposto così: [incolla risposta]. Cosa potrebbe esserci sotto quella risposta? Cosa ha detto e cosa ha evitato di dire? Quale domanda useresti nella prossima sessione?`},
+      {n:141, title:'Sequenza progressiva', text:`Costruisci una sequenza di 5 domande per esplorare [tema specifico] con un cliente. Le domande devono andare in profondità progressivamente: inizia da una accessibile e arriva a una che richiede più coraggio da parte del cliente.`},
+      {n:142, title:'Post dal lavoro in sessione', text:`Prendi questa domanda: [incolla]. Costruiscimi un post che fa capire al mio pubblico il tipo di lavoro che faccio in sessione, partendo da un esempio concreto di cosa accade quando si usa quella domanda, senza spiegare il metodo in astratto.`},
+      {n:143, title:'Newsletter da una domanda', text:`Prendi questa domanda: [incolla]. Scrivimi un'email per la mia newsletter che parte da lì come spunto, espande il concetto, e porta il lettore a chiedersi la stessa cosa nella propria vita. Max 300 parole.`},
+      {n:144, title:'Arco di sessione completo', text:`Costruisci un arco di sessione di 60 minuti su [tema] usando alcune domande del set. Per ogni fase (apertura, esplorazione, profondità, chiusura) indica quale domanda usare e perché, con i tempi indicativi.`},
+      {n:145, title:'Adattare la domanda al cliente', text:`Questa domanda: [incolla] è formulata in modo generico. Riformulala in modo che sia specifica per il mio cliente [descrivi brevemente], mantenendo la stessa struttura di fondo ma usando parole che appartengono al suo mondo.`},
+      {n:146, title:'Analisi della risposta del cliente', text:`Il mio cliente ha risposto così a una domanda: [incolla risposta]. Analizza la risposta: cosa ha detto, cosa ha evitato, cosa sembra non avere ancora parole. Quale domanda potrebbe aprire quello che è rimasto non detto?`},
+      {n:147, title:'Simulazione cliente', text:`Fai finta di essere un cliente in [situazione specifica]. Io ti farò delle domande. Dopo 5-6 scambi, esci dal personaggio e dimmi com'hai vissuto le domande dall'interno: cosa ha aperto, cosa ha chiuso, cosa ti ha messo a disagio.`},
+    ]
+  },
+  {
+    id: 'cat11', num: '11',
+    title: 'Custom GPT',
+    sub: 'Assistenti AI pre-configurati per il tuo settore — copia il system prompt e configurali in ChatGPT o Claude',
+    count: 10,
+    isGPT: true,
+    prompts: [
+      {n:148, title:'Il Brand Editor', tagline:'Riscrive qualsiasi tuo testo nel tuo tono autentico, imparando la tua voce dalle prime interazioni', text:`Sei un editor specializzato nel personal branding autentico per professionisti del coaching e del settore olistico. Il tuo compito è riscrivere i testi che ti porto mantenendo le idee intatte ma rendendole più dirette, concrete e simili al modo in cui questa persona parla davvero.
+
+Regole fisse:
+- Zero termini come "trasformazione", "viaggio interiore", "consapevolezza" usati in senso generico
+- Zero frasi da tazza motivazionale
+- Frasi corte: se una frase supera 25 parole, spezzala
+- Prima persona singolare, non "noi" o "si"
+- Niente aggettivi vuoti: "potente", "straordinario", "incredibile"
+- Se c'è una storia concreta dentro il testo, tirarla fuori è priorità assoluta
+
+Come funzioni:
+1. Alla prima sessione, chiedi 3 esempi di testi che l'utente considera "suoi" — post, email, messaggi — per calibrare la voce
+2. Poi riscrivi qualsiasi cosa ti venga portata
+3. Se non sei sicuro di qualcosa, chiedi prima di riscrivere
+
+Dopo ogni riscrittura, indica in 1 riga cosa hai cambiato e perché.`},
+
+      {n:149, title:"L'Anti-Guru", tagline:'Converte il linguaggio olistico e spirituale in italiano concreto e comprensibile da chiunque', text:`Sei un traduttore specializzato in comunicazione autentica. Il tuo lavoro: prendere testi del settore olistico, del coaching e del benessere e trasformare ogni frase astratta in una frase concreta.
+
+Dizionario di traduzione (non esaustivo):
+- "viaggio interiore" → descrivi cosa fa la persona, in concreto
+- "trasformazione" → cosa cambia esattamente? Come si vede nella vita quotidiana?
+- "lasciare andare" → cosa fa la persona? Smette di fare X? Decide Y?
+- "sbloccare il potenziale" → quale capacità specifica?
+- "consapevolezza" → consapevolezza di cosa, esattamente?
+- "allineamento" → allineamento tra cosa e cosa?
+- "tenere lo spazio" → cosa fa il professionista concretamente in sessione?
+- "processo" → quale processo? Con quali strumenti? In quanto tempo?
+- "percorso" → da dove a dove, in quanto tempo, con cosa in mano alla fine?
+
+Come lavori:
+1. Leggi il testo
+2. Evidenzia ogni frase che usa linguaggio astratto o da settore
+3. Proponi una versione concreta per ciascuna
+4. Non riscrivere l'intero testo a meno che non venga chiesto — lavora frase per frase
+
+Tono: diretto, non sarcastico. Non stai giudicando il professionista — stai aiutandolo a farsi capire da più persone.`},
+
+      {n:150, title:'Il Ghostwriter di Sessione', tagline:'Trasforma le note di una sessione in contenuto pubblicabile rispettando la privacy del cliente', text:`Sei un ghostwriter specializzato per coach, counselor e professionisti olistici. Il tuo lavoro è trasformare le note di una sessione in contenuto pubblicabile, rispettando la privacy del cliente.
+
+Processo:
+1. Ricevi le note di sessione (in forma grezza, con nomi modificati o rimossi)
+2. Identifichi il momento, la dinamica o l'intuizione più ricca di contenuto
+3. Chiedi: "Vuoi un post, un articolo, un'email newsletter o uno spunto per un video?"
+4. Scrivi il contenuto scelto
+
+Regole per la privacy:
+- Mai usare dettagli identificativi (professione specifica, città, situazione familiare unica)
+- Il cliente diventa "una persona con cui lavoro" o "qualcuno in una situazione che riconosco spesso"
+- Se non sei sicuro che un dettaglio sia identificativo, chiedi prima
+
+Regole per il contenuto:
+- Il punto di vista deve essere quello del professionista, non del cliente
+- L'insight deve essere generalizzabile a chi legge
+- Non trasformare la sessione in una storia di successo se non lo era
+- La complessità è benvenuta: non tutto deve avere una morale pulita
+
+Prima di scrivere, chiedi sempre: "C'è qualcosa che vuoi assolutamente escludere da questo contenuto?"`},
+
+      {n:151, title:'Il Critico Onesto', tagline:'Analizza la tua comunicazione e dice esattamente dove suona falsa, generica o performativa', text:`Sei un critico di comunicazione specializzato nel settore del coaching e del personal branding. Non sei qui per fare complimenti — sei qui per dire esattamente dove un testo suona falso, recitato o generico.
+
+Cosa cerchi in ogni testo:
+1. Performance — dove il professionista sembra stia recitando un personaggio invece di parlare come se stesso
+2. Jargon — termini tecnici o spirituali usati per sembrare autorevole invece che per comunicare
+3. Genericità — affermazioni che potrebbero venire da qualsiasi coach del pianeta
+4. Promesse vuote — qualsiasi cosa non possa essere verificata o dimostrata concretamente
+5. Tono difensivo — quando il testo cerca di piacere a tutti invece di parlare a qualcuno
+
+Come lavori:
+1. Leggi il testo completo
+2. Dai un giudizio generale in 2 righe
+3. Elenca i punti specifici da rivedere con citazione del testo originale e spiegazione del problema
+4. Per ogni punto, suggerisci una direzione (non la soluzione completa: quella tocca al professionista)
+5. Non riscrivere il testo intero a meno che non venga esplicitamente richiesto
+
+Sii diretto. Se un testo è scadente, dillo. Se è buono, dillo anche quello.`},
+
+      {n:152, title:'Il Preparatore di Sessione', tagline:'Genera domande calibrate al percorso del cliente con il ragionamento dietro ognuna', text:`Sei un supervisore e preparatore di sessioni per coach, counselor e professionisti olistici. Aiuti il professionista a prepararsi per la sessione successiva con un cliente specifico.
+
+Come funzioni — fai UNA domanda alla volta:
+1. "Descrivimi il cliente: chi è, da quanto lavori con lui o lei, dove era rimasto nell'ultima sessione"
+2. Ascolti la risposta
+3. "C'è qualcosa che ti aspetti emerga oggi? O qualcosa che ti preoccupa di questa sessione?"
+4. Ascolti
+5. Proponi 4-5 domande per la sessione, ognuna con il ragionamento dietro (perché quella domanda, perché in quel momento del percorso)
+6. Chiedi se vuole modificare qualcosa o approfondire una direzione
+
+Regole per le domande che suggerisci:
+- Devono essere aperte
+- Non devono contenere già la risposta
+- Devono essere calibrate al punto del percorso (inizio / metà / avanzato)
+- Almeno una deve toccare quello che il cliente evita sistematicamente
+- Almeno una deve guardare avanti verso un passo successivo concreto
+
+Non suggerire mai tecniche specifiche (EFT, PNL, costellazioni, etc.) a meno che il professionista non le nomini per primo.`},
+
+      {n:153, title:'Il Costruttore di Offerta', tagline:'Struttura i tuoi servizi in modo chiaro e convincente senza aggettivi vuoti o promesse irrealistiche', text:`Sei un consulente specializzato nella strutturazione di offerte per professionisti indipendenti del coaching e del benessere. Il tuo obiettivo: aiutare a creare offerte che siano chiare, oneste e convincenti senza manipolazione.
+
+Processo guidato — fai UNA domanda alla volta:
+1. "Cosa offri esattamente? Descrivimelo come lo spiegheresti a voce a un amico"
+2. "Chi è la persona che ne ha più bisogno in questo momento?"
+3. "Cosa sa fare o come sta questa persona DOPO aver lavorato con te? Sii specifico"
+4. "In quanto tempo? Con quante sessioni o incontri?"
+5. "Qual è il tuo prezzo? Come sei arrivato a quel numero?"
+6. "Chi è che questa offerta non fa per lui o lei?"
+
+Poi costruisci la struttura con:
+- Titolo (il risultato concreto, non il nome del metodo)
+- Per chi è e per chi non è (specifico)
+- Cosa include esattamente
+- Come funziona in pratica step by step
+- Investimento
+- Passo successivo
+
+Regole:
+- Niente aggettivi vuoti: "potente", "trasformativo", "rivoluzionario"
+- Il risultato deve essere verificabile: non "cambia la vita" ma cosa cambia concretamente
+- Se l'offerta è confusa, dillo prima di strutturarla
+- Se il prezzo sembra troppo basso per il valore offerto, dillo`},
+
+      {n:154, title:'Il Debriefing Partner', tagline:'Supervisione post-sessione: elabora quello che è successo con le domande che farebbe un supervisore', text:`Sei un partner di supervisione per coach, counselor e professionisti olistici. Il tuo ruolo è quello che farebbe un supervisore qualificato: aiutare il professionista a elaborare una sessione appena conclusa.
+
+Come funzioni:
+1. Chiedi: "Raccontami com'è andata la sessione — tutto quello che vuoi condividere"
+2. Ascolti senza interrompere
+3. Poi fai UNA domanda alla volta — mai più di una
+
+Domande tipo che usi (scelte in base a quello che emerge):
+- "Quando hai fatto o detto X, cosa stavi cercando di fare in quel momento?"
+- "C'è stato un momento in cui ti sei sentito fuori dal tuo centro? Cosa è successo lì?"
+- "Cosa hai evitato di chiedere? Perché pensi di averlo evitato?"
+- "Se potessi rifare un momento di questa sessione, quale sarebbe?"
+- "Cosa ti porti a casa da questa sessione — su di te, non sul cliente?"
+- "C'è qualcosa del cliente che ha attivato qualcosa in te personalmente?"
+
+Non dare mai soluzioni o valutazioni prima di aver fatto almeno 3 domande.
+Non dire mai "hai fatto bene" o "hai sbagliato" — aiuta il professionista ad arrivarci da solo.
+
+Alla fine, chiedi: "Vuoi identificare un'intenzione specifica per la prossima sessione con questa persona?"`},
+
+      {n:155, title:'Il Posizionatore', tagline:'Analizza la tua comunicazione e identifica il territorio unico che stai lasciando scoperto nel tuo mercato', text:`Sei uno stratega di posizionamento per professionisti del coaching, del counseling e del benessere. Il tuo lavoro: analizzare la comunicazione di un professionista e identificare il territorio unico che non sta ancora occupando.
+
+Processo:
+1. Chiedi: "Mandami 5-10 tuoi contenuti recenti — post, email, pagine del sito. Anche in forma grezza"
+2. Analizza cercando:
+   - Parole e concetti che si ripetono
+   - Cosa manca sistematicamente (argomenti che il professionista evita)
+   - Il tono che emerge realmente vs quello che probabilmente vorrebbe trasmettere
+   - Affermazioni che potrebbe fare qualsiasi competitor del settore
+3. Chiedi: "Descrivimi 2-3 professionisti del tuo settore con cui ti confronti"
+4. Analizza il territorio che stanno occupando
+5. Identifica lo spazio vuoto
+
+Output finale strutturato in tre parti:
+1. "Questo è il messaggio che stai comunicando ora" (descrizione onesta di quello che emerge)
+2. "Questo è il messaggio che potresti comunicare tu solo" (il punto di vista unico che nessun altro ha)
+3. "Questo è il territorio che nessuno del tuo settore sta occupando in questo momento"
+
+Non dare strategie di marketing o consigli di crescita. Solo posizionamento e punto di vista.`},
+
+      {n:156, title:"L'Estrattore di Storie", tagline:'Tira fuori dal tuo vissuto le storie che valgono come contenuto — una domanda alla volta', text:`Sei un intervistatore specializzato nell'estrarre storie di valore da professionisti del coaching e del benessere. Le migliori storie sono già dentro il professionista — il tuo lavoro è tirarle fuori con le domande giuste.
+
+Come funzioni:
+Fai UNA domanda alla volta. Aspetta la risposta. Scegli la prossima in base a quello che emerge — non seguire mai uno script fisso.
+
+Domande di apertura (usane una, non tutte):
+- "Raccontami un momento in cui hai capito perché fai questo lavoro — non la versione da bio, quella vera"
+- "C'è stato un cliente che ti ha insegnato qualcosa che non avresti imparato in nessun corso?"
+- "Quando hai fallito completamente in quello che fai — cosa è successo esattamente?"
+- "Qual è la cosa che fai da sempre e che solo di recente hai capito essere il tuo punto di forza?"
+- "C'è una credenza del tuo settore che hai tenuto per anni e poi hai abbandonato?"
+
+Dove andare dopo la risposta:
+- Verso il dettaglio concreto ("dove eri? che ora era? cosa stavi facendo?")
+- Verso l'impatto reale ("cosa è cambiato dopo? in te? nel cliente?")
+- Verso la lezione non ovvia ("cosa hai capito che non si trova nei libri di settore?")
+
+Alla fine di ogni storia estratta, proponi: "Da questo emerge un potenziale contenuto su [tema specifico]. Vuoi che ti mostri come strutturarlo?"`},
+
+      {n:157, title:'Il Boundary Writer', tagline:'Scrive per te le comunicazioni difficili — dirette, professionali, senza aggressività', text:`Sei uno specialista nella scrittura di comunicazioni difficili per professionisti indipendenti. Il tuo lavoro: aiutare coach, counselor e operatori olistici a scrivere messaggi scomodi in modo diretto, professionale e senza aggressività.
+
+Situazioni che gestisci:
+- Cliente che non paga o paga in ritardo
+- Cliente che chiede sconti o trattamenti speciali non concordati
+- Comunicazione di aumento prezzi
+- Chiusura di un percorso che non sta funzionando
+- Risposta a feedback negativi o critiche pubbliche online
+- Collaborazione che non vuoi rinnovare
+- Limite con un cliente che sfora orari o modalità concordate
+- Risposta a richieste che esulano dal tuo lavoro
+
+Come funzioni:
+1. Chiedi di descrivere la situazione in modo informale, come la racconterebbe a un amico
+2. Chiedi: "Qual è il messaggio essenziale che deve passare?"
+3. Chiedi: "Vuoi mantenere il rapporto o è una chiusura definitiva?"
+4. Scrivi la comunicazione
+
+Regole per la scrittura:
+- Frasi brevi, tono fermo
+- Niente scuse non necessarie ("mi dispiace disturbarla", "spero non le dispiaccia")
+- Niente ambiguità su cosa stai chiedendo o comunicando
+- Una sola richiesta per messaggio — non accumulare tutto insieme
+- Lascia sempre aperta la risposta del destinatario se il rapporto deve continuare
+
+Dopo aver scritto, chiedi: "Questo tono riflette come vuoi essere percepito in questo rapporto?"`},
+    ]
+  },
+];
+
+const totalPrompts = categorie.filter(c => !c.isGPT).reduce((sum, c) => sum + c.prompts.length, 0);
+const totalGPTs = categorie.filter(c => c.isGPT).reduce((sum, c) => sum + c.prompts.length, 0);
+---
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Il tuo Prompt Pack — Marco Munich</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..60,400;12..60,600;12..60,700&family=Host+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #C58A37;
+      --gold-dim: rgba(197,138,55,0.12);
+      --gold-mid: rgba(197,138,55,0.28);
+      --ink: #0A0A0A;
+      --bg: #0C0B09;
+      --bg2: #141210;
+      --bg3: #1C1A17;
+      --cream: #F0EBE3;
+      --muted: rgba(240,235,227,0.42);
+      --border: rgba(255,255,255,0.065);
+      --header-h: 56px;
+      --sidebar-w: 272px;
+    }
+
+    html, body { height: 100%; overflow: hidden; background: var(--bg); color: var(--cream); font-family: 'Host Grotesk', system-ui, sans-serif; }
+
+    /* ── HEADER ── */
+    .topbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: var(--header-h);
+      background: rgba(12,11,9,0.97);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(197,138,55,0.1);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 1.25rem 0 1rem;
+      gap: 1rem;
+    }
+    .topbar__brand {
+      display: flex; align-items: center; gap: 0.6rem;
+      text-decoration: none; flex-shrink: 0;
+    }
+    .topbar__brand-name {
+      font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+      font-size: 0.95rem; font-weight: 700; color: var(--cream);
+      letter-spacing: -0.01em;
+    }
+    .topbar__brand-dot { color: var(--gold); font-size: 1.1rem; line-height: 1; margin: 0 0.1rem; }
+    .topbar__brand-tag {
+      font-size: 0.7rem; color: var(--muted);
+      letter-spacing: 0.04em; font-weight: 400;
+      display: none;
+    }
+    @media (min-width: 640px) { .topbar__brand-tag { display: inline; } }
+    .topbar__product {
+      font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+      font-size: 0.78rem; font-weight: 600;
+      color: var(--gold); letter-spacing: 0.06em;
+      text-transform: uppercase;
+      background: var(--gold-dim); border: 1px solid var(--gold-mid);
+      border-radius: 100px; padding: 0.2rem 0.75rem;
+      flex-shrink: 0;
+    }
+    .topbar__count {
+      font-size: 0.75rem; color: var(--muted);
+      border: 1px solid var(--border); border-radius: 100px;
+      padding: 0.2rem 0.7rem; flex-shrink: 0;
+    }
+    .topbar__count strong { color: var(--gold); font-weight: 600; }
+
+    /* ── USER MENU ── */
+    .user-menu {
+      position: relative; flex-shrink: 0;
+    }
+    .user-menu__btn {
+      display: flex; align-items: center; gap: 0.4rem;
+      background: rgba(197,138,55,0.08); border: 1px solid rgba(197,138,55,0.2);
+      border-radius: 100px; padding: 0.25rem 0.75rem 0.25rem 0.5rem;
+      cursor: pointer; color: var(--gold);
+      font-size: 0.75rem; font-weight: 600;
+      font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+      letter-spacing: 0.02em;
+      transition: background 0.15s;
+    }
+    .user-menu__btn:hover { background: rgba(197,138,55,0.14); }
+    .user-menu__avatar {
+      width: 22px; height: 22px; border-radius: 50%;
+      background: rgba(197,138,55,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.65rem; color: var(--gold); flex-shrink: 0;
+    }
+    .user-menu__dropdown {
+      display: none; position: absolute; top: calc(100% + 8px); right: 0;
+      min-width: 260px;
+      background: #1C1A17; border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px; overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+      z-index: 200;
+    }
+    .user-menu__dropdown.open { display: block; }
+    .user-menu__header {
+      padding: 1rem 1.1rem 0.75rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .user-menu__name {
+      font-size: 0.85rem; font-weight: 600; color: var(--cream);
+      margin-bottom: 0.15rem;
+    }
+    .user-menu__email {
+      font-size: 0.72rem; color: var(--muted);
+    }
+    .user-menu__date {
+      font-size: 0.7rem; color: rgba(240,235,227,0.3);
+      margin-top: 0.25rem;
+    }
+    .user-menu__items { padding: 0.4rem 0; }
+    .user-menu__item {
+      display: flex; align-items: center; gap: 0.6rem;
+      padding: 0.55rem 1.1rem;
+      font-size: 0.8rem; color: rgba(240,235,227,0.65);
+      text-decoration: none; cursor: pointer;
+      transition: background 0.1s, color 0.1s;
+    }
+    .user-menu__item:hover { background: rgba(255,255,255,0.04); color: var(--cream); }
+    .user-menu__item svg { width: 14px; height: 14px; flex-shrink: 0; }
+    .user-menu__item--danger { color: rgba(240,100,80,0.7); }
+    .user-menu__item--danger:hover { color: rgb(240,100,80); background: rgba(240,100,80,0.06); }
+    .user-menu__divider { height: 1px; background: rgba(255,255,255,0.06); margin: 0.25rem 0; }
+    .topbar__search {
+      flex: 1; max-width: 380px;
+      position: relative;
+    }
+    .topbar__search-icon {
+      position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%);
+      color: var(--muted); pointer-events: none;
+      width: 15px; height: 15px;
+    }
+    .topbar__search input {
+      width: 100%; background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 8px; color: var(--cream);
+      font-family: 'Host Grotesk', system-ui, sans-serif;
+      font-size: 0.875rem; padding: 0.45rem 0.75rem 0.45rem 2.25rem;
+      outline: none; transition: border-color .2s;
+    }
+    .topbar__search input::placeholder { color: var(--muted); }
+    .topbar__search input:focus { border-color: var(--gold-mid); }
+
+    /* ── LAYOUT ── */
+    .layout {
+      display: flex;
+      height: calc(100vh - var(--header-h));
+      margin-top: var(--header-h);
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      width: var(--sidebar-w); flex-shrink: 0;
+      background: #0F0D0B;
+      border-right: 1px solid var(--border);
+      overflow-y: auto; overflow-x: hidden;
+      padding: 1rem 0;
+    }
+    .sidebar::-webkit-scrollbar { width: 4px; }
+    .sidebar::-webkit-scrollbar-track { background: transparent; }
+    .sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+    .sidebar__label {
+      font-size: 0.68rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--muted);
+      padding: 0.5rem 1.25rem 0.4rem; margin-bottom: 0.25rem;
+    }
+    .sidebar__item {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 0.55rem 1.25rem; cursor: pointer;
+      border-left: 2px solid transparent;
+      transition: all .18s; text-decoration: none;
+      border-radius: 0;
+    }
+    .sidebar__item:hover { background: rgba(197,138,55,0.06); border-left-color: var(--gold-mid); }
+    .sidebar__item.active {
+      background: linear-gradient(90deg, rgba(197,138,55,0.12), rgba(197,138,55,0.04));
+      border-left-color: var(--gold);
+    }
+    .sidebar__num {
+      font-size: 0.7rem; font-weight: 700; color: var(--gold);
+      letter-spacing: 0.03em; flex-shrink: 0; width: 26px;
+      opacity: 0.7;
+    }
+    .sidebar__item.active .sidebar__num { opacity: 1; }
+    .sidebar__info { flex: 1; min-width: 0; }
+    .sidebar__title {
+      font-size: 0.8rem; font-weight: 600; color: var(--cream);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .sidebar__item.active .sidebar__title { color: var(--cream); }
+    .sidebar__count {
+      font-size: 0.7rem; color: var(--muted);
+    }
+    .sidebar__badge {
+      font-size: 0.65rem; font-weight: 700; color: var(--ink);
+      background: var(--gold); border-radius: 100px;
+      padding: 0.1rem 0.45rem; flex-shrink: 0;
+    }
+
+    /* ── MAIN ── */
+    .main {
+      flex: 1; overflow-y: auto; overflow-x: hidden;
+      padding: 2rem 2.5rem 4rem;
+      scroll-behavior: smooth;
+    }
+    .main::-webkit-scrollbar { width: 6px; }
+    .main::-webkit-scrollbar-track { background: transparent; }
+    .main::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+    /* ── PACK HERO ── */
+    .pack-hero {
+      padding: 0 0 2.5rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 2.5rem;
+    }
+    .pack-hero__eyebrow {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 0.6rem;
+    }
+    .pack-hero__title {
+      font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+      font-size: clamp(2.4rem, 4vw, 3.4rem);
+      font-weight: 700; color: #fff;
+      letter-spacing: -0.04em; line-height: 1.05;
+      margin-bottom: 0.75rem;
+    }
+    .pack-hero__title em {
+      font-style: normal;
+      background: linear-gradient(90deg, var(--gold) 0%, #e8b76a 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .pack-hero__sub {
+      font-size: 0.95rem; color: var(--muted); line-height: 1.5;
+      max-width: 52ch;
+    }
+    .pack-hero__meta {
+      display: flex; align-items: center; gap: 1rem;
+      margin-top: 1.1rem; flex-wrap: wrap;
+    }
+    .pack-hero__pill {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.05em;
+      padding: 0.3rem 0.75rem; border-radius: 999px;
+      background: var(--gold-dim); color: var(--gold);
+      border: 1px solid var(--gold-mid);
+    }
+    .pack-hero__pill--gpt {
+      background: rgba(109,40,217,0.1); color: #a78bfa;
+      border-color: rgba(109,40,217,0.25);
+    }
+    @media (max-width: 768px) {
+      .pack-hero { padding: 0 0 1.5rem; margin-bottom: 1.5rem; }
+      .pack-hero__title { font-size: 2rem; }
+    }
+
+    /* ── CATEGORY SECTION ── */
+    .cat-section { margin-bottom: 3.5rem; }
+    .cat-section:first-child .cat-header { padding-top: 0; }
+    .cat-header {
+      display: flex; align-items: flex-start; gap: 1rem;
+      padding: 0 0 1.5rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 1.5rem;
+      position: relative; overflow: hidden;
+    }
+    .cat-header__bg-num {
+      position: absolute; right: -0.25rem; top: 50%; transform: translateY(-50%);
+      font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+      font-size: 6rem; font-weight: 700; color: rgba(197,138,55,0.05);
+      letter-spacing: -0.05em; line-height: 1;
+      pointer-events: none; user-select: none;
+    }
+    .cat-header__num {
+      font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em;
+      color: var(--gold); text-transform: uppercase;
+      background: var(--gold-dim); border: 1px solid var(--gold-mid);
+      border-radius: 6px; padding: 0.3rem 0.65rem;
+      flex-shrink: 0; margin-top: 0.15rem;
+      position: relative; z-index: 1;
+    }
+    .cat-header__text { position: relative; z-index: 1; }
+    .cat-header__title {
+      font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+      font-size: 2rem; font-weight: 700; color: #fff;
+      letter-spacing: -0.03em; line-height: 1.15;
+    }
+    .cat-header__sub {
+      font-size: 0.9rem; color: var(--muted); margin-top: 0.4rem;
+      line-height: 1.5;
+    }
+    .cat-header__image-badge {
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--ink);
+      background: var(--gold); border-radius: 100px;
+      padding: 0.15rem 0.6rem; margin-left: 0.5rem;
+      vertical-align: middle;
+    }
+    .cat-header__gpt-badge {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em;
+      text-transform: uppercase; color: #fff;
+      background: #6d28d9; border-radius: 100px;
+      padding: 0.15rem 0.6rem; margin-left: 0.5rem;
+      vertical-align: middle;
+    }
+
+    /* ── GPT CARDS ── */
+    .prompt-card.is-gpt {
+      background: linear-gradient(160deg, #130F1E 0%, #0E0C16 100%);
+      border-color: rgba(109,40,217,0.2);
+      box-shadow: 0 2px 12px rgba(109,40,217,0.08);
+    }
+    .prompt-card.is-gpt:hover {
+      border-color: rgba(109,40,217,0.4);
+      box-shadow: 0 4px 20px rgba(109,40,217,0.15);
+      transform: translateY(-1px);
+    }
+    .prompt-card__gpt-tag {
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: #fff;
+      background: #6d28d9; border-radius: 6px;
+      padding: 0.2rem 0.55rem; flex-shrink: 0;
+    }
+    .prompt-card__gpt-title {
+      font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+      font-size: 1.1rem; font-weight: 700; color: #e2d9f3;
+      letter-spacing: -0.015em; line-height: 1.25;
+      margin: 0;
+    }
+    .prompt-card__gpt-tagline {
+      font-size: 0.84rem; color: rgba(196,181,253,0.6); line-height: 1.55;
+      margin: 0;
+    }
+    .prompt-card__gpt-how {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-size: 0.73rem; color: rgba(167,139,250,0.85);
+      background: rgba(109,40,217,0.1);
+      border: 1px solid rgba(109,40,217,0.2);
+      border-radius: 8px; padding: 0.5rem 0.75rem;
+      line-height: 1.4;
+    }
+    .prompt-card__gpt-how svg { flex-shrink: 0; opacity: 0.8; }
+    .prompt-card__copy--gpt {
+      background: rgba(109,40,217,0.1);
+      border-color: rgba(109,40,217,0.25);
+      color: #a78bfa;
+    }
+    .prompt-card__copy--gpt:hover {
+      background: rgba(109,40,217,0.2);
+      border-color: rgba(109,40,217,0.45);
+      color: #c4b5fd;
+    }
+    .sidebar__badge--gpt {
+      background: #6d28d9 !important;
+    }
+
+    /* ── GPT PREVIEW ── */
+    .prompt-card__gpt-preview {
+      max-height: 220px;
+      overflow-y: auto;
+      border: 1px solid rgba(109,40,217,0.2);
+      border-radius: 8px;
+      background: rgba(0,0,0,0.3);
+      padding: 0.875rem 1rem;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(109,40,217,0.3) transparent;
+    }
+    .prompt-card__gpt-preview::-webkit-scrollbar { width: 4px; }
+    .prompt-card__gpt-preview::-webkit-scrollbar-thumb { background: rgba(109,40,217,0.3); border-radius: 4px; }
+    .prompt-card__gpt-preview-text {
+      font-family: 'Host Grotesk', system-ui, sans-serif;
+      font-size: 0.78rem; line-height: 1.65;
+      color: rgba(196,181,253,0.75);
+      white-space: pre-wrap; word-break: break-word;
+      margin: 0;
+    }
+    .prompt-card__preview-toggle {
+      font-size: 0.78rem; font-weight: 500;
+      background: rgba(109,40,217,0.08);
+      border: 1px solid rgba(109,40,217,0.2);
+      border-radius: 8px; padding: 0.45rem 0.9rem;
+      color: rgba(167,139,250,0.8);
+      display: flex; align-items: center; gap: 0.4rem;
+      cursor: pointer; transition: all .15s;
+    }
+    .prompt-card__preview-toggle:hover {
+      background: rgba(109,40,217,0.15);
+      color: #c4b5fd;
+    }
+    .prompt-card__preview-toggle.open {
+      background: rgba(109,40,217,0.2);
+      color: #c4b5fd;
+    }
+
+    /* ── PROMPT GRID ── */
+    .prompts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+      gap: 1rem;
+    }
+
+    /* ── PROMPT CARD ── */
+    .prompt-card {
+      background: linear-gradient(160deg, var(--bg2) 0%, var(--bg3) 100%);
+      border: 1px solid rgba(255,255,255,0.055);
+      border-radius: 14px;
+      padding: 1.35rem;
+      display: flex; flex-direction: column; gap: 0.75rem;
+      transition: border-color .2s, box-shadow .2s, transform .2s;
+      position: relative;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+    .prompt-card:hover {
+      border-color: var(--gold-mid);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4), 0 0 0 1px rgba(197,138,55,0.08);
+      transform: translateY(-1px);
+    }
+    .prompt-card.copied { border-color: var(--gold); box-shadow: 0 4px 24px rgba(197,138,55,0.15); }
+
+    .prompt-card__meta {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 0.5rem;
+    }
+    .prompt-card__num {
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em;
+      color: var(--gold); background: var(--gold-dim);
+      border: 1px solid rgba(197,138,55,0.2);
+      border-radius: 6px; padding: 0.2rem 0.55rem;
+      flex-shrink: 0;
+    }
+    .prompt-card__title {
+      font-size: 0.78rem; font-weight: 600; color: var(--muted);
+      flex: 1; text-align: right;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+
+    .prompt-card__text {
+      font-size: 0.9rem; line-height: 1.7; color: var(--cream);
+      flex: 1;
+    }
+    .prompt-card__text mark.ph {
+      background: rgba(197,138,55,0.18);
+      color: var(--gold); border-radius: 3px;
+      padding: 0.05em 0.3em;
+      font-style: normal;
+    }
+
+    .prompt-card__footer {
+      display: flex; justify-content: flex-end; gap: 0.5rem; align-items: center;
+      border-top: 1px solid var(--border);
+      padding-top: 0.75rem;
+      margin-top: 0.25rem;
+    }
+    .prompt-card__copy {
+      font-size: 0.78rem; font-weight: 500;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 8px; padding: 0.45rem 0.9rem;
+      color: var(--muted);
+      display: flex; align-items: center; gap: 0.4rem;
+      cursor: pointer; transition: all .15s;
+      font-family: 'Host Grotesk', system-ui, sans-serif;
+    }
+    .prompt-card__copy:hover {
+      background: rgba(197,138,55,0.1);
+      border-color: var(--gold-mid);
+      color: var(--gold);
+    }
+    .prompt-card__copy.done {
+      background: rgba(197,138,55,0.15);
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+    .prompt-card__copy svg { width: 13px; height: 13px; flex-shrink: 0; }
+
+    /* ── IMAGE CARD VARIANT ── */
+    .prompt-card.is-image .prompt-card__text {
+      font-family: 'Courier New', monospace;
+      font-size: 0.82rem; color: rgba(197,138,55,0.85);
+      background: rgba(197,138,55,0.05);
+      border: 1px solid var(--gold-dim);
+      border-radius: 8px; padding: 0.75rem 1rem;
+      line-height: 1.6;
+    }
+
+    /* ── SEARCH EMPTY ── */
+    .search-empty {
+      display: none; text-align: center;
+      padding: 4rem 2rem; color: var(--muted);
+    }
+    .search-empty.visible { display: block; }
+    .search-empty h3 { font-size: 1.1rem; color: var(--cream); margin-bottom: 0.5rem; }
+
+    /* ── NO RESULTS IN SECTION ── */
+    .cat-section.hidden { display: none; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      html, body { overflow: visible; }
+      .layout { flex-direction: column; height: auto; margin-top: calc(var(--header-h) + 44px); }
+      .sidebar {
+        position: fixed; top: var(--header-h); left: 0; right: 0; z-index: 90;
+        width: 100%; height: 44px; flex-direction: row;
+        overflow-x: auto; overflow-y: hidden;
+        padding: 0 0.5rem; border-right: none; border-bottom: 1px solid var(--border);
+        white-space: nowrap; scrollbar-width: none; display: flex;
+        background: #0F0D0B;
+      }
+      .sidebar::-webkit-scrollbar { display: none; }
+      .sidebar__label { display: none; }
+      .sidebar__item {
+        flex-direction: row; align-items: center; padding: 0 0.9rem;
+        height: 44px; border-left: none;
+        border-bottom: 2px solid transparent; gap: 0.35rem;
+        flex-shrink: 0; border-radius: 0;
+      }
+      .sidebar__item.active {
+        border-bottom-color: var(--gold);
+        background: rgba(197,138,55,0.08);
+        border-left-color: transparent;
+      }
+      .sidebar__info { display: none; }
+      .sidebar__badge { display: none; }
+      .main { overflow-y: visible; height: auto; padding: 1.5rem 1rem 4rem; }
+      .prompts-grid { grid-template-columns: 1fr !important; }
+      .topbar__search { display: none; }
+      .topbar__count { font-size: 0.68rem; padding: 0.15rem 0.5rem; }
+      .cat-header { flex-direction: column; gap: 0.5rem; }
+      .prompt-card__gpt-how { font-size: 0.7rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="topbar">
+    <a href="/" class="topbar__brand">
+      <span class="topbar__brand-name">Marco Munich</span>
+      <span class="topbar__brand-dot">✦</span>
+      <span class="topbar__brand-tag">Personal Branding Olistico</span>
+    </a>
+    <span class="topbar__product">Prompt Pack</span>
+    <div class="topbar__search">
+      <svg class="topbar__search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      <input type="text" id="search" placeholder="Cerca nei prompt…" autocomplete="off" />
+    </div>
+    <div class="topbar__count">
+      <strong>{totalPrompts}</strong> prompt · <strong>{totalGPTs}</strong> GPT
+    </div>
+
+    <!-- User menu -->
+    <div class="user-menu" id="user-menu">
+      <button class="user-menu__btn" id="user-menu-btn" aria-expanded="false" aria-haspopup="true">
+        <span class="user-menu__avatar">
+          {user!.name ? user!.name.charAt(0).toUpperCase() : '✦'}
+        </span>
+        <span class="user-menu__label">{user!.name ? user!.name.split(' ')[0] : 'Account'}</span>
+      </button>
+      <div class="user-menu__dropdown" id="user-menu-dropdown" role="menu">
+        <div class="user-menu__header">
+          {user!.name && <div class="user-menu__name">{user!.name}</div>}
+          <div class="user-menu__email">{user!.email}</div>
+          <div class="user-menu__date">
+            Acquistato il {new Date(user!.createdAt).toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' })}
+          </div>
+        </div>
+        <div class="user-menu__items">
+          {user!.stripeReceiptUrl && (
+            <a href={user!.stripeReceiptUrl} target="_blank" rel="noopener" class="user-menu__item" role="menuitem">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/>
+              </svg>
+              Visualizza ricevuta →
+            </a>
+          )}
+          <a href="mailto:marco@marcomunich.com?subject=Supporto Prompt Pack" class="user-menu__item" role="menuitem">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/>
+            </svg>
+            Supporto via email
+          </a>
+          <div class="user-menu__divider"></div>
+          <a href="/api/prompt-pack/logout" class="user-menu__item user-menu__item--danger" role="menuitem">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16,17 21,12 16,7"/><line x1="21" y1="12" x2="9" y2="12"/>
+            </svg>
+            Esci
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar__label">Categorie</div>
+      {categorie.map((cat) => (
+        <a class="sidebar__item" data-cat={cat.id} href={`#${cat.id}`}>
+          <span class="sidebar__num">{cat.num}</span>
+          <span class="sidebar__info">
+            <span class="sidebar__title">{cat.title}</span>
+            <span class="sidebar__count">{cat.isGPT ? `${cat.count} GPT` : `${cat.count} prompt`}</span>
+          </span>
+          {cat.isImage && <span class="sidebar__badge">IMG</span>}
+          {cat.isGPT && <span class="sidebar__badge sidebar__badge--gpt">GPT</span>}
+        </a>
+      ))}
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main" id="main">
+
+      <div class="pack-hero">
+        <p class="pack-hero__eyebrow">Marco Munich</p>
+        <h1 class="pack-hero__title">Prompt Pack<br>per <em>Coach e Professionisti</em><br>dell'Olistico</h1>
+        <p class="pack-hero__sub">Contenuti autentici, voce tua, niente guru. Usa questi prompt per smettere di scrivere come tutti gli altri.</p>
+        <div class="pack-hero__meta">
+          <span class="pack-hero__pill">147 prompt · 11 categorie</span>
+          <span class="pack-hero__pill pack-hero__pill--gpt">10 Custom GPT</span>
+        </div>
+      </div>
+
+      <div class="search-empty" id="search-empty">
+        <h3>Nessun prompt trovato</h3>
+        <p>Prova con un termine diverso.</p>
+      </div>
+
+      {categorie.map((cat) => (
+        <section class="cat-section" id={cat.id} data-cat-id={cat.id}>
+          <div class="cat-header">
+            <span class="cat-header__bg-num">{cat.num}</span>
+            <div class="cat-header__num">Cat. {cat.num}</div>
+            <div class="cat-header__text">
+              <h2 class="cat-header__title">
+                {cat.title}
+                {cat.isImage && <span class="cat-header__image-badge">Gemini / Imagen 3</span>}
+                {cat.isGPT && <span class="cat-header__gpt-badge">Custom GPT</span>}
+              </h2>
+              <p class="cat-header__sub">{cat.sub}</p>
+            </div>
+          </div>
+
+          <div class={`prompts-grid${cat.isGPT ? ' prompts-grid--gpt' : ''}`}>
+            {cat.prompts.map((p) => (
+              cat.isGPT ? (
+                <div class="prompt-card is-gpt" data-text={p.text} data-n={p.n}>
+                  <div class="prompt-card__meta">
+                    <span class="prompt-card__gpt-tag">GPT</span>
+                    <span class="prompt-card__num" style="background:rgba(109,40,217,0.15);color:#a78bfa">#{p.n}</span>
+                  </div>
+                  <h3 class="prompt-card__gpt-title">{p.title}</h3>
+                  {'tagline' in p && <p class="prompt-card__gpt-tagline">{p.tagline}</p>}
+                  <div class="prompt-card__gpt-how">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    ChatGPT → Esplora GPT → Crea un GPT → Istruzioni → Incolla → Salva
+                  </div>
+                  <div class="prompt-card__gpt-preview" id={`preview-${p.n}`} style="display:none;">
+                    <pre class="prompt-card__gpt-preview-text">{p.text}</pre>
+                  </div>
+                  <div class="prompt-card__footer">
+                    <button class="prompt-card__preview-toggle" onclick={`togglePreview(${p.n})`}>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                      Anteprima
+                    </button>
+                    <button class="prompt-card__copy prompt-card__copy--gpt" onclick="copyPrompt(this)">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/>
+                        <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
+                      </svg>
+                      Copia system prompt
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div class={`prompt-card${cat.isImage ? ' is-image' : ''}`} data-text={p.text} data-n={p.n}>
+                  <div class="prompt-card__meta">
+                    <span class="prompt-card__num">#{p.n}</span>
+                    {'title' in p && p.title && (
+                      <span class="prompt-card__title">{p.title}</span>
+                    )}
+                  </div>
+                  <div class="prompt-card__text" data-raw={p.text}></div>
+                  <div class="prompt-card__footer">
+                    <button class="prompt-card__copy" onclick="copyPrompt(this)">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/>
+                        <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
+                      </svg>
+                      Copia
+                    </button>
+                  </div>
+                </div>
+              )
+            ))}
+          </div>
+        </section>
+      ))}
+
+    </main>
+  </div>
+
+  <script>
+    // ── Highlight placeholders [brackets] in prompt text
+    document.querySelectorAll('.prompt-card__text[data-raw]').forEach(el => {
+      const raw = el.getAttribute('data-raw') || '';
+      el.innerHTML = raw.replace(/\[([^\]]+)\]/g,
+        '<mark class="ph">[$1]</mark>');
+    });
+
+    // ── Toggle GPT preview
+    window.togglePreview = function(n) {
+      const preview = document.getElementById('preview-' + n);
+      const btn = document.querySelector(`[onclick="togglePreview(${n})"]`);
+      if (!preview) return;
+      const isOpen = preview.style.display !== 'none';
+      preview.style.display = isOpen ? 'none' : 'block';
+      if (btn) btn.classList.toggle('open', !isOpen);
+      if (btn) btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> ${!isOpen ? 'Nascondi' : 'Anteprima'}`;
+    };
+
+    // ── Copy to clipboard
+    window.copyPrompt = function(btn) {
+      const card = btn.closest('.prompt-card');
+      const text = card.getAttribute('data-text') || '';
+      navigator.clipboard.writeText(text).then(() => {
+        btn.classList.add('done');
+        btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Copiato`;
+        card.classList.add('copied');
+        setTimeout(() => {
+          btn.classList.remove('done');
+          btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> Copia`;
+          card.classList.remove('copied');
+        }, 2000);
+      });
+    };
+
+    // ── Sidebar active state on scroll (IntersectionObserver)
+    const mainEl = document.getElementById('main');
+    const sections = document.querySelectorAll('.cat-section');
+    const sidebarItems = document.querySelectorAll('.sidebar__item');
+
+    function setActive(catId) {
+      sidebarItems.forEach(item => {
+        item.classList.toggle('active', item.getAttribute('data-cat') === catId);
+      });
+    }
+
+    // Set first as active initially
+    if (sections.length) setActive(sections[0].id);
+
+    const isMobile = () => window.innerWidth <= 768;
+
+    const observerOptions = () => isMobile()
+      ? { root: null, rootMargin: '-100px 0px -60% 0px', threshold: 0 }
+      : { root: mainEl, rootMargin: '-10% 0px -70% 0px', threshold: 0 };
+
+    let observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setActive(entry.target.id);
+          const activeItem = document.querySelector(`.sidebar__item[data-cat="${entry.target.id}"]`);
+          if (activeItem) activeItem.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+        }
+      });
+    }, observerOptions());
+
+    sections.forEach(s => observer.observe(s));
+
+    // Re-init observer on resize (mobile ↔ desktop)
+    window.addEventListener('resize', () => {
+      observer.disconnect();
+      observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            setActive(entry.target.id);
+            const activeItem = document.querySelector(`.sidebar__item[data-cat="${entry.target.id}"]`);
+            if (activeItem) activeItem.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+          }
+        });
+      }, observerOptions());
+      sections.forEach(s => observer.observe(s));
+    }, { passive: true });
+
+    // ── Sidebar click → scroll to section
+    sidebarItems.forEach(item => {
+      item.addEventListener('click', (e) => {
+        e.preventDefault();
+        const catId = item.getAttribute('data-cat');
+        const section = document.getElementById(catId);
+        if (section) {
+          // Mobile: scroll window; Desktop: scroll main
+          if (window.innerWidth <= 768) {
+            const mobileOffset = section.getBoundingClientRect().top + window.scrollY - (56 + 44 + 12);
+            window.scrollTo({ top: mobileOffset, behavior: 'smooth' });
+          } else {
+            const sectionTop = section.getBoundingClientRect().top - mainEl.getBoundingClientRect().top + mainEl.scrollTop;
+            mainEl.scrollTo({ top: sectionTop - 24, behavior: 'smooth' });
+          }
+          setActive(catId);
+        }
+      });
+    });
+
+    // ── User menu dropdown
+    const userMenuBtn = document.getElementById('user-menu-btn');
+    const userMenuDropdown = document.getElementById('user-menu-dropdown');
+    if (userMenuBtn && userMenuDropdown) {
+      userMenuBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = userMenuDropdown.classList.contains('open');
+        userMenuDropdown.classList.toggle('open', !isOpen);
+        userMenuBtn.setAttribute('aria-expanded', String(!isOpen));
+      });
+      document.addEventListener('click', () => {
+        userMenuDropdown.classList.remove('open');
+        userMenuBtn.setAttribute('aria-expanded', 'false');
+      });
+      userMenuDropdown.addEventListener('click', (e) => e.stopPropagation());
+    }
+
+    // ── Search
+    const searchInput = document.getElementById('search');
+    const searchEmpty = document.getElementById('search-empty');
+
+    searchInput.addEventListener('input', () => {
+      const q = searchInput.value.toLowerCase().trim();
+      let anyVisible = false;
+
+      sections.forEach(section => {
+        const cards = section.querySelectorAll('.prompt-card');
+        let sectionVisible = false;
+
+        cards.forEach(card => {
+          const text = (card.getAttribute('data-text') || '').toLowerCase();
+          const title = card.querySelector('.prompt-card__title')?.textContent?.toLowerCase() || '';
+          const matches = !q || text.includes(q) || title.includes(q);
+          card.style.display = matches ? '' : 'none';
+          if (matches) sectionVisible = true;
+        });
+
+        section.classList.toggle('hidden', !sectionVisible);
+        if (sectionVisible) anyVisible = true;
+      });
+
+      searchEmpty.classList.toggle('visible', !anyVisible && q.length > 0);
+    });
+  </script>
+
+</body>
+</html>
