@@ -802,6 +802,33 @@ const totalGPTs = categorie.filter(c => c.isGPT).reduce((sum, c) => sum + c.prom
       font-size: 0.8rem; color: rgba(240,235,227,0.55); line-height: 1.6;
     }
     .guide-tip__icon { flex-shrink: 0; font-size: 0.9rem; margin-top: 1px; }
+    .guide-style-prompt {
+      margin-top: 0.75rem;
+      background: rgba(0,0,0,0.35);
+      border: 1px solid rgba(197,138,55,0.25);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .guide-style-prompt__header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.6rem 0.9rem;
+      border-bottom: 1px solid rgba(197,138,55,0.15);
+      background: rgba(197,138,55,0.05);
+    }
+    .guide-style-prompt__copy {
+      font-size: 0.7rem; font-weight: 600;
+      color: var(--gold); background: rgba(197,138,55,0.12);
+      border: 1px solid rgba(197,138,55,0.25); border-radius: 4px;
+      padding: 3px 10px; cursor: pointer; flex-shrink: 0;
+      transition: background 0.15s;
+    }
+    .guide-style-prompt__copy:hover { background: rgba(197,138,55,0.22); }
+    .guide-style-prompt__text {
+      font-size: 0.8rem; color: rgba(240,235,227,0.65); line-height: 1.7;
+      margin: 0; padding: 0.8rem 0.9rem;
+      font-style: normal;
+      white-space: pre-wrap;
+    }
     .guide-shortcut {
       display: flex; gap: 0.6rem; align-items: flex-start;
       margin-top: 0.75rem;
@@ -1385,9 +1412,12 @@ const totalGPTs = categorie.filter(c => c.isGPT).reduce((sum, c) => sum + c.prom
                   <span class="guide-example__label">Esempio istruzioni progetto</span>
                   <p>Sono [nome], [professione]. Lavoro con [tipo di cliente]. Il mio tono è diretto e concreto, senza termini spirituali o da guru. Non uso frasi come "viaggio interiore", "trasformazione", "holding space". Scrivo sempre in prima persona, come se stessi parlando a un amico intelligente. Il mio punto di vista originale è [il tuo punto di vista]. Le cose che nel mio settore non sopporto: [lista].</p>
                 </div>
-                <div class="guide-example" style="margin-top:0.6rem;">
-                  <span class="guide-example__label">Regole di stile (copia e incolla nel tuo progetto)</span>
-                  <p>Genera testo in italiano naturale, senza strutture "non X ma Y" e senza "non è… è…". Questo vincolo è assoluto e si applica a ogni variante: "non si tratta di X, si tratta di Y", "non parliamo di X, parliamo di Y", "non sto dicendo X, sto dicendo Y", "non serve X, serve Y", "il punto non è X, il punto è Y". Qualsiasi frase che definisca qualcosa negando prima il suo opposto va eliminata e riscritta affermando direttamente ciò che si vuole dire. Evita triplette (tre aggettivi, tre verbi, tre stati). Elimina meta-frasi che commentano il testo ("è importante", "è chiaro", "è la parte più forte"). Evita astratti senza dettagli concreti ("consapevolezza", "lucidità", "profondo", "responsabilità"). Preferisci scene brevi, azioni e conseguenze verificabili. Chiudi con un fatto o una decisione pratica. Il ritmo deve essere discorsivo: ogni pensiero si sviluppa per almeno tre o quattro righe prima di chiudersi con un punto. Se in due righe ci sono più di due punti, il testo è troppo frammentato. Risultato: testo specifico, asciutto, credibile, pochi aggettivi, zero enfasi artificiale, ritmo disteso, niente emdash.</p>
+                <div class="guide-style-prompt" id="style-prompt-card">
+                  <div class="guide-style-prompt__header">
+                    <span class="guide-example__label" style="margin:0;">Istruzioni di stile — copia nel tuo Progetto</span>
+                    <button class="guide-style-prompt__copy" id="style-prompt-copy" type="button">Copia</button>
+                  </div>
+                  <p class="guide-style-prompt__text" id="style-prompt-text">Genera testo in italiano naturale, senza strutture "non X ma Y" e senza "non è… è…". Questo vincolo è assoluto e si applica a ogni variante della costruzione, anche quando mascherata: "non si tratta di X, si tratta di Y", "non parliamo di X, parliamo di Y", "non sto dicendo X, sto dicendo Y", "non serve X, serve Y", "il punto non è X, il punto è Y", "non è una questione di X, è una questione di Y". Qualsiasi frase che definisca qualcosa negando prima il suo opposto o un'alternativa va eliminata e riscritta affermando direttamente ciò che si vuole dire, senza passare dalla negazione come trampolino. Evita triplette (tre aggettivi, tre verbi, tre stati, tre "senza…"). Elimina meta-frasi che commentano il testo ("è importante", "è chiaro", "è la parte più forte", "è giusto partire da…"). Evita astratti non supportati da dettagli concreti ("consapevolezza", "lucidità", "profondo", "responsabilità", "nel rispetto"). Preferisci scene brevi, azioni e conseguenze verificabili. Non anticipare obiezioni, non scrivere in difesa preventiva. Chiudi con un fatto o una decisione pratica, non con frasi da comunicato. Il ritmo del testo deve essere discorsivo e fluido: ogni pensiero si sviluppa per almeno tre o quattro righe prima di chiudersi con un punto. Evita il ritmo telegrafico dove ogni frase breve finisce con un punto, creando una sequenza frammentata di micro-pensieri staccati. Il testo deve scorrere come un articolo scritto da una persona che ragiona mentre scrive, dove le frasi si collegano tra loro e il respiro è lungo, non spezzettato. Se in due righe ci sono più di due punti, il testo è troppo frammentato e va riscritto legando i pensieri tra loro con costruzioni naturali. Risultato: testo specifico, asciutto, credibile, con pochi aggettivi, zero enfasi artificiale, ritmo disteso e niente emdash.</p>
                 </div>
                 <div class="guide-shortcut">
                   <span class="guide-shortcut__icon">🎙️</span>
@@ -1749,6 +1779,18 @@ const totalGPTs = categorie.filter(c => c.isGPT).reduce((sum, c) => sum + c.prom
         umSaveBtn.disabled = false;
         umSaveBtn.textContent = 'Salva';
         if (umSaveMsg) { umSaveMsg.style.display = 'block'; umSaveMsg.style.color = 'rgba(240,100,80,0.8)'; umSaveMsg.textContent = 'Errore di rete. Riprova.'; }
+      });
+    });
+  }
+
+  /* ── Copia istruzioni di stile ─────────────────────────────────────────── */
+  var stylePromptCopy = document.getElementById('style-prompt-copy');
+  var stylePromptText = document.getElementById('style-prompt-text');
+  if (stylePromptCopy && stylePromptText) {
+    stylePromptCopy.addEventListener('click', function() {
+      navigator.clipboard.writeText(stylePromptText.textContent.trim()).then(function() {
+        stylePromptCopy.textContent = 'Copiato ✓';
+        setTimeout(function() { stylePromptCopy.textContent = 'Copia'; }, 2000);
       });
     });
   }
