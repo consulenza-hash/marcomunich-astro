@@ -12,6 +12,7 @@ import {
 
 // ── Auth gate ────────────────────────────────────────────────────────────────
 let user: AccessTokenData | null = null;
+let setCookieHeader: string | null = null;
 
 if (isDevBypass()) {
   // Sviluppo locale: bypass auth se PROMPT_PACK_DEV_BYPASS=true nel .env
@@ -31,25 +32,16 @@ if (isDevBypass()) {
   if (token) {
     user = await validateToken(token);
     if (user && tokenFromUrl && !tokenFromCookie) {
-      // Prima visita via link email: imposta il cookie e redirect a URL pulito.
-      // Rimuove il token dalla URL bar → niente leak via history / referrer / GA4.
-      return new Response(null, {
-        status: 302,
-        headers: {
-          'Location': '/prompt-pack/accesso',
-          'Set-Cookie': buildAccessCookie(token),
-        },
-      });
-    }
-    if (user && tokenFromCookie) {
-      // Ri-emetti il cookie ad ogni visita: aggiorna path/attributi se l'utente
-      // ha ancora il vecchio cookie (es. Path=/prompt-pack invece di Path=/).
-      Astro.response.headers.append('Set-Cookie', buildAccessCookie(tokenFromCookie));
+      // Prima visita via link email: imposta il cookie
+      setCookieHeader = buildAccessCookie(token);
+      Astro.response.headers.set('Set-Cookie', setCookieHeader);
     }
   }
 
-  // Se non c'è token valido: non facciamo redirect, mostriamo la pagina di recupero accesso
-  // (user rimane null → il template mostra il form invece del pack)
+  if (!user) {
+    // Nessun token valido → redirect alla landing
+    return Astro.redirect('/prompt-pack?accesso=negato', 302);
+  }
 }
 
 const categorie = [
@@ -59,16 +51,16 @@ const categorie = [
     sub: 'Tirare fuori le esperienze concrete invece dei consigli generici',
     count: 10,
     prompts: [
-      {n:1, text:`Ho fallito completamente nel mio lavoro in questo momento specifico: [descrivi brevemente — non la versione "crescita personale", quella vera e cruda]. Aiutami a trasformare quella lezione in un contenuto che parla direttamente a chi sta attraversando lo stesso fallimento adesso.`},
-      {n:2, text:`Ecco il momento esatto in cui ho capito perché faccio questo lavoro — non la versione da bio Instagram: [descrivi con l'ora del giorno, dove eri, cosa provavi nel corpo]. Estrai da questo racconto una cosa concreta che posso dire al mio pubblico.`},
-      {n:3, text:`Ecco un momento in cui ho detto a un cliente "lo so, ci sono passato anch'io": [descrivi brevemente la situazione]. Scrivici sopra un post. Quella frase è il mio contenuto migliore, non i consigli generici.`},
-      {n:4, text:`Ecco 3 cose che ho creduto sul mio lavoro nei primi anni e che si sono rivelate completamente false: 1) [credenza falsa], 2) [credenza falsa], 3) [credenza falsa]. Per ognuna, scrivi cosa ho scoperto al loro posto, in prima persona, partendo dalla mia esperienza diretta.`},
-      {n:5, text:`Ecco una conversazione recente con un cliente che mi ha sorpreso — una domanda inaspettata o una reazione che non mi aspettavo: [descrivi la conversazione]. Aiutami a costruirci un contenuto sopra. Quella conversazione contiene più saggezza di 10 post educativi.`},
-      {n:6, text:`La cosa che i miei colleghi di settore non dicono mai, e che io so essere vera, è questa: [scrivila — quella scomoda, quella che crea fastidio]. Aiutami a scriverla senza filtri per un post.`},
-      {n:7, text:`Scrivi un post che inizia con: "Nessuno me lo aveva detto che ___." Nel vuoto va questo: [inserisci la cosa che hai scoperto sulla strada, non nei libri]. Sviluppa il post partendo da quella scoperta, in prima persona.`},
-      {n:8, text:`Ecco com'è andata la mia prima sessione o consulenza — cosa ricordo di preciso, cosa mi aveva sorpreso: [racconta]. Da questo racconto, aiutami a costruire un contenuto per chi sta iniziando adesso in questo lavoro.`},
-      {n:9, text:`Il mio "cavallo di battaglia" — la cosa che faccio meglio di chiunque altro nel mio settore — è questo: [descrivi]. L'ho scoperto così: [racconta brevemente — spesso un fallimento o un momento difficile]. Aiutami a scrivere questa storia come contenuto.`},
-      {n:10, text:`C'è una cosa che ho fatto per anni convinto fosse giusta e poi ho cambiato idea completamente: [descrivila]. Scrivi il prima e il dopo senza abbellirlo. Questo tipo di contenuto costruisce più fiducia di qualsiasi caso di successo.`},
+      {n:1, text:`Ho fallito completamente nel mio lavoro in un momento specifico. Chiedimi di raccontartelo — non la versione "crescita personale", quella vera e cruda. Poi aiutami a trasformare quella lezione in un contenuto che parla direttamente a chi sta attraversando lo stesso fallimento adesso.`},
+      {n:2, text:`Chiedimi di descriverti il momento esatto in cui ho capito perché faccio questo lavoro. Non la versione da bio Instagram. Quella con l'ora del giorno, dove ero, cosa provavo nel corpo. Poi estrai da lì una cosa che posso dire al mio pubblico.`},
+      {n:3, text:`Prendi l'ultima volta che ho detto a un cliente "lo so, ci sono passato anch'io" e scrivici sopra un post. Parti da quella frase, non dai consigli generici.`},
+      {n:4, text:`Chiedimi quali sono le 3 cose che ho creduto sul mio lavoro nei primi anni e che si sono rivelate completamente false. Poi aiutami a scrivere cosa ho scoperto al loro posto.`},
+      {n:5, text:`Chiedimi di raccontarti una conversazione recente con un cliente che mi ha sorpreso: una domanda inaspettata, una reazione che non mi aspettavo. Quando te la racconto, aiutami a costruirci un contenuto sopra.`},
+      {n:6, text:`Qual è la cosa che i miei colleghi di settore non dicono mai? Quella che so essere vera ma che crea fastidio dirla. Aiutami a scriverla senza filtri, poi decidiamo insieme se e come pubblicarla.`},
+      {n:7, text:`Scrivi un post partendo da questa frase: "Nessuno me lo aveva detto che [completa]." Riempi il vuoto con qualcosa che ho scoperto sulla strada, non nei libri.`},
+      {n:8, text:`Inizia chiedendomi di raccontarti la prima sessione o consulenza che ho fatto: com'era andata, cosa ricordo di preciso, cosa mi aveva sorpreso. Poi, da quello che ti racconto, aiutami a costruire un contenuto per chi sta iniziando adesso in questo lavoro.`},
+      {n:9, text:`Chiedimi qual è la cosa che faccio meglio nel mio lavoro — il mio cavallo di battaglia. Poi aiutami a scrivere la storia di come l'ho scoperto.`},
+      {n:10, text:`C'è una cosa che ho fatto per anni convinto fosse giusta e poi ho cambiato idea completamente. Chiedimi di raccontartela, poi scrivi il prima e il dopo senza abbellirlo.`},
     ]
   },
   {
@@ -77,16 +69,16 @@ const categorie = [
     sub: 'Articolare il punto di vista unico che solo tu puoi avere',
     count: 10,
     prompts: [
-      {n:11, text:`Genera 10 modi per completare questa frase, senza filtrarli: "Io credo che nel mio settore la maggior parte delle persone si sbagli su ___." Non censurarle — includi quelle scomode o in contrasto con i guru. Poi dimmi quale tra le 10 vale la pena approfondire in un post e perché.`},
-      {n:12, text:`La cosa che vedo fare continuamente nel mio settore e che mi fa pensare "ma perché nessuno ne parla" è questa: [descrivila]. Aiutami a scriverla come presa di posizione netta, non come domanda.`},
-      {n:13, text:`La mia credenza più forte sul lavoro che faccio — quella scomoda, in contrasto con i guru del settore — è questa: [scrivila]. Costruiscici sopra un post senza smussare gli angoli.`},
-      {n:14, text:`Il cliente con cui ho lavorato meglio in assoluto aveva queste caratteristiche: [descrivi]. Quello che capiva che gli altri faticavano a capire: [spiega]. Analizza questa risposta e aiutami a costruire un contenuto che parla direttamente a persone come lui.`},
-      {n:15, text:`Aiutami a completare questa frase: "Il vero problema di [il mio target] non è [il problema ovvio che tutti nominano]. È [il problema che nessuno nomina]." Questa è la mia dichiarazione di unicità. Aiutami a scriverla in un post senza smussare gli angoli.`},
-      {n:16, text:`Il mio approccio nel lavoro funziona così: [spiegalo in modo grezzo, anche con termini tecnici]. Adesso riscrivilo per qualcuno che non conosce il mio settore, senza usare nessun termine tecnico o spirituale. Solo parole della vita quotidiana.`},
-      {n:17, text:`La domanda che vorrei che i miei clienti mi facessero più spesso, ma che non fanno mai, è questa: [scrivila]. Rispondici pubblicamente in un post. Quel contenuto dice più su di me di qualsiasi presentazione.`},
-      {n:18, text:`Una cosa che so sul mio lavoro che non si trova in nessun libro, corso o formazione — solo nella pratica reale con le persone — è questa: [scrivila]. Sviluppala in un contenuto che mostra come l'ho imparata sul campo.`},
-      {n:19, text:`Il concetto più importante del mio lavoro è questo: [descrivi il concetto]. Traducilo in una metafora della vita quotidiana, non del settore olistico. Niente "viaggio interiore", niente "processo di trasformazione". Una metafora concreta e visiva che chiunque capirebbe al primo colpo.`},
-      {n:20, text:`Il consiglio più comune nel mio settore che io non darei mai è questo: [inserisci il consiglio]. Scrivi la versione eretica: perché non funziona, con un esempio specifico dalla mia pratica reale.`},
+      {n:11, text:`Aiutami a completare questa frase 10 volte di fila senza filtrarla: "Io credo che nel mio settore la maggior parte delle persone si sbagli su [completa]." Fammele fare una alla volta, poi aiutami a trovare quella che vale la pena approfondire.`},
+      {n:12, text:`Qual è la cosa che vedo fare continuamente nel mio settore e che mi fa pensare "ma perché nessuno parla di questo"? Aiutami a scriverla come presa di posizione, non come domanda.`},
+      {n:13, text:`Aiutami a trovare le mie credenze fondamentali sul lavoro che faccio. Chiedimele una alla volta, incluse quelle scomode o in contrasto con quello che dicono i guru del settore. Quando ne abbiamo identificata una che mi sembra forte, aiutami a costruirci un post sopra.`},
+      {n:14, text:`Chiedimi del cliente con cui ho lavorato meglio in assoluto. Cosa aveva di diverso dagli altri? Cosa capiva che gli altri faticavano a capire? Da quella comprensione, aiutami a estrarre il mio punto di vista distintivo e a scriverlo.`},
+      {n:15, text:`Aiutami a completare questa frase: "Il vero problema di [il mio target] non è [il problema ovvio che tutti nominano]. È [il problema che nessuno nomina]." Aiutami a scriverla in un post senza smussare gli angoli.`},
+      {n:16, text:`Se dovessi spiegare il mio approccio a qualcuno che non conosce il mio settore, senza usare nessun termine tecnico o spirituale, come lo faresti? Scrivi quella spiegazione.`},
+      {n:17, text:`Qual è la domanda che vorrei che i miei clienti mi facessero più spesso, ma che non fanno mai? Scrivila e poi rispondici pubblicamente.`},
+      {n:18, text:`Cosa so sul mio lavoro che non si trova in nessun libro, corso o formazione? Solo nella pratica reale con le persone. Scrivilo.`},
+      {n:19, text:`Aiutami a prendere il concetto più importante del mio lavoro e tradurlo in una metafora della vita quotidiana, non del settore olistico. Niente "viaggio interiore", niente "processo di trasformazione". Una metafora concreta e visiva che chiunque capirebbe al primo colpo.`},
+      {n:20, text:`Scrivi la versione eretica del consiglio più comune nel mio settore. Quel consiglio che tutti danno e che io, nella pratica reale, non darei mai. Poi spiega perché, con un esempio specifico.`},
     ]
   },
   {
@@ -95,33 +87,32 @@ const categorie = [
     sub: 'Strutturare video e yapping che tengono l\'attenzione',
     count: 10,
     prompts: [
-      {n:21, text:`Questa settimana un cliente mi ha fatto capire che non avevo ancora spiegato bene questa cosa: [descrivi]. Struttura una risposta video di massimo 2 minuti, diretta, senza intro.`},
-      {n:22, text:`Ho 60 secondi. Scrivi uno script parlato che spieghi cos'è il mio lavoro [descrivi in una frase] come lo direi a mia nonna: senza termini tecnici, senza "percorso", senza "consapevolezza". Segnami dove fare una pausa naturale. Se lei capisce, il messaggio funziona.`},
-      {n:23, text:`Aiutami a costruire un'apertura video che inizia con: "Ti dico una cosa che nella mia nicchia non dice nessuno." Poi la dico davvero. Senza suspense, senza hook artificiali. La dico nei primi 5 secondi.`},
-      {n:24, text:`Ecco un episodio di questa settimana che mi ha fatto pensare — non è una lezione, non ha una morale perfetta: [racconta]. Strutturalo come video partendo da "Ieri è successa una cosa strana…"`},
-      {n:25, text:`Ecco il commento o messaggio DM più interessante che ho ricevuto di recente: [incolla il messaggio]. Aiutami a strutturare una risposta video pubblica. È il contenuto più autentico che posso fare: nasce da una domanda reale di una persona reale.`},
-      {n:26, text:`Una cosa su cui ho cambiato completamente idea negli ultimi 12 mesi riguardo al mio lavoro è questa: [descrivila]. Struttura un video con questa logica: "Mi sbagliavo. Ecco perché."`},
-      {n:27, text:`Voglio fare un video sul dietro le quinte di [descrivi una cosa concreta che faccio normalmente: una preparazione, una riflessione pre-sessione, un rituale di lavoro]. Struttura un contenuto di 60-90 secondi che mostri questa cosa com'è davvero. Inizia direttamente dall'azione, senza spiegare che stai per mostrare qualcosa.`},
-      {n:28, text:`Ho una credenza sul mio settore che mi crea frizione con i colleghi: [scrivila qui]. Aiutami a strutturare un video in cui la spiego con calma. La frizione è il contenuto, non il problema.`},
-      {n:29, text:`Aiutami a costruire un'apertura video diretta con questa struttura: "Si può fare [X] senza [Y]? Sì. Ti spiego come." X è [inserisci], Y è [inserisci]. Struttura la risposta senza ganci artificiali.`},
-      {n:30, text:`Voglio fare un video di smontaggio. Il consiglio comune nel mio settore che voglio smontare è questo: [inserisci il consiglio]. Nella mia esperienza concreta, non funziona così. Aiutami a strutturare l'argomentazione.`},
+      {n:21, text:`Aiutami a rispondere a questa domanda per un video breve: "Qual è la cosa che questa settimana un cliente mi ha fatto capire che non avevo ancora spiegato bene?" Chiedimi i dettagli e poi aiutami a strutturare una risposta di 2 minuti.`},
+      {n:22, text:`Ho 60 secondi. Aiutami a spiegare cos'è il mio lavoro a mia nonna. Senza termini tecnici, senza "percorso", senza "consapevolezza". Se lei capisce, il messaggio funziona.`},
+      {n:23, text:`Aiutami a costruire un'apertura video in cui dico subito, nei primi 5 secondi, una cosa che nella mia nicchia non dice nessuno. Niente suspense, niente giri di parole. Prima la cosa, poi il contesto.`},
+      {n:24, text:`Chiedimi di raccontarti un episodio di questa settimana che mi ha fatto pensare. Non deve essere una lezione, non deve avere una morale perfetta. Poi aiutami a strutturarlo come video partendo da "Ieri è successa una cosa strana…"`},
+      {n:25, text:`Prendi il commento o il messaggio DM più interessante che ho ricevuto nell'ultimo mese. Aiutami a strutturare una risposta video pubblica. È il contenuto più autentico che posso fare: nasce da una domanda reale di una persona reale.`},
+      {n:26, text:`Aiutami a fare un video su una cosa che ho cambiato idea negli ultimi 12 mesi riguardo al mio lavoro. Chiedimi di cosa si tratta, poi aiutami a strutturarlo come: "Mi sbagliavo. Ecco perché."`},
+      {n:27, text:`Voglio fare un video sul dietro le quinte del mio lavoro. Aiutami a strutturare un contenuto che mostri una cosa ordinaria che faccio: una preparazione, una riflessione pre-sessione, qualcosa di normale per me ma invisibile al mio pubblico.`},
+      {n:28, text:`Ho una credenza sul mio settore che mi crea frizione con i colleghi. Aiutami a strutturare un video in cui la spiego con calma. La frizione è il contenuto, non il problema.`},
+      {n:29, text:`Aiutami a costruire un'apertura video diretta: "Si può fare [X] senza [Y]? Sì. Ti spiego come." Chiedimi qual è la domanda, poi strutturiamo la risposta senza ganci artificiali.`},
+      {n:30, text:`Aiutami a fare un video di smontaggio: prendi un consiglio comune nel mio settore e spiega perché, nella mia esperienza concreta, non funziona così. Chiedimi qual è il consiglio, poi aiutami a strutturare l'argomentazione.`},
     ]
   },
   {
     id: 'cat04', num: '04',
     title: 'Tono e voce autentica',
     sub: 'Calibrare il tono su ciò che sei, non su come pensi si debba parlare',
-    count: 9,
+    count: 8,
     prompts: [
       {n:31, text:`Prendi l'ultimo post che ho pubblicato [incolla] e riscrivilo come se lo stessi raccontando a voce a un amico al bar. Poi confronta le due versioni. Quella al bar è la mia voce.`},
       {n:32, text:`Fai una lista di 10 parole che uso spesso nei miei contenuti [incolla un post recente]. Poi dimmi: quante di queste le userei in una conversazione reale? Elimina quelle che non uscirebbero mai dalla mia bocca e riscrivi il testo con quello che resta.`},
       {n:33, text:`Leggi questi miei contenuti recenti [incolla] e segnami quante volte compaiono: "lasciare andare", "rispetta i tuoi tempi", "percorso", "trasformazione", "energia", "consapevolezza", "viaggio interiore". Per ognuna che ho usato, scrivimi la versione concreta: cosa significa davvero, in parole che non si trovano nei libri del settore.`},
-      {n:34, text:`Scrivi un post di massimo 150 parole su [indica tema] usando solo parole di massimo due sillabe. Se l'idea crolla appena togli il vocabolario tecnico, vuol dire che stava nascosta dietro le parole. Alla fine, segnami le 3 frasi più difficili da riscrivere senza termini specialistici.`},
-      {n:35, text:`Il mio approccio al lavoro è questo: [spiega in 2-3 frasi come lo faresti a un adulto]. Ora riscrivilo come lo spiegheresti a un bambino di 10 anni, senza perdere il senso. Poi usa quella versione semplice come apertura di un contenuto adulto: aggiungi solo un esempio reale tratto dalla mia pratica.`},
+      {n:34, text:`Scrivi un post su un argomento del mio lavoro [indica tema] usando solo parole di massimo due sillabe. Se non riesci a spiegarlo in questo modo, è probabile che stia nascondendo l'idea dietro il linguaggio tecnico.`},
+      {n:35, text:`Come spiegheresti il mio approccio a un bambino di 10 anni? Scrivilo. Poi usa quella spiegazione come base per un contenuto adulto.`},
       {n:36, text:`Ecco la trascrizione di un mio voice memo spontaneo: [incolla]. E questo è un mio post scritto: [incolla]. Confrontali e dimmi: dove il tono è diverso, quale suona più come me, cosa salvare del parlato nel contenuto scritto.`},
-      {n:37, text:`Scrivi un post di massimo 200 parole su [indica tema] che inizia con "Mi fa girare le scatole quando…" oppure "Non reggo quando…". Vai fino in fondo al pensiero: spiega cosa c'è dietro quella reazione, aggiungi un esempio concreto da una situazione reale, chiudi con quello che faccio invece.`},
-      {n:38, text:`Prendi questa cosa complessa del mio lavoro: [indica cosa]. Spiegala in 3 frasi senza usare il termine tecnico neanche una volta. Scrivine 3 versioni diverse, ognuna con un punto di partenza diverso (es. un amico, un genitore, uno sconosciuto sul treno). La versione migliore diventa l'apertura di un post.`},
-      {n:158, title:'Elimina pattern AI', text:`Genera testo in italiano naturale, senza strutture "non X ma Y" e senza "non è… è…". Questo vincolo è assoluto e si applica a ogni variante della costruzione, anche quando mascherata: "non si tratta di X, si tratta di Y", "non parliamo di X, parliamo di Y", "non sto dicendo X, sto dicendo Y", "non serve X, serve Y", "il punto non è X, il punto è Y", "non è una questione di X, è una questione di Y". Qualsiasi frase che definisca qualcosa negando prima il suo opposto o un'alternativa va eliminata e riscritta affermando direttamente ciò che si vuole dire, senza passare dalla negazione come trampolino. Evita triplette (tre aggettivi, tre verbi, tre stati, tre "senza…"). Elimina meta-frasi che commentano il testo ("è importante", "è chiaro", "è la parte più forte", "è giusto partire da…"). Evita astratti non supportati da dettagli concreti ("consapevolezza", "lucidità", "profondo", "responsabilità", "nel rispetto"). Preferisci scene brevi, azioni e conseguenze verificabili. Non anticipare obiezioni, non scrivere in difesa preventiva. Chiudi con un fatto o una decisione pratica, non con frasi da comunicato. Il ritmo del testo deve essere discorsivo e fluido: ogni pensiero si sviluppa per almeno tre o quattro righe prima di chiudersi con un punto. Evita il ritmo telegrafico dove ogni frase breve finisce con un punto, creando una sequenza frammentata di micro-pensieri staccati. Il testo deve scorrere come un articolo scritto da una persona che ragiona mentre scrive, dove le frasi si collegano tra loro e il respiro è lungo, non spezzettato. Se in due righe ci sono più di due punti, il testo è troppo frammentato e va riscritto legando i pensieri tra loro con costruzioni naturali. Risultato: testo specifico, asciutto, credibile, con pochi aggettivi, zero enfasi artificiale, ritmo disteso e niente emdash.`},
+      {n:37, text:`Scrivi un post su un tema che conosco bene [indica tema] iniziando con "Mi fa girare le scatole quando…" oppure "Non reggo quando…". Se suona come me, abbiamo trovato la mia voce.`},
+      {n:38, text:`Prendi una cosa complessa del mio lavoro [indica cosa] e spiegala con una storia di 3 frasi. Non usare il termine tecnico neanche una volta. Chi legge deve capire di cosa si tratta senza conoscere il settore.`},
     ]
   },
   {
@@ -130,14 +121,14 @@ const categorie = [
     sub: 'Dire quelle cose che gli altri nel tuo settore evitano',
     count: 8,
     prompts: [
-      {n:39, text:`La cosa che tutti nel mio settore consigliano e che io non consiglierei mai è questa: [inseriscila]. Scrivila come presa di posizione chiara. Non come domanda, non come "dipende". Una posizione netta.`},
-      {n:40, text:`La cosa che penso e non dico perché "potrebbero fraintendere" o "perderei follower" è questa: [scrivila qui, senza filtri]. Scrivici sopra un post. È spesso il mio contenuto migliore.`},
+      {n:39, text:`Qual è la cosa che tutti nel mio settore consigliano e che io non consiglierei mai? Scrivila come presa di posizione chiara. Non come domanda, non come "dipende". Una posizione netta.`},
+      {n:40, text:`Scrivi il post che ho paura di pubblicare. Quella cosa che penso e non dico perché "potrebbero fraintendere" o "perderei follower".`},
       {n:41, text:`Aiutami a completare questa frase: "Nel mio settore siamo tutti d'accordo su [X]. Io non lo sono. Ecco perché." Non devo avere ragione universale: devo avere un punto di vista reale.`},
-      {n:42, text:`Il consiglio che ho dato per anni e che ora non darei più è questo: [inseriscilo]. Scrivilo come evoluzione onesta, non come scusa. Questo tipo di contenuto costruisce fiducia vera nel tempo.`},
-      {n:43, text:`Una cosa che il mio target crede fermamente e che secondo me gli fa male è questa: [descrivila]. Aiutami a scrivere la risposta onesta, non quella del professionista gentile e rassicurante.`},
-      {n:44, text:`Scrivi un post che inizia con "Nessuno lo dice, ma…" e sviluppa questa cosa che penso davvero sul mio settore: [inserisci la tua opinione scomoda]. Se non crea un minimo di frizione, non è abbastanza onesto.`},
-      {n:45, text:`La promessa più comune del mio settore che voglio smontare è questa: [inserisci — es. "trasformati in X settimane", "trova il tuo scopo", "sblocca il tuo potenziale"]. Smontala con dati della mia esperienza reale. Non per essere cinico, per essere preciso.`},
-      {n:46, text:`Ecco il tipo di persona con cui non lavoro e perché: [descrivi le caratteristiche e il motivo]. Scrivi un post diretto a queste persone. Non come attacco, come chiarimento onesto su con chi lavoro e con chi no. Questo tipo di contenuto filtra e attrae allo stesso tempo.`},
+      {n:42, text:`C'è un consiglio che ho dato per anni e che ora non darei più. Scrivilo come evoluzione onesta, non come scusa.`},
+      {n:43, text:`C'è qualcosa che il mio target crede fermamente e che secondo me gli fa male. Aiutami a scrivere la risposta onesta, non quella del professionista gentile e rassicurante.`},
+      {n:44, text:`Scrivi un post che inizia con "Nessuno lo dice, ma…" e finisce con una cosa che penso davvero sul mio settore, non con un consiglio soft. Se non crea un minimo di frizione, non è abbastanza onesto.`},
+      {n:45, text:`Prendi la promessa più comune del mio settore: "trasformati in X settimane", "trova il tuo scopo", "sblocca il tuo potenziale". Smontala con dati della mia esperienza reale. Non per smontare per sport — per dire cosa succede davvero.`},
+      {n:46, text:`Scrivi un post diretto a chi non voglio come cliente. Non come attacco, come chiarimento onesto su con chi lavoro e con chi no.`},
     ]
   },
   {
@@ -192,7 +183,7 @@ const categorie = [
       {n:72, title:'Bio Instagram sintetica ed efficace', text:`Scrivi una bio Instagram di massimo 150 caratteri per un/una [professione]. Chi sei, chi aiuti, cosa ottengono — in parole concrete. Niente hashtag, niente emoji eccessive, niente "aiuto le persone a trasformarsi", niente "mindset", niente "potenziale illimitato". Quello che fai, per chi, in termini che esistono nella vita reale.`},
       {n:73, title:'Summary LinkedIn autentico', text:`Scrivi il summary LinkedIn per un/una [professione] che lavora con [target]. Max 300 parole. Prima persona. Tono autentico, non corporate. Includi: cosa fai di concreto, per chi, perché sei diverso/a, come contattarti.`},
       {n:74, title:'Proposta commerciale in 400 parole', text:`Scrivi una proposta per [servizio] da inviare a [tipo di cliente]. Include: il problema che risolvi in parole del cliente, la soluzione, come funziona in pratica, investimento, prossimo passo. Max 400 parole. Niente aggettivi vuoti.`},
-      {n:75, title:'Risposta all\'obiezione "è troppo caro"', text:`Scrivi una risposta all'obiezione "è troppo caro" per un servizio di [tipo] al prezzo di €[inserisci cifra], da inviare tramite [email / DM / voce]. Massimo 100 parole. Non giustificare il prezzo e non usare "investire su se stessi". Sposta il focus su cosa rimane uguale se non agiscono.`},
+      {n:75, title:'Risposta all\'obiezione "è troppo caro"', text:`Scrivi una risposta professionale e non difensiva all'obiezione "è troppo caro" per un servizio di [tipo]. Non giustificare il prezzo. Sposta il focus sul valore reale e sul costo del non agire.`},
       {n:76, title:'Email di follow-up dopo una call', text:`Scrivi un'email di follow-up dopo una call conoscitiva con [tipo di prospect]. Riassumi i punti chiave che abbiamo discusso, il passo successivo concordato, e una cosa specifica che ho notato nella loro situazione che mi fa pensare di poterli aiutare. Tono diretto e umano, senza sembrare un funnel di vendita.`},
       {n:77, title:'Prima newsletter: presentati davvero', text:`Scrivi il primo numero di una newsletter per [tipo di professionista] che parla a [target]. Non la solita "benvenuto in questo spazio". Inizia da un momento concreto: qualcosa che è successo, una cosa che ho capito, una domanda che mi faccio. Il lettore deve capire in 30 secondi se questa è la newsletter che cercava. Max 300 parole.`},
       {n:78, title:'10 titoli per articolo o post', text:`Genera 10 titoli per un contenuto su [argomento] scritti per [target]. Evita formule clickbait. Niente "X cose che non sai su...", niente "...e non te lo aspetti", niente "la guida definitiva". Ogni titolo deve comunicare chiaramente cosa c'è dentro e creare curiosità autentica senza promesse che il contenuto non mantiene.`},
@@ -200,44 +191,44 @@ const categorie = [
       {n:80, title:'Descrizione servizio per sito web', text:`Scrivi la descrizione del servizio [nome] per il sito web. Struttura: 1) problema del cliente in parole sue, 2) cosa offri, 3) come funziona in pratica, 4) per chi è e per chi non è, 5) CTA. Max 400 parole.`},
       {n:81, title:'Post LinkedIn da articolo esistente', text:`Trasforma questo articolo [incolla testo] in un post LinkedIn di massimo 1300 caratteri. Inizia con la frase più interessante o provocatoria del pezzo. Nessun hook generico. Mantieni il tono originale.`},
       {n:82, title:'Thread per X/Twitter', text:`Trasforma questo contenuto [incolla] in un thread di 7-10 tweet. Il primo tweet dice la cosa più importante — non fa aspettare. Ogni tweet: una sola idea che regge da sola. Niente "thread 🧵", niente "se sei arrivato fin qui...". Concludi con il takeaway principale, senza suspense artificiale.`},
-      {n:83, title:'Script per video YouTube', text:`Scrivi uno script parlato per un video YouTube di [durata] su [argomento], rivolto a [target]. Struttura: hook diretto che dice subito il punto principale, 3-4 sezioni con esempi concreti e frasi di transizione naturali, conclusione con un'azione specifica. Tono conversazionale — segnami dove fare una pausa o rallentare per enfasi.`},
+      {n:83, title:'Script per video YouTube', text:`Scrivi uno script per un video YouTube di [durata] su [argomento]. Struttura: hook diretto senza suspense artificiale, 3-4 punti principali con esempi concreti, conclusione con azione specifica. Tono conversazionale.`},
       {n:84, title:'Testo di vendita per prodotto digitale', text:`Scrivi il testo di vendita per [nome prodotto] al prezzo di €[X]. Struttura: problema che risolve, cosa contiene esattamente, per chi è e per chi no, cosa ottengono dopo averlo usato. Niente promesse irrealistiche.`},
-      {n:85, title:'Risposta a commento negativo online', text:`Scrivi una risposta a questo commento [incolla] su [piattaforma]. Massimo 80 parole. Se il commento ha un punto valido, riconoscilo esplicitamente prima di rispondere. Se è infondato, mantieni la tua posizione con calma. Niente "grazie per il feedback" come apertura generica.`},
+      {n:85, title:'Risposta a commento negativo online', text:`Scrivi una risposta professionale e non difensiva a questo commento [incolla] su [piattaforma]. Mantieni il tuo punto di vista se è fondato.`},
       {n:86, title:'Caption Instagram da un pensiero', text:`Trasforma questo pensiero [incolla] in una caption Instagram di massimo 200 parole. Espandi con un esempio concreto dalla mia esperienza reale o una domanda che spinge il lettore a pensare. Niente aperture tipo "Oggi voglio condividere con voi...", niente "questo post potrebbe cambiare il tuo modo di vedere le cose". Diretto, senza hashtag motivazionali.`},
       {n:87, title:'Piano editoriale mensile su misura', text:`Crea un piano editoriale per [mese] per un/una [professione] su Instagram. 20 contenuti divisi tra: educativi, esperienziali, opinion, dietro le quinte. Per ogni contenuto: tema, formato, angolo specifico. Nessun tema generico che potrebbe scrivere chiunque del settore — ogni idea deve avere un punto di partenza concreto dalla mia esperienza o dal mio punto di vista.`},
-      {n:88, title:'Descrizione episodio podcast', text:`Scrivi la descrizione di un episodio podcast su [argomento] con [tipo di ospite]. Max 150 parole. La prima frase spiega perché questo episodio esiste adesso, non introduce il tema: ci entra dentro. Poi: 2-3 cose concrete che si imparano, a chi è utile. Inizia dalla cosa più interessante che viene detta nell'episodio, non dall'ospite.`},
+      {n:88, title:'Descrizione episodio podcast', text:`Scrivi la descrizione di un episodio podcast su [argomento] con [tipo di ospite]. Max 150 parole. Include: tema principale, 2-3 cose concrete che si imparano, a chi è utile questo episodio.`},
       {n:89, title:'10 oggetti email ad alta apertura', text:`Scrivi 10 oggetti email per una newsletter su [tema]. Evita "Non perdere questa opportunità". Ogni oggetto deve essere specifico, curioso o leggermente spiazzante. Max 50 caratteri ciascuno.`},
       {n:90, title:'Bio da speaker/relatore', text:`Scrivi una bio da speaker per [nome] che parla di [tema]. Max 100 parole. Terza persona. Include: credenziali reali, a chi si rivolge il messaggio, cosa rende unico il punto di vista. Niente aggettivi vuoti.`},
       {n:91, title:'Testi per presentazione slide', text:`Scrivi i testi per una presentazione di [X slide] su [argomento] per [audience]. Per ogni slide: titolo breve max 6 parole, testo di supporto max 30 parole, eventuale dato o domanda concreta. Stile minimalista e diretto. Nessuna slide con "i miei valori" in astratto o elenchi di bullet point ovvi. Ogni slide deve dire una cosa che vale la pena leggere.`},
       {n:92, title:'Email di onboarding per nuovi clienti', text:`Scrivi l'email di benvenuto per un nuovo cliente che ha acquistato [servizio]. Niente "benvenuto in questa meravigliosa avventura". Una email pratica che risponde alle domande che ha già in testa: cosa succede adesso passo per passo, come mi contatta, cosa aspettarsi nella prima settimana. Conferma la scelta senza entusiasmo forzato.`},
       {n:93, title:'Richiesta recensione naturale', text:`Scrivi un messaggio per chiedere una recensione a un cliente soddisfatto dopo [servizio]. Tono naturale, non insistente. Include 2-3 domande guida per aiutarli a scrivere qualcosa di specifico e utile.`},
       {n:94, title:'Pagina Chi Sono per sito web', text:`Scrivi la pagina "Chi sono" per me: [professione], lavoro con [target]. Struttura: storia personale autentica, cosa ho imparato sul campo, in cosa sono diverso/a, a chi mi rivolgo, come iniziare. Max 500 parole. Niente bio da curriculum: voglio che chi legge capisca perché faccio questo lavoro davvero.`},
-      {n:95, title:'Risposta DM a richiesta info', text:`Scrivi una risposta a un DM in cui qualcuno chiede informazioni su [servizio]. Massimo 60 parole: è un messaggio diretto, non un'email. Fai una sola domanda specifica sulla loro situazione (es. "Da quanto tempo hai questo problema?" oppure "Hai già provato qualcosa?") e proponi un passo successivo concreto.`},
-      {n:96, title:'Accordo semplice per sessioni', text:`Scrivi un accordo chiaro (non legale) tra professionista e cliente per sessioni di [tipo]. Tono diretto e umano: non un contratto, una conversazione scritta. Sezioni numerate: 1. Obiettivo del percorso, 2. Struttura e frequenza, 3. Modalità di lavoro, 4. Pagamento e cancellazioni, 5. Cosa non è incluso. Chiudi con una frase che stabilisce il tono della relazione.`},
+      {n:95, title:'Risposta DM a richiesta info', text:`Scrivi una risposta a un DM in cui qualcuno chiede informazioni su [servizio]. Non incollare la pagina vendita. Fai una domanda per capire meglio la loro situazione e proponi un passo successivo concreto.`},
+      {n:96, title:'Accordo semplice per sessioni', text:`Scrivi un accordo chiaro (non legale) tra professionista e cliente per sessioni di [tipo]. Include: obiettivo del percorso, numero di sessioni, modalità, pagamento, cancellazioni, cosa non è incluso.`},
       {n:97, title:'Sommario settimanale per newsletter', text:`Scrivi un sommario della settimana partendo da questi appunti: [incolla note]. Struttura: 1 cosa appresa, 1 cosa condivisa online, 1 domanda aperta per i lettori. Max 250 parole.`},
       {n:98, title:'Proposta di collaborazione', text:`Scrivi una proposta di collaborazione da inviare a [tipo di persona/brand] per [tipo di collaborazione]. Tono: diretto, non adulatorio. Spiega perché ha senso per entrambi, cosa porti tu, cosa chiedi. Max 200 parole.`},
-      {n:99, title:'Annuncio lancio prodotto', text:`Scrivi un annuncio per il lancio di [prodotto] su [piattaforma]. Struttura: il problema che risolve partendo da un'esperienza concreta, cos'è esattamente, come funziona, prezzo, passo successivo. Tono diretto e onesto. La gente percepisce l'entusiasmo forzato a 10 metri di distanza — scrivi come se stessi spiegando il prodotto a qualcuno che chiede cos'è.`},
+      {n:99, title:'Annuncio lancio prodotto', text:`Scrivi un annuncio per il lancio di [prodotto] su [piattaforma]. Struttura: il problema che risolve partendo da un'esperienza concreta, cos'è esattamente, come funziona, prezzo, passo successivo. Scrivi come se stessi spiegando il prodotto a qualcuno che chiede cos'è.`},
       {n:100, title:'Risposta professionale a email difficile', text:`Riscrivi questa email [incolla] in modo professionale ma diretto. Mantieni il messaggio essenziale, elimina ambiguità, esprimi la posizione chiaramente senza essere aggressivo/a.`},
       {n:101, title:'Post lista per LinkedIn o Instagram', text:`Scrivi un post in formato lista su [argomento] per [target]. Max 10 punti. Ogni punto deve essere specifico e non ovvio. Evita i consigli che si trovano su qualsiasi blog. Inizia con il punto più sorprendente.`},
       {n:102, title:'5 headline per landing page', text:`Scrivi 5 headline per la landing page di [prodotto/servizio]. Ogni headline deve comunicare il beneficio principale in max 10 parole. Evita aggettivi generici come "incredibile", "rivoluzionario", "trasformativo".`},
       {n:103, title:'Outline per diretta live', text:`Crea un outline per una diretta Instagram o YouTube di 30 minuti su [argomento]. Struttura: apertura 2 min, contesto 5 min, 3 punti principali con esempi concreti 15 min, Q&A 5 min, chiusura con CTA 3 min. L'apertura non è "ciao a tutti, benvenuti, condividete se siete con me". Inizia con la cosa più interessante: un caso reale, una domanda che lascia aperta la risposta, un'affermazione netta.`},
       {n:104, title:'Messaggio per riattivare una community', text:`Scrivi un messaggio per i membri di una community [tipo] diventati silenziosi. Non chiedere "ci sei ancora?". Porta un valore concreto e poni una domanda specifica a cui sia facile rispondere.`},
-      {n:105, title:'Analisi comunicazione di un competitor', text:`Analizza la comunicazione di questo competitor [incolla URL o descrizione profilo] e dammi un'analisi in 4 punti numerati: 1. Cosa comunicano bene, con esempi dai loro contenuti, 2. Cosa manca o suona generico, 3. A chi si rivolgono implicitamente, 4. Quale angolo stanno lasciando scoperto che potrei occupare io. Sii specifico: cita frasi o pattern reali, non impressioni generali.`},
+      {n:105, title:'Analisi comunicazione di un competitor', text:`Analizza la comunicazione di questo competitor [incolla URL o descrizione profilo] e dimmi: cosa fanno bene, cosa manca, quale angolo comunicativo stanno lasciando scoperto che potrei occupare io.`},
       {n:106, title:'Trascrizione audio in articolo leggibile', text:`Trascrivi e struttura questo testo parlato [incolla trascrizione grezza] in un articolo leggibile. Mantieni il tono originale del parlato, aggiungi titoli intermedi, elimina i riempitivi verbali, non aggiungere contenuto.`},
       {n:107, title:'Risposta pubblica a domanda frequente', text:`Scrivi una risposta pubblica a questa domanda frequente: [domanda]. Stile: articolo breve, tono diretto, include un esempio pratico dalla mia esperienza concreta. Max 300 parole. Niente risposte generiche che potrebbe scrivere chiunque.`},
       {n:108, title:'Offerta chiara e onesta', text:`Struttura un'offerta per [servizio] al prezzo €[X] che sia chiara e convincente senza manipolare. Include: cosa ottieni esattamente, in quanto tempo, passo successivo, cosa non include, garanzia se prevista.`},
-      {n:109, title:'I 5 concetti più applicabili da un libro', text:`Dammi i 5 concetti più applicabili di [titolo libro/corso] per qualcuno che lavora come [professione]. Per ogni concetto: 1. il principio in una frase, 2. come applicarlo questa settimana in modo concreto, 3. un esempio specifico per il mio settore. Alla fine, dimmi anche cosa posso ignorare senza perdere nulla di utile.`},
+      {n:109, title:'I 5 concetti più applicabili da un libro', text:`Dammi i 5 concetti più applicabili di [titolo libro/corso] per qualcuno che lavora come [professione]. Non la sintesi generica. Solo le cose che cambiano davvero il modo di lavorare nella pratica.`},
       {n:110, title:'20 idee contenuto su misura', text:`Genera 20 idee di contenuto per [professione] che parla a [target] in [mese/stagione]. Per ogni idea: piattaforma consigliata, formato, angolo specifico non ovvio. Evita idee generiche del settore.`},
       {n:111, title:'Trasforma un post in un articolo', text:`Espandi questo post [incolla] in un articolo di blog di 600-800 parole. Mantieni lo stesso tono e punto di vista. Aggiungi: contesto iniziale, 2-3 esempi concreti, conclusione con riflessione aperta.`},
       {n:112, title:'Revisione testo: solo analisi', text:`Rivedi questo testo [incolla] e dimmi: 1) dove il tono cambia e suona forzato, 2) le frasi che potrei togliere senza perdere senso, 3) il punto più forte che dovrebbe venire prima. Analizza senza riscrivere.`},
       {n:113, title:'Email per recuperare un cliente inattivo', text:`Scrivi un'email per ricontattare un cliente con cui non lavori da [periodo]. Tono genuino, non commerciale. Non citare subito un'offerta. Mostra che ti ricordi di loro specificamente e fai una domanda reale.`},
-      {n:114, title:'Caption per immagine', text:`Scrivi una caption per questa immagine [descrivi immagine] da pubblicare su Instagram. Il tema del mio lavoro è [tema]. Usa l'immagine come punto di partenza per un pensiero originale: non descrivere cosa si vede. Inizia con la frase più interessante, non con un'introduzione. Max 150 parole. Chiudi con una domanda concreta o una provocazione, non con un invito generico a commentare.`},
+      {n:114, title:'Caption per immagine', text:`Scrivi una caption per questa immagine [descrivi immagine] da pubblicare su Instagram. Non descrivere l'immagine: usala come punto di partenza per un pensiero originale. Max 150 parole.`},
       {n:115, title:'3 obiettivi trimestrali concreti', text:`Aiutami a definire 3 obiettivi reali per il prossimo trimestre per [tipo di attività]. Non voglio "aumentare la presenza online" o "rafforzare il brand". Voglio: cosa faccio esattamente, quante volte, entro quando, come so che ha funzionato. Per ogni obiettivo: azione specifica, metrica di successo, le due cose da fare questa settimana per iniziare.`},
       {n:116, title:'Struttura sessione individuale', text:`Crea un outline per una sessione individuale di [durata] con [tipo di cliente] su [tema]. Include: accoglienza e check-in, esplorazione del tema, lavoro pratico, chiusura e passo successivo con tempi indicativi. Il check-in non è "come stai oggi". Dimmi anche quale domanda potrei usare per aprire davvero la sessione a partire da dove il cliente era rimasto l'ultima volta.`},
       {n:117, title:'Risposte ai commenti che suonano vere', text:`Riscrivi queste risposte ai commenti [incolla esempi] in modo che suonino come una conversazione vera, non come gestione PR. Sii diretto, fai domande reali, non rispondere con soli emoji e "grazie mille".`},
       {n:118, title:'Analisi del proprio profilo social', text:`Analizza il mio profilo [incolla bio + ultimi 10 post] e dimmi: 1) il messaggio che emerge davvero vs quello che intendo trasmettere, 2) i contenuti che mi rappresentano di più, 3) quelli che sembrano scritti da qualcun altro.`},
       {n:119, title:'Riassunto strutturato di sessione o riunione', text:`Trasforma questi appunti [incolla] in un riassunto strutturato. Include: decisioni prese, azioni da intraprendere con responsabile e scadenza, domande aperte ancora irrisolte. Max 200 parole.`},
-      {n:120, title:'Sbloccarsi quando non sai da dove iniziare', text:`Non so da dove iniziare. Voglio scrivere su [tema] per [target]. Fammi 5 domande — tutte insieme, in un unico messaggio — a cui rispondo liberamente per trovare il punto di vista autentico da cui partire. Solo domande, non suggerire contenuto.`},
+      {n:120, title:'Sbloccarsi quando non sai da dove iniziare', text:`Non so da dove iniziare. Voglio scrivere su [tema] per [target]. Fai 5 domande a cui rispondo liberamente, senza pensare a come suonano, per trovare il punto di vista autentico da cui partire. Fai solo domande, non suggerire contenuto.`},
     ]
   },
   {
@@ -246,21 +237,21 @@ const categorie = [
     sub: 'L\'AI come interlocutore che mette in discussione te, le tue credenze e i tuoi punti ciechi',
     count: 15,
     prompts: [
-      {n:121, text:`Ecco una mia convinzione forte sul lavoro che faccio: [inserisci]. Trovami tre argomenti seri e credibili contro di essa — non per smontarla, ma per testarla. Presentali uno alla volta, lasciando spazio alla riflessione tra uno e l'altro.`},
-      {n:122, text:`Il tipo di cliente con cui lavoro meglio ha queste caratteristiche: [descrivi — cosa capisce, come si comporta, cosa porta in sessione]. Dimmi cosa dice di me questa risposta: di come mi vedo, cosa evito, cosa cerco nelle persone che aiuto.`},
-      {n:123, text:`La cosa che trovo più difficile nel mio lavoro è questa: [descrivi]. Aiutami a capire se questa difficoltà viene da un limite reale o da una storia che mi racconto su me stesso.`},
-      {n:124, text:`Fai finta di essere un professionista del settore [indica settore] con un approccio completamente opposto al mio: [descrivi il tuo approccio in una frase]. Presentati, spiega il tuo metodo con un esempio concreto e difendi la tua posizione. Poi aspetta la mia risposta. Non cedere facilmente: cambia idea solo se ho un argomento valido, non per cortesia.`},
-      {n:125, text:`Ecco cosa mi ha spinto a scegliere questo lavoro: [racconta]. Analizza questa risposta e dimmi: cosa di questa storia è ancora vero oggi? Cosa invece è cambiato senza che me ne sia accorto?`},
-      {n:126, text:`Il consiglio che do più spesso ai miei clienti è questo: [inserisci]. Dimmi perché, secondo te, quello stesso consiglio per me è più difficile da seguire. Poi dimmi cosa dice di me questa risposta.`},
-      {n:127, text:`Dimmi tre cose credibili che potrebbe dire un critico severo del modo in cui faccio il mio lavoro. Dopo averle lette, la critica che mi disturba di più è: [inserisci]. Aiutami a capire cosa c'è di vero in quella critica.`},
-      {n:128, text:`Ecco una sessione o consulenza che è andata particolarmente bene: [racconta brevemente]. Aiutami a capire cosa ho fatto io di specifico che ha contribuito a quel risultato, al di là delle circostanze favorevoli.`},
-      {n:129, text:`La credenza fondamentale sul cambiamento delle persone che guida il mio lavoro è questa: [inserisci]. Da dove viene? Quando l'ho costruita? Aiutami a esplorarlo senza difenderla a priori — incluso quello che potrebbe metterla in discussione.`},
-      {n:130, text:`Il tipo di cliente con cui faccio più fatica è questo: [descrivi le caratteristiche]. Aiutami a esplorare se questa fatica dice qualcosa su di me che non ho ancora esaminato.`},
-      {n:131, text:`Ecco come spiego il mio lavoro a qualcuno che non lo conosce: [descrivi con parole tue]. Dimmi quali parole ho usato che rivelano come mi vedo in questo ruolo, e quali aspetti ho tralasciato o minimizzato.`},
-      {n:132, text:`La cosa del mio settore che mi fa arrabbiare di più è questa: [descrivi]. Aiutami a capire se questa rabbia protegge qualcosa di importante per me o se è solo un'abitudine consolidata.`},
-      {n:133, text:`Ecco dove mi vedo tra cinque anni: [descrivi liberamente]. Analizza questa risposta: cosa c'è di concreto, cosa è vago, cosa ho evitato di dire o lasciato fuori.`},
-      {n:134, text:`Fai finta di essere [descrivi tipo di cliente: età approssimativa, situazione, motivo per cui era difficile]. Raccontami com'è stata la nostra relazione dal suo punto di vista: cosa si aspettava, dove si è sentito deluso o incompreso, cosa avrebbe voluto che facessi diversamente. Dopo 4-5 messaggi, usciamo dal personaggio e analizziamo insieme cosa emerge.`},
-      {n:135, text:`La domanda sul mio lavoro a cui faccio più fatica a rispondere è questa: [inserisci]. Aiutami a stare con questa domanda invece di risolverla subito — girala da angolazioni diverse, esplora cosa la rende difficile, senza forzare una risposta.`},
+      {n:121, text:`Scegli una convinzione che ho sul mio lavoro e trovami tre argomenti seri contro di essa. Poi chiedimi cosa penso di quegli argomenti, uno alla volta, senza anticipare la risposta successiva.`},
+      {n:122, text:`Chiedimi di descriverti il tipo di cliente con cui lavoro meglio. Ascolta la risposta, poi dimmi cosa dice di me: di come mi vedo, di cosa evito, di cosa cerco nelle persone che aiuto.`},
+      {n:123, text:`Chiedimi qual è la cosa che trovo più difficile nel mio lavoro. Poi aiutami a capire se quella difficoltà viene da un limite reale o da una storia che mi racconto su me stesso.`},
+      {n:124, text:`Fai finta di essere un professionista del mio settore con un approccio completamente opposto al mio. Presentati e spiegami perché il tuo metodo funziona meglio. Poi aspetta la mia risposta e discutiamo.`},
+      {n:125, text:`Chiedimi cosa mi ha spinto a scegliere questo lavoro. Ascolta la risposta, poi chiedimi cosa di quella storia è ancora vero oggi e cosa invece è cambiato senza che me ne sia accorto.`},
+      {n:126, text:`Chiedimi qual è il consiglio che do più spesso ai miei clienti. Poi chiedimi perché quello stesso consiglio per me è più difficile da seguire.`},
+      {n:127, text:`Dimmi tre cose che potrebbe dire un critico severo del modo in cui faccio il mio lavoro. Poi chiedimi quale di queste mi disturba di più, e aspetta che risponda prima di continuare.`},
+      {n:128, text:`Chiedimi di raccontarti una sessione o consulenza che è andata particolarmente bene. Poi aiutami a capire cosa ho fatto io di specifico che ha contribuito a quel risultato, al di là delle circostanze favorevoli.`},
+      {n:129, text:`Chiedimi qual è la credenza sul cambiamento delle persone che guida il mio lavoro. Poi chiedi di dove viene quella credenza, quando l'ho costruita, se ho mai visto qualcosa che la mettesse in discussione.`},
+      {n:130, text:`Chiedimi di identificare il tipo di cliente con cui faccio più fatica. Poi aiutami a esplorare se quella fatica dice qualcosa su di me che non ho ancora esaminato.`},
+      {n:131, text:`Chiedimi come spiego il mio lavoro a qualcuno che non lo conosce. Poi dimmi quali parole ho usato che rivelano come mi vedo in questo ruolo, e quali aspetti del mio lavoro ho tralasciato.`},
+      {n:132, text:`Chiedimi qual è la cosa del mio settore che mi fa arrabbiare. Poi aiutami a capire se quella rabbia protegge qualcosa di importante per me o se è solo abitudine.`},
+      {n:133, text:`Chiedimi dove mi vedo tra cinque anni. Poi analizza la risposta: cosa è concreto, cosa è vago, cosa ho evitato di dire.`},
+      {n:134, text:`Fai finta di essere il mio cliente più difficile degli ultimi anni. Raccontami com'è stata la nostra relazione dal suo punto di vista. Poi usciamo dal personaggio e ne parliamo.`},
+      {n:135, text:`Chiedimi qual è la domanda sul mio lavoro a cui faccio più fatica a rispondere. Poi aiutami a stare con quella domanda invece di risolverla subito.`},
     ]
   },
   {
@@ -269,7 +260,7 @@ const categorie = [
     sub: 'Auto-coaching, sessioni, esercizi, debriefing, simulazioni e contenuti',
     count: 12,
     prompts: [
-      {n:136, title:'Auto-coaching su un blocco', text:`Ho [descrivi il blocco o la situazione]. Fai il coach con me: ponmi una domanda alla volta, aspetta la mia risposta, poi scegli la prossima in base a quello che ho detto. Portami verso quello che c'è sotto, senza darmi risposte.`},
+      {n:136, title:'Auto-coaching su un blocco', text:`Ho [descrivi il blocco o la situazione]. Usando una domanda alla volta, fai il coach con me. Pone una domanda, aspetta la mia risposta, poi scegli la prossima in base a quello che ho detto. Portami verso quello che c'è sotto, senza darmi risposte.`},
       {n:137, title:'Preparare la sessione successiva', text:`Il mio prossimo cliente sta attraversando [descrivi la situazione]. Scegli 4-5 domande che potrebbero essere utili per questa sessione e spiegami il ragionamento dietro ognuna: perché quella domanda, in quel momento.`},
       {n:138, title:'Trovare la domanda giusta', text:`Il mio cliente è in questo punto del percorso: [descrivi]. Sembra che stia evitando [descrivi]. Quale domanda potrebbe spostare qualcosa senza essere invasiva per la fase in cui è?`},
       {n:139, title:'Costruire un esercizio scritto', text:`Prendi questa domanda: [incolla]. Trasformala in un esercizio scritto che il cliente può fare da solo tra una sessione e l'altra. Aggiungi istruzioni su come usarla: quando farlo, quanto tempo dedicargli, come riportare la risposta alla sessione successiva.`},
@@ -632,7 +623,6 @@ const totalGPTs = categorie.filter(c => c.isGPT).reduce((sum, c) => sum + c.prom
     .user-menu__item svg { width: 14px; height: 14px; flex-shrink: 0; }
     .user-menu__item--danger { color: rgba(240,100,80,0.7); }
     .user-menu__item--danger:hover { color: rgb(240,100,80); background: rgba(240,100,80,0.06); }
-    .user-menu__item--muted { color: rgba(240,235,227,0.3); cursor: default; pointer-events: none; font-style: italic; }
     .user-menu__divider { height: 1px; background: rgba(255,255,255,0.06); margin: 0.25rem 0; }
     .topbar__search {
       flex: 1; max-width: 380px;
@@ -718,131 +708,6 @@ const totalGPTs = categorie.filter(c => c.isGPT).reduce((sum, c) => sum + c.prom
     .main::-webkit-scrollbar { width: 6px; }
     .main::-webkit-scrollbar-track { background: transparent; }
     .main::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
-
-    /* ── GUIDE BOX ── */
-    .guide-box {
-      background: rgba(197,138,55,0.05);
-      border: 1px solid rgba(197,138,55,0.2);
-      border-radius: 12px;
-      margin-bottom: 2.5rem;
-      overflow: hidden;
-    }
-    .guide-box__header {
-      display: flex; align-items: center; gap: 0.6rem;
-      padding: 1rem 1.25rem;
-      border-bottom: 1px solid rgba(197,138,55,0.15);
-    }
-    .guide-box__icon { font-size: 1rem; flex-shrink: 0; }
-    .guide-box__title {
-      font-family: 'Bricolage Grotesque', system-ui, sans-serif;
-      font-size: 0.9rem; font-weight: 700; color: var(--cream);
-      margin: 0; flex: 1;
-    }
-    .guide-box__toggle {
-      font-size: 0.72rem; color: var(--gold); background: none;
-      border: 1px solid rgba(197,138,55,0.25); border-radius: 4px;
-      padding: 3px 10px; cursor: pointer; flex-shrink: 0;
-      transition: background 0.15s;
-    }
-    .guide-box__toggle:hover { background: rgba(197,138,55,0.1); }
-    .guide-box__body { padding: 1.25rem; }
-    .guide-box__intro {
-      font-size: 0.88rem; color: rgba(240,235,227,0.7); line-height: 1.6;
-      margin: 0 0 1.25rem;
-    }
-    .guide-box__intro strong { color: var(--cream); }
-    .guide-steps { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1rem; }
-    .guide-step {
-      display: flex; gap: 0.9rem;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid var(--border);
-      border-radius: 8px; padding: 0.9rem 1rem;
-    }
-    .guide-step__num {
-      font-family: 'Bricolage Grotesque', system-ui, sans-serif;
-      font-size: 1.1rem; font-weight: 800; color: rgba(197,138,55,0.4);
-      flex-shrink: 0; line-height: 1.3; min-width: 28px;
-    }
-    .guide-step__content { flex: 1; }
-    .guide-step__content strong {
-      display: block; font-size: 0.85rem; color: var(--cream);
-      margin-bottom: 0.35rem;
-    }
-    .guide-step__content p {
-      font-size: 0.82rem; color: rgba(240,235,227,0.6); line-height: 1.6; margin: 0;
-    }
-    .guide-step__content p strong { display: inline; color: var(--cream); margin: 0; }
-    .guide-example {
-      margin-top: 0.6rem;
-      background: rgba(0,0,0,0.3);
-      border-left: 2px solid rgba(197,138,55,0.4);
-      border-radius: 0 6px 6px 0;
-      padding: 0.7rem 0.9rem;
-    }
-    .guide-example__label {
-      display: block; font-size: 0.68rem; font-weight: 600;
-      letter-spacing: 0.08em; text-transform: uppercase;
-      color: rgba(197,138,55,0.6); margin-bottom: 0.4rem;
-    }
-    .guide-example p {
-      font-size: 0.8rem; color: rgba(240,235,227,0.5);
-      line-height: 1.6; margin: 0; font-style: italic;
-    }
-    .guide-placeholder {
-      display: inline-block;
-      background: rgba(197,138,55,0.15);
-      color: var(--gold);
-      border-radius: 3px; padding: 0 4px;
-      font-size: 0.8em; font-family: monospace;
-    }
-    .guide-tip {
-      display: flex; gap: 0.6rem; align-items: flex-start;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid var(--border);
-      border-radius: 8px; padding: 0.8rem 1rem;
-      font-size: 0.8rem; color: rgba(240,235,227,0.55); line-height: 1.6;
-    }
-    .guide-tip__icon { flex-shrink: 0; font-size: 0.9rem; margin-top: 1px; }
-    .guide-style-prompt {
-      margin-top: 0.75rem;
-      background: rgba(0,0,0,0.35);
-      border: 1px solid rgba(197,138,55,0.25);
-      border-radius: 8px;
-      overflow: hidden;
-    }
-    .guide-style-prompt__header {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0.6rem 0.9rem;
-      border-bottom: 1px solid rgba(197,138,55,0.15);
-      background: rgba(197,138,55,0.05);
-    }
-    .guide-style-prompt__copy {
-      font-size: 0.7rem; font-weight: 600;
-      color: var(--gold); background: rgba(197,138,55,0.12);
-      border: 1px solid rgba(197,138,55,0.25); border-radius: 4px;
-      padding: 3px 10px; cursor: pointer; flex-shrink: 0;
-      transition: background 0.15s;
-    }
-    .guide-style-prompt__copy:hover { background: rgba(197,138,55,0.22); }
-    .guide-style-prompt__text {
-      font-size: 0.8rem; color: rgba(240,235,227,0.65); line-height: 1.7;
-      margin: 0; padding: 0.8rem 0.9rem;
-      font-style: normal;
-      white-space: pre-wrap;
-    }
-    .guide-shortcut {
-      display: flex; gap: 0.6rem; align-items: flex-start;
-      margin-top: 0.75rem;
-      background: rgba(197,138,55,0.07);
-      border: 1px solid rgba(197,138,55,0.18);
-      border-radius: 6px; padding: 0.75rem 0.9rem;
-    }
-    .guide-shortcut__icon { flex-shrink: 0; font-size: 1rem; margin-top: 1px; }
-    .guide-shortcut p {
-      font-size: 0.8rem; color: rgba(240,235,227,0.6); line-height: 1.6; margin: 0;
-    }
-    .guide-shortcut p strong { display: inline; color: var(--cream); margin: 0; }
-    .guide-shortcut p em { color: rgba(197,138,55,0.85); font-style: normal; }
 
     /* ── PACK HERO ── */
     .pack-hero {
@@ -991,23 +856,6 @@ const totalGPTs = categorie.filter(c => c.isGPT).reduce((sum, c) => sum + c.prom
     .sidebar__badge--gpt {
       background: #6d28d9 !important;
     }
-    .sidebar__item--guide {
-      background: rgba(197,138,55,0.06);
-      border-left-color: rgba(197,138,55,0.4);
-    }
-    .sidebar__item--guide:hover { background: rgba(197,138,55,0.12); border-left-color: var(--gold); }
-    .sidebar__divider { height: 1px; background: var(--border); margin: 0.5rem 0; }
-    .topbar__guide-link {
-      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.04em;
-      color: rgba(197,138,55,0.7);
-      background: rgba(197,138,55,0.08);
-      border: 1px solid rgba(197,138,55,0.2);
-      border-radius: 100px; padding: 0.2rem 0.75rem;
-      text-decoration: none; flex-shrink: 0;
-      transition: background 0.15s, color 0.15s;
-      white-space: nowrap;
-    }
-    .topbar__guide-link:hover { background: rgba(197,138,55,0.15); color: var(--gold); }
 
     /* ── GPT PREVIEW ── */
     .prompt-card__gpt-preview {
@@ -1187,53 +1035,6 @@ const totalGPTs = categorie.filter(c => c.isGPT).reduce((sum, c) => sum + c.prom
 </head>
 <body>
 
-{!user && (
-  <!-- PAGINA RECUPERO ACCESSO (no token / no cookie) -->
-  <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:#0C0B09;padding:2rem 1.5rem;">
-    <div style="max-width:440px;width:100%;text-align:center;">
-
-      <a href="/" style="display:inline-block;margin-bottom:2.5rem;font-family:Georgia,serif;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:#C58A37;text-decoration:none;">
-        Marco Munich ✦
-      </a>
-
-      <h1 style="margin:0 0 0.75rem;font-family:Georgia,serif;font-size:1.75rem;font-weight:700;color:#F0EBE3;line-height:1.2;">
-        Accedi al<br>Prompt Pack
-      </h1>
-      <p style="margin:0 0 2rem;font-size:0.95rem;line-height:1.6;color:rgba(240,235,227,0.55);">
-        Inserisci l'email con cui hai acquistato — ti inviamo subito il link di accesso.
-      </p>
-
-      <form id="recovery-form" style="display:flex;flex-direction:column;gap:0.75rem;">
-        <input
-          type="email"
-          id="recovery-email"
-          name="email"
-          placeholder="la-tua-email@esempio.com"
-          required
-          autocomplete="email"
-          style="width:100%;padding:14px 16px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:6px;color:#F0EBE3;font-size:1rem;font-family:Georgia,serif;outline:none;box-sizing:border-box;"
-        />
-        <button
-          type="submit"
-          id="recovery-btn"
-          style="width:100%;padding:15px;background:#C58A37;color:#0A0A0A;border:none;border-radius:6px;font-size:1rem;font-weight:700;font-family:Georgia,serif;cursor:pointer;letter-spacing:0.02em;"
-        >
-          Invia link di accesso →
-        </button>
-      </form>
-
-      <div id="recovery-msg" style="display:none;margin-top:1.5rem;padding:1rem;border-radius:6px;font-size:0.9rem;line-height:1.5;"></div>
-
-      <p style="margin-top:2rem;font-size:0.8rem;color:rgba(240,235,227,0.3);">
-        Non hai ancora acquistato?
-        <a href="/prompt-pack" style="color:#C58A37;text-decoration:none;">Scopri il Prompt Pack →</a>
-      </p>
-    </div>
-  </div>
-
-)}
-
-{user && (
   <!-- HEADER -->
   <header class="topbar">
     <a href="/" class="topbar__brand">
@@ -1242,7 +1043,6 @@ const totalGPTs = categorie.filter(c => c.isGPT).reduce((sum, c) => sum + c.prom
       <span class="topbar__brand-tag">Personal Branding Olistico</span>
     </a>
     <span class="topbar__product">Prompt Pack</span>
-    <a class="topbar__guide-link" href="#guide-box" id="topbar-guide-link">⚡ Mini guida</a>
     <div class="topbar__search">
       <svg class="topbar__search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
@@ -1262,83 +1062,36 @@ const totalGPTs = categorie.filter(c => c.isGPT).reduce((sum, c) => sum + c.prom
         <span class="user-menu__label">{user!.name ? user!.name.split(' ')[0] : 'Account'}</span>
       </button>
       <div class="user-menu__dropdown" id="user-menu-dropdown" role="menu">
-
-        <!-- Vista: info account -->
-        <div id="um-view-info">
-          <div class="user-menu__header">
-            <div class="user-menu__name" id="um-display-name">{user!.name || '—'}</div>
-            <div class="user-menu__email" id="um-display-email">{user!.email}</div>
-            <div class="user-menu__date">
-              Acquistato il {new Date(user!.createdAt).toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' })}
-            </div>
-          </div>
-          <div class="user-menu__items">
-            <!-- Ricevuta -->
-            {user!.stripeReceiptUrl ? (
-              <a href={user!.stripeReceiptUrl} target="_blank" rel="noopener" class="user-menu__item" role="menuitem">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/>
-                </svg>
-                Visualizza ricevuta →
-              </a>
-            ) : (
-              <span class="user-menu__item user-menu__item--muted">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/>
-                </svg>
-                Ricevuta nell'email di acquisto
-              </span>
-            )}
-            <!-- Modifica profilo -->
-            <button class="user-menu__item" id="um-edit-btn" role="menuitem">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
-              </svg>
-              Modifica dati
-            </button>
-            <!-- Supporto -->
-            <a href="mailto:consulenza@marcomunich.com?subject=Supporto Prompt Pack" class="user-menu__item" role="menuitem">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/>
-              </svg>
-              Supporto via email
-            </a>
-            <div class="user-menu__divider"></div>
-            <a href="/api/prompt-pack/logout" class="user-menu__item user-menu__item--danger" role="menuitem">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16,17 21,12 16,7"/><line x1="21" y1="12" x2="9" y2="12"/>
-              </svg>
-              Esci
-            </a>
+        <div class="user-menu__header">
+          {user!.name && <div class="user-menu__name">{user!.name}</div>}
+          <div class="user-menu__email">{user!.email}</div>
+          <div class="user-menu__date">
+            Acquistato il {new Date(user!.createdAt).toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' })}
           </div>
         </div>
-
-        <!-- Vista: form modifica dati -->
-        <div id="um-view-edit" style="display:none;padding:1rem;">
-          <div style="font-size:0.75rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:rgba(197,138,55,0.7);margin-bottom:0.75rem;">
-            Modifica profilo
-          </div>
-          <label style="display:block;font-size:0.78rem;color:rgba(240,235,227,0.5);margin-bottom:0.25rem;">Nome</label>
-          <input id="um-input-name" type="text" placeholder="Il tuo nome"
-            value={user!.name || ''}
-            style="width:100%;padding:8px 10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:5px;color:#F0EBE3;font-size:0.88rem;margin-bottom:0.6rem;box-sizing:border-box;" />
-          <label style="display:block;font-size:0.78rem;color:rgba(240,235,227,0.5);margin-bottom:0.25rem;">Email</label>
-          <input id="um-input-email" type="email" placeholder="email@esempio.com"
-            value={user!.email}
-            style="width:100%;padding:8px 10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:5px;color:#F0EBE3;font-size:0.88rem;margin-bottom:0.75rem;box-sizing:border-box;" />
-          <div style="display:flex;gap:0.5rem;">
-            <button id="um-save-btn"
-              style="flex:1;padding:8px;background:#C58A37;color:#0A0A0A;border:none;border-radius:5px;font-size:0.85rem;font-weight:700;cursor:pointer;">
-              Salva
-            </button>
-            <button id="um-cancel-btn"
-              style="padding:8px 12px;background:rgba(255,255,255,0.06);color:rgba(240,235,227,0.6);border:1px solid rgba(255,255,255,0.1);border-radius:5px;font-size:0.85rem;cursor:pointer;">
-              Annulla
-            </button>
-          </div>
-          <div id="um-save-msg" style="display:none;margin-top:0.6rem;font-size:0.8rem;color:#C58A37;"></div>
+        <div class="user-menu__items">
+          {user!.stripeReceiptUrl && (
+            <a href={user!.stripeReceiptUrl} target="_blank" rel="noopener" class="user-menu__item" role="menuitem">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/>
+              </svg>
+              Visualizza ricevuta →
+            </a>
+          )}
+          <a href="mailto:marco@marcomunich.com?subject=Supporto Prompt Pack" class="user-menu__item" role="menuitem">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/>
+            </svg>
+            Supporto via email
+          </a>
+          <div class="user-menu__divider"></div>
+          <a href="/api/prompt-pack/logout" class="user-menu__item user-menu__item--danger" role="menuitem">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16,17 21,12 16,7"/><line x1="21" y1="12" x2="9" y2="12"/>
+            </svg>
+            Esci
+          </a>
         </div>
-
       </div>
     </div>
   </header>
@@ -1347,15 +1100,6 @@ const totalGPTs = categorie.filter(c => c.isGPT).reduce((sum, c) => sum + c.prom
 
     <!-- SIDEBAR -->
     <aside class="sidebar" id="sidebar">
-      <!-- Mini guida link -->
-      <a class="sidebar__item sidebar__item--guide" href="#guide-box" id="sidebar-guide-link">
-        <span class="sidebar__num" style="opacity:1;">⚡</span>
-        <span class="sidebar__info">
-          <span class="sidebar__title">Mini guida</span>
-          <span class="sidebar__count">Come usare i prompt</span>
-        </span>
-      </a>
-      <div class="sidebar__divider"></div>
       <div class="sidebar__label">Categorie</div>
       {categorie.map((cat) => (
         <a class="sidebar__item" data-cat={cat.id} href={`#${cat.id}`}>
@@ -1380,61 +1124,6 @@ const totalGPTs = categorie.filter(c => c.isGPT).reduce((sum, c) => sum + c.prom
         <div class="pack-hero__meta">
           <span class="pack-hero__pill">147 prompt · 11 categorie</span>
           <span class="pack-hero__pill pack-hero__pill--gpt">10 Custom GPT</span>
-        </div>
-      </div>
-
-      <!-- ── GUIDA: COME USARE I PROMPT ── -->
-      <div class="guide-box" id="guide-box">
-        <div class="guide-box__header">
-          <span class="guide-box__icon">⚡</span>
-          <h2 class="guide-box__title">Come usare questi prompt al meglio</h2>
-          <button class="guide-box__toggle" id="guide-toggle" aria-expanded="true">Nascondi</button>
-        </div>
-        <div class="guide-box__body" id="guide-body">
-
-          <p class="guide-box__intro">Questi prompt funzionano già così, ma rendono al 200% se li usi dentro un <strong>Progetto</strong> su ChatGPT o Claude. Ecco come si fa in 2 minuti.</p>
-
-          <div class="guide-steps">
-
-            <div class="guide-step">
-              <div class="guide-step__num">01</div>
-              <div class="guide-step__content">
-                <strong>Crea un Progetto dedicato</strong>
-                <p>Su <strong>ChatGPT</strong>: clicca "Esplora GPT" → "Progetti" → "Nuovo progetto". Su <strong>Claude</strong>: clicca "Progetti" nella barra laterale → "Nuovo progetto". Dagli un nome tipo <em>"Contenuti [tuo nome]"</em>.</p>
-              </div>
-            </div>
-
-            <div class="guide-step">
-              <div class="guide-step__num">02</div>
-              <div class="guide-step__content">
-                <strong>Aggiungi il tuo contesto nelle istruzioni del progetto</strong>
-                <p>Ogni progetto ha un campo "Istruzioni" (ChatGPT) o "Istruzioni del progetto" (Claude). Incollaci dentro una descrizione di te: chi sei, cosa fai, a chi parli, il tuo tono di voce, i tuoi valori, cosa odi nel marketing del tuo settore. Più è specifico, meglio funziona. Esempi:</p>
-                <div class="guide-example">
-                  <span class="guide-example__label">Esempio istruzioni progetto</span>
-                  <p>Sono [nome], [professione]. Lavoro con [tipo di cliente]. Il mio tono è diretto e concreto, senza termini spirituali o da guru. Non uso frasi come "viaggio interiore", "trasformazione", "holding space". Scrivo sempre in prima persona, come se stessi parlando a un amico intelligente. Il mio punto di vista originale è [il tuo punto di vista]. Le cose che nel mio settore non sopporto: [lista].</p>
-                </div>
-<div class="guide-shortcut">
-                  <span class="guide-shortcut__icon">🎙️</span>
-                  <p><strong>Non vuoi scrivere tutto a mano?</strong> Apri ChatGPT o Claude, manda un audio vocale in cui spieghi liberamente chi sei, cosa fai e come lavori — come se lo raccontassi a un amico. Poi scrivi: <em>"Trasforma quello che ti ho appena detto in istruzioni di contesto per un Progetto AI. Devono essere chiare, specifiche e in prima persona."</em> In 30 secondi hai il testo pronto da incollare.</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="guide-step">
-              <div class="guide-step__num">03</div>
-              <div class="guide-step__content">
-                <strong>Usa i prompt dentro il progetto</strong>
-                <p>Ogni volta che apri una conversazione dentro quel progetto, l'AI legge automaticamente il tuo contesto. Copia il prompt, compila i <span class="guide-placeholder">[placeholder]</span> con le tue info reali, incolla. Il risultato sarà calibrato sulla tua voce — non su un generico professionista del coaching.</p>
-              </div>
-            </div>
-
-          </div>
-
-          <div class="guide-tip">
-            <span class="guide-tip__icon">💡</span>
-            <span>Il contesto non deve essere perfetto al primo colpo. Aggiungici cose man mano che usi i prompt — ogni volta che l'AI ti dà una risposta che non ti rappresenta, aggiusta le istruzioni.</span>
-          </div>
-
         </div>
       </div>
 
@@ -1663,161 +1352,6 @@ const totalGPTs = categorie.filter(c => c.isGPT).reduce((sum, c) => sum + c.prom
       searchEmpty.classList.toggle('visible', !anyVisible && q.length > 0);
     });
   </script>
-
-)}
-
-<!-- Script recupero accesso — fuori da qualsiasi condizionale Astro -->
-<script is:inline>
-  var recoveryForm = document.getElementById('recovery-form');
-  if (recoveryForm) {
-    recoveryForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      var emailEl = document.getElementById('recovery-email');
-      var btn = document.getElementById('recovery-btn');
-      var msg = document.getElementById('recovery-msg');
-      var email = emailEl ? emailEl.value : '';
-
-      btn.textContent = 'Invio in corso…';
-      btn.disabled = true;
-
-      fetch('/api/prompt-pack/resend-access', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email }),
-      })
-      .then(function() {
-        msg.style.display = 'block';
-        msg.style.background = 'rgba(197,138,55,0.1)';
-        msg.style.border = '1px solid rgba(197,138,55,0.3)';
-        msg.style.color = '#C58A37';
-        msg.textContent = 'Fatto! Se questa email è associata a un acquisto, riceverai il link entro pochi secondi. Controlla anche lo spam.';
-        recoveryForm.style.display = 'none';
-      })
-      .catch(function() {
-        btn.textContent = 'Invia link di accesso →';
-        btn.disabled = false;
-        msg.style.display = 'block';
-        msg.style.background = 'rgba(255,80,80,0.1)';
-        msg.style.border = '1px solid rgba(255,80,80,0.3)';
-        msg.style.color = '#ff6b6b';
-        msg.textContent = 'Errore di rete. Riprova tra qualche secondo.';
-      });
-    });
-  }
-
-  /* ── Profilo: toggle info ↔ edit ───────────────────────────────────────── */
-  var umViewInfo   = document.getElementById('um-view-info');
-  var umViewEdit   = document.getElementById('um-view-edit');
-  var umEditBtn    = document.getElementById('um-edit-btn');
-  var umCancelBtn  = document.getElementById('um-cancel-btn');
-  var umSaveBtn    = document.getElementById('um-save-btn');
-  var umSaveMsg    = document.getElementById('um-save-msg');
-  var umDisplayName  = document.getElementById('um-display-name');
-  var umDisplayEmail = document.getElementById('um-display-email');
-  var umInputName  = document.getElementById('um-input-name');
-  var umInputEmail = document.getElementById('um-input-email');
-
-  if (umEditBtn && umViewInfo && umViewEdit) {
-    umEditBtn.addEventListener('click', function() {
-      umViewInfo.style.display = 'none';
-      umViewEdit.style.display = 'block';
-      if (umSaveMsg) { umSaveMsg.style.display = 'none'; umSaveMsg.textContent = ''; }
-    });
-  }
-
-  if (umCancelBtn && umViewInfo && umViewEdit) {
-    umCancelBtn.addEventListener('click', function() {
-      umViewEdit.style.display = 'none';
-      umViewInfo.style.display = 'block';
-    });
-  }
-
-  if (umSaveBtn) {
-    umSaveBtn.addEventListener('click', function() {
-      var name  = umInputName  ? umInputName.value.trim()  : '';
-      var email = umInputEmail ? umInputEmail.value.trim() : '';
-
-      if (!name && !email) {
-        if (umSaveMsg) { umSaveMsg.style.display = 'block'; umSaveMsg.style.color = 'rgba(240,100,80,0.8)'; umSaveMsg.textContent = 'Inserisci almeno un campo.'; }
-        return;
-      }
-      if (email && !email.includes('@')) {
-        if (umSaveMsg) { umSaveMsg.style.display = 'block'; umSaveMsg.style.color = 'rgba(240,100,80,0.8)'; umSaveMsg.textContent = 'Email non valida.'; }
-        return;
-      }
-
-      umSaveBtn.disabled = true;
-      umSaveBtn.textContent = 'Salvataggio…';
-
-      fetch('/api/prompt-pack/update-profile', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: name, email: email }),
-      })
-      .then(function(r) { return r.json(); })
-      .then(function(data) {
-        umSaveBtn.disabled = false;
-        umSaveBtn.textContent = 'Salva';
-        if (data.ok) {
-          if (umDisplayName && data.name)  umDisplayName.textContent  = data.name;
-          if (umDisplayEmail && data.email) umDisplayEmail.textContent = data.email;
-          if (umSaveMsg) { umSaveMsg.style.display = 'block'; umSaveMsg.style.color = '#C58A37'; umSaveMsg.textContent = 'Dati aggiornati con successo.'; }
-          setTimeout(function() {
-            if (umViewEdit && umViewInfo) { umViewEdit.style.display = 'none'; umViewInfo.style.display = 'block'; }
-          }, 1200);
-        } else {
-          if (umSaveMsg) { umSaveMsg.style.display = 'block'; umSaveMsg.style.color = 'rgba(240,100,80,0.8)'; umSaveMsg.textContent = data.error || 'Errore durante il salvataggio.'; }
-        }
-      })
-      .catch(function() {
-        umSaveBtn.disabled = false;
-        umSaveBtn.textContent = 'Salva';
-        if (umSaveMsg) { umSaveMsg.style.display = 'block'; umSaveMsg.style.color = 'rgba(240,100,80,0.8)'; umSaveMsg.textContent = 'Errore di rete. Riprova.'; }
-      });
-    });
-  }
-
-  /* ── Copia istruzioni di stile ─────────────────────────────────────────── */
-  var stylePromptCopy = document.getElementById('style-prompt-copy');
-  var stylePromptText = document.getElementById('style-prompt-text');
-  if (stylePromptCopy && stylePromptText) {
-    stylePromptCopy.addEventListener('click', function() {
-      navigator.clipboard.writeText(stylePromptText.textContent.trim()).then(function() {
-        stylePromptCopy.textContent = 'Copiato ✓';
-        setTimeout(function() { stylePromptCopy.textContent = 'Copia'; }, 2000);
-      });
-    });
-  }
-
-  /* ── Mini guida links (sidebar + topbar) → open guide and scroll ───────── */
-  function openAndScrollGuide(e) {
-    e.preventDefault();
-    var body = document.getElementById('guide-body');
-    var toggle = document.getElementById('guide-toggle');
-    var box = document.getElementById('guide-box');
-    if (body && body.style.display === 'none') {
-      body.style.display = 'block';
-      if (toggle) { toggle.textContent = 'Nascondi'; toggle.setAttribute('aria-expanded', 'true'); }
-    }
-    if (box) { box.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
-  }
-  var sidebarGuide = document.getElementById('sidebar-guide-link');
-  var topbarGuide  = document.getElementById('topbar-guide-link');
-  if (sidebarGuide) sidebarGuide.addEventListener('click', openAndScrollGuide);
-  if (topbarGuide)  topbarGuide.addEventListener('click', openAndScrollGuide);
-
-  /* ── Guide box toggle ───────────────────────────────────────────────────── */
-  var guideToggle = document.getElementById('guide-toggle');
-  var guideBody   = document.getElementById('guide-body');
-  if (guideToggle && guideBody) {
-    guideToggle.addEventListener('click', function() {
-      var isOpen = guideBody.style.display !== 'none';
-      guideBody.style.display = isOpen ? 'none' : 'block';
-      guideToggle.textContent = isOpen ? 'Mostra' : 'Nascondi';
-      guideToggle.setAttribute('aria-expanded', String(!isOpen));
-    });
-  }
-</script>
 
 </body>
 </html>
