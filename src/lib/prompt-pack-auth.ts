@@ -18,8 +18,8 @@ const COOKIE_MAX_AGE = 60 * 60 * 24 * 365; // 1 anno
 // ── Gist KV ──────────────────────────────────────────────────────────────────
 
 async function gistFetch(method: 'GET' | 'PATCH', body?: object): Promise<Record<string, any>> {
-  const GITHUB_TOKEN = import.meta.env.GITHUB_TOKEN;
-  const GIST_ID = import.meta.env.PP_GIST_ID;
+  const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
+  const GIST_ID = process.env.PP_GIST_ID;
   if (!GITHUB_TOKEN || !GIST_ID) throw new Error('GITHUB_TOKEN o PP_GIST_ID non configurati');
 
   const res = await fetch(`https://api.github.com/gists/${GIST_ID}`, {
