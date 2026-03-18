@@ -728,7 +728,14 @@ export const prerender = true;
         <li>Accesso immediato, nessuna app da installare</li>
         <li>Aggiornamenti futuri inclusi senza costi aggiuntivi</li>
       </ul>
-      <a href="/api/prompt-pack/checkout" class="pp-price-box__btn" id="pp-buy-btn">
+      <!-- Checkbox consenso recesso -->
+      <label style="display:flex;align-items:flex-start;gap:0.6rem;margin-bottom:0.9rem;cursor:pointer;">
+        <input type="checkbox" id="pp-consent" style="width:16px;height:16px;margin-top:2px;flex-shrink:0;accent-color:#C58A37;" />
+        <span style="font-size:0.78rem;color:rgba(240,235,227,0.5);line-height:1.5;">
+          Ho letto le <a href="/prompt-pack/termini/" target="_blank" style="color:#C58A37;text-decoration:underline;">condizioni di vendita</a> e confermo di voler accedere subito al contenuto digitale, rinunciando al diritto di recesso ai sensi dell'art. 59, co. 1, lett. o) D.Lgs. 206/2005.
+        </span>
+      </label>
+      <a href="/api/prompt-pack/checkout" class="pp-price-box__btn" id="pp-buy-btn" style="opacity:0.4;pointer-events:none;">
         Acquista ora → €27
       </a>
       <p class="pp-price-box__note">
@@ -800,5 +807,16 @@ export const prerender = true;
 </div>
 
 </div><!-- /.pp -->
+
+<script is:inline>
+  var consent = document.getElementById('pp-consent');
+  var buyBtn  = document.getElementById('pp-buy-btn');
+  if (consent && buyBtn) {
+    consent.addEventListener('change', function() {
+      buyBtn.style.opacity = consent.checked ? '1' : '0.4';
+      buyBtn.style.pointerEvents = consent.checked ? 'auto' : 'none';
+    });
+  }
+</script>
 
 </BaseLayout>
