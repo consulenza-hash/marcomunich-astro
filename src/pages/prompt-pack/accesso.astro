@@ -41,6 +41,11 @@ if (isDevBypass()) {
         },
       });
     }
+    if (user && tokenFromCookie) {
+      // Ri-emetti il cookie ad ogni visita: aggiorna path/attributi se l'utente
+      // ha ancora il vecchio cookie (es. Path=/prompt-pack invece di Path=/).
+      Astro.response.headers.append('Set-Cookie', buildAccessCookie(tokenFromCookie));
+    }
   }
 
   // Se non c'è token valido: non facciamo redirect, mostriamo la pagina di recupero accesso
@@ -60,7 +65,7 @@ const categorie = [
       {n:4, text:`Scrivi le 3 cose che ho creduto sul mio lavoro nei primi anni e che si sono rivelate completamente false. Poi spiega cosa ho scoperto al loro posto.`},
       {n:5, text:`Ecco una conversazione recente con un cliente che mi ha sorpreso — una domanda inaspettata o una reazione che non mi aspettavo: [descrivi la conversazione]. Aiutami a costruirci un contenuto sopra. Quella conversazione contiene più saggezza di 10 post educativi.`},
       {n:6, text:`Qual è la cosa che i miei colleghi di settore non dicono mai? Quella che so essere vera ma che crea fastidio dirla. Aiutami a scriverla senza filtri, poi decidiamo insieme se e come pubblicarla.`},
-      {n:7, text:`Scrivi un post partendo da questa frase: "Nessuno me lo aveva detto che [completa]." Riempi il vuoto con qualcosa che ho scoperto sulla strada, non nei libri.`},
+      {n:7, text:`Scrivi un post che inizia con: "Nessuno me lo aveva detto che ___." Nel vuoto va questo: [inserisci la cosa che hai scoperto sulla strada, non nei libri]. Sviluppa il post partendo da quella scoperta, in prima persona.`},
       {n:8, text:`Ecco com'è andata la mia prima sessione o consulenza — cosa ricordo di preciso, cosa mi aveva sorpreso: [racconta]. Da questo racconto, aiutami a costruire un contenuto per chi sta iniziando adesso in questo lavoro.`},
       {n:9, text:`Qual è il mio "cavallo di battaglia"? Quella cosa che faccio meglio di chiunque altro nel mio settore. Aiutami a scrivere la storia di come l'ho scoperto, spesso attraverso un fallimento o un momento difficile.`},
       {n:10, text:`C'è una cosa che ho fatto per anni convinto fosse giusta e poi ho cambiato idea completamente: [descrivila]. Scrivi il prima e il dopo senza abbellirlo. Questo tipo di contenuto costruisce più fiducia di qualsiasi caso di successo.`},
@@ -72,7 +77,7 @@ const categorie = [
     sub: 'Articolare il punto di vista unico che solo tu puoi avere',
     count: 10,
     prompts: [
-      {n:11, text:`Aiutami a completare questa frase 10 volte di fila senza filtrarla: "Io credo che nel mio settore la maggior parte delle persone si sbagli su [completa]." Fammele fare una alla volta, poi aiutami a trovare quella che vale la pena approfondire.`},
+      {n:11, text:`Genera 10 modi per completare questa frase, senza filtrarli: "Io credo che nel mio settore la maggior parte delle persone si sbagli su ___." Non censurarle — includi quelle scomode o in contrasto con i guru. Poi dimmi quale tra le 10 vale la pena approfondire in un post e perché.`},
       {n:12, text:`Qual è la cosa che vedo fare continuamente nel mio settore e che mi fa pensare "ma perché nessuno parla di questo"? Aiutami a scriverla come presa di posizione, non come domanda.`},
       {n:13, text:`La mia credenza più forte sul lavoro che faccio — quella scomoda, in contrasto con i guru del settore — è questa: [scrivila]. Costruiscici sopra un post senza smussare gli angoli.`},
       {n:14, text:`Il cliente con cui ho lavorato meglio in assoluto aveva queste caratteristiche: [descrivi]. Quello che capiva che gli altri faticavano a capire: [spiega]. Analizza questa risposta e aiutami a costruire un contenuto che parla direttamente a persone come lui.`},
@@ -713,6 +718,91 @@ const totalGPTs = categorie.filter(c => c.isGPT).reduce((sum, c) => sum + c.prom
     .main::-webkit-scrollbar-track { background: transparent; }
     .main::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
 
+    /* ── GUIDE BOX ── */
+    .guide-box {
+      background: rgba(197,138,55,0.05);
+      border: 1px solid rgba(197,138,55,0.2);
+      border-radius: 12px;
+      margin-bottom: 2.5rem;
+      overflow: hidden;
+    }
+    .guide-box__header {
+      display: flex; align-items: center; gap: 0.6rem;
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid rgba(197,138,55,0.15);
+    }
+    .guide-box__icon { font-size: 1rem; flex-shrink: 0; }
+    .guide-box__title {
+      font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+      font-size: 0.9rem; font-weight: 700; color: var(--cream);
+      margin: 0; flex: 1;
+    }
+    .guide-box__toggle {
+      font-size: 0.72rem; color: var(--gold); background: none;
+      border: 1px solid rgba(197,138,55,0.25); border-radius: 4px;
+      padding: 3px 10px; cursor: pointer; flex-shrink: 0;
+      transition: background 0.15s;
+    }
+    .guide-box__toggle:hover { background: rgba(197,138,55,0.1); }
+    .guide-box__body { padding: 1.25rem; }
+    .guide-box__intro {
+      font-size: 0.88rem; color: rgba(240,235,227,0.7); line-height: 1.6;
+      margin: 0 0 1.25rem;
+    }
+    .guide-box__intro strong { color: var(--cream); }
+    .guide-steps { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1rem; }
+    .guide-step {
+      display: flex; gap: 0.9rem;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 8px; padding: 0.9rem 1rem;
+    }
+    .guide-step__num {
+      font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+      font-size: 1.1rem; font-weight: 800; color: rgba(197,138,55,0.4);
+      flex-shrink: 0; line-height: 1.3; min-width: 28px;
+    }
+    .guide-step__content { flex: 1; }
+    .guide-step__content strong {
+      display: block; font-size: 0.85rem; color: var(--cream);
+      margin-bottom: 0.35rem;
+    }
+    .guide-step__content p {
+      font-size: 0.82rem; color: rgba(240,235,227,0.6); line-height: 1.6; margin: 0;
+    }
+    .guide-step__content p strong { display: inline; color: var(--cream); margin: 0; }
+    .guide-example {
+      margin-top: 0.6rem;
+      background: rgba(0,0,0,0.3);
+      border-left: 2px solid rgba(197,138,55,0.4);
+      border-radius: 0 6px 6px 0;
+      padding: 0.7rem 0.9rem;
+    }
+    .guide-example__label {
+      display: block; font-size: 0.68rem; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: rgba(197,138,55,0.6); margin-bottom: 0.4rem;
+    }
+    .guide-example p {
+      font-size: 0.8rem; color: rgba(240,235,227,0.5);
+      line-height: 1.6; margin: 0; font-style: italic;
+    }
+    .guide-placeholder {
+      display: inline-block;
+      background: rgba(197,138,55,0.15);
+      color: var(--gold);
+      border-radius: 3px; padding: 0 4px;
+      font-size: 0.8em; font-family: monospace;
+    }
+    .guide-tip {
+      display: flex; gap: 0.6rem; align-items: flex-start;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 8px; padding: 0.8rem 1rem;
+      font-size: 0.8rem; color: rgba(240,235,227,0.55); line-height: 1.6;
+    }
+    .guide-tip__icon { flex-shrink: 0; font-size: 0.9rem; margin-top: 1px; }
+
     /* ── PACK HERO ── */
     .pack-hero {
       padding: 0 0 2.5rem;
@@ -1225,6 +1315,57 @@ const totalGPTs = categorie.filter(c => c.isGPT).reduce((sum, c) => sum + c.prom
         </div>
       </div>
 
+      <!-- ── GUIDA: COME USARE I PROMPT ── -->
+      <div class="guide-box" id="guide-box">
+        <div class="guide-box__header">
+          <span class="guide-box__icon">⚡</span>
+          <h2 class="guide-box__title">Come usare questi prompt al meglio</h2>
+          <button class="guide-box__toggle" id="guide-toggle" aria-expanded="true">Nascondi</button>
+        </div>
+        <div class="guide-box__body" id="guide-body">
+
+          <p class="guide-box__intro">Questi prompt funzionano già così, ma rendono al 200% se li usi dentro un <strong>Progetto</strong> su ChatGPT o Claude. Ecco come si fa in 2 minuti.</p>
+
+          <div class="guide-steps">
+
+            <div class="guide-step">
+              <div class="guide-step__num">01</div>
+              <div class="guide-step__content">
+                <strong>Crea un Progetto dedicato</strong>
+                <p>Su <strong>ChatGPT</strong>: clicca "Esplora GPT" → "Progetti" → "Nuovo progetto". Su <strong>Claude</strong>: clicca "Progetti" nella barra laterale → "Nuovo progetto". Dagli un nome tipo <em>"Contenuti [tuo nome]"</em>.</p>
+              </div>
+            </div>
+
+            <div class="guide-step">
+              <div class="guide-step__num">02</div>
+              <div class="guide-step__content">
+                <strong>Aggiungi il tuo contesto nelle istruzioni del progetto</strong>
+                <p>Ogni progetto ha un campo "Istruzioni" (ChatGPT) o "Istruzioni del progetto" (Claude). Incollaci dentro una descrizione di te: chi sei, cosa fai, a chi parli, il tuo tono di voce, i tuoi valori, cosa odi nel marketing del tuo settore. Più è specifico, meglio funziona. Esempi:</p>
+                <div class="guide-example">
+                  <span class="guide-example__label">Esempio istruzioni progetto</span>
+                  <p>Sono [nome], [professione]. Lavoro con [tipo di cliente]. Il mio tono è diretto e concreto, senza termini spirituali o da guru. Non uso frasi come "viaggio interiore", "trasformazione", "holding space". Scrivo sempre in prima persona, come se stessi parlando a un amico intelligente. Il mio punto di vista originale è [il tuo punto di vista]. Le cose che nel mio settore non sopporto: [lista].</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="guide-step">
+              <div class="guide-step__num">03</div>
+              <div class="guide-step__content">
+                <strong>Usa i prompt dentro il progetto</strong>
+                <p>Ogni volta che apri una conversazione dentro quel progetto, l'AI legge automaticamente il tuo contesto. Copia il prompt, compila i <span class="guide-placeholder">[placeholder]</span> con le tue info reali, incolla. Il risultato sarà calibrato sulla tua voce — non su un generico professionista del coaching.</p>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="guide-tip">
+            <span class="guide-tip__icon">💡</span>
+            <span>Il contesto non deve essere perfetto al primo colpo. Aggiungici cose man mano che usi i prompt — ogni volta che l'AI ti dà una risposta che non ti rappresenta, aggiusta le istruzioni.</span>
+          </div>
+
+        </div>
+      </div>
+
       <div class="search-empty" id="search-empty">
         <h3>Nessun prompt trovato</h3>
         <p>Prova con un termine diverso.</p>
@@ -1561,6 +1702,18 @@ const totalGPTs = categorie.filter(c => c.isGPT).reduce((sum, c) => sum + c.prom
         umSaveBtn.textContent = 'Salva';
         if (umSaveMsg) { umSaveMsg.style.display = 'block'; umSaveMsg.style.color = 'rgba(240,100,80,0.8)'; umSaveMsg.textContent = 'Errore di rete. Riprova.'; }
       });
+    });
+  }
+
+  /* ── Guide box toggle ───────────────────────────────────────────────────── */
+  var guideToggle = document.getElementById('guide-toggle');
+  var guideBody   = document.getElementById('guide-body');
+  if (guideToggle && guideBody) {
+    guideToggle.addEventListener('click', function() {
+      var isOpen = guideBody.style.display !== 'none';
+      guideBody.style.display = isOpen ? 'none' : 'block';
+      guideToggle.textContent = isOpen ? 'Mostra' : 'Nascondi';
+      guideToggle.setAttribute('aria-expanded', String(!isOpen));
     });
   }
 </script>
