@@ -90,6 +90,26 @@ export async function validateToken(token: string): Promise<AccessTokenData | nu
   }
 }
 
+/** Ritorna tutti gli acquirenti (chiavi `token:*`) ordinati per data decrescente */
+export async function getAllPurchasers(): Promise<Array<{ token: string } & AccessTokenData>> {
+  const store = await readTokenStore();
+  return Object.entries(store)
+    .filter(([key]) => key.startsWith('token:'))
+    .map(([key, data]) => ({ token: key.replace('token:', ''), ...(data as AccessTokenData) }))
+    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+}
+
+/** Revoca un token rimuovendolo dallo store */
+export async function revokeToken(token: string): Promise<void> {
+  const store = await readTokenStore();
+  const data = store[`token:${token}`] as AccessTokenData | undefined;
+  if (data) {
+    delete store[`token:${token}`];
+    delete store[`email:${data.email.toLowerCase()}`];
+    await writeTokenStore(store);
+  }
+}
+
 // ── Cookie helpers ────────────────────────────────────────────────────────────
 
 /** Legge il token dal cookie della request */
