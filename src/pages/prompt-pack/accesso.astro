@@ -49,7 +49,7 @@ const categorie = [
   {
     id: 'cat01', num: '01',
     title: 'Scrivere dal vissuto reale',
-    sub: 'Tirare fuori le esperienze concrete invece dei consigli generici',
+    sub: 'Trasformare esperienze concrete di lavoro in contenuti pubblicabili',
     count: 10,
     prompts: [
       {n:1, text:`Ho fallito completamente nel mio lavoro in un momento specifico. Chiedimi di raccontartelo — non la versione "crescita personale", quella vera e cruda. Poi aiutami a trasformare quella lezione in un contenuto che parla direttamente a chi sta attraversando lo stesso fallimento adesso.`},
@@ -103,7 +103,7 @@ const categorie = [
   {
     id: 'cat04', num: '04',
     title: 'Tono e voce autentica',
-    sub: 'Calibrare il tono su ciò che sei, non su come pensi si debba parlare',
+    sub: 'Trovare il tono che corrisponde a come parli davvero e tenerlo quando scrivi',
     count: 8,
     prompts: [
       {n:31, text:`Prendi l'ultimo post che ho pubblicato [incolla] e riscrivilo come se lo stessi raccontando a voce a un amico al bar. Poi confronta le due versioni. Quella al bar è la mia voce.`},
@@ -135,7 +135,7 @@ const categorie = [
   {
     id: 'cat06', num: '06',
     title: 'Immagini realistiche',
-    sub: 'Prompt Midjourney per fotorealistiche professionali',
+    sub: 'Template JSON per Google Gemini e Imagen 3, foto realistiche professionali',
     count: 12,
     isImage: true,
     prompts: [
@@ -156,7 +156,7 @@ const categorie = [
   {
     id: 'cat07', num: '07',
     title: 'Immagini creative',
-    sub: 'Prompt per visual artistici, copertine, grafica editoriale',
+    sub: 'Template JSON per Gemini e Imagen 3, visual creativi per comunicazione e grafica',
     count: 12,
     isImage: true,
     prompts: [
@@ -1219,7 +1219,7 @@ const totalGPTs = categorie.filter(c => c.isGPT).reduce((sum, c) => sum + c.prom
       <div class="pack-hero">
         <p class="pack-hero__eyebrow">Marco Munich</p>
         <h1 class="pack-hero__title">Prompt Pack<br>per <em>Coach e Professionisti</em><br>dell'Olistico</h1>
-        <p class="pack-hero__sub">Contenuti autentici, voce tua, niente guru. Usa questi prompt per smettere di scrivere come tutti gli altri.</p>
+        <p class="pack-hero__sub">Usa questi prompt partendo dalla tua esperienza concreta: quello che esce parla di te.</p>
         <div class="pack-hero__meta">
           <span class="pack-hero__pill">147 prompt · 11 categorie</span>
           <span class="pack-hero__pill pack-hero__pill--gpt">10 Custom GPT</span>
@@ -1310,9 +1310,7 @@ const totalGPTs = categorie.filter(c => c.isGPT).reduce((sum, c) => sum + c.prom
         <div class="pp-upsell__badge">📖 Il libro</div>
         <h2 class="pp-upsell__title">Restare autentici scrivendo con l'intelligenza artificiale</h2>
         <p class="pp-upsell__text">
-          Il Prompt Pack nasce da questo libro. Se vuoi capire il ragionamento dietro
-          ogni prompt — e costruire un metodo tuo invece di seguire un template —
-          questo è il posto da cui partire.
+          Il Prompt Pack nasce da questo libro. Se vuoi capire il ragionamento dietro ogni categoria e come costruire un metodo di contenuti fondato sul tuo lavoro reale, è il posto da cui partire.
         </p>
         <a href="https://www.amazon.it/dp/B0FQ57R899" target="_blank" rel="noopener" class="pp-upsell__btn pp-upsell__btn--book">
           Leggilo su Amazon →
@@ -1324,9 +1322,7 @@ const totalGPTs = categorie.filter(c => c.isGPT).reduce((sum, c) => sum + c.prom
         <div class="pp-upsell__badge">🤝 Lavora con me</div>
         <h2 class="pp-upsell__title">Vuoi costruire il tuo messaggio con il mio supporto diretto?</h2>
         <p class="pp-upsell__text">
-          Il Percorso Privato è 5 sessioni individuali in cui ti seguo passo dopo
-          passo nella costruzione del tuo messaggio autentico — dalla storia personale
-          alla comunicazione sui social, fino all'offerta.
+          Il Percorso Privato è 5 sessioni individuali in cui ti seguo mentre costruisci il tuo messaggio e strutturi come portarlo fuori. Ogni sessione parte da quello che è emerso nella precedente.
         </p>
         <ul class="pp-upsell__list">
           <li>5 sessioni individuali con Marco</li>
@@ -1337,7 +1333,7 @@ const totalGPTs = categorie.filter(c => c.isGPT).reduce((sum, c) => sum + c.prom
         <a href="https://wa.link/wjlw58" target="_blank" rel="noopener" class="pp-upsell__btn pp-upsell__btn--consulting">
           Scrivimi su WhatsApp →
         </a>
-        <p class="pp-upsell__price">€500 — oppure 3 rate da €167</p>
+        <p class="pp-upsell__price">€500, oppure 3 rate da €167</p>
       </div>
 
     </div>
