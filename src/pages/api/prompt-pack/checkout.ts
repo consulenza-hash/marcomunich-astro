@@ -10,18 +10,18 @@ import Stripe from 'stripe';
 export const prerender = false;
 
 export const GET: APIRoute = async ({ redirect }) => {
-  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+  const stripe = new Stripe((process.env.STRIPE_SECRET_KEY || '').trim(), {
     apiVersion: '2025-01-27.acacia',
   });
 
-  const siteUrl = process.env.SITE_URL || 'https://marcomunich.com';
+  const siteUrl = (process.env.SITE_URL || 'https://marcomunich.com').trim();
 
   try {
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
       line_items: [
         {
-          price: process.env.STRIPE_PRICE_ID,
+          price: (process.env.STRIPE_PRICE_ID || '').trim(),
           quantity: 1,
         },
       ],

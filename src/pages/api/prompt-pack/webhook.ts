@@ -17,12 +17,12 @@ import { randomUUID } from 'crypto';
 export const prerender = false;
 
 export const POST: APIRoute = async ({ request }) => {
-  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+  const stripe = new Stripe((process.env.STRIPE_SECRET_KEY || '').trim(), {
     apiVersion: '2025-01-27.acacia',
   });
 
-  const resend = new Resend(process.env.RESEND_API_KEY);
-  const siteUrl = process.env.SITE_URL || 'https://marcomunich.com';
+  const resend = new Resend((process.env.RESEND_API_KEY || '').trim());
+  const siteUrl = (process.env.SITE_URL || 'https://marcomunich.com').trim();
 
   // Leggi il body raw (necessario per verificare la firma Stripe)
   const body = await request.text();
@@ -37,7 +37,7 @@ export const POST: APIRoute = async ({ request }) => {
     event = stripe.webhooks.constructEvent(
       body,
       sig,
-      process.env.STRIPE_WEBHOOK_SECRET!
+      (process.env.STRIPE_WEBHOOK_SECRET || '').trim()
     );
   } catch (err: any) {
     console.error('[webhook] Firma non valida:', err.message);
