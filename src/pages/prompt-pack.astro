@@ -485,8 +485,10 @@ export const prerender = true;
   /* ── Libro ────────────────────────────────────────────────────────────── */
   .pp-libro {
     display: flex;
-    gap: 2rem;
+    flex-direction: column;
     align-items: center;
+    text-align: center;
+    gap: 1rem;
     background: var(--warm);
     border: 1px solid var(--border);
     border-radius: 14px;
@@ -494,7 +496,6 @@ export const prerender = true;
     margin-top: 3rem;
   }
   .pp-libro__badge {
-    flex-shrink: 0;
     background: var(--ink);
     color: var(--gold);
     font-size: 0.68rem;
@@ -503,10 +504,9 @@ export const prerender = true;
     text-transform: uppercase;
     padding: 0.4rem 0.9rem;
     border-radius: 100px;
-    align-self: flex-start;
     white-space: nowrap;
   }
-  .pp-libro__content { flex: 1; }
+  .pp-libro__content { width: 100%; max-width: 640px; }
   .pp-libro__title {
     font-family: 'Bricolage Grotesque', system-ui, sans-serif;
     font-size: 1.05rem;
@@ -597,7 +597,7 @@ export const prerender = true;
 
 <!-- ── IL PROBLEMA ────────────────────────────────────────────────────────────── -->
 <div class="pp-section--bg">
-  <div class="pp-section-inner">
+  <div class="pp-section-inner" style="text-align:center;">
     <div class="pp-label">Il problema reale</div>
     <h2 class="pp-h2">Davanti al cliente sai esattamente cosa dire: c'è qualcuno con una storia concreta davanti a te, c'è un punto da cui partire. Davanti allo schermo quella stessa competenza si inceppa.</h2>
     <p class="pp-body">
@@ -636,7 +636,7 @@ export const prerender = true;
 </div>
 
 <!-- ── COSA OTTIENI ──────────────────────────────────────────────────────────── -->
-<div class="pp-section pp-section--wide">
+<div class="pp-section pp-section--wide" style="text-align:center;">
   <div class="pp-label">Cosa contiene</div>
   <h2 class="pp-h2">147 prompt + 10 Custom GPT in 11 categorie</h2>
   <p class="pp-body">
