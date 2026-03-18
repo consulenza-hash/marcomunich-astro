@@ -110,6 +110,18 @@ export async function getAllPurchasers(): Promise<Array<{ token: string } & Acce
     .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 }
 
+/** Revoca un token di accesso (rimuove token:* e email:* dal Gist) */
+export async function revokeToken(token: string): Promise<void> {
+  const store = await readTokenStore();
+  const key = `token:${token}`;
+  const data = store[key] as AccessTokenData | undefined;
+  if (!data) throw new Error('Token non trovato');
+  delete store[key];
+  const emailKey = `email:${data.email.toLowerCase()}`;
+  if (store[emailKey] === token) delete store[emailKey];
+  await writeTokenStore(store);
+}
+
 /** Dev bypass: se PROMPT_PACK_DEV_BYPASS=true, non controlla il token */
 export function isDevBypass(): boolean {
   return import.meta.env.DEV && import.meta.env.PROMPT_PACK_DEV_BYPASS === 'true';
