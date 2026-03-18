@@ -802,6 +802,19 @@ const totalGPTs = categorie.filter(c => c.isGPT).reduce((sum, c) => sum + c.prom
       font-size: 0.8rem; color: rgba(240,235,227,0.55); line-height: 1.6;
     }
     .guide-tip__icon { flex-shrink: 0; font-size: 0.9rem; margin-top: 1px; }
+    .guide-shortcut {
+      display: flex; gap: 0.6rem; align-items: flex-start;
+      margin-top: 0.75rem;
+      background: rgba(197,138,55,0.07);
+      border: 1px solid rgba(197,138,55,0.18);
+      border-radius: 6px; padding: 0.75rem 0.9rem;
+    }
+    .guide-shortcut__icon { flex-shrink: 0; font-size: 1rem; margin-top: 1px; }
+    .guide-shortcut p {
+      font-size: 0.8rem; color: rgba(240,235,227,0.6); line-height: 1.6; margin: 0;
+    }
+    .guide-shortcut p strong { display: inline; color: var(--cream); margin: 0; }
+    .guide-shortcut p em { color: rgba(197,138,55,0.85); font-style: normal; }
 
     /* ── PACK HERO ── */
     .pack-hero {
@@ -1344,6 +1357,10 @@ const totalGPTs = categorie.filter(c => c.isGPT).reduce((sum, c) => sum + c.prom
                 <div class="guide-example">
                   <span class="guide-example__label">Esempio istruzioni progetto</span>
                   <p>Sono [nome], [professione]. Lavoro con [tipo di cliente]. Il mio tono è diretto e concreto, senza termini spirituali o da guru. Non uso frasi come "viaggio interiore", "trasformazione", "holding space". Scrivo sempre in prima persona, come se stessi parlando a un amico intelligente. Il mio punto di vista originale è [il tuo punto di vista]. Le cose che nel mio settore non sopporto: [lista].</p>
+                </div>
+                <div class="guide-shortcut">
+                  <span class="guide-shortcut__icon">🎙️</span>
+                  <p><strong>Non vuoi scrivere tutto a mano?</strong> Apri ChatGPT o Claude, manda un audio vocale in cui spieghi liberamente chi sei, cosa fai e come lavori — come se lo raccontassi a un amico. Poi scrivi: <em>"Trasforma quello che ti ho appena detto in istruzioni di contesto per un Progetto AI. Devono essere chiare, specifiche e in prima persona."</em> In 30 secondi hai il testo pronto da incollare.</p>
                 </div>
               </div>
             </div>
