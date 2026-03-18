@@ -40,7 +40,14 @@ export default defineConfig({
   // Variabili d'ambiente server-side (lette a runtime, non inlined da Vite)
   env: {
     schema: {
-      GITHUB_TOKEN: envField.string({ context: 'server', access: 'secret', optional: true }),
+      GITHUB_TOKEN:             envField.string({ context: 'server', access: 'secret', optional: true }),
+      STRIPE_SECRET_KEY:        envField.string({ context: 'server', access: 'secret', optional: true }),
+      STRIPE_WEBHOOK_SECRET:    envField.string({ context: 'server', access: 'secret', optional: true }),
+      STRIPE_PRICE_ID:          envField.string({ context: 'server', access: 'secret', optional: true }),
+      RESEND_API_KEY:           envField.string({ context: 'server', access: 'secret', optional: true }),
+      SITE_URL:                 envField.string({ context: 'server', access: 'public',  optional: true }),
+      PROMPT_PACK_DEV_BYPASS:   envField.string({ context: 'server', access: 'public',  optional: true }),
+      PP_GIST_ID:               envField.string({ context: 'server', access: 'secret',  optional: true }),
     },
   },
 

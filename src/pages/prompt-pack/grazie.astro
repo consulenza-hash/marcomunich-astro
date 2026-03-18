@@ -1,0 +1,166 @@
+---
+/**
+ * /prompt-pack/grazie
+ * Pagina di ringraziamento post-acquisto Stripe.
+ * Stripe redirige qui dopo checkout completato.
+ */
+export const prerender = false;
+---
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acquisto completato — Marco Munich</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #C58A37;
+      --bg: #0C0B09;
+      --cream: #F0EBE3;
+      --muted: rgba(240,235,227,0.5);
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--cream);
+      font-family: Georgia, serif;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.5rem;
+      text-align: center;
+    }
+
+    .icon {
+      width: 64px; height: 64px;
+      background: rgba(197,138,55,0.12);
+      border: 1px solid rgba(197,138,55,0.3);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 2rem;
+      font-size: 1.75rem;
+    }
+
+    .eyebrow {
+      font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+      font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700; letter-spacing: -0.03em; line-height: 1.15;
+      color: #fff;
+      margin-bottom: 1.25rem;
+    }
+
+    h1 em {
+      font-style: normal; color: var(--gold);
+    }
+
+    .body {
+      font-size: 1rem; line-height: 1.6;
+      color: var(--muted);
+      max-width: 42ch;
+      margin: 0 auto 2.5rem;
+    }
+
+    .steps {
+      display: flex; flex-direction: column; gap: 1rem;
+      max-width: 420px; margin: 0 auto 3rem;
+      text-align: left;
+    }
+
+    .step {
+      display: flex; align-items: flex-start; gap: 1rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+    }
+
+    .step__num {
+      flex-shrink: 0;
+      width: 28px; height: 28px;
+      background: rgba(197,138,55,0.12);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+      font-size: 0.75rem; font-weight: 700;
+      color: var(--gold);
+    }
+
+    .step__text {
+      font-size: 0.9rem; line-height: 1.5;
+      color: rgba(240,235,227,0.7);
+    }
+
+    .step__text strong {
+      color: var(--cream); display: block; margin-bottom: 0.15rem;
+    }
+
+    .back-link {
+      font-size: 0.82rem;
+      color: var(--muted);
+      text-decoration: none;
+    }
+    .back-link:hover { color: var(--gold); }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="icon">✓</div>
+
+    <p class="eyebrow">Acquisto completato</p>
+
+    <h1>Il pagamento è andato<br>a <em>buon fine.</em></h1>
+
+    <p class="body">
+      Tra pochi secondi ricevi un'email con il link per accedere al tuo Prompt Pack.
+      Controlla la casella di posta — anche lo spam, per sicurezza.
+    </p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step__num">1</div>
+        <div class="step__text">
+          <strong>Controlla la tua email</strong>
+          Trovi un messaggio da <em>noreply@marcomunich.com</em> con il link di accesso.
+        </div>
+      </div>
+      <div class="step">
+        <div class="step__num">2</div>
+        <div class="step__text">
+          <strong>Clicca il link nell'email</strong>
+          Il link è personale — aprilo dal dispositivo che preferisci e aggiungilo ai preferiti.
+        </div>
+      </div>
+      <div class="step">
+        <div class="step__num">3</div>
+        <div class="step__text">
+          <strong>Hai accesso per sempre</strong>
+          Il pack è tuo — tutti gli aggiornamenti futuri arrivano allo stesso link, senza costi aggiuntivi.
+        </div>
+      </div>
+    </div>
+
+    <a href="/" class="back-link">← Torna alla homepage</a>
+  </div>
+</body>
+</html>
