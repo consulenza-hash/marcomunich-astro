@@ -11,18 +11,18 @@
 import type { APIRoute } from 'astro';
 import Stripe from 'stripe';
 import { Resend } from 'resend';
-import { createAccessToken, hasProcessedSession } from '@lib/prompt-pack-auth';
+import { createAccessToken } from '@lib/prompt-pack-auth';
 import { randomUUID } from 'crypto';
 
 export const prerender = false;
 
 export const POST: APIRoute = async ({ request }) => {
-  const stripe = new Stripe((process.env.STRIPE_SECRET_KEY || '').trim(), {
+  const stripe = new Stripe(import.meta.env.STRIPE_SECRET_KEY, {
     apiVersion: '2025-01-27.acacia',
   });
 
-  const resend = new Resend((process.env.RESEND_API_KEY || '').trim());
-  const siteUrl = (process.env.SITE_URL || 'https://marcomunich.com').trim();
+  const resend = new Resend(import.meta.env.RESEND_API_KEY);
+  const siteUrl = import.meta.env.SITE_URL || 'https://marcomunich.com';
 
   // Leggi il body raw (necessario per verificare la firma Stripe)
   const body = await request.text();
@@ -37,7 +37,7 @@ export const POST: APIRoute = async ({ request }) => {
     event = stripe.webhooks.constructEvent(
       body,
       sig,
-      (process.env.STRIPE_WEBHOOK_SECRET || '').trim()
+      import.meta.env.STRIPE_WEBHOOK_SECRET
     );
   } catch (err: any) {
     console.error('[webhook] Firma non valida:', err.message);
@@ -71,14 +71,10 @@ export const POST: APIRoute = async ({ request }) => {
     }
   }
 
-  // Idempotency: se il webhook è già stato processato per questa sessione, non ricreare il token
-  if (await hasProcessedSession(session.id)) {
-    console.log(`[webhook] Sessione già processata (retry Stripe): ${session.id}`);
-    return new Response('OK (già processato)', { status: 200 });
-  }
-
   // Genera token univoco
   const token = randomUUID();
+
+  const newsletterConsent = session.metadata?.newsletterConsent === 'true';
 
   // Salva nel KV store
   await createAccessToken(token, {
@@ -87,6 +83,7 @@ export const POST: APIRoute = async ({ request }) => {
     createdAt: new Date().toISOString(),
     stripeSessionId: session.id,
     stripeReceiptUrl: receiptUrl,
+    newsletterConsent,
   });
 
   // URL di accesso con token
@@ -189,10 +186,14 @@ function buildEmailHtml(
           <!-- Footer -->
           <tr>
             <td style="padding-top:24px;border-top:1px solid rgba(255,255,255,0.08);">
-              <p style="margin:0;font-size:0.78rem;line-height:1.5;color:rgba(240,235,227,0.35);">
+              <p style="margin:0 0 10px;font-size:0.78rem;line-height:1.5;color:rgba(240,235,227,0.35);">
                 Ordine: ${sessionId}<br>
                 Se hai problemi con l'accesso, rispondi a questa email.<br>
                 <a href="https://marcomunich.com" style="color:rgba(197,138,55,0.5);text-decoration:none;">marcomunich.com</a>
+              </p>
+              <p style="margin:0;font-size:0.72rem;line-height:1.5;color:rgba(240,235,227,0.2);">
+                Prodotto digitale — consegna immediata. Il diritto di recesso non si applica (art. 59 D.Lgs. 206/2005).<br>
+                <a href="https://marcomunich.com/termini" style="color:rgba(197,138,55,0.35);text-decoration:underline;">Termini e Condizioni</a>
               </p>
             </td>
           </tr>

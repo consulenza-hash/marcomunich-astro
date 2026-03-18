@@ -418,6 +418,46 @@ export const prerender = true;
     margin-top: 1rem;
     line-height: 1.5;
   }
+  .pp-consent {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    margin-top: 1.25rem;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    text-align: left;
+  }
+  .pp-consent input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    margin-top: 2px;
+    cursor: pointer;
+    accent-color: var(--ink);
+  }
+  .pp-consent span {
+    font-size: 0.78rem;
+    line-height: 1.5;
+    color: #0A0A0A !important;
+  }
+  .pp-consent a {
+    color: #0A0A0A !important;
+    text-decoration: underline;
+  }
+  .pp-price-box__btn--disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+  .pp-consent--newsletter {
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border);
+  }
+  .pp-consent--newsletter span {
+    color: #0A0A0A !important;
+    font-size: 0.78rem;
+  }
 
   /* ── FAQ ─────────────────────────────────────────────────────────────── */
   .pp-faq {
@@ -535,11 +575,6 @@ export const prerender = true;
       Acquista il pack per €27 →
     </a>
     <span class="pp-hero__guarantee">🔒 Pagamento sicuro · Accesso immediato · Aggiornato nel tempo</span>
-  </div>
-  <div style="margin-top:1rem;">
-    <a href="/prompt-pack/accesso" style="font-size:0.85rem;color:rgba(197,138,55,0.7);text-decoration:none;border-bottom:1px solid rgba(197,138,55,0.3);">
-      Hai già acquistato? Accedi al tuo pack →
-    </a>
   </div>
 </section>
 
@@ -728,26 +763,19 @@ export const prerender = true;
         <li>Accesso immediato, nessuna app da installare</li>
         <li>Aggiornamenti futuri inclusi senza costi aggiuntivi</li>
       </ul>
-      <!-- Checkbox consenso recesso -->
-      <label style="display:flex;align-items:flex-start;gap:0.6rem;margin-bottom:0.9rem;cursor:pointer;">
-        <input type="checkbox" id="pp-consent" style="width:16px;height:16px;margin-top:2px;flex-shrink:0;accent-color:#C58A37;" />
-        <span style="font-size:0.78rem;color:rgba(240,235,227,0.5);line-height:1.5;">
-          Ho letto le <a href="/prompt-pack/termini/" target="_blank" style="color:#C58A37;text-decoration:underline;">condizioni di vendita</a> e confermo di voler accedere subito al contenuto digitale, rinunciando al diritto di recesso ai sensi dell'art. 59, co. 1, lett. o) D.Lgs. 206/2005.
-        </span>
+      <label class="pp-consent pp-consent--newsletter">
+        <input type="checkbox" id="pp-newsletter-check">
+        <span>Voglio ricevere aggiornamenti sui nuovi prompt e contenuti da Marco Munich. Posso cancellarmi in qualsiasi momento.</span>
       </label>
-      <a href="/api/prompt-pack/checkout" class="pp-price-box__btn" id="pp-buy-btn" style="opacity:0.4;pointer-events:none;">
+      <label class="pp-consent" id="pp-consent-label">
+        <input type="checkbox" id="pp-consent-check">
+        <span>Ho letto le <a href="/termini" target="_blank">condizioni di vendita</a> e confermo di voler accedere subito al contenuto digitale, rinunciando al diritto di recesso ai sensi dell'art. 59, co. 1, lett. o) D.Lgs. 206/2005.</span>
+      </label>
+      <a href="/api/prompt-pack/checkout" class="pp-price-box__btn pp-price-box__btn--disabled" id="pp-buy-btn" aria-disabled="true">
         Acquista ora → €27
       </a>
       <p class="pp-price-box__note">
-        Pagamento sicuro. Accesso via email entro pochi secondi dall'acquisto.
-      </p>
-      <p style="margin-top:0.6rem;font-size:0.75rem;color:rgba(240,235,227,0.35);line-height:1.4;">
-        Prodotto digitale — nessun rimborso.
-      </p>
-      <p style="margin-top:1rem;">
-        <a href="/prompt-pack/accesso" style="font-size:0.82rem;color:rgba(197,138,55,0.6);text-decoration:none;border-bottom:1px solid rgba(197,138,55,0.25);">
-          Hai già acquistato? Accedi →
-        </a>
+        Pagamento sicuro · Accesso immediato · Nessuna app da installare
       </p>
     </div>
 
@@ -808,15 +836,28 @@ export const prerender = true;
 
 </div><!-- /.pp -->
 
-<script is:inline>
-  var consent = document.getElementById('pp-consent');
-  var buyBtn  = document.getElementById('pp-buy-btn');
-  if (consent && buyBtn) {
-    consent.addEventListener('change', function() {
-      buyBtn.style.opacity = consent.checked ? '1' : '0.4';
-      buyBtn.style.pointerEvents = consent.checked ? 'auto' : 'none';
-    });
+<script>
+  const consentCheck = document.getElementById('pp-consent-check') as HTMLInputElement | null;
+  const newsletterCheck = document.getElementById('pp-newsletter-check') as HTMLInputElement | null;
+  const btn = document.getElementById('pp-buy-btn') as HTMLAnchorElement | null;
+
+  function updateBtn() {
+    if (!btn) return;
+    const enabled = consentCheck?.checked ?? false;
+    if (enabled) {
+      btn.classList.remove('pp-price-box__btn--disabled');
+      btn.removeAttribute('aria-disabled');
+    } else {
+      btn.classList.add('pp-price-box__btn--disabled');
+      btn.setAttribute('aria-disabled', 'true');
+    }
+    // Aggiunge ?newsletter=1 all'href se newsletter spuntata
+    const base = '/api/prompt-pack/checkout';
+    btn.href = newsletterCheck?.checked ? `${base}?newsletter=1` : base;
   }
+
+  consentCheck?.addEventListener('change', updateBtn);
+  newsletterCheck?.addEventListener('change', updateBtn);
 </script>
 
 </BaseLayout>

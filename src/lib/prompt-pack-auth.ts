@@ -10,6 +10,7 @@ export interface AccessTokenData {
   createdAt: string;
   stripeSessionId: string;
   stripeReceiptUrl: string | null;
+  newsletterConsent: boolean;
 }
 
 const COOKIE_NAME = 'pp_access';
@@ -18,8 +19,8 @@ const COOKIE_MAX_AGE = 60 * 60 * 24 * 365; // 1 anno
 // ── Gist KV ──────────────────────────────────────────────────────────────────
 
 async function gistFetch(method: 'GET' | 'PATCH', body?: object): Promise<Record<string, any>> {
-  const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
-  const GIST_ID = process.env.PP_GIST_ID;
+  const GITHUB_TOKEN = import.meta.env.GITHUB_TOKEN;
+  const GIST_ID = import.meta.env.PP_GIST_ID;
   if (!GITHUB_TOKEN || !GIST_ID) throw new Error('GITHUB_TOKEN o PP_GIST_ID non configurati');
 
   const res = await fetch(`https://api.github.com/gists/${GIST_ID}`, {
@@ -54,28 +55,7 @@ export async function createAccessToken(token: string, data: AccessTokenData): P
   const store = await readTokenStore();
   store[`token:${token}`] = data;
   store[`email:${data.email.toLowerCase()}`] = token;
-  store[`session:${data.stripeSessionId}`] = token; // idempotency key
   await writeTokenStore(store);
-}
-
-/** Controlla se una sessione Stripe è già stata processata (anti-replay webhook) */
-export async function hasProcessedSession(stripeSessionId: string): Promise<boolean> {
-  try {
-    const store = await readTokenStore();
-    return !!store[`session:${stripeSessionId}`];
-  } catch {
-    return false;
-  }
-}
-
-/** Trova il token di accesso associato a un'email, o null se non trovato */
-export async function getTokenByEmail(email: string): Promise<string | null> {
-  try {
-    const store = await readTokenStore();
-    return store[`email:${email.toLowerCase().trim()}`] ?? null;
-  } catch {
-    return null;
-  }
 }
 
 /** Valida un token e ritorna i dati utente, o null se invalido */
@@ -87,26 +67,6 @@ export async function validateToken(token: string): Promise<AccessTokenData | nu
     return data ?? null;
   } catch {
     return null;
-  }
-}
-
-/** Ritorna tutti gli acquirenti (chiavi `token:*`) ordinati per data decrescente */
-export async function getAllPurchasers(): Promise<Array<{ token: string } & AccessTokenData>> {
-  const store = await readTokenStore();
-  return Object.entries(store)
-    .filter(([key]) => key.startsWith('token:'))
-    .map(([key, data]) => ({ token: key.replace('token:', ''), ...(data as AccessTokenData) }))
-    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
-}
-
-/** Revoca un token rimuovendolo dallo store */
-export async function revokeToken(token: string): Promise<void> {
-  const store = await readTokenStore();
-  const data = store[`token:${token}`] as AccessTokenData | undefined;
-  if (data) {
-    delete store[`token:${token}`];
-    delete store[`email:${data.email.toLowerCase()}`];
-    await writeTokenStore(store);
   }
 }
 
@@ -129,7 +89,7 @@ export function buildAccessCookie(token: string): string {
   return [
     `${COOKIE_NAME}=${encodeURIComponent(token)}`,
     `Max-Age=${COOKIE_MAX_AGE}`,
-    'Path=/',
+    'Path=/prompt-pack',
     'HttpOnly',
     'SameSite=Lax',
     ...(import.meta.env.PROD ? ['Secure'] : []),
@@ -138,7 +98,16 @@ export function buildAccessCookie(token: string): string {
 
 /** Costruisce il Set-Cookie header per cancellare il cookie */
 export function clearAccessCookie(): string {
-  return `${COOKIE_NAME}=; Max-Age=0; Path=/; HttpOnly; SameSite=Lax`;
+  return `${COOKIE_NAME}=; Max-Age=0; Path=/prompt-pack; HttpOnly; SameSite=Lax`;
+}
+
+/** Ritorna tutti gli acquirenti (solo token:* keys) */
+export async function getAllPurchasers(): Promise<Array<{ token: string } & AccessTokenData>> {
+  const store = await readTokenStore();
+  return Object.entries(store)
+    .filter(([key]) => key.startsWith('token:'))
+    .map(([key, data]) => ({ token: key.replace('token:', ''), ...(data as AccessTokenData) }))
+    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 }
 
 /** Dev bypass: se PROMPT_PACK_DEV_BYPASS=true, non controlla il token */

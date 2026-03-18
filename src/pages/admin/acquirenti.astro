@@ -1,0 +1,184 @@
+---
+export const prerender = false;
+
+import { getAllPurchasers } from '@lib/prompt-pack-auth';
+
+const { request } = Astro;
+
+// Auth
+const ADMIN_PASSWORD = import.meta.env.ADMIN_PASSWORD;
+let authed = false;
+let loginError = false;
+let purchasers: Awaited<ReturnType<typeof getAllPurchasers>> = [];
+
+if (request.method === 'POST') {
+  const form = await request.formData();
+  if (form.get('password') === ADMIN_PASSWORD) {
+    authed = true;
+  } else {
+    loginError = true;
+  }
+} else {
+  const cookie = request.headers.get('cookie') || '';
+  authed = cookie.includes(`admin_auth=${ADMIN_PASSWORD}`);
+}
+
+if (authed) {
+  try {
+    purchasers = await getAllPurchasers();
+  } catch (e) {
+    console.error('[acquirenti] Errore lettura Gist:', e);
+  }
+}
+
+const newsletterCount = purchasers.filter(p => p.newsletterConsent).length;
+const total = purchasers.length;
+
+function formatDate(iso: string) {
+  return new Date(iso).toLocaleDateString('it-IT', { day: '2-digit', month: 'short', year: 'numeric' });
+}
+---
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Acquirenti — Admin</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0f0f1a; color: #e2e8f0; font-family: system-ui, sans-serif; min-height: 100vh; }
+
+    /* Login */
+    .login-wrap { display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+    .login-box { background: #1a1a2e; border: 1px solid #2d2d3d; border-radius: 14px; padding: 2.5rem; width: 320px; text-align: center; }
+    .login-box h1 { font-size: 1rem; color: #64748b; margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: .1em; }
+    input[type=password] { width: 100%; padding: .75rem 1rem; background: #0f0f1a; border: 1px solid #2d2d3d; border-radius: 8px; color: #e2e8f0; font-size: .95rem; margin-bottom: .75rem; }
+    button[type=submit] { width: 100%; padding: .75rem; background: #6366f1; border: none; border-radius: 8px; color: #fff; font-weight: 600; cursor: pointer; }
+    .login-error { color: #f87171; font-size: .85rem; margin-bottom: 1rem; }
+
+    /* Layout */
+    .page { max-width: 960px; margin: 0 auto; padding: 2.5rem 1.5rem; }
+    .top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem; }
+    h1 { font-size: 1.25rem; font-weight: 700; }
+    .back { font-size: .85rem; color: #64748b; text-decoration: none; }
+    .back:hover { color: #e2e8f0; }
+
+    /* Stats strip */
+    .stats { display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap; }
+    .stat { background: #1a1a2e; border: 1px solid #2d2d3d; border-radius: 10px; padding: 1rem 1.5rem; flex: 1; min-width: 140px; }
+    .stat-val { font-size: 2rem; font-weight: 800; color: #fff; line-height: 1; }
+    .stat-label { font-size: .75rem; color: #64748b; margin-top: .3rem; text-transform: uppercase; letter-spacing: .08em; }
+    .stat--green .stat-val { color: #4ade80; }
+
+    /* Filtro */
+    .filter { display: flex; gap: .5rem; margin-bottom: 1.25rem; }
+    .filter-btn { padding: .4rem .9rem; border-radius: 20px; border: 1px solid #2d2d3d; background: transparent; color: #94a3b8; font-size: .8rem; cursor: pointer; transition: all .15s; }
+    .filter-btn.active, .filter-btn:hover { background: #6366f1; border-color: #6366f1; color: #fff; }
+
+    /* Tabella */
+    table { width: 100%; border-collapse: collapse; font-size: .875rem; }
+    th { text-align: left; padding: .5rem .75rem; color: #64748b; font-weight: 500; font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; border-bottom: 1px solid #2d2d3d; }
+    td { padding: .65rem .75rem; border-bottom: 1px solid #1a1a2a; color: #cbd5e1; vertical-align: middle; }
+    tr:hover td { background: #1a1a2e; }
+    .badge { display: inline-flex; align-items: center; gap: .3rem; font-size: .72rem; font-weight: 600; border-radius: 20px; padding: .2rem .6rem; }
+    .badge--yes { background: rgba(74,222,128,.12); color: #4ade80; border: 1px solid rgba(74,222,128,.25); }
+    .badge--no  { background: rgba(100,116,139,.1); color: #64748b; border: 1px solid rgba(100,116,139,.2); }
+    .name { font-weight: 500; color: #f1f5f9; }
+    .email-cell { color: #94a3b8; font-size: .82rem; }
+    .date-cell { color: #64748b; font-size: .8rem; white-space: nowrap; }
+    .empty { color: #64748b; text-align: center; padding: 3rem; }
+  </style>
+</head>
+<body>
+
+{!authed ? (
+  <div class="login-wrap">
+    <div class="login-box">
+      <h1>Acquirenti — Admin</h1>
+      {loginError && <p class="login-error">Password errata.</p>}
+      <form method="POST">
+        <input type="password" name="password" placeholder="Password" autofocus />
+        <button type="submit">Accedi</button>
+      </form>
+    </div>
+  </div>
+) : (
+  <div class="page">
+    <div class="top">
+      <h1>🛒 Acquirenti Prompt Pack</h1>
+      <a href="/admin" class="back">← Admin</a>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-val">{total}</div>
+        <div class="stat-label">Acquirenti totali</div>
+      </div>
+      <div class="stat stat--green">
+        <div class="stat-val">{newsletterCount}</div>
+        <div class="stat-label">Newsletter sì</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val">{total - newsletterCount}</div>
+        <div class="stat-label">Newsletter no</div>
+      </div>
+    </div>
+
+    <div class="filter">
+      <button class="filter-btn active" data-filter="all">Tutti</button>
+      <button class="filter-btn" data-filter="yes">Newsletter ✓</button>
+      <button class="filter-btn" data-filter="no">Solo transaz.</button>
+    </div>
+
+    {purchasers.length === 0 ? (
+      <p class="empty">Nessun acquirente ancora.</p>
+    ) : (
+      <table id="purchasers-table">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Newsletter</th>
+            <th>Data acquisto</th>
+          </tr>
+        </thead>
+        <tbody>
+          {purchasers.map(p => (
+            <tr data-newsletter={p.newsletterConsent ? 'yes' : 'no'}>
+              <td class="name">{p.name || '—'}</td>
+              <td class="email-cell">{p.email}</td>
+              <td>
+                {p.newsletterConsent
+                  ? <span class="badge badge--yes">✓ Sì</span>
+                  : <span class="badge badge--no">No</span>
+                }
+              </td>
+              <td class="date-cell">{formatDate(p.createdAt)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    )}
+  </div>
+)}
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      document.querySelectorAll<HTMLTableRowElement>('#purchasers-table tbody tr').forEach(row => {
+        if (filter === 'all') {
+          row.style.display = '';
+        } else {
+          row.style.display = row.dataset.newsletter === filter ? '' : 'none';
+        }
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
