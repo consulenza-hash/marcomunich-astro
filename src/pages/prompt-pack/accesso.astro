@@ -626,6 +626,7 @@ const totalGPTs = categorie.filter(c => c.isGPT).reduce((sum, c) => sum + c.prom
     .user-menu__item svg { width: 14px; height: 14px; flex-shrink: 0; }
     .user-menu__item--danger { color: rgba(240,100,80,0.7); }
     .user-menu__item--danger:hover { color: rgb(240,100,80); background: rgba(240,100,80,0.06); }
+    .user-menu__item--muted { color: rgba(240,235,227,0.3); cursor: default; pointer-events: none; font-style: italic; }
     .user-menu__divider { height: 1px; background: rgba(255,255,255,0.06); margin: 0.25rem 0; }
     .topbar__search {
       flex: 1; max-width: 380px;
@@ -1112,36 +1113,83 @@ const totalGPTs = categorie.filter(c => c.isGPT).reduce((sum, c) => sum + c.prom
         <span class="user-menu__label">{user!.name ? user!.name.split(' ')[0] : 'Account'}</span>
       </button>
       <div class="user-menu__dropdown" id="user-menu-dropdown" role="menu">
-        <div class="user-menu__header">
-          {user!.name && <div class="user-menu__name">{user!.name}</div>}
-          <div class="user-menu__email">{user!.email}</div>
-          <div class="user-menu__date">
-            Acquistato il {new Date(user!.createdAt).toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' })}
+
+        <!-- Vista: info account -->
+        <div id="um-view-info">
+          <div class="user-menu__header">
+            <div class="user-menu__name" id="um-display-name">{user!.name || '—'}</div>
+            <div class="user-menu__email" id="um-display-email">{user!.email}</div>
+            <div class="user-menu__date">
+              Acquistato il {new Date(user!.createdAt).toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' })}
+            </div>
+          </div>
+          <div class="user-menu__items">
+            <!-- Ricevuta -->
+            {user!.stripeReceiptUrl ? (
+              <a href={user!.stripeReceiptUrl} target="_blank" rel="noopener" class="user-menu__item" role="menuitem">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/>
+                </svg>
+                Visualizza ricevuta →
+              </a>
+            ) : (
+              <span class="user-menu__item user-menu__item--muted">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/>
+                </svg>
+                Ricevuta nell'email di acquisto
+              </span>
+            )}
+            <!-- Modifica profilo -->
+            <button class="user-menu__item" id="um-edit-btn" role="menuitem">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+              </svg>
+              Modifica dati
+            </button>
+            <!-- Supporto -->
+            <a href="mailto:consulenza@marcomunich.com?subject=Supporto Prompt Pack" class="user-menu__item" role="menuitem">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/>
+              </svg>
+              Supporto via email
+            </a>
+            <div class="user-menu__divider"></div>
+            <a href="/api/prompt-pack/logout" class="user-menu__item user-menu__item--danger" role="menuitem">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16,17 21,12 16,7"/><line x1="21" y1="12" x2="9" y2="12"/>
+              </svg>
+              Esci
+            </a>
           </div>
         </div>
-        <div class="user-menu__items">
-          {user!.stripeReceiptUrl && (
-            <a href={user!.stripeReceiptUrl} target="_blank" rel="noopener" class="user-menu__item" role="menuitem">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/>
-              </svg>
-              Visualizza ricevuta →
-            </a>
-          )}
-          <a href="mailto:marco@marcomunich.com?subject=Supporto Prompt Pack" class="user-menu__item" role="menuitem">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/>
-            </svg>
-            Supporto via email
-          </a>
-          <div class="user-menu__divider"></div>
-          <a href="/api/prompt-pack/logout" class="user-menu__item user-menu__item--danger" role="menuitem">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16,17 21,12 16,7"/><line x1="21" y1="12" x2="9" y2="12"/>
-            </svg>
-            Esci
-          </a>
+
+        <!-- Vista: form modifica dati -->
+        <div id="um-view-edit" style="display:none;padding:1rem;">
+          <div style="font-size:0.75rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:rgba(197,138,55,0.7);margin-bottom:0.75rem;">
+            Modifica profilo
+          </div>
+          <label style="display:block;font-size:0.78rem;color:rgba(240,235,227,0.5);margin-bottom:0.25rem;">Nome</label>
+          <input id="um-input-name" type="text" placeholder="Il tuo nome"
+            value={user!.name || ''}
+            style="width:100%;padding:8px 10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:5px;color:#F0EBE3;font-size:0.88rem;margin-bottom:0.6rem;box-sizing:border-box;" />
+          <label style="display:block;font-size:0.78rem;color:rgba(240,235,227,0.5);margin-bottom:0.25rem;">Email</label>
+          <input id="um-input-email" type="email" placeholder="email@esempio.com"
+            value={user!.email}
+            style="width:100%;padding:8px 10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:5px;color:#F0EBE3;font-size:0.88rem;margin-bottom:0.75rem;box-sizing:border-box;" />
+          <div style="display:flex;gap:0.5rem;">
+            <button id="um-save-btn"
+              style="flex:1;padding:8px;background:#C58A37;color:#0A0A0A;border:none;border-radius:5px;font-size:0.85rem;font-weight:700;cursor:pointer;">
+              Salva
+            </button>
+            <button id="um-cancel-btn"
+              style="padding:8px 12px;background:rgba(255,255,255,0.06);color:rgba(240,235,227,0.6);border:1px solid rgba(255,255,255,0.1);border-radius:5px;font-size:0.85rem;cursor:pointer;">
+              Annulla
+            </button>
+          </div>
+          <div id="um-save-msg" style="display:none;margin-top:0.6rem;font-size:0.8rem;color:#C58A37;"></div>
         </div>
+
       </div>
     </div>
   </header>
@@ -1440,6 +1488,78 @@ const totalGPTs = categorie.filter(c => c.isGPT).reduce((sum, c) => sum + c.prom
         msg.style.border = '1px solid rgba(255,80,80,0.3)';
         msg.style.color = '#ff6b6b';
         msg.textContent = 'Errore di rete. Riprova tra qualche secondo.';
+      });
+    });
+  }
+
+  /* ── Profilo: toggle info ↔ edit ───────────────────────────────────────── */
+  var umViewInfo   = document.getElementById('um-view-info');
+  var umViewEdit   = document.getElementById('um-view-edit');
+  var umEditBtn    = document.getElementById('um-edit-btn');
+  var umCancelBtn  = document.getElementById('um-cancel-btn');
+  var umSaveBtn    = document.getElementById('um-save-btn');
+  var umSaveMsg    = document.getElementById('um-save-msg');
+  var umDisplayName  = document.getElementById('um-display-name');
+  var umDisplayEmail = document.getElementById('um-display-email');
+  var umInputName  = document.getElementById('um-input-name');
+  var umInputEmail = document.getElementById('um-input-email');
+
+  if (umEditBtn && umViewInfo && umViewEdit) {
+    umEditBtn.addEventListener('click', function() {
+      umViewInfo.style.display = 'none';
+      umViewEdit.style.display = 'block';
+      if (umSaveMsg) { umSaveMsg.style.display = 'none'; umSaveMsg.textContent = ''; }
+    });
+  }
+
+  if (umCancelBtn && umViewInfo && umViewEdit) {
+    umCancelBtn.addEventListener('click', function() {
+      umViewEdit.style.display = 'none';
+      umViewInfo.style.display = 'block';
+    });
+  }
+
+  if (umSaveBtn) {
+    umSaveBtn.addEventListener('click', function() {
+      var name  = umInputName  ? umInputName.value.trim()  : '';
+      var email = umInputEmail ? umInputEmail.value.trim() : '';
+
+      if (!name && !email) {
+        if (umSaveMsg) { umSaveMsg.style.display = 'block'; umSaveMsg.style.color = 'rgba(240,100,80,0.8)'; umSaveMsg.textContent = 'Inserisci almeno un campo.'; }
+        return;
+      }
+      if (email && !email.includes('@')) {
+        if (umSaveMsg) { umSaveMsg.style.display = 'block'; umSaveMsg.style.color = 'rgba(240,100,80,0.8)'; umSaveMsg.textContent = 'Email non valida.'; }
+        return;
+      }
+
+      umSaveBtn.disabled = true;
+      umSaveBtn.textContent = 'Salvataggio…';
+
+      fetch('/api/prompt-pack/update-profile', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: name, email: email }),
+      })
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        umSaveBtn.disabled = false;
+        umSaveBtn.textContent = 'Salva';
+        if (data.ok) {
+          if (umDisplayName && data.name)  umDisplayName.textContent  = data.name;
+          if (umDisplayEmail && data.email) umDisplayEmail.textContent = data.email;
+          if (umSaveMsg) { umSaveMsg.style.display = 'block'; umSaveMsg.style.color = '#C58A37'; umSaveMsg.textContent = 'Dati aggiornati con successo.'; }
+          setTimeout(function() {
+            if (umViewEdit && umViewInfo) { umViewEdit.style.display = 'none'; umViewInfo.style.display = 'block'; }
+          }, 1200);
+        } else {
+          if (umSaveMsg) { umSaveMsg.style.display = 'block'; umSaveMsg.style.color = 'rgba(240,100,80,0.8)'; umSaveMsg.textContent = data.error || 'Errore durante il salvataggio.'; }
+        }
+      })
+      .catch(function() {
+        umSaveBtn.disabled = false;
+        umSaveBtn.textContent = 'Salva';
+        if (umSaveMsg) { umSaveMsg.style.display = 'block'; umSaveMsg.style.color = 'rgba(240,100,80,0.8)'; umSaveMsg.textContent = 'Errore di rete. Riprova.'; }
       });
     });
   }
