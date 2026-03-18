@@ -558,6 +558,18 @@ export const prerender = true;
   }
 </style>
 
+<style is:global>
+  /* Forza il colore del testo nei checkbox del Prompt Pack — bypassa scoping Astro */
+  .pp-consent span,
+  .pp-consent--newsletter span {
+    color: #0A0A0A !important;
+  }
+  .pp-consent a {
+    color: #0A0A0A !important;
+    text-decoration: underline !important;
+  }
+</style>
+
 <!-- ── HERO ─────────────────────────────────────────────────────────────────── -->
 <div class="pp">
 
@@ -755,7 +767,8 @@ export const prerender = true;
       <div class="pp-price-box__price">€27</div>
       <div class="pp-price-box__sub">pagamento unico · accesso immediato</div>
       <ul class="pp-price-box__includes">
-        <li>147 prompt in 11 categorie (e crescono nel tempo)</li>
+        <li>123 prompt testo in 9 categorie (e crescono nel tempo)</li>
+        <li>24 prompt immagini AI — Gemini e Imagen 3 (cat. 06–07)</li>
         <li>10 Custom GPT pre-configurati per il tuo settore</li>
         <li>15 prompt per ampliare il punto di vista</li>
         <li>12 prompt per lavorare in profondità con i clienti</li>
