@@ -16,16 +16,26 @@ if (Astro.request.method === 'POST') {
     const pw = form.get('password')?.toString() || '';
     const adminPw = process.env.ADMIN_PASSWORD || 'admin';
     if (pw === adminPw) {
-      Astro.response.headers.append('Set-Cookie', buildAdminCookie(getExpectedAdminToken()));
-      return Astro.redirect('/admin/prompt-pack');
+      return new Response(null, {
+        status: 302,
+        headers: {
+          'Location': '/admin/prompt-pack',
+          'Set-Cookie': buildAdminCookie(getExpectedAdminToken()),
+        },
+      });
     } else {
       loginError = true;
     }
   }
 
   if (action === 'logout') {
-    Astro.response.headers.append('Set-Cookie', clearAdminCookie());
-    return Astro.redirect('/admin/prompt-pack');
+    return new Response(null, {
+      status: 302,
+      headers: {
+        'Location': '/admin/prompt-pack',
+        'Set-Cookie': clearAdminCookie(),
+      },
+    });
   }
 }
 
