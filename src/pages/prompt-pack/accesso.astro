@@ -963,6 +963,23 @@ const totalGPTs = categorie.filter(c => c.isGPT).reduce((sum, c) => sum + c.prom
     .sidebar__badge--gpt {
       background: #6d28d9 !important;
     }
+    .sidebar__item--guide {
+      background: rgba(197,138,55,0.06);
+      border-left-color: rgba(197,138,55,0.4);
+    }
+    .sidebar__item--guide:hover { background: rgba(197,138,55,0.12); border-left-color: var(--gold); }
+    .sidebar__divider { height: 1px; background: var(--border); margin: 0.5rem 0; }
+    .topbar__guide-link {
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.04em;
+      color: rgba(197,138,55,0.7);
+      background: rgba(197,138,55,0.08);
+      border: 1px solid rgba(197,138,55,0.2);
+      border-radius: 100px; padding: 0.2rem 0.75rem;
+      text-decoration: none; flex-shrink: 0;
+      transition: background 0.15s, color 0.15s;
+      white-space: nowrap;
+    }
+    .topbar__guide-link:hover { background: rgba(197,138,55,0.15); color: var(--gold); }
 
     /* ── GPT PREVIEW ── */
     .prompt-card__gpt-preview {
@@ -1197,6 +1214,7 @@ const totalGPTs = categorie.filter(c => c.isGPT).reduce((sum, c) => sum + c.prom
       <span class="topbar__brand-tag">Personal Branding Olistico</span>
     </a>
     <span class="topbar__product">Prompt Pack</span>
+    <a class="topbar__guide-link" href="#guide-box" id="topbar-guide-link">⚡ Mini guida</a>
     <div class="topbar__search">
       <svg class="topbar__search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
@@ -1301,6 +1319,15 @@ const totalGPTs = categorie.filter(c => c.isGPT).reduce((sum, c) => sum + c.prom
 
     <!-- SIDEBAR -->
     <aside class="sidebar" id="sidebar">
+      <!-- Mini guida link -->
+      <a class="sidebar__item sidebar__item--guide" href="#guide-box" id="sidebar-guide-link">
+        <span class="sidebar__num" style="opacity:1;">⚡</span>
+        <span class="sidebar__info">
+          <span class="sidebar__title">Mini guida</span>
+          <span class="sidebar__count">Come usare i prompt</span>
+        </span>
+      </a>
+      <div class="sidebar__divider"></div>
       <div class="sidebar__label">Categorie</div>
       {categorie.map((cat) => (
         <a class="sidebar__item" data-cat={cat.id} href={`#${cat.id}`}>
@@ -1721,6 +1748,23 @@ const totalGPTs = categorie.filter(c => c.isGPT).reduce((sum, c) => sum + c.prom
       });
     });
   }
+
+  /* ── Mini guida links (sidebar + topbar) → open guide and scroll ───────── */
+  function openAndScrollGuide(e) {
+    e.preventDefault();
+    var body = document.getElementById('guide-body');
+    var toggle = document.getElementById('guide-toggle');
+    var box = document.getElementById('guide-box');
+    if (body && body.style.display === 'none') {
+      body.style.display = 'block';
+      if (toggle) { toggle.textContent = 'Nascondi'; toggle.setAttribute('aria-expanded', 'true'); }
+    }
+    if (box) { box.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  }
+  var sidebarGuide = document.getElementById('sidebar-guide-link');
+  var topbarGuide  = document.getElementById('topbar-guide-link');
+  if (sidebarGuide) sidebarGuide.addEventListener('click', openAndScrollGuide);
+  if (topbarGuide)  topbarGuide.addEventListener('click', openAndScrollGuide);
 
   /* ── Guide box toggle ───────────────────────────────────────────────────── */
   var guideToggle = document.getElementById('guide-toggle');
