@@ -68,6 +68,16 @@ export async function hasProcessedSession(stripeSessionId: string): Promise<bool
   }
 }
 
+/** Trova il token di accesso associato a un'email, o null se non trovato */
+export async function getTokenByEmail(email: string): Promise<string | null> {
+  try {
+    const store = await readTokenStore();
+    return store[`email:${email.toLowerCase().trim()}`] ?? null;
+  } catch {
+    return null;
+  }
+}
+
 /** Valida un token e ritorna i dati utente, o null se invalido */
 export async function validateToken(token: string): Promise<AccessTokenData | null> {
   if (!token || token.length < 10) return null;

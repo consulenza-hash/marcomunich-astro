@@ -43,10 +43,8 @@ if (isDevBypass()) {
     }
   }
 
-  if (!user) {
-    // Nessun token valido → redirect alla landing
-    return Astro.redirect('/prompt-pack?accesso=negato', 302);
-  }
+  // Se non c'è token valido: non facciamo redirect, mostriamo la pagina di recupero accesso
+  // (user rimane null → il template mostra il form invece del pack)
 }
 
 const categorie = [
@@ -1040,6 +1038,87 @@ const totalGPTs = categorie.filter(c => c.isGPT).reduce((sum, c) => sum + c.prom
 </head>
 <body>
 
+{!user && (
+  <!-- PAGINA RECUPERO ACCESSO (no token / no cookie) -->
+  <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:#0C0B09;padding:2rem 1.5rem;">
+    <div style="max-width:440px;width:100%;text-align:center;">
+
+      <a href="/" style="display:inline-block;margin-bottom:2.5rem;font-family:Georgia,serif;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:#C58A37;text-decoration:none;">
+        Marco Munich ✦
+      </a>
+
+      <h1 style="margin:0 0 0.75rem;font-family:Georgia,serif;font-size:1.75rem;font-weight:700;color:#F0EBE3;line-height:1.2;">
+        Accedi al<br>Prompt Pack
+      </h1>
+      <p style="margin:0 0 2rem;font-size:0.95rem;line-height:1.6;color:rgba(240,235,227,0.55);">
+        Inserisci l'email con cui hai acquistato — ti inviamo subito il link di accesso.
+      </p>
+
+      <form id="recovery-form" style="display:flex;flex-direction:column;gap:0.75rem;">
+        <input
+          type="email"
+          id="recovery-email"
+          name="email"
+          placeholder="la-tua-email@esempio.com"
+          required
+          autocomplete="email"
+          style="width:100%;padding:14px 16px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:6px;color:#F0EBE3;font-size:1rem;font-family:Georgia,serif;outline:none;box-sizing:border-box;"
+        />
+        <button
+          type="submit"
+          id="recovery-btn"
+          style="width:100%;padding:15px;background:#C58A37;color:#0A0A0A;border:none;border-radius:6px;font-size:1rem;font-weight:700;font-family:Georgia,serif;cursor:pointer;letter-spacing:0.02em;"
+        >
+          Invia link di accesso →
+        </button>
+      </form>
+
+      <div id="recovery-msg" style="display:none;margin-top:1.5rem;padding:1rem;border-radius:6px;font-size:0.9rem;line-height:1.5;"></div>
+
+      <p style="margin-top:2rem;font-size:0.8rem;color:rgba(240,235,227,0.3);">
+        Non hai ancora acquistato?
+        <a href="/prompt-pack" style="color:#C58A37;text-decoration:none;">Scopri il Prompt Pack →</a>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('recovery-form');
+    const btn = document.getElementById('recovery-btn');
+    const msg = document.getElementById('recovery-msg');
+
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = (document.getElementById('recovery-email') as HTMLInputElement).value;
+      btn!.textContent = 'Invio in corso…';
+      btn!.setAttribute('disabled', 'true');
+
+      try {
+        await fetch('/api/prompt-pack/resend-access', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email }),
+        });
+        msg!.style.display = 'block';
+        msg!.style.background = 'rgba(197,138,55,0.1)';
+        msg!.style.border = '1px solid rgba(197,138,55,0.3)';
+        msg!.style.color = '#C58A37';
+        msg!.textContent = 'Fatto! Se questa email è associata a un acquisto, riceverai il link entro pochi secondi. Controlla anche lo spam.';
+        form!.style.display = 'none';
+      } catch {
+        btn!.textContent = 'Invia link di accesso →';
+        btn!.removeAttribute('disabled');
+        msg!.style.display = 'block';
+        msg!.style.background = 'rgba(255,80,80,0.1)';
+        msg!.style.border = '1px solid rgba(255,80,80,0.3)';
+        msg!.style.color = '#ff6b6b';
+        msg!.textContent = 'Errore di rete. Riprova tra qualche secondo.';
+      }
+    });
+  </script>
+)}
+
+{user && (
   <!-- HEADER -->
   <header class="topbar">
     <a href="/" class="topbar__brand">
@@ -1357,6 +1436,8 @@ const totalGPTs = categorie.filter(c => c.isGPT).reduce((sum, c) => sum + c.prom
       searchEmpty.classList.toggle('visible', !anyVisible && q.length > 0);
     });
   </script>
+
+)}
 
 </body>
 </html>
