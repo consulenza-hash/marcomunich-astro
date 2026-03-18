@@ -109,7 +109,7 @@ export function buildAccessCookie(token: string): string {
   return [
     `${COOKIE_NAME}=${encodeURIComponent(token)}`,
     `Max-Age=${COOKIE_MAX_AGE}`,
-    'Path=/prompt-pack',
+    'Path=/',
     'HttpOnly',
     'SameSite=Lax',
     ...(import.meta.env.PROD ? ['Secure'] : []),
@@ -118,7 +118,7 @@ export function buildAccessCookie(token: string): string {
 
 /** Costruisce il Set-Cookie header per cancellare il cookie */
 export function clearAccessCookie(): string {
-  return `${COOKIE_NAME}=; Max-Age=0; Path=/prompt-pack; HttpOnly; SameSite=Lax`;
+  return `${COOKIE_NAME}=; Max-Age=0; Path=/; HttpOnly; SameSite=Lax`;
 }
 
 /** Dev bypass: se PROMPT_PACK_DEV_BYPASS=true, non controlla il token */
