@@ -1082,40 +1082,6 @@ const totalGPTs = categorie.filter(c => c.isGPT).reduce((sum, c) => sum + c.prom
     </div>
   </div>
 
-  <script>
-    const form = document.getElementById('recovery-form');
-    const btn = document.getElementById('recovery-btn');
-    const msg = document.getElementById('recovery-msg');
-
-    form?.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const email = (document.getElementById('recovery-email') as HTMLInputElement).value;
-      btn!.textContent = 'Invio in corso…';
-      btn!.setAttribute('disabled', 'true');
-
-      try {
-        await fetch('/api/prompt-pack/resend-access', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email }),
-        });
-        msg!.style.display = 'block';
-        msg!.style.background = 'rgba(197,138,55,0.1)';
-        msg!.style.border = '1px solid rgba(197,138,55,0.3)';
-        msg!.style.color = '#C58A37';
-        msg!.textContent = 'Fatto! Se questa email è associata a un acquisto, riceverai il link entro pochi secondi. Controlla anche lo spam.';
-        form!.style.display = 'none';
-      } catch {
-        btn!.textContent = 'Invia link di accesso →';
-        btn!.removeAttribute('disabled');
-        msg!.style.display = 'block';
-        msg!.style.background = 'rgba(255,80,80,0.1)';
-        msg!.style.border = '1px solid rgba(255,80,80,0.3)';
-        msg!.style.color = '#ff6b6b';
-        msg!.textContent = 'Errore di rete. Riprova tra qualche secondo.';
-      }
-    });
-  </script>
 )}
 
 {user && (
@@ -1438,6 +1404,46 @@ const totalGPTs = categorie.filter(c => c.isGPT).reduce((sum, c) => sum + c.prom
   </script>
 
 )}
+
+<!-- Script recupero accesso — fuori da qualsiasi condizionale Astro -->
+<script is:inline>
+  var recoveryForm = document.getElementById('recovery-form');
+  if (recoveryForm) {
+    recoveryForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var emailEl = document.getElementById('recovery-email');
+      var btn = document.getElementById('recovery-btn');
+      var msg = document.getElementById('recovery-msg');
+      var email = emailEl ? emailEl.value : '';
+
+      btn.textContent = 'Invio in corso…';
+      btn.disabled = true;
+
+      fetch('/api/prompt-pack/resend-access', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email }),
+      })
+      .then(function() {
+        msg.style.display = 'block';
+        msg.style.background = 'rgba(197,138,55,0.1)';
+        msg.style.border = '1px solid rgba(197,138,55,0.3)';
+        msg.style.color = '#C58A37';
+        msg.textContent = 'Fatto! Se questa email è associata a un acquisto, riceverai il link entro pochi secondi. Controlla anche lo spam.';
+        recoveryForm.style.display = 'none';
+      })
+      .catch(function() {
+        btn.textContent = 'Invia link di accesso →';
+        btn.disabled = false;
+        msg.style.display = 'block';
+        msg.style.background = 'rgba(255,80,80,0.1)';
+        msg.style.border = '1px solid rgba(255,80,80,0.3)';
+        msg.style.color = '#ff6b6b';
+        msg.textContent = 'Errore di rete. Riprova tra qualche secondo.';
+      });
+    });
+  }
+</script>
 
 </body>
 </html>
