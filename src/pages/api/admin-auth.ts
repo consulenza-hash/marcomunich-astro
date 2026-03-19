@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
 import { ADMIN_PASSWORD } from 'astro:env/server';
-import { hashPassword, COOKIE_NAME, COOKIE_MAX_AGE } from '../../middleware';
+import { COOKIE_NAME, COOKIE_MAX_AGE } from '../../middleware';
 
 export const prerender = false;
 
@@ -9,15 +9,11 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
   const password = formData.get('password')?.toString() ?? '';
   const next = formData.get('next')?.toString() ?? '/admin';
 
-  const adminPassword = ADMIN_PASSWORD;
-
-  if (!adminPassword || password !== adminPassword) {
+  if (!ADMIN_PASSWORD || password !== ADMIN_PASSWORD) {
     return redirect(`/admin/login?error=1&next=${encodeURIComponent(next)}`, 302);
   }
 
-  const token = await hashPassword(password);
-
-  cookies.set(COOKIE_NAME, token, {
+  cookies.set(COOKIE_NAME, ADMIN_PASSWORD, {
     httpOnly: true,
     secure: true,
     sameSite: 'strict',

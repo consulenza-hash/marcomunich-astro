@@ -1,20 +1,12 @@
 import { defineMiddleware } from 'astro:middleware';
-import { ADMIN_PASSWORD, ADMIN_SESSION_SALT } from 'astro:env/server';
+import { ADMIN_PASSWORD } from 'astro:env/server';
 
 const COOKIE_NAME = 'mm_admin_session';
 const COOKIE_MAX_AGE = 60 * 60 * 24 * 365 * 10; // 10 anni — nessuna scadenza pratica
 
-async function hashPassword(password: string): Promise<string> {
-  const salt = ADMIN_SESSION_SALT ?? 'mm-salt';
-  const data = new TextEncoder().encode(password + salt);
-  const hash = await crypto.subtle.digest('SHA-256', data);
-  return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
-}
-
-async function isValidSession(cookie: string | undefined): Promise<boolean> {
+function isValidSession(cookie: string | undefined): boolean {
   if (!ADMIN_PASSWORD || !cookie) return false;
-  const expected = await hashPassword(ADMIN_PASSWORD);
-  return cookie === expected;
+  return cookie === ADMIN_PASSWORD;
 }
 
 export const onRequest = defineMiddleware(async (ctx, next) => {
@@ -31,7 +23,7 @@ export const onRequest = defineMiddleware(async (ctx, next) => {
       // noop — continua normalmente
     } else {
       const session = ctx.cookies.get(COOKIE_NAME)?.value;
-      const valid = await isValidSession(session);
+      const valid = isValidSession(session);
       if (!valid) {
         const redirect = encodeURIComponent(url.pathname);
         return new Response(null, {
