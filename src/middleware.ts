@@ -34,7 +34,13 @@ export const onRequest = defineMiddleware(async (ctx, next) => {
       const valid = await isValidSession(session);
       if (!valid) {
         const redirect = encodeURIComponent(url.pathname);
-        return ctx.redirect(`/admin/login?next=${redirect}`, 302);
+        return new Response(null, {
+          status: 302,
+          headers: {
+            Location: `/admin/login?next=${redirect}`,
+            'Cache-Control': 'no-store, no-cache, must-revalidate',
+          },
+        });
       }
     }
 

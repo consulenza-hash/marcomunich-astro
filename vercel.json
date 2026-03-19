@@ -1,5 +1,20 @@
 {
   "ignoreCommand": "[ \"$VERCEL_GIT_COMMIT_REF\" = \"deploy\" ] && exit 1 || exit 0",
+  "headers": [
+    {
+      "source": "/admin/:path*",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-store, no-cache, must-revalidate" },
+        { "key": "Pragma", "value": "no-cache" }
+      ]
+    },
+    {
+      "source": "/api/admin-auth",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-store, no-cache, must-revalidate" }
+      ]
+    }
+  ],
   "redirects": [
     { "source": "/inizia-da-qui", "destination": "/risorse/", "permanent": true },
     { "source": "/inizia-da-qui/", "destination": "/risorse/", "permanent": true },
