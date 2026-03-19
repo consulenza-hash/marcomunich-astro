@@ -7,7 +7,7 @@
  * Props:
  *   currentPath: string — percorso corrente per evidenziare la voce attiva
  */
-const { currentPath = '/' } = Astro.props;
+const { currentPath = '/', ctaLink = '', ctaLabel = '' } = Astro.props;
 
 const navItems = [
   { label: 'Homepage',    href: '/' },
@@ -50,6 +50,11 @@ const isActive = (href) => {
       </ul>
     </nav>
 
+    <!-- CTA opzionale (es. "Accedi al pack") -->
+    {ctaLink && (
+      <a href={ctaLink} class="header__cta">{ctaLabel}</a>
+    )}
+
     <!-- Hamburger mobile -->
     <button class="header__burger" aria-label="Apri menu" aria-expanded="false" aria-controls="mobile-menu">
       <span></span>
@@ -69,6 +74,11 @@ const isActive = (href) => {
             </a>
           </li>
         ))}
+        {ctaLink && (
+          <li>
+            <a href={ctaLink} class="header__mobile-link header__mobile-cta">{ctaLabel}</a>
+          </li>
+        )}
       </ul>
     </nav>
   </div>
@@ -151,6 +161,26 @@ const isActive = (href) => {
   .header__nav-link--active {
     border-bottom: 2px solid white;
     padding-bottom: 2px;
+  }
+
+  /* ── CTA opzionale ─────────────────────────────────────────────────────── */
+  .header__cta {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #C58A37;
+    text-decoration: none;
+    border: 1px solid #C58A37;
+    border-radius: 6px;
+    padding: 0.35rem 0.85rem;
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap;
+  }
+  .header__cta:hover {
+    background: #C58A37;
+    color: #0A0A0A;
+  }
+  .header__mobile-cta {
+    color: #C58A37 !important;
   }
 
   /* ── Hamburger mobile ──────────────────────────────────────────────────── */

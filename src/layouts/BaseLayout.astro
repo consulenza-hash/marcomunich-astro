@@ -24,6 +24,8 @@ const {
   description = "L'autenticità è la strada per fare qualsiasi cosa nella vita",
   image = 'https://marcomunich.com/og-image.jpg',
   currentPath = '/',
+  ctaLink = '',
+  ctaLabel = '',
   noIndex = false,
   schemaType = 'WebPage',
   datePublished,
@@ -180,7 +182,7 @@ const schemaGraph = [
 <body>
   <!-- Padding top per compensare header fisso (64px) -->
   <div class="pt-16">
-    <Header currentPath={currentPath} />
+    <Header currentPath={currentPath} ctaLink={ctaLink} ctaLabel={ctaLabel} />
 
     <main id="main-content">
       <slot />
