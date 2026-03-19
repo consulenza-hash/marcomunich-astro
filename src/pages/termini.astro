@@ -9,7 +9,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
       <div class="legal-body">
 
-        <p><strong>1. Venditore</strong></p>
+        <h3>1. Venditore</h3>
         <p>
           Il presente contratto di vendita è concluso tra l'acquirente (di seguito "Cliente") e:<br/>
           <strong>Marco Munich</strong><br/>
@@ -19,7 +19,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           Sito web: <a href="https://marcomunich.com">marcomunich.com</a>
         </p>
 
-        <p><strong>2. Oggetto del contratto</strong></p>
+        <h3>2. Oggetto del contratto</h3>
         <p>
           Il presente contratto disciplina l'acquisto del <strong>Prompt Pack per Coach, Counselor e Operatori Olistici</strong>, un prodotto digitale consistente in 147 prompt (testo e immagini AI) e 10 Custom GPT distribuiti in 11 categorie, accessibile tramite link personale via email.
         </p>
@@ -27,17 +27,17 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           Il prodotto è interamente digitale: non prevede la consegna di alcun bene fisico né l'invio di materiale cartaceo.
         </p>
 
-        <p><strong>3. Prezzo e pagamento</strong></p>
+        <h3>3. Prezzo e pagamento</h3>
         <p>
           Il prezzo del Prompt Pack è di <strong>€27,00 (IVA inclusa)</strong>, pagamento unico. Il pagamento avviene tramite Stripe (carte di credito/debito, Apple Pay, Google Pay). Al completamento del pagamento viene generata automaticamente una ricevuta/fattura Stripe inviata via email.
         </p>
 
-        <p><strong>4. Consegna del prodotto digitale</strong></p>
+        <h3>4. Consegna del prodotto digitale</h3>
         <p>
           Il prodotto viene consegnato immediatamente dopo la conferma del pagamento, tramite email contenente un link personale di accesso. La consegna avviene entro pochi secondi dall'acquisto. In caso di mancata ricezione dell'email entro 15 minuti dall'acquisto, il Cliente è invitato a contattare <a href="mailto:consulenza@marcomunich.com">consulenza@marcomunich.com</a>.
         </p>
 
-        <p><strong>5. Diritto di recesso — esclusione</strong></p>
+        <h3>5. Diritto di recesso — esclusione</h3>
         <p>
           Ai sensi dell'<strong>art. 59, comma 1, lettera o) del D.Lgs. 206/2005</strong> (Codice del Consumo), il diritto di recesso di 14 giorni previsto per i contratti a distanza <strong>non si applica</strong> ai contratti di fornitura di contenuto digitale mediante supporto non materiale, qualora il consumatore abbia espressamente acconsentito all'inizio dell'esecuzione del contratto prima della scadenza del periodo di recesso e abbia riconosciuto che avrebbe perso il diritto di recesso.
         </p>
@@ -52,7 +52,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           In ragione di quanto sopra, <strong>non è previsto alcun rimborso</strong> dopo l'acquisto.
         </p>
 
-        <p><strong>6. Politica rimborsi</strong></p>
+        <h3>6. Politica rimborsi</h3>
         <p>
           Trattandosi di prodotto digitale con consegna immediata e avendo il Cliente espressamente rinunciato al diritto di recesso come indicato all'art. 5, non è previsto il rimborso del prezzo di acquisto.
         </p>
@@ -60,27 +60,27 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           Sono fatti salvi i casi di errore tecnico che impedisca l'accesso al prodotto: in tal caso il Cliente può contattare <a href="mailto:consulenza@marcomunich.com">consulenza@marcomunich.com</a> per ricevere assistenza immediata.
         </p>
 
-        <p><strong>7. Aggiornamenti e disponibilità del prodotto</strong></p>
+        <h3>7. Aggiornamenti e disponibilità del prodotto</h3>
         <p>
           Il Venditore si impegna a mantenere accessibile il prodotto e a fornire gli aggiornamenti futuri inclusi nell'acquisto senza costi aggiuntivi. Il Venditore si riserva il diritto di modificare i contenuti del Prompt Pack nel tempo, a condizione che il valore complessivo del prodotto non diminuisca.
         </p>
 
-        <p><strong>8. Limitazione di responsabilità</strong></p>
+        <h3>8. Limitazione di responsabilità</h3>
         <p>
           Il Prompt Pack è uno strumento di supporto alla creazione di contenuti. Il Venditore non garantisce risultati specifici derivanti dall'uso dei prompt. La responsabilità del Venditore è limitata al prezzo di acquisto del prodotto.
         </p>
 
-        <p><strong>9. Privacy</strong></p>
+        <h3>9. Privacy</h3>
         <p>
           Il trattamento dei dati personali del Cliente è disciplinato dalla <a href="/privacy-policy">Privacy Policy</a> disponibile su questo sito.
         </p>
 
-        <p><strong>10. Legge applicabile e foro competente</strong></p>
+        <h3>10. Legge applicabile e foro competente</h3>
         <p>
           Il presente contratto è regolato dalla legge italiana. Per le controversie con consumatori si applica il foro del luogo di residenza o domicilio del consumatore. Per le controversie tra professionisti, il foro competente è quello di Vicenza. È disponibile la procedura di risoluzione alternativa delle controversie (ODR) tramite la piattaforma europea: <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener">ec.europa.eu/consumers/odr</a>.
         </p>
 
-        <p><strong>11. Contatti</strong></p>
+        <h3>11. Contatti</h3>
         <p>
           Per qualsiasi richiesta relativa all'acquisto: <a href="mailto:consulenza@marcomunich.com">consulenza@marcomunich.com</a>
         </p>
@@ -91,19 +91,19 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 </BaseLayout>
 
 <style>
+  .legal-body h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #111827;
+    margin-top: 2rem;
+    margin-bottom: 0.4rem;
+  }
   .legal-body p {
     margin-bottom: 1rem;
     line-height: 1.7;
     color: #374151;
   }
-  .legal-body p strong:only-child {
-    display: block;
-    margin-top: 2rem;
-    margin-bottom: 0.4rem;
-    font-size: 1rem;
-    color: #111827;
-  }
-  .legal-body p strong {
+  .legal-body strong {
     color: #111827;
   }
   .legal-body ul {
