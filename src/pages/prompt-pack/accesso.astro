@@ -9,6 +9,7 @@ import {
   isDevBypass,
   type AccessTokenData,
 } from '@lib/prompt-pack-auth';
+import { aggiornamenti } from '../../data/prompt-updates';
 
 // ── Auth gate ────────────────────────────────────────────────────────────────
 let user: AccessTokenData | null = null;
@@ -493,6 +494,7 @@ Dopo aver scritto, chiedi: "Questo tono riflette come vuoi essere percepito in q
 
 const totalPrompts = categorie.filter(c => !c.isGPT).reduce((sum, c) => sum + c.prompts.length, 0);
 const totalGPTs = categorie.filter(c => c.isGPT).reduce((sum, c) => sum + c.prompts.length, 0);
+const releasedUpdates = aggiornamenti.filter(a => a.status === 'released');
 ---
 <!DOCTYPE html>
 <html lang="it">
@@ -857,6 +859,24 @@ const totalGPTs = categorie.filter(c => c.isGPT).reduce((sum, c) => sum + c.prom
     .sidebar__badge--gpt {
       background: #6d28d9 !important;
     }
+    .sidebar__badge--update {
+      background: #1e3a5f !important;
+      color: #60a5fa;
+      border-color: rgba(96,165,250,0.3);
+    }
+    .update-subsection {
+      margin-bottom: 2rem;
+    }
+    .update-subsection__title {
+      font-size: .78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: #64748b;
+      margin-bottom: 1rem;
+      padding-bottom: .5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
 
     /* ── GPT PREVIEW ── */
     .prompt-card__gpt-preview {
@@ -1211,6 +1231,21 @@ const totalGPTs = categorie.filter(c => c.isGPT).reduce((sum, c) => sum + c.prom
           {cat.isGPT && <span class="sidebar__badge sidebar__badge--gpt">GPT</span>}
         </a>
       ))}
+      {releasedUpdates.length > 0 && (
+        <>
+          <div class="sidebar__label" style="margin-top:1.5rem;">Aggiornamenti</div>
+          {releasedUpdates.map((upd) => (
+            <a class="sidebar__item sidebar__item--update" data-cat={upd.id} href={`#${upd.id}`}>
+              <span class="sidebar__num">{upd.tag}</span>
+              <span class="sidebar__info">
+                <span class="sidebar__title">{upd.title}</span>
+                <span class="sidebar__count">{upd.sections.reduce((s,sec)=>s+sec.prompts.length,0)} prompt</span>
+              </span>
+              <span class="sidebar__badge sidebar__badge--update">NEW</span>
+            </a>
+          ))}
+        </>
+      )}
     </aside>
 
     <!-- MAIN CONTENT -->
@@ -1301,6 +1336,46 @@ const totalGPTs = categorie.filter(c => c.isGPT).reduce((sum, c) => sum + c.prom
           </div>
         </section>
       ))}
+
+    <!-- ── AGGIORNAMENTI RILASCIATI ────────────────────────────────── -->
+    {releasedUpdates.map((upd) => (
+      <section class="cat-section update-section" id={upd.id} data-cat-id={upd.id}>
+        <div class="cat-header">
+          <span class="cat-header__bg-num">{upd.tag}</span>
+          <div class="cat-header__num">{upd.tag.toUpperCase()}</div>
+          <div class="cat-header__text">
+            <h2 class="cat-header__title">
+              {upd.title}
+              <span class="cat-header__gpt-badge" style="background:rgba(99,102,241,0.15);color:#818cf8;border-color:rgba(99,102,241,0.3);">Nuovo</span>
+            </h2>
+            <p class="cat-header__sub">{upd.description}</p>
+          </div>
+        </div>
+        {upd.sections.map((sec) => (
+          <div class="update-subsection">
+            <h3 class="update-subsection__title">{sec.title}</h3>
+            <div class="prompts-grid">
+              {sec.prompts.map((p) => (
+                <div class="prompt-card" data-text={p.text}>
+                  {p.title && <div class="prompt-card__title">{p.title}</div>}
+                  <p class="prompt-card__text" data-raw={p.text}></p>
+                  <div class="prompt-card__footer">
+                    <span class="prompt-card__num">#{p.n}</span>
+                    <button class="prompt-card__copy" onclick="copyPrompt(this)">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/>
+                        <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
+                      </svg>
+                      Copia
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </section>
+    ))}
 
     <!-- ── PROMO BOOK + CONSULENZA ─────────────────────────────────── -->
     <div class="pp-upsell">
