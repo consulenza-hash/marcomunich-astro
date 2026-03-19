@@ -351,6 +351,11 @@ if (isAuth) {
 
 </head>
 <body>
+  <div id="genera-cfg"
+    data-slug={paramSlug}
+    data-modo={paramModo}
+    data-autostart={paramAutostart ? '1' : ''}
+    style="display:none"></div>
   <div class="wrap">
 
     {!isAuth ? (
@@ -467,8 +472,12 @@ if (isAuth) {
 
   {isAuth && (
     <script is:inline>
-      let sorgenteCorrente = `${paramSlug ? 'esistente' : 'nuovo'}`;
-      let modoCorrente     = `${paramModo}`;
+      const _cfg           = document.getElementById('genera-cfg')?.dataset ?? {};
+      const _paramSlug     = _cfg.slug     || '';
+      const _paramModo     = _cfg.modo     || 'solo-articolo';
+      const _paramAutostart = _cfg.autostart === '1';
+      let sorgenteCorrente = _paramSlug ? 'esistente' : 'nuovo';
+      let modoCorrente     = _paramModo;
       let timerInterval    = null;
       let startTime        = 0;
       let _keystatic_url   = '';
