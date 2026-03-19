@@ -1,7 +1,7 @@
 import { defineMiddleware } from 'astro:middleware';
 
 const COOKIE_NAME = 'mm_admin_session';
-const COOKIE_MAX_AGE = 60 * 60 * 24 * 7; // 7 giorni
+const COOKIE_MAX_AGE = 60 * 60 * 24 * 365 * 10; // 10 anni — nessuna scadenza pratica
 
 async function hashPassword(password: string): Promise<string> {
   const data = new TextEncoder().encode(password + (import.meta.env.ADMIN_SESSION_SALT ?? 'mm-salt'));
