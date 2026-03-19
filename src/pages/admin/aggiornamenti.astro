@@ -393,8 +393,8 @@ const nextRelease = scheduled.sort((a, b) => new Date(a.releaseDate).getTime() -
 
 </div>
 
-<script>
-  function toggleCard(id: string) {
+<script is:inline>
+  function toggleCard(id) {
     const body = document.getElementById('body-' + id);
     const chevron = document.getElementById('chevron-' + id);
     if (!body || !chevron) return;
@@ -402,7 +402,7 @@ const nextRelease = scheduled.sort((a, b) => new Date(a.releaseDate).getTime() -
     chevron.classList.toggle('open');
   }
 
-  function toggleText(updateId: string, n: number) {
+  function toggleText(updateId, n) {
     const el = document.getElementById('text-' + updateId + '-' + n);
     const btn = el?.nextElementSibling as HTMLButtonElement;
     if (!el) return;
@@ -410,7 +410,7 @@ const nextRelease = scheduled.sort((a, b) => new Date(a.releaseDate).getTime() -
     if (btn) btn.textContent = el.classList.contains('expanded') ? 'mostra meno' : 'mostra tutto';
   }
 
-  function copyText(btn: HTMLButtonElement, text: string) {
+  function copyText(btn, text) {
     navigator.clipboard.writeText(text).then(() => {
       btn.textContent = 'Copiato ✓';
       btn.classList.add('copied');
