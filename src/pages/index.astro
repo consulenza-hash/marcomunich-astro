@@ -106,6 +106,43 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
   </div>
 </section>
 
+<!-- ══ PROMPT PACK ════════════════════════════════════════════════════════ -->
+<section class="v2-pp">
+  <div class="v2-pp__inner">
+    <div class="v2-pp__text">
+      <span class="v2-label v2-label--gold">Strumento pratico</span>
+      <h2 class="v2-pp__title">147 prompt AI per chi si blocca sui contenuti</h2>
+      <p class="v2-pp__body">
+        Per Coach, Counselor e Operatori Olistici. Ogni prompt istruisce l'AI a farti
+        le domande giuste sul tuo lavoro reale — il contenuto viene da quello che rispondi tu,
+        non da formule generiche.
+      </p>
+      <div class="v2-pp__meta">
+        <span>147 prompt · 10 Custom GPT · 11 categorie</span>
+        <span class="v2-pp__price">€27 · una sola volta</span>
+      </div>
+      <a href="/prompt-pack" class="v2-btn v2-btn--pp">Scopri il Prompt Pack →</a>
+    </div>
+    <div class="v2-pp__aside">
+      <div class="v2-pp__card">
+        <div class="v2-pp__card-n">01</div>
+        <p>Scrivere dal vissuto reale</p>
+      </div>
+      <div class="v2-pp__card">
+        <div class="v2-pp__card-n">02</div>
+        <p>Trovare il tuo paradigma</p>
+      </div>
+      <div class="v2-pp__card">
+        <div class="v2-pp__card-n">03</div>
+        <p>Punto di vista scomodo</p>
+      </div>
+      <div class="v2-pp__card v2-pp__card--more">
+        <p>+ 8 categorie &amp; 10 Custom GPT</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ══ MANIFESTO ══════════════════════════════════════════════════════════ -->
 <section class="v2-manifesto">
   <div class="v2-manifesto__inner">
@@ -342,43 +379,6 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
   </div>
 </section>
 
-<!-- ══ PROMPT PACK ════════════════════════════════════════════════════════ -->
-<section class="v2-pp">
-  <div class="v2-pp__inner">
-    <div class="v2-pp__text">
-      <span class="v2-label v2-label--gold">Strumento pratico</span>
-      <h2 class="v2-pp__title">147 prompt AI per chi si blocca sui contenuti</h2>
-      <p class="v2-pp__body">
-        Per Coach, Counselor e Operatori Olistici. Ogni prompt istruisce l'AI a farti
-        le domande giuste sul tuo lavoro reale — il contenuto viene da quello che rispondi tu,
-        non da formule generiche.
-      </p>
-      <div class="v2-pp__meta">
-        <span>147 prompt · 10 Custom GPT · 11 categorie</span>
-        <span class="v2-pp__price">€27 · una sola volta</span>
-      </div>
-      <a href="/prompt-pack" class="v2-btn v2-btn--gold">Scopri il Prompt Pack →</a>
-    </div>
-    <div class="v2-pp__aside">
-      <div class="v2-pp__card">
-        <div class="v2-pp__card-n">01</div>
-        <p>Scrivere dal vissuto reale</p>
-      </div>
-      <div class="v2-pp__card">
-        <div class="v2-pp__card-n">02</div>
-        <p>Trovare il tuo paradigma</p>
-      </div>
-      <div class="v2-pp__card">
-        <div class="v2-pp__card-n">03</div>
-        <p>Punto di vista scomodo</p>
-      </div>
-      <div class="v2-pp__card v2-pp__card--more">
-        <p>+ 8 categorie &amp; 10 Custom GPT</p>
-      </div>
-    </div>
-  </div>
-</section>
-
 </BaseLayout>
 
 <style>
@@ -433,6 +433,12 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
   color: var(--white);
 }
 .v2-btn--gold:hover { background: #1DA851; transform: translateY(-1px); }
+
+.v2-btn--pp {
+  background: var(--gold);
+  color: var(--black);
+}
+.v2-btn--pp:hover { background: var(--gold-d); transform: translateY(-1px); }
 
 .v2-btn--white {
   background: var(--white);
