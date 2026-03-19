@@ -1,4 +1,4 @@
-(function () {
+document.addEventListener('DOMContentLoaded', function () {
   const KEY = 'mm_admin_ok';
   const PWD = 'QXSuH7$UfwYG';
 
@@ -40,4 +40,4 @@
   document.getElementById('mm-pwd').addEventListener('keydown', function (e) {
     if (e.key === 'Enter') attempt();
   });
-})();
+});
