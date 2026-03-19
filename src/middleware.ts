@@ -4,7 +4,9 @@ const ADMIN_GUARD_SCRIPT = `<script>
 (function(){
   var KEY='mm_admin_ok';
   var PWD='QXSuH7$UfwYG';
-  try{if(localStorage.getItem(KEY)==='1')return;}catch(e){}
+  var stored; try{stored=localStorage.getItem(KEY);}catch(e){stored='ERROR:'+e;}
+  console.log('[ADMIN-GUARD] localStorage key='+KEY+' value='+stored);
+  if(stored==='1')return;
   document.documentElement.style.visibility='hidden';
   function show(){
     var o=document.createElement('div');
@@ -22,7 +24,7 @@ const ADMIN_GUARD_SCRIPT = `<script>
     setTimeout(function(){var p=document.getElementById('mm-p');if(p)p.focus();},50);
     function go(){
       var v=document.getElementById('mm-p').value;
-      if(v===PWD){try{localStorage.setItem(KEY,'1');}catch(e){}document.getElementById('mm-overlay').remove();}
+      if(v===PWD){var err=null;try{localStorage.setItem(KEY,'1');}catch(e){err=e;}console.log('[ADMIN-GUARD] setItem result, error='+err+' readback='+localStorage.getItem(KEY));document.getElementById('mm-overlay').remove();}
       else{document.getElementById('mm-e').style.display='block';document.getElementById('mm-p').value='';document.getElementById('mm-p').focus();}
     }
     document.getElementById('mm-b').addEventListener('click',go);
