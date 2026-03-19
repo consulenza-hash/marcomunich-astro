@@ -342,6 +342,43 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
   </div>
 </section>
 
+<!-- ══ PROMPT PACK ════════════════════════════════════════════════════════ -->
+<section class="v2-pp">
+  <div class="v2-pp__inner">
+    <div class="v2-pp__text">
+      <span class="v2-label v2-label--gold">Strumento pratico</span>
+      <h2 class="v2-pp__title">147 prompt AI per chi si blocca sui contenuti</h2>
+      <p class="v2-pp__body">
+        Per Coach, Counselor e Operatori Olistici. Ogni prompt istruisce l'AI a farti
+        le domande giuste sul tuo lavoro reale — il contenuto viene da quello che rispondi tu,
+        non da formule generiche.
+      </p>
+      <div class="v2-pp__meta">
+        <span>147 prompt · 10 Custom GPT · 11 categorie</span>
+        <span class="v2-pp__price">€27 · una sola volta</span>
+      </div>
+      <a href="/prompt-pack" class="v2-btn v2-btn--gold">Scopri il Prompt Pack →</a>
+    </div>
+    <div class="v2-pp__aside">
+      <div class="v2-pp__card">
+        <div class="v2-pp__card-n">01</div>
+        <p>Scrivere dal vissuto reale</p>
+      </div>
+      <div class="v2-pp__card">
+        <div class="v2-pp__card-n">02</div>
+        <p>Trovare il tuo paradigma</p>
+      </div>
+      <div class="v2-pp__card">
+        <div class="v2-pp__card-n">03</div>
+        <p>Punto di vista scomodo</p>
+      </div>
+      <div class="v2-pp__card v2-pp__card--more">
+        <p>+ 8 categorie &amp; 10 Custom GPT</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 </BaseLayout>
 
 <style>
@@ -1094,5 +1131,82 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
   
   .v2-articles__header { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
   .v2-articles__grid { grid-template-columns: 1fr; gap: 2px; }
+}
+
+/* ── PROMPT PACK ─────────────────────────────────────────────────────────── */
+.v2-pp {
+  background: var(--black);
+  border-top: 1px solid rgba(197,138,55,0.2);
+}
+.v2-pp__inner {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 5rem var(--pad);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+.v2-pp__title {
+  font: 700 clamp(1.6rem, 3vw, 2.4rem)/1.15 var(--display);
+  color: var(--white);
+  margin: 0.75rem 0 1rem;
+}
+.v2-pp__body {
+  font-size: 1rem;
+  line-height: 1.65;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 1.25rem;
+}
+.v2-pp__meta {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.3);
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+.v2-pp__price {
+  color: var(--gold);
+}
+.v2-pp__aside {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+.v2-pp__card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  padding: 1.1rem 1rem;
+}
+.v2-pp__card-n {
+  font: 700 0.65rem/1 var(--sans);
+  color: var(--gold);
+  letter-spacing: 0.08em;
+  margin-bottom: 0.5rem;
+}
+.v2-pp__card p {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.4;
+}
+.v2-pp__card--more {
+  background: rgba(197,138,55,0.06);
+  border-color: rgba(197,138,55,0.2);
+}
+.v2-pp__card--more p {
+  color: var(--gold);
+  font-size: 0.8rem;
+}
+
+@media (max-width: 768px) {
+  .v2-pp__inner {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .v2-pp__aside {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 </style>
