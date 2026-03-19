@@ -48,6 +48,8 @@ export default defineConfig({
       SITE_URL:                 envField.string({ context: 'server', access: 'public',  optional: true }),
       PROMPT_PACK_DEV_BYPASS:   envField.string({ context: 'server', access: 'public',  optional: true }),
       PP_GIST_ID:               envField.string({ context: 'server', access: 'secret',  optional: true }),
+      ADMIN_PASSWORD:           envField.string({ context: 'server', access: 'secret',  optional: true }),
+      ADMIN_SESSION_SALT:       envField.string({ context: 'server', access: 'secret',  optional: true }),
     },
   },
 
