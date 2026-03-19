@@ -571,6 +571,7 @@ if (isAuth) {
           let testoSorgente  = promptInput ?? '';
           let existing_titolo = '';
           let existing_corpo  = '';
+          let existing_immagine = '';
 
           if (slug_esistente) {
             setStatus('📥 Caricamento articolo…');
@@ -579,9 +580,11 @@ if (isAuth) {
             const { testo } = await loadRes.json();
             testoSorgente = testo;
 
-            // Estrai titolo e corpo dall'mdoc
-            const titleMatch = testo.match(/^titolo:\s*"?([^"\n]+)"?/m);
-            existing_titolo  = titleMatch?.[1]?.replace(/\\"/g, '"') ?? slug_esistente;
+            // Estrai titolo, immagine e corpo dall'mdoc
+            const titleMatch    = testo.match(/^titolo:\s*"?([^"\n]+)"?/m);
+            existing_titolo     = titleMatch?.[1]?.replace(/\\"/g, '"') ?? slug_esistente;
+            const immagineMatch = testo.match(/^immagine:\s*(.+)$/m);
+            existing_immagine   = immagineMatch?.[1]?.trim() ?? '';
             const parts = testo.split(/^---$/m);
             existing_corpo   = parts.length >= 3 ? parts.slice(2).join('---').trim() : '';
           }
@@ -638,7 +641,7 @@ if (isAuth) {
           const saveRes = await fetch('/api/salva-bozza', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ art, modo: modoCorrente, slug_esistente, existing_titolo, existing_corpo }),
+            body: JSON.stringify({ art, modo: modoCorrente, slug_esistente, existing_titolo, existing_corpo, existing_immagine }),
           });
           const saveData = await saveRes.json();
           if (!saveRes.ok || !saveData.success) {

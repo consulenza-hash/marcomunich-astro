@@ -13,14 +13,15 @@ function slugify(text: string): string {
     .replace(/^-|-$/g, '');
 }
 
-function buildMdoc(art: Record<string, any>, existingTitolo: string, existingCorpo: string): string {
-  const titolo   = (art.titolo   && art.titolo   !== 'null') ? art.titolo   : existingTitolo;
-  const corpo    = (art.corpo    && art.corpo    !== 'null') ? art.corpo    : existingCorpo;
-  const descr    = (art.descrizione && art.descrizione !== 'null') ? art.descrizione : '';
-  const seoTitle = (art.seo_title && art.seo_title !== 'null') ? art.seo_title : null;
-  const seoDescr = (art.seo_description && art.seo_description !== 'null') ? art.seo_description : null;
-  const faqs     = Array.isArray(art.schema_faq) ? art.schema_faq : [];
-  const today    = new Date().toISOString().split('T')[0];
+function buildMdoc(art: Record<string, any>, existingTitolo: string, existingCorpo: string, existingImmagine = ''): string {
+  const titolo    = (art.titolo   && art.titolo   !== 'null') ? art.titolo   : existingTitolo;
+  const corpo     = (art.corpo    && art.corpo    !== 'null') ? art.corpo    : existingCorpo;
+  const descr     = (art.descrizione && art.descrizione !== 'null') ? art.descrizione : '';
+  const seoTitle  = (art.seo_title && art.seo_title !== 'null') ? art.seo_title : null;
+  const seoDescr  = (art.seo_description && art.seo_description !== 'null') ? art.seo_description : null;
+  const immagine  = existingImmagine || null;
+  const faqs      = Array.isArray(art.schema_faq) ? art.schema_faq : [];
+  const today     = new Date().toISOString().split('T')[0];
 
   const esc = (s: string) => String(s).replace(/\\/g, '\\\\').replace(/"/g, '\\"');
 
@@ -28,6 +29,7 @@ function buildMdoc(art: Record<string, any>, existingTitolo: string, existingCor
   yaml += `titolo: "${esc(titolo)}"\n`;
   yaml += `descrizione: "${esc(descr)}"\n`;
   yaml += `data: ${today}\n`;
+  if (immagine) yaml += `immagine: ${immagine}\n`;
   if (seoTitle) yaml += `seo_title: "${esc(seoTitle)}"\n`;
   if (seoDescr) yaml += `seo_description: "${esc(seoDescr)}"\n`;
   yaml += `seo_noindex: false\n`;
@@ -69,11 +71,12 @@ export const POST: APIRoute = async ({ request }) => {
     slug_esistente?: string;
     existing_titolo?: string;
     existing_corpo?: string;
+    existing_immagine?: string;
   };
   try { body = await request.json(); }
   catch { return new Response(JSON.stringify({ error: 'JSON non valido' }), { status: 400, headers }); }
 
-  const { art, modo, slug_esistente, existing_titolo = '', existing_corpo = '' } = body;
+  const { art, modo, slug_esistente, existing_titolo = '', existing_corpo = '', existing_immagine = '' } = body;
 
   // Determina slug finale:
   // - Se c'è un articolo esistente E il modo è "solo-metadati" oppure si vuole
@@ -90,7 +93,7 @@ export const POST: APIRoute = async ({ request }) => {
     if (!slug) slug = `articolo-${Date.now()}`;
   }
 
-  const mdocContent    = buildMdoc(art, existing_titolo, existing_corpo);
+  const mdocContent    = buildMdoc(art, existing_titolo, existing_corpo, existing_immagine);
   const filePath       = `src/content/articoli/${slug}/index.mdoc`;
   const fileContentB64 = Buffer.from(mdocContent, 'utf-8').toString('base64');
 
