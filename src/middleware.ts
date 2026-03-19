@@ -4,13 +4,14 @@ const COOKIE_NAME = 'mm_admin_session';
 const COOKIE_MAX_AGE = 60 * 60 * 24 * 365 * 10; // 10 anni — nessuna scadenza pratica
 
 async function hashPassword(password: string): Promise<string> {
-  const data = new TextEncoder().encode(password + (import.meta.env.ADMIN_SESSION_SALT ?? 'mm-salt'));
+  const salt = process.env.ADMIN_SESSION_SALT ?? 'mm-salt';
+  const data = new TextEncoder().encode(password + salt);
   const hash = await crypto.subtle.digest('SHA-256', data);
   return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
 async function isValidSession(cookie: string | undefined): Promise<boolean> {
-  const password = import.meta.env.ADMIN_PASSWORD;
+  const password = process.env.ADMIN_PASSWORD;
   if (!password || !cookie) return false;
   const expected = await hashPassword(password);
   return cookie === expected;
@@ -26,7 +27,7 @@ export const onRequest = defineMiddleware(async (ctx, next) => {
   // Proteggi tutte le rotte /admin/* (tranne login)
   if (url.pathname.startsWith('/admin') && !isLoginPage && !isAuthApi) {
     // In sviluppo locale senza ADMIN_PASSWORD configurata, lascia passare
-    if (!import.meta.env.ADMIN_PASSWORD) {
+    if (!process.env.ADMIN_PASSWORD) {
       // noop — continua normalmente
     } else {
       const session = ctx.cookies.get(COOKIE_NAME)?.value;

@@ -8,7 +8,7 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
   const password = formData.get('password')?.toString() ?? '';
   const next = formData.get('next')?.toString() ?? '/admin';
 
-  const adminPassword = import.meta.env.ADMIN_PASSWORD;
+  const adminPassword = process.env.ADMIN_PASSWORD;
 
   if (!adminPassword || password !== adminPassword) {
     return redirect(`/admin/login?error=1&next=${encodeURIComponent(next)}`, 302);
