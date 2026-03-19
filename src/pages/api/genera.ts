@@ -129,7 +129,8 @@ ${testo}`;
 export const POST: APIRoute = async ({ request }) => {
   // Auth check
   const cookie = request.headers.get('cookie') ?? '';
-  const statsAuth = cookie.split(';').find(c => c.trim().startsWith('stats_auth='))?.split('=')[1]?.trim();
+  const rawAuth = cookie.split(';').find(c => c.trim().startsWith('stats_auth='))?.split('=')[1]?.trim() ?? '';
+  const statsAuth   = decodeURIComponent(rawAuth);
   const expectedPwd = import.meta.env.STATS_PASSWORD || 'stats2024';
   if (statsAuth !== expectedPwd) {
     return new Response('Unauthorized', { status: 401 });
