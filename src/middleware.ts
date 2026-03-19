@@ -37,10 +37,6 @@ export const onRequest = defineMiddleware(async (ctx, next) => {
       }
     }
 
-    // /admin/ → redirect a /admin/index (non a keystatic)
-    if (url.pathname === '/admin' || url.pathname === '/admin/') {
-      return ctx.redirect('/admin/', 302);
-    }
   }
 
   const response = await next();
