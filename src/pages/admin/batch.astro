@@ -31,6 +31,7 @@ if (statsAuth !== expectedPwd) {
     .btn--gold{background:#C9A84C;color:#000} .btn--gold:not(:disabled):hover{background:#b8963e}
     .btn--gray{background:#333;color:#ddd} .btn--gray:hover:not(:disabled){background:#444}
     .btn--red{background:#8b2020;color:#fff} .btn--red:hover{background:#a02828}
+    .btn--green{background:#1a5c1a;color:#aef0ae} .btn--green:hover:not(:disabled){background:#246324}
     .sel-info{font-size:.85rem;color:#aaa;margin-left:auto}
     .article-list{display:flex;flex-direction:column;gap:4px;max-height:420px;overflow-y:auto;border:1px solid #2a2a2a;border-radius:8px;padding:8px;background:#141414;margin-bottom:20px}
     .article-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:6px;cursor:pointer;transition:background .1s}
@@ -48,6 +49,13 @@ if (statsAuth !== expectedPwd) {
     .final-msg{margin-top:12px;font-weight:600;font-size:.9rem}
     .final-msg.ok{color:#4caf50} .final-msg.partial{color:#ff9800}
     .loading{color:#666;font-size:.85rem;padding:20px;text-align:center}
+    #backup-section{display:none;margin-bottom:20px;padding:16px;background:#1a1a1a;border-radius:8px;border:1px solid #2a2a2a}
+    #backup-section h2{font-size:.95rem;color:#C9A84C;margin-bottom:12px}
+    .backup-list{display:flex;flex-direction:column;gap:6px;max-height:300px;overflow-y:auto}
+    .backup-row{display:flex;align-items:center;gap:10px;padding:7px 10px;background:#111;border-radius:6px}
+    .backup-title{font-size:.82rem;flex:1;color:#ccc}
+    .backup-status{font-size:.78rem;color:#666;flex-shrink:0}
+    .backup-status.ok{color:#4caf50} .backup-status.err{color:#f44336} .backup-status.loading{color:#C9A84C}
   </style>
 </head>
 <body>
@@ -75,9 +83,13 @@ if (statsAuth !== expectedPwd) {
     <div class="log" id="log"></div>
     <div class="final-msg" id="final-msg"></div>
   </div>
+  <div id="backup-section">
+    <h2>↩ Versioni originali — ripristino</h2>
+    <div class="backup-list" id="backup-list"></div>
+  </div>
   <script is:inline>
   (function(){
-    var arts=[],paused=false,stopped=false;
+    var arts=[],paused=false,stopped=false,backups={};
     async function load(){
       try{var r=await fetch("/api/lista-articoli");if(!r.ok)throw new Error(r.status);arts=await r.json();render();}
       catch(e){document.getElementById("article-list").innerHTML="<div class=\"loading\" style=\"color:#f44\">Errore: "+e.message+"</div>";}
@@ -112,6 +124,7 @@ if (statsAuth !== expectedPwd) {
       document.getElementById("progress-section").style.display="block";
       ["btn-start","btn-all","btn-none"].forEach(function(id){document.getElementById(id).disabled=true;});
       document.getElementById("log").innerHTML="";document.getElementById("final-msg").textContent="";
+      backups={};document.getElementById("backup-section").style.display="none";document.getElementById("backup-list").innerHTML="";
       for(var i=0;i<sel.length;i++){
         if(stopped)break;
         while(paused&&!stopped)await wait(500);
@@ -121,6 +134,7 @@ if (statsAuth !== expectedPwd) {
           var lr=await fetch("/api/articolo?slug="+encodeURIComponent(a.slug));
           if(!lr.ok)throw new Error("load "+lr.status);
           var testo=(await lr.json()).testo;
+          backups[a.slug]=testo;addBackupRow(a.slug,a.titolo);
           var tm=testo.match(/^titolo:\s*"?([^"\n]+)"?/m);
           var et=tm?tm[1].replace(/\\"/g,'"'):a.slug;
           var im=testo.match(/^immagine:\s*(.+)$/m);
@@ -146,6 +160,43 @@ if (statsAuth !== expectedPwd) {
     function prog(d,t,title){var pct=t>0?Math.round(d/t*100):0;document.getElementById("prog-bar").style.width=pct+"%";document.getElementById("prog-label").textContent=d+" / "+t+" completati";document.getElementById("current-art").textContent=title?"In corso: "+title:"";}
     function addLog(msg,type){var el=document.getElementById("log"),d=document.createElement("div");d.className="log-"+type;d.textContent=msg;el.appendChild(d);el.scrollTop=el.scrollHeight;}
     function wait(ms){return new Promise(function(r){setTimeout(r,ms);});}
+    function addBackupRow(slug,titolo){
+      var sec=document.getElementById("backup-section");
+      sec.style.display="block";
+      var list=document.getElementById("backup-list");
+      var row=document.createElement("div");
+      row.className="backup-row";
+      row.id="bkp-"+slug;
+      var btn=document.createElement("button");
+      btn.className="btn btn--green";
+      btn.style.fontSize=".78rem";
+      btn.style.padding="5px 10px";
+      btn.textContent="↩ Ripristina";
+      btn.onclick=function(){ripristina(slug,btn);};
+      var title=document.createElement("span");
+      title.className="backup-title";
+      title.textContent=titolo||slug;
+      var status=document.createElement("span");
+      status.className="backup-status";
+      status.id="bkp-status-"+slug;
+      status.textContent="pronto";
+      row.appendChild(btn);row.appendChild(title);row.appendChild(status);
+      list.appendChild(row);
+    }
+    async function ripristina(slug,btn){
+      var status=document.getElementById("bkp-status-"+slug);
+      if(!backups[slug]){status.textContent="nessun backup";status.className="backup-status err";return;}
+      btn.disabled=true;
+      status.textContent="ripristino...";status.className="backup-status loading";
+      try{
+        var r=await fetch("/api/ripristina-articolo",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({slug:slug,content:backups[slug]})});
+        if(!r.ok)throw new Error((await r.json()).error||r.status);
+        status.textContent="ripristinato";status.className="backup-status ok";
+      }catch(e){
+        status.textContent="errore: "+e.message;status.className="backup-status err";
+        btn.disabled=false;
+      }
+    }
     load();
   })();
   </script>
