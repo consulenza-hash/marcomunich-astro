@@ -27,7 +27,9 @@ if (!art) {
 
 const title    = art.titolo;
 const date     = formatDataIt(art.data);
-const imageUrl = art.immagine ? `/images/articoli/${art.immagine}` : null;
+const imageUrl = art.immagine
+  ? (String(art.immagine).startsWith('/') ? art.immagine : `/images/articoli/${art.immagine}`)
+  : null;
 
 const seoTitle = art.seo_title       || title;
 const seoDesc  = art.seo_description || art.descrizione || '';
