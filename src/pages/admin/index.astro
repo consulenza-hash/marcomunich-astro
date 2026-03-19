@@ -1,6 +1,17 @@
 ---
 export const prerender = false;
-// Redirect semplice a /keystatic con link rapido alle statistiche
+const expectedPwd = (import.meta.env.STATS_PASSWORD || 'stats2024').trim();
+const isAuth = (Astro.cookies.get('stats_auth')?.value ?? '') === expectedPwd;
+if (!isAuth) {
+  if (Astro.request.method === 'POST') {
+    const form = await Astro.request.formData();
+    if ((form.get('password')?.toString() ?? '').trim() === expectedPwd) {
+      Astro.cookies.set('stats_auth', expectedPwd, { path: '/', maxAge: 86400 * 7 });
+      return Astro.redirect('/admin', 302);
+    }
+  }
+  return new Response(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Admin</title></head><body style="background:#0f172a;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;font-family:sans-serif"><div style="background:#1e293b;padding:2rem;border-radius:12px;width:320px;text-align:center"><p style="color:#94a3b8;margin:0 0 .5rem;font-size:.85rem">marcomunich.com</p><h2 style="color:#f1f5f9;margin:0 0 1.5rem;font-size:1.2rem">Area admin</h2><form method="POST"><input type="password" name="password" placeholder="Password" autofocus style="width:100%;box-sizing:border-box;padding:.75rem 1rem;border-radius:8px;border:1px solid #334155;background:#0f172a;color:#f1f5f9;font-size:1rem;margin-bottom:.75rem"><button style="width:100%;padding:.75rem;background:#6366f1;color:#fff;border:none;border-radius:8px;font-size:1rem;cursor:pointer">Accedi</button></form></div></body></html>`, { status: 401, headers: { 'Content-Type': 'text/html' } });
+}
 ---
 <!DOCTYPE html>
 <html lang="it">
