@@ -108,7 +108,7 @@ export const POST: APIRoute = async ({ request }) => {
     async start(controller) {
       try {
         const stream = client.messages.stream({
-          model: 'claude-sonnet-4-6',
+          model: 'claude-opus-4-5',
           max_tokens: 8000,
           system: SISTEMA,
           messages: [{ role: 'user', content: prompt }],
