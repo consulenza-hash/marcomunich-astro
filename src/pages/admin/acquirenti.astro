@@ -6,7 +6,7 @@ import { getAllPurchasers } from '@lib/prompt-pack-auth';
 const { request } = Astro;
 
 // Auth
-const ADMIN_PASSWORD = import.meta.env.ADMIN_PASSWORD;
+const ADMIN_PASSWORD = import.meta.env.STATS_PASSWORD || 'stats2024';
 let authed = false;
 let loginError = false;
 let purchasers: Awaited<ReturnType<typeof getAllPurchasers>> = [];
@@ -14,13 +14,13 @@ let purchasers: Awaited<ReturnType<typeof getAllPurchasers>> = [];
 if (request.method === 'POST') {
   const form = await request.formData();
   if (form.get('password') === ADMIN_PASSWORD) {
+    Astro.cookies.set('stats_auth', ADMIN_PASSWORD, { path: '/', maxAge: 86400 * 7 });
     authed = true;
   } else {
     loginError = true;
   }
 } else {
-  const cookie = request.headers.get('cookie') || '';
-  authed = cookie.includes(`admin_auth=${ADMIN_PASSWORD}`);
+  authed = (Astro.cookies.get('stats_auth')?.value ?? '') === ADMIN_PASSWORD;
 }
 
 if (authed) {

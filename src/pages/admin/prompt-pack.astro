@@ -5,7 +5,8 @@ import { getAllPurchasers } from '@lib/prompt-pack-auth';
 import { getExpectedAdminToken, isAdminRequest, buildAdminCookie, clearAdminCookie } from '@lib/admin-auth';
 
 // ── Auth ──────────────────────────────────────────────────────────────────────
-let isLoggedIn = isAdminRequest(Astro.request);
+const EXPECTED_PWD = import.meta.env.STATS_PASSWORD || 'stats2024';
+let isLoggedIn = (Astro.cookies.get('stats_auth')?.value ?? '') === EXPECTED_PWD;
 let loginError = false;
 
 if (Astro.request.method === 'POST') {
@@ -14,28 +15,17 @@ if (Astro.request.method === 'POST') {
 
   if (action === 'login') {
     const pw = form.get('password')?.toString() || '';
-    const adminPw = process.env.ADMIN_PASSWORD || 'admin';
-    if (pw === adminPw) {
-      return new Response(null, {
-        status: 302,
-        headers: {
-          'Location': '/admin/prompt-pack',
-          'Set-Cookie': buildAdminCookie(getExpectedAdminToken()),
-        },
-      });
+    if (pw === EXPECTED_PWD) {
+      Astro.cookies.set('stats_auth', EXPECTED_PWD, { path: '/', maxAge: 86400 * 7 });
+      return Astro.redirect('/admin/prompt-pack', 302);
     } else {
       loginError = true;
     }
   }
 
   if (action === 'logout') {
-    return new Response(null, {
-      status: 302,
-      headers: {
-        'Location': '/admin/prompt-pack',
-        'Set-Cookie': clearAdminCookie(),
-      },
-    });
+    Astro.cookies.delete('stats_auth', { path: '/' });
+    return Astro.redirect('/admin/prompt-pack', 302);
   }
 }
 
