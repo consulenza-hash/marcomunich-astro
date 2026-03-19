@@ -1,0 +1,153 @@
+---
+export const prerender = false;
+
+const cookie    = Astro.request.headers.get('cookie') ?? '';
+const rawAuth   = cookie.split(';').find(c => c.trim().startsWith('stats_auth='))?.split('=')[1]?.trim() ?? '';
+const statsAuth = decodeURIComponent(rawAuth);
+const expectedPwd = (import.meta.env.STATS_PASSWORD || 'stats2024').trim();
+
+if (statsAuth !== expectedPwd) {
+  return new Response(
+    `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Login</title><style>body{background:#111;color:#fff;font-family:sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0}form{display:flex;flex-direction:column;gap:12px;width:280px}input{padding:10px;background:#222;border:1px solid #333;color:#fff;border-radius:4px}button{padding:10px;background:#C9A84C;color:#000;border:none;border-radius:4px;cursor:pointer;font-weight:700}</style></head><body><form method="POST" action="/api/admin-auth"><h2>Admin</h2><input type="password" name="password" placeholder="Password" autofocus><input type="hidden" name="redirect" value="/admin/batch"><button type="submit">Accedi</button></form></body></html>`,
+    { status: 401, headers: { 'Content-Type': 'text/html' } }
+  );
+}
+---
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Batch Rewrite - Admin</title>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{background:#0f0f0f;color:#e0e0e0;font-family:-apple-system,BlinkMacSystemFont,sans-serif;min-height:100vh;padding:24px}
+    h1{color:#C9A84C;font-size:1.5rem;margin-bottom:24px}
+    .toolbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:20px;padding:16px;background:#1a1a1a;border-radius:8px;border:1px solid #2a2a2a}
+    .toolbar label{color:#aaa;font-size:.85rem}
+    select,.btn{padding:8px 14px;border-radius:6px;font-size:.85rem;cursor:pointer;border:none}
+    select{background:#2a2a2a;color:#e0e0e0;border:1px solid #3a3a3a}
+    .btn{font-weight:600;transition:opacity .15s} .btn:disabled{opacity:.35;cursor:not-allowed}
+    .btn--gold{background:#C9A84C;color:#000} .btn--gold:not(:disabled):hover{background:#b8963e}
+    .btn--gray{background:#333;color:#ddd} .btn--gray:hover:not(:disabled){background:#444}
+    .btn--red{background:#8b2020;color:#fff} .btn--red:hover{background:#a02828}
+    .sel-info{font-size:.85rem;color:#aaa;margin-left:auto}
+    .article-list{display:flex;flex-direction:column;gap:4px;max-height:420px;overflow-y:auto;border:1px solid #2a2a2a;border-radius:8px;padding:8px;background:#141414;margin-bottom:20px}
+    .article-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:6px;cursor:pointer;transition:background .1s}
+    .article-item:hover{background:#1e1e1e}
+    .article-item input[type=checkbox]{accent-color:#C9A84C;width:16px;height:16px;cursor:pointer;flex-shrink:0}
+    .art-title{font-size:.85rem;flex:1;line-height:1.4} .art-date{font-size:.75rem;color:#666;flex-shrink:0}
+    .badge{font-size:.75rem;background:#2a2a1a;color:#C9A84C;border:1px solid rgba(201,168,76,.27);padding:1px 6px;border-radius:10px;flex-shrink:0}
+    #progress-section{display:none;margin-bottom:20px;padding:16px;background:#1a1a1a;border-radius:8px;border:1px solid #2a2a2a}
+    .pb-wrap{background:#2a2a2a;border-radius:4px;height:10px;margin:10px 0;overflow:hidden}
+    .pb-fill{height:100%;background:#C9A84C;border-radius:4px;transition:width .3s}
+    .prog-label{font-size:.85rem;color:#aaa} .current-art{font-size:.82rem;color:#C9A84C;margin-top:6px;min-height:1.2em}
+    .ctrl-btns{display:flex;gap:8px;margin-top:12px}
+    .log{margin-top:14px;max-height:200px;overflow-y:auto;font-size:.78rem;font-family:monospace;background:#0d0d0d;border-radius:6px;padding:10px;display:flex;flex-direction:column;gap:3px}
+    .log-ok{color:#4caf50} .log-err{color:#f44336} .log-info{color:#888}
+    .final-msg{margin-top:12px;font-weight:600;font-size:.9rem}
+    .final-msg.ok{color:#4caf50} .final-msg.partial{color:#ff9800}
+    .loading{color:#666;font-size:.85rem;padding:20px;text-align:center}
+  </style>
+</head>
+<body>
+  <h1>Batch Rewrite Articoli</h1>
+  <div class="toolbar">
+    <label>Modo: <select id="modo" style="margin-left:6px">
+      <option value="tutto-completo" selected>tutto-completo (articolo + SEO + FAQ)</option>
+      <option value="solo-metadati">solo-metadati (SEO + FAQ, testo invariato)</option>
+      <option value="solo-articolo">solo-articolo (riscrivi testo, no SEO)</option>
+    </select></label>
+    <span class="sel-info" id="sel-info">0 selezionati</span>
+    <button class="btn btn--gray" id="btn-all">Seleziona tutti</button>
+    <button class="btn btn--gray" id="btn-none">Deseleziona tutti</button>
+    <button class="btn btn--gold" id="btn-start" disabled>Avvia batch</button>
+  </div>
+  <div class="article-list" id="article-list"><div class="loading">Caricamento...</div></div>
+  <div id="progress-section">
+    <div class="prog-label" id="prog-label">0 / 0 completati</div>
+    <div class="pb-wrap"><div class="pb-fill" id="prog-bar" style="width:0%"></div></div>
+    <div class="current-art" id="current-art"></div>
+    <div class="ctrl-btns">
+      <button class="btn btn--gray" id="btn-pause">Pausa</button>
+      <button class="btn btn--red" id="btn-stop">Stop</button>
+    </div>
+    <div class="log" id="log"></div>
+    <div class="final-msg" id="final-msg"></div>
+  </div>
+  <script is:inline>
+  (function(){
+    var arts=[],paused=false,stopped=false;
+    async function load(){
+      try{var r=await fetch("/api/lista-articoli");if(!r.ok)throw new Error(r.status);arts=await r.json();render();}
+      catch(e){document.getElementById("article-list").innerHTML="<div class=\"loading\" style=\"color:#f44\">Errore: "+e.message+"</div>";}
+    }
+    function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+    function render(){
+      var el=document.getElementById("article-list");
+      if(!arts.length){el.innerHTML="<div class=\"loading\">Nessun articolo</div>";return;}
+      var h="";
+      for(var i=0;i<arts.length;i++){
+        var a=arts[i];
+        h+="<label class=\"article-item\"><input type=\"checkbox\" class=\"art-cb\" data-i=\""+i+"\">";
+        h+="<span class=\"art-title\">"+esc(a.titolo)+"</span>";
+        if(a.hasImmagine)h+="<span class=\"badge\">img</span>";
+        h+="<span class=\"art-date\">"+esc(a.data||"")+"</span></label>";
+      }
+      el.innerHTML=h;
+      el.querySelectorAll(".art-cb").forEach(function(cb){cb.addEventListener("change",upd);});
+    }
+    function upd(){var n=document.querySelectorAll(".art-cb:checked").length;document.getElementById("sel-info").textContent=n+" selezionati";document.getElementById("btn-start").disabled=n===0;}
+    document.getElementById("btn-all").onclick=function(){document.querySelectorAll(".art-cb").forEach(function(c){c.checked=true;});upd();};
+    document.getElementById("btn-none").onclick=function(){document.querySelectorAll(".art-cb").forEach(function(c){c.checked=false;});upd();};
+    document.getElementById("btn-pause").onclick=function(){paused=!paused;this.textContent=paused?"Riprendi":"Pausa";};
+    document.getElementById("btn-stop").onclick=function(){stopped=true;paused=false;addLog("Interrotto.","info");};
+    document.getElementById("btn-start").onclick=run;
+    async function run(){
+      var cbs=document.querySelectorAll(".art-cb:checked"),sel=[];
+      for(var k=0;k<cbs.length;k++)sel.push(arts[+cbs[k].dataset.i]);
+      if(!sel.length)return;
+      paused=false;stopped=false;
+      var modo=document.getElementById("modo").value,total=sel.length,ok=0,err=0;
+      document.getElementById("progress-section").style.display="block";
+      ["btn-start","btn-all","btn-none"].forEach(function(id){document.getElementById(id).disabled=true;});
+      document.getElementById("log").innerHTML="";document.getElementById("final-msg").textContent="";
+      for(var i=0;i<sel.length;i++){
+        if(stopped)break;
+        while(paused&&!stopped)await wait(500);
+        if(stopped)break;
+        var a=sel[i];prog(i,total,a.titolo);
+        try{
+          var lr=await fetch("/api/articolo?slug="+encodeURIComponent(a.slug));
+          if(!lr.ok)throw new Error("load "+lr.status);
+          var testo=(await lr.json()).testo;
+          var tm=testo.match(/^titolo:\s*"?([^"\n]+)"?/m);
+          var et=tm?tm[1].replace(/\\"/g,'"'):a.slug;
+          var im=testo.match(/^immagine:\s*(.+)$/m);
+          var ei=im?im[1].trim():"";
+          var pts=testo.split(/^---$/m);
+          var ec=pts.length>=3?pts.slice(2).join("---").trim():"";
+          var gr=await fetch("/api/genera-json",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({prompt:testo,modo:modo,slug_esistente:a.slug})});
+          if(!gr.ok)throw new Error("gen "+gr.status);
+          var gd=await gr.json();if(!gd.art)throw new Error("no art");
+          var sr=await fetch("/api/salva-bozza",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({art:gd.art,modo:modo,slug_esistente:a.slug,existing_titolo:et,existing_corpo:ec,existing_immagine:ei})});
+          if(!sr.ok)throw new Error("save "+sr.status);
+          ok++;addLog("OK  "+a.slug,"ok");
+        }catch(e){err++;addLog("ERR "+a.slug+": "+e.message,"err");}
+        prog(i+1,total,"");
+        if(i<sel.length-1&&!stopped)await wait(4000);
+      }
+      ["btn-start","btn-all","btn-none"].forEach(function(id){document.getElementById(id).disabled=false;});
+      document.getElementById("current-art").textContent="";
+      var fe=document.getElementById("final-msg");
+      fe.textContent=(stopped?"Interrotto. ":"Completato. ")+ok+" ok, "+err+" errori.";
+      fe.className="final-msg "+(err===0?"ok":"partial");
+    }
+    function prog(d,t,title){var pct=t>0?Math.round(d/t*100):0;document.getElementById("prog-bar").style.width=pct+"%";document.getElementById("prog-label").textContent=d+" / "+t+" completati";document.getElementById("current-art").textContent=title?"In corso: "+title:"";}
+    function addLog(msg,type){var el=document.getElementById("log"),d=document.createElement("div");d.className="log-"+type;d.textContent=msg;el.appendChild(d);el.scrollTop=el.scrollHeight;}
+    function wait(ms){return new Promise(function(r){setTimeout(r,ms);});}
+    load();
+  })();
+  </script>
+</body>
+</html>
