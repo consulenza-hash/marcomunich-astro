@@ -134,24 +134,32 @@ if (statsAuth !== expectedPwd) {
         if(stopped)break;
         var a=sel[i];prog(i,total,a.titolo);
         try{
+          addLog("[1/4] carico "+a.slug+"...","info");
           var lr=await fetch("/api/articolo?slug="+encodeURIComponent(a.slug));
           if(!lr.ok)throw new Error("load "+lr.status);
           var testo=(await lr.json()).testo;
           backups[a.slug]=testo;addBackupRow(a.slug,a.titolo);
+          addLog("[1/4] caricato ("+testo.length+" chars)","info");
           var tm=testo.match(/^titolo:\s*"?([^"\n]+)"?/m);
           var et=tm?tm[1].replace(/\\"/g,'"'):a.slug;
           var im=testo.match(/^immagine:\s*(.+)$/m);
           var ei=im?im[1].trim():"";
           var pts=testo.split(/^---$/m);
           var ec=pts.length>=3?pts.slice(2).join("---").trim():"";
+          addLog("[2/4] genero con AI (Opus)...","info");
           var gr=await fetch("/api/genera-json",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({testo:testo,modo:modo,isNew:false})});
-          if(!gr.ok)throw new Error("gen "+gr.status);
+          if(!gr.ok){var errBody="";try{errBody=await gr.text();}catch(x){}throw new Error("gen "+gr.status+" "+errBody.substring(0,200));}
           var reader=gr.body.getReader(),decoder=new TextDecoder(),rawJson="";
           while(true){var ch=await reader.read();if(ch.done)break;rawJson+=decoder.decode(ch.value,{stream:true});}
+          addLog("[2/4] ricevuto stream ("+rawJson.length+" chars)","info");
           if(rawJson.includes('"__error"')){var em=rawJson.match(/"__error":"([^"]+)"/);throw new Error(em?em[1]:"Errore Claude");}
-          var art=JSON.parse(rawJson.trim());if(!art||!art.titolo)throw new Error("no art");
+          addLog("[3/4] parsing JSON...","info");
+          var art;try{art=JSON.parse(rawJson.trim());}catch(pe){throw new Error("JSON parse: "+pe.message+" | primi 200: "+rawJson.substring(0,200));}
+          if(!art||!art.titolo)throw new Error("no art (keys: "+Object.keys(art||{}).join(",")+")");
+          addLog("[3/4] art OK: titolo="+String(art.titolo).substring(0,40)+"...","info");
+          addLog("[4/4] salvo su GitHub...","info");
           var sr=await fetch("/api/salva-bozza",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({art:art,modo:modo,slug_esistente:a.slug,existing_titolo:et,existing_corpo:ec,existing_immagine:ei})});
-          if(!sr.ok)throw new Error("save "+sr.status);
+          if(!sr.ok){var srBody="";try{srBody=await sr.text();}catch(x){}throw new Error("save "+sr.status+" "+srBody.substring(0,200));}
           ok++;addLog("OK  "+a.slug,"ok");
         }catch(e){err++;addLog("ERR "+a.slug+": "+e.message,"err");}
         prog(i+1,total,"");
