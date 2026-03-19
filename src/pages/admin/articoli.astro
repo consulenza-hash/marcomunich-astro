@@ -1,0 +1,506 @@
+---
+export const prerender = false;
+
+// ── Auth ──────────────────────────────────────────────────────────────────────
+const cookie      = Astro.cookies.get('stats_auth')?.value ?? '';
+const expectedPwd = (import.meta.env.STATS_PASSWORD || 'stats2024').trim();
+const isAuth      = cookie === expectedPwd;
+
+if (Astro.request.method === 'POST' && !isAuth) {
+  const form = await Astro.request.formData();
+  const pwd  = form.get('password')?.toString() ?? '';
+  if (pwd === expectedPwd) {
+    Astro.cookies.set('stats_auth', pwd, { path: '/', maxAge: 86400 * 7 });
+    return Astro.redirect('/admin/articoli');
+  }
+}
+
+// ── Carica articoli ───────────────────────────────────────────────────────────
+interface ArticoloMeta {
+  slug: string;
+  titolo: string;
+  data?: string;
+  descrizione?: string;
+  bozza?: boolean;
+}
+
+let articoli: ArticoloMeta[] = [];
+
+if (isAuth) {
+  // Usa import.meta.glob per leggere tutti i frontmatter a build time
+  const files = import.meta.glob<{ default?: string; frontmatter?: Record<string, any> }>(
+    '../../content/articoli/*/index.mdoc',
+    { eager: true, as: 'raw' }
+  ) as Record<string, string>;
+
+  for (const [path, raw] of Object.entries(files)) {
+    // Estrai slug dal path: ../../content/articoli/SLUG/index.mdoc
+    const slugMatch = path.match(/articoli\/([^/]+)\/index\.mdoc$/);
+    if (!slugMatch) continue;
+    const slug = slugMatch[1];
+
+    // Estrai frontmatter minimale
+    const fmMatch = raw.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+    if (!fmMatch) {
+      articoli.push({ slug, titolo: slug });
+      continue;
+    }
+    const fm = fmMatch[1];
+    const titolo      = fm.match(/^titolo:\s*"?([^"\n]+)"?/m)?.[1]?.replace(/\\"/g, '"') ?? slug;
+    const data        = fm.match(/^data:\s*(\S+)/m)?.[1] ?? undefined;
+    const descrizione = fm.match(/^descrizione:\s*"?([^"\n]+)"?/m)?.[1]?.replace(/\\"/g, '"') ?? undefined;
+    const bozza       = /^bozza:\s*true/m.test(fm);
+
+    articoli.push({ slug, titolo, data, descrizione, bozza });
+  }
+
+  // Ordina per data decrescente
+  articoli.sort((a, b) => {
+    if (!a.data && !b.data) return 0;
+    if (!a.data) return 1;
+    if (!b.data) return -1;
+    return b.data.localeCompare(a.data);
+  });
+}
+
+const totale     = articoli.length;
+const pubblicati = articoli.filter(a => !a.bozza).length;
+const bozze      = articoli.filter(a => a.bozza).length;
+---
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Articoli — MM Admin</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0A0A0A;
+      --ink:   #1C1C1C;
+      --smoke: #2A2A2A;
+      --paper: #F2EFE9;
+      --muted: #888;
+      --gold:  #C58A37;
+      --ai:    #5551D3;
+      --ai-soft: rgba(85,81,211,0.12);
+      --green: #1A7A4E;
+      --r: 6px;
+      --font: 'DM Mono', 'Courier New', monospace;
+    }
+
+    body {
+      background: var(--black);
+      color: var(--paper);
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 13px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── HEADER ── */
+    header {
+      border-bottom: 1px solid var(--smoke);
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.5rem;
+      position: sticky;
+      top: 0;
+      background: rgba(10,10,10,0.97);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+      gap: 1rem;
+    }
+
+    .logo {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
+      white-space: nowrap;
+      text-decoration: none;
+    }
+    .logo span { color: var(--paper); opacity: 0.35; }
+
+    nav { display: flex; }
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0 1rem;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      border-right: 1px solid var(--smoke);
+      transition: color 0.15s;
+      white-space: nowrap;
+    }
+    nav a:first-child { border-left: 1px solid var(--smoke); }
+    nav a:hover { color: var(--paper); }
+    nav a.active { color: var(--gold); }
+
+    .btn-new {
+      background: var(--gold);
+      color: var(--black);
+      border: none;
+      padding: 0.4rem 1rem;
+      border-radius: var(--r);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      text-decoration: none;
+      font-weight: 600;
+      white-space: nowrap;
+      transition: opacity 0.15s;
+    }
+    .btn-new:hover { opacity: 0.85; }
+
+    /* ── MAIN ── */
+    main { flex: 1; padding: 1.75rem 1.5rem; max-width: 1280px; width: 100%; margin: 0 auto; }
+
+    .page-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--smoke);
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .page-title { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
+    .page-title strong { display: block; font-size: 20px; letter-spacing: -0.02em; color: var(--paper); margin-top: 0.1rem; font-weight: 400; font-style: italic; }
+
+    .stats { display: flex; gap: 1.5rem; }
+    .stat-num { font-size: 18px; color: var(--gold); font-weight: 300; line-height: 1; }
+    .stat-label { font-size: 9px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px; }
+
+    /* ── TOOLBAR ── */
+    .toolbar {
+      display: flex;
+      gap: 0.6rem;
+      margin-bottom: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .search-wrap { position: relative; flex: 1; min-width: 200px; max-width: 340px; }
+    .search-wrap svg { position: absolute; left: 0.6rem; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
+    input[type="search"] {
+      width: 100%;
+      background: var(--ink);
+      border: 1px solid var(--smoke);
+      color: var(--paper);
+      font-size: 12px;
+      padding: 0.45rem 0.6rem 0.45rem 2rem;
+      border-radius: var(--r);
+      outline: none;
+      font-family: inherit;
+      transition: border-color 0.15s;
+    }
+    input[type="search"]::placeholder { color: var(--muted); }
+    input[type="search"]:focus { border-color: var(--gold); }
+
+    .filter-btn {
+      background: var(--ink);
+      border: 1px solid var(--smoke);
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      padding: 0.45rem 0.8rem;
+      border-radius: var(--r);
+      cursor: pointer;
+      text-transform: uppercase;
+      font-family: inherit;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .filter-btn:hover { color: var(--paper); border-color: var(--muted); }
+    .filter-btn.active { color: var(--paper); border-color: var(--paper); background: var(--smoke); }
+
+    .count-badge {
+      margin-left: auto;
+      font-size: 10px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    /* ── TABLE ── */
+    .table-wrap { border: 1px solid var(--smoke); border-radius: var(--r); overflow: hidden; }
+
+    table { width: 100%; border-collapse: collapse; }
+
+    thead { background: var(--ink); border-bottom: 1px solid var(--smoke); }
+    th {
+      padding: 0.55rem 0.9rem;
+      text-align: left;
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 400;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid var(--smoke);
+      transition: background 0.1s;
+    }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: rgba(255,255,255,0.025); }
+    tbody tr.hidden { display: none; }
+
+    td { padding: 0.75rem 0.9rem; vertical-align: middle; }
+
+    .art-title {
+      font-size: 13px;
+      color: var(--paper);
+      font-style: italic;
+      max-width: 420px;
+    }
+    .art-slug {
+      font-size: 10px;
+      color: var(--muted);
+      font-style: normal;
+      margin-top: 2px;
+      letter-spacing: 0.03em;
+      font-family: 'Courier New', monospace;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      font-size: 9px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.18rem 0.5rem;
+      border-radius: 3px;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .badge-pub   { background: rgba(26,122,78,0.15); color: #4ade96; border: 1px solid rgba(26,122,78,0.3); }
+    .badge-draft { background: rgba(197,138,55,0.12); color: var(--gold); border: 1px solid rgba(197,138,55,0.25); }
+
+    .date-cell { font-size: 11px; color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+    /* ── ACTIONS ── */
+    .actions { display: flex; gap: 0.35rem; justify-content: flex-end; flex-wrap: nowrap; }
+
+    .btn-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.28rem 0.6rem;
+      border-radius: 4px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      text-decoration: none;
+      font-family: inherit;
+      transition: all 0.15s;
+      white-space: nowrap;
+      background: transparent;
+    }
+    .btn-edit    { border-color: var(--smoke); color: var(--muted); }
+    .btn-edit:hover { border-color: var(--paper); color: var(--paper); }
+
+    .btn-ai {
+      background: var(--ai-soft);
+      border-color: rgba(85,81,211,0.4);
+      color: #9d9bef;
+      font-weight: 500;
+    }
+    .btn-ai:hover { background: rgba(85,81,211,0.22); border-color: var(--ai); color: #c4c3f7; box-shadow: 0 0 10px rgba(85,81,211,0.2); }
+    .btn-ai .spark { font-size: 10px; }
+
+    .btn-preview { border-color: var(--smoke); color: var(--muted); }
+    .btn-preview:hover { color: var(--muted); border-color: var(--smoke); opacity: 0.7; }
+
+    /* ── EMPTY ── */
+    .empty-row td { text-align: center; padding: 3rem; color: var(--muted); font-size: 12px; }
+
+    /* ── FOOTER ── */
+    footer { border-top: 1px solid var(--smoke); padding: 0.6rem 1.5rem; display: flex; align-items: center; justify-content: space-between; }
+    footer span { font-size: 10px; color: var(--muted); letter-spacing: 0.06em; }
+
+    /* ── LOGIN ── */
+    .login-wrap { display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+    .login-box { background: var(--ink); border: 1px solid var(--smoke); border-radius: 10px; padding: 2.5rem; width: 320px; text-align: center; }
+    .login-box h2 { font-size: 14px; color: var(--paper); margin-bottom: 1.5rem; font-weight: 500; letter-spacing: 0.08em; }
+    .login-box input { width: 100%; background: var(--black); border: 1px solid var(--smoke); color: var(--paper); font-size: 13px; padding: 0.65rem 0.75rem; border-radius: var(--r); outline: none; font-family: inherit; margin-bottom: 0.75rem; transition: border-color 0.15s; }
+    .login-box input:focus { border-color: var(--gold); }
+    .login-box button { width: 100%; background: var(--gold); color: var(--black); border: none; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.65rem; border-radius: var(--r); cursor: pointer; font-family: inherit; font-weight: 600; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+    tbody tr:not(.hidden) { animation: fadeUp 0.25s ease both; }
+  </style>
+  <script src="/admin-guard.js"></script>
+</head>
+<body>
+
+{!isAuth ? (
+  <div class="login-wrap">
+    <div class="login-box">
+      <h2>🔐 Admin — Accesso</h2>
+      <form method="POST">
+        <input type="password" name="password" placeholder="Password" autofocus />
+        <button type="submit">Accedi</button>
+      </form>
+    </div>
+  </div>
+) : (
+  <>
+    <header>
+      <a href="/admin" class="logo">MM <span>/</span> Admin</a>
+      <nav>
+        <a href="/admin/articoli" class="active">Articoli</a>
+        <a href="/admin/genera">Genera</a>
+        <a href="/admin/statistiche">Stats</a>
+      </nav>
+      <a href="/admin/genera" class="btn-new">+ Nuovo</a>
+    </header>
+
+    <main>
+      <div class="page-header">
+        <div class="page-title">
+          Contenuti
+          <strong>Articoli</strong>
+        </div>
+        <div class="stats">
+          <div>
+            <div class="stat-num">{totale}</div>
+            <div class="stat-label">Totale</div>
+          </div>
+          <div>
+            <div class="stat-num">{pubblicati}</div>
+            <div class="stat-label">Pubblicati</div>
+          </div>
+          <div>
+            <div class="stat-num">{bozze}</div>
+            <div class="stat-label">Bozze</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <div class="search-wrap">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+          </svg>
+          <input type="search" id="search" placeholder="Cerca per titolo o slug…" autocomplete="off" />
+        </div>
+        <button class="filter-btn active" data-filter="tutti">Tutti</button>
+        <button class="filter-btn" data-filter="pubblicato">Pubblicati</button>
+        <button class="filter-btn" data-filter="bozza">Bozze</button>
+        <span class="count-badge" id="count">{totale} articoli</span>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:46%">Articolo</th>
+              <th>Data</th>
+              <th>Stato</th>
+              <th style="text-align:right">Azioni</th>
+            </tr>
+          </thead>
+          <tbody id="tbody">
+            {articoli.map(a => (
+              <tr data-status={a.bozza ? 'bozza' : 'pubblicato'}
+                  data-search={`${a.titolo} ${a.slug}`.toLowerCase()}>
+                <td>
+                  <div class="art-title">{a.titolo}</div>
+                  <div class="art-slug">{a.slug}</div>
+                </td>
+                <td>
+                  <span class="date-cell">{a.data ?? '—'}</span>
+                </td>
+                <td>
+                  <span class={`badge ${a.bozza ? 'badge-draft' : 'badge-pub'}`}>
+                    {a.bozza ? '○ Bozza' : '● Pubblicato'}
+                  </span>
+                </td>
+                <td>
+                  <div class="actions">
+                    <a href={`/admin/edit/${a.slug}`} class="btn-action btn-edit">Modifica</a>
+                    <a href={`/admin/edit/${a.slug}?ai=1`} class="btn-action btn-ai">
+                      <span class="spark">✦</span> AI
+                    </a>
+                    <a href={`/${a.slug}`} target="_blank" class="btn-action btn-preview">Anteprima ↗</a>
+                  </div>
+                </td>
+              </tr>
+            ))}
+            <tr class="empty-row" id="empty" style="display:none">
+              <td colspan="4">Nessun articolo trovato.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+
+    <footer>
+      <span>marcomunich.com — Admin</span>
+      <span id="footer-count">{totale} articoli</span>
+    </footer>
+  </>
+)}
+
+<script>
+  const rows        = Array.from(document.querySelectorAll<HTMLTableRowElement>('#tbody tr:not(.empty-row)'));
+  const emptyRow    = document.getElementById('empty')!;
+  const countEl     = document.getElementById('count')!;
+  const footerCount = document.getElementById('footer-count')!;
+  const searchEl    = document.getElementById('search') as HTMLInputElement;
+  const filterBtns  = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
+
+  let currentFilter = 'tutti';
+  let currentSearch = '';
+
+  function applyFilters() {
+    let visible = 0;
+    rows.forEach(row => {
+      const statusMatch = currentFilter === 'tutti' || row.dataset.status === currentFilter;
+      const searchMatch = !currentSearch || (row.dataset.search ?? '').includes(currentSearch);
+      const show = statusMatch && searchMatch;
+      row.classList.toggle('hidden', !show);
+      if (show) visible++;
+    });
+    emptyRow.style.display = visible === 0 ? '' : 'none';
+    const label = `${visible} articol${visible === 1 ? 'o' : 'i'}`;
+    countEl.textContent = label;
+    footerCount.textContent = label;
+  }
+
+  searchEl?.addEventListener('input', e => {
+    currentSearch = (e.target as HTMLInputElement).value.toLowerCase().trim();
+    applyFilters();
+  });
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentFilter = btn.dataset.filter ?? 'tutti';
+      applyFilters();
+    });
+  });
+</script>
+
+</body>
+</html>
