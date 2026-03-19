@@ -1,6 +1,8 @@
 import type { APIRoute } from 'astro';
 import { ADMIN_PASSWORD } from 'astro:env/server';
-import { COOKIE_NAME, COOKIE_MAX_AGE } from '../../middleware';
+
+const COOKIE_NAME = 'mm_admin_session';
+const COOKIE_MAX_AGE = 60 * 60 * 24 * 365 * 10;
 
 export const prerender = false;
 
