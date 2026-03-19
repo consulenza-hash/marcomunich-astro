@@ -16,7 +16,7 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
     titolo:     (fm.titolo     as string) ?? slug,
     descrizione:(fm.descrizione as string) ?? '',
     data:       fm.data ? String(fm.data) : '',
-    immagine:   (fm.immagine   as string) ?? '',
+    immagine:   fm.immagine ? (String(fm.immagine).startsWith('/') ? fm.immagine : `/images/articoli/${fm.immagine}`) : '',
   };
 })
   .sort((a, b) => new Date(b.data).getTime() - new Date(a.data).getTime())
@@ -359,7 +359,7 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
           <div class="v2-article__img-wrap">
             {post.immagine
               ? <img
-                  src={`/images/articoli/${post.immagine}`}
+                  src={post.immagine}
                   alt={post.titolo}
                   loading="lazy"
                   class="v2-article__img"
