@@ -404,7 +404,7 @@ const nextRelease = scheduled.sort((a, b) => new Date(a.releaseDate).getTime() -
 
   function toggleText(updateId, n) {
     const el = document.getElementById('text-' + updateId + '-' + n);
-    const btn = el?.nextElementSibling as HTMLButtonElement;
+    const btn = el?.nextElementSibling;
     if (!el) return;
     el.classList.toggle('expanded');
     if (btn) btn.textContent = el.classList.contains('expanded') ? 'mostra meno' : 'mostra tutto';
