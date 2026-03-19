@@ -1,0 +1,411 @@
+---
+export const prerender = false;
+import { aggiornamenti } from '../../data/prompt-updates';
+
+const now = new Date();
+
+function daysUntil(dateStr: string) {
+  const target = new Date(dateStr);
+  const diff = Math.ceil((target.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
+  return diff;
+}
+
+function formatDate(dateStr: string) {
+  return new Date(dateStr).toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' });
+}
+
+const released = aggiornamenti.filter(u => u.status === 'released');
+const scheduled = aggiornamenti.filter(u => u.status === 'scheduled');
+const draft = aggiornamenti.filter(u => u.status === 'draft');
+const nextRelease = scheduled.sort((a, b) => new Date(a.releaseDate).getTime() - new Date(b.releaseDate).getTime())[0];
+---
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aggiornamenti Prompt Pack — Admin</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0f0f1a;
+      --bg2: #1a1a2e;
+      --bg3: #22223b;
+      --border: rgba(255,255,255,0.08);
+      --text: #e2e8f0;
+      --muted: #64748b;
+      --gold: #C58A37;
+      --green: #22c55e;
+      --blue: #6366f1;
+      --orange: #f97316;
+    }
+    body { background: var(--bg); color: var(--text); font-family: system-ui, sans-serif; min-height: 100vh; }
+    a { color: inherit; text-decoration: none; }
+
+    /* TOPBAR */
+    .topbar {
+      position: sticky; top: 0; z-index: 10;
+      background: var(--bg); border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 1rem;
+      padding: 0 2rem; height: 52px;
+    }
+    .topbar__back { color: var(--muted); font-size: .85rem; display: flex; align-items: center; gap: .4rem; }
+    .topbar__back:hover { color: var(--text); }
+    .topbar__title { font-size: .95rem; font-weight: 600; }
+    .topbar__spacer { flex: 1; }
+    .topbar__hint { font-size: .75rem; color: var(--muted); }
+
+    /* LAYOUT */
+    .page { max-width: 960px; margin: 0 auto; padding: 2.5rem 2rem 6rem; }
+
+    /* STATS ROW */
+    .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2.5rem; }
+    .stat-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 1.2rem 1.5rem; }
+    .stat-card__label { font-size: .72rem; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin-bottom: .4rem; }
+    .stat-card__value { font-size: 1.8rem; font-weight: 700; }
+    .stat-card__value--gold { color: var(--gold); }
+    .stat-card__value--green { color: var(--green); }
+    .stat-card__value--blue { color: var(--blue); }
+    .stat-card__sub { font-size: .75rem; color: var(--muted); margin-top: .3rem; }
+
+    /* NEXT RELEASE BANNER */
+    .next-banner {
+      background: linear-gradient(135deg, #1a1a2e 0%, #22223b 100%);
+      border: 1px solid rgba(197,138,55,0.3);
+      border-radius: 14px; padding: 1.5rem 2rem;
+      display: flex; align-items: center; gap: 2rem;
+      margin-bottom: 2.5rem;
+    }
+    .next-banner__label { font-size: .72rem; color: var(--gold); text-transform: uppercase; letter-spacing: .1em; margin-bottom: .3rem; }
+    .next-banner__title { font-size: 1.1rem; font-weight: 600; }
+    .next-banner__date { font-size: .85rem; color: var(--muted); margin-top: .2rem; }
+    .next-banner__spacer { flex: 1; }
+    .next-banner__countdown { text-align: right; }
+    .next-banner__days { font-size: 2.5rem; font-weight: 700; color: var(--gold); line-height: 1; }
+    .next-banner__days-label { font-size: .75rem; color: var(--muted); }
+    .next-banner__action {
+      background: rgba(197,138,55,0.12); border: 1px solid rgba(197,138,55,0.3);
+      color: var(--gold); border-radius: 8px; padding: .5rem 1.2rem;
+      font-size: .82rem; font-weight: 600; cursor: pointer;
+      transition: background .15s;
+    }
+    .next-banner__action:hover { background: rgba(197,138,55,0.22); }
+
+    /* SECTION TITLE */
+    .section-title { font-size: .72rem; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 1rem; margin-top: 2.5rem; }
+
+    /* UPDATE CARD */
+    .update-card {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 16px; margin-bottom: 1.5rem; overflow: hidden;
+    }
+    .update-card--released { border-color: rgba(34,197,94,0.25); }
+    .update-card--scheduled { border-color: rgba(197,138,55,0.2); }
+
+    .update-card__header {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1.5rem 2rem; cursor: pointer;
+    }
+    .update-card__header:hover { background: rgba(255,255,255,0.02); }
+
+    .update-card__tag {
+      font-size: .7rem; font-weight: 700; border-radius: 6px;
+      padding: .25rem .7rem; text-transform: uppercase; letter-spacing: .08em;
+    }
+    .update-card__tag--released { background: rgba(34,197,94,0.15); color: var(--green); }
+    .update-card__tag--scheduled { background: rgba(197,138,55,0.12); color: var(--gold); }
+    .update-card__tag--draft { background: rgba(100,116,139,0.15); color: var(--muted); }
+
+    .update-card__title { font-size: 1rem; font-weight: 600; }
+    .update-card__desc { font-size: .82rem; color: var(--muted); margin-top: .2rem; }
+    .update-card__meta { display: flex; gap: 1rem; margin-top: .5rem; }
+    .update-card__pill {
+      font-size: .72rem; background: rgba(255,255,255,0.05);
+      border-radius: 6px; padding: .2rem .6rem; color: var(--muted);
+    }
+    .update-card__spacer { flex: 1; }
+    .update-card__chevron { color: var(--muted); transition: transform .2s; font-size: 1.1rem; }
+    .update-card__chevron.open { transform: rotate(180deg); }
+
+    /* RELEASE BUTTON */
+    .release-btn {
+      background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.3);
+      color: var(--green); border-radius: 8px; padding: .4rem 1rem;
+      font-size: .78rem; font-weight: 600; white-space: nowrap;
+    }
+
+    /* BODY */
+    .update-card__body { display: none; border-top: 1px solid var(--border); }
+    .update-card__body.open { display: block; }
+
+    /* HOW TO RELEASE */
+    .release-hint {
+      background: rgba(197,138,55,0.06); border-left: 3px solid var(--gold);
+      padding: 1rem 1.5rem; margin: 1.5rem 2rem;
+      font-size: .82rem; color: var(--muted); border-radius: 0 8px 8px 0;
+    }
+    .release-hint code {
+      background: rgba(255,255,255,0.08); padding: .1rem .4rem;
+      border-radius: 4px; font-family: monospace; color: var(--gold);
+      font-size: .78rem;
+    }
+
+    /* SECTIONS */
+    .prompt-section { padding: 0 2rem 1rem; }
+    .prompt-section__title {
+      font-size: .78rem; font-weight: 600; color: var(--muted);
+      text-transform: uppercase; letter-spacing: .08em;
+      padding: 1.2rem 0 .8rem; border-top: 1px solid var(--border);
+      margin-top: .5rem;
+    }
+    .prompt-section:first-of-type .prompt-section__title { border-top: none; margin-top: 0; }
+
+    /* PROMPT ROW */
+    .prompt-row {
+      display: flex; gap: 1rem; align-items: flex-start;
+      padding: .75rem 0; border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .prompt-row:last-child { border-bottom: none; }
+    .prompt-row__num {
+      font-size: .7rem; color: var(--muted); min-width: 28px;
+      padding-top: .15rem; font-family: monospace;
+    }
+    .prompt-row__content { flex: 1; min-width: 0; }
+    .prompt-row__title { font-size: .88rem; font-weight: 600; margin-bottom: .25rem; }
+    .prompt-row__text {
+      font-size: .78rem; color: var(--muted); line-height: 1.5;
+      white-space: pre-wrap; word-break: break-word;
+      max-height: 60px; overflow: hidden; transition: max-height .2s;
+    }
+    .prompt-row__text.expanded { max-height: 600px; }
+    .prompt-row__expand {
+      font-size: .72rem; color: var(--blue); cursor: pointer; margin-top: .25rem;
+      background: none; border: none; padding: 0; font-family: inherit;
+    }
+
+    /* COPY BUTTON */
+    .copy-btn {
+      background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+      border-radius: 6px; padding: .3rem .7rem; font-size: .72rem;
+      color: var(--muted); cursor: pointer; white-space: nowrap;
+      font-family: inherit; transition: background .15s;
+    }
+    .copy-btn:hover { background: rgba(255,255,255,0.1); color: var(--text); }
+    .copy-btn.copied { color: var(--green); border-color: rgba(34,197,94,0.3); }
+
+    @media (max-width: 600px) {
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .next-banner { flex-direction: column; gap: 1rem; }
+      .update-card__header { flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="topbar">
+  <a href="/admin" class="topbar__back">← Admin</a>
+  <span class="topbar__title">Aggiornamenti Prompt Pack</span>
+  <div class="topbar__spacer"></div>
+  <span class="topbar__hint">Cambia <code style="background:rgba(255,255,255,0.08);padding:.1rem .4rem;border-radius:4px;font-size:.72rem">status</code> in <code style="background:rgba(255,255,255,0.08);padding:.1rem .4rem;border-radius:4px;font-size:.72rem">prompt-updates.ts</code> per rilasciare</span>
+</nav>
+
+<div class="page">
+
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-card__label">Prompt base</div>
+      <div class="stat-card__value stat-card__value--gold">147</div>
+      <div class="stat-card__sub">+ 10 Custom GPT</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card__label">In aggiornamenti</div>
+      <div class="stat-card__value stat-card__value--blue">
+        {aggiornamenti.reduce((sum, u) => sum + u.sections.reduce((s2, sec) => s2 + sec.prompts.length, 0), 0)}
+      </div>
+      <div class="stat-card__sub">su {aggiornamenti.length} batch</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card__label">Rilasciati</div>
+      <div class="stat-card__value stat-card__value--green">{released.length}</div>
+      <div class="stat-card__sub">batch live</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card__label">In arrivo</div>
+      <div class="stat-card__value">{scheduled.length}</div>
+      <div class="stat-card__sub">batch pianificati</div>
+    </div>
+  </div>
+
+  <!-- NEXT RELEASE BANNER -->
+  {nextRelease && (
+    <div class="next-banner">
+      <div>
+        <div class="next-banner__label">Prossimo rilascio</div>
+        <div class="next-banner__title">{nextRelease.title}</div>
+        <div class="next-banner__date">{formatDate(nextRelease.releaseDate)}</div>
+      </div>
+      <div class="next-banner__spacer"></div>
+      <div class="next-banner__countdown">
+        <div class="next-banner__days">{daysUntil(nextRelease.releaseDate)}</div>
+        <div class="next-banner__days-label">giorni</div>
+      </div>
+    </div>
+  )}
+
+  <!-- RELEASED -->
+  {released.length > 0 && (
+    <>
+      <div class="section-title">Rilasciati — visibili ai clienti</div>
+      {released.map((update) => (
+        <div class="update-card update-card--released">
+          <div class="update-card__header" onclick={`toggleCard('${update.id}')`}>
+            <span class="update-card__tag update-card__tag--released">Live</span>
+            <div>
+              <div class="update-card__title">{update.title}</div>
+              <div class="update-card__desc">{update.description}</div>
+              <div class="update-card__meta">
+                <span class="update-card__pill">{update.sections.reduce((s, sec) => s + sec.prompts.length, 0)} prompt</span>
+                <span class="update-card__pill">{update.sections.length} sezioni</span>
+                <span class="update-card__pill">{formatDate(update.releaseDate)}</span>
+              </div>
+            </div>
+            <div class="update-card__spacer"></div>
+            <span class="update-card__chevron" id={`chevron-${update.id}`}>▾</span>
+          </div>
+          <div class="update-card__body" id={`body-${update.id}`}>
+            {update.sections.map((section) => (
+              <div class="prompt-section">
+                <div class="prompt-section__title">{section.title}</div>
+                {section.prompts.map((p) => (
+                  <div class="prompt-row">
+                    <div class="prompt-row__num">{p.n}.</div>
+                    <div class="prompt-row__content">
+                      {p.title && <div class="prompt-row__title">{p.title}</div>}
+                      <div class="prompt-row__text" id={`text-${update.id}-${p.n}`}>{p.text}</div>
+                      <button class="prompt-row__expand" onclick={`toggleText('${update.id}', ${p.n})`}>mostra tutto</button>
+                    </div>
+                    <button class="copy-btn" onclick={`copyText(this, \`${p.text.replace(/`/g, '\\`')}\`)`}>Copia</button>
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </>
+  )}
+
+  <!-- SCHEDULED -->
+  <div class="section-title">Pianificati — non ancora visibili ai clienti</div>
+  {scheduled.map((update) => (
+    <div class="update-card update-card--scheduled">
+      <div class="update-card__header" onclick={`toggleCard('${update.id}')`}>
+        <span class="update-card__tag update-card__tag--scheduled">Scheduled</span>
+        <div>
+          <div class="update-card__title">{update.title}</div>
+          <div class="update-card__desc">{update.description}</div>
+          <div class="update-card__meta">
+            <span class="update-card__pill">{update.sections.reduce((s, sec) => s + sec.prompts.length, 0)} prompt</span>
+            <span class="update-card__pill">{update.sections.length} sezioni</span>
+            <span class="update-card__pill">{formatDate(update.releaseDate)} · {daysUntil(update.releaseDate)} gg</span>
+          </div>
+        </div>
+        <div class="update-card__spacer"></div>
+        <span class="update-card__chevron" id={`chevron-${update.id}`}>▾</span>
+      </div>
+      <div class="update-card__body" id={`body-${update.id}`}>
+        <div class="release-hint">
+          Per rendere visibile questo batch ai clienti: apri <code>src/data/prompt-updates.ts</code>, trova il batch <code>{update.tag}</code> e cambia <code>status: 'scheduled'</code> → <code>status: 'released'</code>, poi fai deploy.
+        </div>
+        {update.sections.map((section) => (
+          <div class="prompt-section">
+            <div class="prompt-section__title">{section.title}</div>
+            {section.prompts.map((p) => (
+              <div class="prompt-row">
+                <div class="prompt-row__num">{p.n}.</div>
+                <div class="prompt-row__content">
+                  {p.title && <div class="prompt-row__title">{p.title}</div>}
+                  <div class="prompt-row__text" id={`text-${update.id}-${p.n}`}>{p.text}</div>
+                  <button class="prompt-row__expand" onclick={`toggleText('${update.id}', ${p.n})`}>mostra tutto</button>
+                </div>
+                <button class="copy-btn" onclick={`copyText(this, \`${p.text.replace(/`/g, '\\`')}\`)`}>Copia</button>
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+  ))}
+
+  <!-- DRAFT -->
+  {draft.length > 0 && (
+    <>
+      <div class="section-title">Bozze</div>
+      {draft.map((update) => (
+        <div class="update-card">
+          <div class="update-card__header" onclick={`toggleCard('${update.id}')`}>
+            <span class="update-card__tag update-card__tag--draft">Draft</span>
+            <div>
+              <div class="update-card__title">{update.title}</div>
+              <div class="update-card__desc">{update.description}</div>
+            </div>
+            <div class="update-card__spacer"></div>
+            <span class="update-card__chevron" id={`chevron-${update.id}`}>▾</span>
+          </div>
+          <div class="update-card__body" id={`body-${update.id}`}>
+            {update.sections.map((section) => (
+              <div class="prompt-section">
+                <div class="prompt-section__title">{section.title}</div>
+                {section.prompts.map((p) => (
+                  <div class="prompt-row">
+                    <div class="prompt-row__num">{p.n}.</div>
+                    <div class="prompt-row__content">
+                      {p.title && <div class="prompt-row__title">{p.title}</div>}
+                      <div class="prompt-row__text" id={`text-${update.id}-${p.n}`}>{p.text}</div>
+                      <button class="prompt-row__expand" onclick={`toggleText('${update.id}', ${p.n})`}>mostra tutto</button>
+                    </div>
+                    <button class="copy-btn" onclick={`copyText(this, \`${p.text.replace(/`/g, '\\`')}\`)`}>Copia</button>
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </>
+  )}
+
+</div>
+
+<script>
+  function toggleCard(id: string) {
+    const body = document.getElementById('body-' + id);
+    const chevron = document.getElementById('chevron-' + id);
+    if (!body || !chevron) return;
+    body.classList.toggle('open');
+    chevron.classList.toggle('open');
+  }
+
+  function toggleText(updateId: string, n: number) {
+    const el = document.getElementById('text-' + updateId + '-' + n);
+    const btn = el?.nextElementSibling as HTMLButtonElement;
+    if (!el) return;
+    el.classList.toggle('expanded');
+    if (btn) btn.textContent = el.classList.contains('expanded') ? 'mostra meno' : 'mostra tutto';
+  }
+
+  function copyText(btn: HTMLButtonElement, text: string) {
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'Copiato ✓';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = 'Copia';
+        btn.classList.remove('copied');
+      }, 1800);
+    });
+  }
+</script>
+</body>
+</html>
