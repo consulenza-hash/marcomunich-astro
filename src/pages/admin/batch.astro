@@ -108,8 +108,11 @@ if (statsAuth !== expectedPwd) {
       }
       el.innerHTML=h;
       el.querySelectorAll(".art-cb").forEach(function(cb){cb.addEventListener("change",upd);});
+      restoreSelection();upd();
     }
-    function upd(){var n=document.querySelectorAll(".art-cb:checked").length;document.getElementById("sel-info").textContent=n+" selezionati";document.getElementById("btn-start").disabled=n===0;}
+    function saveSelection(){var slugs=[];document.querySelectorAll(".art-cb:checked").forEach(function(cb){slugs.push(arts[+cb.dataset.i].slug);});localStorage.setItem("batch_sel",JSON.stringify(slugs));}
+    function restoreSelection(){try{var saved=JSON.parse(localStorage.getItem("batch_sel")||"[]");if(!saved.length)return;var map={};saved.forEach(function(s){map[s]=true;});document.querySelectorAll(".art-cb").forEach(function(cb){if(map[arts[+cb.dataset.i].slug])cb.checked=true;});}catch(e){}}
+    function upd(){var n=document.querySelectorAll(".art-cb:checked").length;document.getElementById("sel-info").textContent=n+" selezionati";document.getElementById("btn-start").disabled=n===0;saveSelection();}
     document.getElementById("btn-all").onclick=function(){document.querySelectorAll(".art-cb").forEach(function(c){c.checked=true;});upd();};
     document.getElementById("btn-none").onclick=function(){document.querySelectorAll(".art-cb").forEach(function(c){c.checked=false;});upd();};
     document.getElementById("btn-pause").onclick=function(){paused=!paused;this.textContent=paused?"Riprendi":"Pausa";};
