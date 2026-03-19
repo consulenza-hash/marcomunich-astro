@@ -141,7 +141,7 @@ if (statsAuth !== expectedPwd) {
           var ei=im?im[1].trim():"";
           var pts=testo.split(/^---$/m);
           var ec=pts.length>=3?pts.slice(2).join("---").trim():"";
-          var gr=await fetch("/api/genera-json",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({prompt:testo,modo:modo,slug_esistente:a.slug})});
+          var gr=await fetch("/api/genera-json",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({testo:testo,modo:modo,isNew:false})});
           if(!gr.ok)throw new Error("gen "+gr.status);
           var gd=await gr.json();if(!gd.art)throw new Error("no art");
           var sr=await fetch("/api/salva-bozza",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({art:gd.art,modo:modo,slug_esistente:a.slug,existing_titolo:et,existing_corpo:ec,existing_immagine:ei})});
