@@ -1,0 +1,847 @@
+---
+export const prerender = false;
+
+// ── Auth ──────────────────────────────────────────────────────────────────────
+const cookie      = Astro.cookies.get('stats_auth')?.value ?? '';
+const expectedPwd = (import.meta.env.STATS_PASSWORD || 'stats2024').trim();
+const isAuth      = cookie === expectedPwd;
+
+if (!isAuth) return Astro.redirect('/admin/login?redirect=/admin/social-piano');
+---
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Piano Editoriale Social — Admin</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+
+    .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem;
+    }
+
+    h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    .subtitle {
+      color: #94a3b8;
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+    }
+
+    .back-link {
+      display: inline-block;
+      color: #f59e0b;
+      text-decoration: none;
+      font-size: 0.85rem;
+      margin-bottom: 1.5rem;
+    }
+    .back-link:hover { text-decoration: underline; }
+
+    /* ── Step 1: Selection ────────────────────────────────────────────── */
+    .step-card {
+      background: #1e293b;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .step-card h2 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: #f59e0b;
+    }
+
+    .select-row {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-end;
+      flex-wrap: wrap;
+    }
+
+    .select-row label {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .select-row label span {
+      display: block;
+      font-size: 0.8rem;
+      color: #94a3b8;
+      margin-bottom: 0.35rem;
+    }
+
+    select {
+      width: 100%;
+      padding: 0.6rem 0.75rem;
+      border-radius: 8px;
+      border: 1px solid #334155;
+      background: #0f172a;
+      color: #e2e8f0;
+      font-size: 0.9rem;
+      appearance: none;
+      cursor: pointer;
+    }
+    select:focus { outline: 2px solid #f59e0b; outline-offset: -1px; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1.25rem;
+      border-radius: 8px;
+      border: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s, opacity 0.15s;
+      white-space: nowrap;
+    }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .btn-primary {
+      background: #f59e0b;
+      color: #0f172a;
+    }
+    .btn-primary:hover:not(:disabled) { background: #d97706; }
+
+    .btn-secondary {
+      background: #334155;
+      color: #e2e8f0;
+    }
+    .btn-secondary:hover:not(:disabled) { background: #475569; }
+
+    .btn-sm {
+      padding: 0.4rem 0.85rem;
+      font-size: 0.8rem;
+    }
+
+    .btn-success {
+      background: #059669;
+      color: #fff;
+    }
+    .btn-success:hover:not(:disabled) { background: #047857; }
+
+    .btn-blue {
+      background: #2563eb;
+      color: #fff;
+    }
+    .btn-blue:hover:not(:disabled) { background: #1d4ed8; }
+
+    .btn-purple {
+      background: #7c3aed;
+      color: #fff;
+    }
+    .btn-purple:hover:not(:disabled) { background: #6d28d9; }
+
+    .btn-pink {
+      background: #db2777;
+      color: #fff;
+    }
+    .btn-pink:hover:not(:disabled) { background: #be185d; }
+
+    /* ── Status / spinner ────────────────────────────────────────────── */
+    .status-msg {
+      margin-top: 1rem;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      display: none;
+    }
+    .status-msg.visible { display: block; }
+    .status-msg.info    { background: #1e3a5f; color: #93c5fd; }
+    .status-msg.success { background: #064e3b; color: #6ee7b7; }
+    .status-msg.error   { background: #4c0519; color: #fca5a5; }
+
+    .spinner {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid transparent;
+      border-top-color: currentColor;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+      vertical-align: middle;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Step 2: Plan cards ───────────────────────────────────────────── */
+    #piano-container {
+      display: none;
+    }
+    #piano-container.visible {
+      display: block;
+    }
+
+    .piano-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .piano-header h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+
+    .day-card {
+      background: #1e293b;
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+      border-left: 4px solid #f59e0b;
+    }
+
+    .day-card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #f59e0b;
+    }
+
+    .day-card-body {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 1.25rem;
+    }
+
+    .img-preview-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .img-preview {
+      width: 100%;
+      aspect-ratio: 9 / 16;
+      max-height: 400px;
+      background: #0f172a;
+      border-radius: 10px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #334155;
+      position: relative;
+    }
+
+    .img-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .img-placeholder {
+      padding: 1rem;
+      text-align: center;
+      font-size: 0.8rem;
+      color: #64748b;
+      line-height: 1.4;
+      overflow: hidden;
+      max-height: 100%;
+    }
+
+    .img-placeholder .quote-text {
+      font-style: italic;
+      color: #94a3b8;
+      margin-top: 0.5rem;
+      font-size: 0.75rem;
+    }
+
+    .texts-col {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .text-group label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #94a3b8;
+      margin-bottom: 0.25rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .text-group textarea {
+      width: 100%;
+      min-height: 80px;
+      padding: 0.6rem 0.75rem;
+      border-radius: 8px;
+      border: 1px solid #334155;
+      background: #0f172a;
+      color: #e2e8f0;
+      font-size: 0.85rem;
+      font-family: inherit;
+      resize: vertical;
+      line-height: 1.45;
+    }
+    .text-group textarea:focus {
+      outline: 2px solid #f59e0b;
+      outline-offset: -1px;
+    }
+
+    .day-card-actions {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-top: 0.75rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid #334155;
+    }
+
+    /* ── Toast ────────────────────────────────────────────────────────── */
+    .toast {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      padding: 0.75rem 1.25rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      z-index: 999;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.25s, transform 0.25s;
+      pointer-events: none;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .toast.toast-ok   { background: #064e3b; color: #6ee7b7; }
+    .toast.toast-err  { background: #4c0519; color: #fca5a5; }
+
+    /* ── Responsive ──────────────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .wrap { padding: 1rem; }
+      h1 { font-size: 1.35rem; }
+
+      .select-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .day-card-body {
+        grid-template-columns: 1fr;
+      }
+
+      .img-preview {
+        max-height: 300px;
+        margin: 0 auto;
+        width: 200px;
+      }
+
+      .piano-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .day-card-actions {
+        flex-direction: column;
+      }
+      .day-card-actions .btn { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="wrap">
+    <a class="back-link" href="/admin">&larr; Torna alla dashboard</a>
+    <h1>Piano Editoriale Social</h1>
+    <p class="subtitle">Genera 5 giorni di contenuti social a partire da un articolo del blog.</p>
+
+    <!-- ── Step 1: Article selection ───────────────────────────────────── -->
+    <div class="step-card">
+      <h2>1. Seleziona articolo</h2>
+      <div class="select-row">
+        <label>
+          <span>Articolo</span>
+          <select id="sel-articolo">
+            <option value="">Caricamento articoli...</option>
+          </select>
+        </label>
+        <button class="btn btn-primary" id="btn-genera" disabled onclick="genera()">
+          Genera Piano Editoriale
+        </button>
+      </div>
+      <div class="status-msg" id="status-genera"></div>
+    </div>
+
+    <!-- ── Step 2: Editorial plan ─────────────────────────────────────── -->
+    <div id="piano-container">
+      <div class="piano-header">
+        <h2 id="piano-titolo">Piano Editoriale</h2>
+        <button class="btn btn-primary" id="btn-genera-tutte" onclick="generaTutte()">
+          Genera Tutte le Immagini
+        </button>
+      </div>
+      <div id="cards-wrap"></div>
+    </div>
+  </div>
+
+  <!-- ── Toast ──────────────────────────────────────────────────────── -->
+  <div class="toast" id="toast"></div>
+
+  <script is:inline>
+    // ── State ──────────────────────────────────────────────────────────
+    window.piano = [];
+    var pianoMeta = { titolo: '', slug: '', articleUrl: '' };
+
+    var TIPO_ICONS = {
+      'carosello':   '\uD83C\uDFA0',
+      'citazione':   '\u2728',
+      'lista':       '\uD83D\uDCCB',
+      'domanda':     '\u2753',
+      'storia':      '\uD83D\uDCDA',
+      'dato':        '\uD83D\uDCCA',
+      'confronto':   '\u2696\uFE0F',
+      'tutorial':    '\uD83D\uDEE0\uFE0F',
+      'provocazione':'\uD83D\uDD25',
+      'meme':        '\uD83D\uDE02'
+    };
+
+    // ── Load articles ─────────────────────────────────────────────────
+    (function loadArticoli() {
+      var sel = document.getElementById('sel-articolo');
+      var btn = document.getElementById('btn-genera');
+
+      fetch('/api/lista-articoli')
+        .then(function(r) {
+          if (!r.ok) throw new Error('HTTP ' + r.status);
+          return r.json();
+        })
+        .then(function(lista) {
+          if (!lista || lista.length === 0) {
+            sel.innerHTML = '<option value="">Nessun articolo trovato</option>';
+            return;
+          }
+          var opts = '<option value="">— Scegli un articolo —</option>';
+          for (var i = 0; i < lista.length; i++) {
+            var a = lista[i];
+            var label = a.titolo || a.slug;
+            if (a.data) label = a.data + ' — ' + label;
+            opts += '<option value="' + a.slug + '">' + escHtml(label) + '</option>';
+          }
+          sel.innerHTML = opts;
+          btn.disabled = false;
+
+          sel.addEventListener('change', function() {
+            btn.disabled = !sel.value;
+          });
+        })
+        .catch(function(err) {
+          sel.innerHTML = '<option value="">Errore caricamento: ' + escHtml(err.message) + '</option>';
+        });
+    })();
+
+    // ── genera() — Step 1 → Step 2 ───────────────────────────────────
+    function genera() {
+      var sel = document.getElementById('sel-articolo');
+      var slug = sel.value;
+      if (!slug) return;
+
+      var btn = document.getElementById('btn-genera');
+      var status = document.getElementById('status-genera');
+
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner"></span> Generazione in corso...';
+      showStatus(status, 'info', '<span class="spinner"></span> Invio richiesta al server... Potrebbe richiedere 30-60 secondi.');
+
+      fetch('/api/social/piano-editoriale', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ slug: slug })
+      })
+      .then(function(r) {
+        if (!r.ok) return r.json().then(function(d) { throw new Error(d.error || 'HTTP ' + r.status); });
+        return r.json();
+      })
+      .then(function(data) {
+        window.piano = data.piano || [];
+        pianoMeta.titolo = data.titolo || slug;
+        pianoMeta.slug = data.slug || slug;
+        pianoMeta.articleUrl = data.articleUrl || '';
+
+        showStatus(status, 'success', 'Piano generato: ' + window.piano.length + ' giorni di contenuti.');
+        btn.innerHTML = 'Genera Piano Editoriale';
+        btn.disabled = false;
+
+        renderPiano();
+      })
+      .catch(function(err) {
+        showStatus(status, 'error', 'Errore: ' + escHtml(err.message));
+        btn.innerHTML = 'Genera Piano Editoriale';
+        btn.disabled = false;
+      });
+    }
+
+    // ── renderPiano() — Build cards ──────────────────────────────────
+    function renderPiano() {
+      var container = document.getElementById('piano-container');
+      var wrap = document.getElementById('cards-wrap');
+      var titolo = document.getElementById('piano-titolo');
+
+      titolo.textContent = 'Piano Editoriale — ' + pianoMeta.titolo;
+      wrap.innerHTML = '';
+
+      for (var i = 0; i < window.piano.length; i++) {
+        var p = window.piano[i];
+        var tipoLabel = p.tipo || 'post';
+        var icon = TIPO_ICONS[tipoLabel.toLowerCase()] || '\uD83D\uDCC4';
+
+        var card = document.createElement('div');
+        card.className = 'day-card';
+        card.setAttribute('data-index', i);
+
+        card.innerHTML =
+          '<div class="day-card-header">' +
+            '<span>' + icon + '</span> ' +
+            '<span>Giorno ' + (p.giorno || (i + 1)) + ' &mdash; ' + escHtml(tipoLabel) + '</span>' +
+          '</div>' +
+          '<div class="day-card-body">' +
+            '<div class="img-preview-wrap">' +
+              '<div class="img-preview" id="img-preview-' + i + '">' +
+                '<div class="img-placeholder">' +
+                  '<div>Anteprima immagine</div>' +
+                  '<div class="quote-text">' + escHtml(truncate(p.testo_grafica || '', 120)) + '</div>' +
+                '</div>' +
+              '</div>' +
+              '<button class="btn btn-secondary btn-sm" id="btn-img-' + i + '" onclick="generaImmagine(' + i + ')">' +
+                'Genera Immagine' +
+              '</button>' +
+            '</div>' +
+            '<div class="texts-col">' +
+              '<div class="text-group">' +
+                '<label for="txt-x-' + i + '">X (Twitter)</label>' +
+                '<textarea id="txt-x-' + i + '" rows="3">' + escHtml(p.x_post || '') + '</textarea>' +
+              '</div>' +
+              '<div class="text-group">' +
+                '<label for="txt-li-' + i + '">LinkedIn</label>' +
+                '<textarea id="txt-li-' + i + '" rows="4">' + escHtml(p.linkedin_post || '') + '</textarea>' +
+              '</div>' +
+              '<div class="text-group">' +
+                '<label for="txt-fb-' + i + '">Facebook</label>' +
+                '<textarea id="txt-fb-' + i + '" rows="4">' + escHtml(p.facebook_post || '') + '</textarea>' +
+              '</div>' +
+              '<div class="text-group">' +
+                '<label for="txt-ig-' + i + '">Instagram</label>' +
+                '<textarea id="txt-ig-' + i + '" rows="4">' + escHtml(p.instagram_caption || '') + '</textarea>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="day-card-actions">' +
+            '<button class="btn btn-blue btn-sm" onclick="pubblica(' + i + ',\'facebook\')">Pubblica FB</button>' +
+            '<button class="btn btn-blue btn-sm" onclick="pubblica(' + i + ',\'linkedin\')">Pubblica LinkedIn</button>' +
+            '<button class="btn btn-secondary btn-sm" onclick="copiaX(' + i + ')">Copia X</button>' +
+            '<button class="btn btn-purple btn-sm" onclick="scarica(' + i + ')">Scarica per Instagram</button>' +
+          '</div>';
+
+        wrap.appendChild(card);
+      }
+
+      container.classList.add('visible');
+      container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // ── generaImmagine(index) ────────────────────────────────────────
+    function generaImmagine(index) {
+      var p = window.piano[index];
+      if (!p) return;
+
+      var btn = document.getElementById('btn-img-' + index);
+      var preview = document.getElementById('img-preview-' + index);
+
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner"></span> Generazione...';
+
+      fetch('/api/social/genera-immagine', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          tipo: p.tipo || 'citazione',
+          testo: p.testo_grafica || '',
+          slug: pianoMeta.slug
+        })
+      })
+      .then(function(r) {
+        if (!r.ok) return r.json().then(function(d) { throw new Error(d.error || 'HTTP ' + r.status); });
+        return r.json();
+      })
+      .then(function(data) {
+        if (data.success && data.url) {
+          p._imageUrl = data.url;
+          preview.innerHTML = '<img src="' + escAttr(data.url) + '" alt="Immagine giorno ' + (index + 1) + '" />';
+          btn.innerHTML = 'Rigenera Immagine';
+          showToast('Immagine giorno ' + (index + 1) + ' generata', 'ok');
+        } else {
+          throw new Error(data.error || 'Nessun URL ricevuto');
+        }
+        btn.disabled = false;
+      })
+      .catch(function(err) {
+        btn.innerHTML = 'Genera Immagine';
+        btn.disabled = false;
+        showToast('Errore immagine giorno ' + (index + 1) + ': ' + err.message, 'err');
+      });
+    }
+
+    // ── generaTutte() ────────────────────────────────────────────────
+    function generaTutte() {
+      var btn = document.getElementById('btn-genera-tutte');
+      var total = window.piano.length;
+      if (total === 0) return;
+
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner"></span> 0/' + total + '...';
+      var done = 0;
+
+      function next(i) {
+        if (i >= total) {
+          btn.innerHTML = 'Genera Tutte le Immagini';
+          btn.disabled = false;
+          showToast('Tutte le ' + total + ' immagini generate', 'ok');
+          return;
+        }
+
+        var p = window.piano[i];
+        var imgBtn = document.getElementById('btn-img-' + i);
+        var preview = document.getElementById('img-preview-' + i);
+
+        imgBtn.disabled = true;
+        imgBtn.innerHTML = '<span class="spinner"></span> Generazione...';
+
+        fetch('/api/social/genera-immagine', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            tipo: p.tipo || 'citazione',
+            testo: p.testo_grafica || '',
+            slug: pianoMeta.slug
+          })
+        })
+        .then(function(r) {
+          if (!r.ok) return r.json().then(function(d) { throw new Error(d.error || 'HTTP ' + r.status); });
+          return r.json();
+        })
+        .then(function(data) {
+          if (data.success && data.url) {
+            p._imageUrl = data.url;
+            preview.innerHTML = '<img src="' + escAttr(data.url) + '" alt="Immagine giorno ' + (i + 1) + '" />';
+            imgBtn.innerHTML = 'Rigenera Immagine';
+          } else {
+            imgBtn.innerHTML = 'Genera Immagine';
+          }
+          imgBtn.disabled = false;
+        })
+        .catch(function(err) {
+          imgBtn.innerHTML = 'Genera Immagine';
+          imgBtn.disabled = false;
+          showToast('Errore giorno ' + (i + 1) + ': ' + err.message, 'err');
+        })
+        .finally(function() {
+          done++;
+          btn.innerHTML = '<span class="spinner"></span> ' + done + '/' + total + '...';
+          next(i + 1);
+        });
+      }
+
+      next(0);
+    }
+
+    // ── pubblica(index, platform) ────────────────────────────────────
+    function pubblica(index, platform) {
+      var p = window.piano[index];
+      if (!p) return;
+
+      var textEl;
+      if (platform === 'facebook') {
+        textEl = document.getElementById('txt-fb-' + index);
+      } else if (platform === 'linkedin') {
+        textEl = document.getElementById('txt-li-' + index);
+      } else {
+        return;
+      }
+      var text = textEl ? textEl.value : '';
+      if (!text.trim()) {
+        showToast('Testo vuoto per ' + platform, 'err');
+        return;
+      }
+
+      var card = textEl.closest('.day-card');
+      var btns = card.querySelectorAll('.day-card-actions .btn');
+      for (var b = 0; b < btns.length; b++) btns[b].disabled = true;
+
+      showToast('Pubblicazione su ' + platform + '...', 'ok');
+
+      fetch('/api/social/pubblica', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          platform: platform,
+          text: text,
+          link: pianoMeta.articleUrl || '',
+          imageUrl: p._imageUrl || ''
+        })
+      })
+      .then(function(r) {
+        if (!r.ok) return r.json().then(function(d) { throw new Error(d.error || 'HTTP ' + r.status); });
+        return r.json();
+      })
+      .then(function(data) {
+        if (data.success) {
+          var msg = 'Pubblicato su ' + platform;
+          if (data.postUrl) msg += ' — ' + data.postUrl;
+          showToast(msg, 'ok');
+        } else {
+          throw new Error(data.error || 'Pubblicazione fallita');
+        }
+      })
+      .catch(function(err) {
+        showToast('Errore ' + platform + ': ' + err.message, 'err');
+      })
+      .finally(function() {
+        for (var b = 0; b < btns.length; b++) btns[b].disabled = false;
+      });
+    }
+
+    // ── copiaX(index) ────────────────────────────────────────────────
+    function copiaX(index) {
+      var textEl = document.getElementById('txt-x-' + index);
+      if (!textEl) return;
+      var text = textEl.value;
+      if (!text.trim()) {
+        showToast('Testo X vuoto', 'err');
+        return;
+      }
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function() {
+          showToast('Testo X copiato negli appunti', 'ok');
+        }).catch(function() {
+          fallbackCopy(text);
+        });
+      } else {
+        fallbackCopy(text);
+      }
+    }
+
+    function fallbackCopy(text) {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.left = '-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        document.execCommand('copy');
+        showToast('Testo X copiato negli appunti', 'ok');
+      } catch (e) {
+        showToast('Copia fallita — seleziona manualmente', 'err');
+      }
+      document.body.removeChild(ta);
+    }
+
+    // ── scarica(index) ───────────────────────────────────────────────
+    function scarica(index) {
+      var p = window.piano[index];
+      if (!p || !p._imageUrl) {
+        showToast('Genera prima l\'immagine per il giorno ' + (index + 1), 'err');
+        return;
+      }
+
+      var url = p._imageUrl;
+
+      // data: URL or blob URL — download directly
+      if (url.indexOf('data:') === 0 || url.indexOf('blob:') === 0) {
+        triggerDownload(url, 'social-giorno-' + (index + 1) + '.png');
+        return;
+      }
+
+      // Remote URL — fetch as blob then download
+      fetch(url)
+        .then(function(r) {
+          if (!r.ok) throw new Error('HTTP ' + r.status);
+          return r.blob();
+        })
+        .then(function(blob) {
+          var blobUrl = URL.createObjectURL(blob);
+          triggerDownload(blobUrl, 'social-giorno-' + (index + 1) + '.png');
+          setTimeout(function() { URL.revokeObjectURL(blobUrl); }, 5000);
+        })
+        .catch(function(err) {
+          showToast('Download fallito: ' + err.message, 'err');
+        });
+    }
+
+    function triggerDownload(url, filename) {
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      a.style.display = 'none';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      showToast('Download avviato: ' + filename, 'ok');
+    }
+
+    // ── UI helpers ───────────────────────────────────────────────────
+    function showStatus(el, type, html) {
+      el.className = 'status-msg visible ' + type;
+      el.innerHTML = html;
+    }
+
+    var toastTimer = null;
+    function showToast(msg, type) {
+      var t = document.getElementById('toast');
+      t.textContent = msg;
+      t.className = 'toast show ' + (type === 'ok' ? 'toast-ok' : 'toast-err');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function() {
+        t.className = 'toast';
+      }, 4000);
+    }
+
+    function escHtml(s) {
+      if (!s) return '';
+      var d = document.createElement('div');
+      d.appendChild(document.createTextNode(s));
+      return d.innerHTML;
+    }
+
+    function escAttr(s) {
+      return escHtml(s).replace(/"/g, '&quot;');
+    }
+
+    function truncate(s, len) {
+      if (!s) return '';
+      return s.length > len ? s.substring(0, len) + '...' : s;
+    }
+  </script>
+
+</body>
+</html>
