@@ -50,6 +50,15 @@ export default defineConfig({
       PP_GIST_ID:               envField.string({ context: 'server', access: 'secret',  optional: true }),
       ADMIN_PASSWORD:           envField.string({ context: 'server', access: 'secret',  optional: true }),
       ADMIN_SESSION_SALT:       envField.string({ context: 'server', access: 'secret',  optional: true }),
+      // Social Media APIs
+      X_API_KEY:                envField.string({ context: 'server', access: 'secret',  optional: true }),
+      X_API_SECRET:             envField.string({ context: 'server', access: 'secret',  optional: true }),
+      X_ACCESS_TOKEN:           envField.string({ context: 'server', access: 'secret',  optional: true }),
+      X_ACCESS_TOKEN_SECRET:    envField.string({ context: 'server', access: 'secret',  optional: true }),
+      LINKEDIN_ACCESS_TOKEN:    envField.string({ context: 'server', access: 'secret',  optional: true }),
+      LINKEDIN_PERSON_URN:      envField.string({ context: 'server', access: 'secret',  optional: true }),
+      FB_PAGE_ID:               envField.string({ context: 'server', access: 'secret',  optional: true }),
+      FB_PAGE_ACCESS_TOKEN:     envField.string({ context: 'server', access: 'secret',  optional: true }),
     },
   },
 
