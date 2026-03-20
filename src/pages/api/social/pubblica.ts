@@ -48,8 +48,8 @@ export const POST: APIRoute = async ({ request }) => {
       }
 
       case 'linkedin': {
-        const liToken = import.meta.env.LINKEDIN_ACCESS_TOKEN;
-        const liUrn = import.meta.env.LINKEDIN_PERSON_URN;
+        const liToken = (import.meta.env.LINKEDIN_ACCESS_TOKEN || '').trim();
+        const liUrn = (import.meta.env.LINKEDIN_PERSON_URN || '').trim();
         if (!liToken || !liUrn) {
           return new Response(JSON.stringify({ error: 'Credenziali LinkedIn non configurate. Aggiungi LINKEDIN_ACCESS_TOKEN e LINKEDIN_PERSON_URN su Vercel.' }), { status: 500, headers });
         }
