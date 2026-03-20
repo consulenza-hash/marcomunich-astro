@@ -13,7 +13,7 @@ function slugify(text: string): string {
     .replace(/^-|-$/g, '');
 }
 
-function buildMdoc(art: Record<string, any>, existingTitolo: string, existingCorpo: string, existingImmagine = ''): string {
+function buildMdoc(art: Record<string, any>, existingTitolo: string, existingCorpo: string, existingImmagine = '', existingData = ''): string {
   const titolo    = (art.titolo   && art.titolo   !== 'null') ? art.titolo   : existingTitolo;
   const corpo     = (art.corpo    && art.corpo    !== 'null') ? art.corpo    : existingCorpo;
   const descr     = (art.descrizione && art.descrizione !== 'null') ? art.descrizione : '';
@@ -22,13 +22,14 @@ function buildMdoc(art: Record<string, any>, existingTitolo: string, existingCor
   const immagine  = existingImmagine || null;
   const faqs      = Array.isArray(art.schema_faq) ? art.schema_faq : [];
   const today     = new Date().toISOString().split('T')[0];
+  const data      = existingData || today;
 
   const esc = (s: string) => String(s).replace(/\\/g, '\\\\').replace(/"/g, '\\"');
 
   let yaml = `---\n`;
   yaml += `titolo: "${esc(titolo)}"\n`;
   yaml += `descrizione: "${esc(descr)}"\n`;
-  yaml += `data: ${today}\n`;
+  yaml += `data: ${data}\n`;
   if (immagine) yaml += `immagine: ${immagine}\n`;
   if (seoTitle) yaml += `seo_title: "${esc(seoTitle)}"\n`;
   if (seoDescr) yaml += `seo_description: "${esc(seoDescr)}"\n`;
@@ -72,11 +73,12 @@ export const POST: APIRoute = async ({ request }) => {
     existing_titolo?: string;
     existing_corpo?: string;
     existing_immagine?: string;
+    existing_data?: string;
   };
   try { body = await request.json(); }
   catch { return new Response(JSON.stringify({ error: 'JSON non valido' }), { status: 400, headers }); }
 
-  const { art, modo, slug_esistente, existing_titolo = '', existing_corpo = '', existing_immagine = '' } = body;
+  const { art, modo, slug_esistente, existing_titolo = '', existing_corpo = '', existing_immagine = '', existing_data = '' } = body;
 
   // Determina slug finale:
   // - Se c'è un articolo esistente E il modo è "solo-metadati" oppure si vuole
@@ -93,7 +95,7 @@ export const POST: APIRoute = async ({ request }) => {
     if (!slug) slug = `articolo-${Date.now()}`;
   }
 
-  const mdocContent    = buildMdoc(art, existing_titolo, existing_corpo, existing_immagine);
+  const mdocContent    = buildMdoc(art, existing_titolo, existing_corpo, existing_immagine, existing_data);
   const filePath       = `src/content/articoli/${slug}/index.mdoc`;
   const fileContentB64 = Buffer.from(mdocContent, 'utf-8').toString('base64');
 

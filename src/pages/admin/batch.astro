@@ -144,6 +144,8 @@ if (statsAuth !== expectedPwd) {
           var et=tm?tm[1].replace(/\\"/g,'"'):a.slug;
           var im=testo.match(/^immagine:\s*(.+)$/m);
           var ei=im?im[1].trim():"";
+          var dm=testo.match(/^data:\s*(.+)$/m);
+          var ed=dm?dm[1].trim():"";
           var pts=testo.split(/^---$/m);
           var ec=pts.length>=3?pts.slice(2).join("---").trim():"";
           addLog("[2/4] genero con AI (Opus)...","info");
@@ -158,7 +160,7 @@ if (statsAuth !== expectedPwd) {
           if(!art||!art.titolo)throw new Error("no art (keys: "+Object.keys(art||{}).join(",")+")");
           addLog("[3/4] art OK: titolo="+String(art.titolo).substring(0,40)+"...","info");
           addLog("[4/4] salvo su GitHub...","info");
-          var sr=await fetch("/api/salva-bozza",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({art:art,modo:modo,slug_esistente:a.slug,existing_titolo:et,existing_corpo:ec,existing_immagine:ei})});
+          var sr=await fetch("/api/salva-bozza",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({art:art,modo:modo,slug_esistente:a.slug,existing_titolo:et,existing_corpo:ec,existing_immagine:ei,existing_data:ed})});
           if(!sr.ok){var srBody="";try{srBody=await sr.text();}catch(x){}throw new Error("save "+sr.status+" "+srBody.substring(0,200));}
           ok++;addLog("OK  "+a.slug,"ok");
         }catch(e){err++;addLog("ERR "+a.slug+": "+e.message,"err");}
