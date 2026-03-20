@@ -222,8 +222,8 @@ if (!isAuth) return Astro.redirect('/admin/login?redirect=/admin/social-piano');
     }
 
     .day-card-body {
-      display: grid;
-      grid-template-columns: 280px 1fr;
+      display: flex;
+      flex-direction: column;
       gap: 1.25rem;
     }
 
@@ -234,9 +234,9 @@ if (!isAuth) return Astro.redirect('/admin/login?redirect=/admin/social-piano');
     }
 
     .img-preview {
-      width: 100%;
+      width: 200px;
       aspect-ratio: 9 / 16;
-      max-height: 400px;
+      max-height: 360px;
       background: #0f172a;
       border-radius: 10px;
       overflow: hidden;
@@ -271,7 +271,7 @@ if (!isAuth) return Astro.redirect('/admin/login?redirect=/admin/social-piano');
       font-size: 0.75rem;
     }
 
-    .texts-col {
+    .texts-grid {
       display: flex;
       flex-direction: column;
       gap: 0.75rem;
@@ -287,9 +287,15 @@ if (!isAuth) return Astro.redirect('/admin/login?redirect=/admin/social-piano');
       letter-spacing: 0.5px;
     }
 
+    .texts-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
     .text-group textarea {
       width: 100%;
-      min-height: 80px;
+      min-height: 100px;
       padding: 0.6rem 0.75rem;
       border-radius: 8px;
       border: 1px solid #334155;
@@ -346,14 +352,14 @@ if (!isAuth) return Astro.redirect('/admin/login?redirect=/admin/social-piano');
         align-items: stretch;
       }
 
-      .day-card-body {
+      .texts-grid {
         grid-template-columns: 1fr;
       }
 
       .img-preview {
         max-height: 300px;
         margin: 0 auto;
-        width: 200px;
+        width: 180px;
       }
 
       .piano-header {
@@ -535,7 +541,7 @@ if (!isAuth) return Astro.redirect('/admin/login?redirect=/admin/social-piano');
                 'Genera Immagine' +
               '</button>' +
             '</div>' +
-            '<div class="texts-col">' +
+            '<div class="texts-grid">' +
               '<div class="text-group">' +
                 '<label for="txt-x-' + i + '">X (Twitter)</label>' +
                 '<textarea id="txt-x-' + i + '" rows="3">' + escHtml(p.x_post || '') + '</textarea>' +
