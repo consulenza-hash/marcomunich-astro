@@ -98,30 +98,26 @@ export async function postToLinkedIn(
   personUrn: string
 ): Promise<{ success: boolean; postUrl?: string; error?: string }> {
   const fullText = `${text}\n\n${link}`;
+  const urn = personUrn.trim();
 
   const body = {
-    author: personUrn,
+    author: urn,
+    commentary: fullText,
+    visibility: 'PUBLIC',
+    distribution: {
+      feedDistribution: 'MAIN_FEED',
+      targetEntities: [],
+      thirdPartyDistributionChannels: [],
+    },
     lifecycleState: 'PUBLISHED',
-    specificContent: {
-      'com.linkedin.ugc.ShareContent': {
-        shareCommentary: { text: fullText },
-        shareMediaCategory: 'ARTICLE',
-        media: [{
-          status: 'READY',
-          originalUrl: link,
-        }],
-      },
-    },
-    visibility: {
-      'com.linkedin.ugc.MemberNetworkVisibility': 'PUBLIC',
-    },
   };
 
-  const res = await fetch('https://api.linkedin.com/v2/ugcPosts', {
+  const res = await fetch('https://api.linkedin.com/rest/posts', {
     method: 'POST',
     headers: {
-      Authorization: `Bearer ${accessToken}`,
+      Authorization: `Bearer ${accessToken.trim()}`,
       'Content-Type': 'application/json',
+      'LinkedIn-Version': '202503',
       'X-Restli-Protocol-Version': '2.0.0',
     },
     body: JSON.stringify(body),
@@ -132,10 +128,10 @@ export async function postToLinkedIn(
     return { success: false, error: `LinkedIn API ${res.status}: ${errText.substring(0, 200)}` };
   }
 
-  const data = await res.json() as { id: string };
+  const postId = res.headers.get('x-restli-id') || '';
   return {
     success: true,
-    postUrl: `https://www.linkedin.com/feed/update/${data.id}`,
+    postUrl: postId ? `https://www.linkedin.com/feed/update/${postId}` : 'https://www.linkedin.com/feed/',
   };
 }
 
