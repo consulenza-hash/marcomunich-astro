@@ -21,7 +21,7 @@ if (!slug) return Astro.redirect('/404', 302);
 const token = GITHUB_TOKEN;
 const art   = await fetchArticolo(slug as string, token ?? undefined);
 
-if (!art) {
+if (!art || art.bozza === true) {
   return Astro.redirect('/404', 302);
 }
 

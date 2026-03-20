@@ -25,8 +25,9 @@ const posts = Object.entries(rawFiles).map(([filePath, content]) => {
     descrizione:(fm.descrizione as string) ?? '',
     data:       fm.data ? String(fm.data) : '',
     immagine:   fm.immagine ? (String(fm.immagine).startsWith('/') ? fm.immagine : `/images/articoli/${fm.immagine}`) : null,
+    bozza:      fm.bozza === true,
   };
-}).sort((a, b) => new Date(b.data).getTime() - new Date(a.data).getTime());
+}).filter(p => !p.bozza).sort((a, b) => new Date(b.data).getTime() - new Date(a.data).getTime());
 ---
 
 <BaseLayout

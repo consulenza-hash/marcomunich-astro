@@ -34,6 +34,7 @@ function buildMdoc(art: Record<string, any>, existingTitolo: string, existingCor
   if (seoTitle) yaml += `seo_title: "${esc(seoTitle)}"\n`;
   if (seoDescr) yaml += `seo_description: "${esc(seoDescr)}"\n`;
   yaml += `seo_noindex: false\n`;
+  yaml += `bozza: true\n`;
 
   if (faqs.length > 0) {
     yaml += `schema_faq:\n`;

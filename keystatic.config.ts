@@ -22,6 +22,11 @@ export default config({
           multiline: true,
         }),
         data: fields.date({ label: 'Data pubblicazione' }),
+        bozza: fields.checkbox({
+          label: 'Bozza',
+          description: 'Se attivo, l\'articolo non appare sul sito. Disattiva per pubblicare.',
+          defaultValue: false,
+        }),
         immagine: fields.image({
           label: 'Immagine di copertina',
           directory: 'public/images/articoli',
