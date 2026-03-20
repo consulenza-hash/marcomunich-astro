@@ -22,8 +22,10 @@ if (!isAuth) return Astro.redirect('/admin/login?redirect=/admin/social');
     button:disabled{opacity:.4;cursor:not-allowed}
     .btn-primary{background:#3b82f6;border-color:#3b82f6;color:#fff}
     .btn-primary:hover:not(:disabled){background:#2563eb}
-    .btn-success{background:#10b981;border-color:#10b981;color:#fff}
+    .btn-success{background:#10b981;border-color:#10b981;color:#fff;display:inline-block;padding:8px 16px;border-radius:6px}
     .btn-success:hover:not(:disabled){background:#059669}
+    .btn-copy{background:#6366f1;border:1px solid #6366f1;color:#fff;padding:8px 16px;border-radius:6px;cursor:pointer;font-size:.85rem}
+    .btn-copy:hover{background:#4f46e5}
     .btn-danger{background:#ef4444;border-color:#ef4444;color:#fff}
     .status-msg{margin-top:12px;padding:10px;border-radius:8px;font-size:.9rem}
     .status-ok{background:#064e3b;color:#6ee7b7}
@@ -76,9 +78,11 @@ if (!isAuth) return Astro.redirect('/admin/login?redirect=/admin/social');
         <div class="hashtags" id="hashtags-x"></div>
         <div class="card-footer">
           <span class="char-count" id="count-x">0 / 280</span>
-          <button class="btn-success btn-pub" data-platform="x">Pubblica</button>
+          <button class="btn-copy" onclick="var t=document.getElementById('text-x');t.select();document.execCommand('copy');this.textContent='Copiato!';setTimeout(()=>this.textContent='Copia testo',2000)">Copia testo</button>
+          <a href="https://x.com/compose/post" target="_blank" class="btn-success" style="text-decoration:none;text-align:center">Apri X e incolla</a>
         </div>
         <div class="card-status" id="status-x" style="display:none"></div>
+        <div style="margin-top:8px;text-align:center"><a href="https://x.com/marcomunich_" target="_blank" style="color:#999;font-size:13px">Il tuo profilo → @marcomunich_</a></div>
       </div>
 
       <!-- LinkedIn Card -->
