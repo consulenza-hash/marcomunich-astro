@@ -124,6 +124,7 @@ if (statsAuth !== expectedPwd) {
       if(!sel.length)return;
       paused=false;stopped=false;
       var modo=document.getElementById("modo").value,total=sel.length,ok=0,err=0;
+      var pendingArticles=[];
       document.getElementById("progress-section").style.display="block";
       ["btn-start","btn-all","btn-none"].forEach(function(id){document.getElementById(id).disabled=true;});
       document.getElementById("log").innerHTML="";document.getElementById("final-msg").textContent="";
@@ -134,12 +135,12 @@ if (statsAuth !== expectedPwd) {
         if(stopped)break;
         var a=sel[i];prog(i,total,a.titolo);
         try{
-          addLog("[1/4] carico "+a.slug+"...","info");
+          addLog("[1/3] carico "+a.slug+"...","info");
           var lr=await fetch("/api/articolo?slug="+encodeURIComponent(a.slug));
           if(!lr.ok)throw new Error("load "+lr.status);
           var testo=(await lr.json()).testo;
           backups[a.slug]=testo;addBackupRow(a.slug,a.titolo);
-          addLog("[1/4] caricato ("+testo.length+" chars)","info");
+          addLog("[1/3] caricato ("+testo.length+" chars)","info");
           var tm=testo.match(/^titolo:\s*"?([^"\n]+)"?/m);
           var et=tm?tm[1].replace(/\\"/g,'"'):a.slug;
           var im=testo.match(/^immagine:\s*(.+)$/m);
@@ -148,29 +149,37 @@ if (statsAuth !== expectedPwd) {
           var ed=dm?dm[1].trim():"";
           var pts=testo.split(/^---$/m);
           var ec=pts.length>=3?pts.slice(2).join("---").trim():"";
-          addLog("[2/4] genero con AI (Opus)...","info");
+          addLog("[2/3] genero con AI (Opus)...","info");
           var gr=await fetch("/api/genera-json",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({testo:testo,modo:modo,isNew:false})});
           if(!gr.ok){var errBody="";try{errBody=await gr.text();}catch(x){}throw new Error("gen "+gr.status+" "+errBody.substring(0,200));}
           var reader=gr.body.getReader(),decoder=new TextDecoder(),rawJson="";
           while(true){var ch=await reader.read();if(ch.done)break;rawJson+=decoder.decode(ch.value,{stream:true});}
-          addLog("[2/4] ricevuto stream ("+rawJson.length+" chars)","info");
+          addLog("[2/3] ricevuto stream ("+rawJson.length+" chars)","info");
           if(rawJson.includes('"__error"')){var em=rawJson.match(/"__error":"([^"]+)"/);throw new Error(em?em[1]:"Errore Claude");}
-          addLog("[3/4] parsing JSON...","info");
+          addLog("[3/3] parsing JSON...","info");
           var art;try{art=JSON.parse(rawJson.trim());}catch(pe){throw new Error("JSON parse: "+pe.message+" | primi 200: "+rawJson.substring(0,200));}
           if(!art||!art.titolo)throw new Error("no art (keys: "+Object.keys(art||{}).join(",")+")");
-          addLog("[3/4] art OK: titolo="+String(art.titolo).substring(0,40)+"...","info");
-          addLog("[4/4] salvo su GitHub...","info");
-          var sr=await fetch("/api/salva-bozza",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({art:art,modo:modo,slug_esistente:a.slug,existing_titolo:et,existing_corpo:ec,existing_immagine:ei,existing_data:ed})});
-          if(!sr.ok){var srBody="";try{srBody=await sr.text();}catch(x){}throw new Error("save "+sr.status+" "+srBody.substring(0,200));}
-          ok++;addLog("OK  "+a.slug,"ok");
+          addLog("[3/3] art OK: "+String(art.titolo).substring(0,40)+"...","info");
+          pendingArticles.push({slug:a.slug,art:art,modo:modo,existing_titolo:et,existing_corpo:ec,existing_immagine:ei,existing_data:ed});
+          ok++;addLog("OK  "+a.slug+" (in coda per commit)","ok");
         }catch(e){err++;addLog("ERR "+a.slug+": "+e.message,"err");}
         prog(i+1,total,"");
         if(i<sel.length-1&&!stopped)await wait(4000);
       }
+      if(pendingArticles.length>0){
+        addLog("--- Salvataggio batch: "+pendingArticles.length+" articoli in 1 commit...","info");
+        prog(total,total,"Salvo tutto su GitHub...");
+        try{
+          var sr=await fetch("/api/salva-batch",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({articles:pendingArticles})});
+          if(!sr.ok){var srBody="";try{srBody=await sr.text();}catch(x){}throw new Error("batch save "+sr.status+" "+srBody.substring(0,300));}
+          var srData=await sr.json();
+          addLog("COMMIT OK: "+pendingArticles.length+" articoli salvati in 1 commit ("+String(srData.commit).substring(0,7)+")","ok");
+        }catch(e){addLog("ERRORE COMMIT BATCH: "+e.message,"err");err+=pendingArticles.length;ok-=pendingArticles.length;}
+      }
       ["btn-start","btn-all","btn-none"].forEach(function(id){document.getElementById(id).disabled=false;});
       document.getElementById("current-art").textContent="";
       var fe=document.getElementById("final-msg");
-      fe.textContent=(stopped?"Interrotto. ":"Completato. ")+ok+" ok, "+err+" errori.";
+      fe.textContent=(stopped?"Interrotto. ":"Completato. ")+ok+" ok, "+err+" errori."+(pendingArticles.length>0?" (1 commit unico)":"");
       fe.className="final-msg "+(err===0?"ok":"partial");
     }
     function prog(d,t,title){var pct=t>0?Math.round(d/t*100):0;document.getElementById("prog-bar").style.width=pct+"%";document.getElementById("prog-label").textContent=d+" / "+t+" completati";document.getElementById("current-art").textContent=title?"In corso: "+title:"";}
