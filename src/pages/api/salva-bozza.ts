@@ -138,6 +138,6 @@ export const POST: APIRoute = async ({ request }) => {
     );
   }
 
-  const keystatic_url = `/keystatic/branch/main/collections/articoli`;
+  const keystatic_url = `/keystatic/collection/articoli/item/${slug}`;
   return new Response(JSON.stringify({ success: true, slug, keystatic_url }), { headers });
 };
