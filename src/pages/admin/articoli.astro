@@ -326,6 +326,9 @@ const bozze      = articoli.filter(a => a.bozza).length;
       font-weight: 500;
     }
     .btn-ai:hover { background: rgba(124,58,237,0.22); border-color: var(--ai); color: #c4b5fd; box-shadow: 0 0 10px rgba(124,58,237,0.2); }
+
+    .btn-delete { border-color: rgba(220,38,38,0.3); color: #ef4444; }
+    .btn-delete:hover { border-color: #ef4444; background: rgba(220,38,38,0.12); color: #fca5a5; }
     .btn-ai .spark { font-size: 10px; }
 
     .btn-preview { border-color: var(--smoke); color: var(--muted); }
@@ -444,6 +447,7 @@ const bozze      = articoli.filter(a => a.bozza).length;
                       <span class="spark">✦</span> AI
                     </a>
                     <a href={`/${a.slug}`} target="_blank" class="btn-action btn-preview">Anteprima ↗</a>
+                    <button onclick={`eliminaArticolo('${a.slug}', this)`} class="btn-action btn-delete">Elimina</button>
                   </div>
                 </td>
               </tr>
@@ -463,8 +467,37 @@ const bozze      = articoli.filter(a => a.bozza).length;
   </>
 )}
 
+<script is:inline>
+  function eliminaArticolo(slug, btnEl) {
+    if (!confirm('Sei sicuro di voler eliminare "' + slug + '"? Questa azione è irreversibile.')) return;
+    btnEl.disabled = true;
+    btnEl.textContent = '...';
+    fetch('/api/elimina-articolo', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ slug: slug })
+    })
+    .then(function(r) {
+      if (!r.ok) return r.json().then(function(d) { throw new Error(d.error || 'HTTP ' + r.status); });
+      return r.json();
+    })
+    .then(function(data) {
+      if (data.success) {
+        var row = btnEl.closest('tr');
+        if (row) row.remove();
+      } else {
+        throw new Error(data.error || 'Eliminazione fallita');
+      }
+    })
+    .catch(function(err) {
+      alert('Errore: ' + err.message);
+      btnEl.disabled = false;
+      btnEl.textContent = 'Elimina';
+    });
+  }
+</script>
 <script>
-  const rows        = Array.from(document.querySelectorAll<HTMLTableRowElement>('#tbody tr:not(.empty-row)'));
+  const rows        = Array.from(document.querySelectorAll('#tbody tr:not(.empty-row)'));
   const emptyRow    = document.getElementById('empty')!;
   const countEl     = document.getElementById('count')!;
   const footerCount = document.getElementById('footer-count')!;
