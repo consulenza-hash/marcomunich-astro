@@ -74,7 +74,7 @@ export const POST: APIRoute = async ({ request }) => {
 
   try {
     const response = await client.messages.create({
-      model: 'claude-haiku-4-5-20250315a',
+      model: 'claude-haiku-4-5-20251001',
       max_tokens: 2048,
       system: SOCIAL_SYSTEM_PROMPT,
       tools: [SOCIAL_TOOL_SCHEMA],
