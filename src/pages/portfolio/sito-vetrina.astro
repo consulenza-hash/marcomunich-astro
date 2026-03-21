@@ -1,0 +1,589 @@
+---
+export const prerender = true;
+---
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nome Cognome — Professionista</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #faf9f6;
+      --bg-warm: #f5f0ea;
+      --terra: #c2703e;
+      --terra-light: #d4855a;
+      --terra-dark: #a85d32;
+      --dark: #2c2420;
+      --text: #3d3530;
+      --gray-400: #9a918a;
+      --gray-300: #b8b0a8;
+      --gray-200: #ddd6ce;
+      --white: #fff;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Back button */
+    .back-btn {
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      z-index: 9999;
+      background: var(--terra);
+      color: var(--white);
+      text-decoration: none;
+      padding: 10px 18px;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(194,112,62,0.3);
+      transition: transform 0.2s, background 0.2s;
+    }
+    .back-btn:hover { transform: translateY(-1px); background: var(--terra-dark); }
+
+    /* Navbar */
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 60px;
+      background: var(--bg);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 24px;
+      color: var(--dark);
+    }
+    .nav-links { display: flex; gap: 36px; align-items: center; }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--gray-400);
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--dark); }
+    .nav-links .cta-link {
+      background: var(--terra);
+      color: var(--white);
+      padding: 10px 28px;
+      border-radius: 50px;
+    }
+    .nav-links .cta-link:hover { background: var(--terra-dark); color: var(--white); }
+
+    /* Hero */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 85vh;
+      align-items: center;
+      padding: 60px;
+      gap: 60px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .hero-text h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(36px, 4.5vw, 56px);
+      color: var(--dark);
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+    .hero-text h1 span { color: var(--terra); font-style: italic; }
+    .hero-text p {
+      color: var(--gray-400);
+      font-size: 17px;
+      margin-bottom: 36px;
+      max-width: 440px;
+    }
+    .hero-btns { display: flex; gap: 16px; align-items: center; }
+    .btn-fill {
+      display: inline-block;
+      background: var(--terra);
+      color: var(--white);
+      text-decoration: none;
+      padding: 16px 36px;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 600;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn-fill:hover { background: var(--terra-dark); transform: translateY(-2px); }
+    .btn-ghost {
+      display: inline-block;
+      color: var(--dark);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      border-bottom: 2px solid var(--gray-200);
+      padding-bottom: 2px;
+      transition: border-color 0.2s;
+    }
+    .btn-ghost:hover { border-color: var(--terra); }
+
+    .hero-photo {
+      width: 100%;
+      aspect-ratio: 4/5;
+      background: linear-gradient(135deg, var(--bg-warm), var(--gray-200));
+      border-radius: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-photo::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 40%;
+      height: 40%;
+      background: var(--terra);
+      opacity: 0.12;
+      border-radius: 24px 0 24px 0;
+    }
+
+    /* About */
+    .about {
+      padding: 100px 60px;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .about-img {
+      width: 100%;
+      aspect-ratio: 1;
+      background: linear-gradient(160deg, var(--gray-200), var(--bg-warm));
+      border-radius: 20px;
+    }
+    .about-text .label {
+      color: var(--terra);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .about-text h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 36px;
+      color: var(--dark);
+      margin-bottom: 20px;
+    }
+    .about-text p {
+      color: var(--gray-400);
+      font-size: 15px;
+      margin-bottom: 16px;
+      line-height: 1.8;
+    }
+
+    /* Services */
+    .services {
+      background: var(--white);
+      padding: 100px 60px;
+    }
+    .services-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+    .services-header .label {
+      color: var(--terra);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .services-header h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 36px;
+      color: var(--dark);
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .service-card {
+      background: var(--bg);
+      border-radius: 20px;
+      padding: 40px 32px;
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+      border: 1px solid transparent;
+    }
+    .service-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 60px rgba(44,36,32,0.08);
+      border-color: var(--gray-200);
+    }
+    .service-icon {
+      font-size: 40px;
+      margin-bottom: 20px;
+      display: block;
+    }
+    .service-card h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 22px;
+      color: var(--dark);
+      margin-bottom: 12px;
+    }
+    .service-card p {
+      color: var(--gray-400);
+      font-size: 14px;
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+    .service-price {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--terra);
+    }
+    .service-price span {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--gray-400);
+    }
+
+    /* Testimonials */
+    .testimonials {
+      padding: 100px 60px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .testimonials .label {
+      text-align: center;
+      color: var(--terra);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .testimonials h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 36px;
+      color: var(--dark);
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .test-scroll {
+      display: flex;
+      gap: 28px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      padding-bottom: 20px;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    .test-scroll::-webkit-scrollbar { display: none; }
+    .test-card {
+      min-width: 340px;
+      flex-shrink: 0;
+      scroll-snap-align: start;
+      background: var(--white);
+      border-radius: 20px;
+      padding: 36px;
+      border: 1px solid var(--gray-200);
+    }
+    .test-quote {
+      font-family: 'DM Serif Display', serif;
+      font-size: 48px;
+      color: var(--terra);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .test-text {
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.7;
+      margin-bottom: 24px;
+      font-style: italic;
+    }
+    .test-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .test-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--terra), var(--terra-light));
+    }
+    .test-name { font-weight: 600; font-size: 14px; color: var(--dark); }
+    .test-role { font-size: 12px; color: var(--gray-400); }
+
+    /* Contact */
+    .contact {
+      background: var(--white);
+      padding: 100px 60px;
+    }
+    .contact-inner {
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .contact .label {
+      color: var(--terra);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .contact h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 36px;
+      color: var(--dark);
+      margin-bottom: 12px;
+    }
+    .contact > .contact-inner > p {
+      color: var(--gray-400);
+      font-size: 15px;
+      margin-bottom: 40px;
+    }
+    .contact-form { text-align: left; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--dark);
+      margin-bottom: 6px;
+    }
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 14px 18px;
+      border: 1px solid var(--gray-200);
+      border-radius: 12px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      color: var(--text);
+      background: var(--bg);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus { border-color: var(--terra); }
+    .form-group textarea { resize: vertical; min-height: 140px; }
+    .form-submit {
+      width: 100%;
+      padding: 16px;
+      background: var(--terra);
+      color: var(--white);
+      border: none;
+      border-radius: 50px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .form-submit:hover { background: var(--terra-dark); }
+
+    /* Footer */
+    .footer {
+      background: var(--dark);
+      color: var(--white);
+      padding: 48px 60px;
+    }
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .footer-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 20px;
+    }
+    .footer-social { display: flex; gap: 20px; }
+    .footer-social a {
+      text-decoration: none;
+      color: var(--gray-400);
+      font-size: 14px;
+      transition: color 0.2s;
+    }
+    .footer-social a:hover { color: var(--white); }
+    .footer-copy { color: var(--gray-400); font-size: 12px; }
+
+    @media (max-width: 768px) {
+      .navbar { padding: 16px 20px; }
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; padding: 40px 20px; gap: 40px; min-height: auto; }
+      .hero-photo { aspect-ratio: 3/4; max-height: 400px; }
+      .about { grid-template-columns: 1fr; padding: 60px 20px; gap: 40px; }
+      .services { padding: 60px 20px; }
+      .services-grid { grid-template-columns: 1fr; }
+      .testimonials { padding: 60px 20px; }
+      .test-card { min-width: 280px; }
+      .contact { padding: 60px 20px; }
+      .form-row { grid-template-columns: 1fr; }
+      .footer { padding: 32px 20px; }
+      .footer-inner { flex-direction: column; gap: 20px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+  <a href="/portfolio" class="back-btn">&larr; Torna al Portfolio</a>
+
+  <nav class="navbar">
+    <div class="nav-logo">Nome Cognome</div>
+    <div class="nav-links">
+      <a href="#">Chi Sono</a>
+      <a href="#">Servizi</a>
+      <a href="#">Testimonianze</a>
+      <a href="#" class="cta-link">Contatti</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-text">
+      <h1>Consulenza strategica per il tuo <span>business digitale</span></h1>
+      <p>Aiuto professionisti e aziende a costruire una presenza online che genera risultati concreti e misurabili, con un approccio su misura.</p>
+      <div class="hero-btns">
+        <a href="#" class="btn-fill">Prenota una Consulenza</a>
+        <a href="#" class="btn-ghost">Scopri i Servizi</a>
+      </div>
+    </div>
+    <div class="hero-photo"></div>
+  </section>
+
+  <section class="about">
+    <div class="about-img"></div>
+    <div class="about-text">
+      <div class="label">Chi Sono</div>
+      <h2>Oltre 10 anni al servizio dei professionisti</h2>
+      <p>Mi occupo di strategia digitale dal 2014. Ho lavorato con oltre 200 clienti tra liberi professionisti, studi legali, medici e piccole imprese.</p>
+      <p>Il mio approccio parte sempre dall'ascolto. Prima di proporre soluzioni, capisco le esigenze reali del tuo business per costruire un percorso personalizzato che porti risultati duraturi.</p>
+      <p>Credo nella trasparenza e nella formazione: ogni cliente riceve report mensili dettagliati e sessioni di formazione per diventare autonomo nel tempo.</p>
+    </div>
+  </section>
+
+  <section class="services">
+    <div class="services-header">
+      <div class="label">Servizi</div>
+      <h2>Come Posso Aiutarti</h2>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <span class="service-icon">&#9998;</span>
+        <h3>Strategia Digitale</h3>
+        <p>Analisi completa della tua presenza online con piano d'azione personalizzato per raggiungere i tuoi obiettivi di business.</p>
+        <div class="service-price">&euro;350 <span>/ sessione</span></div>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">&#9881;</span>
+        <h3>Sito Web Professionale</h3>
+        <p>Design e sviluppo di un sito web moderno, veloce e ottimizzato per convertire i visitatori in clienti.</p>
+        <div class="service-price">&euro;2.500 <span>/ progetto</span></div>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">&#9733;</span>
+        <h3>Personal Branding</h3>
+        <p>Costruisci un'identit&agrave; professionale forte e riconoscibile che ti distingua dalla concorrenza nel tuo settore.</p>
+        <div class="service-price">&euro;180 <span>/ mese</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="testimonials">
+    <div class="label">Testimonianze</div>
+    <h2>Le Parole dei Miei Clienti</h2>
+    <div class="test-scroll">
+      <div class="test-card">
+        <div class="test-quote">&ldquo;</div>
+        <div class="test-text">Collaborare con questo professionista ha cambiato completamente il modo in cui gestisco la mia comunicazione online. I risultati sono arrivati gi&agrave; dal primo mese.</div>
+        <div class="test-author">
+          <div class="test-avatar"></div>
+          <div>
+            <div class="test-name">Avv. Francesca Neri</div>
+            <div class="test-role">Studio Legale Neri &amp; Associati</div>
+          </div>
+        </div>
+      </div>
+      <div class="test-card">
+        <div class="test-quote">&ldquo;</div>
+        <div class="test-text">Il mio studio medico ha raddoppiato le prenotazioni online dopo aver seguito il percorso di personal branding. Un investimento che consiglio a ogni professionista.</div>
+        <div class="test-author">
+          <div class="test-avatar"></div>
+          <div>
+            <div class="test-name">Dott. Roberto Sala</div>
+            <div class="test-role">Medico Chirurgo</div>
+          </div>
+        </div>
+      </div>
+      <div class="test-card">
+        <div class="test-quote">&ldquo;</div>
+        <div class="test-text">Professionalit&agrave;, puntualit&agrave; e competenza. Il sito web realizzato &egrave; esattamente quello che serviva alla mia attivit&agrave; per fare il salto di qualit&agrave;.</div>
+        <div class="test-author">
+          <div class="test-avatar"></div>
+          <div>
+            <div class="test-name">Maria Conti</div>
+            <div class="test-role">Titolare, Conti Design</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact">
+    <div class="contact-inner">
+      <div class="label">Contatti</div>
+      <h2>Parliamo del Tuo Progetto</h2>
+      <p>Compila il modulo per richiedere una consulenza gratuita di 30 minuti. Ti risponder&ograve; entro 24 ore.</p>
+      <form class="contact-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Nome</label>
+            <input type="text" placeholder="Il tuo nome" />
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" placeholder="email@esempio.it" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Messaggio</label>
+          <textarea placeholder="Raccontami del tuo progetto..."></textarea>
+        </div>
+        <button type="button" class="form-submit">Invia Messaggio</button>
+      </form>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-logo">Nome Cognome</div>
+      <div class="footer-social">
+        <a href="#">LinkedIn</a>
+        <a href="#">Instagram</a>
+        <a href="#">Twitter</a>
+      </div>
+      <div class="footer-copy">&copy; 2026 Nome Cognome &mdash; P.IVA 12345678901</div>
+    </div>
+  </footer>
+</body>
+</html>

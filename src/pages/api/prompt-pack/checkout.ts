@@ -20,6 +20,7 @@ export const GET: APIRoute = async ({ redirect, request }) => {
   try {
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
+      allow_promotion_codes: true,
       line_items: [
         {
           price: import.meta.env.STRIPE_PRICE_ID,

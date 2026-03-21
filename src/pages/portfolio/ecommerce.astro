@@ -1,0 +1,567 @@
+---
+export const prerender = true;
+---
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Il Tuo Brand — Fashion E-commerce</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap');
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --gold: #c9a96e;
+      --gold-light: #d4ba8a;
+      --black: #111;
+      --white: #fff;
+      --gray-100: #f7f7f7;
+      --gray-200: #e8e8e8;
+      --gray-500: #888;
+      --gray-700: #444;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      color: var(--black);
+      background: var(--white);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Back button */
+    .back-btn {
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      z-index: 9999;
+      background: var(--black);
+      color: var(--white);
+      text-decoration: none;
+      padding: 10px 18px;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      border-radius: 6px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      transition: background 0.2s, transform 0.2s;
+    }
+    .back-btn:hover { background: var(--gold); transform: translateY(-1px); }
+
+    /* Announcement bar */
+    .announcement {
+      background: var(--black);
+      color: var(--white);
+      text-align: center;
+      padding: 10px;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .announcement span { color: var(--gold); }
+
+    /* Navbar */
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 60px;
+      border-bottom: 1px solid var(--gray-200);
+      background: var(--white);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-left { display: flex; gap: 32px; align-items: center; }
+    .nav-left a {
+      text-decoration: none;
+      color: var(--black);
+      font-size: 13px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      position: relative;
+    }
+    .nav-left a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 1.5px;
+      background: var(--gold);
+      transition: width 0.3s;
+    }
+    .nav-left a:hover::after { width: 100%; }
+
+    .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    .nav-right { display: flex; gap: 24px; align-items: center; }
+    .search-bar {
+      display: flex;
+      align-items: center;
+      border: 1px solid var(--gray-200);
+      border-radius: 0;
+      padding: 8px 16px;
+      gap: 8px;
+    }
+    .search-bar input {
+      border: none;
+      outline: none;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px;
+      width: 180px;
+    }
+    .search-icon, .cart-icon {
+      font-size: 18px;
+      cursor: pointer;
+      color: var(--gray-700);
+    }
+    .cart-icon { position: relative; }
+    .cart-badge {
+      position: absolute;
+      top: -8px;
+      right: -10px;
+      background: var(--gold);
+      color: var(--white);
+      font-size: 10px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+    }
+
+    /* Hero */
+    .hero {
+      height: 85vh;
+      background: linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 30%, #c9a96e33 70%, #111 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 80px,
+        rgba(201,169,110,0.03) 80px,
+        rgba(201,169,110,0.03) 82px
+      );
+    }
+    .hero-content { position: relative; z-index: 1; }
+    .hero-label {
+      color: var(--gold);
+      font-size: 13px;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(42px, 6vw, 80px);
+      color: var(--white);
+      font-weight: 400;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--gold);
+    }
+    .hero p {
+      color: var(--gray-500);
+      font-size: 15px;
+      margin-bottom: 40px;
+      letter-spacing: 1px;
+    }
+    .btn-primary {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--white);
+      text-decoration: none;
+      padding: 16px 48px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+    /* Categories */
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      padding: 2px;
+    }
+    .cat-card {
+      height: 400px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 40px;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .cat-card:nth-child(1) { background: linear-gradient(to bottom, #d4c5a9, #b8a88a); }
+    .cat-card:nth-child(2) { background: linear-gradient(to bottom, #2c2c2c, #1a1a1a); }
+    .cat-card:nth-child(3) { background: linear-gradient(to bottom, #8a7e6b, #6b6050); }
+    .cat-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0);
+      transition: background 0.4s;
+    }
+    .cat-card:hover::after { background: rgba(0,0,0,0.15); }
+    .cat-card span {
+      position: relative;
+      z-index: 1;
+      color: var(--white);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+    }
+
+    /* Section heading */
+    .section-heading {
+      text-align: center;
+      padding: 80px 20px 40px;
+    }
+    .section-heading h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 36px;
+      font-weight: 400;
+      margin-bottom: 8px;
+    }
+    .section-heading p {
+      color: var(--gray-500);
+      font-size: 14px;
+      letter-spacing: 1px;
+    }
+
+    /* Products */
+    .products {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+      padding: 0 60px 80px;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+    .product-card { cursor: pointer; }
+    .product-img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      margin-bottom: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+    .product-card:nth-child(1) .product-img { background: linear-gradient(135deg, #e8ddd0, #d4c5a9); }
+    .product-card:nth-child(2) .product-img { background: linear-gradient(135deg, #2c2c2c, #444); }
+    .product-card:nth-child(3) .product-img { background: linear-gradient(135deg, #c9a96e, #b89a5e); }
+    .product-card:nth-child(4) .product-img { background: linear-gradient(135deg, #f0ebe4, #ddd5c8); }
+    .product-card:nth-child(5) .product-img { background: linear-gradient(135deg, #1a1a1a, #333); }
+    .product-card:nth-child(6) .product-img { background: linear-gradient(135deg, #a08c6a, #8a7e6b); }
+
+    .product-img .quick-add {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--black);
+      color: var(--white);
+      text-align: center;
+      padding: 14px;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transform: translateY(100%);
+      transition: transform 0.3s;
+      cursor: pointer;
+      border: none;
+      width: 100%;
+      font-family: 'Montserrat', sans-serif;
+    }
+    .product-card:hover .quick-add { transform: translateY(0); }
+
+    .product-info { text-align: center; }
+    .product-name {
+      font-size: 14px;
+      font-weight: 400;
+      margin-bottom: 4px;
+    }
+    .product-price {
+      color: var(--gray-700);
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .product-price .old-price {
+      text-decoration: line-through;
+      color: var(--gray-500);
+      margin-right: 8px;
+      font-weight: 300;
+    }
+
+    /* Newsletter */
+    .newsletter {
+      background: var(--gray-100);
+      padding: 80px 20px;
+      text-align: center;
+    }
+    .newsletter h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 32px;
+      font-weight: 400;
+      margin-bottom: 8px;
+    }
+    .newsletter p {
+      color: var(--gray-500);
+      font-size: 14px;
+      margin-bottom: 32px;
+    }
+    .newsletter-form {
+      display: flex;
+      max-width: 480px;
+      margin: 0 auto;
+      gap: 0;
+    }
+    .newsletter-form input {
+      flex: 1;
+      padding: 16px 20px;
+      border: 1px solid var(--gray-200);
+      border-right: none;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px;
+      outline: none;
+    }
+    .newsletter-form button {
+      padding: 16px 32px;
+      background: var(--black);
+      color: var(--white);
+      border: none;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .newsletter-form button:hover { background: var(--gold); }
+
+    /* Footer */
+    .footer {
+      background: var(--black);
+      color: var(--white);
+      padding: 60px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .footer-brand .logo { font-size: 22px; margin-bottom: 16px; }
+    .footer-brand p { color: var(--gray-500); font-size: 13px; line-height: 1.8; }
+    .footer h4 {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      color: var(--gold);
+    }
+    .footer ul { list-style: none; }
+    .footer li { margin-bottom: 10px; }
+    .footer a {
+      text-decoration: none;
+      color: var(--gray-500);
+      font-size: 13px;
+      transition: color 0.2s;
+    }
+    .footer a:hover { color: var(--white); }
+    .footer-bottom {
+      border-top: 1px solid #222;
+      margin-top: 48px;
+      padding-top: 24px;
+      text-align: center;
+      color: var(--gray-500);
+      font-size: 12px;
+    }
+
+    @media (max-width: 768px) {
+      .navbar { padding: 16px 20px; flex-wrap: wrap; gap: 12px; }
+      .nav-left { display: none; }
+      .search-bar { display: none; }
+      .hero { height: 60vh; }
+      .hero h1 { font-size: 32px; }
+      .categories { grid-template-columns: 1fr; }
+      .cat-card { height: 250px; }
+      .products { grid-template-columns: repeat(2, 1fr); padding: 0 20px 60px; gap: 20px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .newsletter-form { flex-direction: column; }
+      .newsletter-form input { border-right: 1px solid var(--gray-200); }
+    }
+  </style>
+</head>
+<body>
+  <a href="/portfolio" class="back-btn">&larr; Torna al Portfolio</a>
+
+  <div class="announcement">
+    Spedizione gratuita per ordini superiori a <span>&euro;99</span>
+  </div>
+
+  <nav class="navbar">
+    <div class="nav-left">
+      <a href="#">Donna</a>
+      <a href="#">Uomo</a>
+      <a href="#">Accessori</a>
+      <a href="#">Sale</a>
+    </div>
+    <div class="logo">Il Tuo Brand</div>
+    <div class="nav-right">
+      <div class="search-bar">
+        <span class="search-icon">&#128269;</span>
+        <input type="text" placeholder="Cerca prodotti..." />
+      </div>
+      <div class="cart-icon">
+        &#128722;
+        <span class="cart-badge">2</span>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-label">Nuovi Arrivi</div>
+      <h1>Collezione<br /><em>Primavera 2026</em></h1>
+      <p>Eleganza senza tempo, stile contemporaneo</p>
+      <a href="#" class="btn-primary">Acquista Ora</a>
+    </div>
+  </section>
+
+  <section class="categories">
+    <div class="cat-card"><span>Donna</span></div>
+    <div class="cat-card"><span>Uomo</span></div>
+    <div class="cat-card"><span>Accessori</span></div>
+  </section>
+
+  <div class="section-heading">
+    <h2>Selezionati per Te</h2>
+    <p>I capi pi&ugrave; amati della stagione</p>
+  </div>
+
+  <section class="products">
+    <div class="product-card">
+      <div class="product-img"><button class="quick-add">Aggiungi al Carrello</button></div>
+      <div class="product-info">
+        <div class="product-name">Cappotto in Lana Merino</div>
+        <div class="product-price">&euro;289,00</div>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-img"><button class="quick-add">Aggiungi al Carrello</button></div>
+      <div class="product-info">
+        <div class="product-name">Camicia in Seta Nera</div>
+        <div class="product-price">&euro;129,00</div>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-img"><button class="quick-add">Aggiungi al Carrello</button></div>
+      <div class="product-info">
+        <div class="product-name">Borsa Tote in Pelle</div>
+        <div class="product-price">&euro;189,00</div>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-img"><button class="quick-add">Aggiungi al Carrello</button></div>
+      <div class="product-info">
+        <div class="product-name">Abito in Lino Naturale</div>
+        <div class="product-price"><span class="old-price">&euro;159,00</span>&euro;89,00</div>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-img"><button class="quick-add">Aggiungi al Carrello</button></div>
+      <div class="product-info">
+        <div class="product-name">Pantalone Sartoriale</div>
+        <div class="product-price">&euro;149,00</div>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-img"><button class="quick-add">Aggiungi al Carrello</button></div>
+      <div class="product-info">
+        <div class="product-name">Cintura Intrecciata</div>
+        <div class="product-price">&euro;69,00</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="newsletter">
+    <h2>Resta in Contatto</h2>
+    <p>Iscriviti alla newsletter e ricevi subito il 10% di sconto sul primo ordine</p>
+    <div class="newsletter-form">
+      <input type="email" placeholder="Il tuo indirizzo email" />
+      <button>Iscriviti</button>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo">Il Tuo Brand</div>
+        <p>Dal 2018 creiamo capi di abbigliamento che uniscono artigianato italiano e design contemporaneo.</p>
+      </div>
+      <div>
+        <h4>Chi Siamo</h4>
+        <ul>
+          <li><a href="#">La Nostra Storia</a></li>
+          <li><a href="#">Sostenibilit&agrave;</a></li>
+          <li><a href="#">Lavora con Noi</a></li>
+          <li><a href="#">Press</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Assistenza</h4>
+        <ul>
+          <li><a href="#">Spedizioni</a></li>
+          <li><a href="#">Resi e Cambi</a></li>
+          <li><a href="#">Guida Taglie</a></li>
+          <li><a href="#">FAQ</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contatti</h4>
+        <ul>
+          <li><a href="#">info@iltuobrand.it</a></li>
+          <li><a href="#">+39 02 1234567</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Facebook</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2026 Il Tuo Brand. Tutti i diritti riservati. &mdash; P.IVA 12345678901
+    </div>
+  </footer>
+</body>
+</html>

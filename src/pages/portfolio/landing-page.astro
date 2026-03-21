@@ -1,0 +1,661 @@
+---
+export const prerender = true;
+---
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Il Tuo Prodotto — Landing Page</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0f0f0f;
+      --bg-card: #1a1a1a;
+      --bg-elevated: #222;
+      --green: #22c55e;
+      --green-dark: #16a34a;
+      --white: #ffffff;
+      --gray-100: rgba(255,255,255,0.92);
+      --gray-300: rgba(255,255,255,0.6);
+      --gray-500: rgba(255,255,255,0.35);
+      --gray-700: rgba(255,255,255,0.1);
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg);
+      color: var(--white);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Back button */
+    .back-btn {
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      z-index: 9999;
+      background: var(--green);
+      color: var(--bg);
+      text-decoration: none;
+      padding: 10px 18px;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(34,197,94,0.3);
+      transition: transform 0.2s, background 0.2s;
+    }
+    .back-btn:hover { transform: translateY(-1px); background: var(--green-dark); }
+
+    /* Top bar */
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 60px;
+    }
+    .topbar-logo {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+    .topbar-logo span { color: var(--green); }
+    .topbar-link {
+      color: var(--gray-300);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .topbar-link:hover { color: var(--white); }
+
+    /* Hero */
+    .hero {
+      padding: 100px 60px 120px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -300px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1000px;
+      height: 1000px;
+      background: radial-gradient(circle, rgba(34,197,94,0.06) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(34,197,94,0.1);
+      border: 1px solid rgba(34,197,94,0.2);
+      padding: 8px 20px;
+      border-radius: 50px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--green);
+      margin-bottom: 36px;
+    }
+    .hero-badge .dot {
+      width: 8px;
+      height: 8px;
+      background: var(--green);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+    .hero h1 {
+      font-size: clamp(42px, 6vw, 76px);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -2px;
+      margin-bottom: 24px;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero h1 .highlight {
+      background: linear-gradient(135deg, var(--green), #86efac);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      color: var(--gray-300);
+      font-size: 19px;
+      max-width: 520px;
+      margin: 0 auto 48px;
+      font-weight: 300;
+    }
+    .hero-form {
+      display: flex;
+      max-width: 460px;
+      margin: 0 auto;
+      background: var(--bg-card);
+      border-radius: 14px;
+      border: 1px solid var(--gray-700);
+      padding: 6px;
+      gap: 0;
+    }
+    .hero-form input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      padding: 16px 20px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 15px;
+      color: var(--white);
+    }
+    .hero-form input::placeholder { color: var(--gray-500); }
+    .hero-form button {
+      background: var(--green);
+      color: var(--bg);
+      border: none;
+      padding: 16px 28px;
+      border-radius: 10px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s;
+    }
+    .hero-form button:hover { background: var(--green-dark); }
+    .hero-note {
+      color: var(--gray-500);
+      font-size: 13px;
+      margin-top: 16px;
+    }
+
+    /* Logos */
+    .logos {
+      padding: 60px;
+      text-align: center;
+      border-top: 1px solid var(--gray-700);
+      border-bottom: 1px solid var(--gray-700);
+    }
+    .logos p {
+      color: var(--gray-500);
+      font-size: 13px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 32px;
+    }
+    .logo-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 48px;
+      flex-wrap: wrap;
+    }
+    .logo-placeholder {
+      width: 120px;
+      height: 36px;
+      background: var(--gray-700);
+      border-radius: 6px;
+      opacity: 0.6;
+    }
+
+    /* Benefits */
+    .benefits {
+      padding: 100px 60px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .benefits-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+    .benefits-header h2 {
+      font-size: 40px;
+      font-weight: 700;
+      letter-spacing: -1px;
+      margin-bottom: 12px;
+    }
+    .benefits-header p { color: var(--gray-300); font-size: 16px; }
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+    .benefit-card {
+      background: var(--bg-card);
+      border: 1px solid var(--gray-700);
+      border-radius: 20px;
+      padding: 40px 32px;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .benefit-card:hover {
+      border-color: rgba(34,197,94,0.3);
+      transform: translateY(-4px);
+    }
+    .benefit-icon {
+      width: 52px;
+      height: 52px;
+      background: rgba(34,197,94,0.1);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin-bottom: 24px;
+    }
+    .benefit-card h3 {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .benefit-card p {
+      color: var(--gray-300);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    /* How it works */
+    .how {
+      padding: 100px 60px;
+      background: var(--bg-card);
+    }
+    .how-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+    .how-header h2 {
+      font-size: 40px;
+      font-weight: 700;
+      letter-spacing: -1px;
+      margin-bottom: 12px;
+    }
+    .how-header p { color: var(--gray-300); font-size: 16px; }
+    .how-steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .step { text-align: center; }
+    .step-num {
+      width: 64px;
+      height: 64px;
+      background: var(--green);
+      color: var(--bg);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      font-weight: 800;
+      margin: 0 auto 20px;
+    }
+    .step h3 {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .step p {
+      color: var(--gray-300);
+      font-size: 14px;
+      line-height: 1.7;
+      max-width: 280px;
+      margin: 0 auto;
+    }
+
+    /* Pricing */
+    .pricing {
+      padding: 100px 60px;
+    }
+    .pricing-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+    .pricing-header h2 {
+      font-size: 40px;
+      font-weight: 700;
+      letter-spacing: -1px;
+      margin-bottom: 12px;
+    }
+    .pricing-header p { color: var(--gray-300); font-size: 16px; }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      max-width: 1000px;
+      margin: 0 auto;
+      align-items: start;
+    }
+    .price-card {
+      background: var(--bg-card);
+      border: 1px solid var(--gray-700);
+      border-radius: 24px;
+      padding: 40px 32px;
+      position: relative;
+    }
+    .price-card.popular {
+      border-color: var(--green);
+      background: linear-gradient(to bottom, rgba(34,197,94,0.05), var(--bg-card));
+    }
+    .popular-badge {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--green);
+      color: var(--bg);
+      padding: 6px 20px;
+      border-radius: 50px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .price-name {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--gray-300);
+      margin-bottom: 8px;
+    }
+    .price-amount {
+      font-size: 48px;
+      font-weight: 800;
+      letter-spacing: -2px;
+      margin-bottom: 4px;
+    }
+    .price-amount span { font-size: 16px; font-weight: 400; color: var(--gray-500); letter-spacing: 0; }
+    .price-desc {
+      color: var(--gray-500);
+      font-size: 13px;
+      margin-bottom: 28px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--gray-700);
+    }
+    .price-features { list-style: none; margin-bottom: 32px; }
+    .price-features li {
+      padding: 8px 0;
+      font-size: 14px;
+      color: var(--gray-100);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .price-features li::before {
+      content: '\2713';
+      color: var(--green);
+      font-weight: 700;
+      font-size: 14px;
+    }
+    .price-features li.disabled {
+      color: var(--gray-500);
+    }
+    .price-features li.disabled::before {
+      content: '\2014';
+      color: var(--gray-500);
+    }
+    .price-btn {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 16px;
+      border-radius: 12px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .price-btn-outline {
+      background: transparent;
+      color: var(--white);
+      border: 1px solid var(--gray-700);
+    }
+    .price-btn-outline:hover { border-color: var(--gray-300); }
+    .price-btn-fill {
+      background: var(--green);
+      color: var(--bg);
+    }
+    .price-btn-fill:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(34,197,94,0.3); }
+
+    /* Final CTA */
+    .final-cta {
+      padding: 100px 60px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .final-cta::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(34,197,94,0.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .final-cta h2 {
+      font-size: clamp(32px, 4vw, 50px);
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      margin-bottom: 16px;
+      position: relative;
+    }
+    .final-cta p {
+      color: var(--gray-300);
+      font-size: 17px;
+      max-width: 500px;
+      margin: 0 auto 40px;
+      position: relative;
+    }
+    .final-cta .btn-big {
+      display: inline-block;
+      background: var(--green);
+      color: var(--bg);
+      text-decoration: none;
+      padding: 20px 52px;
+      border-radius: 14px;
+      font-size: 17px;
+      font-weight: 700;
+      position: relative;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .final-cta .btn-big:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(34,197,94,0.35); }
+
+    /* Footer */
+    .footer {
+      border-top: 1px solid var(--gray-700);
+      padding: 36px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-logo { font-size: 16px; font-weight: 600; }
+    .footer-logo span { color: var(--green); }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a {
+      text-decoration: none;
+      color: var(--gray-500);
+      font-size: 13px;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--white); }
+    .footer-copy { color: var(--gray-500); font-size: 12px; }
+
+    @media (max-width: 768px) {
+      .topbar { padding: 16px 20px; }
+      .hero { padding: 60px 20px 80px; }
+      .hero-form { flex-direction: column; padding: 8px; }
+      .hero-form input { padding: 14px 16px; }
+      .hero-form button { width: 100%; padding: 14px; }
+      .logos { padding: 40px 20px; }
+      .logo-row { gap: 24px; }
+      .benefits, .how, .pricing, .final-cta { padding: 60px 20px; }
+      .benefits-grid, .how-steps, .pricing-grid { grid-template-columns: 1fr; }
+      .price-card.popular { order: -1; }
+      .footer { flex-direction: column; gap: 20px; text-align: center; padding: 32px 20px; }
+    }
+  </style>
+</head>
+<body>
+  <a href="/portfolio" class="back-btn">&larr; Torna al Portfolio</a>
+
+  <div class="topbar">
+    <div class="topbar-logo">Il Tuo <span>Prodotto</span></div>
+    <a href="#" class="topbar-link">Accedi &rarr;</a>
+  </div>
+
+  <section class="hero">
+    <div class="hero-badge"><span class="dot"></span> Novit&agrave; 2026</div>
+    <h1>La soluzione che <span class="highlight">stavi cercando</span></h1>
+    <p>Automatizza il tuo lavoro, risparmia tempo e concentrati su quello che conta davvero per il tuo business.</p>
+    <div class="hero-form">
+      <input type="email" placeholder="La tua email aziendale" />
+      <button>Provalo Gratis</button>
+    </div>
+    <div class="hero-note">Gratis per 14 giorni. Nessuna carta richiesta.</div>
+  </section>
+
+  <section class="logos">
+    <p>Usato da oltre 2.000 aziende in Italia</p>
+    <div class="logo-row">
+      <div class="logo-placeholder"></div>
+      <div class="logo-placeholder"></div>
+      <div class="logo-placeholder"></div>
+      <div class="logo-placeholder"></div>
+      <div class="logo-placeholder"></div>
+    </div>
+  </section>
+
+  <section class="benefits">
+    <div class="benefits-header">
+      <h2>Perch&eacute; sceglierci</h2>
+      <p>Tutto quello che serve per far crescere il tuo business</p>
+    </div>
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <div class="benefit-icon">&#9889;</div>
+        <h3>Velocit&agrave; Estrema</h3>
+        <p>Riduci del 70% i tempi di lavoro grazie all'automazione intelligente dei processi ripetitivi.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">&#128274;</div>
+        <h3>Sicurezza Totale</h3>
+        <p>I tuoi dati sono protetti con crittografia end-to-end e server certificati in Europa.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">&#128200;</div>
+        <h3>Analytics Avanzati</h3>
+        <p>Dashboard in tempo reale con metriche personalizzabili per monitorare ogni aspetto del tuo business.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="how">
+    <div class="how-header">
+      <h2>Come Funziona</h2>
+      <p>Tre semplici passaggi per iniziare</p>
+    </div>
+    <div class="how-steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Crea il Tuo Account</h3>
+        <p>Registrati in meno di 2 minuti con la tua email aziendale. Nessuna carta di credito necessaria.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Configura lo Spazio</h3>
+        <p>Importa i tuoi dati, invita il team e personalizza le dashboard secondo le tue esigenze.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Guarda i Risultati</h3>
+        <p>L'automazione inizia subito a lavorare. Monitora i progressi dalla dashboard in tempo reale.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="pricing">
+    <div class="pricing-header">
+      <h2>Piani e Prezzi</h2>
+      <p>Scegli il piano adatto alle tue esigenze. Cambia quando vuoi.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="price-name">Base</div>
+        <div class="price-amount">&euro;9 <span>/ mese</span></div>
+        <div class="price-desc">Perfetto per iniziare e testare le funzionalit&agrave; principali.</div>
+        <ul class="price-features">
+          <li>1 utente incluso</li>
+          <li>5 progetti attivi</li>
+          <li>1 GB di spazio</li>
+          <li>Report mensili</li>
+          <li class="disabled">Automazioni avanzate</li>
+          <li class="disabled">Supporto prioritario</li>
+        </ul>
+        <button class="price-btn price-btn-outline">Inizia Gratis</button>
+      </div>
+      <div class="price-card popular">
+        <div class="popular-badge">Pi&ugrave; scelto</div>
+        <div class="price-name">Pro</div>
+        <div class="price-amount">&euro;29 <span>/ mese</span></div>
+        <div class="price-desc">Per professionisti che vogliono il massimo dell'efficienza.</div>
+        <ul class="price-features">
+          <li>5 utenti inclusi</li>
+          <li>Progetti illimitati</li>
+          <li>50 GB di spazio</li>
+          <li>Report in tempo reale</li>
+          <li>Automazioni avanzate</li>
+          <li class="disabled">Supporto prioritario</li>
+        </ul>
+        <button class="price-btn price-btn-fill">Inizia Gratis</button>
+      </div>
+      <div class="price-card">
+        <div class="price-name">Business</div>
+        <div class="price-amount">&euro;79 <span>/ mese</span></div>
+        <div class="price-desc">Per team e aziende con esigenze avanzate.</div>
+        <ul class="price-features">
+          <li>Utenti illimitati</li>
+          <li>Progetti illimitati</li>
+          <li>500 GB di spazio</li>
+          <li>Report personalizzati</li>
+          <li>Automazioni avanzate</li>
+          <li>Supporto prioritario 24/7</li>
+        </ul>
+        <button class="price-btn price-btn-outline">Contattaci</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="final-cta">
+    <h2>Pronto a trasformare il tuo business?</h2>
+    <p>Unisciti a oltre 2.000 aziende italiane che hanno gi&agrave; scelto di crescere con noi.</p>
+    <a href="#" class="btn-big">Inizia la Prova Gratuita</a>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-logo">Il Tuo <span>Prodotto</span></div>
+    <div class="footer-links">
+      <a href="#">Privacy</a>
+      <a href="#">Termini</a>
+      <a href="#">Supporto</a>
+      <a href="#">Blog</a>
+    </div>
+    <div class="footer-copy">&copy; 2026 Il Tuo Prodotto Srl</div>
+  </footer>
+</body>
+</html>

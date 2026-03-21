@@ -1,0 +1,308 @@
+---
+export const prerender = true;
+---
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Marco & Giulia — 15 Giugno 2026</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: Georgia, 'Times New Roman', serif; background: #fdf2f8; color: #1c1917; line-height: 1.7; }
+
+    .back-btn {
+      position: fixed; top: 16px; left: 16px; z-index: 1000;
+      background: #b76e79; color: #fff; text-decoration: none;
+      padding: 8px 16px; border-radius: 8px; font-size: 14px;
+      font-family: -apple-system, sans-serif; font-weight: 500;
+      box-shadow: 0 4px 12px rgba(183,110,121,.35); transition: background .2s;
+    }
+    .back-btn:hover { background: #9e5a64; }
+
+    /* Header */
+    .site-header {
+      text-align: center; padding: 40px 20px 0;
+      font-size: 18px; color: #b76e79; letter-spacing: 3px;
+      text-transform: uppercase; font-weight: normal;
+    }
+
+    /* Hero */
+    .hero {
+      text-align: center; padding: 60px 20px 80px;
+    }
+    .hero-names {
+      font-size: 72px; font-weight: normal; color: #1c1917;
+      line-height: 1.1; margin-bottom: 16px;
+    }
+    .hero-ampersand { color: #b76e79; font-style: italic; }
+    .hero-date { font-size: 22px; color: #78716c; letter-spacing: 4px; margin-bottom: 8px; }
+    .hero-location { font-size: 17px; color: #a8a29e; font-style: italic; }
+    .divider {
+      width: 120px; height: 1px; background: #b76e79; margin: 40px auto 0;
+      position: relative;
+    }
+    .divider::after {
+      content: '\2661'; position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%); background: #fdf2f8;
+      padding: 0 16px; color: #b76e79; font-size: 20px;
+    }
+
+    /* Section */
+    section { padding: 80px 20px; max-width: 900px; margin: 0 auto; }
+    .section-title {
+      text-align: center; font-size: 36px; font-weight: normal;
+      color: #1c1917; margin-bottom: 12px;
+    }
+    .section-sub {
+      text-align: center; color: #a8a29e; font-size: 16px;
+      margin-bottom: 48px; font-style: italic;
+    }
+    .section-divider {
+      width: 60px; height: 1px; background: #b76e79; margin: 0 auto 48px;
+    }
+
+    /* Timeline - Our Story */
+    .story-timeline { position: relative; padding-left: 40px; }
+    .story-timeline::before {
+      content: ''; position: absolute; left: 15px; top: 0; bottom: 0;
+      width: 1px; background: #e8c4ca;
+    }
+    .story-item { position: relative; margin-bottom: 48px; }
+    .story-item:last-child { margin-bottom: 0; }
+    .story-item::before {
+      content: ''; position: absolute; left: -33px; top: 6px;
+      width: 12px; height: 12px; border-radius: 50%;
+      background: #b76e79; border: 3px solid #fdf2f8;
+      box-shadow: 0 0 0 2px #b76e79;
+    }
+    .story-date { font-size: 14px; color: #b76e79; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px; font-family: -apple-system, sans-serif; }
+    .story-item h3 { font-size: 24px; font-weight: normal; color: #1c1917; margin-bottom: 8px; }
+    .story-item p { font-size: 16px; color: #78716c; }
+
+    /* Details */
+    .details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+    .detail-card {
+      text-align: center; padding: 40px 32px; background: #fff;
+      border-radius: 16px; box-shadow: 0 2px 16px rgba(0,0,0,.04);
+    }
+    .detail-card .icon { font-size: 36px; margin-bottom: 16px; color: #b76e79; }
+    .detail-card h3 { font-size: 24px; font-weight: normal; margin-bottom: 12px; color: #1c1917; }
+    .detail-card .time { font-size: 20px; color: #b76e79; margin-bottom: 4px; }
+    .detail-card .place { font-size: 16px; color: #78716c; font-style: italic; }
+
+    /* Program */
+    .program-list { max-width: 500px; margin: 0 auto; }
+    .program-item {
+      display: flex; gap: 24px; padding: 20px 0;
+      border-bottom: 1px solid #f5e6ea;
+    }
+    .program-item:last-child { border-bottom: none; }
+    .program-time {
+      font-size: 20px; color: #b76e79; min-width: 70px;
+      font-family: -apple-system, sans-serif; font-weight: 600;
+    }
+    .program-item h3 { font-size: 20px; font-weight: normal; color: #1c1917; }
+    .program-item p { font-size: 15px; color: #a8a29e; margin-top: 2px; }
+
+    /* RSVP */
+    .rsvp-section { background: #fff; border-radius: 24px; padding: 60px 48px; box-shadow: 0 4px 24px rgba(0,0,0,.04); }
+    .rsvp-form { max-width: 500px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+    .rsvp-form input, .rsvp-form select, .rsvp-form textarea {
+      width: 100%; padding: 16px 20px; border: 2px solid #f5e6ea;
+      border-radius: 12px; font-size: 16px; font-family: Georgia, serif;
+      color: #1c1917; background: #fdf2f8; outline: none;
+      transition: border-color .2s;
+    }
+    .rsvp-form input::placeholder, .rsvp-form textarea::placeholder { color: #d4b5bb; }
+    .rsvp-form input:focus, .rsvp-form select:focus, .rsvp-form textarea:focus { border-color: #b76e79; }
+    .rsvp-form textarea { resize: vertical; min-height: 100px; }
+    .rsvp-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .rsvp-submit {
+      padding: 16px; background: #b76e79; color: #fff; border: none;
+      border-radius: 12px; font-size: 18px; font-family: Georgia, serif;
+      cursor: pointer; transition: background .2s; letter-spacing: 1px;
+    }
+    .rsvp-submit:hover { background: #9e5a64; }
+
+    /* Gift */
+    .gift-section { text-align: center; }
+    .gift-text { font-size: 18px; color: #78716c; max-width: 600px; margin: 0 auto 24px; font-style: italic; }
+    .gift-iban {
+      display: inline-block; padding: 16px 32px; background: #fff;
+      border: 2px solid #f5e6ea; border-radius: 12px;
+      font-family: -apple-system, monospace; font-size: 16px; color: #1c1917;
+      letter-spacing: 1px;
+    }
+
+    /* Gallery */
+    .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .gallery-item { aspect-ratio: 1; border-radius: 12px; }
+    .gallery-item:nth-child(1) { background: #fce7f3; }
+    .gallery-item:nth-child(2) { background: #fef3c7; }
+    .gallery-item:nth-child(3) { background: #dbeafe; }
+    .gallery-item:nth-child(4) { background: #d1fae5; }
+    .gallery-item:nth-child(5) { background: #ede9fe; }
+    .gallery-item:nth-child(6) { background: #ffe4e6; }
+
+    /* Footer */
+    .site-footer {
+      text-align: center; padding: 48px 20px 40px; color: #b76e79;
+      font-size: 20px; letter-spacing: 2px;
+    }
+    .site-footer .hashtag { font-family: -apple-system, sans-serif; font-weight: 600; }
+    .site-footer .hearts { margin-top: 12px; font-size: 14px; color: #d4b5bb; }
+
+    @media (max-width: 768px) {
+      .hero-names { font-size: 44px; }
+      .details-grid { grid-template-columns: 1fr; }
+      .rsvp-section { padding: 40px 24px; }
+      .rsvp-row { grid-template-columns: 1fr; }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      section { padding: 48px 20px; }
+    }
+  </style>
+</head>
+<body>
+  <a href="/portfolio" class="back-btn">&larr; Torna al Portfolio</a>
+
+  <header class="site-header">Marco &amp; Giulia</header>
+
+  <section class="hero">
+    <h1 class="hero-names">Marco <span class="hero-ampersand">&amp;</span> Giulia</h1>
+    <div class="hero-date">15 Giugno 2026</div>
+    <div class="hero-location">Villa dei Fiori, Toscana</div>
+    <div class="divider"></div>
+  </section>
+
+  <section>
+    <h2 class="section-title">La Nostra Storia</h2>
+    <div class="section-divider"></div>
+    <div class="story-timeline">
+      <div class="story-item">
+        <div class="story-date">Settembre 2019</div>
+        <h3>Il Primo Incontro</h3>
+        <p>Un caff&egrave; rovesciato, una risata condivisa, e la sensazione che qualcosa di speciale stesse nascendo. Ci siamo incontrati alla libreria di quartiere e non ci siamo pi&ugrave; lasciati.</p>
+      </div>
+      <div class="story-item">
+        <div class="story-date">Dicembre 2024</div>
+        <h3>La Proposta</h3>
+        <p>Sotto il cielo stellato di Firenze, con le luci del Ponte Vecchio a fare da cornice. Una domanda sussurrata, un s&igrave; gridato di gioia, e lacrime che parlavano pi&ugrave; di mille parole.</p>
+      </div>
+      <div class="story-item">
+        <div class="story-date">Giugno 2026</div>
+        <h3>Il Grande Giorno</h3>
+        <p>Tra gli ulivi della Toscana, circondati dalle persone che amiamo, inizieremo insieme il capitolo pi&ugrave; bello della nostra storia.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">Dettagli</h2>
+    <div class="section-divider"></div>
+    <div class="details-grid">
+      <div class="detail-card">
+        <div class="icon">&#9829;</div>
+        <h3>Cerimonia</h3>
+        <div class="time">Ore 15:00</div>
+        <div class="place">Chiesa di Santa Maria del Fiore<br/>Via dei Cipressi 12, Fiesole</div>
+      </div>
+      <div class="detail-card">
+        <div class="icon">&#127870;</div>
+        <h3>Ricevimento</h3>
+        <div class="time">Ore 17:00</div>
+        <div class="place">Villa dei Fiori<br/>Strada delle Rose 5, Greve in Chianti</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">Programma della Giornata</h2>
+    <div class="section-divider"></div>
+    <div class="program-list">
+      <div class="program-item">
+        <div class="program-time">15:00</div>
+        <div>
+          <h3>Cerimonia</h3>
+          <p>Rito religioso nella chiesa storica</p>
+        </div>
+      </div>
+      <div class="program-item">
+        <div class="program-time">16:30</div>
+        <div>
+          <h3>Aperitivo</h3>
+          <p>Nel giardino della villa, tra fiori e musica dal vivo</p>
+        </div>
+      </div>
+      <div class="program-item">
+        <div class="program-time">19:00</div>
+        <div>
+          <h3>Cena</h3>
+          <p>Men&ugrave; toscano con prodotti locali selezionati</p>
+        </div>
+      </div>
+      <div class="program-item">
+        <div class="program-time">22:00</div>
+        <div>
+          <h3>Festa</h3>
+          <p>Musica, balli e taglio della torta sotto le stelle</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="rsvp-section">
+      <h2 class="section-title">Conferma la Tua Presenza</h2>
+      <p class="section-sub">Vi preghiamo di confermare entro il 15 aprile 2026</p>
+      <form class="rsvp-form">
+        <div class="rsvp-row">
+          <input type="text" placeholder="Nome" />
+          <input type="email" placeholder="Email" />
+        </div>
+        <div class="rsvp-row">
+          <input type="number" placeholder="Numero di ospiti" min="1" max="5" />
+          <select>
+            <option value="">Restrizioni alimentari</option>
+            <option>Nessuna</option>
+            <option>Vegetariano</option>
+            <option>Vegano</option>
+            <option>Senza glutine</option>
+            <option>Senza lattosio</option>
+            <option>Altro</option>
+          </select>
+        </div>
+        <textarea placeholder="Un messaggio per gli sposi..."></textarea>
+        <button type="button" class="rsvp-submit">Conferma Presenza</button>
+      </form>
+    </div>
+  </section>
+
+  <section class="gift-section">
+    <h2 class="section-title">Lista Nozze</h2>
+    <div class="section-divider"></div>
+    <p class="gift-text">
+      La vostra presenza &egrave; il regalo pi&ugrave; bello che possiate farci.
+      Se desiderate contribuire al nostro viaggio di nozze, potete farlo tramite bonifico:
+    </p>
+    <div class="gift-iban">IT60 X054 2811 1010 0000 0123 456</div>
+  </section>
+
+  <section>
+    <h2 class="section-title">I Nostri Ricordi</h2>
+    <div class="section-divider"></div>
+    <div class="gallery-grid">
+      <div class="gallery-item"></div>
+      <div class="gallery-item"></div>
+      <div class="gallery-item"></div>
+      <div class="gallery-item"></div>
+      <div class="gallery-item"></div>
+      <div class="gallery-item"></div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="hashtag">#MarcoEGiulia2026</div>
+    <div class="hearts">Con tutto il nostro amore</div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,592 @@
+---
+export const prerender = true;
+---
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nome del Ristorante — Demo</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Nunito+Sans:wght@400;600;700&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Nunito Sans', sans-serif;
+      background: #1a2e1a;
+      color: #f5f0e1;
+      line-height: 1.6;
+    }
+
+    .back-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
+      background: #d4a853;
+      color: #1a2e1a;
+      text-decoration: none;
+      padding: 10px 18px;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      box-shadow: 0 4px 15px rgba(212,168,83,0.3);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .back-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(212,168,83,0.4);
+    }
+
+    /* NAVBAR */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 60px;
+      background: rgba(26,46,26,0.95);
+      border-bottom: 1px solid rgba(212,168,83,0.15);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: #d4a853;
+    }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      text-decoration: none;
+      color: rgba(245,240,225,0.6);
+      font-size: 0.88rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: #d4a853; }
+
+    /* HERO */
+    .hero {
+      height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: linear-gradient(135deg, #1a2e1a 0%, #2d4a2d 50%, #1a2e1a 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 30% 50%, rgba(212,168,83,0.08) 0%, transparent 50%);
+    }
+    .hero-content { position: relative; z-index: 1; }
+    .hero-divider {
+      width: 60px;
+      height: 1px;
+      background: #d4a853;
+      margin: 0 auto 24px;
+    }
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 300;
+      letter-spacing: 2px;
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+    .hero p {
+      font-size: 1rem;
+      color: rgba(245,240,225,0.6);
+      margin-bottom: 36px;
+      letter-spacing: 1px;
+    }
+    .hero-cta {
+      display: inline-block;
+      background: #d4a853;
+      color: #1a2e1a;
+      text-decoration: none;
+      padding: 14px 36px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .hero-cta:hover {
+      background: #e0b864;
+      transform: translateY(-2px);
+    }
+
+    /* MENU */
+    .menu-section {
+      padding: 80px 60px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .section-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .section-header h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.5rem;
+      font-weight: 300;
+      margin-bottom: 8px;
+    }
+    .section-header .divider {
+      width: 40px;
+      height: 1px;
+      background: #d4a853;
+      margin: 12px auto 0;
+    }
+
+    .menu-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 40px;
+    }
+    .menu-tab {
+      background: transparent;
+      border: 1px solid rgba(212,168,83,0.3);
+      color: rgba(245,240,225,0.6);
+      padding: 10px 24px;
+      font-family: 'Nunito Sans', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .menu-tab:hover { border-color: #d4a853; color: #d4a853; }
+    .menu-tab.active {
+      background: #d4a853;
+      color: #1a2e1a;
+      border-color: #d4a853;
+    }
+
+    .menu-items { display: flex; flex-direction: column; gap: 0; }
+    .menu-item {
+      display: flex;
+      align-items: baseline;
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(245,240,225,0.06);
+    }
+    .menu-item:last-child { border-bottom: none; }
+    .menu-item-info { flex: 1; }
+    .menu-item-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 500;
+      margin-bottom: 4px;
+      color: #f5f0e1;
+    }
+    .menu-item-desc {
+      font-size: 0.85rem;
+      color: rgba(245,240,225,0.45);
+    }
+    .menu-item-dots {
+      flex: 1;
+      border-bottom: 1px dotted rgba(245,240,225,0.15);
+      margin: 0 16px;
+      min-width: 40px;
+      align-self: center;
+    }
+    .menu-item-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      color: #d4a853;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    /* STORIA */
+    .storia {
+      padding: 80px 60px;
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .storia-text h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem;
+      font-weight: 300;
+      margin-bottom: 24px;
+    }
+    .storia-text p {
+      font-size: 0.95rem;
+      color: rgba(245,240,225,0.6);
+      margin-bottom: 14px;
+      line-height: 1.8;
+    }
+    .storia-img {
+      width: 100%;
+      height: 400px;
+      background: linear-gradient(135deg, #2d4a2d 0%, #3d5a3d 100%);
+      border-radius: 4px;
+    }
+
+    /* HOURS */
+    .hours {
+      padding: 60px;
+      background: rgba(212,168,83,0.05);
+      border-top: 1px solid rgba(212,168,83,0.1);
+      border-bottom: 1px solid rgba(212,168,83,0.1);
+    }
+    .hours-inner {
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .hours h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 300;
+      margin-bottom: 30px;
+    }
+    .hours-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .hours-table tr { border-bottom: 1px solid rgba(245,240,225,0.06); }
+    .hours-table tr:last-child { border-bottom: none; }
+    .hours-table td {
+      padding: 14px 0;
+      font-size: 0.95rem;
+    }
+    .hours-table td:first-child {
+      text-align: left;
+      color: rgba(245,240,225,0.6);
+    }
+    .hours-table td:last-child {
+      text-align: right;
+      color: #d4a853;
+      font-weight: 600;
+    }
+
+    /* RESERVATION */
+    .reservation {
+      padding: 80px 60px;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .reservation form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group.full { grid-column: 1 / -1; }
+    .form-group label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: rgba(245,240,225,0.4);
+      font-weight: 600;
+    }
+    .form-group input,
+    .form-group select {
+      background: rgba(245,240,225,0.06);
+      border: 1px solid rgba(245,240,225,0.12);
+      color: #f5f0e1;
+      padding: 14px 16px;
+      font-family: 'Nunito Sans', sans-serif;
+      font-size: 0.92rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-group input::placeholder { color: rgba(245,240,225,0.25); }
+    .form-group input:focus,
+    .form-group select:focus { border-color: #d4a853; }
+    .form-group select option { background: #1a2e1a; }
+    .reserve-btn {
+      grid-column: 1 / -1;
+      background: #d4a853;
+      color: #1a2e1a;
+      border: none;
+      padding: 16px;
+      font-family: 'Nunito Sans', sans-serif;
+      font-weight: 700;
+      font-size: 0.88rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .reserve-btn:hover {
+      background: #e0b864;
+      transform: translateY(-2px);
+    }
+
+    /* FOOTER */
+    footer {
+      background: #0f1f0f;
+      padding: 60px;
+      border-top: 1px solid rgba(212,168,83,0.1);
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 40px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .footer-grid h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: #d4a853;
+      margin-bottom: 16px;
+    }
+    .footer-grid p, .footer-grid a {
+      font-size: 0.85rem;
+      color: rgba(245,240,225,0.4);
+      text-decoration: none;
+      display: block;
+      line-height: 2;
+    }
+    .footer-grid a:hover { color: #d4a853; }
+    .social-icons {
+      display: flex;
+      gap: 16px;
+      margin-top: 12px;
+    }
+    .social-icon {
+      width: 36px;
+      height: 36px;
+      border: 1px solid rgba(212,168,83,0.3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      color: #d4a853;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+    }
+    .social-icon:hover {
+      background: #d4a853;
+      color: #1a2e1a;
+    }
+    .footer-bottom {
+      text-align: center;
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(245,240,225,0.06);
+      font-size: 0.75rem;
+      color: rgba(245,240,225,0.25);
+      max-width: 1100px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 16px 20px; }
+      .nav-links { display: none; }
+      .hero { height: 60vh; }
+      .hero h1 { font-size: 2rem; }
+      .menu-section { padding: 50px 20px; }
+      .menu-tabs { flex-wrap: wrap; }
+      .storia {
+        grid-template-columns: 1fr;
+        padding: 50px 20px;
+        gap: 30px;
+      }
+      .storia-img { height: 250px; }
+      .hours { padding: 40px 20px; }
+      .reservation { padding: 50px 20px; }
+      .reservation form { grid-template-columns: 1fr; }
+      footer { padding: 40px 20px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 30px; }
+    }
+  </style>
+</head>
+<body>
+  <a href="/portfolio" class="back-btn">&larr; Torna al Portfolio</a>
+
+  <nav>
+    <div class="nav-logo">Nome del Ristorante</div>
+    <ul class="nav-links">
+      <li><a href="#">Menu</a></li>
+      <li><a href="#">La Nostra Storia</a></li>
+      <li><a href="#">Prenota</a></li>
+      <li><a href="#">Contatti</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-divider"></div>
+      <h1>Cucina autentica<br>dal 1985</h1>
+      <p>Tradizione, passione e ingredienti selezionati</p>
+      <a href="#" class="hero-cta">Prenota un Tavolo</a>
+    </div>
+  </section>
+
+  <section class="menu-section">
+    <div class="section-header">
+      <h2>Il Nostro Menu</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="menu-tabs">
+      <button class="menu-tab active">Antipasti</button>
+      <button class="menu-tab">Primi</button>
+      <button class="menu-tab">Secondi</button>
+      <button class="menu-tab">Dolci</button>
+    </div>
+    <div class="menu-items">
+      <div class="menu-item">
+        <div class="menu-item-info">
+          <div class="menu-item-name">Bruschetta al Pomodoro</div>
+          <div class="menu-item-desc">Pane toscano, pomodorini, basilico fresco</div>
+        </div>
+        <div class="menu-item-dots"></div>
+        <div class="menu-item-price">&euro;8</div>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-info">
+          <div class="menu-item-name">Carpaccio di Manzo</div>
+          <div class="menu-item-desc">Manzo piemontese, rucola, scaglie di parmigiano, olio al tartufo</div>
+        </div>
+        <div class="menu-item-dots"></div>
+        <div class="menu-item-price">&euro;14</div>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-info">
+          <div class="menu-item-name">Burrata Pugliese</div>
+          <div class="menu-item-desc">Burrata fresca, pomodori datterini, basilico, olio extravergine</div>
+        </div>
+        <div class="menu-item-dots"></div>
+        <div class="menu-item-price">&euro;12</div>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-info">
+          <div class="menu-item-name">Tagliere della Casa</div>
+          <div class="menu-item-desc">Selezione di salumi artigianali, formaggi stagionati, miele e confetture</div>
+        </div>
+        <div class="menu-item-dots"></div>
+        <div class="menu-item-price">&euro;18</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="storia">
+    <div class="storia-text">
+      <h2>La Nostra Storia</h2>
+      <p>Tutto ebbe inizio nel 1985, quando nonno Giuseppe decise di trasformare la sua passione per la cucina in un luogo dove condividere i sapori della tradizione italiana con il quartiere.</p>
+      <p>Oggi, tre generazioni dopo, continuiamo a portare in tavola gli stessi valori: ingredienti freschi dal mercato locale, ricette tramandate e la cura di chi considera ogni ospite parte della famiglia.</p>
+      <p>Ogni piatto racconta la nostra terra, ogni serata diventa un ricordo da conservare.</p>
+    </div>
+    <div class="storia-img"></div>
+  </section>
+
+  <section class="hours">
+    <div class="hours-inner">
+      <h2>Orari di Apertura</h2>
+      <table class="hours-table">
+        <tr>
+          <td>Luned&igrave; — Venerd&igrave;</td>
+          <td>12:00 — 15:00 / 19:00 — 23:00</td>
+        </tr>
+        <tr>
+          <td>Sabato — Domenica</td>
+          <td>12:00 — 23:00</td>
+        </tr>
+      </table>
+    </div>
+  </section>
+
+  <section class="reservation">
+    <div class="section-header">
+      <h2>Prenota un Tavolo</h2>
+      <div class="divider"></div>
+    </div>
+    <form>
+      <div class="form-group">
+        <label>Data</label>
+        <input type="date" />
+      </div>
+      <div class="form-group">
+        <label>Orario</label>
+        <select>
+          <option>19:00</option>
+          <option>19:30</option>
+          <option>20:00</option>
+          <option>20:30</option>
+          <option>21:00</option>
+          <option>21:30</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Ospiti</label>
+        <select>
+          <option>1 persona</option>
+          <option>2 persone</option>
+          <option>3 persone</option>
+          <option>4 persone</option>
+          <option>5 persone</option>
+          <option>6+ persone</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Nome</label>
+        <input type="text" placeholder="Il tuo nome" />
+      </div>
+      <div class="form-group full">
+        <label>Telefono</label>
+        <input type="tel" placeholder="+39 xxx xxx xxxx" />
+      </div>
+      <button type="submit" class="reserve-btn">Prenota</button>
+    </form>
+  </section>
+
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <h4>Nome del Ristorante</h4>
+        <p>Via Garibaldi 15, 50123 Firenze (FI)</p>
+        <p>+39 055 123 4567</p>
+        <p>info@nomedelristorante.it</p>
+        <div class="social-icons">
+          <a href="#" class="social-icon">f</a>
+          <a href="#" class="social-icon">ig</a>
+          <a href="#" class="social-icon">tw</a>
+        </div>
+      </div>
+      <div>
+        <h4>Menu</h4>
+        <a href="#">Antipasti</a>
+        <a href="#">Primi</a>
+        <a href="#">Secondi</a>
+        <a href="#">Dolci</a>
+        <a href="#">Carta dei Vini</a>
+      </div>
+      <div>
+        <h4>Info</h4>
+        <a href="#">La Nostra Storia</a>
+        <a href="#">Eventi Privati</a>
+        <a href="#">Lavora con Noi</a>
+        <a href="#">Privacy Policy</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2026 Nome del Ristorante. Tutti i diritti riservati. P.IVA 12345678901
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,715 @@
+---
+export const prerender = true;
+---
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Il Tuo Studio — Booking Demo</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #f0fdf4;
+      color: #1a2e1a;
+      line-height: 1.6;
+    }
+
+    .back-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
+      background: #059669;
+      color: #fff;
+      text-decoration: none;
+      padding: 10px 18px;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      box-shadow: 0 4px 15px rgba(5,150,105,0.3);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .back-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(5,150,105,0.4);
+    }
+
+    /* NAVBAR */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 60px;
+      background: #fff;
+      box-shadow: 0 1px 10px rgba(0,0,0,0.04);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.5rem;
+      color: #059669;
+    }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a {
+      text-decoration: none;
+      color: #555;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: #059669; }
+    .nav-cta {
+      background: #059669 !important;
+      color: #fff !important;
+      padding: 10px 22px;
+      border-radius: 8px;
+    }
+
+    /* HERO */
+    .hero {
+      text-align: center;
+      padding: 100px 20px 80px;
+      background: linear-gradient(180deg, #f0fdf4 0%, #dcfce7 100%);
+    }
+    .hero-badge {
+      display: inline-block;
+      background: #d1fae5;
+      color: #059669;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 3.2rem;
+      color: #1a2e1a;
+      margin-bottom: 16px;
+      line-height: 1.15;
+    }
+    .hero p {
+      font-size: 1.1rem;
+      color: #4b7c4b;
+      max-width: 550px;
+      margin: 0 auto 30px;
+    }
+    .hero-cta {
+      display: inline-block;
+      background: #059669;
+      color: #fff;
+      text-decoration: none;
+      padding: 16px 36px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 15px rgba(5,150,105,0.3);
+    }
+    .hero-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(5,150,105,0.35);
+    }
+
+    /* SERVICES */
+    .services {
+      padding: 80px 60px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .section-header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    .section-header h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.2rem;
+      color: #1a2e1a;
+      margin-bottom: 10px;
+    }
+    .section-header p {
+      color: #6b8f6b;
+      font-size: 1rem;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+    .service-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 32px 24px;
+      text-align: center;
+      border: 2px solid transparent;
+      transition: border-color 0.3s, transform 0.2s, box-shadow 0.2s;
+    }
+    .service-card:hover {
+      border-color: #059669;
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(5,150,105,0.1);
+    }
+    .service-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
+      background: #ecfdf5;
+      margin: 0 auto 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+    }
+    .service-card h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: #1a2e1a;
+    }
+    .service-duration {
+      color: #059669;
+      font-size: 0.82rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .service-price {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2rem;
+      color: #059669;
+      margin-bottom: 18px;
+    }
+    .service-price small {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.8rem;
+      color: #888;
+    }
+    .service-btn {
+      display: inline-block;
+      background: #059669;
+      color: #fff;
+      text-decoration: none;
+      padding: 10px 28px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.88rem;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .service-btn:hover { background: #047857; }
+
+    /* CALENDAR */
+    .calendar-section {
+      padding: 0 60px 80px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .calendar {
+      background: #fff;
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+    }
+    .cal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+    .cal-header h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.3rem;
+    }
+    .cal-nav {
+      display: flex;
+      gap: 8px;
+    }
+    .cal-nav button {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      background: #fff;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: border-color 0.2s;
+    }
+    .cal-nav button:hover { border-color: #059669; }
+    .week-grid {
+      display: grid;
+      grid-template-columns: 60px repeat(7, 1fr);
+      gap: 1px;
+      background: #f0f0f0;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .week-grid .day-header {
+      background: #f8fdf8;
+      padding: 12px 8px;
+      text-align: center;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #666;
+    }
+    .week-grid .time-label {
+      background: #fff;
+      padding: 8px;
+      text-align: right;
+      font-size: 0.72rem;
+      color: #999;
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-end;
+      height: 50px;
+    }
+    .week-grid .cell {
+      background: #fff;
+      height: 50px;
+      position: relative;
+    }
+    .slot {
+      position: absolute;
+      left: 3px;
+      right: 3px;
+      border-radius: 4px;
+      padding: 3px 6px;
+      font-size: 0.65rem;
+      font-weight: 600;
+    }
+    .slot.booked {
+      background: #dcfce7;
+      color: #059669;
+      top: 2px;
+      bottom: 2px;
+    }
+    .slot.available {
+      background: #f0fdf4;
+      color: #6b8f6b;
+      top: 2px;
+      bottom: 2px;
+      border: 1px dashed #a7d5a7;
+    }
+
+    /* TESTIMONIALS */
+    .testimonials {
+      padding: 80px 60px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .test-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .test-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 28px;
+      position: relative;
+    }
+    .test-stars {
+      color: #f59e0b;
+      font-size: 0.9rem;
+      margin-bottom: 14px;
+    }
+    .test-card p {
+      font-size: 0.92rem;
+      color: #555;
+      font-style: italic;
+      margin-bottom: 18px;
+      line-height: 1.6;
+    }
+    .test-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .test-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #dcfce7;
+    }
+    .test-author strong {
+      font-size: 0.88rem;
+      display: block;
+      color: #1a2e1a;
+    }
+    .test-author span {
+      font-size: 0.78rem;
+      color: #888;
+    }
+
+    /* CONTACT */
+    .contact {
+      padding: 0 60px 80px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+    }
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .info-item {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .info-icon {
+      width: 44px;
+      height: 44px;
+      background: #dcfce7;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    .info-item h4 {
+      font-size: 0.9rem;
+      margin-bottom: 2px;
+    }
+    .info-item p {
+      font-size: 0.85rem;
+      color: #666;
+    }
+    .map-placeholder {
+      background: #e2e8e2;
+      border-radius: 16px;
+      height: 100%;
+      min-height: 280px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 8px;
+      color: #888;
+    }
+    .map-pin {
+      width: 40px;
+      height: 40px;
+      background: #059669;
+      border-radius: 50% 50% 50% 0;
+      transform: rotate(-45deg);
+      position: relative;
+    }
+    .map-pin::after {
+      content: '';
+      width: 16px;
+      height: 16px;
+      background: #fff;
+      border-radius: 50%;
+      position: absolute;
+      top: 12px;
+      left: 12px;
+    }
+
+    /* FOOTER */
+    footer {
+      background: #1a2e1a;
+      color: #fff;
+      padding: 50px 60px 30px;
+    }
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .footer-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.3rem;
+    }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a {
+      color: #a7d5a7;
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: #fff; }
+    .footer-copy {
+      text-align: center;
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid #2d4a2d;
+      font-size: 0.78rem;
+      color: #6b8f6b;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    @media (max-width: 1024px) {
+      .services-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      nav { padding: 16px 20px; }
+      .nav-links { display: none; }
+      .hero { padding: 60px 20px 50px; }
+      .hero h1 { font-size: 2.2rem; }
+      .services { padding: 50px 20px; }
+      .services-grid { grid-template-columns: 1fr; }
+      .calendar-section { padding: 0 20px 50px; }
+      .week-grid { overflow-x: auto; }
+      .testimonials { padding: 50px 20px; }
+      .test-grid { grid-template-columns: 1fr; }
+      .contact { padding: 0 20px 50px; }
+      .contact-grid { grid-template-columns: 1fr; }
+      footer { padding: 40px 20px 20px; }
+      .footer-inner { flex-direction: column; gap: 16px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+  <a href="/portfolio" class="back-btn">&larr; Torna al Portfolio</a>
+
+  <nav>
+    <div class="nav-logo">Il Tuo Studio</div>
+    <ul class="nav-links">
+      <li><a href="#">Servizi</a></li>
+      <li><a href="#">Prenota</a></li>
+      <li><a href="#">Chi Siamo</a></li>
+      <li><a href="#" class="nav-cta">Contatti</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <span class="hero-badge">Disponibilità Immediata</span>
+    <h1>Prenota il tuo<br>appuntamento</h1>
+    <p>Scegli il servizio che fa per te e prenota in pochi click. Il tuo benessere inizia da qui.</p>
+    <a href="#" class="hero-cta">Vedi Disponibilità</a>
+  </section>
+
+  <section class="services">
+    <div class="section-header">
+      <h2>I Nostri Servizi</h2>
+      <p>Percorsi personalizzati per il tuo benessere</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">&#128172;</div>
+        <h3>Consulenza Iniziale</h3>
+        <div class="service-duration">60 min</div>
+        <div class="service-price">&euro;50</div>
+        <button class="service-btn">Prenota</button>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">&#129504;</div>
+        <h3>Sessione Individuale</h3>
+        <div class="service-duration">60 min</div>
+        <div class="service-price">&euro;80</div>
+        <button class="service-btn">Prenota</button>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">&#127775;</div>
+        <h3>Pacchetto 5 Sessioni</h3>
+        <div class="service-duration">60 min ciascuna</div>
+        <div class="service-price">&euro;350 <small>risparmi &euro;50</small></div>
+        <button class="service-btn">Prenota</button>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">&#128149;</div>
+        <h3>Sessione di Coppia</h3>
+        <div class="service-duration">60 min</div>
+        <div class="service-price">&euro;120</div>
+        <button class="service-btn">Prenota</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="calendar-section">
+    <div class="section-header">
+      <h2>Disponibilità Settimanale</h2>
+      <p>Seleziona lo slot che preferisci</p>
+    </div>
+    <div class="calendar">
+      <div class="cal-header">
+        <h3>Marzo 2026</h3>
+        <div class="cal-nav">
+          <button>&lsaquo;</button>
+          <button>&rsaquo;</button>
+        </div>
+      </div>
+      <div class="week-grid">
+        <div class="day-header"></div>
+        <div class="day-header">Lun 16</div>
+        <div class="day-header">Mar 17</div>
+        <div class="day-header">Mer 18</div>
+        <div class="day-header">Gio 19</div>
+        <div class="day-header">Ven 20</div>
+        <div class="day-header">Sab 21</div>
+        <div class="day-header">Dom 22</div>
+
+        <div class="time-label">9:00</div>
+        <div class="cell"><div class="slot booked">Occupato</div></div>
+        <div class="cell"><div class="slot available">Libero</div></div>
+        <div class="cell"><div class="slot booked">Occupato</div></div>
+        <div class="cell"><div class="slot available">Libero</div></div>
+        <div class="cell"><div class="slot available">Libero</div></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+
+        <div class="time-label">10:00</div>
+        <div class="cell"><div class="slot available">Libero</div></div>
+        <div class="cell"><div class="slot booked">Occupato</div></div>
+        <div class="cell"><div class="slot available">Libero</div></div>
+        <div class="cell"><div class="slot booked">Occupato</div></div>
+        <div class="cell"><div class="slot available">Libero</div></div>
+        <div class="cell"><div class="slot available">Libero</div></div>
+        <div class="cell"></div>
+
+        <div class="time-label">11:00</div>
+        <div class="cell"><div class="slot booked">Occupato</div></div>
+        <div class="cell"><div class="slot available">Libero</div></div>
+        <div class="cell"><div class="slot booked">Occupato</div></div>
+        <div class="cell"><div class="slot available">Libero</div></div>
+        <div class="cell"><div class="slot booked">Occupato</div></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+
+        <div class="time-label">14:00</div>
+        <div class="cell"><div class="slot available">Libero</div></div>
+        <div class="cell"><div class="slot available">Libero</div></div>
+        <div class="cell"><div class="slot booked">Occupato</div></div>
+        <div class="cell"><div class="slot available">Libero</div></div>
+        <div class="cell"><div class="slot available">Libero</div></div>
+        <div class="cell"><div class="slot booked">Occupato</div></div>
+        <div class="cell"></div>
+
+        <div class="time-label">15:00</div>
+        <div class="cell"><div class="slot booked">Occupato</div></div>
+        <div class="cell"><div class="slot available">Libero</div></div>
+        <div class="cell"><div class="slot available">Libero</div></div>
+        <div class="cell"><div class="slot booked">Occupato</div></div>
+        <div class="cell"><div class="slot booked">Occupato</div></div>
+        <div class="cell"><div class="slot available">Libero</div></div>
+        <div class="cell"></div>
+
+        <div class="time-label">16:00</div>
+        <div class="cell"><div class="slot available">Libero</div></div>
+        <div class="cell"><div class="slot booked">Occupato</div></div>
+        <div class="cell"><div class="slot available">Libero</div></div>
+        <div class="cell"><div class="slot available">Libero</div></div>
+        <div class="cell"><div class="slot available">Libero</div></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="testimonials">
+    <div class="section-header">
+      <h2>Cosa Dicono i Nostri Clienti</h2>
+      <p>Esperienze reali di chi ha scelto il nostro studio</p>
+    </div>
+    <div class="test-grid">
+      <div class="test-card">
+        <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p>Un percorso che mi ha cambiato la vita. Professionalità, empatia e competenza in ogni incontro. Consiglio a tutti di provare almeno una sessione.</p>
+        <div class="test-author">
+          <div class="test-avatar"></div>
+          <div>
+            <strong>Maria Grazia T.</strong>
+            <span>Cliente da 6 mesi</span>
+          </div>
+        </div>
+      </div>
+      <div class="test-card">
+        <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p>Ambiente accogliente e rilassante. Dopo le prime sessioni ho notato miglioramenti significativi nella gestione dello stress quotidiano.</p>
+        <div class="test-author">
+          <div class="test-avatar"></div>
+          <div>
+            <strong>Roberto M.</strong>
+            <span>Cliente da 1 anno</span>
+          </div>
+        </div>
+      </div>
+      <div class="test-card">
+        <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p>Le sessioni di coppia hanno rafforzato la nostra relazione. La disponibilità e la flessibilità degli orari rendono tutto ancora più semplice.</p>
+        <div class="test-author">
+          <div class="test-avatar"></div>
+          <div>
+            <strong>Francesca & Luca</strong>
+            <span>Clienti da 3 mesi</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact">
+    <div class="section-header">
+      <h2>Dove Siamo</h2>
+      <p>Vieni a trovarci nel nostro studio</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="info-item">
+          <div class="info-icon">&#128205;</div>
+          <div>
+            <h4>Indirizzo</h4>
+            <p>Via Roma 42, 20121 Milano (MI)</p>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">&#128222;</div>
+          <div>
+            <h4>Telefono</h4>
+            <p>+39 02 1234 5678</p>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">&#9993;</div>
+          <div>
+            <h4>Email</h4>
+            <p>info@iltuostudio.it</p>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">&#128337;</div>
+          <div>
+            <h4>Orari</h4>
+            <p>Lun — Ven: 9:00 — 18:00<br>Sabato: 9:00 — 13:00</p>
+          </div>
+        </div>
+      </div>
+      <div class="map-placeholder">
+        <div class="map-pin"></div>
+        <span style="font-size: 0.85rem;">Mappa interattiva</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">Il Tuo Studio</div>
+      <div class="footer-links">
+        <a href="#">Privacy</a>
+        <a href="#">Termini</a>
+        <a href="#">Cookie</a>
+        <a href="#">Contatti</a>
+      </div>
+    </div>
+    <div class="footer-copy">
+      &copy; 2026 Il Tuo Studio. Tutti i diritti riservati. P.IVA 12345678901
+    </div>
+  </footer>
+</body>
+</html>

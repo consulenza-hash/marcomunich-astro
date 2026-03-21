@@ -1,0 +1,576 @@
+---
+export const prerender = true;
+---
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>La Tua Academy — Corsi Online</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #1a1a2e;
+      --bg-light: #16213e;
+      --bg-card: #1f2a48;
+      --cyan: #00d4ff;
+      --cyan-dark: #00a8cc;
+      --white: #ffffff;
+      --gray-100: rgba(255,255,255,0.9);
+      --gray-300: rgba(255,255,255,0.6);
+      --gray-500: rgba(255,255,255,0.4);
+      --gray-700: rgba(255,255,255,0.15);
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--white);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Back button */
+    .back-btn {
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      z-index: 9999;
+      background: var(--cyan);
+      color: var(--bg);
+      text-decoration: none;
+      padding: 10px 18px;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0,212,255,0.3);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .back-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 30px rgba(0,212,255,0.4); }
+
+    /* Navbar */
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 60px;
+      background: rgba(26,26,46,0.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--gray-700);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+    }
+    .nav-logo span { color: var(--cyan); }
+    .nav-links { display: flex; gap: 36px; align-items: center; }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--gray-300);
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--white); }
+    .nav-cta {
+      background: var(--cyan) !important;
+      color: var(--bg) !important;
+      padding: 10px 24px;
+      border-radius: 8px;
+      font-weight: 600 !important;
+    }
+    .nav-cta:hover { opacity: 0.9; }
+
+    /* Hero */
+    .hero {
+      padding: 120px 60px 100px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(0,212,255,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(0,212,255,0.1);
+      border: 1px solid rgba(0,212,255,0.3);
+      color: var(--cyan);
+      padding: 8px 20px;
+      border-radius: 50px;
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 32px;
+    }
+    .hero h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(40px, 5.5vw, 72px);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 20px;
+      max-width: 750px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero h1 .gradient-text {
+      background: linear-gradient(135deg, var(--cyan), #7c3aed);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      color: var(--gray-300);
+      font-size: 18px;
+      max-width: 550px;
+      margin: 0 auto 40px;
+    }
+    .hero-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-block;
+      background: var(--cyan);
+      color: var(--bg);
+      text-decoration: none;
+      padding: 16px 36px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,212,255,0.3); }
+    .btn-secondary {
+      display: inline-block;
+      background: transparent;
+      color: var(--white);
+      text-decoration: none;
+      padding: 16px 36px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 500;
+      border: 1px solid var(--gray-700);
+      transition: border-color 0.2s;
+    }
+    .btn-secondary:hover { border-color: var(--gray-300); }
+
+    /* Stats */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 0 20px 80px;
+      gap: 20px;
+    }
+    .stat {
+      text-align: center;
+      padding: 28px;
+      background: var(--bg-card);
+      border-radius: 16px;
+      border: 1px solid var(--gray-700);
+    }
+    .stat-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--cyan);
+      margin-bottom: 4px;
+    }
+    .stat-label { color: var(--gray-300); font-size: 14px; }
+
+    /* Courses */
+    .section-header {
+      text-align: center;
+      padding: 60px 20px 40px;
+    }
+    .section-header h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 36px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .section-header p { color: var(--gray-300); font-size: 15px; }
+
+    .courses {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 60px 80px;
+    }
+    .course-card {
+      background: var(--bg-card);
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--gray-700);
+      transition: transform 0.3s, border-color 0.3s;
+    }
+    .course-card:hover { transform: translateY(-4px); border-color: rgba(0,212,255,0.3); }
+    .course-img {
+      height: 200px;
+      position: relative;
+    }
+    .course-card:nth-child(1) .course-img { background: linear-gradient(135deg, #00d4ff33, #7c3aed33); }
+    .course-card:nth-child(2) .course-img { background: linear-gradient(135deg, #f59e0b33, #ef444433); }
+    .course-card:nth-child(3) .course-img { background: linear-gradient(135deg, #22c55e33, #00d4ff33); }
+    .course-tag {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(10px);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+    .course-body { padding: 24px; }
+    .course-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .course-instructor {
+      color: var(--gray-300);
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+    .course-rating {
+      color: #f59e0b;
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+    .course-rating span { color: var(--gray-500); margin-left: 6px; }
+    .course-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 16px;
+      border-top: 1px solid var(--gray-700);
+    }
+    .course-price {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--cyan);
+    }
+    .course-btn {
+      background: transparent;
+      color: var(--cyan);
+      border: 1px solid var(--cyan);
+      padding: 8px 20px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: background 0.2s, color 0.2s;
+    }
+    .course-btn:hover { background: var(--cyan); color: var(--bg); }
+
+    /* Testimonials */
+    .testimonials {
+      background: var(--bg-light);
+      padding: 80px 60px;
+    }
+    .testimonials h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 32px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .test-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .test-card {
+      background: var(--bg-card);
+      padding: 32px;
+      border-radius: 16px;
+      border: 1px solid var(--gray-700);
+    }
+    .test-stars { color: #f59e0b; font-size: 16px; margin-bottom: 16px; }
+    .test-text {
+      color: var(--gray-100);
+      font-size: 15px;
+      line-height: 1.7;
+      margin-bottom: 20px;
+      font-style: italic;
+    }
+    .test-author { display: flex; align-items: center; gap: 12px; }
+    .test-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--cyan), #7c3aed);
+    }
+    .test-name { font-weight: 600; font-size: 14px; }
+    .test-role { color: var(--gray-500); font-size: 12px; }
+
+    /* FAQ */
+    .faq {
+      padding: 80px 60px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .faq h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 32px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .faq details {
+      border: 1px solid var(--gray-700);
+      border-radius: 12px;
+      margin-bottom: 12px;
+      overflow: hidden;
+      transition: border-color 0.3s;
+    }
+    .faq details[open] { border-color: rgba(0,212,255,0.3); }
+    .faq summary {
+      padding: 20px 24px;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary::after {
+      content: '+';
+      font-size: 22px;
+      color: var(--cyan);
+      transition: transform 0.2s;
+    }
+    .faq details[open] summary::after { content: '\2212'; }
+    .faq .faq-answer {
+      padding: 0 24px 20px;
+      color: var(--gray-300);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--bg-light);
+      border-top: 1px solid var(--gray-700);
+      padding: 48px 60px;
+    }
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .footer-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .footer-logo span { color: var(--cyan); }
+    .footer-links { display: flex; gap: 28px; }
+    .footer-links a {
+      text-decoration: none;
+      color: var(--gray-300);
+      font-size: 13px;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--white); }
+    .footer-copy { color: var(--gray-500); font-size: 12px; }
+
+    @media (max-width: 768px) {
+      .navbar { padding: 16px 20px; }
+      .nav-links { display: none; }
+      .hero { padding: 80px 20px 60px; }
+      .stats { grid-template-columns: 1fr; max-width: 300px; }
+      .courses { grid-template-columns: 1fr; padding: 0 20px 60px; }
+      .test-grid { grid-template-columns: 1fr; }
+      .testimonials, .faq { padding: 60px 20px; }
+      .footer-inner { flex-direction: column; gap: 20px; text-align: center; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+  <a href="/portfolio" class="back-btn">&larr; Torna al Portfolio</a>
+
+  <nav class="navbar">
+    <div class="nav-logo">La Tua <span>Academy</span></div>
+    <div class="nav-links">
+      <a href="#">Corsi</a>
+      <a href="#">Chi Siamo</a>
+      <a href="#">Blog</a>
+      <a href="#" class="nav-cta">Accedi</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-badge">&#127891; Oltre 45 corsi disponibili</div>
+    <h1>Impara al <span class="gradient-text">tuo ritmo</span></h1>
+    <p>Corsi online creati da professionisti del settore per portare le tue competenze al livello successivo.</p>
+    <div class="hero-btns">
+      <a href="#" class="btn-primary">Esplora i Corsi</a>
+      <a href="#" class="btn-secondary">Guarda il Video &#9654;</a>
+    </div>
+  </section>
+
+  <section class="stats">
+    <div class="stat">
+      <div class="stat-num">1.200+</div>
+      <div class="stat-label">Studenti Attivi</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">45</div>
+      <div class="stat-label">Corsi Online</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">98%</div>
+      <div class="stat-label">Soddisfatti</div>
+    </div>
+  </section>
+
+  <div class="section-header">
+    <h2>Corsi in Evidenza</h2>
+    <p>Scelti dai nostri studenti questa settimana</p>
+  </div>
+
+  <section class="courses">
+    <div class="course-card">
+      <div class="course-img">
+        <span class="course-tag">Design</span>
+      </div>
+      <div class="course-body">
+        <div class="course-title">UX Design Avanzato</div>
+        <div class="course-instructor">di Marco Bianchi</div>
+        <div class="course-rating">&#9733;&#9733;&#9733;&#9733;&#9733; <span>4.9 (234 recensioni)</span></div>
+        <div class="course-footer">
+          <div class="course-price">&euro;197</div>
+          <button class="course-btn">Iscriviti</button>
+        </div>
+      </div>
+    </div>
+    <div class="course-card">
+      <div class="course-img">
+        <span class="course-tag">Marketing</span>
+      </div>
+      <div class="course-body">
+        <div class="course-title">Marketing Digitale Completo</div>
+        <div class="course-instructor">di Laura Rossi</div>
+        <div class="course-rating">&#9733;&#9733;&#9733;&#9733;&#9734; <span>4.7 (189 recensioni)</span></div>
+        <div class="course-footer">
+          <div class="course-price">&euro;147</div>
+          <button class="course-btn">Iscriviti</button>
+        </div>
+      </div>
+    </div>
+    <div class="course-card">
+      <div class="course-img">
+        <span class="course-tag">Sviluppo</span>
+      </div>
+      <div class="course-body">
+        <div class="course-title">Python per Data Science</div>
+        <div class="course-instructor">di Andrea Verdi</div>
+        <div class="course-rating">&#9733;&#9733;&#9733;&#9733;&#9733; <span>4.8 (312 recensioni)</span></div>
+        <div class="course-footer">
+          <div class="course-price">&euro;197</div>
+          <button class="course-btn">Iscriviti</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="testimonials">
+    <h2>Cosa Dicono i Nostri Studenti</h2>
+    <div class="test-grid">
+      <div class="test-card">
+        <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <div class="test-text">&laquo;Ho completato il corso di UX Design in tre settimane. La qualit&agrave; dei contenuti &egrave; eccezionale e il supporto dei docenti mi ha aiutato in ogni momento. Oggi lavoro come designer freelance.&raquo;</div>
+        <div class="test-author">
+          <div class="test-avatar"></div>
+          <div>
+            <div class="test-name">Giulia Ferretti</div>
+            <div class="test-role">UX Designer Freelance</div>
+          </div>
+        </div>
+      </div>
+      <div class="test-card">
+        <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <div class="test-text">&laquo;Grazie al corso di Marketing Digitale ho raddoppiato il fatturato della mia azienda in sei mesi. Un investimento che si ripaga da solo molte volte.&raquo;</div>
+        <div class="test-author">
+          <div class="test-avatar"></div>
+          <div>
+            <div class="test-name">Luca Martini</div>
+            <div class="test-role">CEO, Martini Digital</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq">
+    <h2>Domande Frequenti</h2>
+
+    <details>
+      <summary>Posso seguire i corsi al mio ritmo?</summary>
+      <div class="faq-answer">Tutti i nostri corsi sono on-demand. Puoi iniziare quando vuoi, mettere in pausa e riprendere in qualsiasi momento. Avrai accesso illimitato ai contenuti per sempre.</div>
+    </details>
+
+    <details>
+      <summary>Ricever&ograve; un certificato alla fine del corso?</summary>
+      <div class="faq-answer">Ogni corso completato include un certificato digitale verificabile che potrai condividere su LinkedIn e aggiungere al tuo curriculum.</div>
+    </details>
+
+    <details>
+      <summary>C'&egrave; una garanzia soddisfatti o rimborsati?</summary>
+      <div class="faq-answer">Offriamo una garanzia di 30 giorni su tutti i corsi. Se non sei soddisfatto, ti rimborsiamo l'intero importo senza domande.</div>
+    </details>
+
+    <details>
+      <summary>Posso interagire con il docente?</summary>
+      <div class="faq-answer">Ogni corso ha una sezione dedicata alle domande dove puoi interagire direttamente con il docente e con gli altri studenti della community.</div>
+    </details>
+
+    <details>
+      <summary>Quali metodi di pagamento accettate?</summary>
+      <div class="faq-answer">Accettiamo tutte le principali carte di credito, PayPal, bonifico bancario e Apple Pay. Offriamo anche la possibilit&agrave; di pagare a rate senza interessi.</div>
+    </details>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-logo">La Tua <span>Academy</span></div>
+      <div class="footer-links">
+        <a href="#">Corsi</a>
+        <a href="#">Chi Siamo</a>
+        <a href="#">Blog</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Termini</a>
+      </div>
+      <div class="footer-copy">&copy; 2026 La Tua Academy</div>
+    </div>
+  </footer>
+</body>
+</html>
