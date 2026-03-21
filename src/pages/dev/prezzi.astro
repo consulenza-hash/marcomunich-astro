@@ -1,0 +1,417 @@
+---
+export const prerender = true;
+---
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prezzi — Marco Munich Dev</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #050505;
+      color: #e5e5e5;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* Navbar */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid #1a1a1a;
+      position: sticky;
+      top: 0;
+      background: rgba(5, 5, 5, 0.95);
+      backdrop-filter: blur(10px);
+      z-index: 100;
+    }
+    .nav-brand { font-weight: 700; font-size: 1.05rem; color: #fff; }
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+      align-items: center;
+    }
+    .nav-links a { font-size: 0.9rem; color: #999; transition: color 0.2s; }
+    .nav-links a:hover { color: #fff; }
+    .nav-links a.active { color: #f59e0b; font-weight: 600; }
+    .mobile-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      padding: 5rem 2rem 3rem;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .hero h1 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 1rem;
+    }
+    .hero p { font-size: 1.15rem; color: #999; }
+
+    /* Pricing */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      max-width: 1050px;
+      margin: 0 auto;
+      padding: 0 2rem 3rem;
+    }
+    .card {
+      background: #111;
+      border: 1px solid #1a1a1a;
+      border-radius: 12px;
+      padding: 2.2rem 1.8rem;
+      display: flex;
+      flex-direction: column;
+    }
+    .card.featured {
+      border-color: #f59e0b;
+      position: relative;
+    }
+    .badge {
+      position: absolute;
+      top: -0.75rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #f59e0b;
+      color: #050505;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.25rem 1rem;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .card h3 {
+      font-size: 1.2rem;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+    .price {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #f59e0b;
+      margin-bottom: 1.5rem;
+    }
+    .price span { font-size: 1rem; font-weight: 400; color: #999; }
+    .features {
+      list-style: none;
+      flex: 1;
+      margin-bottom: 1.8rem;
+    }
+    .features li {
+      padding: 0.4rem 0;
+      padding-left: 1.4rem;
+      position: relative;
+      font-size: 0.92rem;
+      color: #ccc;
+    }
+    .features li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: #f59e0b;
+      font-weight: 700;
+    }
+    .card-btn {
+      display: block;
+      text-align: center;
+      background: transparent;
+      border: 1px solid #333;
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 0.75rem 1.2rem;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+    .card-btn:hover {
+      border-color: #f59e0b;
+      color: #f59e0b;
+    }
+    .card.featured .card-btn {
+      background: #f59e0b;
+      border-color: #f59e0b;
+      color: #050505;
+    }
+    .card.featured .card-btn:hover {
+      background: #d97706;
+      border-color: #d97706;
+    }
+
+    /* Included / Note */
+    .info-section {
+      max-width: 750px;
+      margin: 0 auto;
+      padding: 1rem 2rem 3rem;
+      text-align: center;
+    }
+    .included {
+      background: #111;
+      border: 1px solid #1a1a1a;
+      border-radius: 10px;
+      padding: 1.5rem 2rem;
+      margin-bottom: 1.2rem;
+      font-size: 0.95rem;
+      color: #ccc;
+    }
+    .included strong { color: #fff; }
+    .note {
+      font-size: 0.9rem;
+      color: #777;
+      margin-bottom: 2rem;
+    }
+
+    /* Types detail */
+    .types-section { max-width: 800px; margin: 80px auto 0; padding: 0 24px; }
+    .type-card { background: #111; border: 1px solid #222; border-left: 3px solid #f59e0b; border-radius: 10px; padding: 28px 32px; margin-bottom: 20px; }
+    .type-card h3 { font-size: 1.2rem; color: #fff; margin: 0 0 4px; }
+    .type-price { color: #f59e0b; font-size: 1.1rem; font-weight: 700; margin: 0 0 16px; }
+    .type-card p { color: #cbd5e1; font-size: 0.92rem; line-height: 1.65; margin: 0 0 12px; }
+    .type-card p:last-child { margin-bottom: 0; }
+    .type-card strong { color: #f59e0b; }
+
+    /* FAQ */
+    .faq-section {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 0 2rem 4rem;
+    }
+    .faq-section h2 {
+      font-size: 1.5rem;
+      color: #fff;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .faq-item {
+      border-bottom: 1px solid #1a1a1a;
+      padding: 1.2rem 0;
+    }
+    .faq-item:first-of-type { border-top: 1px solid #1a1a1a; }
+    .faq-q {
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 0.4rem;
+      font-size: 0.98rem;
+    }
+    .faq-a {
+      color: #999;
+      font-size: 0.92rem;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid #1a1a1a;
+      text-align: center;
+      padding: 2rem;
+    }
+    footer a { color: #999; font-size: 0.9rem; transition: color 0.2s; }
+    footer a:hover { color: #f59e0b; }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .mobile-toggle { display: block; }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(5, 5, 5, 0.98);
+        flex-direction: column;
+        padding: 1.5rem 2rem;
+        gap: 1rem;
+        border-bottom: 1px solid #1a1a1a;
+      }
+      .nav-links.open { display: flex; }
+      .hero { padding: 3rem 1.5rem 2rem; }
+      .hero h1 { font-size: 2rem; }
+      .pricing-grid {
+        grid-template-columns: 1fr;
+        padding: 0 1.5rem 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <span class="nav-brand">Marco Munich &middot; Dev</span>
+    <button class="mobile-toggle" aria-label="Menu">&#9776;</button>
+    <ul class="nav-links">
+      <li><a href="/dev/come-lavoro">Come Lavoro</a></li>
+      <li><a href="/dev/vibe-coding">Vibe Coding</a></li>
+      <li><a href="/dev/portfolio">Portfolio</a></li>
+      <li><a href="/dev/prezzi" class="active">Prezzi</a></li>
+      <li><a href="/dev/contatti">Contatti</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <h1>Prezzi chiari, nessuna sorpresa.</h1>
+    <p>Scegli il pacchetto giusto per il tuo progetto. Ogni prezzo include tutto il necessario.</p>
+  </section>
+
+  <div class="pricing-grid">
+    <div class="card">
+      <h3>Sito Vetrina</h3>
+      <div class="price">&euro;1.500</div>
+      <ul class="features">
+        <li>Fino a 5 pagine</li>
+        <li>Design su misura</li>
+        <li>Ottimizzazione SEO base</li>
+        <li>Responsive mobile</li>
+        <li>Consegna in 7-10 giorni</li>
+      </ul>
+      <a href="/dev/contatti" class="card-btn">Scegli questo &rarr;</a>
+    </div>
+
+    <div class="card featured">
+      <span class="badge">Consigliato</span>
+      <h3>Sito Professionale</h3>
+      <div class="price">&euro;2.500</div>
+      <ul class="features">
+        <li>Fino a 10 pagine</li>
+        <li>Blog integrato</li>
+        <li>SEO avanzato</li>
+        <li>Form contatti</li>
+        <li>Analytics</li>
+        <li>Consegna in 14-21 giorni</li>
+      </ul>
+      <a href="/dev/contatti" class="card-btn">Scegli questo &rarr;</a>
+    </div>
+
+    <div class="card">
+      <h3>E-commerce / Custom</h3>
+      <div class="price">Da &euro;4.000</div>
+      <ul class="features">
+        <li>Pagine illimitate</li>
+        <li>Carrello e pagamenti</li>
+        <li>Area riservata</li>
+        <li>Integrazioni custom</li>
+        <li>Supporto prioritario</li>
+      </ul>
+      <a href="/dev/contatti" class="card-btn">Parliamone &rarr;</a>
+    </div>
+  </div>
+
+  <div class="info-section">
+    <div class="included"><strong>Tutti i prezzi includono:</strong> hosting primo anno, dominio, certificato SSL, formazione sull'uso del sito.</div>
+    <p class="note">Pagamento flessibile: anticipo di &euro;500 per avviare, saldo alla consegna.</p>
+  </div>
+
+  <!-- DETTAGLIO TIPOLOGIE -->
+  <section class="types-section">
+    <h2 style="text-align:center; font-size:1.75rem; margin-bottom:12px;">Cosa include ogni tipologia</h2>
+    <p style="text-align:center; color:#94a3b8; max-width:600px; margin:0 auto 48px; font-size:0.95rem;">Ogni progetto è diverso. Ecco cosa comporta ogni tipologia e perché ha quel prezzo.</p>
+
+    <div class="type-card">
+      <h3>🛒 E-commerce</h3>
+      <p class="type-price">Da &euro;4.000</p>
+      <p>Un e-commerce non è un sito con un carrello aggiunto sopra. È un sistema completo che deve gestire catalogo prodotti, varianti (taglie, colori), calcolo spedizioni, gateway di pagamento sicuro, gestione ordini, notifiche email automatiche e area cliente. Ogni pezzo deve funzionare in modo affidabile perché ci passano soldi veri.</p>
+      <p><strong>Perché questo prezzo:</strong> La complessità tecnica è alta. Servono integrazioni con sistemi di pagamento (Stripe, PayPal), logica di inventario, email transazionali, pagine prodotto ottimizzate per la SEO e test approfonditi su ogni flusso d'acquisto. Non è un template — è un sistema costruito su misura per il tuo business.</p>
+    </div>
+
+    <div class="type-card">
+      <h3>🎓 Corso Online / Membership</h3>
+      <p class="type-price">Da &euro;2.500</p>
+      <p>Una piattaforma di corsi richiede un'area riservata con login, gestione degli accessi ai contenuti, player video, progressione delle lezioni e spesso un sistema di pagamento ricorrente per gli abbonamenti. Deve essere semplice da usare sia per te che per i tuoi studenti.</p>
+      <p><strong>Perché questo prezzo:</strong> L'area riservata con autenticazione è il cuore del progetto. Ogni utente deve vedere solo i contenuti a cui ha accesso. Serve integrazione video, gestione abbonamenti, email automatiche di benvenuto e promemoria. È un prodotto digitale completo.</p>
+    </div>
+
+    <div class="type-card">
+      <h3>👤 Sito Vetrina</h3>
+      <p class="type-price">Da &euro;1.500</p>
+      <p>Il sito vetrina è il tuo biglietto da visita digitale. Include chi sei, cosa fai, come contattarti. Sembra semplice, ma la differenza tra un sito vetrina che funziona e uno che non serve a niente sta nel design, nella struttura dei contenuti e nell'ottimizzazione per i motori di ricerca.</p>
+      <p><strong>Perché questo prezzo:</strong> Ogni pagina viene progettata su misura — struttura, testi, design, SEO. Non è un template con il tuo nome sopra. È il tuo spazio online costruito intorno alla tua identità professionale, veloce, responsive e indicizzabile.</p>
+    </div>
+
+    <div class="type-card">
+      <h3>🚀 Landing Page</h3>
+      <p class="type-price">Da &euro;1.500</p>
+      <p>Una landing page ha un solo obiettivo: convertire. Che sia raccogliere email, vendere un prodotto o prenotare una consulenza, ogni elemento della pagina — dal titolo al pulsante — deve essere pensato per portare l'utente a compiere quell'azione.</p>
+      <p><strong>Perché questo prezzo:</strong> Una landing page efficace richiede copywriting strategico, design orientato alla conversione, A/B testing, velocità di caricamento estrema e integrazione con i tuoi strumenti di marketing (email, analytics, pixel). Poche pagine, molto lavoro su ogni dettaglio.</p>
+    </div>
+
+    <div class="type-card">
+      <h3>📅 Booking / Prenotazioni</h3>
+      <p class="type-price">Da &euro;2.500</p>
+      <p>Un sistema di prenotazioni deve gestire disponibilità in tempo reale, evitare doppie prenotazioni, inviare conferme automatiche e integrarsi con il tuo calendario. Per coach, terapeuti e professionisti olistici è lo strumento che ti libera dal gestire gli appuntamenti a mano.</p>
+      <p><strong>Perché questo prezzo:</strong> La logica di calendario è complessa — gestione fusi orari, slot ricorrenti, eccezioni, notifiche email e SMS. Spesso include anche il pagamento anticipato della sessione. È un sistema che deve funzionare senza intoppi perché gestisce il tuo tempo e quello dei tuoi clienti.</p>
+    </div>
+
+    <div class="type-card">
+      <h3>📰 Blog & Magazine</h3>
+      <p class="type-price">Da &euro;1.500</p>
+      <p>Un blog professionale non è WordPress con un tema gratuito. È un sito costruito per la velocità, l'indicizzazione e la lettura. Categorie, tag, ricerca, articoli correlati, sitemap automatica, schema markup per Google — tutto quello che serve perché i tuoi contenuti vengano trovati.</p>
+      <p><strong>Perché questo prezzo:</strong> L'ottimizzazione SEO tecnica è il cuore del lavoro. Ogni articolo deve caricarsi in meno di un secondo, avere i metadati corretti, generare le anteprime social e posizionarsi su Google. Il CMS integrato ti permette di pubblicare senza toccare codice.</p>
+    </div>
+
+    <div class="type-card">
+      <h3>⚡ SaaS / Web App</h3>
+      <p class="type-price">Da &euro;4.000</p>
+      <p>Un'applicazione web è un software che gira nel browser. Dashboard, gestione utenti, dati in tempo reale, grafici, notifiche — è il livello più complesso di sviluppo web. Ogni funzionalità deve essere progettata, sviluppata e testata individualmente.</p>
+      <p><strong>Perché questo prezzo:</strong> Una web app richiede architettura backend, database, autenticazione sicura, API, gestione ruoli e permessi. Il tempo di sviluppo è significativamente maggiore e ogni funzionalità aggiuntiva ha un impatto sulla complessità complessiva.</p>
+    </div>
+
+    <div class="type-card">
+      <h3>🏠 Immobiliare</h3>
+      <p class="type-price">Da &euro;2.500</p>
+      <p>Un sito immobiliare deve gestire un catalogo di proprietà con filtri (zona, prezzo, metratura, tipologia), gallerie fotografiche, mappe interattive e form di contatto per ogni annuncio. Deve essere facile da aggiornare quando aggiungi o rimuovi proprietà.</p>
+      <p><strong>Perché questo prezzo:</strong> La ricerca filtrata è il cuore del sito — l'utente deve trovare quello che cerca in pochi click. Servono mappe, gallerie ottimizzate, schede dettagliate per ogni proprietà e un pannello di gestione semplice per te.</p>
+    </div>
+
+    <div class="type-card">
+      <h3>💍 Wedding & Eventi</h3>
+      <p class="type-price">Da &euro;1.500</p>
+      <p>Un sito per eventi include invito digitale, RSVP con gestione risposte, programma della giornata, gallery fotografica, e spesso integrazione con mappe e indicazioni per raggiungere la location. Deve essere elegante e semplice da navigare anche per gli invitati meno tecnologici.</p>
+      <p><strong>Perché questo prezzo:</strong> Il design deve essere perfetto — è la prima impressione del tuo evento. Il sistema RSVP deve raccogliere risposte, gestire allergie alimentari, contare i partecipanti. Dopo l'evento, la gallery diventa il ricordo digitale.</p>
+    </div>
+  </section>
+
+  <section class="faq-section">
+    <h2>Domande frequenti</h2>
+    <div class="faq-item">
+      <div class="faq-q">Ci sono costi nascosti?</div>
+      <div class="faq-a">No. Il prezzo che vedi è il prezzo che paghi.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Posso pagare a rate?</div>
+      <div class="faq-a">Sì, possiamo organizzare un piano di pagamento.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Cosa succede dopo il primo anno?</div>
+      <div class="faq-a">Il costo di mantenimento è di &euro;97/anno per hosting e aggiornamenti.</div>
+    </div>
+  </section>
+
+  <footer>
+    <a href="/">&larr; Torna a marcomunich.com</a>
+  </footer>
+
+  <script>
+    document.querySelector('.mobile-toggle')?.addEventListener('click', () => {
+      document.querySelector('.nav-links')?.classList.toggle('open');
+    });
+  </script>
+</body>
+</html>

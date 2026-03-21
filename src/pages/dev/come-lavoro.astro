@@ -1,0 +1,260 @@
+---
+export const prerender = true;
+---
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Come Lavoro — Marco Munich Dev</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #050505;
+      color: #e5e5e5;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* Navbar */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid #1a1a1a;
+      position: sticky;
+      top: 0;
+      background: rgba(5, 5, 5, 0.95);
+      backdrop-filter: blur(10px);
+      z-index: 100;
+    }
+    .nav-brand {
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: #fff;
+    }
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+      align-items: center;
+    }
+    .nav-links a {
+      font-size: 0.9rem;
+      color: #999;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: #fff; }
+    .nav-links a.active {
+      color: #f59e0b;
+      font-weight: 600;
+    }
+    .mobile-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      padding: 5rem 2rem 3rem;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .hero h1 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 1rem;
+      line-height: 1.15;
+    }
+    .hero p {
+      font-size: 1.15rem;
+      color: #999;
+      max-width: 550px;
+      margin: 0 auto;
+    }
+
+    /* Timeline */
+    .timeline-section {
+      max-width: 750px;
+      margin: 0 auto;
+      padding: 2rem 2rem 4rem;
+    }
+    .timeline {
+      position: relative;
+      padding-left: 3.5rem;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 1.1rem;
+      top: 0.5rem;
+      bottom: 0.5rem;
+      width: 2px;
+      background: linear-gradient(to bottom, #f59e0b, #f59e0b 80%, transparent);
+    }
+    .step {
+      position: relative;
+      margin-bottom: 2.5rem;
+    }
+    .step:last-child { margin-bottom: 0; }
+    .step-number {
+      position: absolute;
+      left: -3.5rem;
+      top: 0;
+      width: 2.25rem;
+      height: 2.25rem;
+      border-radius: 50%;
+      background: #f59e0b;
+      color: #050505;
+      font-weight: 700;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .step h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 0.4rem;
+    }
+    .step p {
+      color: #999;
+      font-size: 0.95rem;
+      line-height: 1.65;
+    }
+
+    /* CTA */
+    .cta-section {
+      text-align: center;
+      padding: 3rem 2rem 5rem;
+    }
+    .cta-btn {
+      display: inline-block;
+      background: #f59e0b;
+      color: #050505;
+      font-weight: 700;
+      font-size: 1.05rem;
+      padding: 0.9rem 2.2rem;
+      border-radius: 8px;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .cta-btn:hover {
+      background: #d97706;
+      transform: translateY(-1px);
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid #1a1a1a;
+      text-align: center;
+      padding: 2rem;
+    }
+    footer a {
+      color: #999;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+    footer a:hover { color: #f59e0b; }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .mobile-toggle { display: block; }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(5, 5, 5, 0.98);
+        flex-direction: column;
+        padding: 1.5rem 2rem;
+        gap: 1rem;
+        border-bottom: 1px solid #1a1a1a;
+      }
+      .nav-links.open { display: flex; }
+      .hero { padding: 3rem 1.5rem 2rem; }
+      .hero h1 { font-size: 2rem; }
+      .timeline-section { padding: 1.5rem 1.5rem 3rem; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <span class="nav-brand">Marco Munich &middot; Dev</span>
+    <button class="mobile-toggle" aria-label="Menu">&#9776;</button>
+    <ul class="nav-links">
+      <li><a href="/dev/come-lavoro" class="active">Come Lavoro</a></li>
+      <li><a href="/dev/vibe-coding">Vibe Coding</a></li>
+      <li><a href="/dev/portfolio">Portfolio</a></li>
+      <li><a href="/dev/prezzi">Prezzi</a></li>
+      <li><a href="/dev/contatti">Contatti</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <h1>Dal tuo bisogno al sito online.</h1>
+    <p>Un processo semplice, trasparente, pensato per darti il controllo su ogni fase.</p>
+  </section>
+
+  <section class="timeline-section">
+    <div class="timeline">
+      <div class="step">
+        <span class="step-number">1</span>
+        <h3>Ascolto</h3>
+        <p>Parliamo di cosa ti serve, chi è il tuo pubblico, quali obiettivi hai. Niente brief infiniti — una conversazione diretta.</p>
+      </div>
+      <div class="step">
+        <span class="step-number">2</span>
+        <h3>Progettazione</h3>
+        <p>Definisco struttura, navigazione e contenuti. Ti mostro un'anteprima prima di scrivere una riga di codice.</p>
+      </div>
+      <div class="step">
+        <span class="step-number">3</span>
+        <h3>Sviluppo</h3>
+        <p>Costruisco il sito con il mio metodo di vibe coding. Veloce, pulito, ottimizzato. Ti tengo aggiornato a ogni passo.</p>
+      </div>
+      <div class="step">
+        <span class="step-number">4</span>
+        <h3>Revisione</h3>
+        <p>Lo guardi, lo provi, mi dici cosa cambiare. Nessun limite sulle revisioni in questa fase.</p>
+      </div>
+      <div class="step">
+        <span class="step-number">5</span>
+        <h3>Online</h3>
+        <p>Pubblichiamo. Ti spiego come funziona tutto. Il sito è tuo, il codice è tuo.</p>
+      </div>
+      <div class="step">
+        <span class="step-number">6</span>
+        <h3>Supporto</h3>
+        <p>Non sparisco dopo la consegna. Sono qui se serve qualcosa.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <a href="/dev/contatti" class="cta-btn">Iniziamo &rarr;</a>
+  </section>
+
+  <footer>
+    <a href="/">&larr; Torna a marcomunich.com</a>
+  </footer>
+
+  <script>
+    document.querySelector('.mobile-toggle')?.addEventListener('click', () => {
+      document.querySelector('.nav-links')?.classList.toggle('open');
+    });
+  </script>
+</body>
+</html>
