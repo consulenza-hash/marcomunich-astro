@@ -534,7 +534,9 @@ const socials = [
   .rs-quicklinks__inner { grid-template-columns: 1fr; }
   .rs-quicklink,
   .rs-quicklink:not(:first-child) { padding: 1.5rem 0; border-right: none; }
-  .rs-social-link { color: rgba(255,255,255,0.92); }
+  .rs-social-link { color: #ffffff !important; display: flex !important; visibility: visible !important; opacity: 1 !important; }
+  .rs-social-link svg { fill: #ffffff !important; width: 28px !important; height: 28px !important; display: block !important; visibility: visible !important; }
+  .rs-hero__social { display: flex !important; visibility: visible !important; gap: 1rem; justify-content: center; min-height: 44px; }
 }
 @media (max-width: 480px) {
   .rs-step { grid-template-columns: 1fr; gap: 0.75rem; }
