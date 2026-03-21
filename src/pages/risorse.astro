@@ -327,14 +327,15 @@ const socials = [
   justify-content: center;
 }
 .rs-social-link {
-  width: 40px; height: 40px;
-  display: flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px;
+  display: flex !important; align-items: center; justify-content: center;
   color: #ffffff;
   opacity: 0.85;
   transition: color 0.15s, opacity 0.15s;
+  -webkit-appearance: none;
 }
 .rs-social-link:hover { color: var(--gold); opacity: 1; }
-.rs-social-link svg { width: 22px; height: 22px; fill: #ffffff; }
+.rs-social-link svg { width: 28px !important; height: 28px !important; min-width: 28px; min-height: 28px; fill: #ffffff !important; display: block !important; visibility: visible !important; }
 
 /* ══ PERCORSO ═══════════════════════════════════════════════════════════════ */
 .rs-percorso {
