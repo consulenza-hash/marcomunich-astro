@@ -837,11 +837,14 @@ export const prerender = true;
     @media (max-width: 600px) {
       .feature-grid { grid-template-columns: 1fr; }
       .stats-grid { grid-template-columns: 1fr; }
-      .hero-title { font-size: 2rem; }
+      .hero { flex-direction: column; min-height: auto; padding: 100px 20px 60px; }
+      .hero-title { font-size: 1.6rem; }
+      .hero-content { max-width: 100%; }
       .hero-buttons { flex-direction: column; align-items: center; }
       .back-btn { font-size: 0.75rem; padding: 8px 14px; }
       .final-cta-inner { padding: 48px 24px; }
       .footer-cols { grid-template-columns: 1fr; }
+      .floating-cta { bottom: 16px; right: 16px; padding: 10px 20px; font-size: 0.8rem; }
     }
   </style>
 </body>
