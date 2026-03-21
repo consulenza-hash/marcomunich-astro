@@ -1,6 +1,7 @@
 ---
 export const prerender = true;
 ---
+
 <html lang="it">
 <head>
   <meta charset="UTF-8" />
@@ -8,66 +9,152 @@ export const prerender = true;
   <title>Prezzi — Marco Munich Dev</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
+    [data-theme="dark"] {
+      --bg: #0a0e1a;
+      --bg-card: #111827;
+      --border: #1e293b;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --primary: #3b82f6;
+      --primary-hover: #60a5fa;
+      --accent: #818cf8;
+      --navbar-bg: rgba(10, 14, 26, 0.8);
+      --input-bg: #0f1629;
+    }
+    [data-theme="light"] {
+      --bg: #f8fafc;
+      --bg-card: #ffffff;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --text-dim: #94a3b8;
+      --primary: #2563eb;
+      --primary-hover: #3b82f6;
+      --accent: #818cf8;
+      --navbar-bg: rgba(248, 250, 252, 0.8);
+      --input-bg: #f1f5f9;
+    }
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
     body {
       font-family: 'Inter', sans-serif;
-      background: #050505;
-      color: #e5e5e5;
+      background: var(--bg);
+      color: var(--text);
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
+      transition: background 0.3s, color 0.3s;
     }
     a { color: inherit; text-decoration: none; }
 
-    /* Navbar */
-    nav {
+    /* ── Navbar ── */
+    .navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: var(--navbar-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .navbar-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      height: 64px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 1rem 2rem;
-      border-bottom: 1px solid #1a1a1a;
-      position: sticky;
-      top: 0;
-      background: rgba(5, 5, 5, 0.95);
-      backdrop-filter: blur(10px);
-      z-index: 100;
     }
-    .nav-brand { font-weight: 700; font-size: 1.05rem; color: #fff; }
-    .nav-links {
+    .nav-logo {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      transition: color 0.3s;
+    }
+    .nav-logo span { color: var(--primary); }
+    .nav-right { display: flex; align-items: center; gap: 2rem; }
+    .nav-links { display: flex; gap: 1.75rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      transition: color 0.2s;
+      position: relative;
+      padding-bottom: 4px;
+    }
+    .nav-links a:hover { color: var(--primary); }
+    .nav-links a.active { color: var(--primary); }
+    .nav-links a.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--primary);
+      border-radius: 1px;
+    }
+    .theme-toggle {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      width: 36px; height: 36px;
       display: flex;
-      gap: 1.5rem;
-      list-style: none;
       align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: background 0.3s, border-color 0.3s;
+      color: var(--text-muted);
+      flex-shrink: 0;
     }
-    .nav-links a { font-size: 0.9rem; color: #999; transition: color 0.2s; }
-    .nav-links a:hover { color: #fff; }
-    .nav-links a.active { color: #f59e0b; font-weight: 600; }
-    .mobile-toggle {
+    .theme-toggle:hover { border-color: var(--primary); color: var(--primary); }
+    [data-theme="dark"] .theme-toggle .icon-sun { display: none; }
+    [data-theme="dark"] .theme-toggle .icon-moon { display: inline; }
+    [data-theme="light"] .theme-toggle .icon-sun { display: inline; }
+    [data-theme="light"] .theme-toggle .icon-moon { display: none; }
+    .nav-toggle {
       display: none;
       background: none;
       border: none;
-      color: #fff;
-      font-size: 1.5rem;
       cursor: pointer;
+      padding: 0.5rem;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 22px; height: 2px;
+      background: var(--text);
+      margin: 5px 0;
+      transition: all 0.3s;
     }
 
-    /* Hero */
+    /* ── Hero ── */
     .hero {
       text-align: center;
-      padding: 5rem 2rem 3rem;
+      padding: 10rem 2rem 4rem;
       max-width: 700px;
       margin: 0 auto;
     }
     .hero h1 {
+      font-family: 'JetBrains Mono', monospace;
       font-size: 2.8rem;
       font-weight: 700;
-      color: #fff;
+      color: var(--text);
       margin-bottom: 1rem;
+      transition: color 0.3s;
     }
-    .hero p { font-size: 1.15rem; color: #999; }
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      transition: color 0.3s;
+    }
 
-    /* Pricing */
+    /* ── Pricing Grid ── */
     .pricing-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -77,15 +164,16 @@ export const prerender = true;
       padding: 0 2rem 3rem;
     }
     .card {
-      background: #111;
-      border: 1px solid #1a1a1a;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
       border-radius: 12px;
       padding: 2.2rem 1.8rem;
       display: flex;
       flex-direction: column;
+      transition: background 0.3s, border-color 0.3s;
     }
     .card.featured {
-      border-color: #f59e0b;
+      border-color: var(--primary);
       position: relative;
     }
     .badge {
@@ -93,27 +181,35 @@ export const prerender = true;
       top: -0.75rem;
       left: 50%;
       transform: translateX(-50%);
-      background: #f59e0b;
-      color: #050505;
-      font-size: 0.75rem;
+      background: var(--primary);
+      color: #fff;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
       font-weight: 700;
       padding: 0.25rem 1rem;
       border-radius: 20px;
       text-transform: uppercase;
-      letter-spacing: 0.03em;
+      letter-spacing: 0.05em;
     }
     .card h3 {
-      font-size: 1.2rem;
-      color: #fff;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.15rem;
+      color: var(--text);
       margin-bottom: 0.5rem;
+      transition: color 0.3s;
     }
     .price {
+      font-family: 'JetBrains Mono', monospace;
       font-size: 2.2rem;
       font-weight: 700;
-      color: #f59e0b;
+      color: var(--primary);
       margin-bottom: 1.5rem;
     }
-    .price span { font-size: 1rem; font-weight: 400; color: #999; }
+    .price span {
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--text-muted);
+    }
     .features {
       list-style: none;
       flex: 1;
@@ -124,21 +220,22 @@ export const prerender = true;
       padding-left: 1.4rem;
       position: relative;
       font-size: 0.92rem;
-      color: #ccc;
+      color: var(--text-muted);
+      transition: color 0.3s;
     }
     .features li::before {
-      content: '✓';
+      content: '\2713';
       position: absolute;
       left: 0;
-      color: #f59e0b;
+      color: var(--primary);
       font-weight: 700;
     }
     .card-btn {
       display: block;
       text-align: center;
       background: transparent;
-      border: 1px solid #333;
-      color: #fff;
+      border: 1px solid var(--border);
+      color: var(--text);
       font-weight: 600;
       font-size: 0.95rem;
       padding: 0.75rem 1.2rem;
@@ -146,20 +243,20 @@ export const prerender = true;
       transition: all 0.2s;
     }
     .card-btn:hover {
-      border-color: #f59e0b;
-      color: #f59e0b;
+      border-color: var(--primary);
+      color: var(--primary);
     }
     .card.featured .card-btn {
-      background: #f59e0b;
-      border-color: #f59e0b;
-      color: #050505;
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
     }
     .card.featured .card-btn:hover {
-      background: #d97706;
-      border-color: #d97706;
+      background: var(--primary-hover);
+      border-color: var(--primary-hover);
     }
 
-    /* Included / Note */
+    /* ── Included / Note ── */
     .info-section {
       max-width: 750px;
       margin: 0 auto;
@@ -167,103 +264,174 @@ export const prerender = true;
       text-align: center;
     }
     .included {
-      background: #111;
-      border: 1px solid #1a1a1a;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
       border-radius: 10px;
       padding: 1.5rem 2rem;
       margin-bottom: 1.2rem;
       font-size: 0.95rem;
-      color: #ccc;
+      color: var(--text-muted);
+      transition: background 0.3s, border-color 0.3s, color 0.3s;
     }
-    .included strong { color: #fff; }
+    .included strong { color: var(--text); }
     .note {
       font-size: 0.9rem;
-      color: #777;
+      color: var(--text-dim);
       margin-bottom: 2rem;
+      transition: color 0.3s;
     }
 
-    /* Types detail */
-    .types-section { max-width: 800px; margin: 80px auto 0; padding: 0 24px; }
-    .type-card { background: #111; border: 1px solid #222; border-left: 3px solid #f59e0b; border-radius: 10px; padding: 28px 32px; margin-bottom: 20px; }
-    .type-card h3 { font-size: 1.2rem; color: #fff; margin: 0 0 4px; }
-    .type-price { color: #f59e0b; font-size: 1.1rem; font-weight: 700; margin: 0 0 16px; }
-    .type-card p { color: #cbd5e1; font-size: 0.92rem; line-height: 1.65; margin: 0 0 12px; }
+    /* ── Types detail ── */
+    .types-section {
+      max-width: 800px;
+      margin: 80px auto 0;
+      padding: 0 24px;
+    }
+    .types-section h2 {
+      font-family: 'JetBrains Mono', monospace;
+      text-align: center;
+      font-size: 1.75rem;
+      margin-bottom: 12px;
+      color: var(--text);
+      transition: color 0.3s;
+    }
+    .types-section > p {
+      text-align: center;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto 48px;
+      font-size: 0.95rem;
+    }
+    .type-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--primary);
+      border-radius: 10px;
+      padding: 28px 32px;
+      margin-bottom: 20px;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .type-card h3 {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.2rem;
+      color: var(--text);
+      margin: 0 0 4px;
+      transition: color 0.3s;
+    }
+    .type-price {
+      color: var(--primary);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin: 0 0 16px;
+    }
+    .type-card p {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      line-height: 1.65;
+      margin: 0 0 12px;
+      transition: color 0.3s;
+    }
     .type-card p:last-child { margin-bottom: 0; }
-    .type-card strong { color: #f59e0b; }
+    .type-card strong { color: var(--primary); }
 
-    /* FAQ */
+    /* ── FAQ ── */
     .faq-section {
       max-width: 700px;
       margin: 0 auto;
       padding: 0 2rem 4rem;
     }
     .faq-section h2 {
+      font-family: 'JetBrains Mono', monospace;
       font-size: 1.5rem;
-      color: #fff;
+      color: var(--text);
       text-align: center;
       margin-bottom: 2rem;
+      transition: color 0.3s;
     }
     .faq-item {
-      border-bottom: 1px solid #1a1a1a;
+      border-bottom: 1px solid var(--border);
       padding: 1.2rem 0;
+      transition: border-color 0.3s;
     }
-    .faq-item:first-of-type { border-top: 1px solid #1a1a1a; }
+    .faq-item:first-of-type {
+      border-top: 1px solid var(--border);
+    }
     .faq-q {
       font-weight: 600;
-      color: #fff;
+      color: var(--text);
       margin-bottom: 0.4rem;
       font-size: 0.98rem;
+      transition: color 0.3s;
     }
     .faq-a {
-      color: #999;
+      color: var(--text-muted);
       font-size: 0.92rem;
+      transition: color 0.3s;
     }
 
-    /* Footer */
-    footer {
-      border-top: 1px solid #1a1a1a;
+    /* ── Footer ── */
+    .footer {
+      border-top: 1px solid var(--border);
       text-align: center;
-      padding: 2rem;
+      padding: 2.5rem;
+      transition: border-color 0.3s;
     }
-    footer a { color: #999; font-size: 0.9rem; transition: color 0.2s; }
-    footer a:hover { color: #f59e0b; }
+    .footer a {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+    .footer a:hover { color: var(--primary); }
 
-    /* Mobile */
+    /* ── Mobile ── */
     @media (max-width: 768px) {
-      .mobile-toggle { display: block; }
       .nav-links {
         display: none;
         position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background: rgba(5, 5, 5, 0.98);
+        top: 64px; left: 0; right: 0;
+        background: var(--navbar-bg);
+        backdrop-filter: blur(12px);
         flex-direction: column;
-        padding: 1.5rem 2rem;
+        padding: 1.5rem;
         gap: 1rem;
-        border-bottom: 1px solid #1a1a1a;
+        border-bottom: 1px solid var(--border);
       }
       .nav-links.open { display: flex; }
-      .hero { padding: 3rem 1.5rem 2rem; }
+      .nav-toggle { display: block; }
+      .hero { padding: 7rem 1.5rem 2rem; }
       .hero h1 { font-size: 2rem; }
       .pricing-grid {
         grid-template-columns: 1fr;
         padding: 0 1.5rem 2rem;
       }
+      .types-section { padding: 0 1.5rem; }
+      .type-card { padding: 20px 20px; }
     }
   </style>
 </head>
 <body>
-  <nav>
-    <span class="nav-brand">Marco Munich &middot; Dev</span>
-    <button class="mobile-toggle" aria-label="Menu">&#9776;</button>
-    <ul class="nav-links">
-      <li><a href="/dev/come-lavoro">Come Lavoro</a></li>
-      <li><a href="/dev/vibe-coding">Vibe Coding</a></li>
-      <li><a href="/dev/portfolio">Portfolio</a></li>
-      <li><a href="/dev/prezzi" class="active">Prezzi</a></li>
-      <li><a href="/dev/contatti">Contatti</a></li>
-    </ul>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="/dev/" class="nav-logo">Marco Munich <span>&middot; Dev</span></a>
+      <div class="nav-right">
+        <ul class="nav-links" id="navLinks">
+          <li><a href="/dev/come-lavoro">Come Lavoro</a></li>
+          <li><a href="/dev/vibe-coding">Vibe Coding</a></li>
+          <li><a href="/dev/portfolio">Portfolio</a></li>
+          <li><a href="/dev/prezzi" class="active">Prezzi</a></li>
+          <li><a href="/dev/contatti">Contatti</a></li>
+        </ul>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Cambia tema">
+          <span class="icon-sun">&#9728;</span>
+          <span class="icon-moon">&#127769;</span>
+        </button>
+        <button class="nav-toggle" aria-label="Menu" id="navToggle">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
   </nav>
 
   <section class="hero">
@@ -321,67 +489,67 @@ export const prerender = true;
 
   <!-- DETTAGLIO TIPOLOGIE -->
   <section class="types-section">
-    <h2 style="text-align:center; font-size:1.75rem; margin-bottom:12px;">Cosa include ogni tipologia</h2>
-    <p style="text-align:center; color:#94a3b8; max-width:600px; margin:0 auto 48px; font-size:0.95rem;">Ogni progetto è diverso. Ecco cosa comporta ogni tipologia e perché ha quel prezzo.</p>
+    <h2>Cosa include ogni tipologia</h2>
+    <p>Ogni progetto è diverso. Ecco cosa comporta ogni tipologia e perché ha quel prezzo.</p>
 
     <div class="type-card">
-      <h3>🛒 E-commerce</h3>
+      <h3>&#128722; E-commerce</h3>
       <p class="type-price">Da &euro;4.000</p>
       <p>Un e-commerce non è un sito con un carrello aggiunto sopra. È un sistema completo che deve gestire catalogo prodotti, varianti (taglie, colori), calcolo spedizioni, gateway di pagamento sicuro, gestione ordini, notifiche email automatiche e area cliente. Ogni pezzo deve funzionare in modo affidabile perché ci passano soldi veri.</p>
       <p><strong>Perché questo prezzo:</strong> La complessità tecnica è alta. Servono integrazioni con sistemi di pagamento (Stripe, PayPal), logica di inventario, email transazionali, pagine prodotto ottimizzate per la SEO e test approfonditi su ogni flusso d'acquisto. Non è un template — è un sistema costruito su misura per il tuo business.</p>
     </div>
 
     <div class="type-card">
-      <h3>🎓 Corso Online / Membership</h3>
+      <h3>&#127891; Corso Online / Membership</h3>
       <p class="type-price">Da &euro;2.500</p>
       <p>Una piattaforma di corsi richiede un'area riservata con login, gestione degli accessi ai contenuti, player video, progressione delle lezioni e spesso un sistema di pagamento ricorrente per gli abbonamenti. Deve essere semplice da usare sia per te che per i tuoi studenti.</p>
       <p><strong>Perché questo prezzo:</strong> L'area riservata con autenticazione è il cuore del progetto. Ogni utente deve vedere solo i contenuti a cui ha accesso. Serve integrazione video, gestione abbonamenti, email automatiche di benvenuto e promemoria. È un prodotto digitale completo.</p>
     </div>
 
     <div class="type-card">
-      <h3>👤 Sito Vetrina</h3>
+      <h3>&#128100; Sito Vetrina</h3>
       <p class="type-price">Da &euro;1.500</p>
       <p>Il sito vetrina è il tuo biglietto da visita digitale. Include chi sei, cosa fai, come contattarti. Sembra semplice, ma la differenza tra un sito vetrina che funziona e uno che non serve a niente sta nel design, nella struttura dei contenuti e nell'ottimizzazione per i motori di ricerca.</p>
       <p><strong>Perché questo prezzo:</strong> Ogni pagina viene progettata su misura — struttura, testi, design, SEO. Non è un template con il tuo nome sopra. È il tuo spazio online costruito intorno alla tua identità professionale, veloce, responsive e indicizzabile.</p>
     </div>
 
     <div class="type-card">
-      <h3>🚀 Landing Page</h3>
+      <h3>&#128640; Landing Page</h3>
       <p class="type-price">Da &euro;1.500</p>
       <p>Una landing page ha un solo obiettivo: convertire. Che sia raccogliere email, vendere un prodotto o prenotare una consulenza, ogni elemento della pagina — dal titolo al pulsante — deve essere pensato per portare l'utente a compiere quell'azione.</p>
       <p><strong>Perché questo prezzo:</strong> Una landing page efficace richiede copywriting strategico, design orientato alla conversione, A/B testing, velocità di caricamento estrema e integrazione con i tuoi strumenti di marketing (email, analytics, pixel). Poche pagine, molto lavoro su ogni dettaglio.</p>
     </div>
 
     <div class="type-card">
-      <h3>📅 Booking / Prenotazioni</h3>
+      <h3>&#128197; Booking / Prenotazioni</h3>
       <p class="type-price">Da &euro;2.500</p>
       <p>Un sistema di prenotazioni deve gestire disponibilità in tempo reale, evitare doppie prenotazioni, inviare conferme automatiche e integrarsi con il tuo calendario. Per coach, terapeuti e professionisti olistici è lo strumento che ti libera dal gestire gli appuntamenti a mano.</p>
       <p><strong>Perché questo prezzo:</strong> La logica di calendario è complessa — gestione fusi orari, slot ricorrenti, eccezioni, notifiche email e SMS. Spesso include anche il pagamento anticipato della sessione. È un sistema che deve funzionare senza intoppi perché gestisce il tuo tempo e quello dei tuoi clienti.</p>
     </div>
 
     <div class="type-card">
-      <h3>📰 Blog & Magazine</h3>
+      <h3>&#128240; Blog &amp; Magazine</h3>
       <p class="type-price">Da &euro;1.500</p>
       <p>Un blog professionale non è WordPress con un tema gratuito. È un sito costruito per la velocità, l'indicizzazione e la lettura. Categorie, tag, ricerca, articoli correlati, sitemap automatica, schema markup per Google — tutto quello che serve perché i tuoi contenuti vengano trovati.</p>
       <p><strong>Perché questo prezzo:</strong> L'ottimizzazione SEO tecnica è il cuore del lavoro. Ogni articolo deve caricarsi in meno di un secondo, avere i metadati corretti, generare le anteprime social e posizionarsi su Google. Il CMS integrato ti permette di pubblicare senza toccare codice.</p>
     </div>
 
     <div class="type-card">
-      <h3>⚡ SaaS / Web App</h3>
+      <h3>&#9889; SaaS / Web App</h3>
       <p class="type-price">Da &euro;4.000</p>
       <p>Un'applicazione web è un software che gira nel browser. Dashboard, gestione utenti, dati in tempo reale, grafici, notifiche — è il livello più complesso di sviluppo web. Ogni funzionalità deve essere progettata, sviluppata e testata individualmente.</p>
       <p><strong>Perché questo prezzo:</strong> Una web app richiede architettura backend, database, autenticazione sicura, API, gestione ruoli e permessi. Il tempo di sviluppo è significativamente maggiore e ogni funzionalità aggiuntiva ha un impatto sulla complessità complessiva.</p>
     </div>
 
     <div class="type-card">
-      <h3>🏠 Immobiliare</h3>
+      <h3>&#127968; Immobiliare</h3>
       <p class="type-price">Da &euro;2.500</p>
       <p>Un sito immobiliare deve gestire un catalogo di proprietà con filtri (zona, prezzo, metratura, tipologia), gallerie fotografiche, mappe interattive e form di contatto per ogni annuncio. Deve essere facile da aggiornare quando aggiungi o rimuovi proprietà.</p>
       <p><strong>Perché questo prezzo:</strong> La ricerca filtrata è il cuore del sito — l'utente deve trovare quello che cerca in pochi click. Servono mappe, gallerie ottimizzate, schede dettagliate per ogni proprietà e un pannello di gestione semplice per te.</p>
     </div>
 
     <div class="type-card">
-      <h3>💍 Wedding & Eventi</h3>
+      <h3>&#128141; Wedding &amp; Eventi</h3>
       <p class="type-price">Da &euro;1.500</p>
       <p>Un sito per eventi include invito digitale, RSVP con gestione risposte, programma della giornata, gallery fotografica, e spesso integrazione con mappe e indicazioni per raggiungere la location. Deve essere elegante e semplice da navigare anche per gli invitati meno tecnologici.</p>
       <p><strong>Perché questo prezzo:</strong> Il design deve essere perfetto — è la prima impressione del tuo evento. Il sistema RSVP deve raccogliere risposte, gestire allergie alimentari, contare i partecipanti. Dopo l'evento, la gallery diventa il ricordo digitale.</p>
@@ -404,13 +572,23 @@ export const prerender = true;
     </div>
   </section>
 
-  <footer>
+  <footer class="footer">
     <a href="/">&larr; Torna a marcomunich.com</a>
   </footer>
 
-  <script>
-    document.querySelector('.mobile-toggle')?.addEventListener('click', () => {
-      document.querySelector('.nav-links')?.classList.toggle('open');
+  <script is:inline>
+    const toggle = document.getElementById('theme-toggle');
+    const html = document.documentElement;
+    const saved = localStorage.getItem('dev-theme') || 'dark';
+    html.setAttribute('data-theme', saved);
+    toggle.addEventListener('click', () => {
+      const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('dev-theme', next);
+    });
+
+    document.getElementById('navToggle')?.addEventListener('click', () => {
+      document.getElementById('navLinks')?.classList.toggle('open');
     });
   </script>
 </body>

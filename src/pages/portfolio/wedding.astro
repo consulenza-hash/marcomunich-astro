@@ -5,304 +5,560 @@ export const prerender = true;
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Marco & Giulia — 15 Giugno 2026</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: Georgia, 'Times New Roman', serif; background: #fdf2f8; color: #1c1917; line-height: 1.7; }
-
-    .back-btn {
-      position: fixed; top: 16px; left: 16px; z-index: 1000;
-      background: #b76e79; color: #fff; text-decoration: none;
-      padding: 8px 16px; border-radius: 8px; font-size: 14px;
-      font-family: -apple-system, sans-serif; font-weight: 500;
-      box-shadow: 0 4px 12px rgba(183,110,121,.35); transition: background .2s;
-    }
-    .back-btn:hover { background: #9e5a64; }
-
-    /* Header */
-    .site-header {
-      text-align: center; padding: 40px 20px 0;
-      font-size: 18px; color: #b76e79; letter-spacing: 3px;
-      text-transform: uppercase; font-weight: normal;
-    }
-
-    /* Hero */
-    .hero {
-      text-align: center; padding: 60px 20px 80px;
-    }
-    .hero-names {
-      font-size: 72px; font-weight: normal; color: #1c1917;
-      line-height: 1.1; margin-bottom: 16px;
-    }
-    .hero-ampersand { color: #b76e79; font-style: italic; }
-    .hero-date { font-size: 22px; color: #78716c; letter-spacing: 4px; margin-bottom: 8px; }
-    .hero-location { font-size: 17px; color: #a8a29e; font-style: italic; }
-    .divider {
-      width: 120px; height: 1px; background: #b76e79; margin: 40px auto 0;
-      position: relative;
-    }
-    .divider::after {
-      content: '\2661'; position: absolute; top: 50%; left: 50%;
-      transform: translate(-50%, -50%); background: #fdf2f8;
-      padding: 0 16px; color: #b76e79; font-size: 20px;
-    }
-
-    /* Section */
-    section { padding: 80px 20px; max-width: 900px; margin: 0 auto; }
-    .section-title {
-      text-align: center; font-size: 36px; font-weight: normal;
-      color: #1c1917; margin-bottom: 12px;
-    }
-    .section-sub {
-      text-align: center; color: #a8a29e; font-size: 16px;
-      margin-bottom: 48px; font-style: italic;
-    }
-    .section-divider {
-      width: 60px; height: 1px; background: #b76e79; margin: 0 auto 48px;
-    }
-
-    /* Timeline - Our Story */
-    .story-timeline { position: relative; padding-left: 40px; }
-    .story-timeline::before {
-      content: ''; position: absolute; left: 15px; top: 0; bottom: 0;
-      width: 1px; background: #e8c4ca;
-    }
-    .story-item { position: relative; margin-bottom: 48px; }
-    .story-item:last-child { margin-bottom: 0; }
-    .story-item::before {
-      content: ''; position: absolute; left: -33px; top: 6px;
-      width: 12px; height: 12px; border-radius: 50%;
-      background: #b76e79; border: 3px solid #fdf2f8;
-      box-shadow: 0 0 0 2px #b76e79;
-    }
-    .story-date { font-size: 14px; color: #b76e79; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px; font-family: -apple-system, sans-serif; }
-    .story-item h3 { font-size: 24px; font-weight: normal; color: #1c1917; margin-bottom: 8px; }
-    .story-item p { font-size: 16px; color: #78716c; }
-
-    /* Details */
-    .details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
-    .detail-card {
-      text-align: center; padding: 40px 32px; background: #fff;
-      border-radius: 16px; box-shadow: 0 2px 16px rgba(0,0,0,.04);
-    }
-    .detail-card .icon { font-size: 36px; margin-bottom: 16px; color: #b76e79; }
-    .detail-card h3 { font-size: 24px; font-weight: normal; margin-bottom: 12px; color: #1c1917; }
-    .detail-card .time { font-size: 20px; color: #b76e79; margin-bottom: 4px; }
-    .detail-card .place { font-size: 16px; color: #78716c; font-style: italic; }
-
-    /* Program */
-    .program-list { max-width: 500px; margin: 0 auto; }
-    .program-item {
-      display: flex; gap: 24px; padding: 20px 0;
-      border-bottom: 1px solid #f5e6ea;
-    }
-    .program-item:last-child { border-bottom: none; }
-    .program-time {
-      font-size: 20px; color: #b76e79; min-width: 70px;
-      font-family: -apple-system, sans-serif; font-weight: 600;
-    }
-    .program-item h3 { font-size: 20px; font-weight: normal; color: #1c1917; }
-    .program-item p { font-size: 15px; color: #a8a29e; margin-top: 2px; }
-
-    /* RSVP */
-    .rsvp-section { background: #fff; border-radius: 24px; padding: 60px 48px; box-shadow: 0 4px 24px rgba(0,0,0,.04); }
-    .rsvp-form { max-width: 500px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
-    .rsvp-form input, .rsvp-form select, .rsvp-form textarea {
-      width: 100%; padding: 16px 20px; border: 2px solid #f5e6ea;
-      border-radius: 12px; font-size: 16px; font-family: Georgia, serif;
-      color: #1c1917; background: #fdf2f8; outline: none;
-      transition: border-color .2s;
-    }
-    .rsvp-form input::placeholder, .rsvp-form textarea::placeholder { color: #d4b5bb; }
-    .rsvp-form input:focus, .rsvp-form select:focus, .rsvp-form textarea:focus { border-color: #b76e79; }
-    .rsvp-form textarea { resize: vertical; min-height: 100px; }
-    .rsvp-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    .rsvp-submit {
-      padding: 16px; background: #b76e79; color: #fff; border: none;
-      border-radius: 12px; font-size: 18px; font-family: Georgia, serif;
-      cursor: pointer; transition: background .2s; letter-spacing: 1px;
-    }
-    .rsvp-submit:hover { background: #9e5a64; }
-
-    /* Gift */
-    .gift-section { text-align: center; }
-    .gift-text { font-size: 18px; color: #78716c; max-width: 600px; margin: 0 auto 24px; font-style: italic; }
-    .gift-iban {
-      display: inline-block; padding: 16px 32px; background: #fff;
-      border: 2px solid #f5e6ea; border-radius: 12px;
-      font-family: -apple-system, monospace; font-size: 16px; color: #1c1917;
-      letter-spacing: 1px;
-    }
-
-    /* Gallery */
-    .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-    .gallery-item { aspect-ratio: 1; border-radius: 12px; }
-    .gallery-item:nth-child(1) { background: #fce7f3; }
-    .gallery-item:nth-child(2) { background: #fef3c7; }
-    .gallery-item:nth-child(3) { background: #dbeafe; }
-    .gallery-item:nth-child(4) { background: #d1fae5; }
-    .gallery-item:nth-child(5) { background: #ede9fe; }
-    .gallery-item:nth-child(6) { background: #ffe4e6; }
-
-    /* Footer */
-    .site-footer {
-      text-align: center; padding: 48px 20px 40px; color: #b76e79;
-      font-size: 20px; letter-spacing: 2px;
-    }
-    .site-footer .hashtag { font-family: -apple-system, sans-serif; font-weight: 600; }
-    .site-footer .hearts { margin-top: 12px; font-size: 14px; color: #d4b5bb; }
-
-    @media (max-width: 768px) {
-      .hero-names { font-size: 44px; }
-      .details-grid { grid-template-columns: 1fr; }
-      .rsvp-section { padding: 40px 24px; }
-      .rsvp-row { grid-template-columns: 1fr; }
-      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
-      section { padding: 48px 20px; }
-    }
-  </style>
+  <title>Wedding — Portfolio Demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
 </head>
 <body>
-  <a href="/portfolio" class="back-btn">&larr; Torna al Portfolio</a>
+  <a href="/dev/portfolio" class="back-btn">&larr; Torna al Portfolio</a>
 
-  <header class="site-header">Marco &amp; Giulia</header>
+  <!-- Floating hearts -->
+  <div class="hearts-container">
+    <div class="heart" style="--x: 10%; --size: 18px; --dur: 8s; --delay: 0s"></div>
+    <div class="heart" style="--x: 25%; --size: 12px; --dur: 12s; --delay: 2s"></div>
+    <div class="heart" style="--x: 40%; --size: 22px; --dur: 10s; --delay: 4s"></div>
+    <div class="heart" style="--x: 55%; --size: 14px; --dur: 9s; --delay: 1s"></div>
+    <div class="heart" style="--x: 70%; --size: 20px; --dur: 11s; --delay: 3s"></div>
+    <div class="heart" style="--x: 85%; --size: 16px; --dur: 7s; --delay: 5s"></div>
+    <div class="heart" style="--x: 15%; --size: 10px; --dur: 13s; --delay: 6s"></div>
+    <div class="heart" style="--x: 60%; --size: 24px; --dur: 14s; --delay: 1.5s"></div>
+    <div class="heart" style="--x: 90%; --size: 11px; --dur: 9s; --delay: 7s"></div>
+    <div class="heart" style="--x: 35%; --size: 15px; --dur: 10s; --delay: 3.5s"></div>
+  </div>
 
-  <section class="hero">
-    <h1 class="hero-names">Marco <span class="hero-ampersand">&amp;</span> Giulia</h1>
-    <div class="hero-date">15 Giugno 2026</div>
-    <div class="hero-location">Villa dei Fiori, Toscana</div>
-    <div class="divider"></div>
-  </section>
-
-  <section>
-    <h2 class="section-title">La Nostra Storia</h2>
-    <div class="section-divider"></div>
-    <div class="story-timeline">
-      <div class="story-item">
-        <div class="story-date">Settembre 2019</div>
-        <h3>Il Primo Incontro</h3>
-        <p>Un caff&egrave; rovesciato, una risata condivisa, e la sensazione che qualcosa di speciale stesse nascendo. Ci siamo incontrati alla libreria di quartiere e non ci siamo pi&ugrave; lasciati.</p>
+  <!-- Hero with parallax -->
+  <section class="hero" id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content fade-in">
+      <div class="flourish">
+        <svg viewBox="0 0 200 30" fill="none" stroke="#b76e79" stroke-width="1"><path d="M0 15 C40 0, 60 30, 100 15 C140 0, 160 30, 200 15" /></svg>
       </div>
-      <div class="story-item">
-        <div class="story-date">Dicembre 2024</div>
-        <h3>La Proposta</h3>
-        <p>Sotto il cielo stellato di Firenze, con le luci del Ponte Vecchio a fare da cornice. Una domanda sussurrata, un s&igrave; gridato di gioia, e lacrime che parlavano pi&ugrave; di mille parole.</p>
-      </div>
-      <div class="story-item">
-        <div class="story-date">Giugno 2026</div>
-        <h3>Il Grande Giorno</h3>
-        <p>Tra gli ulivi della Toscana, circondati dalle persone che amiamo, inizieremo insieme il capitolo pi&ugrave; bello della nostra storia.</p>
+      <p class="hero-subtitle">Insieme per sempre</p>
+      <h1 class="hero-title">Giulia <span class="amp">&amp;</span> Alessandro</h1>
+      <p class="hero-date">12 Settembre 2026 &mdash; Villa Borghese, Roma</p>
+      <div class="flourish flip">
+        <svg viewBox="0 0 200 30" fill="none" stroke="#b76e79" stroke-width="1"><path d="M0 15 C40 0, 60 30, 100 15 C140 0, 160 30, 200 15" /></svg>
       </div>
     </div>
   </section>
 
-  <section>
-    <h2 class="section-title">Dettagli</h2>
-    <div class="section-divider"></div>
-    <div class="details-grid">
-      <div class="detail-card">
-        <div class="icon">&#9829;</div>
-        <h3>Cerimonia</h3>
-        <div class="time">Ore 15:00</div>
-        <div class="place">Chiesa di Santa Maria del Fiore<br/>Via dei Cipressi 12, Fiesole</div>
+  <!-- Countdown -->
+  <section class="countdown-section fade-in">
+    <h2 class="section-label">Mancano</h2>
+    <div class="countdown">
+      <div class="countdown-item">
+        <div class="countdown-num" id="cd-days">175</div>
+        <span class="countdown-label">Giorni</span>
       </div>
-      <div class="detail-card">
-        <div class="icon">&#127870;</div>
-        <h3>Ricevimento</h3>
-        <div class="time">Ore 17:00</div>
-        <div class="place">Villa dei Fiori<br/>Strada delle Rose 5, Greve in Chianti</div>
+      <div class="countdown-sep">:</div>
+      <div class="countdown-item">
+        <div class="countdown-num" id="cd-hours">14</div>
+        <span class="countdown-label">Ore</span>
       </div>
-    </div>
-  </section>
-
-  <section>
-    <h2 class="section-title">Programma della Giornata</h2>
-    <div class="section-divider"></div>
-    <div class="program-list">
-      <div class="program-item">
-        <div class="program-time">15:00</div>
-        <div>
-          <h3>Cerimonia</h3>
-          <p>Rito religioso nella chiesa storica</p>
-        </div>
+      <div class="countdown-sep">:</div>
+      <div class="countdown-item">
+        <div class="countdown-num" id="cd-mins">32</div>
+        <span class="countdown-label">Minuti</span>
       </div>
-      <div class="program-item">
-        <div class="program-time">16:30</div>
-        <div>
-          <h3>Aperitivo</h3>
-          <p>Nel giardino della villa, tra fiori e musica dal vivo</p>
-        </div>
-      </div>
-      <div class="program-item">
-        <div class="program-time">19:00</div>
-        <div>
-          <h3>Cena</h3>
-          <p>Men&ugrave; toscano con prodotti locali selezionati</p>
-        </div>
-      </div>
-      <div class="program-item">
-        <div class="program-time">22:00</div>
-        <div>
-          <h3>Festa</h3>
-          <p>Musica, balli e taglio della torta sotto le stelle</p>
-        </div>
+      <div class="countdown-sep">:</div>
+      <div class="countdown-item">
+        <div class="countdown-num" id="cd-secs">08</div>
+        <span class="countdown-label">Secondi</span>
       </div>
     </div>
   </section>
 
-  <section>
-    <div class="rsvp-section">
-      <h2 class="section-title">Conferma la Tua Presenza</h2>
-      <p class="section-sub">Vi preghiamo di confermare entro il 15 aprile 2026</p>
-      <form class="rsvp-form">
-        <div class="rsvp-row">
-          <input type="text" placeholder="Nome" />
-          <input type="email" placeholder="Email" />
+  <!-- Ornament divider -->
+  <div class="divider">
+    <svg viewBox="0 0 400 40" fill="none" stroke="#b76e79" stroke-width="1" class="divider-svg">
+      <path d="M0 20 C50 5, 80 35, 120 20 C160 5, 200 35, 200 20 C200 5, 240 35, 280 20 C320 5, 350 35, 400 20" />
+    </svg>
+  </div>
+
+  <!-- Our Story Timeline -->
+  <section class="timeline-section">
+    <div class="section-header fade-in">
+      <h2 class="section-title">La nostra <span class="rose-text">storia</span></h2>
+    </div>
+    <div class="timeline">
+      <div class="timeline-line"></div>
+      <div class="timeline-item left fade-in" style="--delay: 0s">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <span class="timeline-date">Giugno 2019</span>
+          <h3>Il primo incontro</h3>
+          <p>Un caff&egrave; in piazza Navona, due sguardi che si incrociano. Da quel momento, tutto &egrave; cambiato.</p>
         </div>
-        <div class="rsvp-row">
-          <input type="number" placeholder="Numero di ospiti" min="1" max="5" />
-          <select>
-            <option value="">Restrizioni alimentari</option>
-            <option>Nessuna</option>
-            <option>Vegetariano</option>
-            <option>Vegano</option>
-            <option>Senza glutine</option>
-            <option>Senza lattosio</option>
-            <option>Altro</option>
-          </select>
+      </div>
+      <div class="timeline-item right fade-in" style="--delay: 0.15s">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <span class="timeline-date">Dicembre 2020</span>
+          <h3>Il primo viaggio insieme</h3>
+          <p>Una settimana a Parigi sotto la neve. La citt&agrave; dell&rsquo;amore ha reso tutto pi&ugrave; speciale.</p>
         </div>
-        <textarea placeholder="Un messaggio per gli sposi..."></textarea>
-        <button type="button" class="rsvp-submit">Conferma Presenza</button>
+      </div>
+      <div class="timeline-item left fade-in" style="--delay: 0.3s">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <span class="timeline-date">Agosto 2024</span>
+          <h3>La proposta</h3>
+          <p>Al tramonto sulla costiera amalfitana, con un anello e una domanda che aspettava da tempo.</p>
+        </div>
+      </div>
+      <div class="timeline-item right fade-in" style="--delay: 0.45s">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <span class="timeline-date">12 Settembre 2026</span>
+          <h3>Il grande giorno</h3>
+          <p>Villa Borghese, i nostri amici pi&ugrave; cari e la promessa di una vita insieme.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ornament divider -->
+  <div class="divider">
+    <svg viewBox="0 0 400 40" fill="none" stroke="#b76e79" stroke-width="1" class="divider-svg">
+      <path d="M0 20 C50 5, 80 35, 120 20 C160 5, 200 35, 200 20 C200 5, 240 35, 280 20 C320 5, 350 35, 400 20" />
+    </svg>
+  </div>
+
+  <!-- Gallery -->
+  <section class="gallery-section">
+    <div class="section-header fade-in">
+      <h2 class="section-title">I nostri <span class="rose-text">momenti</span></h2>
+    </div>
+    <div class="gallery-grid fade-in">
+      <div class="gallery-item" style="background: linear-gradient(135deg, #fce4ec, #f8bbd0)">
+        <div class="gallery-overlay">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="#b76e79" stroke="none"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        </div>
+      </div>
+      <div class="gallery-item tall" style="background: linear-gradient(135deg, #f3e5f5, #ce93d8)">
+        <div class="gallery-overlay">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="#b76e79" stroke="none"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        </div>
+      </div>
+      <div class="gallery-item" style="background: linear-gradient(135deg, #fff3e0, #ffcc80)">
+        <div class="gallery-overlay">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="#b76e79" stroke="none"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        </div>
+      </div>
+      <div class="gallery-item wide" style="background: linear-gradient(135deg, #e8eaf6, #9fa8da)">
+        <div class="gallery-overlay">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="#b76e79" stroke="none"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        </div>
+      </div>
+      <div class="gallery-item" style="background: linear-gradient(135deg, #fdf2f8, #f9a8d4)">
+        <div class="gallery-overlay">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="#b76e79" stroke="none"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        </div>
+      </div>
+      <div class="gallery-item" style="background: linear-gradient(135deg, #e0f2f1, #80cbc4)">
+        <div class="gallery-overlay">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="#b76e79" stroke="none"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RSVP -->
+  <section class="rsvp-section">
+    <div class="rsvp-inner fade-in">
+      <h2 class="section-title light">Conferma la tua <span class="rose-text">presenza</span></h2>
+      <p class="rsvp-desc">Saremo felicissimi di averti con noi in questo giorno speciale.</p>
+      <form class="rsvp-form" id="rsvp-form">
+        <div class="form-group">
+          <input type="text" id="rsvp-name" required />
+          <label for="rsvp-name">Nome e Cognome</label>
+        </div>
+        <div class="form-group">
+          <input type="email" id="rsvp-email" required />
+          <label for="rsvp-email">Email</label>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <input type="number" id="rsvp-guests" min="1" max="5" required />
+            <label for="rsvp-guests">Numero ospiti</label>
+          </div>
+          <div class="form-group">
+            <select id="rsvp-menu" required>
+              <option value="" disabled selected></option>
+              <option>Tradizionale</option>
+              <option>Vegetariano</option>
+              <option>Vegano</option>
+            </select>
+            <label for="rsvp-menu" class="select-label">Preferenza men&ugrave;</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <textarea id="rsvp-msg" rows="3"></textarea>
+          <label for="rsvp-msg">Un messaggio per gli sposi</label>
+        </div>
+        <button type="submit" class="rsvp-btn" id="rsvp-submit">
+          <span class="btn-text">Conferma presenza</span>
+        </button>
       </form>
     </div>
+    <!-- Confetti canvas -->
+    <canvas id="confetti-canvas"></canvas>
   </section>
 
-  <section class="gift-section">
-    <h2 class="section-title">Lista Nozze</h2>
-    <div class="section-divider"></div>
-    <p class="gift-text">
-      La vostra presenza &egrave; il regalo pi&ugrave; bello che possiate farci.
-      Se desiderate contribuire al nostro viaggio di nozze, potete farlo tramite bonifico:
-    </p>
-    <div class="gift-iban">IT60 X054 2811 1010 0000 0123 456</div>
-  </section>
-
-  <section>
-    <h2 class="section-title">I Nostri Ricordi</h2>
-    <div class="section-divider"></div>
-    <div class="gallery-grid">
-      <div class="gallery-item"></div>
-      <div class="gallery-item"></div>
-      <div class="gallery-item"></div>
-      <div class="gallery-item"></div>
-      <div class="gallery-item"></div>
-      <div class="gallery-item"></div>
+  <footer class="footer fade-in">
+    <div class="flourish">
+      <svg viewBox="0 0 200 30" fill="none" stroke="#b76e79" stroke-width="1"><path d="M0 15 C40 0, 60 30, 100 15 C140 0, 160 30, 200 15" /></svg>
     </div>
-  </section>
-
-  <footer class="site-footer">
-    <div class="hashtag">#MarcoEGiulia2026</div>
-    <div class="hearts">Con tutto il nostro amore</div>
+    <p>Giulia &amp; Alessandro &mdash; 12.09.2026</p>
   </footer>
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Lato', sans-serif; color: #4a3728; background: #fdf2f8; overflow-x: hidden;
+      font-weight: 300;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #fdf2f8; }
+    ::-webkit-scrollbar-thumb { background: #b76e79; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #a15d67; }
+
+    h1, h2, h3 { font-family: 'Cormorant Garamond', serif; }
+
+    .back-btn {
+      position: fixed; top: 20px; left: 20px; z-index: 1000;
+      background: rgba(253,242,248,0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(183,110,121,0.3); color: #b76e79; padding: 10px 20px; border-radius: 12px;
+      text-decoration: none; font-size: 0.875rem; font-weight: 400; transition: all 0.3s ease;
+      font-family: 'Lato', sans-serif;
+    }
+    .back-btn:hover { background: rgba(183,110,121,0.1); transform: translateX(-4px); box-shadow: 0 4px 20px rgba(183,110,121,0.15); }
+
+    .rose-text { color: #b76e79; }
+    .section-header { text-align: center; margin-bottom: 48px; }
+    .section-title { font-size: 2.5rem; font-weight: 600; color: #4a3728; }
+    .section-title.light { color: #fdf2f8; }
+    .section-label { text-align: center; font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; color: #b76e79; font-style: italic; margin-bottom: 24px; }
+
+    .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; transition-delay: var(--delay, 0s); }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* Flourish */
+    .flourish { width: 160px; margin: 0 auto; opacity: 0.6; }
+    .flourish.flip svg { transform: scaleY(-1); }
+
+    /* Divider */
+    .divider { text-align: center; padding: 40px 0; }
+    .divider-svg { width: 200px; height: 40px; opacity: 0.4; }
+
+    /* ===== FLOATING HEARTS ===== */
+    .hearts-container { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+    .heart {
+      position: absolute; left: var(--x); bottom: -30px;
+      width: var(--size); height: var(--size);
+      animation: floatHeart var(--dur) ease-in-out infinite;
+      animation-delay: var(--delay);
+      opacity: 0;
+    }
+    .heart::before, .heart::after {
+      content: ''; position: absolute;
+      width: var(--size); height: var(--size);
+      background: #b76e79; border-radius: 50% 50% 0 0;
+    }
+    .heart::before { left: calc(var(--size) * -0.5); transform: rotate(-45deg); transform-origin: 100% 100%; }
+    .heart::after { left: 0; transform: rotate(45deg); transform-origin: 0 100%; }
+    @keyframes floatHeart {
+      0% { transform: translateY(0) rotate(0deg) scale(0.5); opacity: 0; }
+      10% { opacity: 0.3; }
+      50% { opacity: 0.15; }
+      100% { transform: translateY(-100vh) rotate(20deg) scale(1); opacity: 0; }
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      overflow: hidden; padding: 80px 24px;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, #fdf2f8 0%, #fce7f3 50%, #fbcfe8 100%);
+      z-index: 0;
+    }
+    .hero-content { position: relative; z-index: 2; text-align: center; }
+    .hero-subtitle {
+      font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-style: italic;
+      color: #b76e79; margin-bottom: 12px; letter-spacing: 0.1em;
+    }
+    .hero-title {
+      font-size: 4.5rem; font-weight: 600; color: #4a3728; line-height: 1.1; margin: 16px 0;
+    }
+    .amp {
+      font-style: italic; font-weight: 400;
+      background: linear-gradient(135deg, #b76e79, #d4a574);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      font-size: 3.5rem;
+    }
+    .hero-date { font-size: 1.1rem; color: #78716c; letter-spacing: 0.15em; margin-top: 16px; }
+
+    /* ===== COUNTDOWN ===== */
+    .countdown-section { padding: 60px 24px; background: #fff; }
+    .countdown { display: flex; justify-content: center; align-items: center; gap: 8px; }
+    .countdown-item { text-align: center; }
+    .countdown-num {
+      font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; font-weight: 600; color: #4a3728;
+      width: 90px; height: 90px; display: flex; align-items: center; justify-content: center;
+      background: #fdf2f8; border-radius: 16px; border: 1px solid rgba(183,110,121,0.15);
+      position: relative; overflow: hidden;
+    }
+    .countdown-num::after {
+      content: ''; position: absolute; left: 0; right: 0; top: 50%;
+      height: 1px; background: rgba(183,110,121,0.1);
+    }
+    .countdown-label { font-size: 0.75rem; color: #b76e79; text-transform: uppercase; letter-spacing: 0.1em; margin-top: 8px; display: block; }
+    .countdown-sep { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; color: #b76e79; opacity: 0.4; padding-bottom: 20px; }
+
+    /* ===== TIMELINE ===== */
+    .timeline-section { padding: 100px 24px; }
+    .timeline { position: relative; max-width: 800px; margin: 0 auto; }
+    .timeline-line {
+      position: absolute; left: 50%; top: 0; bottom: 0; width: 2px;
+      background: rgba(183,110,121,0.2); transform: translateX(-50%);
+    }
+    .timeline-line::after {
+      content: ''; position: absolute; left: 0; top: 0; width: 100%; height: 0;
+      background: #b76e79; transition: height 2s ease;
+    }
+    .timeline.animate .timeline-line::after { height: 100%; }
+    .timeline-item {
+      position: relative; width: 50%; padding: 0 40px 60px;
+    }
+    .timeline-item.left { left: 0; text-align: right; }
+    .timeline-item.right { left: 50%; text-align: left; }
+    .timeline-dot {
+      position: absolute; top: 4px; width: 16px; height: 16px;
+      background: #b76e79; border: 3px solid #fdf2f8; border-radius: 50%;
+      z-index: 2;
+    }
+    .timeline-item.left .timeline-dot { right: -8px; }
+    .timeline-item.right .timeline-dot { left: -8px; }
+    .timeline-card {
+      background: #fff; border-radius: 16px; padding: 24px;
+      border: 1px solid rgba(183,110,121,0.12);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+      transition: all 0.3s ease;
+    }
+    .timeline-card:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(183,110,121,0.12); }
+    .timeline-date { font-size: 0.8rem; color: #b76e79; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+    .timeline-card h3 { font-size: 1.35rem; font-weight: 600; color: #4a3728; margin: 8px 0; }
+    .timeline-card p { font-size: 0.9rem; color: #78716c; line-height: 1.7; }
+
+    /* ===== GALLERY ===== */
+    .gallery-section { padding: 80px 24px; background: #fff; }
+    .gallery-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: 200px;
+      gap: 16px; max-width: 900px; margin: 0 auto;
+    }
+    .gallery-item {
+      border-radius: 16px; overflow: hidden; position: relative; cursor: pointer;
+      transition: transform 0.4s ease;
+    }
+    .gallery-item.tall { grid-row: span 2; }
+    .gallery-item.wide { grid-column: span 2; }
+    .gallery-item:hover { transform: scale(1.03); z-index: 2; }
+    .gallery-overlay {
+      position: absolute; inset: 0; background: rgba(183,110,121,0.2);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity 0.3s ease;
+    }
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
+
+    /* ===== RSVP ===== */
+    .rsvp-section {
+      padding: 100px 24px; position: relative; overflow: hidden;
+      background: linear-gradient(160deg, #4a3728 0%, #3d2d1f 100%);
+    }
+    .rsvp-inner { max-width: 560px; margin: 0 auto; position: relative; z-index: 2; }
+    .rsvp-desc { text-align: center; color: #c4a882; font-size: 1.05rem; margin: 12px 0 40px; line-height: 1.7; }
+    .rsvp-form { display: flex; flex-direction: column; gap: 28px; }
+
+    /* Floating label inputs */
+    .form-group { position: relative; }
+    .form-group input, .form-group textarea, .form-group select {
+      width: 100%; padding: 16px 0 8px; border: none;
+      border-bottom: 2px solid rgba(183,110,121,0.3);
+      background: transparent; color: #fdf2f8; font-size: 1rem;
+      font-family: 'Lato', sans-serif; outline: none; transition: border-color 0.3s ease;
+    }
+    .form-group select { cursor: pointer; }
+    .form-group select option { color: #4a3728; background: #fff; }
+    .form-group label {
+      position: absolute; top: 16px; left: 0;
+      font-size: 0.9rem; color: #c4a882; pointer-events: none;
+      transition: all 0.3s ease;
+    }
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-bottom-color: #b76e79; }
+    .form-group input:focus ~ label,
+    .form-group input:valid ~ label,
+    .form-group textarea:focus ~ label,
+    .form-group textarea:valid ~ label,
+    .form-group select:focus ~ label,
+    .form-group select:valid ~ .select-label {
+      top: -4px; font-size: 0.7rem; color: #b76e79;
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+
+    .rsvp-btn {
+      font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 600;
+      padding: 16px 40px; border: 2px solid #b76e79; border-radius: 40px;
+      background: transparent; color: #b76e79; cursor: pointer;
+      transition: all 0.4s ease; position: relative; overflow: hidden; align-self: center;
+    }
+    .rsvp-btn::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, #b76e79, #d4a574);
+      transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease;
+      z-index: 0;
+    }
+    .rsvp-btn:hover::before { transform: scaleX(1); }
+    .rsvp-btn:hover { color: #fff; border-color: transparent; }
+    .btn-text { position: relative; z-index: 1; }
+
+    #confetti-canvas {
+      position: absolute; inset: 0; pointer-events: none; z-index: 3;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center; padding: 60px 24px; color: #b76e79;
+      font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-style: italic;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero-title { font-size: 2.75rem; }
+      .amp { font-size: 2.25rem; }
+      .countdown-num { width: 65px; height: 65px; font-size: 2.5rem; }
+      .timeline-line { left: 24px; }
+      .timeline-item { width: 100%; left: 0 !important; padding-left: 56px; padding-right: 0; text-align: left !important; }
+      .timeline-dot { left: 16px !important; right: auto !important; }
+      .gallery-grid { grid-template-columns: 1fr; grid-auto-rows: 200px; }
+      .gallery-item.tall, .gallery-item.wide { grid-row: span 1; grid-column: span 1; }
+      .form-row { grid-template-columns: 1fr; }
+      .section-title { font-size: 2rem; }
+      .back-btn { top: 12px; left: 12px; font-size: 0.8rem; padding: 8px 14px; }
+    }
+  </style>
+
+  <script>
+    // Intersection Observer
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          // Animate timeline line
+          const tl = entry.target.closest('.timeline');
+          if (tl) tl.classList.add('animate');
+        }
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Parallax hero
+    window.addEventListener('scroll', () => {
+      const hero = document.getElementById('hero');
+      if (hero) {
+        const scrolled = window.scrollY;
+        hero.querySelector('.hero-bg').style.transform = 'translateY(' + scrolled * 0.4 + 'px)';
+      }
+    });
+
+    // Countdown timer
+    function updateCountdown() {
+      const wedding = new Date('2026-09-12T15:00:00');
+      const now = new Date();
+      const diff = wedding - now;
+      if (diff <= 0) return;
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const secs = Math.floor((diff % (1000 * 60)) / 1000);
+      document.getElementById('cd-days').textContent = days;
+      document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
+      document.getElementById('cd-mins').textContent = String(mins).padStart(2, '0');
+      document.getElementById('cd-secs').textContent = String(secs).padStart(2, '0');
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    // Confetti on RSVP hover
+    const canvas = document.getElementById('confetti-canvas');
+    const ctx = canvas.getContext('2d');
+    let confettiParticles = [];
+    let animating = false;
+
+    function resizeCanvas() {
+      const section = canvas.parentElement;
+      canvas.width = section.offsetWidth;
+      canvas.height = section.offsetHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    function createConfetti() {
+      confettiParticles = [];
+      const colors = ['#b76e79', '#d4a574', '#f9a8d4', '#fbbf24', '#c084fc'];
+      for (let i = 0; i < 60; i++) {
+        confettiParticles.push({
+          x: canvas.width / 2 + (Math.random() - 0.5) * 200,
+          y: canvas.height * 0.7,
+          vx: (Math.random() - 0.5) * 10,
+          vy: -Math.random() * 12 - 4,
+          size: Math.random() * 6 + 3,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          rotation: Math.random() * 360,
+          rotSpeed: (Math.random() - 0.5) * 10,
+          life: 1
+        });
+      }
+    }
+
+    function animateConfetti() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      let alive = false;
+      confettiParticles.forEach(p => {
+        if (p.life <= 0) return;
+        alive = true;
+        p.x += p.vx;
+        p.vy += 0.3;
+        p.y += p.vy;
+        p.rotation += p.rotSpeed;
+        p.life -= 0.008;
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate((p.rotation * Math.PI) / 180);
+        ctx.globalAlpha = p.life;
+        ctx.fillStyle = p.color;
+        ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.6);
+        ctx.restore();
+      });
+      if (alive) {
+        requestAnimationFrame(animateConfetti);
+      } else {
+        animating = false;
+      }
+    }
+
+    document.getElementById('rsvp-submit').addEventListener('mouseenter', () => {
+      if (!animating) {
+        animating = true;
+        createConfetti();
+        animateConfetti();
+      }
+    });
+  </script>
 </body>
 </html>

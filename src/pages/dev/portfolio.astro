@@ -1,6 +1,7 @@
 ---
 export const prerender = true;
 ---
+
 <html lang="it">
 <head>
   <meta charset="UTF-8" />
@@ -8,66 +9,150 @@ export const prerender = true;
   <title>Portfolio — Marco Munich Dev</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
+    [data-theme="dark"] {
+      --bg: #0a0e1a;
+      --bg-card: #111827;
+      --border: #1e293b;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --primary: #3b82f6;
+      --primary-hover: #60a5fa;
+      --accent: #818cf8;
+      --navbar-bg: rgba(10, 14, 26, 0.8);
+    }
+    [data-theme="light"] {
+      --bg: #f8fafc;
+      --bg-card: #ffffff;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --primary: #2563eb;
+      --primary-hover: #3b82f6;
+      --accent: #818cf8;
+      --navbar-bg: rgba(248, 250, 252, 0.8);
+    }
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
     body {
       font-family: 'Inter', sans-serif;
-      background: #050505;
-      color: #e5e5e5;
+      background: var(--bg);
+      color: var(--text);
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
+      transition: background 0.3s, color 0.3s;
     }
     a { color: inherit; text-decoration: none; }
 
-    /* Navbar */
-    nav {
+    /* ── Navbar ── */
+    .navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: var(--navbar-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .navbar-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      height: 64px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 1rem 2rem;
-      border-bottom: 1px solid #1a1a1a;
-      position: sticky;
-      top: 0;
-      background: rgba(5, 5, 5, 0.95);
-      backdrop-filter: blur(10px);
-      z-index: 100;
     }
-    .nav-brand { font-weight: 700; font-size: 1.05rem; color: #fff; }
-    .nav-links {
+    .nav-logo {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      transition: color 0.3s;
+    }
+    .nav-logo span { color: var(--primary); }
+    .nav-right { display: flex; align-items: center; gap: 2rem; }
+    .nav-links { display: flex; gap: 1.75rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      transition: color 0.2s;
+      position: relative;
+      padding-bottom: 4px;
+    }
+    .nav-links a:hover { color: var(--primary); }
+    .nav-links a.active { color: var(--primary); }
+    .nav-links a.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--primary);
+      border-radius: 1px;
+    }
+    .theme-toggle {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      width: 36px; height: 36px;
       display: flex;
-      gap: 1.5rem;
-      list-style: none;
       align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: background 0.3s, border-color 0.3s;
+      color: var(--text-muted);
+      flex-shrink: 0;
     }
-    .nav-links a { font-size: 0.9rem; color: #999; transition: color 0.2s; }
-    .nav-links a:hover { color: #fff; }
-    .nav-links a.active { color: #f59e0b; font-weight: 600; }
-    .mobile-toggle {
+    .theme-toggle:hover { border-color: var(--primary); color: var(--primary); }
+    [data-theme="dark"] .theme-toggle .icon-sun { display: none; }
+    [data-theme="dark"] .theme-toggle .icon-moon { display: inline; }
+    [data-theme="light"] .theme-toggle .icon-sun { display: inline; }
+    [data-theme="light"] .theme-toggle .icon-moon { display: none; }
+    .nav-toggle {
       display: none;
       background: none;
       border: none;
-      color: #fff;
-      font-size: 1.5rem;
       cursor: pointer;
+      padding: 0.5rem;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 22px; height: 2px;
+      background: var(--text);
+      margin: 5px 0;
+      transition: all 0.3s;
     }
 
-    /* Hero */
+    /* ── Hero ── */
     .hero {
       text-align: center;
-      padding: 5rem 2rem 3rem;
+      padding: 10rem 2rem 4rem;
       max-width: 700px;
       margin: 0 auto;
     }
     .hero h1 {
+      font-family: 'JetBrains Mono', monospace;
       font-size: 2.8rem;
       font-weight: 700;
-      color: #fff;
+      color: var(--text);
       margin-bottom: 1rem;
+      transition: color 0.3s;
     }
-    .hero p { font-size: 1.15rem; color: #999; max-width: 550px; margin: 0 auto; }
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 550px;
+      margin: 0 auto;
+      transition: color 0.3s;
+    }
 
-    /* Portfolio grid */
+    /* ── Portfolio grid ── */
     .portfolio-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -77,16 +162,16 @@ export const prerender = true;
       padding: 0 2rem 4rem;
     }
     .project-card {
-      background: #111;
-      border: 1px solid #1a1a1a;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
       border-radius: 12px;
       padding: 1.8rem 1.5rem;
-      transition: border-color 0.2s, transform 0.2s;
+      transition: border-color 0.2s, transform 0.2s, background 0.3s;
       display: flex;
       flex-direction: column;
     }
     .project-card:hover {
-      border-color: #333;
+      border-color: var(--primary);
       transform: translateY(-2px);
     }
     .project-icon {
@@ -94,39 +179,43 @@ export const prerender = true;
       margin-bottom: 0.8rem;
     }
     .project-card h3 {
+      font-family: 'JetBrains Mono', monospace;
       font-size: 1.05rem;
-      color: #fff;
+      color: var(--text);
       font-weight: 600;
       margin-bottom: 0.4rem;
+      transition: color 0.3s;
     }
     .project-card p {
       font-size: 0.88rem;
-      color: #999;
+      color: var(--text-muted);
       flex: 1;
       margin-bottom: 1rem;
+      transition: color 0.3s;
     }
     .project-link {
       font-size: 0.88rem;
       font-weight: 600;
-      color: #f59e0b;
+      color: var(--primary);
       transition: color 0.2s;
     }
-    .project-link:hover { color: #d97706; }
+    .project-link:hover { color: var(--primary-hover); }
 
-    /* CTA */
+    /* ── CTA ── */
     .cta-section {
       text-align: center;
       padding: 0 2rem 5rem;
     }
     .cta-section p {
       font-size: 1.15rem;
-      color: #999;
+      color: var(--text-muted);
       margin-bottom: 1.5rem;
+      transition: color 0.3s;
     }
     .cta-btn {
       display: inline-block;
-      background: #f59e0b;
-      color: #050505;
+      background: var(--primary);
+      color: #fff;
       font-weight: 700;
       font-size: 1.05rem;
       padding: 0.9rem 2.2rem;
@@ -134,36 +223,40 @@ export const prerender = true;
       transition: background 0.2s, transform 0.2s;
     }
     .cta-btn:hover {
-      background: #d97706;
+      background: var(--primary-hover);
       transform: translateY(-1px);
     }
 
-    /* Footer */
-    footer {
-      border-top: 1px solid #1a1a1a;
+    /* ── Footer ── */
+    .footer {
+      border-top: 1px solid var(--border);
       text-align: center;
-      padding: 2rem;
+      padding: 2.5rem;
+      transition: border-color 0.3s;
     }
-    footer a { color: #999; font-size: 0.9rem; transition: color 0.2s; }
-    footer a:hover { color: #f59e0b; }
+    .footer a {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+    .footer a:hover { color: var(--primary); }
 
-    /* Mobile */
+    /* ── Mobile ── */
     @media (max-width: 768px) {
-      .mobile-toggle { display: block; }
       .nav-links {
         display: none;
         position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background: rgba(5, 5, 5, 0.98);
+        top: 64px; left: 0; right: 0;
+        background: var(--navbar-bg);
+        backdrop-filter: blur(12px);
         flex-direction: column;
-        padding: 1.5rem 2rem;
+        padding: 1.5rem;
         gap: 1rem;
-        border-bottom: 1px solid #1a1a1a;
+        border-bottom: 1px solid var(--border);
       }
       .nav-links.open { display: flex; }
-      .hero { padding: 3rem 1.5rem 2rem; }
+      .nav-toggle { display: block; }
+      .hero { padding: 7rem 1.5rem 2rem; }
       .hero h1 { font-size: 2rem; }
       .portfolio-grid {
         grid-template-columns: 1fr;
@@ -173,16 +266,27 @@ export const prerender = true;
   </style>
 </head>
 <body>
-  <nav>
-    <span class="nav-brand">Marco Munich &middot; Dev</span>
-    <button class="mobile-toggle" aria-label="Menu">&#9776;</button>
-    <ul class="nav-links">
-      <li><a href="/dev/come-lavoro">Come Lavoro</a></li>
-      <li><a href="/dev/vibe-coding">Vibe Coding</a></li>
-      <li><a href="/dev/portfolio" class="active">Portfolio</a></li>
-      <li><a href="/dev/prezzi">Prezzi</a></li>
-      <li><a href="/dev/contatti">Contatti</a></li>
-    </ul>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="/dev/" class="nav-logo">Marco Munich <span>&middot; Dev</span></a>
+      <div class="nav-right">
+        <ul class="nav-links" id="navLinks">
+          <li><a href="/dev/come-lavoro">Come Lavoro</a></li>
+          <li><a href="/dev/vibe-coding">Vibe Coding</a></li>
+          <li><a href="/dev/portfolio" class="active">Portfolio</a></li>
+          <li><a href="/dev/prezzi">Prezzi</a></li>
+          <li><a href="/dev/contatti">Contatti</a></li>
+        </ul>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Cambia tema">
+          <span class="icon-sun">&#9728;</span>
+          <span class="icon-moon">&#127769;</span>
+        </button>
+        <button class="nav-toggle" aria-label="Menu" id="navToggle">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
   </nav>
 
   <section class="hero">
@@ -281,13 +385,23 @@ export const prerender = true;
     <a href="/dev/contatti" class="cta-btn">Contattami &rarr;</a>
   </section>
 
-  <footer>
+  <footer class="footer">
     <a href="/">&larr; Torna a marcomunich.com</a>
   </footer>
 
-  <script>
-    document.querySelector('.mobile-toggle')?.addEventListener('click', () => {
-      document.querySelector('.nav-links')?.classList.toggle('open');
+  <script is:inline>
+    const toggle = document.getElementById('theme-toggle');
+    const html = document.documentElement;
+    const saved = localStorage.getItem('dev-theme') || 'dark';
+    html.setAttribute('data-theme', saved);
+    toggle.addEventListener('click', () => {
+      const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('dev-theme', next);
+    });
+
+    document.getElementById('navToggle')?.addEventListener('click', () => {
+      document.getElementById('navLinks')?.classList.toggle('open');
     });
   </script>
 </body>

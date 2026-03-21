@@ -5,370 +5,514 @@ export const prerender = true;
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nome Agenzia Immobiliare — Trova la Casa dei Tuoi Sogni</title>
+  <title>Immobiliare — Portfolio Demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <a href="/dev/portfolio" class="back-btn">&larr; Torna al Portfolio</a>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content fade-in">
+      <span class="hero-tag">La casa dei tuoi sogni ti aspetta</span>
+      <h1 class="hero-title">Trova la tua <span class="gradient-text">propriet&agrave; ideale</span></h1>
+      <p class="hero-desc">Oltre 2.000 immobili selezionati nelle migliori localit&agrave; italiane. Affidati a chi conosce il mercato.</p>
+      <!-- Search bar -->
+      <div class="search-bar">
+        <div class="search-field">
+          <label>Localit&agrave;</label>
+          <input type="text" placeholder="Roma, Milano, Firenze..." />
+        </div>
+        <div class="search-field">
+          <label>Tipologia</label>
+          <select>
+            <option>Qualsiasi</option>
+            <option>Appartamento</option>
+            <option>Villa</option>
+            <option>Attico</option>
+            <option>Loft</option>
+          </select>
+        </div>
+        <div class="search-field">
+          <label>Budget max</label>
+          <input type="text" placeholder="€500.000" />
+        </div>
+        <button class="search-submit">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          Cerca
+        </button>
+      </div>
+    </div>
+    <div class="hero-decor">
+      <div class="hero-orb orb-1"></div>
+      <div class="hero-orb orb-2"></div>
+    </div>
+  </section>
+
+  <!-- Filter pills -->
+  <section class="filters-section">
+    <div class="filters-inner fade-in">
+      <button class="filter-pill active">Tutti</button>
+      <button class="filter-pill">Appartamenti</button>
+      <button class="filter-pill">Ville</button>
+      <button class="filter-pill">Attici</button>
+      <button class="filter-pill">Nuove costruzioni</button>
+      <button class="filter-pill">Lusso</button>
+    </div>
+  </section>
+
+  <!-- Properties -->
+  <section class="properties">
+    <div class="section-header fade-in">
+      <h2 class="section-title">Immobili in <span class="gradient-text">evidenza</span></h2>
+      <p class="section-sub">Le proposte pi&ugrave; richieste della settimana</p>
+    </div>
+    <div class="properties-grid">
+      <div class="property-card fade-in" style="--delay: 0s">
+        <div class="property-img" style="background: linear-gradient(135deg, #dbeafe, #93c5fd)">
+          <span class="property-badge">Nuovo</span>
+          <div class="property-overlay">
+            <span>3 camere &bull; 2 bagni &bull; 120 m&sup2;</span>
+          </div>
+        </div>
+        <div class="property-body">
+          <div class="property-location">Roma, Trastevere</div>
+          <h3>Appartamento con terrazza panoramica</h3>
+          <div class="property-price">&euro;485.000</div>
+        </div>
+      </div>
+      <div class="property-card fade-in" style="--delay: 0.1s">
+        <div class="property-img" style="background: linear-gradient(135deg, #fce7f3, #f9a8d4)">
+          <span class="property-badge hot">Richiesto</span>
+          <div class="property-overlay">
+            <span>5 camere &bull; 3 bagni &bull; 280 m&sup2;</span>
+          </div>
+        </div>
+        <div class="property-body">
+          <div class="property-location">Firenze, Oltrarno</div>
+          <h3>Villa storica con giardino privato</h3>
+          <div class="property-price">&euro;1.250.000</div>
+        </div>
+      </div>
+      <div class="property-card fade-in" style="--delay: 0.2s">
+        <div class="property-img" style="background: linear-gradient(135deg, #d1fae5, #6ee7b7)">
+          <div class="property-overlay">
+            <span>2 camere &bull; 1 bagno &bull; 85 m&sup2;</span>
+          </div>
+        </div>
+        <div class="property-body">
+          <div class="property-location">Milano, Navigli</div>
+          <h3>Loft moderno zona canali</h3>
+          <div class="property-price">&euro;395.000</div>
+        </div>
+      </div>
+      <div class="property-card fade-in" style="--delay: 0.3s">
+        <div class="property-img" style="background: linear-gradient(135deg, #fef3c7, #fcd34d)">
+          <span class="property-badge">Esclusivo</span>
+          <div class="property-overlay">
+            <span>4 camere &bull; 3 bagni &bull; 200 m&sup2;</span>
+          </div>
+        </div>
+        <div class="property-body">
+          <div class="property-location">Lago di Como, Bellagio</div>
+          <h3>Attico vista lago con piscina</h3>
+          <div class="property-price">&euro;2.100.000</div>
+        </div>
+      </div>
+      <div class="property-card fade-in" style="--delay: 0.4s">
+        <div class="property-img" style="background: linear-gradient(135deg, #e0e7ff, #a5b4fc)">
+          <div class="property-overlay">
+            <span>3 camere &bull; 2 bagni &bull; 140 m&sup2;</span>
+          </div>
+        </div>
+        <div class="property-body">
+          <div class="property-location">Torino, Centro</div>
+          <h3>Appartamento d&rsquo;epoca ristrutturato</h3>
+          <div class="property-price">&euro;320.000</div>
+        </div>
+      </div>
+      <div class="property-card fade-in" style="--delay: 0.5s">
+        <div class="property-img" style="background: linear-gradient(135deg, #fae8ff, #d946ef)">
+          <span class="property-badge hot">Richiesto</span>
+          <div class="property-overlay">
+            <span>6 camere &bull; 4 bagni &bull; 350 m&sup2;</span>
+          </div>
+        </div>
+        <div class="property-body">
+          <div class="property-location">Costiera Amalfitana</div>
+          <h3>Villa panoramica sul mare</h3>
+          <div class="property-price">&euro;3.800.000</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Map placeholder -->
+  <section class="map-section fade-in">
+    <div class="section-header">
+      <h2 class="section-title">Esplora la <span class="gradient-text">mappa</span></h2>
+    </div>
+    <div class="map-placeholder">
+      <div class="map-grid"></div>
+      <div class="map-pin" style="top: 30%; left: 45%"><span class="pin-label">Roma</span></div>
+      <div class="map-pin" style="top: 20%; left: 35%" data-delay="0.3s"><span class="pin-label">Firenze</span></div>
+      <div class="map-pin" style="top: 15%; left: 30%" data-delay="0.6s"><span class="pin-label">Milano</span></div>
+      <div class="map-pin" style="top: 50%; left: 55%" data-delay="0.9s"><span class="pin-label">Napoli</span></div>
+      <div class="map-pin" style="top: 25%; left: 55%" data-delay="1.2s"><span class="pin-label">Venezia</span></div>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section class="stats-section">
+    <div class="stats-inner">
+      <div class="stat-item fade-in" style="--delay: 0s">
+        <span class="stat-num"><span class="counter" data-target="500">0</span>+</span>
+        <span class="stat-label">Propriet&agrave; vendute</span>
+      </div>
+      <div class="stat-item fade-in" style="--delay: 0.1s">
+        <span class="stat-num"><span class="counter" data-target="98">0</span>%</span>
+        <span class="stat-label">Clienti soddisfatti</span>
+      </div>
+      <div class="stat-item fade-in" style="--delay: 0.2s">
+        <span class="stat-num"><span class="counter" data-target="15">0</span></span>
+        <span class="stat-label">Anni di esperienza</span>
+      </div>
+      <div class="stat-item fade-in" style="--delay: 0.3s">
+        <span class="stat-num"><span class="counter" data-target="42">0</span></span>
+        <span class="stat-label">Agenti professionisti</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Agents -->
+  <section class="agents-section">
+    <div class="section-header fade-in">
+      <h2 class="section-title">Il nostro <span class="gradient-text">team</span></h2>
+      <p class="section-sub">Professionisti al tuo servizio</p>
+    </div>
+    <div class="agents-grid">
+      <div class="agent-card fade-in" style="--delay: 0s">
+        <div class="agent-photo" style="background: linear-gradient(135deg, #6366f1, #4f46e5)">
+          <span class="agent-initials">LR</span>
+          <div class="agent-socials">
+            <a href="#">Li</a><a href="#">Tw</a><a href="#">Em</a>
+          </div>
+        </div>
+        <h3>Laura Romani</h3>
+        <p>Specialista residenziale Roma</p>
+      </div>
+      <div class="agent-card fade-in" style="--delay: 0.1s">
+        <div class="agent-photo" style="background: linear-gradient(135deg, #2563eb, #1d4ed8)">
+          <span class="agent-initials">MC</span>
+          <div class="agent-socials">
+            <a href="#">Li</a><a href="#">Tw</a><a href="#">Em</a>
+          </div>
+        </div>
+        <h3>Marco Colombo</h3>
+        <p>Immobili di lusso, Costiera</p>
+      </div>
+      <div class="agent-card fade-in" style="--delay: 0.2s">
+        <div class="agent-photo" style="background: linear-gradient(135deg, #0891b2, #0e7490)">
+          <span class="agent-initials">SB</span>
+          <div class="agent-socials">
+            <a href="#">Li</a><a href="#">Tw</a><a href="#">Em</a>
+          </div>
+        </div>
+        <h3>Sara Bellini</h3>
+        <p>Commerciale Milano e hinterland</p>
+      </div>
+      <div class="agent-card fade-in" style="--delay: 0.3s">
+        <div class="agent-photo" style="background: linear-gradient(135deg, #7c3aed, #6d28d9)">
+          <span class="agent-initials">GF</span>
+          <div class="agent-socials">
+            <a href="#">Li</a><a href="#">Tw</a><a href="#">Em</a>
+          </div>
+        </div>
+        <h3>Giuseppe Ferraro</h3>
+        <p>Nuove costruzioni, Torino</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skeleton loader -->
+  <section class="skeleton-section fade-in">
+    <p class="skeleton-label">Caricamento altri immobili...</p>
+    <div class="skeleton-grid">
+      <div class="skeleton-card"><div class="skeleton-img shimmer"></div><div class="skeleton-line shimmer"></div><div class="skeleton-line short shimmer"></div></div>
+      <div class="skeleton-card"><div class="skeleton-img shimmer"></div><div class="skeleton-line shimmer"></div><div class="skeleton-line short shimmer"></div></div>
+      <div class="skeleton-card"><div class="skeleton-img shimmer"></div><div class="skeleton-line shimmer"></div><div class="skeleton-line short shimmer"></div></div>
+    </div>
+  </section>
+
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #fff; color: #1e293b; line-height: 1.6; }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', system-ui, sans-serif; color: #1e293b; background: #f8fafc; overflow-x: hidden; }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #f1f5f9; }
+    ::-webkit-scrollbar-thumb { background: #2563eb; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #1d4ed8; }
+
+    h1, h2, h3 { font-family: 'Plus Jakarta Sans', sans-serif; }
 
     .back-btn {
-      position: fixed; top: 16px; left: 16px; z-index: 1000;
-      background: #2563eb; color: #fff; text-decoration: none;
-      padding: 8px 16px; border-radius: 8px; font-size: 14px; font-weight: 500;
-      box-shadow: 0 4px 12px rgba(37,99,235,.35); transition: background .2s;
+      position: fixed; top: 20px; left: 20px; z-index: 1000;
+      background: rgba(255,255,255,0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(37,99,235,0.2); color: #1e40af; padding: 10px 20px; border-radius: 12px;
+      text-decoration: none; font-size: 0.875rem; font-weight: 600; transition: all 0.3s ease;
     }
-    .back-btn:hover { background: #1d4ed8; }
+    .back-btn:hover { background: rgba(37,99,235,0.1); transform: translateX(-4px); box-shadow: 0 4px 20px rgba(37,99,235,0.15); }
 
-    /* Navbar */
-    .navbar {
-      background: #fff; padding: 0 48px; height: 72px;
-      display: flex; align-items: center; justify-content: space-between;
-      border-bottom: 1px solid #e2e8f0; position: sticky; top: 0; z-index: 100;
-    }
-    .nav-logo { font-size: 20px; font-weight: 800; color: #1e293b; }
-    .nav-logo span { color: #2563eb; }
-    .nav-links { display: flex; gap: 28px; list-style: none; }
-    .nav-links a { text-decoration: none; color: #64748b; font-size: 15px; font-weight: 500; transition: color .2s; }
-    .nav-links a:hover { color: #2563eb; }
-    .nav-cta {
-      padding: 10px 24px; background: #2563eb; color: #fff; text-decoration: none;
-      border-radius: 8px; font-size: 14px; font-weight: 600; transition: background .2s;
-    }
-    .nav-cta:hover { background: #1d4ed8; }
+    .gradient-text { background: linear-gradient(135deg, #2563eb, #7c3aed); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 
-    /* Hero */
+    .section-header { text-align: center; margin-bottom: 48px; }
+    .section-title { font-size: 2.25rem; font-weight: 800; color: #1e293b; }
+    .section-sub { color: #64748b; font-size: 1rem; margin-top: 8px; }
+
+    .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; transition-delay: var(--delay, 0s); }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* ===== HERO ===== */
     .hero {
-      padding: 80px 48px 48px; text-align: center;
-      background: linear-gradient(180deg, #eff6ff 0%, #fff 100%);
+      position: relative; padding: 120px 24px 80px; text-align: center;
+      background: linear-gradient(180deg, #fff 0%, #f0f4ff 100%);
+      overflow: hidden;
     }
-    .hero h1 { font-size: 48px; font-weight: 800; color: #0f172a; margin-bottom: 12px; }
-    .hero p { font-size: 18px; color: #64748b; margin-bottom: 40px; }
+    .hero-content { position: relative; z-index: 2; max-width: 800px; margin: 0 auto; }
+    .hero-tag {
+      display: inline-block; background: rgba(37,99,235,0.08); color: #2563eb;
+      padding: 6px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; margin-bottom: 20px;
+    }
+    .hero-title { font-size: 3.25rem; font-weight: 800; line-height: 1.1; color: #1e293b; margin-bottom: 16px; }
+    .hero-desc { font-size: 1.1rem; color: #64748b; max-width: 560px; margin: 0 auto 40px; line-height: 1.7; }
 
     /* Search bar */
     .search-bar {
-      max-width: 900px; margin: 0 auto; background: #fff;
-      border-radius: 16px; padding: 20px 24px;
-      box-shadow: 0 8px 32px rgba(0,0,0,.1); display: flex; gap: 16px; align-items: end; flex-wrap: wrap;
+      display: flex; gap: 1px; background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(37,99,235,0.15); border-radius: 20px; padding: 8px;
+      box-shadow: 0 8px 40px rgba(37,99,235,0.1); max-width: 760px; margin: 0 auto;
     }
-    .search-field { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 140px; }
-    .search-field label { font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: .5px; }
-    .search-field select, .search-field input {
-      padding: 12px 14px; border: 2px solid #e2e8f0; border-radius: 10px;
-      font-size: 15px; color: #1e293b; background: #f8fafc; outline: none;
-      transition: border-color .2s;
+    .search-field { flex: 1; padding: 12px 16px; text-align: left; }
+    .search-field label { display: block; font-size: 0.7rem; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+    .search-field input, .search-field select {
+      width: 100%; border: none; outline: none; background: none; font-size: 0.9rem; color: #1e293b;
+      font-family: 'Inter', sans-serif;
     }
-    .search-field select:focus, .search-field input:focus { border-color: #2563eb; }
-    .search-btn {
-      padding: 12px 32px; background: #2563eb; color: #fff; border: none;
-      border-radius: 10px; font-size: 16px; font-weight: 700; cursor: pointer;
-      transition: background .2s; white-space: nowrap;
+    .search-field input::placeholder { color: #94a3b8; }
+    .search-field select { cursor: pointer; }
+    .search-field:focus-within { background: rgba(37,99,235,0.04); border-radius: 12px; }
+    .search-submit {
+      display: flex; align-items: center; gap: 8px; background: #2563eb; color: #fff;
+      border: none; border-radius: 14px; padding: 14px 28px; font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; white-space: nowrap;
     }
-    .search-btn:hover { background: #1d4ed8; }
+    .search-submit:hover { background: #1d4ed8; transform: scale(1.02); box-shadow: 0 8px 24px rgba(37,99,235,0.3); }
 
-    /* Section */
-    section { padding: 80px 48px; }
-    .section-title { font-size: 36px; font-weight: 800; text-align: center; color: #0f172a; margin-bottom: 12px; }
-    .section-sub { text-align: center; color: #64748b; font-size: 17px; max-width: 560px; margin: 0 auto 48px; }
+    .hero-orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.12; pointer-events: none; }
+    .hero-orb.orb-1 { width: 400px; height: 400px; background: #2563eb; top: -100px; right: -100px; animation: float1 20s ease-in-out infinite; }
+    .hero-orb.orb-2 { width: 300px; height: 300px; background: #7c3aed; bottom: -80px; left: -80px; animation: float2 25s ease-in-out infinite; }
+    @keyframes float1 { 0%, 100% { transform: translate(0,0); } 50% { transform: translate(-40px, 60px); } }
+    @keyframes float2 { 0%, 100% { transform: translate(0,0); } 50% { transform: translate(50px, -40px); } }
 
-    /* Listings */
-    .listings-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 1200px; margin: 0 auto; }
-    .listing-card {
-      background: #fff; border-radius: 16px; overflow: hidden;
-      box-shadow: 0 2px 16px rgba(0,0,0,.06); transition: transform .2s, box-shadow .2s;
+    /* ===== FILTERS ===== */
+    .filters-section { padding: 32px 24px; }
+    .filters-inner { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+    .filter-pill {
+      font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.85rem; font-weight: 600;
+      padding: 10px 20px; border-radius: 12px; border: 1px solid #e2e8f0; background: #fff;
+      color: #64748b; cursor: pointer; transition: all 0.3s ease;
     }
-    .listing-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(0,0,0,.12); }
-    .listing-img { height: 200px; position: relative; }
-    .listing-card:nth-child(1) .listing-img { background: linear-gradient(135deg, #93c5fd, #3b82f6); }
-    .listing-card:nth-child(2) .listing-img { background: linear-gradient(135deg, #a5b4fc, #6366f1); }
-    .listing-card:nth-child(3) .listing-img { background: linear-gradient(135deg, #6ee7b7, #10b981); }
-    .listing-card:nth-child(4) .listing-img { background: linear-gradient(135deg, #fcd34d, #f59e0b); }
-    .listing-card:nth-child(5) .listing-img { background: linear-gradient(135deg, #fda4af, #f43f5e); }
-    .listing-card:nth-child(6) .listing-img { background: linear-gradient(135deg, #c4b5fd, #8b5cf6); }
-    .listing-badge {
-      position: absolute; top: 16px; left: 16px; padding: 6px 14px;
-      background: #2563eb; color: #fff; border-radius: 8px;
-      font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px;
+    .filter-pill:hover { border-color: #2563eb; color: #2563eb; }
+    .filter-pill.active {
+      background: #2563eb; color: #fff; border-color: #2563eb;
+      box-shadow: 0 4px 16px rgba(37,99,235,0.3);
     }
-    .listing-badge.rent { background: #10b981; }
-    .listing-body { padding: 20px; }
-    .listing-price { font-size: 24px; font-weight: 800; color: #0f172a; }
-    .listing-price span { font-size: 14px; font-weight: 400; color: #94a3b8; }
-    .listing-addr { font-size: 15px; color: #64748b; margin: 6px 0 14px; }
-    .listing-specs { display: flex; gap: 16px; font-size: 14px; color: #64748b; margin-bottom: 16px; }
-    .listing-btn {
-      display: block; text-align: center; padding: 12px;
-      border: 2px solid #2563eb; color: #2563eb; border-radius: 10px;
-      text-decoration: none; font-weight: 600; font-size: 15px; transition: all .2s;
-    }
-    .listing-btn:hover { background: #2563eb; color: #fff; }
 
-    /* Value props */
-    .values-section { background: #f8fafc; }
-    .values-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; max-width: 1100px; margin: 0 auto; }
-    .value-card { text-align: center; padding: 32px 20px; }
-    .value-icon {
-      width: 64px; height: 64px; border-radius: 16px; background: #eff6ff;
+    /* ===== PROPERTIES ===== */
+    .properties { padding: 60px 24px 80px; max-width: 1200px; margin: 0 auto; }
+    .properties-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+    .property-card {
+      background: #fff; border-radius: 20px; overflow: hidden;
+      border: 1px solid #e2e8f0; transition: all 0.4s ease;
+    }
+    .property-card:hover { transform: translateY(-8px); box-shadow: 0 20px 60px rgba(37,99,235,0.12); border-color: rgba(37,99,235,0.2); }
+    .property-img {
+      height: 220px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center;
+    }
+    .property-card:hover .property-img { transform: scale(1.03); }
+    .property-img { transition: transform 0.6s ease; }
+    .property-badge {
+      position: absolute; top: 16px; left: 16px; background: #2563eb; color: #fff;
+      font-size: 0.75rem; font-weight: 700; padding: 4px 12px; border-radius: 8px; z-index: 2;
+    }
+    .property-badge.hot { background: #ef4444; }
+    .property-overlay {
+      position: absolute; inset: 0; background: rgba(30,41,59,0.6);
       display: flex; align-items: center; justify-content: center;
-      font-size: 28px; margin: 0 auto 16px;
+      opacity: 0; transition: opacity 0.3s ease;
     }
-    .value-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; color: #0f172a; }
-    .value-card p { font-size: 15px; color: #64748b; }
+    .property-card:hover .property-overlay { opacity: 1; }
+    .property-overlay span { color: #fff; font-size: 0.9rem; font-weight: 500; }
+    .property-body { padding: 20px; }
+    .property-location { font-size: 0.8rem; color: #2563eb; font-weight: 600; margin-bottom: 6px; }
+    .property-body h3 { font-size: 1.05rem; font-weight: 700; color: #1e293b; margin-bottom: 12px; line-height: 1.3; }
+    .property-price {
+      font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.25rem; font-weight: 800;
+      background: linear-gradient(135deg, #2563eb, #7c3aed);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
 
-    /* Team */
-    .team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; max-width: 900px; margin: 0 auto; }
-    .team-card { text-align: center; padding: 32px 24px; background: #f8fafc; border-radius: 16px; }
-    .team-avatar {
-      width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 16px;
+    /* ===== MAP ===== */
+    .map-section { padding: 80px 24px; max-width: 1000px; margin: 0 auto; }
+    .map-placeholder {
+      position: relative; height: 400px; border-radius: 24px;
+      background: linear-gradient(135deg, #e0e7ff, #dbeafe); overflow: hidden;
+      border: 1px solid rgba(37,99,235,0.15);
+    }
+    .map-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(37,99,235,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(37,99,235,0.05) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+    .map-pin {
+      position: absolute; width: 20px; height: 20px;
+      background: #2563eb; border-radius: 50% 50% 50% 0; transform: rotate(-45deg);
+      animation: pinDrop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+      animation-delay: var(--pin-delay, 0s);
+      box-shadow: 0 4px 12px rgba(37,99,235,0.4);
+    }
+    .map-pin::after {
+      content: ''; position: absolute; width: 8px; height: 8px;
+      background: #fff; border-radius: 50%; top: 6px; left: 6px;
+    }
+    .pin-label {
+      position: absolute; top: -28px; left: 50%; transform: translateX(-50%) rotate(45deg);
+      font-size: 0.75rem; font-weight: 600; color: #1e40af; white-space: nowrap;
+      background: rgba(255,255,255,0.9); padding: 2px 8px; border-radius: 6px;
+    }
+    @keyframes pinDrop {
+      0% { transform: rotate(-45deg) translateY(-60px); opacity: 0; }
+      100% { transform: rotate(-45deg) translateY(0); opacity: 1; }
+    }
+
+    /* ===== STATS ===== */
+    .stats-section { padding: 80px 24px; background: linear-gradient(135deg, #1e293b, #0f172a); }
+    .stats-inner { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; max-width: 1000px; margin: 0 auto; text-align: center; }
+    .stat-num { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 2.75rem; font-weight: 800; color: #fff; display: block; }
+    .stat-label { font-size: 0.9rem; color: #94a3b8; margin-top: 4px; display: block; }
+
+    /* ===== AGENTS ===== */
+    .agents-section { padding: 100px 24px; max-width: 1100px; margin: 0 auto; }
+    .agents-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; }
+    .agent-card {
+      text-align: center; background: #fff; border-radius: 20px; padding: 32px 20px;
+      border: 1px solid #e2e8f0; transition: all 0.4s ease;
+    }
+    .agent-card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(37,99,235,0.1); }
+    .agent-photo {
+      width: 100px; height: 100px; border-radius: 50%; margin: 0 auto 16px;
       display: flex; align-items: center; justify-content: center;
-      font-size: 28px; font-weight: 700; color: #fff;
+      position: relative; overflow: hidden; transition: transform 0.4s ease;
     }
-    .team-card:nth-child(1) .team-avatar { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
-    .team-card:nth-child(2) .team-avatar { background: linear-gradient(135deg, #8b5cf6, #6d28d9); }
-    .team-card:nth-child(3) .team-avatar { background: linear-gradient(135deg, #10b981, #059669); }
-    .team-card h3 { font-size: 18px; font-weight: 700; color: #0f172a; }
-    .team-role { font-size: 14px; color: #2563eb; font-weight: 500; margin: 4px 0 8px; }
-    .team-phone { font-size: 14px; color: #64748b; }
-
-    /* Contact */
-    .contact-section { background: #0f172a; color: #e2e8f0; }
-    .contact-section .section-title { color: #fff; }
-    .contact-section .section-sub { color: #94a3b8; }
-    .contact-form { max-width: 600px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    .contact-form .full { grid-column: 1 / -1; }
-    .contact-form input, .contact-form textarea, .contact-form select {
-      width: 100%; padding: 14px 16px; background: #1e293b; border: 2px solid #334155;
-      border-radius: 10px; color: #e2e8f0; font-size: 15px; font-family: inherit; outline: none;
-      transition: border-color .2s;
+    .agent-card:hover .agent-photo { transform: scale(1.08); }
+    .agent-initials { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.5rem; font-weight: 800; color: #fff; position: relative; z-index: 1; }
+    .agent-socials {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      display: flex; justify-content: center; gap: 6px;
+      padding: 8px; background: rgba(0,0,0,0.5);
+      transform: translateY(100%); transition: transform 0.3s ease;
     }
-    .contact-form input::placeholder, .contact-form textarea::placeholder { color: #64748b; }
-    .contact-form input:focus, .contact-form textarea:focus { border-color: #2563eb; }
-    .contact-form textarea { resize: vertical; min-height: 120px; }
-    .contact-submit {
-      grid-column: 1 / -1; padding: 14px; background: #2563eb; color: #fff;
-      border: none; border-radius: 10px; font-size: 16px; font-weight: 700;
-      cursor: pointer; transition: background .2s;
+    .agent-card:hover .agent-socials { transform: translateY(0); }
+    .agent-socials a {
+      color: #fff; font-size: 0.65rem; font-weight: 700;
+      width: 24px; height: 24px; border-radius: 50%; background: rgba(255,255,255,0.2);
+      display: flex; align-items: center; justify-content: center; text-decoration: none;
+      transition: background 0.2s;
     }
-    .contact-submit:hover { background: #1d4ed8; }
+    .agent-socials a:hover { background: rgba(255,255,255,0.4); }
+    .agent-card h3 { font-size: 1.05rem; font-weight: 700; color: #1e293b; margin-bottom: 4px; }
+    .agent-card p { font-size: 0.85rem; color: #64748b; }
 
-    /* Footer */
-    .footer { background: #0f172a; border-top: 1px solid #1e293b; padding: 32px 48px; text-align: center; }
-    .footer p { color: #475569; font-size: 14px; }
-    .footer a { color: #2563eb; text-decoration: none; }
+    /* ===== SKELETON LOADER ===== */
+    .skeleton-section { padding: 40px 24px 80px; max-width: 1200px; margin: 0 auto; text-align: center; }
+    .skeleton-label { font-size: 0.9rem; color: #94a3b8; margin-bottom: 24px; }
+    .skeleton-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+    .skeleton-card { background: #fff; border-radius: 20px; overflow: hidden; border: 1px solid #e2e8f0; }
+    .skeleton-img { height: 200px; }
+    .skeleton-line { height: 16px; margin: 16px; border-radius: 8px; }
+    .skeleton-line.short { width: 40%; height: 12px; }
+    .shimmer {
+      background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+    }
+    @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
+    /* Responsive */
     @media (max-width: 1024px) {
-      .listings-grid { grid-template-columns: repeat(2, 1fr); }
-      .values-grid { grid-template-columns: repeat(2, 1fr); }
+      .properties-grid { grid-template-columns: repeat(2, 1fr); }
+      .agents-grid { grid-template-columns: repeat(2, 1fr); }
+      .stats-inner { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 768px) {
-      .nav-links, .nav-cta { display: none; }
-      .hero h1 { font-size: 32px; }
-      .search-bar { flex-direction: column; }
-      .listings-grid, .team-grid { grid-template-columns: 1fr; }
-      .values-grid { grid-template-columns: 1fr; }
-      section { padding: 48px 20px; }
-      .contact-form { grid-template-columns: 1fr; }
+      .hero-title { font-size: 2.25rem; }
+      .search-bar { flex-direction: column; gap: 0; }
+      .search-field { border-bottom: 1px solid #e2e8f0; }
+      .search-submit { width: 100%; justify-content: center; margin: 8px 0 0; }
+      .properties-grid, .skeleton-grid { grid-template-columns: 1fr; }
+      .agents-grid { grid-template-columns: 1fr 1fr; }
+      .stats-inner { grid-template-columns: 1fr 1fr; gap: 24px; }
+      .stat-num { font-size: 2rem; }
+      .section-title { font-size: 1.75rem; }
+      .map-placeholder { height: 260px; }
+      .back-btn { top: 12px; left: 12px; font-size: 0.8rem; padding: 8px 14px; }
     }
   </style>
-</head>
-<body>
-  <a href="/portfolio" class="back-btn">&larr; Torna al Portfolio</a>
 
-  <nav class="navbar">
-    <div class="nav-logo"><span>Nome</span> Agenzia Immobiliare</div>
-    <ul class="nav-links">
-      <li><a href="#">Vendita</a></li>
-      <li><a href="#">Affitto</a></li>
-      <li><a href="#">Nuove Costruzioni</a></li>
-      <li><a href="#">Valutazione</a></li>
-    </ul>
-    <a href="#" class="nav-cta">Contatti</a>
-  </nav>
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          entry.target.querySelectorAll('.counter').forEach(c => animateCounter(c));
+          // Animate map pins
+          entry.target.querySelectorAll('.map-pin').forEach((pin, i) => {
+            pin.style.setProperty('--pin-delay', (i * 0.3) + 's');
+          });
+        }
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-  <section class="hero">
-    <h1>Trova la casa dei tuoi sogni</h1>
-    <p>Oltre 500 immobili selezionati nelle migliori zone della citt&agrave;.</p>
-    <div class="search-bar">
-      <div class="search-field">
-        <label>Tipo</label>
-        <select>
-          <option>Vendita</option>
-          <option>Affitto</option>
-        </select>
-      </div>
-      <div class="search-field">
-        <label>Zona</label>
-        <input type="text" placeholder="Es. Centro, Navigli..." />
-      </div>
-      <div class="search-field">
-        <label>Prezzo Min</label>
-        <input type="text" placeholder="&euro; 0" />
-      </div>
-      <div class="search-field">
-        <label>Prezzo Max</label>
-        <input type="text" placeholder="&euro; 500.000" />
-      </div>
-      <button class="search-btn">Cerca</button>
-    </div>
-  </section>
+    function animateCounter(el) {
+      if (el.dataset.animated) return;
+      el.dataset.animated = 'true';
+      const target = parseFloat(el.dataset.target);
+      const duration = 2000;
+      const start = performance.now();
+      function update(now) {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.floor(target * eased).toLocaleString('it-IT');
+        if (progress < 1) requestAnimationFrame(update);
+      }
+      requestAnimationFrame(update);
+    }
 
-  <section>
-    <h2 class="section-title">Immobili in Evidenza</h2>
-    <p class="section-sub">Una selezione dei nostri immobili migliori, aggiornata ogni giorno.</p>
-    <div class="listings-grid">
-      <div class="listing-card">
-        <div class="listing-img"><span class="listing-badge">Vendita</span></div>
-        <div class="listing-body">
-          <div class="listing-price">&euro;285.000</div>
-          <div class="listing-addr">Via Roma 42, Centro</div>
-          <div class="listing-specs">
-            <span>&#128716; 3 camere</span>
-            <span>&#128703; 2 bagni</span>
-            <span>&#128208; 120 m&sup2;</span>
-          </div>
-          <a href="#" class="listing-btn">Dettagli</a>
-        </div>
-      </div>
-      <div class="listing-card">
-        <div class="listing-img"><span class="listing-badge rent">Affitto</span></div>
-        <div class="listing-body">
-          <div class="listing-price">&euro;950<span>/mese</span></div>
-          <div class="listing-addr">Corso Buenos Aires 18, Loreto</div>
-          <div class="listing-specs">
-            <span>&#128716; 2 camere</span>
-            <span>&#128703; 1 bagno</span>
-            <span>&#128208; 75 m&sup2;</span>
-          </div>
-          <a href="#" class="listing-btn">Dettagli</a>
-        </div>
-      </div>
-      <div class="listing-card">
-        <div class="listing-img"><span class="listing-badge">Vendita</span></div>
-        <div class="listing-body">
-          <div class="listing-price">&euro;425.000</div>
-          <div class="listing-addr">Via Tortona 7, Navigli</div>
-          <div class="listing-specs">
-            <span>&#128716; 4 camere</span>
-            <span>&#128703; 2 bagni</span>
-            <span>&#128208; 160 m&sup2;</span>
-          </div>
-          <a href="#" class="listing-btn">Dettagli</a>
-        </div>
-      </div>
-      <div class="listing-card">
-        <div class="listing-img"><span class="listing-badge rent">Affitto</span></div>
-        <div class="listing-body">
-          <div class="listing-price">&euro;1.200<span>/mese</span></div>
-          <div class="listing-addr">Piazza Duomo 3, Centro</div>
-          <div class="listing-specs">
-            <span>&#128716; 2 camere</span>
-            <span>&#128703; 1 bagno</span>
-            <span>&#128208; 85 m&sup2;</span>
-          </div>
-          <a href="#" class="listing-btn">Dettagli</a>
-        </div>
-      </div>
-      <div class="listing-card">
-        <div class="listing-img"><span class="listing-badge">Vendita</span></div>
-        <div class="listing-body">
-          <div class="listing-price">&euro;189.000</div>
-          <div class="listing-addr">Via Padova 112, NoLo</div>
-          <div class="listing-specs">
-            <span>&#128716; 2 camere</span>
-            <span>&#128703; 1 bagno</span>
-            <span>&#128208; 65 m&sup2;</span>
-          </div>
-          <a href="#" class="listing-btn">Dettagli</a>
-        </div>
-      </div>
-      <div class="listing-card">
-        <div class="listing-img"><span class="listing-badge">Vendita</span></div>
-        <div class="listing-body">
-          <div class="listing-price">&euro;620.000</div>
-          <div class="listing-addr">Via Montenapoleone 8, Quadrilatero</div>
-          <div class="listing-specs">
-            <span>&#128716; 5 camere</span>
-            <span>&#128703; 3 bagni</span>
-            <span>&#128208; 210 m&sup2;</span>
-          </div>
-          <a href="#" class="listing-btn">Dettagli</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="values-section">
-    <h2 class="section-title">Perch&eacute; Scegliere Noi</h2>
-    <p class="section-sub">Da oltre 20 anni al servizio dei nostri clienti con professionalit&agrave; e passione.</p>
-    <div class="values-grid">
-      <div class="value-card">
-        <div class="value-icon">&#127942;</div>
-        <h3>Esperienza</h3>
-        <p>Oltre 20 anni nel settore immobiliare con migliaia di compravendite concluse con successo.</p>
-      </div>
-      <div class="value-card">
-        <div class="value-icon">&#128270;</div>
-        <h3>Trasparenza</h3>
-        <p>Informazioni chiare e complete su ogni immobile. Nessuna sorpresa, solo certezze.</p>
-      </div>
-      <div class="value-card">
-        <div class="value-icon">&#127760;</div>
-        <h3>Rete</h3>
-        <p>Collaboriamo con le migliori agenzie e professionisti del settore in tutta Italia.</p>
-      </div>
-      <div class="value-card">
-        <div class="value-icon">&#129309;</div>
-        <h3>Assistenza</h3>
-        <p>Ti accompagniamo in ogni fase: dalla ricerca alla firma, fino alla consegna delle chiavi.</p>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <h2 class="section-title">Il Nostro Team</h2>
-    <p class="section-sub">Professionisti dedicati pronti ad aiutarti.</p>
-    <div class="team-grid">
-      <div class="team-card">
-        <div class="team-avatar">MR</div>
-        <h3>Marco Rossi</h3>
-        <div class="team-role">Direttore Commerciale</div>
-        <div class="team-phone">&#128222; +39 02 1234 567</div>
-      </div>
-      <div class="team-card">
-        <div class="team-avatar">LB</div>
-        <h3>Laura Bianchi</h3>
-        <div class="team-role">Agente Senior</div>
-        <div class="team-phone">&#128222; +39 02 1234 568</div>
-      </div>
-      <div class="team-card">
-        <div class="team-avatar">GV</div>
-        <h3>Giuseppe Verdi</h3>
-        <div class="team-role">Consulente Immobiliare</div>
-        <div class="team-phone">&#128222; +39 02 1234 569</div>
-      </div>
-    </div>
-  </section>
-
-  <section class="contact-section">
-    <h2 class="section-title">Contattaci</h2>
-    <p class="section-sub">Compila il modulo e ti ricontatteremo entro 24 ore.</p>
-    <form class="contact-form">
-      <input type="text" placeholder="Nome" />
-      <input type="text" placeholder="Cognome" />
-      <input type="email" placeholder="Email" class="full" />
-      <input type="tel" placeholder="Telefono" class="full" />
-      <select class="full">
-        <option>Sono interessato a...</option>
-        <option>Comprare un immobile</option>
-        <option>Vendere un immobile</option>
-        <option>Affittare un immobile</option>
-        <option>Valutazione gratuita</option>
-      </select>
-      <textarea class="full" placeholder="Messaggio..."></textarea>
-      <button type="button" class="contact-submit">Invia Richiesta</button>
-    </form>
-  </section>
-
-  <footer class="footer">
-    <p>&copy; 2026 Nome Agenzia Immobiliare S.r.l. &mdash; P.IVA 01234567890 &mdash; <a href="#">Privacy</a> &mdash; <a href="#">Cookie</a></p>
-  </footer>
+    // Filter pills toggle
+    document.querySelectorAll('.filter-pill').forEach(pill => {
+      pill.addEventListener('click', () => {
+        document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+      });
+    });
+  </script>
 </body>
 </html>

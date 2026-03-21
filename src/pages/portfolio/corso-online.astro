@@ -1,576 +1,775 @@
 ---
 export const prerender = true;
 ---
-<!DOCTYPE html>
 <html lang="it">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>La Tua Academy — Corsi Online</title>
+  <title>NebulaDev — Piattaforma Corsi Premium</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <!-- Noise overlay -->
+  <div class="noise"></div>
+
+  <!-- Matrix rain background -->
+  <div class="matrix-rain" aria-hidden="true">
+    <div class="rain-col" style="--col:1;--speed:12s;--delay:0s">0 1 1 0 1 0 0 1 1 0 1 0 0 1 1 0 1 0</div>
+    <div class="rain-col" style="--col:2;--speed:15s;--delay:-3s">1 0 0 1 0 1 1 0 0 1 0 1 1 0 0 1 0 1</div>
+    <div class="rain-col" style="--col:3;--speed:10s;--delay:-1s">0 1 0 1 1 0 1 0 1 0 1 1 0 1 0 1 1 0</div>
+    <div class="rain-col" style="--col:4;--speed:18s;--delay:-7s">1 1 0 0 1 0 1 1 0 0 1 0 1 1 0 0 1 0</div>
+    <div class="rain-col" style="--col:5;--speed:14s;--delay:-2s">0 0 1 1 0 1 0 0 1 1 0 1 0 0 1 1 0 1</div>
+    <div class="rain-col" style="--col:6;--speed:11s;--delay:-5s">1 0 1 0 0 1 1 0 1 0 0 1 1 0 1 0 0 1</div>
+    <div class="rain-col" style="--col:7;--speed:16s;--delay:-4s">0 1 1 1 0 0 1 0 1 1 1 0 0 1 0 1 1 1</div>
+    <div class="rain-col" style="--col:8;--speed:13s;--delay:-6s">1 1 0 1 1 0 0 1 1 0 1 1 0 0 1 1 0 1</div>
+    <div class="rain-col" style="--col:9;--speed:17s;--delay:-8s">0 0 1 0 1 1 0 0 0 1 0 1 1 0 0 0 1 0</div>
+    <div class="rain-col" style="--col:10;--speed:12s;--delay:-1s">1 0 0 1 0 0 1 1 1 0 0 1 0 0 1 1 1 0</div>
+  </div>
+
+  <!-- Back button -->
+  <a href="/dev/portfolio" class="back-btn">
+    <span class="back-arrow">&larr;</span> Torna al Portfolio
+  </a>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-glow hero-glow-1"></div>
+    <div class="hero-glow hero-glow-2"></div>
+    <div class="hero-content fade-in">
+      <div class="hero-badge">
+        <span class="pulse-dot"></span>
+        Nuovi corsi disponibili
+      </div>
+      <h1 class="hero-title">
+        Impara a <span class="gradient-text">Programmare</span><br />
+        il Tuo Futuro
+      </h1>
+      <p class="hero-sub">Corsi avanzati di sviluppo web, design e intelligenza artificiale. Lezioni pratiche, progetti reali, mentorship dedicata.</p>
+      <div class="hero-buttons">
+        <a href="#corsi" class="btn-primary">
+          Esplora i Corsi
+          <span class="btn-glow"></span>
+        </a>
+        <a href="#demo" class="btn-secondary">Guarda una Demo Gratuita</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats bar -->
+  <section class="stats-bar fade-in">
+    <div class="stat-item">
+      <span class="stat-number" data-target="12500">0</span>
+      <span class="stat-label">Studenti Iscritti</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number" data-target="95">0</span><span class="stat-suffix">%</span>
+      <span class="stat-label">Tasso di Completamento</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number" data-target="48">0</span>
+      <span class="stat-label">Corsi Disponibili</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number" data-target="4">0</span><span class="stat-suffix">.9</span>
+      <span class="stat-label">Valutazione Media</span>
+    </div>
+  </section>
+
+  <!-- Courses -->
+  <section class="courses" id="corsi">
+    <div class="section-header fade-in">
+      <p class="section-tag">Percorsi Formativi</p>
+      <h2 class="section-title">I Nostri <span class="gradient-text">Corsi</span></h2>
+      <p class="section-desc">Scegli il percorso che si adatta al tuo livello e ai tuoi obiettivi professionali.</p>
+    </div>
+    <div class="course-grid">
+      <div class="course-card fade-in" style="--delay:0s">
+        <div class="course-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+        </div>
+        <div class="course-level">Avanzato</div>
+        <h3>Full-Stack Development</h3>
+        <p>React, Node.js, TypeScript e architetture moderne. Dal frontend al backend con progetti reali.</p>
+        <div class="course-meta">
+          <span>48 lezioni</span>
+          <span>32 ore</span>
+        </div>
+        <div class="course-progress-wrap">
+          <div class="course-progress-bar" style="--progress:75%"></div>
+        </div>
+        <div class="course-footer">
+          <span class="course-price">&euro;299</span>
+          <a href="#" class="course-cta">Inizia Ora &rarr;</a>
+        </div>
+      </div>
+      <div class="course-card featured-course fade-in" style="--delay:0.1s">
+        <div class="popular-badge">Piu Popolare</div>
+        <div class="course-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+        </div>
+        <div class="course-level">Intermedio</div>
+        <h3>AI & Machine Learning</h3>
+        <p>Python, TensorFlow, reti neurali e applicazioni pratiche dell'intelligenza artificiale.</p>
+        <div class="course-meta">
+          <span>64 lezioni</span>
+          <span>45 ore</span>
+        </div>
+        <div class="course-progress-wrap">
+          <div class="course-progress-bar" style="--progress:60%"></div>
+        </div>
+        <div class="course-footer">
+          <span class="course-price">&euro;399</span>
+          <a href="#" class="course-cta">Inizia Ora &rarr;</a>
+        </div>
+      </div>
+      <div class="course-card fade-in" style="--delay:0.2s">
+        <div class="course-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+        </div>
+        <div class="course-level">Base</div>
+        <h3>UI/UX Design Moderno</h3>
+        <p>Figma, design system, prototipazione rapida e principi di usabilità avanzata.</p>
+        <div class="course-meta">
+          <span>36 lezioni</span>
+          <span>24 ore</span>
+        </div>
+        <div class="course-progress-wrap">
+          <div class="course-progress-bar" style="--progress:40%"></div>
+        </div>
+        <div class="course-footer">
+          <span class="course-price">&euro;199</span>
+          <a href="#" class="course-cta">Inizia Ora &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="features">
+    <div class="section-header fade-in">
+      <p class="section-tag">Perché Sceglierci</p>
+      <h2 class="section-title">Un'Esperienza <span class="gradient-text">Completa</span></h2>
+    </div>
+    <div class="feature-grid">
+      <div class="feature-card fade-in" style="--delay:0s">
+        <div class="feature-icon-wrap">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+        </div>
+        <h3>Certificazione Riconosciuta</h3>
+        <p>Ogni corso rilascia un certificato verificabile e riconosciuto dalle aziende partner.</p>
+      </div>
+      <div class="feature-card fade-in" style="--delay:0.1s">
+        <div class="feature-icon-wrap">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 00-3-3.87"></path><path d="M16 3.13a4 4 0 010 7.75"></path></svg>
+        </div>
+        <h3>Mentorship 1-a-1</h3>
+        <p>Sessioni individuali con professionisti del settore per guidarti in ogni fase del percorso.</p>
+      </div>
+      <div class="feature-card fade-in" style="--delay:0.2s">
+        <div class="feature-icon-wrap">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+        </div>
+        <h3>Progetti Reali</h3>
+        <p>Costruisci portfolio professionale con progetti concreti durante ogni modulo del corso.</p>
+      </div>
+      <div class="feature-card fade-in" style="--delay:0.3s">
+        <div class="feature-icon-wrap">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+        </div>
+        <h3>Accesso Illimitato</h3>
+        <p>Studia quando vuoi, dove vuoi. Contenuti disponibili per sempre dopo l'acquisto.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="testimonials">
+    <div class="section-header fade-in">
+      <p class="section-tag">Storie di Successo</p>
+      <h2 class="section-title">I Nostri <span class="gradient-text">Studenti</span></h2>
+    </div>
+    <div class="testimonial-grid">
+      <div class="testimonial-card fade-in" style="--delay:0s">
+        <div class="testimonial-quote">"</div>
+        <p>Dopo il corso di Full-Stack sono passato da junior a mid-level in sei mesi. I progetti pratici hanno fatto la differenza nei colloqui.</p>
+        <div class="testimonial-author">
+          <div class="avatar">LM</div>
+          <div>
+            <strong>Luca Martini</strong>
+            <span>Full-Stack Developer @ Startup</span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card fade-in" style="--delay:0.15s">
+        <div class="testimonial-quote">"</div>
+        <p>Il corso di AI mi ha aperto le porte di un mondo completamente nuovo. La mentorship individuale vale da sola il prezzo dell'abbonamento.</p>
+        <div class="testimonial-author">
+          <div class="avatar">SC</div>
+          <div>
+            <strong>Sara Colombo</strong>
+            <span>Data Scientist @ Enterprise</span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card fade-in" style="--delay:0.3s">
+        <div class="testimonial-quote">"</div>
+        <p>Venivo dal graphic design e volevo capire meglio l'UX. Il percorso è strutturato in modo chiaro e i feedback dei mentor sono puntuali.</p>
+        <div class="testimonial-author">
+          <div class="avatar">MF</div>
+          <div>
+            <strong>Marco Ferraro</strong>
+            <span>UX Designer Freelance</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta fade-in">
+    <div class="cta-glass">
+      <div class="cta-glow"></div>
+      <h2>Pronto a Iniziare il Tuo <span class="gradient-text">Percorso</span>?</h2>
+      <p>Iscriviti oggi e ottieni il 20% di sconto sul primo corso. Garanzia soddisfatti o rimborsati entro 30 giorni.</p>
+      <a href="#" class="btn-primary">Iscriviti Gratis <span class="btn-glow"></span></a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <h3 class="gradient-text">NEBULADEV</h3>
+        <p>Impara. Costruisci. Cresci.</p>
+      </div>
+      <div class="footer-links">
+        <a href="#">Corsi</a>
+        <a href="#">Prezzi</a>
+        <a href="#">Blog</a>
+        <a href="#">Contatti</a>
+        <a href="#">Privacy</a>
+      </div>
+    </div>
+    <p class="footer-copy">&copy; 2026 NebulaDev. Tutti i diritti riservati. &mdash; Demo template di Marco Munich</p>
+  </footer>
+
+  <script>
+    // Intersection Observer for fade-in
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Animated counters
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.querySelectorAll('.stat-number').forEach(counter => {
+            const target = parseInt(counter.dataset.target);
+            const duration = 2000;
+            const start = performance.now();
+            const animate = (now) => {
+              const p = Math.min((now - start) / duration, 1);
+              const eased = 1 - Math.pow(1 - p, 3);
+              counter.textContent = Math.floor(target * eased).toLocaleString('it-IT');
+              if (p < 1) requestAnimationFrame(animate);
+              else counter.textContent = target.toLocaleString('it-IT');
+            };
+            requestAnimationFrame(animate);
+          });
+          counterObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    document.querySelectorAll('.stats-bar').forEach(el => counterObserver.observe(el));
+
+    // Progress bar animation
+    const progressObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.querySelector('.course-progress-bar').style.width = entry.target.querySelector('.course-progress-bar').style.getPropertyValue('--progress');
+          progressObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    document.querySelectorAll('.course-progress-wrap').forEach(el => progressObserver.observe(el));
+  </script>
+
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
-
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-    :root {
-      --bg: #1a1a2e;
-      --bg-light: #16213e;
-      --bg-card: #1f2a48;
-      --cyan: #00d4ff;
-      --cyan-dark: #00a8cc;
-      --white: #ffffff;
-      --gray-100: rgba(255,255,255,0.9);
-      --gray-300: rgba(255,255,255,0.6);
-      --gray-500: rgba(255,255,255,0.4);
-      --gray-700: rgba(255,255,255,0.15);
-    }
-
+    html { scroll-behavior: smooth; }
     body {
       font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: var(--white);
+      background: #0a0118;
+      color: #e0dce8;
+      overflow-x: hidden;
       line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
     }
 
-    /* Back button */
-    .back-btn {
-      position: fixed;
-      top: 16px;
-      left: 16px;
-      z-index: 9999;
-      background: var(--cyan);
-      color: var(--bg);
-      text-decoration: none;
-      padding: 10px 18px;
-      font-size: 13px;
-      font-weight: 600;
-      border-radius: 8px;
-      box-shadow: 0 4px 20px rgba(0,212,255,0.3);
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .back-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 30px rgba(0,212,255,0.4); }
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #0a0118; }
+    ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #7c3aed, #06b6d4); border-radius: 4px; }
 
-    /* Navbar */
-    .navbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 20px 60px;
-      background: rgba(26,26,46,0.95);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--gray-700);
-      position: sticky;
-      top: 0;
-      z-index: 100;
+    /* Noise */
+    .noise {
+      position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     }
-    .nav-logo {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 22px;
-      font-weight: 700;
+
+    .gradient-text {
+      background: linear-gradient(135deg, #7c3aed, #a78bfa, #06b6d4, #22d3ee);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     }
-    .nav-logo span { color: var(--cyan); }
-    .nav-links { display: flex; gap: 36px; align-items: center; }
-    .nav-links a {
-      text-decoration: none;
-      color: var(--gray-300);
+
+    .fade-in {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
+      transition-delay: var(--delay, 0s);
+    }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* ========== MATRIX RAIN ========== */
+    .matrix-rain {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+    }
+    .rain-col {
+      position: absolute;
+      top: -100%;
+      left: calc(var(--col) * 10%);
+      writing-mode: vertical-rl;
+      font-family: 'Space Grotesk', monospace;
       font-size: 14px;
-      font-weight: 500;
-      transition: color 0.2s;
+      letter-spacing: 8px;
+      color: rgba(124, 58, 237, 0.08);
+      animation: rain var(--speed) linear var(--delay) infinite;
+      white-space: nowrap;
     }
-    .nav-links a:hover { color: var(--white); }
-    .nav-cta {
-      background: var(--cyan) !important;
-      color: var(--bg) !important;
-      padding: 10px 24px;
-      border-radius: 8px;
-      font-weight: 600 !important;
+    @keyframes rain {
+      0% { transform: translateY(-10%); }
+      100% { transform: translateY(110vh); }
     }
-    .nav-cta:hover { opacity: 0.9; }
 
-    /* Hero */
+    /* ========== BACK BUTTON ========== */
+    .back-btn {
+      position: fixed; top: 24px; left: 24px; z-index: 100;
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 20px;
+      background: rgba(10,1,24,0.7);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(124,58,237,0.2);
+      border-radius: 50px;
+      color: #a78bfa;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+    .back-btn:hover {
+      background: rgba(124,58,237,0.1);
+      border-color: rgba(124,58,237,0.5);
+      box-shadow: 0 0 20px rgba(124,58,237,0.15);
+    }
+    .back-arrow { transition: transform 0.3s ease; }
+    .back-btn:hover .back-arrow { transform: translateX(-3px); }
+
+    /* ========== HERO ========== */
     .hero {
-      padding: 120px 60px 100px;
-      text-align: center;
       position: relative;
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      padding: 120px 24px 80px;
       overflow: hidden;
     }
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: -200px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 800px;
-      height: 800px;
-      background: radial-gradient(circle, rgba(0,212,255,0.08) 0%, transparent 70%);
-      pointer-events: none;
+    .hero-glow {
+      position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.3;
     }
+    .hero-glow-1 {
+      width: 600px; height: 600px; top: -200px; left: -100px;
+      background: radial-gradient(circle, #7c3aed 0%, transparent 70%);
+      animation: glowPulse 8s ease-in-out infinite;
+    }
+    .hero-glow-2 {
+      width: 500px; height: 500px; bottom: -200px; right: -100px;
+      background: radial-gradient(circle, #06b6d4 0%, transparent 70%);
+      animation: glowPulse 8s ease-in-out infinite reverse;
+    }
+    @keyframes glowPulse {
+      0%, 100% { transform: scale(1); opacity: 0.2; }
+      50% { transform: scale(1.2); opacity: 0.35; }
+    }
+
+    .hero-content { position: relative; z-index: 2; text-align: center; max-width: 750px; }
     .hero-badge {
-      display: inline-block;
-      background: rgba(0,212,255,0.1);
-      border: 1px solid rgba(0,212,255,0.3);
-      color: var(--cyan);
+      display: inline-flex; align-items: center; gap: 8px;
       padding: 8px 20px;
+      background: rgba(124,58,237,0.1);
+      border: 1px solid rgba(124,58,237,0.25);
       border-radius: 50px;
-      font-size: 13px;
-      font-weight: 500;
+      font-size: 0.8rem;
+      color: #a78bfa;
       margin-bottom: 32px;
     }
-    .hero h1 {
+    .pulse-dot {
+      width: 8px; height: 8px;
+      background: #22d3ee;
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(34,211,238,0.4); }
+      50% { opacity: 0.7; box-shadow: 0 0 0 8px rgba(34,211,238,0); }
+    }
+
+    .hero-title {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(40px, 5.5vw, 72px);
-      font-weight: 700;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
       line-height: 1.1;
-      margin-bottom: 20px;
-      max-width: 750px;
-      margin-left: auto;
-      margin-right: auto;
+      font-weight: 700;
+      margin-bottom: 24px;
     }
-    .hero h1 .gradient-text {
-      background: linear-gradient(135deg, var(--cyan), #7c3aed);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+    .hero-sub {
+      font-size: 1.1rem; font-weight: 300;
+      color: rgba(224,220,232,0.65);
+      max-width: 550px; margin: 0 auto 40px;
+      line-height: 1.8;
     }
-    .hero p {
-      color: var(--gray-300);
-      font-size: 18px;
-      max-width: 550px;
-      margin: 0 auto 40px;
-    }
-    .hero-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
     .btn-primary {
-      display: inline-block;
-      background: var(--cyan);
-      color: var(--bg);
-      text-decoration: none;
-      padding: 16px 36px;
-      border-radius: 10px;
-      font-size: 15px;
-      font-weight: 600;
-      transition: transform 0.2s, box-shadow 0.2s;
+      position: relative; display: inline-block;
+      padding: 14px 36px;
+      background: linear-gradient(135deg, #7c3aed, #6d28d9);
+      color: #fff;
+      text-decoration: none; font-size: 0.85rem; font-weight: 600;
+      letter-spacing: 0.5px; border-radius: 50px; border: none; cursor: pointer;
+      overflow: hidden; transition: all 0.3s ease;
+      font-family: 'Inter', sans-serif;
     }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,212,255,0.3); }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(124,58,237,0.4);
+    }
+    .btn-glow {
+      position: absolute; inset: -2px;
+      background: linear-gradient(135deg, #7c3aed, #06b6d4, #7c3aed);
+      background-size: 200% 200%;
+      border-radius: 50px;
+      z-index: -1;
+      animation: btnGlow 3s ease infinite;
+      filter: blur(8px);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .btn-primary:hover .btn-glow { opacity: 0.6; }
+    @keyframes btnGlow {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
     .btn-secondary {
-      display: inline-block;
-      background: transparent;
-      color: var(--white);
-      text-decoration: none;
-      padding: 16px 36px;
-      border-radius: 10px;
-      font-size: 15px;
-      font-weight: 500;
-      border: 1px solid var(--gray-700);
-      transition: border-color 0.2s;
+      display: inline-block; padding: 14px 36px;
+      background: transparent; color: #a78bfa;
+      text-decoration: none; font-size: 0.85rem; font-weight: 500;
+      letter-spacing: 0.5px; border-radius: 50px;
+      border: 1px solid rgba(124,58,237,0.4);
+      transition: all 0.3s ease;
     }
-    .btn-secondary:hover { border-color: var(--gray-300); }
+    .btn-secondary:hover {
+      background: rgba(124,58,237,0.1);
+      border-color: #7c3aed;
+    }
 
-    /* Stats */
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      max-width: 700px;
-      margin: 0 auto;
-      padding: 0 20px 80px;
-      gap: 20px;
-    }
-    .stat {
+    /* ========== STATS ========== */
+    .stats-bar {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 24px; max-width: 900px; margin: 0 auto 80px;
+      padding: 40px 24px;
+      background: rgba(255,255,255,0.03);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(124,58,237,0.1);
+      border-radius: 20px;
       text-align: center;
-      padding: 28px;
-      background: var(--bg-card);
-      border-radius: 16px;
-      border: 1px solid var(--gray-700);
     }
-    .stat-num {
+    .stat-number {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 36px;
-      font-weight: 700;
-      color: var(--cyan);
-      margin-bottom: 4px;
+      font-size: 2.5rem; font-weight: 700;
+      background: linear-gradient(135deg, #a78bfa, #22d3ee);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     }
-    .stat-label { color: var(--gray-300); font-size: 14px; }
-
-    /* Courses */
-    .section-header {
-      text-align: center;
-      padding: 60px 20px 40px;
-    }
-    .section-header h2 {
+    .stat-suffix {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 36px;
-      font-weight: 700;
-      margin-bottom: 8px;
+      font-size: 2.5rem; font-weight: 700;
+      background: linear-gradient(135deg, #a78bfa, #22d3ee);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     }
-    .section-header p { color: var(--gray-300); font-size: 15px; }
+    .stat-label {
+      display: block; font-size: 0.75rem; letter-spacing: 1px;
+      text-transform: uppercase; color: rgba(224,220,232,0.4); margin-top: 4px;
+    }
 
-    .courses {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 28px;
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 60px 80px;
+    /* ========== COURSES ========== */
+    .courses { max-width: 1100px; margin: 0 auto; padding: 80px 24px; }
+    .section-header { text-align: center; margin-bottom: 60px; }
+    .section-tag {
+      font-size: 0.8rem; letter-spacing: 4px; text-transform: uppercase;
+      color: #a78bfa; margin-bottom: 12px;
     }
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; margin-bottom: 12px;
+    }
+    .section-desc {
+      font-weight: 300; color: rgba(224,220,232,0.5);
+      max-width: 500px; margin: 0 auto;
+    }
+
+    .course-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
     .course-card {
-      background: var(--bg-card);
-      border-radius: 16px;
-      overflow: hidden;
-      border: 1px solid var(--gray-700);
-      transition: transform 0.3s, border-color 0.3s;
-    }
-    .course-card:hover { transform: translateY(-4px); border-color: rgba(0,212,255,0.3); }
-    .course-img {
-      height: 200px;
       position: relative;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(124,58,237,0.1);
+      border-radius: 20px;
+      padding: 32px;
+      transition: all 0.4s ease;
+      display: flex; flex-direction: column;
     }
-    .course-card:nth-child(1) .course-img { background: linear-gradient(135deg, #00d4ff33, #7c3aed33); }
-    .course-card:nth-child(2) .course-img { background: linear-gradient(135deg, #f59e0b33, #ef444433); }
-    .course-card:nth-child(3) .course-img { background: linear-gradient(135deg, #22c55e33, #00d4ff33); }
-    .course-tag {
-      position: absolute;
-      top: 16px;
-      left: 16px;
-      background: rgba(0,0,0,0.5);
-      backdrop-filter: blur(10px);
-      padding: 6px 14px;
-      border-radius: 6px;
-      font-size: 12px;
-      font-weight: 500;
+    .course-card:hover {
+      border-color: rgba(124,58,237,0.4);
+      transform: perspective(1000px) rotateX(2deg) translateY(-4px);
+      box-shadow: 0 20px 60px rgba(124,58,237,0.1), 0 0 30px rgba(124,58,237,0.05);
     }
-    .course-body { padding: 24px; }
-    .course-title {
+    .featured-course {
+      border-color: rgba(124,58,237,0.3);
+      background: linear-gradient(135deg, rgba(124,58,237,0.08), rgba(6,182,212,0.05));
+    }
+    .popular-badge {
+      position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+      padding: 6px 16px;
+      background: linear-gradient(135deg, #7c3aed, #06b6d4);
+      color: #fff; font-size: 0.7rem; font-weight: 600;
+      letter-spacing: 1px; text-transform: uppercase; border-radius: 50px;
+      white-space: nowrap;
+    }
+
+    .course-icon {
+      width: 56px; height: 56px;
+      background: rgba(124,58,237,0.1);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      color: #a78bfa;
+      margin-bottom: 20px;
+    }
+    .course-level {
+      font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase;
+      color: #22d3ee; margin-bottom: 8px;
+    }
+    .course-card h3 {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 20px;
-      font-weight: 600;
-      margin-bottom: 8px;
+      font-size: 1.2rem; font-weight: 600; margin-bottom: 12px;
     }
-    .course-instructor {
-      color: var(--gray-300);
-      font-size: 13px;
-      margin-bottom: 12px;
+    .course-card p {
+      font-size: 0.9rem; color: rgba(224,220,232,0.5);
+      line-height: 1.7; margin-bottom: 20px; flex: 1;
     }
-    .course-rating {
-      color: #f59e0b;
-      font-size: 14px;
+    .course-meta {
+      display: flex; gap: 16px;
+      font-size: 0.75rem; color: rgba(224,220,232,0.35);
       margin-bottom: 16px;
     }
-    .course-rating span { color: var(--gray-500); margin-left: 6px; }
+    .course-progress-wrap {
+      height: 4px; background: rgba(255,255,255,0.06);
+      border-radius: 2px; margin-bottom: 20px; overflow: hidden;
+    }
+    .course-progress-bar {
+      height: 100%; width: 0;
+      background: linear-gradient(90deg, #7c3aed, #06b6d4);
+      border-radius: 2px;
+      transition: width 1.5s cubic-bezier(0.16,1,0.3,1);
+    }
     .course-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-top: 16px;
-      border-top: 1px solid var(--gray-700);
+      display: flex; justify-content: space-between; align-items: center;
     }
     .course-price {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 24px;
-      font-weight: 700;
-      color: var(--cyan);
+      font-size: 1.3rem; font-weight: 700; color: #fff;
     }
-    .course-btn {
-      background: transparent;
-      color: var(--cyan);
-      border: 1px solid var(--cyan);
-      padding: 8px 20px;
-      border-radius: 8px;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      font-family: 'Inter', sans-serif;
-      transition: background 0.2s, color 0.2s;
+    .course-cta {
+      color: #a78bfa; text-decoration: none; font-size: 0.85rem; font-weight: 500;
+      transition: color 0.3s ease;
     }
-    .course-btn:hover { background: var(--cyan); color: var(--bg); }
+    .course-cta:hover { color: #22d3ee; }
 
-    /* Testimonials */
-    .testimonials {
-      background: var(--bg-light);
-      padding: 80px 60px;
-    }
-    .testimonials h2 {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 32px;
-      font-weight: 700;
-      text-align: center;
-      margin-bottom: 48px;
-    }
-    .test-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 28px;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-    .test-card {
-      background: var(--bg-card);
-      padding: 32px;
+    /* ========== FEATURES ========== */
+    .features { max-width: 1100px; margin: 0 auto; padding: 80px 24px; }
+    .feature-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+    .feature-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(124,58,237,0.08);
       border-radius: 16px;
-      border: 1px solid var(--gray-700);
+      padding: 28px;
+      transition: all 0.4s ease;
+      text-align: center;
     }
-    .test-stars { color: #f59e0b; font-size: 16px; margin-bottom: 16px; }
-    .test-text {
-      color: var(--gray-100);
-      font-size: 15px;
-      line-height: 1.7;
-      margin-bottom: 20px;
+    .feature-card:hover {
+      border-color: rgba(124,58,237,0.3);
+      transform: translateY(-4px);
+    }
+    .feature-icon-wrap {
+      width: 48px; height: 48px;
+      background: rgba(124,58,237,0.1);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      color: #a78bfa;
+      margin: 0 auto 16px;
+      transition: all 0.3s ease;
+    }
+    .feature-card:hover .feature-icon-wrap {
+      background: rgba(124,58,237,0.2);
+      box-shadow: 0 0 20px rgba(124,58,237,0.2);
+    }
+    .feature-card h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem; font-weight: 600; margin-bottom: 8px;
+    }
+    .feature-card p { font-size: 0.85rem; color: rgba(224,220,232,0.45); line-height: 1.6; }
+
+    /* ========== TESTIMONIALS ========== */
+    .testimonials { max-width: 1100px; margin: 0 auto; padding: 80px 24px; }
+    .testimonial-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .testimonial-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(124,58,237,0.08);
+      border-radius: 20px;
+      padding: 32px;
+      transition: all 0.4s ease;
+      position: relative;
+    }
+    .testimonial-card:hover {
+      border-color: rgba(124,58,237,0.3);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+    }
+    .testimonial-card::before {
+      content: '';
+      position: absolute; inset: -1px;
+      border-radius: 20px;
+      padding: 1px;
+      background: linear-gradient(135deg, rgba(124,58,237,0.3), transparent, rgba(6,182,212,0.3));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    .testimonial-card:hover::before { opacity: 1; }
+    .testimonial-quote {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 3rem; font-weight: 700;
+      background: linear-gradient(135deg, #7c3aed, #06b6d4);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      line-height: 1; margin-bottom: 8px;
+    }
+    .testimonial-card > p {
+      font-size: 0.9rem; line-height: 1.7;
+      color: rgba(224,220,232,0.6); margin-bottom: 24px;
       font-style: italic;
     }
-    .test-author { display: flex; align-items: center; gap: 12px; }
-    .test-avatar {
-      width: 44px;
-      height: 44px;
+    .testimonial-author { display: flex; align-items: center; gap: 12px; }
+    .avatar {
+      width: 40px; height: 40px;
+      background: linear-gradient(135deg, #7c3aed, #06b6d4);
       border-radius: 50%;
-      background: linear-gradient(135deg, var(--cyan), #7c3aed);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 0.75rem; font-weight: 700; flex-shrink: 0;
     }
-    .test-name { font-weight: 600; font-size: 14px; }
-    .test-role { color: var(--gray-500); font-size: 12px; }
+    .testimonial-author strong { display: block; font-size: 0.9rem; }
+    .testimonial-author span { font-size: 0.75rem; color: rgba(224,220,232,0.35); }
 
-    /* FAQ */
-    .faq {
-      padding: 80px 60px;
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    .faq h2 {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 32px;
-      font-weight: 700;
+    /* ========== CTA ========== */
+    .cta { max-width: 800px; margin: 0 auto 80px; padding: 0 24px; }
+    .cta-glass {
+      position: relative;
+      background: rgba(124,58,237,0.06);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(124,58,237,0.15);
+      border-radius: 24px;
+      padding: 64px 40px;
       text-align: center;
-      margin-bottom: 40px;
-    }
-    .faq details {
-      border: 1px solid var(--gray-700);
-      border-radius: 12px;
-      margin-bottom: 12px;
       overflow: hidden;
-      transition: border-color 0.3s;
     }
-    .faq details[open] { border-color: rgba(0,212,255,0.3); }
-    .faq summary {
-      padding: 20px 24px;
-      font-weight: 600;
-      font-size: 15px;
-      cursor: pointer;
-      list-style: none;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    .cta-glow {
+      position: absolute; width: 300px; height: 300px;
+      top: 50%; left: 50%; transform: translate(-50%, -50%);
+      background: radial-gradient(circle, rgba(124,58,237,0.15) 0%, transparent 70%);
+      filter: blur(60px);
+      animation: ctaGlow 6s ease-in-out infinite;
     }
-    .faq summary::-webkit-details-marker { display: none; }
-    .faq summary::after {
-      content: '+';
-      font-size: 22px;
-      color: var(--cyan);
-      transition: transform 0.2s;
+    @keyframes ctaGlow {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); }
+      50% { transform: translate(-50%, -50%) scale(1.3); }
     }
-    .faq details[open] summary::after { content: '\2212'; }
-    .faq .faq-answer {
-      padding: 0 24px 20px;
-      color: var(--gray-300);
-      font-size: 14px;
-      line-height: 1.7;
+    .cta-glass h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 700; margin-bottom: 16px; position: relative;
+    }
+    .cta-glass p {
+      color: rgba(224,220,232,0.5);
+      margin-bottom: 32px; position: relative;
     }
 
-    /* Footer */
+    /* ========== FOOTER ========== */
     .footer {
-      background: var(--bg-light);
-      border-top: 1px solid var(--gray-700);
-      padding: 48px 60px;
-    }
-    .footer-inner {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      border-top: 1px solid rgba(124,58,237,0.08);
+      padding: 40px 24px 24px;
       max-width: 1100px;
       margin: 0 auto;
     }
-    .footer-logo {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 18px;
-      font-weight: 700;
+    .footer-inner {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 24px; flex-wrap: wrap; gap: 16px;
     }
-    .footer-logo span { color: var(--cyan); }
-    .footer-links { display: flex; gap: 28px; }
+    .footer-brand h3 {
+      font-family: 'Space Grotesk', sans-serif; font-size: 1.4rem; font-weight: 700;
+    }
+    .footer-brand p { font-size: 0.8rem; color: rgba(224,220,232,0.35); }
+    .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
     .footer-links a {
-      text-decoration: none;
-      color: var(--gray-300);
-      font-size: 13px;
-      transition: color 0.2s;
+      color: rgba(224,220,232,0.4); text-decoration: none; font-size: 0.85rem;
+      transition: color 0.3s ease;
     }
-    .footer-links a:hover { color: var(--white); }
-    .footer-copy { color: var(--gray-500); font-size: 12px; }
+    .footer-links a:hover { color: #a78bfa; }
+    .footer-copy {
+      text-align: center; font-size: 0.7rem;
+      color: rgba(224,220,232,0.2);
+      border-top: 1px solid rgba(124,58,237,0.06);
+      padding-top: 20px;
+    }
 
-    @media (max-width: 768px) {
-      .navbar { padding: 16px 20px; }
-      .nav-links { display: none; }
-      .hero { padding: 80px 20px 60px; }
-      .stats { grid-template-columns: 1fr; max-width: 300px; }
-      .courses { grid-template-columns: 1fr; padding: 0 20px 60px; }
-      .test-grid { grid-template-columns: 1fr; }
-      .testimonials, .faq { padding: 60px 20px; }
-      .footer-inner { flex-direction: column; gap: 20px; text-align: center; }
-      .footer-links { flex-wrap: wrap; justify-content: center; }
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 900px) {
+      .course-grid, .testimonial-grid { grid-template-columns: 1fr; max-width: 500px; margin: 0 auto; }
+      .feature-grid { grid-template-columns: repeat(2, 1fr); }
+      .stats-bar { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .feature-grid { grid-template-columns: 1fr; }
+      .stats-bar { grid-template-columns: 1fr; }
+      .hero-title { font-size: 2.2rem; }
+      .hero-buttons { flex-direction: column; align-items: center; }
+      .back-btn { font-size: 0.75rem; padding: 8px 14px; }
+      .footer-inner { flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+      .cta-glass { padding: 48px 24px; }
     }
   </style>
-</head>
-<body>
-  <a href="/portfolio" class="back-btn">&larr; Torna al Portfolio</a>
-
-  <nav class="navbar">
-    <div class="nav-logo">La Tua <span>Academy</span></div>
-    <div class="nav-links">
-      <a href="#">Corsi</a>
-      <a href="#">Chi Siamo</a>
-      <a href="#">Blog</a>
-      <a href="#" class="nav-cta">Accedi</a>
-    </div>
-  </nav>
-
-  <section class="hero">
-    <div class="hero-badge">&#127891; Oltre 45 corsi disponibili</div>
-    <h1>Impara al <span class="gradient-text">tuo ritmo</span></h1>
-    <p>Corsi online creati da professionisti del settore per portare le tue competenze al livello successivo.</p>
-    <div class="hero-btns">
-      <a href="#" class="btn-primary">Esplora i Corsi</a>
-      <a href="#" class="btn-secondary">Guarda il Video &#9654;</a>
-    </div>
-  </section>
-
-  <section class="stats">
-    <div class="stat">
-      <div class="stat-num">1.200+</div>
-      <div class="stat-label">Studenti Attivi</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num">45</div>
-      <div class="stat-label">Corsi Online</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num">98%</div>
-      <div class="stat-label">Soddisfatti</div>
-    </div>
-  </section>
-
-  <div class="section-header">
-    <h2>Corsi in Evidenza</h2>
-    <p>Scelti dai nostri studenti questa settimana</p>
-  </div>
-
-  <section class="courses">
-    <div class="course-card">
-      <div class="course-img">
-        <span class="course-tag">Design</span>
-      </div>
-      <div class="course-body">
-        <div class="course-title">UX Design Avanzato</div>
-        <div class="course-instructor">di Marco Bianchi</div>
-        <div class="course-rating">&#9733;&#9733;&#9733;&#9733;&#9733; <span>4.9 (234 recensioni)</span></div>
-        <div class="course-footer">
-          <div class="course-price">&euro;197</div>
-          <button class="course-btn">Iscriviti</button>
-        </div>
-      </div>
-    </div>
-    <div class="course-card">
-      <div class="course-img">
-        <span class="course-tag">Marketing</span>
-      </div>
-      <div class="course-body">
-        <div class="course-title">Marketing Digitale Completo</div>
-        <div class="course-instructor">di Laura Rossi</div>
-        <div class="course-rating">&#9733;&#9733;&#9733;&#9733;&#9734; <span>4.7 (189 recensioni)</span></div>
-        <div class="course-footer">
-          <div class="course-price">&euro;147</div>
-          <button class="course-btn">Iscriviti</button>
-        </div>
-      </div>
-    </div>
-    <div class="course-card">
-      <div class="course-img">
-        <span class="course-tag">Sviluppo</span>
-      </div>
-      <div class="course-body">
-        <div class="course-title">Python per Data Science</div>
-        <div class="course-instructor">di Andrea Verdi</div>
-        <div class="course-rating">&#9733;&#9733;&#9733;&#9733;&#9733; <span>4.8 (312 recensioni)</span></div>
-        <div class="course-footer">
-          <div class="course-price">&euro;197</div>
-          <button class="course-btn">Iscriviti</button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="testimonials">
-    <h2>Cosa Dicono i Nostri Studenti</h2>
-    <div class="test-grid">
-      <div class="test-card">
-        <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <div class="test-text">&laquo;Ho completato il corso di UX Design in tre settimane. La qualit&agrave; dei contenuti &egrave; eccezionale e il supporto dei docenti mi ha aiutato in ogni momento. Oggi lavoro come designer freelance.&raquo;</div>
-        <div class="test-author">
-          <div class="test-avatar"></div>
-          <div>
-            <div class="test-name">Giulia Ferretti</div>
-            <div class="test-role">UX Designer Freelance</div>
-          </div>
-        </div>
-      </div>
-      <div class="test-card">
-        <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <div class="test-text">&laquo;Grazie al corso di Marketing Digitale ho raddoppiato il fatturato della mia azienda in sei mesi. Un investimento che si ripaga da solo molte volte.&raquo;</div>
-        <div class="test-author">
-          <div class="test-avatar"></div>
-          <div>
-            <div class="test-name">Luca Martini</div>
-            <div class="test-role">CEO, Martini Digital</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="faq">
-    <h2>Domande Frequenti</h2>
-
-    <details>
-      <summary>Posso seguire i corsi al mio ritmo?</summary>
-      <div class="faq-answer">Tutti i nostri corsi sono on-demand. Puoi iniziare quando vuoi, mettere in pausa e riprendere in qualsiasi momento. Avrai accesso illimitato ai contenuti per sempre.</div>
-    </details>
-
-    <details>
-      <summary>Ricever&ograve; un certificato alla fine del corso?</summary>
-      <div class="faq-answer">Ogni corso completato include un certificato digitale verificabile che potrai condividere su LinkedIn e aggiungere al tuo curriculum.</div>
-    </details>
-
-    <details>
-      <summary>C'&egrave; una garanzia soddisfatti o rimborsati?</summary>
-      <div class="faq-answer">Offriamo una garanzia di 30 giorni su tutti i corsi. Se non sei soddisfatto, ti rimborsiamo l'intero importo senza domande.</div>
-    </details>
-
-    <details>
-      <summary>Posso interagire con il docente?</summary>
-      <div class="faq-answer">Ogni corso ha una sezione dedicata alle domande dove puoi interagire direttamente con il docente e con gli altri studenti della community.</div>
-    </details>
-
-    <details>
-      <summary>Quali metodi di pagamento accettate?</summary>
-      <div class="faq-answer">Accettiamo tutte le principali carte di credito, PayPal, bonifico bancario e Apple Pay. Offriamo anche la possibilit&agrave; di pagare a rate senza interessi.</div>
-    </details>
-  </section>
-
-  <footer class="footer">
-    <div class="footer-inner">
-      <div class="footer-logo">La Tua <span>Academy</span></div>
-      <div class="footer-links">
-        <a href="#">Corsi</a>
-        <a href="#">Chi Siamo</a>
-        <a href="#">Blog</a>
-        <a href="#">Privacy Policy</a>
-        <a href="#">Termini</a>
-      </div>
-      <div class="footer-copy">&copy; 2026 La Tua Academy</div>
-    </div>
-  </footer>
 </body>
 </html>

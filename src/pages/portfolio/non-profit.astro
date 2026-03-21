@@ -5,274 +5,476 @@ export const prerender = true;
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nome Associazione — Insieme per il Cambiamento</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Segoe UI', -apple-system, sans-serif; background: #fffbf0; color: #292524; line-height: 1.6; }
-
-    .back-btn {
-      position: fixed; top: 16px; left: 16px; z-index: 1000;
-      background: #ea580c; color: #fff; text-decoration: none;
-      padding: 8px 16px; border-radius: 8px; font-size: 14px; font-weight: 500;
-      box-shadow: 0 4px 12px rgba(234,88,12,.35); transition: background .2s;
-    }
-    .back-btn:hover { background: #c2410c; }
-
-    /* Navbar */
-    .navbar {
-      background: #fff; border-bottom: 1px solid #fed7aa;
-      padding: 0 40px; height: 72px; display: flex; align-items: center;
-      justify-content: space-between; position: sticky; top: 0; z-index: 100;
-    }
-    .nav-logo { font-size: 20px; font-weight: 700; color: #ea580c; display: flex; align-items: center; gap: 8px; }
-    .nav-logo .heart { font-size: 24px; }
-    .nav-links { display: flex; gap: 32px; list-style: none; }
-    .nav-links a { text-decoration: none; color: #57534e; font-size: 15px; font-weight: 500; transition: color .2s; }
-    .nav-links a:hover { color: #ea580c; }
-
-    /* Hero */
-    .hero {
-      padding: 80px 40px 60px; text-align: center;
-      background: linear-gradient(180deg, #fff7ed 0%, #fffbf0 100%);
-    }
-    .hero h1 { font-size: 48px; font-weight: 800; color: #1c1917; max-width: 700px; margin: 0 auto; line-height: 1.15; }
-    .hero p { font-size: 18px; color: #78716c; margin-top: 16px; max-width: 560px; margin-left: auto; margin-right: auto; }
-    .counters { display: flex; justify-content: center; gap: 60px; margin-top: 48px; }
-    .counter { text-align: center; }
-    .counter .num { font-size: 42px; font-weight: 800; color: #ea580c; }
-    .counter .lbl { font-size: 15px; color: #78716c; margin-top: 4px; }
-    .hero-cta {
-      display: inline-block; margin-top: 40px; padding: 16px 48px;
-      background: #ea580c; color: #fff; text-decoration: none;
-      border-radius: 50px; font-size: 18px; font-weight: 700;
-      box-shadow: 0 8px 24px rgba(234,88,12,.3); transition: transform .2s, box-shadow .2s;
-    }
-    .hero-cta:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(234,88,12,.4); }
-
-    /* Section */
-    section { padding: 80px 40px; }
-    .section-title { font-size: 36px; font-weight: 800; text-align: center; color: #1c1917; margin-bottom: 12px; }
-    .section-sub { text-align: center; color: #78716c; font-size: 17px; max-width: 600px; margin: 0 auto 48px; }
-
-    /* Mission */
-    .mission { background: #fff; text-align: center; }
-    .mission-text { font-size: 22px; color: #44403c; max-width: 800px; margin: 0 auto; line-height: 1.7; }
-
-    /* Projects */
-    .projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; max-width: 1100px; margin: 0 auto; }
-    .project-card { background: #fff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,.06); transition: transform .2s; }
-    .project-card:hover { transform: translateY(-4px); }
-    .project-img { height: 180px; }
-    .project-card:nth-child(1) .project-img { background: linear-gradient(135deg, #fed7aa, #fdba74); }
-    .project-card:nth-child(2) .project-img { background: linear-gradient(135deg, #fde68a, #fbbf24); }
-    .project-card:nth-child(3) .project-img { background: linear-gradient(135deg, #bbf7d0, #4ade80); }
-    .project-body { padding: 24px; }
-    .project-body h3 { font-size: 20px; font-weight: 700; color: #1c1917; margin-bottom: 8px; }
-    .project-body p { font-size: 15px; color: #78716c; margin-bottom: 16px; }
-    .progress-bar { height: 8px; background: #f5f5f4; border-radius: 4px; overflow: hidden; margin-bottom: 8px; }
-    .progress-fill { height: 100%; border-radius: 4px; background: #ea580c; }
-    .progress-label { font-size: 13px; color: #a8a29e; margin-bottom: 16px; }
-    .project-link { color: #ea580c; font-weight: 600; text-decoration: none; font-size: 15px; }
-    .project-link:hover { text-decoration: underline; }
-
-    /* How to help */
-    .help-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; max-width: 900px; margin: 0 auto; }
-    .help-card { text-align: center; padding: 40px 24px; background: #fff; border-radius: 16px; box-shadow: 0 2px 12px rgba(0,0,0,.05); }
-    .help-icon { font-size: 48px; margin-bottom: 16px; }
-    .help-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 8px; color: #1c1917; }
-    .help-card p { font-size: 15px; color: #78716c; }
-
-    /* Events */
-    .events-section { background: #fff; }
-    .events-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; max-width: 900px; margin: 0 auto; }
-    .event-card { display: flex; gap: 20px; padding: 24px; border: 2px solid #fed7aa; border-radius: 16px; }
-    .event-date {
-      background: #ea580c; color: #fff; border-radius: 12px;
-      min-width: 72px; height: 72px; display: flex; flex-direction: column;
-      align-items: center; justify-content: center; flex-shrink: 0;
-    }
-    .event-date .day { font-size: 28px; font-weight: 800; line-height: 1; }
-    .event-date .month { font-size: 13px; font-weight: 600; text-transform: uppercase; }
-    .event-info h3 { font-size: 18px; font-weight: 700; color: #1c1917; }
-    .event-info .loc { font-size: 14px; color: #a8a29e; margin: 4px 0 12px; }
-    .event-btn {
-      display: inline-block; padding: 8px 20px; border: 2px solid #ea580c;
-      color: #ea580c; border-radius: 8px; text-decoration: none;
-      font-size: 14px; font-weight: 600; transition: all .2s;
-    }
-    .event-btn:hover { background: #ea580c; color: #fff; }
-
-    /* Donation */
-    .donate-section { text-align: center; }
-    .donate-amounts { display: flex; justify-content: center; gap: 16px; margin-bottom: 32px; flex-wrap: wrap; }
-    .donate-amt {
-      padding: 14px 28px; border: 2px solid #ea580c; border-radius: 12px;
-      background: transparent; color: #ea580c; font-size: 18px; font-weight: 700;
-      cursor: pointer; transition: all .2s;
-    }
-    .donate-amt:hover, .donate-amt.active { background: #ea580c; color: #fff; }
-    .donate-cta {
-      display: inline-block; padding: 16px 56px; background: #ea580c; color: #fff;
-      border: none; border-radius: 50px; font-size: 18px; font-weight: 700;
-      cursor: pointer; box-shadow: 0 8px 24px rgba(234,88,12,.3); transition: transform .2s;
-    }
-    .donate-cta:hover { transform: translateY(-2px); }
-
-    /* Footer */
-    .footer {
-      background: #1c1917; color: #a8a29e; padding: 40px; text-align: center; font-size: 14px; line-height: 1.8;
-    }
-    .footer a { color: #ea580c; text-decoration: none; }
-
-    @media (max-width: 768px) {
-      .nav-links { display: none; }
-      .hero h1 { font-size: 32px; }
-      .counters { flex-direction: column; gap: 24px; }
-      .projects-grid, .help-grid, .events-grid { grid-template-columns: 1fr; }
-      section { padding: 48px 20px; }
-    }
-  </style>
+  <title>Non-Profit — Portfolio Demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
 </head>
 <body>
-  <a href="/portfolio" class="back-btn">&larr; Torna al Portfolio</a>
+  <a href="/dev/portfolio" class="back-btn">&larr; Torna al Portfolio</a>
 
-  <nav class="navbar">
-    <div class="nav-logo"><span class="heart">&#10084;</span> Nome Associazione</div>
-    <ul class="nav-links">
-      <li><a href="#">Chi Siamo</a></li>
-      <li><a href="#">Progetti</a></li>
-      <li><a href="#">Dona</a></li>
-      <li><a href="#">Volontariato</a></li>
-      <li><a href="#">Eventi</a></li>
-    </ul>
-  </nav>
-
+  <!-- Hero -->
   <section class="hero">
-    <h1>Insieme possiamo fare la differenza</h1>
-    <p>Dal 2015 lavoriamo ogni giorno per costruire un futuro migliore, una comunit&agrave; alla volta.</p>
-    <div class="counters">
-      <div class="counter"><div class="num">1.200</div><div class="lbl">Famiglie Aiutate</div></div>
-      <div class="counter"><div class="num">45</div><div class="lbl">Volontari Attivi</div></div>
-      <div class="counter"><div class="num">8</div><div class="lbl">Progetti Attivi</div></div>
+    <div class="hero-bg"></div>
+    <div class="hero-content fade-in">
+      <span class="hero-tag">Insieme per il cambiamento</span>
+      <h1 class="hero-title">Ogni gesto<br /><span class="gradient-text">conta davvero</span></h1>
+      <p class="hero-desc">Dal 2015 lavoriamo al fianco delle comunit&agrave; pi&ugrave; fragili. Istruzione, salute e ambiente: tre pilastri per un futuro migliore.</p>
+      <div class="hero-stats">
+        <div class="hero-stat fade-in" style="--delay: 0.1s">
+          <span class="hero-num counter" data-target="15420">0</span>
+          <span class="hero-stat-label">Persone aiutate</span>
+        </div>
+        <div class="hero-stat fade-in" style="--delay: 0.2s">
+          <span class="hero-num counter" data-target="87">0</span>
+          <span class="hero-stat-label">Progetti attivi</span>
+        </div>
+        <div class="hero-stat fade-in" style="--delay: 0.3s">
+          <span class="hero-num">&euro;<span class="counter" data-target="2400000">0</span></span>
+          <span class="hero-stat-label">Fondi raccolti</span>
+        </div>
+      </div>
     </div>
-    <a href="#" class="hero-cta">Dona Ora</a>
+    <!-- Floating decorative shapes -->
+    <div class="hero-shape shape-1"></div>
+    <div class="hero-shape shape-2"></div>
+    <div class="hero-shape shape-3"></div>
   </section>
 
-  <section class="mission">
-    <h2 class="section-title">La Nostra Missione</h2>
-    <p class="mission-text">
-      Crediamo che ogni persona meriti accesso a cibo, istruzione e opportunit&agrave;.
-      La nostra associazione opera sul territorio per sostenere le famiglie in difficolt&agrave;,
-      promuovere l'inclusione sociale e costruire percorsi di autonomia che durano nel tempo.
-    </p>
-  </section>
-
-  <section>
-    <h2 class="section-title">I Nostri Progetti</h2>
-    <p class="section-sub">Ogni progetto nasce dall'ascolto delle reali esigenze del territorio.</p>
+  <!-- Projects -->
+  <section class="projects">
+    <div class="section-header fade-in">
+      <span class="section-tag">I nostri progetti</span>
+      <h2 class="section-title">Dove il tuo aiuto <span class="gradient-text-warm">fa la differenza</span></h2>
+    </div>
     <div class="projects-grid">
-      <div class="project-card">
-        <div class="project-img"></div>
+      <div class="project-card fade-in" style="--delay: 0s">
+        <div class="project-img" style="background: linear-gradient(135deg, #f59e0b, #d97706)">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+        </div>
         <div class="project-body">
-          <h3>Banco Alimentare Solidale</h3>
-          <p>Distribuzione settimanale di generi alimentari a oltre 200 famiglie del territorio.</p>
-          <div class="progress-bar"><div class="progress-fill" style="width:78%"></div></div>
-          <div class="progress-label">78% dell'obiettivo raggiunto</div>
-          <a href="#" class="project-link">Scopri di pi&ugrave; &rarr;</a>
+          <h3>Scuole per tutti</h3>
+          <p>Costruzione di 12 scuole rurali in Africa orientale per garantire istruzione a oltre 3.000 bambini.</p>
+          <div class="progress-wrap">
+            <div class="progress-header">
+              <span>Avanzamento</span>
+              <span class="progress-pct">78%</span>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" style="--target: 78%"></div></div>
+          </div>
         </div>
       </div>
-      <div class="project-card">
-        <div class="project-img"></div>
+      <div class="project-card fade-in" style="--delay: 0.15s">
+        <div class="project-img" style="background: linear-gradient(135deg, #10b981, #059669)">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
         <div class="project-body">
-          <h3>Doposcuola per Tutti</h3>
-          <p>Supporto scolastico gratuito per bambini e ragazzi delle scuole primarie e medie.</p>
-          <div class="progress-bar"><div class="progress-fill" style="width:92%"></div></div>
-          <div class="progress-label">92% dell'obiettivo raggiunto</div>
-          <a href="#" class="project-link">Scopri di pi&ugrave; &rarr;</a>
+          <h3>Acqua pulita</h3>
+          <p>Installazione di sistemi di purificazione idrica in 25 villaggi del sudest asiatico.</p>
+          <div class="progress-wrap">
+            <div class="progress-header">
+              <span>Avanzamento</span>
+              <span class="progress-pct">92%</span>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" style="--target: 92%"></div></div>
+          </div>
         </div>
       </div>
-      <div class="project-card">
-        <div class="project-img"></div>
+      <div class="project-card fade-in" style="--delay: 0.3s">
+        <div class="project-img" style="background: linear-gradient(135deg, #6366f1, #4f46e5)">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        </div>
         <div class="project-body">
-          <h3>Casa Accoglienza</h3>
-          <p>Ospitalit&agrave; temporanea per persone senza dimora durante i mesi invernali.</p>
-          <div class="progress-bar"><div class="progress-fill" style="width:54%"></div></div>
-          <div class="progress-label">54% dell'obiettivo raggiunto</div>
-          <a href="#" class="project-link">Scopri di pi&ugrave; &rarr;</a>
+          <h3>Cure mediche</h3>
+          <p>Cliniche mobili per portare assistenza sanitaria nelle aree pi&ugrave; remote dell&rsquo;America Latina.</p>
+          <div class="progress-wrap">
+            <div class="progress-header">
+              <span>Avanzamento</span>
+              <span class="progress-pct">61%</span>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" style="--target: 61%"></div></div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section style="background:#fff7ed">
-    <h2 class="section-title">Come Puoi Aiutare</h2>
-    <p class="section-sub">Ogni gesto conta. Scegli il modo che fa per te.</p>
-    <div class="help-grid">
-      <div class="help-card">
-        <div class="help-icon">&#128147;</div>
-        <h3>Dona</h3>
-        <p>Anche un piccolo contributo pu&ograve; cambiare la vita di una famiglia. Ogni euro viene investito nei nostri progetti.</p>
-      </div>
-      <div class="help-card">
-        <div class="help-icon">&#129309;</div>
-        <h3>Volontariato</h3>
-        <p>Unisciti al nostro team di volontari. Bastano poche ore alla settimana per fare la differenza.</p>
-      </div>
-      <div class="help-card">
-        <div class="help-icon">&#128227;</div>
-        <h3>Diffondi</h3>
-        <p>Condividi la nostra missione sui social e nel tuo quartiere. La consapevolezza &egrave; il primo passo.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="events-section">
-    <h2 class="section-title">Prossimi Eventi</h2>
-    <p class="section-sub">Partecipa ai nostri eventi e scopri come contribuire.</p>
-    <div class="events-grid">
-      <div class="event-card">
-        <div class="event-date">
-          <span class="day">12</span>
-          <span class="month">Apr</span>
-        </div>
-        <div class="event-info">
-          <h3>Cena di Beneficenza</h3>
-          <div class="loc">&#128205; Palazzo dei Congressi, Milano</div>
-          <a href="#" class="event-btn">Partecipa</a>
-        </div>
-      </div>
-      <div class="event-card">
-        <div class="event-date">
-          <span class="day">28</span>
-          <span class="month">Apr</span>
-        </div>
-        <div class="event-info">
-          <h3>Giornata del Volontariato</h3>
-          <div class="loc">&#128205; Parco Sempione, Milano</div>
-          <a href="#" class="event-btn">Partecipa</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
+  <!-- Donate section -->
   <section class="donate-section">
-    <h2 class="section-title">Fai la Tua Donazione</h2>
-    <p class="section-sub">Scegli l'importo e contribuisci a un futuro migliore.</p>
-    <div class="donate-amounts">
-      <button class="donate-amt">&euro;10</button>
-      <button class="donate-amt active">&euro;25</button>
-      <button class="donate-amt">&euro;50</button>
-      <button class="donate-amt">&euro;100</button>
-      <button class="donate-amt">Altro</button>
+    <div class="donate-inner fade-in">
+      <h2 class="section-title light">Dona ora, <span class="gradient-text-warm">cambia una vita</span></h2>
+      <p class="donate-desc">Ogni contributo viene destinato direttamente ai progetti sul campo. Scegli l&rsquo;importo che preferisci.</p>
+      <div class="donate-amounts">
+        <button class="donate-btn" data-amount="10">&euro;10</button>
+        <button class="donate-btn featured" data-amount="25">&euro;25</button>
+        <button class="donate-btn" data-amount="50">&euro;50</button>
+        <button class="donate-btn" data-amount="100">&euro;100</button>
+      </div>
+      <button class="cta-btn">Procedi con la donazione &rarr;</button>
     </div>
-    <button class="donate-cta">Dona Ora</button>
   </section>
 
-  <footer class="footer">
-    <p><strong>Nome Associazione ODV</strong> &mdash; C.F. 97123456789</p>
-    <p>Via della Solidariet&agrave; 15, 20100 Milano (MI)</p>
-    <p>Iscrizione RUNTS n. 12345 &mdash; <a href="#">Privacy Policy</a> &mdash; <a href="#">Statuto</a></p>
-    <p style="margin-top:12px">&copy; 2026 Nome Associazione. Tutti i diritti riservati.</p>
+  <!-- Events -->
+  <section class="events">
+    <div class="section-header fade-in">
+      <span class="section-tag">Prossimi eventi</span>
+      <h2 class="section-title">Partecipa e <span class="gradient-text-warm">fai la tua parte</span></h2>
+    </div>
+    <div class="events-grid">
+      <div class="event-card fade-in" style="--delay: 0s">
+        <div class="event-date">
+          <span class="event-day">15</span>
+          <span class="event-month">Apr</span>
+        </div>
+        <div class="event-body">
+          <h3>Maratona della solidariet&agrave;</h3>
+          <p>Corsa benefica di 10 km nel centro storico. Iscrizione gratuita, fondi destinati al progetto scuole.</p>
+          <span class="event-location">Roma, Parco del Colosseo</span>
+        </div>
+      </div>
+      <div class="event-card fade-in" style="--delay: 0.15s">
+        <div class="event-date">
+          <span class="event-day">28</span>
+          <span class="event-month">Apr</span>
+        </div>
+        <div class="event-body">
+          <h3>Cena di beneficenza</h3>
+          <p>Serata con chef stellati che cucineranno piatti della tradizione. Ricavato interamente devoluto.</p>
+          <span class="event-location">Milano, Palazzo Reale</span>
+        </div>
+      </div>
+      <div class="event-card fade-in" style="--delay: 0.3s">
+        <div class="event-date">
+          <span class="event-day">10</span>
+          <span class="event-month">Mag</span>
+        </div>
+        <div class="event-body">
+          <h3>Volontariato sul campo</h3>
+          <p>Due settimane in Kenya per costruire insieme la nuova scuola del villaggio di Makueni.</p>
+          <span class="event-location">Kenya, Makueni County</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How to help (SVG icons) -->
+  <section class="help-section">
+    <div class="section-header fade-in">
+      <span class="section-tag">Come puoi aiutare</span>
+      <h2 class="section-title">Tre modi per <span class="gradient-text-warm">fare la differenza</span></h2>
+    </div>
+    <div class="help-grid">
+      <div class="help-card fade-in" style="--delay: 0s">
+        <div class="help-icon">
+          <svg class="draw-svg" viewBox="0 0 64 64" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="32" cy="32" r="28" />
+            <path d="M32 18v14l10 6" />
+          </svg>
+        </div>
+        <h3>Dona il tuo tempo</h3>
+        <p>Diventa volontario e partecipa alle missioni sul campo. Ogni ora conta.</p>
+      </div>
+      <div class="help-card fade-in" style="--delay: 0.15s">
+        <div class="help-icon">
+          <svg class="draw-svg" viewBox="0 0 64 64" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="8" y="20" width="48" height="30" rx="4" />
+            <path d="M8 28h48" />
+            <path d="M16 38h12" />
+          </svg>
+        </div>
+        <h3>Contributo economico</h3>
+        <p>Anche un piccolo importo pu&ograve; cambiare la vita di una famiglia intera.</p>
+      </div>
+      <div class="help-card fade-in" style="--delay: 0.3s">
+        <div class="help-icon">
+          <svg class="draw-svg" viewBox="0 0 64 64" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M32 8C18 8 8 20 8 32s24 24 24 24 24-12 24-24S46 8 32 8z" />
+            <circle cx="32" cy="28" r="8" />
+          </svg>
+        </div>
+        <h3>Diffondi la voce</h3>
+        <p>Condividi la nostra missione sui social e aiutaci a raggiungere pi&ugrave; persone.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Photo collage -->
+  <section class="collage-section">
+    <div class="section-header fade-in">
+      <span class="section-tag">Dal campo</span>
+      <h2 class="section-title">Momenti che <span class="gradient-text-warm">ispirano</span></h2>
+    </div>
+    <div class="collage-grid fade-in">
+      <div class="collage-item" style="background: linear-gradient(135deg, #fbbf24, #f59e0b)"><span>Costruzione scuola</span></div>
+      <div class="collage-item tall" style="background: linear-gradient(135deg, #34d399, #059669)"><span>Distribuzione acqua</span></div>
+      <div class="collage-item" style="background: linear-gradient(135deg, #818cf8, #4f46e5)"><span>Clinica mobile</span></div>
+      <div class="collage-item wide" style="background: linear-gradient(135deg, #fb923c, #ea580c)"><span>I volontari al lavoro</span></div>
+      <div class="collage-item" style="background: linear-gradient(135deg, #f472b6, #db2777)"><span>Sorrisi dei bambini</span></div>
+      <div class="collage-item" style="background: linear-gradient(135deg, #38bdf8, #0284c7)"><span>Inaugurazione pozzo</span></div>
+    </div>
+  </section>
+
+  <footer class="footer fade-in">
+    <p>&copy; 2026 Luce Onlus &mdash; Organizzazione senza scopo di lucro</p>
   </footer>
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Open Sans', sans-serif; color: #1c1917; overflow-x: hidden; background: #fffbeb; }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #fef3c7; }
+    ::-webkit-scrollbar-thumb { background: #f59e0b; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #d97706; }
+
+    h1, h2, h3 { font-family: 'Poppins', sans-serif; }
+
+    /* Back button */
+    .back-btn {
+      position: fixed; top: 20px; left: 20px; z-index: 1000;
+      background: rgba(255,255,255,0.8); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(245,158,11,0.3); color: #92400e; padding: 10px 20px; border-radius: 12px;
+      text-decoration: none; font-size: 0.875rem; font-weight: 600; transition: all 0.3s ease;
+    }
+    .back-btn:hover {
+      background: rgba(245,158,11,0.15); transform: translateX(-4px);
+      box-shadow: 0 4px 20px rgba(245,158,11,0.2);
+    }
+
+    /* Gradient text */
+    .gradient-text { background: linear-gradient(135deg, #6366f1, #06b6d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .gradient-text-warm { background: linear-gradient(135deg, #f59e0b, #ef4444); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+    /* Section utils */
+    .section-header { text-align: center; margin-bottom: 48px; }
+    .section-tag {
+      display: inline-block; font-family: 'Poppins', sans-serif;
+      font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em;
+      color: #f59e0b; margin-bottom: 12px;
+    }
+    .section-title { font-size: 2.25rem; font-weight: 700; color: #1c1917; line-height: 1.2; }
+    .section-title.light { color: #fff; }
+
+    /* Fade in */
+    .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; transition-delay: var(--delay, 0s); }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* ===== HERO ===== */
+    .hero {
+      position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      overflow: hidden; padding: 80px 24px;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: linear-gradient(160deg, #fffbeb 0%, #fef3c7 30%, #fde68a 70%, #f59e0b 100%);
+      z-index: 0;
+    }
+    .hero-content { position: relative; z-index: 2; text-align: center; max-width: 800px; }
+    .hero-tag {
+      display: inline-block; background: rgba(245,158,11,0.15); color: #92400e;
+      padding: 6px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 600;
+      margin-bottom: 24px; font-family: 'Poppins', sans-serif;
+    }
+    .hero-title { font-size: 3.5rem; font-weight: 800; line-height: 1.1; color: #1c1917; margin-bottom: 20px; }
+    .hero-desc { font-size: 1.15rem; color: #57534e; max-width: 600px; margin: 0 auto 48px; line-height: 1.7; }
+    .hero-stats { display: flex; justify-content: center; gap: 48px; flex-wrap: wrap; }
+    .hero-stat { text-align: center; }
+    .hero-num { font-family: 'Poppins', sans-serif; font-size: 2.5rem; font-weight: 800; color: #92400e; display: block; }
+    .hero-stat-label { font-size: 0.85rem; color: #78716c; font-weight: 500; }
+
+    /* Floating shapes */
+    .hero-shape { position: absolute; border-radius: 50%; opacity: 0.15; z-index: 1; }
+    .shape-1 { width: 300px; height: 300px; background: #f59e0b; top: -80px; right: -60px; animation: float1 15s ease-in-out infinite; }
+    .shape-2 { width: 200px; height: 200px; background: #ef4444; bottom: -40px; left: -30px; animation: float2 20s ease-in-out infinite; }
+    .shape-3 { width: 150px; height: 150px; background: #6366f1; top: 30%; left: 10%; animation: float3 18s ease-in-out infinite; }
+    @keyframes float1 { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(-30px, 40px) scale(1.05); } }
+    @keyframes float2 { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(40px, -30px) scale(1.1); } }
+    @keyframes float3 { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(20px, -20px); } }
+
+    /* ===== PROJECTS ===== */
+    .projects { padding: 100px 24px; max-width: 1200px; margin: 0 auto; }
+    .projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+    .project-card {
+      background: #fff; border-radius: 20px; overflow: hidden;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.06); transition: all 0.4s ease;
+      border: 1px solid rgba(245,158,11,0.1);
+    }
+    .project-card:hover { transform: translateY(-8px); box-shadow: 0 20px 60px rgba(245,158,11,0.15); }
+    .project-img {
+      height: 180px; display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .project-img::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to bottom, transparent 60%, rgba(0,0,0,0.1));
+    }
+    .project-body { padding: 24px; }
+    .project-body h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: 8px; color: #1c1917; }
+    .project-body p { font-size: 0.9rem; color: #57534e; line-height: 1.6; margin-bottom: 20px; }
+    .progress-wrap { margin-top: auto; }
+    .progress-header { display: flex; justify-content: space-between; font-size: 0.8rem; color: #78716c; margin-bottom: 8px; }
+    .progress-pct { font-weight: 700; color: #f59e0b; }
+    .progress-bar { height: 8px; background: #fef3c7; border-radius: 4px; overflow: hidden; }
+    .progress-fill {
+      height: 100%; width: 0; background: linear-gradient(90deg, #f59e0b, #ef4444);
+      border-radius: 4px; transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .progress-fill.animate { width: var(--target); }
+
+    /* ===== DONATE ===== */
+    .donate-section {
+      padding: 100px 24px;
+      background: linear-gradient(160deg, #1c1917 0%, #292524 100%);
+      position: relative; overflow: hidden;
+    }
+    .donate-section::before {
+      content: ''; position: absolute; top: -50%; right: -20%;
+      width: 600px; height: 600px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(245,158,11,0.15) 0%, transparent 70%);
+    }
+    .donate-inner { max-width: 700px; margin: 0 auto; text-align: center; position: relative; z-index: 1; }
+    .donate-desc { color: #a8a29e; font-size: 1.05rem; line-height: 1.7; margin: 16px 0 40px; }
+    .donate-amounts { display: flex; justify-content: center; gap: 16px; margin-bottom: 32px; flex-wrap: wrap; }
+    .donate-btn {
+      font-family: 'Poppins', sans-serif; font-size: 1.1rem; font-weight: 600;
+      padding: 16px 32px; border-radius: 14px; border: 2px solid rgba(245,158,11,0.3);
+      background: transparent; color: #fbbf24; cursor: pointer;
+      transition: all 0.3s ease; position: relative; overflow: hidden;
+    }
+    .donate-btn:hover, .donate-btn.featured {
+      background: #f59e0b; color: #1c1917; border-color: #f59e0b;
+      transform: scale(1.05); box-shadow: 0 8px 30px rgba(245,158,11,0.3);
+    }
+    .donate-btn:active { transform: scale(0.95); }
+    .donate-btn.featured { box-shadow: 0 0 20px rgba(245,158,11,0.4); }
+    .cta-btn {
+      font-family: 'Poppins', sans-serif; font-size: 1rem; font-weight: 600;
+      padding: 16px 40px; border-radius: 14px; border: none;
+      background: linear-gradient(135deg, #f59e0b, #ef4444); color: #fff;
+      cursor: pointer; transition: all 0.3s ease;
+    }
+    .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(245,158,11,0.4); }
+
+    /* ===== EVENTS ===== */
+    .events { padding: 100px 24px; max-width: 1000px; margin: 0 auto; }
+    .events-grid { display: flex; flex-direction: column; gap: 20px; }
+    .event-card {
+      display: flex; gap: 24px; background: #fff; border-radius: 16px; padding: 24px;
+      border: 1px solid rgba(245,158,11,0.1); transition: all 0.3s ease;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    }
+    .event-card:hover { transform: translateX(8px); box-shadow: 0 8px 30px rgba(245,158,11,0.12); border-color: rgba(245,158,11,0.3); }
+    .event-date {
+      flex-shrink: 0; width: 72px; height: 72px; border-radius: 16px;
+      background: linear-gradient(135deg, #fef3c7, #fde68a);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      animation: datePulse 3s ease-in-out infinite;
+    }
+    @keyframes datePulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(245,158,11,0.2); }
+      50% { box-shadow: 0 0 0 8px rgba(245,158,11,0); }
+    }
+    .event-day { font-family: 'Poppins', sans-serif; font-size: 1.5rem; font-weight: 800; color: #92400e; line-height: 1; }
+    .event-month { font-family: 'Poppins', sans-serif; font-size: 0.75rem; font-weight: 600; color: #b45309; text-transform: uppercase; }
+    .event-body h3 { font-size: 1.1rem; font-weight: 700; color: #1c1917; margin-bottom: 6px; }
+    .event-body p { font-size: 0.875rem; color: #57534e; line-height: 1.6; margin-bottom: 8px; }
+    .event-location { font-size: 0.8rem; color: #f59e0b; font-weight: 600; }
+
+    /* ===== HOW TO HELP (SVG draw) ===== */
+    .help-section { padding: 100px 24px; background: #fef9ee; }
+    .help-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; max-width: 1000px; margin: 0 auto; }
+    .help-card {
+      text-align: center; padding: 40px 24px; border-radius: 20px; background: #fff;
+      border: 1px solid rgba(245,158,11,0.1); transition: all 0.4s ease;
+    }
+    .help-card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(245,158,11,0.12); }
+    .help-icon { width: 80px; height: 80px; margin: 0 auto 20px; }
+    .draw-svg {
+      width: 100%; height: 100%;
+      stroke-dasharray: 300; stroke-dashoffset: 300;
+      transition: stroke-dashoffset 1.5s ease;
+    }
+    .fade-in.visible .draw-svg { stroke-dashoffset: 0; }
+    .help-card h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 8px; color: #1c1917; }
+    .help-card p { font-size: 0.875rem; color: #57534e; line-height: 1.6; }
+
+    /* ===== PHOTO COLLAGE ===== */
+    .collage-section { padding: 100px 24px; max-width: 1200px; margin: 0 auto; }
+    .collage-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: 200px;
+      gap: 16px;
+    }
+    .collage-item {
+      border-radius: 16px; position: relative; overflow: hidden; cursor: pointer;
+      display: flex; align-items: flex-end; padding: 16px;
+      transition: transform 0.4s ease;
+    }
+    .collage-item.tall { grid-row: span 2; }
+    .collage-item.wide { grid-column: span 2; }
+    .collage-item span {
+      color: #fff; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 0.9rem;
+      opacity: 0; transform: translateY(10px); transition: all 0.3s ease;
+    }
+    .collage-item:hover { transform: scale(1.03); z-index: 2; }
+    .collage-item:hover span { opacity: 1; transform: translateY(0); }
+
+    /* Footer */
+    .footer { text-align: center; padding: 40px 24px; color: #78716c; font-size: 0.85rem; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero-title { font-size: 2.25rem; }
+      .hero-stats { gap: 24px; }
+      .hero-num { font-size: 2rem; }
+      .projects-grid, .help-grid { grid-template-columns: 1fr; }
+      .collage-grid { grid-template-columns: 1fr; grid-auto-rows: 180px; }
+      .collage-item.tall, .collage-item.wide { grid-row: span 1; grid-column: span 1; }
+      .event-card { flex-direction: column; gap: 12px; }
+      .donate-amounts { gap: 10px; }
+      .donate-btn { padding: 12px 24px; font-size: 1rem; }
+      .section-title { font-size: 1.75rem; }
+      .back-btn { top: 12px; left: 12px; font-size: 0.8rem; padding: 8px 14px; }
+    }
+  </style>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          // Animate progress bars
+          entry.target.querySelectorAll('.progress-fill').forEach(fill => fill.classList.add('animate'));
+          // Animate counters
+          entry.target.querySelectorAll('.counter').forEach(c => animateCounter(c));
+        }
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    function animateCounter(el) {
+      if (el.dataset.animated) return;
+      el.dataset.animated = 'true';
+      const target = parseFloat(el.dataset.target);
+      const duration = 2000;
+      const start = performance.now();
+      function update(now) {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.floor(target * eased).toLocaleString('it-IT');
+        if (progress < 1) requestAnimationFrame(update);
+      }
+      requestAnimationFrame(update);
+    }
+
+    // Donate button click animation
+    document.querySelectorAll('.donate-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.donate-btn').forEach(b => b.classList.remove('featured'));
+        btn.classList.add('featured');
+      });
+    });
+  </script>
 </body>
 </html>

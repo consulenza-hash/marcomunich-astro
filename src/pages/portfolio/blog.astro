@@ -5,528 +5,884 @@ export const prerender = true;
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Il Tuo Magazine — Blog Demo</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@400;500;600&display=swap');
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: 'Inter', sans-serif;
-      background: #ffffff;
-      color: #2d2d2d;
-      line-height: 1.6;
-    }
-
-    .back-btn {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      z-index: 1000;
-      background: #e63946;
-      color: #fff;
-      text-decoration: none;
-      padding: 10px 18px;
-      border-radius: 50px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      box-shadow: 0 4px 15px rgba(230,57,70,0.3);
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .back-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(230,57,70,0.4);
-    }
-
-    /* NAVBAR */
-    nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 20px 60px;
-      border-bottom: 1px solid #eee;
-      background: #fff;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    .nav-logo {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.6rem;
-      font-weight: 900;
-      color: #1a1a1a;
-    }
-    .nav-logo span { color: #e63946; }
-    .nav-links { display: flex; gap: 32px; list-style: none; }
-    .nav-links a {
-      text-decoration: none;
-      color: #555;
-      font-size: 0.9rem;
-      font-weight: 500;
-      transition: color 0.2s;
-    }
-    .nav-links a:hover { color: #e63946; }
-
-    /* FEATURED */
-    .featured {
-      position: relative;
-      height: 520px;
-      margin: 30px 60px;
-      border-radius: 16px;
-      overflow: hidden;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    }
-    .featured-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.1) 60%);
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 50px;
-    }
-    .featured-cat {
-      display: inline-block;
-      background: #e63946;
-      color: #fff;
-      padding: 5px 14px;
-      border-radius: 20px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 16px;
-      width: fit-content;
-    }
-    .featured h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.8rem;
-      color: #fff;
-      margin-bottom: 12px;
-      max-width: 650px;
-      line-height: 1.2;
-    }
-    .featured p {
-      color: rgba(255,255,255,0.85);
-      font-size: 1.05rem;
-      max-width: 550px;
-      margin-bottom: 20px;
-    }
-    .featured-meta {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      color: rgba(255,255,255,0.7);
-      font-size: 0.85rem;
-    }
-    .featured-meta .avatar {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background: #e63946;
-    }
-
-    /* MAIN CONTENT */
-    .content-wrap {
-      display: grid;
-      grid-template-columns: 1fr 340px;
-      gap: 40px;
-      padding: 50px 60px;
-      max-width: 1400px;
-      margin: 0 auto;
-    }
-
-    .section-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.8rem;
-      margin-bottom: 30px;
-      color: #1a1a1a;
-    }
-
-    /* ARTICLES GRID */
-    .articles-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 30px;
-    }
-    .article-card {
-      border-radius: 12px;
-      overflow: hidden;
-      background: #fff;
-      border: 1px solid #f0f0f0;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .article-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 30px rgba(0,0,0,0.08);
-    }
-    .article-img {
-      height: 200px;
-      width: 100%;
-    }
-    .article-img.c1 { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
-    .article-img.c2 { background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%); }
-    .article-img.c3 { background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%); }
-    .article-img.c4 { background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%); }
-    .article-img.c5 { background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%); }
-    .article-img.c6 { background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); }
-    .article-body { padding: 20px; }
-    .article-cat {
-      font-size: 0.7rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: #e63946;
-      margin-bottom: 8px;
-    }
-    .article-body h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.15rem;
-      color: #1a1a1a;
-      margin-bottom: 8px;
-      line-height: 1.3;
-    }
-    .article-body p {
-      font-size: 0.88rem;
-      color: #777;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      margin-bottom: 14px;
-    }
-    .article-footer {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 0.8rem;
-      color: #999;
-    }
-    .article-footer .mini-avatar {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      background: #ddd;
-    }
-
-    /* SIDEBAR */
-    .sidebar { display: flex; flex-direction: column; gap: 30px; }
-    .sidebar-block {
-      background: #fafafa;
-      border-radius: 12px;
-      padding: 24px;
-    }
-    .sidebar-block h4 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.1rem;
-      margin-bottom: 16px;
-      color: #1a1a1a;
-    }
-    .popular-list { list-style: none; }
-    .popular-list li {
-      padding: 12px 0;
-      border-bottom: 1px solid #eee;
-      display: flex;
-      gap: 12px;
-      align-items: flex-start;
-    }
-    .popular-list li:last-child { border-bottom: none; }
-    .popular-num {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: #e63946;
-      line-height: 1;
-      min-width: 24px;
-    }
-    .popular-list li span {
-      font-size: 0.88rem;
-      color: #444;
-      line-height: 1.4;
-    }
-
-    .newsletter-box {
-      background: linear-gradient(135deg, #e63946, #c62838);
-      border-radius: 12px;
-      padding: 28px;
-      color: #fff;
-    }
-    .newsletter-box h4 {
-      color: #fff;
-      font-family: 'Playfair Display', serif;
-      margin-bottom: 8px;
-      font-size: 1.2rem;
-    }
-    .newsletter-box p {
-      font-size: 0.85rem;
-      opacity: 0.9;
-      margin-bottom: 16px;
-    }
-    .newsletter-box input {
-      width: 100%;
-      padding: 12px 16px;
-      border: none;
-      border-radius: 8px;
-      font-size: 0.9rem;
-      margin-bottom: 10px;
-      outline: none;
-    }
-    .newsletter-box button {
-      width: 100%;
-      padding: 12px;
-      background: #fff;
-      color: #e63946;
-      border: none;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 0.9rem;
-      cursor: pointer;
-      transition: opacity 0.2s;
-    }
-    .newsletter-box button:hover { opacity: 0.9; }
-
-    .cat-list { list-style: none; }
-    .cat-list li {
-      display: flex;
-      justify-content: space-between;
-      padding: 10px 0;
-      border-bottom: 1px solid #eee;
-      font-size: 0.9rem;
-      color: #555;
-    }
-    .cat-list li:last-child { border-bottom: none; }
-    .cat-list .count {
-      background: #f0f0f0;
-      padding: 2px 10px;
-      border-radius: 20px;
-      font-size: 0.78rem;
-      color: #888;
-    }
-
-    /* FOOTER */
-    footer {
-      background: #1a1a1a;
-      color: #fff;
-      padding: 60px;
-      margin-top: 40px;
-    }
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr 1fr;
-      gap: 40px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .footer-grid h5 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.1rem;
-      margin-bottom: 16px;
-    }
-    .footer-grid p, .footer-grid a {
-      font-size: 0.85rem;
-      color: #aaa;
-      text-decoration: none;
-      line-height: 2;
-      display: block;
-    }
-    .footer-grid a:hover { color: #e63946; }
-    .footer-bottom {
-      text-align: center;
-      padding-top: 40px;
-      margin-top: 40px;
-      border-top: 1px solid #333;
-      font-size: 0.8rem;
-      color: #666;
-      max-width: 1200px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    @media (max-width: 1024px) {
-      .content-wrap { grid-template-columns: 1fr; }
-      .sidebar { order: 2; }
-    }
-    @media (max-width: 768px) {
-      nav { padding: 16px 20px; }
-      .nav-links { display: none; }
-      .featured { height: 400px; margin: 15px 20px; }
-      .featured h1 { font-size: 1.8rem; }
-      .featured-overlay { padding: 24px; }
-      .content-wrap { padding: 30px 20px; }
-      .articles-grid { grid-template-columns: 1fr; }
-      footer { padding: 40px 20px; }
-      .footer-grid { grid-template-columns: 1fr 1fr; }
-    }
-  </style>
+  <title>Il Corriere Digitale — Blog Editoriale Premium</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,400&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet" />
 </head>
 <body>
-  <a href="/portfolio" class="back-btn">&larr; Torna al Portfolio</a>
+  <!-- Noise overlay -->
+  <div class="noise"></div>
 
-  <nav>
-    <div class="nav-logo">Il Tuo <span>Magazine</span></div>
-    <ul class="nav-links">
-      <li><a href="#">Home</a></li>
-      <li><a href="#">Lifestyle</a></li>
-      <li><a href="#">Tecnologia</a></li>
-      <li><a href="#">Cultura</a></li>
-      <li><a href="#">Chi Siamo</a></li>
-    </ul>
+  <!-- Back button -->
+  <a href="/dev/portfolio" class="back-btn">
+    <span class="back-arrow">&larr;</span> Torna al Portfolio
+  </a>
+
+  <!-- Breaking news ticker -->
+  <div class="ticker">
+    <div class="ticker-label">ULTIME NOTIZIE</div>
+    <div class="ticker-track">
+      <div class="ticker-content">
+        <span>Nuovo studio rivela: il 78% dei lettori preferisce contenuti long-form</span>
+        <span class="ticker-dot"></span>
+        <span>Tecnologia e sostenibilità: le tendenze del 2026</span>
+        <span class="ticker-dot"></span>
+        <span>Intervista esclusiva con il fondatore della startup italiana più innovativa</span>
+        <span class="ticker-dot"></span>
+        <span>Il futuro dell'editoria digitale: report completo disponibile</span>
+        <span class="ticker-dot"></span>
+        <span>Nuovo studio rivela: il 78% dei lettori preferisce contenuti long-form</span>
+        <span class="ticker-dot"></span>
+        <span>Tecnologia e sostenibilità: le tendenze del 2026</span>
+        <span class="ticker-dot"></span>
+        <span>Intervista esclusiva con il fondatore della startup italiana più innovativa</span>
+        <span class="ticker-dot"></span>
+        <span>Il futuro dell'editoria digitale: report completo disponibile</span>
+        <span class="ticker-dot"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <header class="hero fade-in">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <div class="hero-category">Articolo in evidenza</div>
+        <h1 class="hero-title">L'arte di raccontare storie nell'era digitale</h1>
+        <p class="hero-excerpt">
+          Un'esplorazione profonda di come la narrativa sta evolvendo,
+          tra intelligenza artificiale, giornalismo immersivo e nuove forme
+          di coinvolgimento del lettore.
+        </p>
+        <div class="hero-meta">
+          <span class="hero-author">di <strong>Marco Rossi</strong></span>
+          <span class="hero-date">21 Marzo 2026</span>
+          <span class="hero-read">12 min lettura</span>
+        </div>
+      </div>
+      <div class="hero-image">
+        <div class="hero-image-placeholder">
+          <div class="hero-image-lines">
+            <div></div><div></div><div></div><div></div><div></div>
+          </div>
+          <span>Foto di copertina</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Categories -->
+  <nav class="categories fade-in">
+    <div class="categories-inner">
+      <a href="#" class="cat-pill active">Tutti</a>
+      <a href="#" class="cat-pill">Tecnologia</a>
+      <a href="#" class="cat-pill">Cultura</a>
+      <a href="#" class="cat-pill">Economia</a>
+      <a href="#" class="cat-pill">Scienza</a>
+      <a href="#" class="cat-pill">Opinioni</a>
+      <a href="#" class="cat-pill">Longform</a>
+    </div>
   </nav>
 
-  <div class="featured">
-    <div class="featured-overlay">
-      <span class="featured-cat">Lifestyle</span>
-      <h1>Titolo dell'Articolo in Evidenza</h1>
-      <p>Scopri le ultime tendenze e lasciati ispirare dalle storie che stanno cambiando il nostro modo di vivere, pensare e creare ogni giorno.</p>
-      <div class="featured-meta">
-        <div class="avatar"></div>
-        <span>Marco Rossi &middot; 18 Marzo 2026</span>
+  <!-- Main content -->
+  <main class="content">
+    <div class="content-inner">
+      <!-- Articles grid -->
+      <div class="articles">
+        <article class="card card-featured fade-in">
+          <div class="card-image">
+            <div class="card-image-placeholder">
+              <span>Immagine articolo</span>
+            </div>
+            <div class="card-category-badge">Tecnologia</div>
+          </div>
+          <div class="card-body">
+            <h2 class="card-title">Come l'intelligenza artificiale sta ridefinendo il giornalismo investigativo</h2>
+            <p class="card-excerpt">Dalle redazioni di tutto il mondo emergono nuovi strumenti che amplificano le capacità dei reporter, senza sostituire il tocco umano.</p>
+            <div class="card-footer">
+              <span class="card-author">Giulia Bianchi</span>
+              <span class="card-time">8 min</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="card fade-in">
+          <div class="card-image">
+            <div class="card-image-placeholder small">
+              <span>Img</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="card-category-tag">Cultura</div>
+            <h3 class="card-title">Rinascimento digitale: i musei italiani conquistano il metaverso</h3>
+            <p class="card-excerpt">Visite virtuali, NFT d'arte e esperienze immersive stanno trasformando il modo in cui fruiamo il patrimonio culturale.</p>
+            <div class="card-footer">
+              <span class="card-author">Luca Verdi</span>
+              <span class="card-time">6 min</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="card fade-in">
+          <div class="card-image">
+            <div class="card-image-placeholder small">
+              <span>Img</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="card-category-tag">Economia</div>
+            <h3 class="card-title">Startup italiane: il boom silenzioso che nessuno racconta</h3>
+            <p class="card-excerpt">Oltre 200 startup hanno raccolto finanziamenti record nel primo trimestre. Un ecosistema in fermento.</p>
+            <div class="card-footer">
+              <span class="card-author">Anna Ferretti</span>
+              <span class="card-time">5 min</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="card fade-in">
+          <div class="card-image">
+            <div class="card-image-placeholder small">
+              <span>Img</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="card-category-tag">Scienza</div>
+            <h3 class="card-title">La corsa allo spazio privato: l'Italia gioca la sua partita</h3>
+            <p class="card-excerpt">Da Avio a nuove realtà emergenti, il settore spaziale italiano si prepara a una nuova era.</p>
+            <div class="card-footer">
+              <span class="card-author">Paolo Neri</span>
+              <span class="card-time">7 min</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="card fade-in">
+          <div class="card-image">
+            <div class="card-image-placeholder small">
+              <span>Img</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="card-category-tag">Opinioni</div>
+            <h3 class="card-title">Perché abbiamo bisogno di un nuovo patto con la tecnologia</h3>
+            <p class="card-excerpt">Non si tratta di rifiutare il progresso. Si tratta di scegliere quale progresso vogliamo.</p>
+            <div class="card-footer">
+              <span class="card-author">Elena Marchi</span>
+              <span class="card-time">4 min</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Pull Quote -->
+        <blockquote class="pull-quote fade-in">
+          <div class="pull-quote-mark">&ldquo;</div>
+          <p>Il giornalismo non morirà mai. Cambierà forma, cambierà strumenti, ma la necessità umana di raccontare e ascoltare storie resterà eterna.</p>
+          <cite>— Maria Grazia Colombo, direttrice editoriale</cite>
+        </blockquote>
+
+        <article class="card fade-in">
+          <div class="card-image">
+            <div class="card-image-placeholder small">
+              <span>Img</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="card-category-tag">Longform</div>
+            <h3 class="card-title">Sei mesi nell'Artico: diario di una spedizione climatica</h3>
+            <p class="card-excerpt">Un reportage immersivo dalla prima linea del cambiamento climatico, tra ghiacci che si sciolgono e comunità che resistono.</p>
+            <div class="card-footer">
+              <span class="card-author">Davide Costa</span>
+              <span class="card-time">18 min</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="card fade-in">
+          <div class="card-image">
+            <div class="card-image-placeholder small">
+              <span>Img</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="card-category-tag">Tecnologia</div>
+            <h3 class="card-title">Il codice sorgente della democrazia: open source e trasparenza</h3>
+            <p class="card-excerpt">Come il software libero sta influenzando la governance e la partecipazione civica in tutta Europa.</p>
+            <div class="card-footer">
+              <span class="card-author">Roberto Sala</span>
+              <span class="card-time">9 min</span>
+            </div>
+          </div>
+        </article>
       </div>
+
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="sidebar-sticky">
+          <div class="sidebar-section glass-card fade-in">
+            <h4 class="sidebar-title">Più Letti</h4>
+            <ol class="most-read">
+              <li>
+                <span class="most-read-num">01</span>
+                <a href="#">L'algoritmo che prevede le crisi economiche con 6 mesi di anticipo</a>
+              </li>
+              <li>
+                <span class="most-read-num">02</span>
+                <a href="#">Vivere senza smartphone: l'esperimento che ha cambiato la mia vita</a>
+              </li>
+              <li>
+                <span class="most-read-num">03</span>
+                <a href="#">Roma 2030: il piano urbanistico che divide gli esperti</a>
+              </li>
+              <li>
+                <span class="most-read-num">04</span>
+                <a href="#">Perché i giovani italiani tornano dai borghi</a>
+              </li>
+              <li>
+                <span class="most-read-num">05</span>
+                <a href="#">L'ultimo treno per la transizione energetica</a>
+              </li>
+            </ol>
+          </div>
+
+          <div class="sidebar-section glass-card fade-in">
+            <h4 class="sidebar-title">Newsletter</h4>
+            <p class="sidebar-text">Ricevi ogni mattina le storie che contano. Niente spam, solo giornalismo di qualità.</p>
+            <form class="newsletter-form">
+              <input type="email" placeholder="La tua email" class="newsletter-input" />
+              <button type="button" class="newsletter-btn">Iscriviti</button>
+            </form>
+          </div>
+
+          <div class="sidebar-section glass-card fade-in">
+            <h4 class="sidebar-title">Tag Popolari</h4>
+            <div class="tag-cloud">
+              <a href="#" class="tag">Intelligenza Artificiale</a>
+              <a href="#" class="tag">Clima</a>
+              <a href="#" class="tag">Startup</a>
+              <a href="#" class="tag">Europa</a>
+              <a href="#" class="tag">Design</a>
+              <a href="#" class="tag">Innovazione</a>
+              <a href="#" class="tag">Sostenibilità</a>
+              <a href="#" class="tag">Cultura</a>
+            </div>
+          </div>
+        </div>
+      </aside>
     </div>
-  </div>
+  </main>
 
-  <div class="content-wrap">
-    <main>
-      <h2 class="section-title">Ultimi Articoli</h2>
-      <div class="articles-grid">
-        <div class="article-card">
-          <div class="article-img c1"></div>
-          <div class="article-body">
-            <div class="article-cat">Tecnologia</div>
-            <h3>Il futuro dell'intelligenza artificiale nel quotidiano</h3>
-            <p>Come le nuove tecnologie stanno trasformando il modo in cui lavoriamo, comunichiamo e viviamo le nostre giornate.</p>
-            <div class="article-footer">
-              <div class="mini-avatar"></div>
-              <span>Luca Bianchi &middot; 16 Mar 2026</span>
-            </div>
-          </div>
-        </div>
-        <div class="article-card">
-          <div class="article-img c2"></div>
-          <div class="article-body">
-            <div class="article-cat">Cultura</div>
-            <h3>Cinque mostre da non perdere questa primavera</h3>
-            <p>Una selezione curata degli eventi culturali che animeranno le principali città italiane nei prossimi mesi.</p>
-            <div class="article-footer">
-              <div class="mini-avatar"></div>
-              <span>Giulia Verdi &middot; 15 Mar 2026</span>
-            </div>
-          </div>
-        </div>
-        <div class="article-card">
-          <div class="article-img c3"></div>
-          <div class="article-body">
-            <div class="article-cat">Lifestyle</div>
-            <h3>Minimalismo: vivere con meno per stare meglio</h3>
-            <p>Ridurre il superfluo per concentrarsi su ciò che conta davvero. Una guida pratica per iniziare questo percorso.</p>
-            <div class="article-footer">
-              <div class="mini-avatar"></div>
-              <span>Anna Neri &middot; 14 Mar 2026</span>
-            </div>
-          </div>
-        </div>
-        <div class="article-card">
-          <div class="article-img c4"></div>
-          <div class="article-body">
-            <div class="article-cat">Tecnologia</div>
-            <h3>La rivoluzione del lavoro da remoto nel 2026</h3>
-            <p>Nuovi strumenti, nuove abitudini: come le aziende italiane stanno ripensando l'organizzazione del lavoro.</p>
-            <div class="article-footer">
-              <div class="mini-avatar"></div>
-              <span>Paolo Conti &middot; 12 Mar 2026</span>
-            </div>
-          </div>
-        </div>
-        <div class="article-card">
-          <div class="article-img c5"></div>
-          <div class="article-body">
-            <div class="article-cat">Cultura</div>
-            <h3>Il rinascimento della letteratura italiana contemporanea</h3>
-            <p>Nuove voci, nuove storie: gli autori che stanno ridefinendo la narrativa nel nostro paese.</p>
-            <div class="article-footer">
-              <div class="mini-avatar"></div>
-              <span>Sara Russo &middot; 10 Mar 2026</span>
-            </div>
-          </div>
-        </div>
-        <div class="article-card">
-          <div class="article-img c6"></div>
-          <div class="article-body">
-            <div class="article-cat">Lifestyle</div>
-            <h3>Cucina sostenibile: ricette a impatto zero</h3>
-            <p>Ingredienti di stagione e zero sprechi: le ricette che fanno bene al palato e al pianeta.</p>
-            <div class="article-footer">
-              <div class="mini-avatar"></div>
-              <span>Elena Marino &middot; 8 Mar 2026</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </main>
+  <!-- Floating decorations -->
+  <div class="floating-circle c1"></div>
+  <div class="floating-circle c2"></div>
+  <div class="floating-circle c3"></div>
 
-    <aside class="sidebar">
-      <div class="sidebar-block">
-        <h4>Articoli Popolari</h4>
-        <ul class="popular-list">
-          <li><span class="popular-num">1</span><span>Come organizzare la settimana in modo efficace</span></li>
-          <li><span class="popular-num">2</span><span>Le migliori app per la produttività personale</span></li>
-          <li><span class="popular-num">3</span><span>Viaggio in Sardegna: itinerario di 7 giorni</span></li>
-          <li><span class="popular-num">4</span><span>Guida completa allo smart working</span></li>
-          <li><span class="popular-num">5</span><span>Tendenze design d'interni per il 2026</span></li>
-        </ul>
+  <footer class="footer fade-in">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <h3>Il Corriere Digitale</h3>
+        <p>Giornalismo indipendente per menti curiose.</p>
       </div>
-
-      <div class="newsletter-box">
-        <h4>Resta Aggiornato</h4>
-        <p>Iscriviti alla newsletter e ricevi ogni settimana i nostri migliori contenuti.</p>
-        <input type="email" placeholder="La tua email..." />
-        <button>Iscriviti Ora</button>
-      </div>
-
-      <div class="sidebar-block">
-        <h4>Categorie</h4>
-        <ul class="cat-list">
-          <li><span>Lifestyle</span><span class="count">24</span></li>
-          <li><span>Tecnologia</span><span class="count">18</span></li>
-          <li><span>Cultura</span><span class="count">15</span></li>
-          <li><span>Viaggi</span><span class="count">12</span></li>
-          <li><span>Benessere</span><span class="count">9</span></li>
-        </ul>
-      </div>
-    </aside>
-  </div>
-
-  <footer>
-    <div class="footer-grid">
-      <div>
-        <h5>Il Tuo Magazine</h5>
-        <p>La tua fonte quotidiana di ispirazione per uno stile di vita consapevole, creativo e connesso con il mondo che cambia.</p>
-      </div>
-      <div>
-        <h5>Sezioni</h5>
-        <a href="#">Lifestyle</a>
-        <a href="#">Tecnologia</a>
-        <a href="#">Cultura</a>
-        <a href="#">Viaggi</a>
-      </div>
-      <div>
-        <h5>Azienda</h5>
-        <a href="#">Chi Siamo</a>
+      <div class="footer-links">
+        <a href="#">Chi siamo</a>
         <a href="#">Redazione</a>
-        <a href="#">Collabora</a>
         <a href="#">Pubblicità</a>
+        <a href="#">Contatti</a>
+        <a href="#">Privacy</a>
       </div>
-      <div>
-        <h5>Seguici</h5>
-        <a href="#">Instagram</a>
-        <a href="#">Facebook</a>
-        <a href="#">Twitter</a>
-        <a href="#">LinkedIn</a>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      &copy; 2026 Il Tuo Magazine. Tutti i diritti riservati.
+      <div class="footer-copy">&copy; 2026 Il Corriere Digitale. Tutti i diritti riservati.</div>
     </div>
   </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const delay = el.dataset.delay || 0;
+          setTimeout(() => el.classList.add('visible'), Number(delay));
+          observer.unobserve(el);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach((el, i) => {
+      el.dataset.delay = (i % 5) * 100;
+      observer.observe(el);
+    });
+  </script>
+
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Source Sans 3', 'Segoe UI', sans-serif;
+      background: #ffffff;
+      color: #1a1a1a;
+      line-height: 1.7;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #f5f5f5; }
+    ::-webkit-scrollbar-thumb { background: #dc2626; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #b91c1c; }
+
+    /* Noise overlay */
+    .noise {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 256px 256px;
+    }
+
+    /* Fade-in animation */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Floating circles */
+    .floating-circle {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: -1;
+      opacity: 0.05;
+      background: #dc2626;
+    }
+    .c1 { width: 400px; height: 400px; top: 10%; right: -100px; animation: floatA 20s ease-in-out infinite; }
+    .c2 { width: 250px; height: 250px; bottom: 20%; left: -80px; animation: floatB 25s ease-in-out infinite; }
+    .c3 { width: 150px; height: 150px; top: 60%; right: 10%; animation: floatA 18s ease-in-out infinite reverse; }
+    @keyframes floatA {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(30px, -20px) scale(1.05); }
+      66% { transform: translate(-20px, 20px) scale(0.95); }
+    }
+    @keyframes floatB {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(40px, -30px); }
+    }
+
+    /* ===== BACK BUTTON ===== */
+    .back-btn {
+      position: fixed;
+      top: 58px;
+      left: 20px;
+      z-index: 1000;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(220,38,38,0.2);
+      border-radius: 50px;
+      color: #1a1a1a;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    }
+    .back-btn:hover {
+      background: #dc2626;
+      color: #fff;
+      border-color: #dc2626;
+      transform: translateX(-4px);
+      box-shadow: 0 4px 25px rgba(220,38,38,0.25);
+    }
+    .back-arrow { font-size: 1.1rem; transition: transform 0.3s ease; }
+    .back-btn:hover .back-arrow { transform: translateX(-3px); }
+
+    /* ===== TICKER ===== */
+    .ticker {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      height: 40px;
+      background: #dc2626;
+      color: #fff;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      overflow: hidden;
+    }
+    .ticker-label {
+      flex-shrink: 0;
+      padding: 0 20px;
+      background: #1a1a1a;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+    }
+    .ticker-track { flex: 1; overflow: hidden; }
+    .ticker-content {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      white-space: nowrap;
+      animation: ticker 40s linear infinite;
+    }
+    .ticker-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.5);
+      flex-shrink: 0;
+    }
+    @keyframes ticker {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ===== HERO ===== */
+    .hero { margin-top: 40px; padding: 80px 5vw 60px; }
+    .hero-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .hero-category {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #dc2626;
+      border: 1.5px solid #dc2626;
+      padding: 4px 14px;
+      border-radius: 3px;
+      margin-bottom: 24px;
+    }
+    .hero-title {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 900;
+      line-height: 1.15;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #0a0a0a 0%, #dc2626 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-excerpt {
+      font-size: 1.15rem;
+      color: #555;
+      line-height: 1.8;
+      margin-bottom: 24px;
+    }
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      font-size: 0.85rem;
+      color: #888;
+    }
+    .hero-meta strong { color: #1a1a1a; }
+    .hero-image-placeholder {
+      width: 100%;
+      aspect-ratio: 4/3;
+      background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.08);
+    }
+    .hero-image-placeholder span {
+      font-size: 0.85rem;
+      color: #aaa;
+      font-weight: 600;
+      z-index: 1;
+    }
+    .hero-image-lines {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      opacity: 0.15;
+    }
+    .hero-image-lines div {
+      width: 60%; height: 3px;
+      background: #aaa;
+      border-radius: 2px;
+    }
+
+    /* ===== CATEGORIES ===== */
+    .categories { padding: 0 5vw; margin-bottom: 50px; }
+    .categories-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 20px;
+    }
+    .cat-pill {
+      padding: 8px 22px;
+      border-radius: 50px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-decoration: none;
+      color: #666;
+      background: #f7f7f7;
+      border: 1.5px solid transparent;
+      transition: all 0.3s ease;
+    }
+    .cat-pill:hover, .cat-pill.active {
+      background: linear-gradient(135deg, #dc2626, #ef4444);
+      color: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(220,38,38,0.3);
+    }
+
+    /* ===== MAIN CONTENT ===== */
+    .content { padding: 0 5vw 80px; }
+    .content-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 50px;
+      align-items: start;
+    }
+    .articles {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    /* ===== CARDS ===== */
+    .card {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 24px;
+      padding: 24px;
+      border-radius: 16px;
+      background: #fff;
+      border: 1px solid #f0f0f0;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+    }
+    .card:hover {
+      border-color: rgba(220,38,38,0.15);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.06);
+      transform: translateY(-4px);
+    }
+    .card-featured {
+      grid-template-columns: 1fr;
+      background: linear-gradient(135deg, #fff 0%, #fef2f2 100%);
+      border-color: rgba(220,38,38,0.1);
+    }
+    .card-featured .card-image-placeholder { aspect-ratio: 16/8; }
+    .card-image { overflow: hidden; border-radius: 10px; }
+    .card-image-placeholder {
+      width: 100%;
+      aspect-ratio: 1;
+      background: linear-gradient(135deg, #f5f5f5, #ebebeb);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      color: #bbb;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .card-image-placeholder.small { aspect-ratio: 1; }
+    .card:hover .card-image-placeholder { transform: scale(1.08); }
+    .card-category-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: #dc2626;
+      color: #fff;
+      padding: 4px 12px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .card-body { display: flex; flex-direction: column; justify-content: center; }
+    .card-category-tag {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #dc2626;
+      margin-bottom: 8px;
+    }
+    .card-title {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      line-height: 1.4;
+      color: #111;
+      margin-bottom: 10px;
+      transition: color 0.3s ease;
+    }
+    .card:hover .card-title { color: #dc2626; }
+    .card-featured .card-title { font-size: 1.4rem; }
+    .card-excerpt {
+      font-size: 0.9rem;
+      color: #666;
+      line-height: 1.7;
+      margin-bottom: 14px;
+    }
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      color: #999;
+    }
+    .card-author { font-weight: 600; color: #555; }
+
+    /* ===== PULL QUOTE ===== */
+    .pull-quote {
+      position: relative;
+      padding: 50px 40px 40px 80px;
+      margin: 20px 0;
+      border-left: 4px solid #dc2626;
+      background: linear-gradient(135deg, #fef2f2, #fff);
+      border-radius: 0 16px 16px 0;
+    }
+    .pull-quote-mark {
+      position: absolute;
+      top: 10px;
+      left: 20px;
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 5rem;
+      color: #dc2626;
+      opacity: 0.2;
+      line-height: 1;
+    }
+    .pull-quote p {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 1.2rem;
+      font-style: italic;
+      color: #333;
+      line-height: 1.7;
+      margin-bottom: 12px;
+    }
+    .pull-quote cite {
+      font-style: normal;
+      font-size: 0.85rem;
+      color: #dc2626;
+      font-weight: 600;
+    }
+
+    /* ===== SIDEBAR ===== */
+    .sidebar-sticky {
+      position: sticky;
+      top: 60px;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+    .glass-card {
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(220,38,38,0.08);
+      border-radius: 16px;
+      padding: 28px;
+      transition: all 0.3s ease;
+    }
+    .glass-card:hover {
+      border-color: rgba(220,38,38,0.2);
+      box-shadow: 0 8px 30px rgba(220,38,38,0.06);
+    }
+    .sidebar-title {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #dc2626;
+      display: inline-block;
+    }
+    .most-read {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .most-read li {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .most-read-num {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: #eee;
+      flex-shrink: 0;
+      line-height: 1;
+      transition: color 0.3s ease;
+    }
+    .most-read li:hover .most-read-num { color: #dc2626; }
+    .most-read a {
+      font-size: 0.88rem;
+      color: #333;
+      text-decoration: none;
+      line-height: 1.5;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+    .most-read a:hover { color: #dc2626; }
+    .sidebar-text {
+      font-size: 0.88rem;
+      color: #666;
+      margin-bottom: 16px;
+      line-height: 1.6;
+    }
+    .newsletter-form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .newsletter-input {
+      padding: 12px 16px;
+      border: 1.5px solid #e5e5e5;
+      border-radius: 10px;
+      font-size: 0.88rem;
+      font-family: inherit;
+      transition: border-color 0.3s ease;
+      outline: none;
+    }
+    .newsletter-input:focus { border-color: #dc2626; }
+    .newsletter-btn {
+      padding: 12px;
+      background: #dc2626;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .newsletter-btn:hover {
+      background: #b91c1c;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(220,38,38,0.3);
+    }
+    .tag-cloud { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag {
+      padding: 6px 14px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #666;
+      background: #f5f5f5;
+      border-radius: 50px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    .tag:hover {
+      background: linear-gradient(135deg, #dc2626, #ef4444);
+      color: #fff;
+      transform: scale(1.05);
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      background: #0a0a0a;
+      color: #fff;
+      padding: 60px 5vw;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .footer-brand h3 {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 1.5rem;
+      margin-bottom: 8px;
+    }
+    .footer-brand p {
+      color: #888;
+      font-size: 0.9rem;
+      margin-bottom: 30px;
+    }
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 30px;
+      margin-bottom: 30px;
+    }
+    .footer-links a {
+      color: #888;
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: color 0.3s;
+    }
+    .footer-links a:hover { color: #dc2626; }
+    .footer-copy {
+      font-size: 0.78rem;
+      color: #555;
+      border-top: 1px solid #222;
+      padding-top: 24px;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
+      .content-inner { grid-template-columns: 1fr; }
+      .sidebar-sticky { position: static; }
+    }
+    @media (max-width: 768px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 30px; }
+      .hero { padding: 60px 5vw 40px; }
+      .card { grid-template-columns: 1fr; }
+      .card-image-placeholder.small { aspect-ratio: 16/9; }
+      .back-btn { top: 48px; left: 12px; padding: 8px 14px; font-size: 0.78rem; }
+      .pull-quote { padding: 40px 24px 30px 40px; }
+      .pull-quote-mark { font-size: 3rem; left: 10px; }
+      .pull-quote p { font-size: 1rem; }
+    }
+    @media (max-width: 480px) {
+      .hero-title { font-size: 1.6rem; }
+      .hero-meta { flex-direction: column; gap: 8px; }
+      .categories-inner { gap: 6px; }
+      .cat-pill { padding: 6px 14px; font-size: 0.75rem; }
+    }
+  </style>
 </body>
 </html>

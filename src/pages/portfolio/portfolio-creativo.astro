@@ -5,377 +5,668 @@ export const prerender = true;
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nome Cognome — Portfolio Creativo</title>
+  <title>Studio Nero — Portfolio Creativo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <!-- Loading screen -->
+  <div class="loader" id="loader">
+    <div class="loader-inner">
+      <div class="loader-text">STUDIO NERO</div>
+      <div class="loader-bar">
+        <div class="loader-progress"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Custom cursor -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursorFollower"></div>
+
+  <!-- Back button -->
+  <a href="/dev/portfolio" class="back-btn" data-hover>
+    <span>&larr;</span> Torna al Portfolio
+  </a>
+
+  <!-- Section 1: Hero -->
+  <section class="section hero-section" id="hero">
+    <div class="hero-content">
+      <div class="hero-line fade-in">
+        <span class="hero-small">Portfolio di</span>
+      </div>
+      <h1 class="hero-name fade-in">Studio Nero</h1>
+      <div class="hero-line fade-in">
+        <span class="hero-tagline">Direzione creativa &amp; design visivo</span>
+      </div>
+      <div class="scroll-indicator fade-in">
+        <div class="scroll-line"></div>
+        <span>Scorri</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2: About -->
+  <section class="section about-section" id="about">
+    <div class="about-content">
+      <div class="about-number fade-in">01</div>
+      <h2 class="about-title fade-in">L'essenziale,<br/>nient'altro.</h2>
+      <p class="about-text fade-in">Creiamo identità visive che parlano attraverso il silenzio. Ogni progetto nasce dalla sottrazione: togliamo tutto ciò che non serve, fino a trovare la forma pura dell'idea.</p>
+      <div class="about-stats fade-in">
+        <div class="about-stat">
+          <span class="about-stat-num">47</span>
+          <span class="about-stat-label">Progetti completati</span>
+        </div>
+        <div class="about-stat">
+          <span class="about-stat-num">12</span>
+          <span class="about-stat-label">Premi internazionali</span>
+        </div>
+        <div class="about-stat">
+          <span class="about-stat-num">8</span>
+          <span class="about-stat-label">Anni di attività</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3: Gallery -->
+  <section class="section gallery-section" id="gallery">
+    <div class="gallery-header">
+      <div class="about-number fade-in">02</div>
+      <h2 class="gallery-title fade-in">Lavori selezionati</h2>
+    </div>
+    <div class="masonry">
+      <div class="masonry-item tall fade-in" data-hover>
+        <div class="masonry-placeholder"></div>
+        <div class="masonry-overlay">
+          <span class="masonry-cat">Brand Identity</span>
+          <h3 class="masonry-name">Nuvola Nera</h3>
+          <p class="masonry-year">2025</p>
+        </div>
+      </div>
+      <div class="masonry-item fade-in" data-hover>
+        <div class="masonry-placeholder"></div>
+        <div class="masonry-overlay">
+          <span class="masonry-cat">Editorial Design</span>
+          <h3 class="masonry-name">Silenzio Bianco</h3>
+          <p class="masonry-year">2025</p>
+        </div>
+      </div>
+      <div class="masonry-item fade-in" data-hover>
+        <div class="masonry-placeholder"></div>
+        <div class="masonry-overlay">
+          <span class="masonry-cat">Packaging</span>
+          <h3 class="masonry-name">Forma Essenziale</h3>
+          <p class="masonry-year">2024</p>
+        </div>
+      </div>
+      <div class="masonry-item tall fade-in" data-hover>
+        <div class="masonry-placeholder"></div>
+        <div class="masonry-overlay">
+          <span class="masonry-cat">Web Design</span>
+          <h3 class="masonry-name">Geometria Liquida</h3>
+          <p class="masonry-year">2024</p>
+        </div>
+      </div>
+      <div class="masonry-item fade-in" data-hover>
+        <div class="masonry-placeholder"></div>
+        <div class="masonry-overlay">
+          <span class="masonry-cat">Art Direction</span>
+          <h3 class="masonry-name">Vuoto Pieno</h3>
+          <p class="masonry-year">2024</p>
+        </div>
+      </div>
+      <div class="masonry-item fade-in" data-hover>
+        <div class="masonry-placeholder"></div>
+        <div class="masonry-overlay">
+          <span class="masonry-cat">Brand Identity</span>
+          <h3 class="masonry-name">Linea Sottile</h3>
+          <p class="masonry-year">2023</p>
+        </div>
+      </div>
+      <div class="masonry-item fade-in" data-hover>
+        <div class="masonry-placeholder"></div>
+        <div class="masonry-overlay">
+          <span class="masonry-cat">Photography</span>
+          <h3 class="masonry-name">Ombra Lunga</h3>
+          <p class="masonry-year">2023</p>
+        </div>
+      </div>
+      <div class="masonry-item tall fade-in" data-hover>
+        <div class="masonry-placeholder"></div>
+        <div class="masonry-overlay">
+          <span class="masonry-cat">Motion</span>
+          <h3 class="masonry-name">Ritmo Muto</h3>
+          <p class="masonry-year">2023</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 4: Services -->
+  <section class="section services-section" id="services">
+    <div class="services-content">
+      <div class="about-number fade-in">03</div>
+      <h2 class="services-title fade-in">Competenze</h2>
+      <div class="services-list">
+        <div class="service-row fade-in" data-hover>
+          <span class="service-num">01</span>
+          <span class="service-name">Brand Identity</span>
+          <span class="service-arrow">&rarr;</span>
+        </div>
+        <div class="service-row fade-in" data-hover>
+          <span class="service-num">02</span>
+          <span class="service-name">Art Direction</span>
+          <span class="service-arrow">&rarr;</span>
+        </div>
+        <div class="service-row fade-in" data-hover>
+          <span class="service-num">03</span>
+          <span class="service-name">Editorial Design</span>
+          <span class="service-arrow">&rarr;</span>
+        </div>
+        <div class="service-row fade-in" data-hover>
+          <span class="service-num">04</span>
+          <span class="service-name">Web &amp; Digital</span>
+          <span class="service-arrow">&rarr;</span>
+        </div>
+        <div class="service-row fade-in" data-hover>
+          <span class="service-num">05</span>
+          <span class="service-name">Motion Graphics</span>
+          <span class="service-arrow">&rarr;</span>
+        </div>
+        <div class="service-row fade-in" data-hover>
+          <span class="service-num">06</span>
+          <span class="service-name">Photography</span>
+          <span class="service-arrow">&rarr;</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 5: Contact -->
+  <section class="section contact-section" id="contact">
+    <div class="contact-content">
+      <div class="about-number fade-in">04</div>
+      <h2 class="contact-title fade-in">Parliamo<br/>del tuo progetto.</h2>
+      <a href="mailto:studio@studionero.it" class="contact-email fade-in" data-hover>studio@studionero.it</a>
+      <div class="contact-links fade-in">
+        <a href="#" data-hover>Instagram</a>
+        <a href="#" data-hover>Behance</a>
+        <a href="#" data-hover>LinkedIn</a>
+      </div>
+      <div class="contact-copy fade-in">&copy; 2026 Studio Nero. Milano, Italia.</div>
+    </div>
+  </section>
+
+  <script>
+    // Remove loader after animation
+    setTimeout(() => {
+      const loader = document.getElementById('loader');
+      if (loader) {
+        loader.style.opacity = '0';
+        loader.style.pointerEvents = 'none';
+        setTimeout(() => loader.remove(), 600);
+      }
+    }, 2200);
+
+    // Custom cursor
+    const cursor = document.getElementById('cursor');
+    const follower = document.getElementById('cursorFollower');
+    let mouseX = 0, mouseY = 0, followerX = 0, followerY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      if (cursor) {
+        cursor.style.left = mouseX + 'px';
+        cursor.style.top = mouseY + 'px';
+      }
+    });
+
+    function animateFollower() {
+      followerX += (mouseX - followerX) * 0.1;
+      followerY += (mouseY - followerY) * 0.1;
+      if (follower) {
+        follower.style.left = followerX + 'px';
+        follower.style.top = followerY + 'px';
+      }
+      requestAnimationFrame(animateFollower);
+    }
+    animateFollower();
+
+    // Cursor hover effect
+    document.querySelectorAll('[data-hover]').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursor?.classList.add('hover');
+        follower?.classList.add('hover');
+      });
+      el.addEventListener('mouseleave', () => {
+        cursor?.classList.remove('hover');
+        follower?.classList.remove('hover');
+      });
+    });
+
+    // Intersection observer for fade-in
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const delay = entry.target.dataset.delay || 0;
+          setTimeout(() => entry.target.classList.add('visible'), Number(delay));
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.fade-in').forEach((el, i) => {
+      el.dataset.delay = (i % 4) * 150;
+      observer.observe(el);
+    });
+  </script>
+
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html {
+      scroll-behavior: smooth;
+      scroll-snap-type: y mandatory;
+    }
     body {
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       background: #000;
       color: #fff;
-      line-height: 1.5;
+      line-height: 1.6;
       overflow-x: hidden;
+      cursor: none;
     }
 
-    .back-btn {
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: #000; }
+    ::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
+    ::-webkit-scrollbar-thumb:hover { background: #555; }
+
+    /* Loader */
+    .loader {
+      position: fixed; inset: 0; z-index: 10000;
+      background: #000;
+      display: flex; align-items: center; justify-content: center;
+      transition: opacity 0.6s ease;
+    }
+    .loader-inner { text-align: center; }
+    .loader-text {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      font-weight: 300;
+      letter-spacing: 0.4em;
+      margin-bottom: 30px;
+      animation: loaderFade 1.5s ease-in-out;
+    }
+    @keyframes loaderFade {
+      0% { opacity: 0; transform: translateY(20px); }
+      40% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 1; }
+    }
+    .loader-bar {
+      width: 200px; height: 1px; background: #222; margin: 0 auto;
+    }
+    .loader-progress {
+      height: 100%; background: #fff;
+      animation: loaderProgress 2s ease-in-out forwards;
+    }
+    @keyframes loaderProgress {
+      0% { width: 0%; }
+      100% { width: 100%; }
+    }
+
+    /* Custom cursor */
+    .cursor, .cursor-follower {
       position: fixed;
-      top: 20px;
-      left: 20px;
-      z-index: 1000;
+      pointer-events: none;
+      z-index: 9999;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.3s, height 0.3s, background 0.3s, opacity 0.3s;
+    }
+    .cursor {
+      width: 8px; height: 8px;
       background: #fff;
-      color: #000;
-      text-decoration: none;
-      padding: 10px 18px;
-      border-radius: 50px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      box-shadow: 0 4px 15px rgba(255,255,255,0.15);
-      transition: transform 0.2s;
     }
-    .back-btn:hover { transform: translateY(-2px); }
+    .cursor.hover {
+      width: 50px; height: 50px;
+      background: rgba(255,255,255,0.1);
+      mix-blend-mode: difference;
+    }
+    .cursor-follower {
+      width: 30px; height: 30px;
+      border: 1px solid rgba(255,255,255,0.3);
+    }
+    .cursor-follower.hover {
+      width: 60px; height: 60px;
+      border-color: rgba(255,255,255,0.5);
+    }
 
-    /* NAVBAR */
-    nav {
+    /* Fade-in */
+    .fade-in {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 1s cubic-bezier(0.16,1,0.3,1), transform 1s cubic-bezier(0.16,1,0.3,1);
+    }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* Sections */
+    .section {
+      min-height: 100vh;
+      scroll-snap-align: start;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      padding: 24px 60px;
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+      justify-content: center;
+      position: relative;
+      padding: 80px 8vw;
     }
-    .nav-name {
-      font-size: 1.2rem;
-      font-weight: 600;
-      letter-spacing: -0.5px;
-    }
-    .nav-links { display: flex; gap: 32px; list-style: none; }
-    .nav-links a {
-      text-decoration: none;
+
+    /* Back button */
+    .back-btn {
+      position: fixed; top: 30px; left: 30px; z-index: 1000;
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 10px 22px;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 0;
       color: rgba(255,255,255,0.6);
-      font-size: 0.88rem;
+      text-decoration: none;
+      font-size: 0.78rem;
       font-weight: 400;
-      transition: color 0.3s;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: all 0.4s ease;
     }
-    .nav-links a:hover { color: #fff; }
+    .back-btn:hover {
+      color: #fff;
+      border-color: rgba(255,255,255,0.5);
+      transform: translateX(-4px);
+    }
 
-    /* HERO */
-    .hero {
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    /* ===== HERO ===== */
+    .hero-section {
+      flex-direction: column;
       text-align: center;
-      padding: 0 40px;
-      position: relative;
     }
-    .hero h1 {
-      font-size: clamp(2.5rem, 7vw, 5.5rem);
-      font-weight: 300;
-      letter-spacing: -2px;
-      line-height: 1.1;
-      animation: fadeUp 1.2s ease-out;
-    }
-    .hero h1 span {
+    .hero-content { max-width: 900px; }
+    .hero-line { overflow: hidden; margin-bottom: 8px; }
+    .hero-small {
       display: inline-block;
-      opacity: 0;
-      animation: fadeUp 1s ease-out forwards;
-    }
-    .hero h1 span:nth-child(1) { animation-delay: 0.2s; }
-    .hero h1 span:nth-child(2) { animation-delay: 0.5s; }
-    .hero h1 span:nth-child(3) { animation-delay: 0.8s; }
-    .hero-scroll {
-      position: absolute;
-      bottom: 40px;
-      left: 50%;
-      transform: translateX(-50%);
-      color: rgba(255,255,255,0.3);
-      font-size: 0.75rem;
-      letter-spacing: 3px;
+      font-size: 0.78rem;
       text-transform: uppercase;
-      animation: pulse 2s infinite;
+      letter-spacing: 0.25em;
+      color: rgba(255,255,255,0.4);
+      font-weight: 400;
     }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 0.3; }
-      50% { opacity: 0.7; }
-    }
-
-    /* GALLERY */
-    .gallery {
-      padding: 40px 60px 100px;
-    }
-    .gallery-label {
-      font-size: 0.7rem;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.3);
-      margin-bottom: 40px;
-    }
-    .masonry {
-      columns: 3;
-      column-gap: 20px;
-    }
-    .masonry-item {
-      break-inside: avoid;
-      margin-bottom: 20px;
-      border-radius: 8px;
-      overflow: hidden;
-      position: relative;
-      cursor: pointer;
-    }
-    .masonry-item .placeholder {
-      width: 100%;
-      display: block;
-    }
-    .m1 .placeholder { height: 350px; background: #e8b4b8; }
-    .m2 .placeholder { height: 240px; background: #b4d4e8; }
-    .m3 .placeholder { height: 300px; background: #d4e8b4; }
-    .m4 .placeholder { height: 200px; background: #e8d4b4; }
-    .m5 .placeholder { height: 280px; background: #b4e8d4; }
-    .m6 .placeholder { height: 320px; background: #d4b4e8; }
-    .m7 .placeholder { height: 220px; background: #e8e4b4; }
-    .m8 .placeholder { height: 260px; background: #b4b8e8; }
-
-    .masonry-overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(0,0,0,0.7);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-    .masonry-item:hover .masonry-overlay { opacity: 1; }
-    .masonry-overlay span {
-      font-size: 1.1rem;
-      font-weight: 500;
-      letter-spacing: -0.5px;
-    }
-
-    /* ABOUT */
-    .about {
-      padding: 100px 60px;
-      display: grid;
-      grid-template-columns: 400px 1fr;
-      gap: 60px;
-      align-items: center;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-    .about-photo {
-      width: 100%;
-      height: 500px;
-      background: linear-gradient(135deg, #333 0%, #222 100%);
-      border-radius: 12px;
-    }
-    .about-text h2 {
-      font-size: 2.5rem;
+    .hero-name {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(3rem, 10vw, 8rem);
       font-weight: 300;
-      letter-spacing: -1px;
-      margin-bottom: 24px;
-    }
-    .about-text p {
-      color: rgba(255,255,255,0.6);
-      font-size: 1rem;
-      line-height: 1.8;
+      letter-spacing: 0.05em;
+      line-height: 1;
       margin-bottom: 16px;
     }
-
-    /* CLIENTS */
-    .clients {
-      padding: 60px;
-      border-top: 1px solid rgba(255,255,255,0.08);
-      border-bottom: 1px solid rgba(255,255,255,0.08);
+    .hero-tagline {
+      font-size: 0.85rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      font-weight: 300;
     }
-    .clients-label {
-      font-size: 0.7rem;
-      letter-spacing: 4px;
+    .scroll-indicator {
+      position: absolute;
+      bottom: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    .scroll-line {
+      width: 1px; height: 50px;
+      background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.3));
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; height: 50px; }
+      50% { opacity: 1; height: 70px; }
+    }
+    .scroll-indicator span {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
       color: rgba(255,255,255,0.3);
+    }
+
+    /* ===== ABOUT ===== */
+    .about-section {
+      background: #000;
+    }
+    .about-content { max-width: 800px; }
+    .about-number {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.2);
+      letter-spacing: 0.15em;
+      margin-bottom: 30px;
+    }
+    .about-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 300;
+      line-height: 1.2;
+      margin-bottom: 30px;
+    }
+    .about-text {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.9;
+      max-width: 600px;
+      margin-bottom: 50px;
+    }
+    .about-stats {
+      display: flex;
+      gap: 60px;
+    }
+    .about-stat { display: flex; flex-direction: column; }
+    .about-stat-num {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 2.5rem;
+      font-weight: 300;
+    }
+    .about-stat-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.3);
+      margin-top: 4px;
+    }
+
+    /* ===== GALLERY ===== */
+    .gallery-section {
+      min-height: auto;
+      padding: 100px 5vw;
+      flex-direction: column;
+      align-items: flex-start;
+      scroll-snap-align: start;
+    }
+    .gallery-header { margin-bottom: 50px; }
+    .gallery-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 300;
+    }
+    .masonry {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      width: 100%;
+    }
+    .masonry-item {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .masonry-placeholder {
+      width: 100%;
+      aspect-ratio: 4/3;
+      background: #111;
+      transition: transform 0.7s cubic-bezier(0.16,1,0.3,1), filter 0.5s;
+    }
+    .masonry-item.tall .masonry-placeholder {
+      aspect-ratio: 3/4;
+    }
+    .masonry-item:hover .masonry-placeholder {
+      transform: scale(1.08);
+      filter: brightness(0.6);
+    }
+    .masonry-overlay {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 30px;
+      transform: translateY(100%);
+      transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
+    }
+    .masonry-item:hover .masonry-overlay {
+      transform: translateY(0);
+    }
+    .masonry-cat {
+      display: inline-block;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 8px;
+    }
+    .masonry-name {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.4rem;
+      font-weight: 400;
+      margin-bottom: 4px;
+    }
+    .masonry-year {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.4);
+    }
+
+    /* ===== SERVICES ===== */
+    .services-section { background: #000; }
+    .services-content { max-width: 900px; width: 100%; }
+    .services-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 300;
+      margin-bottom: 50px;
+    }
+    .services-list {
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .service-row {
+      display: flex;
+      align-items: center;
+      padding: 28px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      cursor: pointer;
+      transition: all 0.4s ease;
+    }
+    .service-row:hover {
+      padding-left: 20px;
+    }
+    .service-num {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.2);
+      width: 40px;
+      flex-shrink: 0;
+    }
+    .service-name {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+      font-weight: 400;
+      flex: 1;
+      transition: color 0.3s;
+    }
+    .service-row:hover .service-name { color: #fff; }
+    .service-arrow {
+      font-size: 1.2rem;
+      color: rgba(255,255,255,0.15);
+      transition: all 0.4s;
+    }
+    .service-row:hover .service-arrow {
+      color: #fff;
+      transform: translateX(8px);
+    }
+
+    /* ===== CONTACT ===== */
+    .contact-section {
+      flex-direction: column;
       text-align: center;
+    }
+    .contact-content { max-width: 700px; }
+    .contact-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 300;
+      line-height: 1.2;
       margin-bottom: 40px;
     }
-    .clients-row {
-      display: flex;
-      justify-content: center;
-      gap: 40px;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-    .client-logo {
-      width: 120px;
-      height: 44px;
-      background: rgba(255,255,255,0.06);
-      border-radius: 6px;
-      transition: background 0.3s;
-    }
-    .client-logo:hover { background: rgba(255,255,255,0.12); }
-
-    /* CONTACT */
-    .contact-section {
-      padding: 120px 60px;
-      text-align: center;
-    }
-    .contact-label {
-      font-size: 0.7rem;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.3);
-      margin-bottom: 20px;
-    }
     .contact-email {
-      font-size: clamp(1.5rem, 4vw, 3rem);
-      font-weight: 300;
-      letter-spacing: -1px;
+      display: inline-block;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(1.2rem, 3vw, 2rem);
       color: #fff;
       text-decoration: none;
       border-bottom: 1px solid rgba(255,255,255,0.2);
       padding-bottom: 4px;
       transition: border-color 0.3s;
+      margin-bottom: 50px;
     }
     .contact-email:hover { border-color: #fff; }
-
-    /* FOOTER */
-    footer {
-      padding: 30px 60px;
+    .contact-links {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-top: 1px solid rgba(255,255,255,0.06);
-      font-size: 0.78rem;
-      color: rgba(255,255,255,0.3);
+      justify-content: center;
+      gap: 40px;
+      margin-bottom: 60px;
     }
-    .footer-social { display: flex; gap: 20px; }
-    .footer-social a {
-      color: rgba(255,255,255,0.3);
+    .contact-links a {
+      color: rgba(255,255,255,0.35);
       text-decoration: none;
-      transition: color 0.2s;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: color 0.3s;
     }
-    .footer-social a:hover { color: #fff; }
+    .contact-links a:hover { color: #fff; }
+    .contact-copy {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.15);
+      letter-spacing: 0.08em;
+    }
 
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
+      .masonry { grid-template-columns: repeat(2, 1fr); }
+    }
     @media (max-width: 768px) {
-      nav { padding: 20px; }
-      .nav-links { display: none; }
-      .hero h1 { font-size: 2.2rem; }
-      .gallery { padding: 30px 20px 60px; }
-      .masonry { columns: 2; column-gap: 12px; }
-      .about {
-        grid-template-columns: 1fr;
-        padding: 60px 20px;
-        gap: 30px;
-      }
-      .about-photo { height: 300px; }
-      .clients { padding: 40px 20px; }
-      .client-logo { width: 80px; height: 30px; }
-      .contact-section { padding: 80px 20px; }
-      footer { padding: 20px; flex-direction: column; gap: 10px; }
+      html { scroll-snap-type: none; }
+      .section { min-height: auto; padding: 80px 6vw; }
+      .hero-section { min-height: 100vh; }
+      .masonry { grid-template-columns: 1fr; }
+      .masonry-item.tall .masonry-placeholder { aspect-ratio: 4/3; }
+      .about-stats { flex-direction: column; gap: 24px; }
+      .back-btn { top: 16px; left: 16px; padding: 8px 14px; font-size: 0.7rem; }
+      .cursor, .cursor-follower { display: none; }
+      body { cursor: auto; }
+      .contact-links { gap: 24px; }
+    }
+    @media (max-width: 480px) {
+      .hero-name { font-size: 2.8rem; }
+      .service-row { padding: 20px 0; }
+      .service-name { font-size: 1.1rem; }
     }
   </style>
-</head>
-<body>
-  <a href="/portfolio" class="back-btn">&larr; Torna al Portfolio</a>
-
-  <nav>
-    <div class="nav-name">Nome Cognome</div>
-    <ul class="nav-links">
-      <li><a href="#">Info</a></li>
-      <li><a href="#">Lavori</a></li>
-      <li><a href="#">Contatti</a></li>
-    </ul>
-  </nav>
-
-  <section class="hero">
-    <h1>
-      <span>Fotografo /&nbsp;</span>
-      <span>Designer /&nbsp;</span>
-      <span>Creativo</span>
-    </h1>
-    <div class="hero-scroll">Scorri</div>
-  </section>
-
-  <section class="gallery">
-    <div class="gallery-label">Lavori Selezionati</div>
-    <div class="masonry">
-      <div class="masonry-item m1">
-        <div class="placeholder"></div>
-        <div class="masonry-overlay"><span>Campagna Estiva 2026</span></div>
-      </div>
-      <div class="masonry-item m2">
-        <div class="placeholder"></div>
-        <div class="masonry-overlay"><span>Ritratti Urbani</span></div>
-      </div>
-      <div class="masonry-item m3">
-        <div class="placeholder"></div>
-        <div class="masonry-overlay"><span>Brand Identity — Alma</span></div>
-      </div>
-      <div class="masonry-item m4">
-        <div class="placeholder"></div>
-        <div class="masonry-overlay"><span>Editoriale Vogue</span></div>
-      </div>
-      <div class="masonry-item m5">
-        <div class="placeholder"></div>
-        <div class="masonry-overlay"><span>Architettura Minimalista</span></div>
-      </div>
-      <div class="masonry-item m6">
-        <div class="placeholder"></div>
-        <div class="masonry-overlay"><span>Food Photography</span></div>
-      </div>
-      <div class="masonry-item m7">
-        <div class="placeholder"></div>
-        <div class="masonry-overlay"><span>Packaging Design</span></div>
-      </div>
-      <div class="masonry-item m8">
-        <div class="placeholder"></div>
-        <div class="masonry-overlay"><span>Progetto Personale</span></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="about">
-    <div class="about-photo"></div>
-    <div class="about-text">
-      <h2>Ciao, sono Nome</h2>
-      <p>Da oltre dieci anni lavoro nel campo della fotografia e del design visivo. Il mio approccio combina sensibilità estetica e attenzione al dettaglio per raccontare storie attraverso le immagini.</p>
-      <p>Ho collaborato con brand nazionali e internazionali, agenzie creative e riviste di settore. Ogni progetto rappresenta una nuova sfida e una nuova occasione per esplorare la bellezza nelle sue forme più autentiche.</p>
-      <p>Vivo e lavoro a Milano.</p>
-    </div>
-  </section>
-
-  <section class="clients">
-    <div class="clients-label">Clienti Selezionati</div>
-    <div class="clients-row">
-      <div class="client-logo"></div>
-      <div class="client-logo"></div>
-      <div class="client-logo"></div>
-      <div class="client-logo"></div>
-      <div class="client-logo"></div>
-      <div class="client-logo"></div>
-    </div>
-  </section>
-
-  <section class="contact-section">
-    <div class="contact-label">Parliamo del tuo progetto</div>
-    <a href="mailto:ciao@iltuosito.it" class="contact-email">ciao@iltuosito.it</a>
-  </section>
-
-  <footer>
-    <span>&copy; 2026</span>
-    <div class="footer-social">
-      <a href="#">Instagram</a>
-      <a href="#">Behance</a>
-      <a href="#">LinkedIn</a>
-    </div>
-  </footer>
 </body>
 </html>
