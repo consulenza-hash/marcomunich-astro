@@ -62,12 +62,7 @@ export const prerender = true;
         </div>
       </div>
       <div class="hero-image">
-        <div class="hero-image-placeholder">
-          <div class="hero-image-lines">
-            <div></div><div></div><div></div><div></div><div></div>
-          </div>
-          <span>Foto di copertina</span>
-        </div>
+        <img src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=1200&h=500&fit=crop&auto=format&q=80" alt="Foto di copertina" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;" />
       </div>
     </div>
   </header>
@@ -92,9 +87,7 @@ export const prerender = true;
       <div class="articles">
         <article class="card card-featured fade-in">
           <div class="card-image">
-            <div class="card-image-placeholder">
-              <span>Immagine articolo</span>
-            </div>
+            <img src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=400&h=250&fit=crop&auto=format&q=80" alt="Immagine articolo" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;" />
             <div class="card-category-badge">Tecnologia</div>
           </div>
           <div class="card-body">
@@ -109,9 +102,7 @@ export const prerender = true;
 
         <article class="card fade-in">
           <div class="card-image">
-            <div class="card-image-placeholder small">
-              <span>Img</span>
-            </div>
+            <img src="https://images.unsplash.com/photo-1504711434969-e33886168d4c?w=400&h=250&fit=crop&auto=format&q=80" alt="Img" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;" />
           </div>
           <div class="card-body">
             <div class="card-category-tag">Cultura</div>
@@ -126,9 +117,7 @@ export const prerender = true;
 
         <article class="card fade-in">
           <div class="card-image">
-            <div class="card-image-placeholder small">
-              <span>Img</span>
-            </div>
+            <img src="https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?w=400&h=250&fit=crop&auto=format&q=80" alt="Img" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;" />
           </div>
           <div class="card-body">
             <div class="card-category-tag">Economia</div>
@@ -143,9 +132,7 @@ export const prerender = true;
 
         <article class="card fade-in">
           <div class="card-image">
-            <div class="card-image-placeholder small">
-              <span>Img</span>
-            </div>
+            <img src="https://images.unsplash.com/photo-1456324504439-367cee3b3c32?w=400&h=250&fit=crop&auto=format&q=80" alt="Img" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;" />
           </div>
           <div class="card-body">
             <div class="card-category-tag">Scienza</div>
@@ -160,9 +147,7 @@ export const prerender = true;
 
         <article class="card fade-in">
           <div class="card-image">
-            <div class="card-image-placeholder small">
-              <span>Img</span>
-            </div>
+            <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=400&h=250&fit=crop&auto=format&q=80" alt="Img" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;" />
           </div>
           <div class="card-body">
             <div class="card-category-tag">Opinioni</div>
@@ -184,9 +169,7 @@ export const prerender = true;
 
         <article class="card fade-in">
           <div class="card-image">
-            <div class="card-image-placeholder small">
-              <span>Img</span>
-            </div>
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=250&fit=crop&auto=format&q=80" alt="Img" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;" />
           </div>
           <div class="card-body">
             <div class="card-category-tag">Longform</div>
@@ -201,9 +184,7 @@ export const prerender = true;
 
         <article class="card fade-in">
           <div class="card-image">
-            <div class="card-image-placeholder small">
-              <span>Img</span>
-            </div>
+            <img src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=400&h=250&fit=crop&auto=format&q=80" alt="Img" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;" />
           </div>
           <div class="card-body">
             <div class="card-category-tag">Tecnologia</div>
@@ -504,25 +485,16 @@ export const prerender = true;
       color: #888;
     }
     .hero-meta strong { color: #1a1a1a; }
-    .hero-image-placeholder {
-      width: 100%;
-      aspect-ratio: 4/3;
-      background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+    .hero-image {
       border-radius: 12px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 16px;
-      position: relative;
       overflow: hidden;
       box-shadow: 0 25px 60px rgba(0,0,0,0.08);
     }
-    .hero-image-placeholder span {
-      font-size: 0.85rem;
-      color: #aaa;
-      font-weight: 600;
-      z-index: 1;
+    .hero-image img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      display: block;
     }
     .hero-image-lines {
       position: absolute;
@@ -607,24 +579,19 @@ export const prerender = true;
       background: linear-gradient(135deg, #fff 0%, #fef2f2 100%);
       border-color: rgba(220,38,38,0.1);
     }
-    .card-featured .card-image-placeholder { aspect-ratio: 16/8; }
+    .card-featured .card-image img { aspect-ratio: 16/8; }
     .card-image { overflow: hidden; border-radius: 10px; }
-    .card-image-placeholder {
+    .card-image img {
       width: 100%;
       aspect-ratio: 1;
-      background: linear-gradient(135deg, #f5f5f5, #ebebeb);
+      object-fit: cover;
+      display: block;
       border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.8rem;
-      color: #bbb;
       position: relative;
       overflow: hidden;
       transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .card-image-placeholder.small { aspect-ratio: 1; }
-    .card:hover .card-image-placeholder { transform: scale(1.08); }
+    .card:hover .card-image img { transform: scale(1.08); }
     .card-category-badge {
       position: absolute;
       top: 12px;
@@ -871,7 +838,7 @@ export const prerender = true;
       .hero-inner { grid-template-columns: 1fr; gap: 30px; }
       .hero { padding: 60px 5vw 40px; }
       .card { grid-template-columns: 1fr; }
-      .card-image-placeholder.small { aspect-ratio: 16/9; }
+      .card-image img { aspect-ratio: 16/9; }
       .back-btn { top: 48px; left: 12px; padding: 8px 14px; font-size: 0.78rem; }
       .pull-quote { padding: 40px 24px 30px 40px; }
       .pull-quote-mark { font-size: 3rem; left: 10px; }

@@ -252,7 +252,7 @@ export const prerender = true;
           <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
           <p class="testimonial-text">Un'esperienza trasformativa. Il massaggio rilassante mi ha restituito energie che non sentivo da mesi. Personale gentilissimo e ambiente da sogno.</p>
           <div class="testimonial-author">
-            <div class="testimonial-avatar">SB</div>
+            <img src="https://i.pravatar.cc/60?img=20" alt="Sara Bellini" loading="lazy" class="testimonial-avatar" style="width:42px;height:42px;object-fit:cover;display:block;border-radius:50%;" />
             <div>
               <div class="testimonial-name">Sara Bellini</div>
               <div class="testimonial-role">Massaggio Rilassante</div>
@@ -263,7 +263,7 @@ export const prerender = true;
           <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
           <p class="testimonial-text">Il percorso detox completo vale ogni centesimo. Dalla sauna al massaggio finale, ogni passaggio è curato nei minimi dettagli.</p>
           <div class="testimonial-author">
-            <div class="testimonial-avatar">MR</div>
+            <img src="https://i.pravatar.cc/60?img=25" alt="Marco Ricci" loading="lazy" class="testimonial-avatar" style="width:42px;height:42px;object-fit:cover;display:block;border-radius:50%;" />
             <div>
               <div class="testimonial-name">Marco Ricci</div>
               <div class="testimonial-role">Percorso Detox</div>
@@ -274,7 +274,7 @@ export const prerender = true;
           <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
           <p class="testimonial-text">Abbiamo festeggiato il nostro anniversario con il pacchetto coppia. Un'atmosfera romantica e rilassante che non dimenticheremo.</p>
           <div class="testimonial-author">
-            <div class="testimonial-avatar">LC</div>
+            <img src="https://i.pravatar.cc/60?img=30" alt="Laura e Carlo" loading="lazy" class="testimonial-avatar" style="width:42px;height:42px;object-fit:cover;display:block;border-radius:50%;" />
             <div>
               <div class="testimonial-name">Laura &amp; Carlo</div>
               <div class="testimonial-role">Pacchetto Coppia</div>
@@ -705,9 +705,8 @@ export const prerender = true;
     .testimonial-author { display: flex; gap: 12px; align-items: center; }
     .testimonial-avatar {
       width: 42px; height: 42px; border-radius: 50%;
-      background: linear-gradient(135deg, #059669, #34d399);
-      color: #fff; display: flex; align-items: center; justify-content: center;
-      font-size: 0.75rem; font-weight: 700;
+      object-fit: cover;
+      flex-shrink: 0;
     }
     .testimonial-name { font-weight: 700; font-size: 0.88rem; }
     .testimonial-role { font-size: 0.78rem; color: #999; }

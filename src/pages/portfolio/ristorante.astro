@@ -21,7 +21,7 @@ export const prerender = true;
 
   <!-- Hero -->
   <header class="hero">
-    <div class="hero-bg"></div>
+    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1200&h=600&fit=crop&auto=format&q=80" alt="Ristorante" loading="lazy" class="hero-bg" style="width:100%;height:100%;object-fit:cover;display:block;" />
     <div class="candle c1"><div class="flame"></div></div>
     <div class="candle c2"><div class="flame"></div></div>
     <div class="hero-content fade-in">
@@ -51,9 +51,7 @@ export const prerender = true;
     <div class="section-inner">
       <div class="phil-grid">
         <div class="phil-image fade-in">
-          <div class="phil-placeholder">
-            <span>Foto dello Chef</span>
-          </div>
+          <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=500&h=400&fit=crop&auto=format&q=80" alt="Foto dello Chef" loading="lazy" class="phil-placeholder" style="width:100%;height:100%;object-fit:cover;display:block;" />
         </div>
         <div class="phil-text fade-in">
           <span class="section-label">La Nostra Filosofia</span>
@@ -215,9 +213,7 @@ export const prerender = true;
       </div>
       <div class="photo-grid">
         <div class="photo-item photo-wide fade-in">
-          <div class="photo-placeholder">
-            <span>Sala principale</span>
-          </div>
+          <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?w=400&h=300&fit=crop&auto=format&q=80" alt="Sala principale" loading="lazy" class="photo-placeholder" style="width:100%;height:100%;object-fit:cover;display:block;" />
           <div class="photo-overlay">
             <div class="photo-zoom-icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg>
@@ -225,9 +221,7 @@ export const prerender = true;
           </div>
         </div>
         <div class="photo-item fade-in">
-          <div class="photo-placeholder">
-            <span>Piatto signature</span>
-          </div>
+          <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=300&fit=crop&auto=format&q=80" alt="Piatto signature" loading="lazy" class="photo-placeholder" style="width:100%;height:100%;object-fit:cover;display:block;" />
           <div class="photo-overlay">
             <div class="photo-zoom-icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg>
@@ -235,9 +229,7 @@ export const prerender = true;
           </div>
         </div>
         <div class="photo-item fade-in">
-          <div class="photo-placeholder">
-            <span>Cantina vini</span>
-          </div>
+          <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=400&h=300&fit=crop&auto=format&q=80" alt="Cantina vini" loading="lazy" class="photo-placeholder" style="width:100%;height:100%;object-fit:cover;display:block;" />
           <div class="photo-overlay">
             <div class="photo-zoom-icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg>
@@ -245,9 +237,7 @@ export const prerender = true;
           </div>
         </div>
         <div class="photo-item fade-in">
-          <div class="photo-placeholder">
-            <span>Dessert</span>
-          </div>
+          <img src="https://images.unsplash.com/photo-1424847651672-bf20a4b0982b?w=400&h=300&fit=crop&auto=format&q=80" alt="Dessert" loading="lazy" class="photo-placeholder" style="width:100%;height:100%;object-fit:cover;display:block;" />
           <div class="photo-overlay">
             <div class="photo-zoom-icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg>
@@ -255,9 +245,7 @@ export const prerender = true;
           </div>
         </div>
         <div class="photo-item photo-wide fade-in">
-          <div class="photo-placeholder">
-            <span>Terrazza panoramica</span>
-          </div>
+          <img src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?w=400&h=300&fit=crop&auto=format&q=80" alt="Terrazza panoramica" loading="lazy" class="photo-placeholder" style="width:100%;height:100%;object-fit:cover;display:block;" />
           <div class="photo-overlay">
             <div class="photo-zoom-icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg>
@@ -513,7 +501,8 @@ export const prerender = true;
     }
     .hero-bg {
       position: absolute; inset: 0;
-      background: radial-gradient(ellipse at 50% 30%, rgba(212,168,83,0.06) 0%, transparent 70%);
+      width: 100%; height: 100%; object-fit: cover;
+      opacity: 0.3;
     }
     .hero-content { position: relative; z-index: 2; }
     .hero-title {
@@ -646,10 +635,8 @@ export const prerender = true;
     }
     .phil-placeholder {
       width: 100%; aspect-ratio: 3/4;
-      background: linear-gradient(135deg, #151210, #1a1510);
+      object-fit: cover;
       border: 1px solid rgba(212,168,83,0.1);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.85rem; color: rgba(212,168,83,0.3);
     }
     .phil-text .section-label { margin-top: 0; }
     .phil-desc {
@@ -734,9 +721,7 @@ export const prerender = true;
     .photo-wide { grid-column: span 2; }
     .photo-placeholder {
       width: 100%; aspect-ratio: 16/10;
-      background: linear-gradient(135deg, #151210, #1a1510);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.85rem; color: rgba(212,168,83,0.25);
+      object-fit: cover;
       transition: transform 0.6s cubic-bezier(0.16,1,0.3,1);
     }
     .photo-item:hover .photo-placeholder { transform: scale(1.05); }
