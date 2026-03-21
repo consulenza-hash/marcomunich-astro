@@ -323,6 +323,55 @@ export const prerender = true;
       margin-top: 0.25rem;
       display: inline-block;
     }
+    .netsons-banner {
+      max-width: 900px;
+      margin: 0 auto 3rem;
+      text-align: center;
+      padding: 0 2rem;
+    }
+    .netsons-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1rem;
+    }
+    .netsons-link {
+      display: inline-block;
+      border-radius: 10px;
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+      border: 1px solid var(--border);
+    }
+    .netsons-link:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(59, 130, 246, 0.15);
+    }
+    .netsons-img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+    .netsons-mobile { display: none; }
+    .netsons-desktop { display: block; }
+    [data-theme="dark"] .netsons-dark-only { display: block; }
+    [data-theme="dark"] .netsons-light-only { display: none; }
+    [data-theme="light"] .netsons-dark-only { display: none; }
+    [data-theme="light"] .netsons-light-only { display: block; }
+    [data-theme="dark"] .netsons-mobile.netsons-dark-only { display: none; }
+    [data-theme="light"] .netsons-mobile.netsons-light-only { display: none; }
+    .netsons-note {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 1rem;
+      line-height: 1.5;
+    }
+    @media (max-width: 768px) {
+      .netsons-desktop { display: none !important; }
+      [data-theme="dark"] .netsons-mobile.netsons-dark-only { display: block !important; }
+      [data-theme="light"] .netsons-mobile.netsons-light-only { display: block !important; }
+    }
 
     /* ── Types detail ── */
     .types-section {
@@ -536,6 +585,17 @@ export const prerender = true;
         <li><span class="recurring-label">Mantenimento sito (opzionale)</span><span class="recurring-price">&euro;147/anno</span><br><span class="recurring-detail">Aggiornamenti tecnici, backup, monitoraggio, supporto per modifiche. Se preferisci gestire tutto in autonomia, questo costo non si applica.</span></li>
       </ul>
     </div>
+  </div>
+
+  <div class="netsons-banner">
+    <p class="netsons-label">Hosting consigliato · Datacenter in Italia</p>
+    <a href="https://www.netsons.com/manage/aff.php?aff=7671" target="_blank" rel="noopener" class="netsons-link">
+      <img src="/images/netsons/banner-dark.png" alt="Netsons Hosting" class="netsons-img netsons-dark-only netsons-desktop" loading="lazy">
+      <img src="/images/netsons/banner-light.png" alt="Netsons Hosting" class="netsons-img netsons-light-only netsons-desktop" loading="lazy">
+      <img src="/images/netsons/banner-dark-mobile.png" alt="Netsons Hosting" class="netsons-img netsons-dark-only netsons-mobile" loading="lazy">
+      <img src="/images/netsons/banner-light-mobile.png" alt="Netsons Hosting" class="netsons-img netsons-light-only netsons-mobile" loading="lazy">
+    </a>
+    <p class="netsons-note">Hai già un hosting? Il prezzo si riduce di conseguenza. L'importante è che il tuo provider supporti le tecnologie necessarie per il tipo di sito che costruiamo insieme.</p>
   </div>
 
   <!-- DETTAGLIO TIPOLOGIE -->
