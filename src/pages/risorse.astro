@@ -107,10 +107,10 @@ const socials = [
       </audio>
     </div>
 
-    <div class="rs-hero__social">
+    <div style="display:flex;gap:1.25rem;flex-wrap:wrap;justify-content:center;margin:1.5rem 0;">
       {socials.map(s => (
-        <a href={s.href} target="_blank" rel="nofollow" aria-label={s.label} class="rs-social-link">
-          <Fragment set:html={s.icon} />
+        <a href={s.href} target="_blank" rel="nofollow" aria-label={s.label} style="display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;color:#fff;">
+          <Fragment set:html={s.icon.replace('fill="currentColor"', 'fill="#ffffff" width="28" height="28" style="display:block;width:28px;height:28px;"')} />
         </a>
       ))}
     </div>
