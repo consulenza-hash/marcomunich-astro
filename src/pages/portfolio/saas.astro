@@ -496,16 +496,26 @@ export const prerender = true;
     /* Responsive */
     @media (max-width: 1200px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 768px) {
+      body { overflow-x: hidden; }
       .sidebar { display: none; }
-      .main { margin-left: 0; padding: 16px; }
+      .main { margin-left: 0; padding: 16px; width: 100%; max-width: 100%; box-sizing: border-box; }
       .back-btn { top: 12px; left: 12px; font-size: 0.8rem; padding: 8px 14px; }
-      .topbar { flex-direction: column; align-items: flex-start; gap: 16px; padding-top: 56px; }
+      .topbar { flex-direction: column; align-items: flex-start; gap: 12px; padding-top: 56px; }
       .topbar-right { width: 100%; }
       .search-box { flex: 1; }
       .search-box input { width: 100%; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+      .stat-card { padding: 16px; }
+      .stat-value { font-size: 1.5rem; }
+      .chart-card { padding: 16px; max-width: 100%; box-sizing: border-box; }
+      .chart-bars { height: 150px; gap: 8px; }
+      .bar-group { gap: 2px; }
+      .table-card { padding: 16px; max-width: 100%; box-sizing: border-box; overflow-x: auto; }
+      .activity-table { min-width: 480px; }
+      .activity-table th, .activity-table td { padding: 10px 8px; font-size: 0.8rem; }
+    }
+    @media (max-width: 420px) {
       .stats-grid { grid-template-columns: 1fr; }
-      .chart-bars { height: 150px; }
-      .activity-table th, .activity-table td { padding: 10px 8px; }
     }
   </style>
 
