@@ -791,6 +791,7 @@ export const prerender = true;
       <a href="/api/prompt-pack/checkout" class="pp-price-box__btn pp-price-box__btn--disabled" id="pp-buy-btn" aria-disabled="true">
         Acquista ora → €27
       </a>
+      <p id="pp-hint" style="margin:8px 0 0; font-size:0.8rem; color:#e67e22; display:block;">↑ Spunta la casella qui sopra per attivare il pulsante</p>
       <p class="pp-price-box__note">
         Pagamento sicuro · Accesso immediato · Nessuna app da installare
       </p>
@@ -870,15 +871,19 @@ export const prerender = true;
   const newsletterCheck = document.getElementById('pp-newsletter-check') as HTMLInputElement | null;
   const btn = document.getElementById('pp-buy-btn') as HTMLAnchorElement | null;
 
+  const hint = document.getElementById('pp-hint');
+
   function updateBtn() {
     if (!btn) return;
     const enabled = consentCheck?.checked ?? false;
     if (enabled) {
       btn.classList.remove('pp-price-box__btn--disabled');
       btn.removeAttribute('aria-disabled');
+      if (hint) hint.style.display = 'none';
     } else {
       btn.classList.add('pp-price-box__btn--disabled');
       btn.setAttribute('aria-disabled', 'true');
+      if (hint) hint.style.display = 'block';
     }
     // Aggiunge ?newsletter=1 all'href se newsletter spuntata
     const base = '/api/prompt-pack/checkout';
