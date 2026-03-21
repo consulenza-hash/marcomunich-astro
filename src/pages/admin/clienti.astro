@@ -1,0 +1,817 @@
+---
+export const prerender = false;
+
+// ── Auth ──────────────────────────────────────────────────────────────────────
+const cookie      = Astro.cookies.get('stats_auth')?.value ?? '';
+const expectedPwd = (import.meta.env.STATS_PASSWORD || 'stats2024').trim();
+const isAuth      = cookie === expectedPwd;
+
+if (Astro.request.method === 'POST' && !isAuth) {
+  const form = await Astro.request.formData();
+  const pw   = form.get('password')?.toString().trim() ?? '';
+  if (pw === expectedPwd) {
+    Astro.cookies.set('stats_auth', pw, { path: '/', maxAge: 60*60*24*7, httpOnly: true, secure: true, sameSite: 'lax' });
+    return Astro.redirect('/admin/clienti');
+  }
+}
+---
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gestione Clienti — Admin</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+      min-height: 100vh;
+      padding: 2rem 1rem;
+    }
+
+    .wrap { max-width: 1200px; margin: 0 auto; }
+
+    a { color: #94a3b8; text-decoration: none; transition: color .2s; }
+    a:hover { color: #f59e0b; }
+
+    /* ── Login ── */
+    .login-box {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 12px;
+      padding: 3rem;
+      max-width: 400px;
+      margin: 8rem auto;
+      text-align: center;
+    }
+    .login-box h2 { margin-bottom: 1.5rem; font-size: 1.2rem; }
+    .login-box input {
+      width: 100%;
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: .75rem 1rem;
+      color: #e2e8f0;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+    .login-box button {
+      width: 100%;
+      background: #f59e0b;
+      color: #0f172a;
+      border: none;
+      border-radius: 8px;
+      padding: .75rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .2s;
+    }
+    .login-box button:hover { background: #d97706; }
+
+    /* ── Header ── */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .header-left { display: flex; align-items: center; gap: 1.5rem; }
+    .header-left .back { font-size: .9rem; color: #94a3b8; }
+    .header-left .back:hover { color: #f59e0b; }
+    .header h1 { font-size: 1.5rem; font-weight: 700; }
+    .btn-new {
+      background: #f59e0b;
+      color: #0f172a;
+      border: none;
+      border-radius: 8px;
+      padding: .6rem 1.2rem;
+      font-size: .9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .2s;
+    }
+    .btn-new:hover { background: #d97706; }
+
+    /* ── Filters ── */
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .75rem;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    .search-input {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: .5rem 1rem;
+      color: #e2e8f0;
+      font-size: .9rem;
+      min-width: 220px;
+      flex: 1;
+      max-width: 320px;
+    }
+    .search-input::placeholder { color: #64748b; }
+    .filter-btn {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: .45rem .9rem;
+      color: #94a3b8;
+      font-size: .85rem;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .filter-btn:hover { border-color: #f59e0b; color: #f59e0b; }
+    .filter-btn.active { background: #f59e0b; color: #0f172a; border-color: #f59e0b; font-weight: 600; }
+
+    /* ── Table ── */
+    .table-wrap {
+      overflow-x: auto;
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 12px;
+    }
+    table { width: 100%; border-collapse: collapse; min-width: 700px; }
+    thead th {
+      text-align: left;
+      padding: .75rem 1rem;
+      font-size: .8rem;
+      font-weight: 600;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      border-bottom: 1px solid #334155;
+    }
+    tbody tr { cursor: pointer; transition: background .15s; }
+    tbody tr:hover { background: #253348; }
+    tbody td {
+      padding: .7rem 1rem;
+      font-size: .9rem;
+      border-bottom: 1px solid #1e293b;
+      vertical-align: middle;
+    }
+
+    /* ── Badges ── */
+    .badge {
+      display: inline-block;
+      padding: .2rem .6rem;
+      border-radius: 9999px;
+      font-size: .75rem;
+      font-weight: 600;
+    }
+    .badge-attivo { background: #065f46; color: #6ee7b7; }
+    .badge-in_lavorazione { background: #713f12; color: #fde68a; }
+    .badge-scaduto { background: #7f1d1d; color: #fca5a5; }
+    .badge-concluso { background: #334155; color: #94a3b8; }
+
+    .date-warn { color: #ef4444; font-weight: 600; }
+
+    /* ── Action buttons ── */
+    .actions { display: flex; gap: .4rem; flex-wrap: wrap; }
+    .btn-sm {
+      padding: .3rem .6rem;
+      border-radius: 6px;
+      border: 1px solid #334155;
+      background: #1e293b;
+      color: #94a3b8;
+      font-size: .78rem;
+      cursor: pointer;
+      transition: all .15s;
+      white-space: nowrap;
+    }
+    .btn-sm:hover { border-color: #f59e0b; color: #f59e0b; }
+    .btn-sm.danger { border-color: #7f1d1d; color: #ef4444; }
+    .btn-sm.danger:hover { background: #7f1d1d; color: #fca5a5; }
+
+    /* ── Expanded row ── */
+    .expanded-row { display: none; }
+    .expanded-row.open { display: table-row; }
+    .expanded-cell {
+      padding: 1rem 1.5rem;
+      background: #162032;
+      border-bottom: 1px solid #334155;
+    }
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: .75rem;
+      margin-bottom: 1rem;
+    }
+    .detail-item label {
+      display: block;
+      font-size: .75rem;
+      color: #64748b;
+      margin-bottom: .15rem;
+      text-transform: uppercase;
+    }
+    .detail-item span { font-size: .9rem; }
+    .note-box {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: .75rem 1rem;
+      margin-top: .75rem;
+    }
+    .note-box h4 { font-size: .85rem; margin-bottom: .5rem; color: #94a3b8; }
+    .note-entry { font-size: .85rem; padding: .3rem 0; border-bottom: 1px solid #253348; }
+    .note-entry:last-child { border-bottom: none; }
+    .note-date { color: #64748b; font-size: .75rem; margin-right: .5rem; }
+    .add-note-row {
+      display: flex;
+      gap: .5rem;
+      margin-top: .5rem;
+    }
+    .add-note-row input {
+      flex: 1;
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 6px;
+      padding: .4rem .7rem;
+      color: #e2e8f0;
+      font-size: .85rem;
+    }
+    .add-note-row button {
+      background: #f59e0b;
+      color: #0f172a;
+      border: none;
+      border-radius: 6px;
+      padding: .4rem .8rem;
+      font-size: .85rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .storico-title { font-size: .85rem; color: #94a3b8; margin-top: .75rem; margin-bottom: .4rem; }
+
+    /* ── Modal ── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.6);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 12px;
+      padding: 2rem;
+      width: 100%;
+      max-width: 600px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .modal h2 { font-size: 1.2rem; margin-bottom: 1.5rem; }
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .form-group { display: flex; flex-direction: column; }
+    .form-group.full { grid-column: 1 / -1; }
+    .form-group label {
+      font-size: .8rem;
+      color: #94a3b8;
+      margin-bottom: .3rem;
+      font-weight: 500;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: .55rem .8rem;
+      color: #e2e8f0;
+      font-size: .9rem;
+      font-family: inherit;
+    }
+    .form-group textarea { resize: vertical; min-height: 80px; }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #f59e0b;
+    }
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      padding-top: 1.5rem;
+    }
+    .checkbox-row input[type="checkbox"] { width: 18px; height: 18px; accent-color: #f59e0b; }
+    .form-actions {
+      display: flex;
+      gap: .75rem;
+      justify-content: flex-end;
+      margin-top: 1.5rem;
+    }
+    .btn-save {
+      background: #f59e0b;
+      color: #0f172a;
+      border: none;
+      border-radius: 8px;
+      padding: .6rem 1.5rem;
+      font-size: .9rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-save:hover { background: #d97706; }
+    .btn-cancel {
+      background: transparent;
+      border: 1px solid #334155;
+      color: #94a3b8;
+      border-radius: 8px;
+      padding: .6rem 1.5rem;
+      font-size: .9rem;
+      cursor: pointer;
+    }
+    .btn-cancel:hover { border-color: #94a3b8; color: #e2e8f0; }
+
+    /* ── Empty state ── */
+    .empty-state {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: #64748b;
+      font-size: .95rem;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .header { flex-direction: column; align-items: flex-start; }
+      .filters { flex-direction: column; }
+      .search-input { max-width: 100%; min-width: 0; width: 100%; }
+      .form-grid { grid-template-columns: 1fr; }
+      .modal { padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    {!isAuth ? (
+      <div class="login-box">
+        <h2>Gestione Clienti — Accesso</h2>
+        <form method="POST">
+          <input type="password" name="password" placeholder="Password" autofocus />
+          <button type="submit">Accedi</button>
+        </form>
+      </div>
+    ) : (
+      <>
+        <!-- Header -->
+        <div class="header">
+          <div class="header-left">
+            <a href="/admin" class="back">&larr; Dashboard</a>
+            <h1>Gestione Clienti</h1>
+          </div>
+          <button class="btn-new" onclick="showForm(null)">+ Nuovo Cliente</button>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters">
+          <input type="text" class="search-input" id="searchInput" placeholder="Cerca nome o sito..." oninput="renderTable()" />
+          <button class="filter-btn active" data-filter="tutti" onclick="setFilter(this)">Tutti</button>
+          <button class="filter-btn" data-filter="attivo" onclick="setFilter(this)">Attivi</button>
+          <button class="filter-btn" data-filter="in_lavorazione" onclick="setFilter(this)">In lavorazione</button>
+          <button class="filter-btn" data-filter="scaduto" onclick="setFilter(this)">Scaduti</button>
+          <button class="filter-btn" data-filter="concluso" onclick="setFilter(this)">Conclusi</button>
+        </div>
+
+        <!-- Table -->
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>Sito</th>
+                <th>Pacchetto</th>
+                <th>Stato</th>
+                <th>Scadenza Hosting</th>
+                <th>Azioni</th>
+              </tr>
+            </thead>
+            <tbody id="clientiBody"></tbody>
+          </table>
+          <div class="empty-state" id="emptyState" style="display:none;">Nessun cliente trovato.</div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal-overlay" id="modalOverlay" onclick="closeModalOverlay(event)">
+          <div class="modal" onclick="event.stopPropagation()">
+            <h2 id="modalTitle">Nuovo Cliente</h2>
+            <div class="form-grid">
+              <div class="form-group">
+                <label>Nome *</label>
+                <input type="text" id="fNome" required />
+              </div>
+              <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="fEmail" />
+              </div>
+              <div class="form-group">
+                <label>Telefono</label>
+                <input type="tel" id="fTelefono" />
+              </div>
+              <div class="form-group">
+                <label>URL Sito</label>
+                <input type="url" id="fSito" placeholder="https://" />
+              </div>
+              <div class="form-group">
+                <label>Pacchetto</label>
+                <select id="fPacchetto">
+                  <option value="Sito Vetrina">Sito Vetrina</option>
+                  <option value="Sito Professionale">Sito Professionale</option>
+                  <option value="E-commerce">E-commerce</option>
+                  <option value="Custom">Custom</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Prezzo (&euro;)</label>
+                <input type="number" id="fPrezzo" min="0" step="1" />
+              </div>
+              <div class="form-group">
+                <label>Stato</label>
+                <select id="fStato">
+                  <option value="attivo">Attivo</option>
+                  <option value="in_lavorazione">In lavorazione</option>
+                  <option value="scaduto">Scaduto</option>
+                  <option value="concluso">Concluso</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Data Inizio</label>
+                <input type="date" id="fDataInizio" />
+              </div>
+              <div class="form-group">
+                <label>Data Consegna</label>
+                <input type="date" id="fDataConsegna" />
+              </div>
+              <div class="form-group">
+                <label>Scadenza Hosting</label>
+                <input type="date" id="fScadenzaHosting" />
+              </div>
+              <div class="form-group">
+                <div class="checkbox-row">
+                  <input type="checkbox" id="fHaMantenimento" onchange="toggleMantenimento()" />
+                  <label for="fHaMantenimento" style="margin:0;">Ha Mantenimento</label>
+                </div>
+              </div>
+              <div class="form-group" id="mantenimentoGroup" style="display:none;">
+                <label>Scadenza Mantenimento</label>
+                <input type="date" id="fScadenzaMant" />
+              </div>
+              <div class="form-group full">
+                <label>Note</label>
+                <textarea id="fNote"></textarea>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button class="btn-cancel" onclick="closeModal()">Annulla</button>
+              <button class="btn-save" onclick="saveCliente()">Salva</button>
+            </div>
+          </div>
+        </div>
+      </>
+    )}
+
+  </div>
+
+  <script is:inline>
+    var clienti = [];
+    var editingId = null;
+    var currentFilter = 'tutti';
+
+    var STATO_LABELS = {
+      attivo: 'Attivo',
+      in_lavorazione: 'In lavorazione',
+      scaduto: 'Scaduto',
+      concluso: 'Concluso'
+    };
+
+    var PACCHETTO_SHORT = {
+      'Sito Vetrina': 'Vetrina',
+      'Sito Professionale': 'Professionale',
+      'E-commerce': 'E-commerce',
+      'Custom': 'Custom'
+    };
+
+    function loadClienti() {
+      fetch('/api/clienti')
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          clienti = data;
+          renderTable();
+        })
+        .catch(function() {
+          clienti = [];
+          renderTable();
+        });
+    }
+
+    function isExpiringSoon(dateStr) {
+      if (!dateStr) return false;
+      var now = new Date();
+      var target = new Date(dateStr);
+      var diff = target.getTime() - now.getTime();
+      var days = diff / (1000 * 60 * 60 * 24);
+      return days <= 30 && days >= 0;
+    }
+
+    function isExpired(dateStr) {
+      if (!dateStr) return false;
+      var now = new Date();
+      var target = new Date(dateStr);
+      return target.getTime() < now.getTime();
+    }
+
+    function formatDate(dateStr) {
+      if (!dateStr) return '—';
+      var d = new Date(dateStr);
+      var day = String(d.getDate()).padStart(2, '0');
+      var month = String(d.getMonth() + 1).padStart(2, '0');
+      var year = d.getFullYear();
+      return day + '/' + month + '/' + year;
+    }
+
+    function renderTable() {
+      var body = document.getElementById('clientiBody');
+      var empty = document.getElementById('emptyState');
+      var search = (document.getElementById('searchInput').value || '').toLowerCase();
+
+      var filtered = clienti.filter(function(c) {
+        if (currentFilter !== 'tutti' && c.stato !== currentFilter) return false;
+        if (search) {
+          var nome = (c.nome || '').toLowerCase();
+          var sito = (c.sito || '').toLowerCase();
+          if (nome.indexOf(search) === -1 && sito.indexOf(search) === -1) return false;
+        }
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        body.innerHTML = '';
+        empty.style.display = 'block';
+        return;
+      }
+      empty.style.display = 'none';
+
+      var html = '';
+      for (var i = 0; i < filtered.length; i++) {
+        var c = filtered[i];
+        var badgeClass = 'badge badge-' + c.stato;
+        var scadHostClass = '';
+        if (isExpired(c.scadenza_hosting) || isExpiringSoon(c.scadenza_hosting)) {
+          scadHostClass = ' class="date-warn"';
+        }
+        var sitoShort = (c.sito || '').replace(/^https?:\/\//, '').replace(/\/$/, '');
+        var pacchettoLabel = PACCHETTO_SHORT[c.pacchetto] || c.pacchetto || '—';
+
+        html += '<tr onclick="toggleRow(\'' + c.id + '\')">';
+        html += '<td><strong>' + escapeHtml(c.nome) + '</strong></td>';
+        html += '<td>';
+        if (c.sito) {
+          html += '<a href="' + escapeHtml(c.sito) + '" target="_blank" rel="noopener" onclick="event.stopPropagation()">' + escapeHtml(sitoShort) + '</a>';
+        } else {
+          html += '—';
+        }
+        html += '</td>';
+        html += '<td>' + escapeHtml(pacchettoLabel) + '</td>';
+        html += '<td><span class="' + badgeClass + '">' + (STATO_LABELS[c.stato] || c.stato) + '</span></td>';
+        html += '<td' + scadHostClass + '>' + formatDate(c.scadenza_hosting) + '</td>';
+        html += '<td class="actions" onclick="event.stopPropagation()">';
+        html += '<button class="btn-sm" onclick="showForm(clientById(\'' + c.id + '\'))">Modifica</button>';
+        if (c.sito) {
+          html += '<a class="btn-sm" href="' + escapeHtml(c.sito) + '" target="_blank" rel="noopener">Apri sito</a>';
+        }
+        html += '<button class="btn-sm" onclick="promptNote(\'' + c.id + '\')">Note</button>';
+        html += '<button class="btn-sm danger" onclick="deleteCliente(\'' + c.id + '\')">Elimina</button>';
+        html += '</td>';
+        html += '</tr>';
+
+        // Expanded row
+        html += '<tr class="expanded-row" id="row-' + c.id + '">';
+        html += '<td colspan="6" class="expanded-cell">';
+        html += '<div class="detail-grid">';
+        html += detailItem('Email', c.email);
+        html += detailItem('Telefono', c.telefono);
+        html += detailItem('Prezzo', c.prezzo ? c.prezzo + ' &euro;' : '—');
+        html += detailItem('Data Inizio', formatDate(c.data_inizio));
+        html += detailItem('Data Consegna', formatDate(c.data_consegna));
+        html += detailItem('Mantenimento', c.ha_mantenimento ? 'Si' : 'No');
+        if (c.ha_mantenimento) {
+          var mantClass = '';
+          if (isExpired(c.scadenza_mantenimento) || isExpiringSoon(c.scadenza_mantenimento)) {
+            mantClass = ' date-warn';
+          }
+          html += '<div class="detail-item"><label>Scadenza Mant.</label><span class="' + mantClass + '">' + formatDate(c.scadenza_mantenimento) + '</span></div>';
+        }
+        html += '</div>';
+
+        // Notes
+        var notes = c.note_list || [];
+        if (c.note && notes.length === 0) {
+          notes = [{ data: '', testo: c.note }];
+        }
+        if (notes.length > 0) {
+          html += '<div class="note-box"><h4>Note</h4>';
+          for (var n = 0; n < notes.length; n++) {
+            html += '<div class="note-entry">';
+            if (notes[n].data) html += '<span class="note-date">' + formatDate(notes[n].data) + '</span>';
+            html += escapeHtml(notes[n].testo);
+            html += '</div>';
+          }
+          html += '</div>';
+        }
+
+        // Storico
+        var storico = c.storico || [];
+        if (storico.length > 0) {
+          html += '<div class="storico-title">Storico modifiche</div>';
+          html += '<div class="note-box">';
+          for (var s = 0; s < storico.length; s++) {
+            html += '<div class="note-entry"><span class="note-date">' + formatDate(storico[s].data) + '</span>' + escapeHtml(storico[s].azione) + '</div>';
+          }
+          html += '</div>';
+        }
+
+        // Add note inline
+        html += '<div class="add-note-row">';
+        html += '<input type="text" id="noteInput-' + c.id + '" placeholder="Aggiungi una nota..." />';
+        html += '<button onclick="addNote(\'' + c.id + '\')">Aggiungi</button>';
+        html += '</div>';
+
+        html += '</td></tr>';
+      }
+
+      body.innerHTML = html;
+    }
+
+    function detailItem(label, value) {
+      return '<div class="detail-item"><label>' + label + '</label><span>' + (value || '&mdash;') + '</span></div>';
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function clientById(id) {
+      for (var i = 0; i < clienti.length; i++) {
+        if (clienti[i].id === id) return clienti[i];
+      }
+      return null;
+    }
+
+    function setFilter(btn) {
+      var all = document.querySelectorAll('.filter-btn');
+      for (var i = 0; i < all.length; i++) { all[i].classList.remove('active'); }
+      btn.classList.add('active');
+      currentFilter = btn.getAttribute('data-filter');
+      renderTable();
+    }
+
+    function toggleRow(id) {
+      var row = document.getElementById('row-' + id);
+      if (!row) return;
+      row.classList.toggle('open');
+    }
+
+    function showForm(cliente) {
+      editingId = cliente ? cliente.id : null;
+      document.getElementById('modalTitle').textContent = cliente ? 'Modifica Cliente' : 'Nuovo Cliente';
+      document.getElementById('fNome').value = cliente ? (cliente.nome || '') : '';
+      document.getElementById('fEmail').value = cliente ? (cliente.email || '') : '';
+      document.getElementById('fTelefono').value = cliente ? (cliente.telefono || '') : '';
+      document.getElementById('fSito').value = cliente ? (cliente.sito || '') : '';
+      document.getElementById('fPacchetto').value = cliente ? (cliente.pacchetto || 'Sito Vetrina') : 'Sito Vetrina';
+      document.getElementById('fPrezzo').value = cliente ? (cliente.prezzo || '') : '';
+      document.getElementById('fStato').value = cliente ? (cliente.stato || 'attivo') : 'attivo';
+      document.getElementById('fDataInizio').value = cliente ? (cliente.data_inizio || '') : '';
+      document.getElementById('fDataConsegna').value = cliente ? (cliente.data_consegna || '') : '';
+      document.getElementById('fScadenzaHosting').value = cliente ? (cliente.scadenza_hosting || '') : '';
+      document.getElementById('fHaMantenimento').checked = cliente ? !!cliente.ha_mantenimento : false;
+      document.getElementById('fScadenzaMant').value = cliente ? (cliente.scadenza_mantenimento || '') : '';
+      document.getElementById('fNote').value = cliente ? (cliente.note || '') : '';
+      toggleMantenimento();
+      document.getElementById('modalOverlay').classList.add('open');
+    }
+
+    function closeModal() {
+      document.getElementById('modalOverlay').classList.remove('open');
+      editingId = null;
+    }
+
+    function closeModalOverlay(e) {
+      if (e.target === e.currentTarget) closeModal();
+    }
+
+    function toggleMantenimento() {
+      var checked = document.getElementById('fHaMantenimento').checked;
+      document.getElementById('mantenimentoGroup').style.display = checked ? '' : 'none';
+    }
+
+    function saveCliente() {
+      var nome = document.getElementById('fNome').value.trim();
+      if (!nome) {
+        alert('Il nome e\u0027 obbligatorio.');
+        return;
+      }
+
+      var payload = {
+        action: editingId ? 'update' : 'create',
+        id: editingId || undefined,
+        nome: nome,
+        email: document.getElementById('fEmail').value.trim(),
+        telefono: document.getElementById('fTelefono').value.trim(),
+        sito: document.getElementById('fSito').value.trim(),
+        pacchetto: document.getElementById('fPacchetto').value,
+        prezzo: document.getElementById('fPrezzo').value ? Number(document.getElementById('fPrezzo').value) : null,
+        stato: document.getElementById('fStato').value,
+        data_inizio: document.getElementById('fDataInizio').value || null,
+        data_consegna: document.getElementById('fDataConsegna').value || null,
+        scadenza_hosting: document.getElementById('fScadenzaHosting').value || null,
+        ha_mantenimento: document.getElementById('fHaMantenimento').checked,
+        scadenza_mantenimento: document.getElementById('fScadenzaMant').value || null,
+        note: document.getElementById('fNote').value.trim()
+      };
+
+      fetch('/api/clienti', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(function(r) { return r.json(); })
+      .then(function() {
+        closeModal();
+        loadClienti();
+      })
+      .catch(function(err) { alert('Errore nel salvataggio: ' + err.message); });
+    }
+
+    function deleteCliente(id) {
+      if (!confirm('Eliminare questo cliente?')) return;
+      fetch('/api/clienti', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'delete', id: id })
+      })
+      .then(function() { loadClienti(); })
+      .catch(function(err) { alert('Errore: ' + err.message); });
+    }
+
+    function addNote(id) {
+      var input = document.getElementById('noteInput-' + id);
+      if (!input) return;
+      var testo = input.value.trim();
+      if (!testo) return;
+
+      fetch('/api/clienti', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'add_note', id: id, testo: testo })
+      })
+      .then(function() {
+        input.value = '';
+        loadClienti();
+      })
+      .catch(function(err) { alert('Errore: ' + err.message); });
+    }
+
+    function promptNote(id) {
+      var testo = prompt('Inserisci una nota:');
+      if (!testo || !testo.trim()) return;
+      fetch('/api/clienti', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'add_note', id: id, testo: testo.trim() })
+      })
+      .then(function() { loadClienti(); })
+      .catch(function(err) { alert('Errore: ' + err.message); });
+    }
+
+    // Init
+    if (document.getElementById('clientiBody')) {
+      loadClienti();
+    }
+  </script>
+</body>
+</html>
