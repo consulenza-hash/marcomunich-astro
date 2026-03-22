@@ -35,7 +35,7 @@ jobs:
         run: |
           cp package.json dist/package.json
           cp package-lock.json dist/package-lock.json
-          cd dist && npm ci --production --ignore-scripts
+          cd dist && npm ci --ignore-scripts
 
       - name: Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
