@@ -1,59 +1,42 @@
-name: Build & Deploy
+name: Deploy to Netsons
 
-# Trigger 1: WordPress pubblica/aggiorna/elimina un articolo → invia webhook a GitHub
-# Trigger 2: push di codice su main (aggiornamenti Astro/CSS/pagine)
-# Trigger 3: manuale da GitHub Actions tab (utile per test)
 on:
-  repository_dispatch:
-    types: [wp_content_changed, wp_post_published]
   push:
     branches: [main]
+  repository_dispatch:
+    types: [wp_content_changed, wp_post_published]
   workflow_dispatch:
 
 jobs:
-  build-deploy:
+  deploy:
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
-    permissions:
-      contents: write   # necessario per git push sul branch deploy
-
     steps:
-      # ── 1. Checkout branch main (sorgente Astro) ──────────────────────────
-      - name: Checkout main
+      - name: Checkout
         uses: actions/checkout@v4
         with:
           ref: main
           fetch-depth: 0
-          # Usa GITHUB_TOKEN built-in (non serve PAT esterno)
 
-      # ── 2. Setup Node.js ───────────────────────────────────────────────────
-      - name: Setup Node.js 20
+      - name: Setup Node.js 22
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: 'npm'
 
-      # ── 3. Installa dipendenze ─────────────────────────────────────────────
       - name: Install dependencies
         run: npm ci
 
-      # ── 4. Build Astro ─────────────────────────────────────────────────────
       - name: Build
         run: npm run build
 
-      # ── 5. Trigger Vercel rebuild (solo per WordPress/manuale — push su main
-      #       è già auto-deployato da Vercel tramite GitHub integration) ────────
-      - name: Trigger Vercel rebuild
-        if: github.event_name != 'push'
-        run: |
-          HTTP_CODE=$(curl -s -o /tmp/vercel_response.txt -w "%{http_code}" \
-            -X POST \
-            "https://api.vercel.com/v1/integrations/deploy/prj_kVRUrVBfghaw1Ng51e3UcMKDWBU5/4eEbccdxYr")
-          echo "HTTP $HTTP_CODE"
-          cat /tmp/vercel_response.txt
-          if [ "$HTTP_CODE" != "200" ] && [ "$HTTP_CODE" != "201" ]; then
-            echo "❌ Vercel deploy hook fallito (HTTP $HTTP_CODE)"
-            exit 1
-          fi
-          echo "✅ Vercel rebuild avviato"
+      - name: Deploy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ftp.marcomunich.com
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./dist/
+          server-dir: /marcomunich-app/
+          dangerous-clean-slate: false

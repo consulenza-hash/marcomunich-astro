@@ -1,7 +1,7 @@
-import { defineConfig, envField } from 'astro/config';
+import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 import sitemap from '@astrojs/sitemap';
-import vercel from '@astrojs/vercel';
+import node from '@astrojs/node';
 import keystatic from '@keystatic/astro';
 import react from '@astrojs/react';
 import { fileURLToPath } from 'url';
@@ -16,7 +16,7 @@ export default defineConfig({
 
   // Static (default Astro 5): supporta prerender=false su singole pagine (ex "hybrid")
   output: 'static',
-  adapter: vercel(),
+  adapter: node({ mode: 'standalone' }),
 
   // Disabilita CSRF check per le pagine SSR (es. /admin/statistiche login form)
   security: { checkOrigin: false },
@@ -36,31 +36,6 @@ export default defineConfig({
     react(),
     keystatic(),
   ],
-
-  // Variabili d'ambiente server-side (lette a runtime, non inlined da Vite)
-  env: {
-    schema: {
-      GITHUB_TOKEN:             envField.string({ context: 'server', access: 'secret', optional: true }),
-      STRIPE_SECRET_KEY:        envField.string({ context: 'server', access: 'secret', optional: true }),
-      STRIPE_WEBHOOK_SECRET:    envField.string({ context: 'server', access: 'secret', optional: true }),
-      STRIPE_PRICE_ID:          envField.string({ context: 'server', access: 'secret', optional: true }),
-      RESEND_API_KEY:           envField.string({ context: 'server', access: 'secret', optional: true }),
-      SITE_URL:                 envField.string({ context: 'server', access: 'public',  optional: true }),
-      PROMPT_PACK_DEV_BYPASS:   envField.string({ context: 'server', access: 'public',  optional: true }),
-      PP_GIST_ID:               envField.string({ context: 'server', access: 'secret',  optional: true }),
-      ADMIN_PASSWORD:           envField.string({ context: 'server', access: 'secret',  optional: true }),
-      ADMIN_SESSION_SALT:       envField.string({ context: 'server', access: 'secret',  optional: true }),
-      // Social Media APIs
-      X_API_KEY:                envField.string({ context: 'server', access: 'secret',  optional: true }),
-      X_API_SECRET:             envField.string({ context: 'server', access: 'secret',  optional: true }),
-      X_ACCESS_TOKEN:           envField.string({ context: 'server', access: 'secret',  optional: true }),
-      X_ACCESS_TOKEN_SECRET:    envField.string({ context: 'server', access: 'secret',  optional: true }),
-      LINKEDIN_ACCESS_TOKEN:    envField.string({ context: 'server', access: 'secret',  optional: true }),
-      LINKEDIN_PERSON_URN:      envField.string({ context: 'server', access: 'secret',  optional: true }),
-      FB_PAGE_ID:               envField.string({ context: 'server', access: 'secret',  optional: true }),
-      FB_PAGE_ACCESS_TOKEN:     envField.string({ context: 'server', access: 'secret',  optional: true }),
-    },
-  },
 
   // Alias per import più puliti
   vite: {

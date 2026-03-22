@@ -11,7 +11,7 @@ export const prerender = false;
 
 import BaseLayout from '@layouts/BaseLayout.astro';
 import { fetchArticolo, formatDataIt } from '@lib/articoli';
-import { GITHUB_TOKEN } from 'astro:env/server';
+const GITHUB_TOKEN = import.meta.env.GITHUB_TOKEN;
 
 // ── Dati del post ─────────────────────────────────────────────────────────────
 const { slug } = Astro.params;

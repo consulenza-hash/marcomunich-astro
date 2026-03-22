@@ -72,24 +72,7 @@ export const POST: APIRoute = async ({ request }) => {
     // Convert to PNG
     const pngBuffer = await sharp(Buffer.from(svg)).png({ quality: 90 }).toBuffer();
 
-    // Try Vercel Blob upload
-    const blobToken = (import.meta.env.BLOB_READ_WRITE_TOKEN || '').trim();
-    if (blobToken) {
-      const { put } = await import('@vercel/blob');
-      const timestamp = Date.now();
-      const blob = await put(`social/${slug}/${timestamp}-${tipo}.png`, pngBuffer, {
-        access: 'public',
-        contentType: 'image/png',
-        token: blobToken,
-      });
-      return new Response(JSON.stringify({
-        success: true,
-        url: blob.url,
-        pathname: blob.pathname,
-      }), { headers });
-    }
-
-    // Fallback: return image as base64 data URL
+    // Return image as base64 data URL
     const b64 = pngBuffer.toString('base64');
     return new Response(JSON.stringify({
       success: true,
