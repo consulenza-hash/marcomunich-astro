@@ -2,21 +2,18 @@ name: Deploy to Netsons
 
 on:
   push:
-    branches: [main]
-  repository_dispatch:
-    types: [wp_content_changed, wp_post_published]
+    branches: [netsons-migration]
   workflow_dispatch:
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 30
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          ref: main
           fetch-depth: 0
 
       - name: Setup Node.js 22
@@ -31,6 +28,18 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Install production deps in dist
+        run: |
+          cp package.json dist/
+          cp package-lock.json dist/
+          cd dist
+          npm ci --omit=dev
+          rm package-lock.json
+
+      - name: Create GOOGLE_SERVICE_ACCOUNT_JSON file
+        run: |
+          echo '${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}' > dist/google-sa.json
+
       - name: Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
@@ -40,3 +49,7 @@ jobs:
           local-dir: ./dist/
           server-dir: /marcomunich-app/
           dangerous-clean-slate: false
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/.cache/**
