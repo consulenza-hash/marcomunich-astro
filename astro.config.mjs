@@ -1,7 +1,7 @@
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 import sitemap from '@astrojs/sitemap';
-import node from '@astrojs/node';
+import vercel from '@astrojs/vercel';
 import keystatic from '@keystatic/astro';
 import react from '@astrojs/react';
 import { fileURLToPath } from 'url';
@@ -16,7 +16,7 @@ export default defineConfig({
 
   // Static (default Astro 5): supporta prerender=false su singole pagine (ex "hybrid")
   output: 'static',
-  adapter: node({ mode: 'standalone' }),
+  adapter: vercel(),
 
   // Disabilita CSRF check per le pagine SSR (es. /admin/statistiche login form)
   security: { checkOrigin: false },
