@@ -33,12 +33,8 @@ jobs:
 
       - name: Prepare deploy folder
         run: |
-          mkdir -p deploy
-          # Static HTML pages go to public_html
-          cp -r dist/client/* deploy/
-          # PHP API files are already in public/api/ which is in dist/client/api/
-          # .env needs to be on server already (not in git)
-          echo "Deploy folder ready: $(find deploy -type f | wc -l) files"
+          # Astro static output is in dist/ (no client/ subfolder)
+          echo "Deploy folder ready: $(find dist -type f | wc -l) files"
 
       - name: Deploy static files via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
@@ -46,7 +42,7 @@ jobs:
           server: 89.40.173.242
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./deploy/
+          local-dir: ./dist/
           server-dir: /public_html/
           exclude: |
             **/.git*
