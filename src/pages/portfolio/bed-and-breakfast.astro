@@ -116,9 +116,7 @@ export const prerender = true;
       <div class="struttura-grid">
         <div class="struttura-image reveal" style="--delay:.1s">
           <div class="blob-frame">
-            <div class="blob-placeholder" role="img" aria-label="Podere del Sole — la struttura">
-              <span>Podere del Sole</span>
-            </div>
+            <img src="/images/portfolio/bb-struttura.jpg" alt="Podere del Sole — la struttura" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:inherit;" loading="lazy" />
           </div>
         </div>
         <div class="struttura-text reveal" style="--delay:.25s">
@@ -709,7 +707,7 @@ export const prerender = true;
       box-shadow:0 12px 36px rgba(45,36,24,.1);
     }
     .bento-item:hover::before {
-      border-image:linear-gradient(135deg, var(--accent), transparent) 1;
+      border-color: var(--accent);
     }
     .bento-item--wide { grid-column:span 2; }
     .bento-icon {
