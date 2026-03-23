@@ -767,11 +767,14 @@ export const prerender = true;
 
     /* ========== RESPONSIVE ========== */
     @media (max-width: 900px) {
-      .course-grid, .testimonial-grid { grid-template-columns: 1fr; max-width: 500px; margin: 0 auto; }
+      .course-grid { grid-template-columns: repeat(2, 1fr); max-width: 700px; margin: 0 auto; }
+      .testimonial-grid { grid-template-columns: repeat(2, 1fr); }
       .feature-grid { grid-template-columns: repeat(2, 1fr); }
       .stats-bar { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 600px) {
+      .course-grid { grid-template-columns: 1fr; max-width: 400px; }
+      .testimonial-grid { grid-template-columns: 1fr; }
       .feature-grid { grid-template-columns: 1fr; }
       .stats-bar { grid-template-columns: 1fr; }
       .hero-title { font-size: 2.2rem; }
