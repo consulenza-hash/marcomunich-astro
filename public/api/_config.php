@@ -11,7 +11,9 @@ function loadEnv() {
             if (strpos(trim($line), '#') === 0) continue;
             $parts = explode('=', $line, 2);
             if (count($parts) !== 2) continue;
-            putenv(trim($parts[0]) . '=' . trim($parts[1]));
+            $val = trim($parts[1]);
+            $val = trim($val, '"\'');
+            putenv(trim($parts[0]) . '=' . $val);
         }
     }
 }
