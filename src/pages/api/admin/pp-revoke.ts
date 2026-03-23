@@ -2,7 +2,6 @@ import type { APIRoute } from 'astro';
 import { isAdminRequest } from '@lib/admin-auth';
 import { revokeToken } from '@lib/prompt-pack-auth';
 
-export const prerender = false;
 
 export const POST: APIRoute = async ({ request }) => {
   if (!isAdminRequest(request)) {

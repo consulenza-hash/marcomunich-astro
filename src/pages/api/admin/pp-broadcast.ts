@@ -3,7 +3,6 @@ import { Resend } from 'resend';
 import { isAdminRequest } from '@lib/admin-auth';
 import { getAllPurchasers } from '@lib/prompt-pack-auth';
 
-export const prerender = false;
 
 export const POST: APIRoute = async ({ request }) => {
   if (!isAdminRequest(request)) {

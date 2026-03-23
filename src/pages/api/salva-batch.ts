@@ -1,6 +1,5 @@
 import type { APIRoute } from 'astro';
 
-export const prerender = false;
 
 function buildMdoc(art: Record<string, any>, existingTitolo: string, existingCorpo: string, existingImmagine = '', existingData = ''): string {
   const titolo    = (art.titolo   && art.titolo   !== 'null') ? art.titolo   : existingTitolo;

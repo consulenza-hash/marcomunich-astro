@@ -1,17 +1,5 @@
 ---
-export const prerender = false;
-
-const cookie    = Astro.request.headers.get('cookie') ?? '';
-const rawAuth   = cookie.split(';').find(c => c.trim().startsWith('stats_auth='))?.split('=')[1]?.trim() ?? '';
-const statsAuth = decodeURIComponent(rawAuth);
-const expectedPwd = (import.meta.env.STATS_PASSWORD || 'stats2024').trim();
-
-if (statsAuth !== expectedPwd) {
-  return new Response(
-    `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Login</title><style>body{background:#111;color:#fff;font-family:sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0}form{display:flex;flex-direction:column;gap:12px;width:280px}input{padding:10px;background:#222;border:1px solid #333;color:#fff;border-radius:4px}button{padding:10px;background:#C9A84C;color:#000;border:none;border-radius:4px;cursor:pointer;font-weight:700}</style></head><body><form method="POST" action="/api/admin-auth"><h2>Admin</h2><input type="password" name="password" placeholder="Password" autofocus><input type="hidden" name="redirect" value="/admin/batch"><button type="submit">Accedi</button></form></body></html>`,
-    { status: 401, headers: { 'Content-Type': 'text/html' } }
-  );
-}
+export const prerender = true;
 ---
 <!DOCTYPE html>
 <html lang="it">
@@ -19,6 +7,7 @@ if (statsAuth !== expectedPwd) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Batch Rewrite - Admin</title>
+  <meta name="robots" content="noindex,nofollow" />
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     body{background:#0f0f0f;color:#e0e0e0;font-family:-apple-system,BlinkMacSystemFont,sans-serif;min-height:100vh;padding:24px}
@@ -56,42 +45,81 @@ if (statsAuth !== expectedPwd) {
     .backup-title{font-size:.82rem;flex:1;color:#ccc}
     .backup-status{font-size:.78rem;color:#666;flex-shrink:0}
     .backup-status.ok{color:#4caf50} .backup-status.err{color:#f44336} .backup-status.loading{color:#C9A84C}
+
+    /* Login */
+    .login-wrap{display:flex;align-items:center;justify-content:center;min-height:100vh;position:fixed;inset:0;background:#111;z-index:100}
+    .login-wrap form{display:flex;flex-direction:column;gap:12px;width:280px}
+    .login-wrap input{padding:10px;background:#222;border:1px solid #333;color:#fff;border-radius:4px}
+    .login-wrap button{padding:10px;background:#C9A84C;color:#000;border:none;border-radius:4px;cursor:pointer;font-weight:700}
   </style>
 </head>
 <body>
-  <h1>Batch Rewrite Articoli</h1>
-  <div class="toolbar">
-    <label>Modo: <select id="modo" style="margin-left:6px">
-      <option value="tutto-completo" selected>tutto-completo (articolo + SEO + FAQ)</option>
-      <option value="solo-metadati">solo-metadati (SEO + FAQ, testo invariato)</option>
-      <option value="solo-articolo">solo-articolo (riscrivi testo, no SEO)</option>
-    </select></label>
-    <span class="sel-info" id="sel-info">0 selezionati</span>
-    <button class="btn btn--gray" id="btn-all">Seleziona tutti</button>
-    <button class="btn btn--gray" id="btn-none">Deseleziona tutti</button>
-    <button class="btn btn--gold" id="btn-start" disabled>Avvia batch</button>
+  <div id="login-wrap" class="login-wrap" style="display:none">
+    <form id="login-form">
+      <h2 style="color:#fff">Admin</h2>
+      <input type="password" name="password" id="pwd" placeholder="Password" autofocus>
+      <button type="submit">Accedi</button>
+    </form>
   </div>
-  <div class="article-list" id="article-list"><div class="loading">Caricamento...</div></div>
-  <div id="progress-section">
-    <div class="prog-label" id="prog-label">0 / 0 completati</div>
-    <div class="pb-wrap"><div class="pb-fill" id="prog-bar" style="width:0%"></div></div>
-    <div class="current-art" id="current-art"></div>
-    <div class="ctrl-btns">
-      <button class="btn btn--gray" id="btn-pause">Pausa</button>
-      <button class="btn btn--red" id="btn-stop">Stop</button>
+  <div id="content-wrap" style="display:none">
+    <h1>Batch Rewrite Articoli</h1>
+    <div class="toolbar">
+      <label>Modo: <select id="modo" style="margin-left:6px">
+        <option value="tutto-completo" selected>tutto-completo (articolo + SEO + FAQ)</option>
+        <option value="solo-metadati">solo-metadati (SEO + FAQ, testo invariato)</option>
+        <option value="solo-articolo">solo-articolo (riscrivi testo, no SEO)</option>
+      </select></label>
+      <span class="sel-info" id="sel-info">0 selezionati</span>
+      <button class="btn btn--gray" id="btn-all">Seleziona tutti</button>
+      <button class="btn btn--gray" id="btn-none">Deseleziona tutti</button>
+      <button class="btn btn--gold" id="btn-start" disabled>Avvia batch</button>
     </div>
-    <div class="log" id="log"></div>
-    <div class="final-msg" id="final-msg"></div>
-  </div>
-  <div id="backup-section">
-    <h2>↩ Versioni originali — ripristino</h2>
-    <div class="backup-list" id="backup-list"></div>
+    <div class="article-list" id="article-list"><div class="loading">Caricamento...</div></div>
+    <div id="progress-section">
+      <div class="prog-label" id="prog-label">0 / 0 completati</div>
+      <div class="pb-wrap"><div class="pb-fill" id="prog-bar" style="width:0%"></div></div>
+      <div class="current-art" id="current-art"></div>
+      <div class="ctrl-btns">
+        <button class="btn btn--gray" id="btn-pause">Pausa</button>
+        <button class="btn btn--red" id="btn-stop">Stop</button>
+      </div>
+      <div class="log" id="log"></div>
+      <div class="final-msg" id="final-msg"></div>
+    </div>
+    <div id="backup-section">
+      <h2>↩ Versioni originali — ripristino</h2>
+      <div class="backup-list" id="backup-list"></div>
+    </div>
   </div>
   <script is:inline>
   (function(){
+    // Auth check
+    var cookie = document.cookie;
+    var auth = cookie.split(';').find(function(c){return c.trim().startsWith('stats_auth=')});
+    if(auth){
+      document.getElementById('content-wrap').style.display='block';
+    } else {
+      document.getElementById('login-wrap').style.display='flex';
+    }
+    var loginForm = document.getElementById('login-form');
+    if(loginForm) loginForm.addEventListener('submit', function(e){
+      e.preventDefault();
+      var pwd = document.getElementById('pwd').value;
+      fetch('/api/admin-auth.php', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({password:pwd})})
+      .then(function(r){return r.json()})
+      .then(function(d){
+        if(d.success) { document.cookie='stats_auth='+encodeURIComponent(pwd)+';path=/;max-age=604800'; location.reload(); }
+        else alert('Password errata');
+      })
+      .catch(function(){ alert('Errore di connessione'); });
+    });
+
+    // Batch logic (only runs if authed)
+    if(!auth) return;
+
     var arts=[],paused=false,stopped=false,backups={};
     async function load(){
-      try{var r=await fetch("/api/lista-articoli");if(!r.ok)throw new Error(r.status);arts=await r.json();render();}
+      try{var r=await fetch("/api/lista-articoli.php");if(!r.ok)throw new Error(r.status);arts=await r.json();render();}
       catch(e){document.getElementById("article-list").innerHTML="<div class=\"loading\" style=\"color:#f44\">Errore: "+e.message+"</div>";}
     }
     function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
@@ -136,7 +164,7 @@ if (statsAuth !== expectedPwd) {
         var a=sel[i];prog(i,total,a.titolo);
         try{
           addLog("[1/3] carico "+a.slug+"...","info");
-          var lr=await fetch("/api/articolo?slug="+encodeURIComponent(a.slug));
+          var lr=await fetch("/api/articolo.php?slug="+encodeURIComponent(a.slug));
           if(!lr.ok)throw new Error("load "+lr.status);
           var testo=(await lr.json()).testo;
           backups[a.slug]=testo;addBackupRow(a.slug,a.titolo);
@@ -150,7 +178,7 @@ if (statsAuth !== expectedPwd) {
           var pts=testo.split(/^---$/m);
           var ec=pts.length>=3?pts.slice(2).join("---").trim():"";
           addLog("[2/3] genero con AI (Opus)...","info");
-          var gr=await fetch("/api/genera-json",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({testo:testo,modo:modo,isNew:false})});
+          var gr=await fetch("/api/genera-json.php",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({testo:testo,modo:modo,isNew:false})});
           if(!gr.ok){var errBody="";try{errBody=await gr.text();}catch(x){}throw new Error("gen "+gr.status+" "+errBody.substring(0,200));}
           var reader=gr.body.getReader(),decoder=new TextDecoder(),rawJson="";
           while(true){var ch=await reader.read();if(ch.done)break;rawJson+=decoder.decode(ch.value,{stream:true});}
@@ -170,7 +198,7 @@ if (statsAuth !== expectedPwd) {
         addLog("--- Salvataggio batch: "+pendingArticles.length+" articoli in 1 commit...","info");
         prog(total,total,"Salvo tutto su GitHub...");
         try{
-          var sr=await fetch("/api/salva-batch",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({articles:pendingArticles})});
+          var sr=await fetch("/api/salva-batch.php",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({articles:pendingArticles})});
           if(!sr.ok){var srBody="";try{srBody=await sr.text();}catch(x){}throw new Error("batch save "+sr.status+" "+srBody.substring(0,300));}
           var srData=await sr.json();
           addLog("COMMIT OK: "+pendingArticles.length+" articoli salvati in 1 commit ("+String(srData.commit).substring(0,7)+")","ok");
@@ -214,7 +242,7 @@ if (statsAuth !== expectedPwd) {
       btn.disabled=true;
       status.textContent="ripristino...";status.className="backup-status loading";
       try{
-        var r=await fetch("/api/ripristina-articolo",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({slug:slug,content:backups[slug]})});
+        var r=await fetch("/api/ripristina-articolo.php",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({slug:slug,content:backups[slug]})});
         if(!r.ok)throw new Error((await r.json()).error||r.status);
         status.textContent="ripristinato";status.className="backup-status ok";
       }catch(e){

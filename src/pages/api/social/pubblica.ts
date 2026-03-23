@@ -1,7 +1,6 @@
 import type { APIRoute } from 'astro';
 import { postToX, postToLinkedIn, postToFacebook } from '../../../lib/social-clients';
 
-export const prerender = false;
 
 export const POST: APIRoute = async ({ request }) => {
   const headers = { 'Content-Type': 'application/json' };

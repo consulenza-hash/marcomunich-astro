@@ -1,21 +1,7 @@
 ---
-export const prerender = false;
+export const prerender = true;
 
-// ── Auth ──────────────────────────────────────────────────────────────────────
-const cookie      = Astro.cookies.get('stats_auth')?.value ?? '';
-const expectedPwd = (import.meta.env.STATS_PASSWORD || 'stats2024').trim();
-const isAuth      = cookie === expectedPwd;
-
-if (Astro.request.method === 'POST' && !isAuth) {
-  const form = await Astro.request.formData();
-  const pwd  = form.get('password')?.toString() ?? '';
-  if (pwd === expectedPwd) {
-    Astro.cookies.set('stats_auth', pwd, { path: '/', maxAge: 86400 * 7 });
-    return Astro.redirect('/admin/articoli');
-  }
-}
-
-// ── Carica articoli ───────────────────────────────────────────────────────────
+// ── Carica articoli a build time ─────────────────────────────────────────────
 interface ArticoloMeta {
   slug: string;
   titolo: string;
@@ -26,42 +12,36 @@ interface ArticoloMeta {
 
 let articoli: ArticoloMeta[] = [];
 
-if (isAuth) {
-  // Usa import.meta.glob per leggere tutti i frontmatter a build time
-  const files = import.meta.glob<{ default?: string; frontmatter?: Record<string, any> }>(
-    '../../content/articoli/*/index.mdoc',
-    { eager: true, as: 'raw' }
-  ) as Record<string, string>;
+const files = import.meta.glob<{ default?: string; frontmatter?: Record<string, any> }>(
+  '../../content/articoli/*/index.mdoc',
+  { eager: true, as: 'raw' }
+) as Record<string, string>;
 
-  for (const [path, raw] of Object.entries(files)) {
-    // Estrai slug dal path: ../../content/articoli/SLUG/index.mdoc
-    const slugMatch = path.match(/articoli\/([^/]+)\/index\.mdoc$/);
-    if (!slugMatch) continue;
-    const slug = slugMatch[1];
+for (const [path, raw] of Object.entries(files)) {
+  const slugMatch = path.match(/articoli\/([^/]+)\/index\.mdoc$/);
+  if (!slugMatch) continue;
+  const slug = slugMatch[1];
 
-    // Estrai frontmatter minimale
-    const fmMatch = raw.match(/^---\r?\n([\s\S]*?)\r?\n---/);
-    if (!fmMatch) {
-      articoli.push({ slug, titolo: slug });
-      continue;
-    }
-    const fm = fmMatch[1];
-    const titolo      = fm.match(/^titolo:\s*"?([^"\n]+)"?/m)?.[1]?.replace(/\\"/g, '"') ?? slug;
-    const data        = fm.match(/^data:\s*(\S+)/m)?.[1] ?? undefined;
-    const descrizione = fm.match(/^descrizione:\s*"?([^"\n]+)"?/m)?.[1]?.replace(/\\"/g, '"') ?? undefined;
-    const bozza       = /^bozza:\s*true/m.test(fm);
-
-    articoli.push({ slug, titolo, data, descrizione, bozza });
+  const fmMatch = raw.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+  if (!fmMatch) {
+    articoli.push({ slug, titolo: slug });
+    continue;
   }
+  const fm = fmMatch[1];
+  const titolo      = fm.match(/^titolo:\s*"?([^"\n]+)"?/m)?.[1]?.replace(/\\"/g, '"') ?? slug;
+  const data        = fm.match(/^data:\s*(\S+)/m)?.[1] ?? undefined;
+  const descrizione = fm.match(/^descrizione:\s*"?([^"\n]+)"?/m)?.[1]?.replace(/\\"/g, '"') ?? undefined;
+  const bozza       = /^bozza:\s*true/m.test(fm);
 
-  // Ordina per data decrescente
-  articoli.sort((a, b) => {
-    if (!a.data && !b.data) return 0;
-    if (!a.data) return 1;
-    if (!b.data) return -1;
-    return b.data.localeCompare(a.data);
-  });
+  articoli.push({ slug, titolo, data, descrizione, bozza });
 }
+
+articoli.sort((a, b) => {
+  if (!a.data && !b.data) return 0;
+  if (!a.data) return 1;
+  if (!b.data) return -1;
+  return b.data.localeCompare(a.data);
+});
 
 const totale     = articoli.length;
 const pubblicati = articoli.filter(a => !a.bozza).length;
@@ -345,10 +325,10 @@ const bozze      = articoli.filter(a => a.bozza).length;
     footer span { font-size: 11px; color: var(--muted); letter-spacing: 0.06em; }
 
     /* ── LOGIN ── */
-    .login-wrap { display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+    .login-wrap { display: flex; align-items: center; justify-content: center; min-height: 100vh; position: fixed; inset: 0; background: var(--black); z-index: 200; }
     .login-box { background: var(--ink); border: 1px solid var(--smoke); border-radius: 10px; padding: 2.5rem; width: 320px; text-align: center; }
     .login-box h2 { font-size: 14px; color: var(--paper); margin-bottom: 1.5rem; font-weight: 500; letter-spacing: 0.08em; }
-    .login-box input { width: 100%; background: var(--black); border: 1px solid var(--smoke); color: var(--paper); font-size: 14px; padding: 0.65rem 0.75rem; border-radius: var(--r); outline: none; font-family: inherit; margin-bottom: 0.75rem; transition: border-color 150ms; }
+    .login-box input { width: 100%; background: var(--black); border: 1px solid var(--smoke); color: var(--paper); font-size: 14px; padding: 0.65rem 0.75rem; border-radius: var(--r); outline: none; font-family: inherit; margin-bottom: 0.75rem; transition: border-color 150ms; box-sizing: border-box; }
     .login-box input:focus { border-color: var(--gold); }
     .login-box button { width: 100%; background: var(--gold); color: var(--black); border: none; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.65rem; border-radius: var(--r); cursor: pointer; font-family: inherit; font-weight: 600; }
 
@@ -356,126 +336,148 @@ const bozze      = articoli.filter(a => a.bozza).length;
     @keyframes fadeUp { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
     tbody tr:not(.hidden) { animation: fadeUp 0.25s ease both; }
   </style>
-
 </head>
 <body>
 
-{!isAuth ? (
-  <div class="login-wrap">
-    <div class="login-box">
-      <h2>🔐 Admin — Accesso</h2>
-      <form method="POST">
-        <input type="password" name="password" placeholder="Password" autofocus />
-        <button type="submit">Accedi</button>
-      </form>
-    </div>
+<div id="login-wrap" class="login-wrap" style="display:none">
+  <div class="login-box">
+    <h2>Admin — Accesso</h2>
+    <form id="login-form">
+      <input type="password" id="pwd" placeholder="Password" autofocus />
+      <button type="submit">Accedi</button>
+    </form>
   </div>
-) : (
-  <>
-    <header>
-      <a href="/admin" class="logo">MM <span>/</span> Admin</a>
-      <nav>
-        <a href="/admin/articoli" class="active">Articoli</a>
-        <a href="/admin/genera">Genera</a>
-        <a href="/admin/statistiche">Stats</a>
-      </nav>
-      <a href="/admin/genera" class="btn-new">+ Nuovo</a>
-    </header>
+</div>
 
-    <main>
-      <div class="page-header">
-        <div class="page-title">
-          Contenuti
-          <strong>Articoli</strong>
+<div id="content-wrap" style="display:none">
+  <header>
+    <a href="/admin" class="logo">MM <span>/</span> Admin</a>
+    <nav>
+      <a href="/admin/articoli" class="active">Articoli</a>
+      <a href="/admin/genera">Genera</a>
+      <a href="/admin/statistiche">Stats</a>
+    </nav>
+    <a href="/admin/genera" class="btn-new">+ Nuovo</a>
+  </header>
+
+  <main>
+    <div class="page-header">
+      <div class="page-title">
+        Contenuti
+        <strong>Articoli</strong>
+      </div>
+      <div class="stats">
+        <div>
+          <div class="stat-num">{totale}</div>
+          <div class="stat-label">Totale</div>
         </div>
-        <div class="stats">
-          <div>
-            <div class="stat-num">{totale}</div>
-            <div class="stat-label">Totale</div>
-          </div>
-          <div>
-            <div class="stat-num">{pubblicati}</div>
-            <div class="stat-label">Pubblicati</div>
-          </div>
-          <div>
-            <div class="stat-num">{bozze}</div>
-            <div class="stat-label">Bozze</div>
-          </div>
+        <div>
+          <div class="stat-num">{pubblicati}</div>
+          <div class="stat-label">Pubblicati</div>
+        </div>
+        <div>
+          <div class="stat-num">{bozze}</div>
+          <div class="stat-label">Bozze</div>
         </div>
       </div>
+    </div>
 
-      <div class="toolbar">
-        <div class="search-wrap">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-          </svg>
-          <input type="search" id="search" placeholder="Cerca per titolo o slug…" autocomplete="off" />
-        </div>
-        <button class="filter-btn active" data-filter="tutti">Tutti</button>
-        <button class="filter-btn" data-filter="pubblicato">Pubblicati</button>
-        <button class="filter-btn" data-filter="bozza">Bozze</button>
-        <span class="count-badge" id="count">{totale} articoli</span>
+    <div class="toolbar">
+      <div class="search-wrap">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+        <input type="search" id="search" placeholder="Cerca per titolo o slug…" autocomplete="off" />
       </div>
+      <button class="filter-btn active" data-filter="tutti">Tutti</button>
+      <button class="filter-btn" data-filter="pubblicato">Pubblicati</button>
+      <button class="filter-btn" data-filter="bozza">Bozze</button>
+      <span class="count-badge" id="count">{totale} articoli</span>
+    </div>
 
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th style="width:46%">Articolo</th>
-              <th>Data</th>
-              <th>Stato</th>
-              <th style="text-align:right">Azioni</th>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:46%">Articolo</th>
+            <th>Data</th>
+            <th>Stato</th>
+            <th style="text-align:right">Azioni</th>
+          </tr>
+        </thead>
+        <tbody id="tbody">
+          {articoli.map(a => (
+            <tr data-status={a.bozza ? 'bozza' : 'pubblicato'}
+                data-search={`${a.titolo} ${a.slug}`.toLowerCase()}>
+              <td>
+                <div class="art-title">{a.titolo}</div>
+                <div class="art-slug">{a.slug}</div>
+              </td>
+              <td>
+                <span class="date-cell">{a.data ?? '—'}</span>
+              </td>
+              <td>
+                <span class={`badge ${a.bozza ? 'badge-draft' : 'badge-pub'}`}>
+                  {a.bozza ? '○ Bozza' : '● Pubblicato'}
+                </span>
+              </td>
+              <td>
+                <div class="actions">
+                  <a href={`/admin/edit/${a.slug}`} class="btn-action btn-edit">Modifica</a>
+                  <a href={`/admin/edit/${a.slug}?ai=1`} class="btn-action btn-ai">
+                    <span class="spark">✦</span> AI
+                  </a>
+                  <a href={`/${a.slug}`} target="_blank" class="btn-action btn-preview">Anteprima ↗</a>
+                  {a.bozza && <button onclick={`pubblicaArticolo('${a.slug}', this)`} class="btn-action btn-publish">Pubblica</button>}
+                  <button onclick={`eliminaArticolo('${a.slug}', this)`} class="btn-action btn-delete">Elimina</button>
+                </div>
+              </td>
             </tr>
-          </thead>
-          <tbody id="tbody">
-            {articoli.map(a => (
-              <tr data-status={a.bozza ? 'bozza' : 'pubblicato'}
-                  data-search={`${a.titolo} ${a.slug}`.toLowerCase()}>
-                <td>
-                  <div class="art-title">{a.titolo}</div>
-                  <div class="art-slug">{a.slug}</div>
-                </td>
-                <td>
-                  <span class="date-cell">{a.data ?? '—'}</span>
-                </td>
-                <td>
-                  <span class={`badge ${a.bozza ? 'badge-draft' : 'badge-pub'}`}>
-                    {a.bozza ? '○ Bozza' : '● Pubblicato'}
-                  </span>
-                </td>
-                <td>
-                  <div class="actions">
-                    <a href={`/admin/edit/${a.slug}`} class="btn-action btn-edit">Modifica</a>
-                    <a href={`/admin/edit/${a.slug}?ai=1`} class="btn-action btn-ai">
-                      <span class="spark">✦</span> AI
-                    </a>
-                    <a href={`/${a.slug}`} target="_blank" class="btn-action btn-preview">Anteprima ↗</a>
-                    {a.bozza && <button onclick={`pubblicaArticolo('${a.slug}', this)`} class="btn-action btn-publish">Pubblica</button>}
-                    <button onclick={`eliminaArticolo('${a.slug}', this)`} class="btn-action btn-delete">Elimina</button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-            <tr class="empty-row" id="empty" style="display:none">
-              <td colspan="4">Nessun articolo trovato.</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </main>
+          ))}
+          <tr class="empty-row" id="empty" style="display:none">
+            <td colspan="4">Nessun articolo trovato.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
 
-    <footer>
-      <span>marcomunich.com — Admin</span>
-      <span id="footer-count">{totale} articoli</span>
-    </footer>
-  </>
-)}
+  <footer>
+    <span>marcomunich.com — Admin</span>
+    <span id="footer-count">{totale} articoli</span>
+  </footer>
+</div>
 
 <script is:inline>
+(function(){
+  // Auth check
+  var cookie = document.cookie;
+  var auth = cookie.split(';').find(function(c){return c.trim().startsWith('stats_auth=')});
+  if(auth){
+    document.getElementById('content-wrap').style.display='flex';
+    document.getElementById('content-wrap').style.flexDirection='column';
+    document.getElementById('content-wrap').style.minHeight='100vh';
+  } else {
+    document.getElementById('login-wrap').style.display='flex';
+  }
+  var form = document.getElementById('login-form');
+  if(form) form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var pwd = document.getElementById('pwd').value;
+    fetch('/api/admin-auth.php', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({password:pwd})})
+    .then(function(r){return r.json()})
+    .then(function(d){
+      if(d.success) { document.cookie='stats_auth='+encodeURIComponent(pwd)+';path=/;max-age=604800'; location.reload(); }
+      else alert('Password errata');
+    })
+    .catch(function(){ alert('Errore di connessione'); });
+  });
+
+  // Article functions (work regardless of auth since page is static)
   function pubblicaArticolo(slug, btnEl) {
     btnEl.disabled = true;
     btnEl.textContent = '...';
-    fetch('/api/pubblica-articolo', {
+    fetch('/api/pubblica-articolo.php', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ slug: slug })
@@ -500,12 +502,13 @@ const bozze      = articoli.filter(a => a.bozza).length;
       btnEl.textContent = 'Pubblica';
     });
   }
+  window.pubblicaArticolo = pubblicaArticolo;
 
   function eliminaArticolo(slug, btnEl) {
     if (!confirm('Sei sicuro di voler eliminare "' + slug + '"? Questa azione è irreversibile.')) return;
     btnEl.disabled = true;
     btnEl.textContent = '...';
-    fetch('/api/elimina-articolo', {
+    fetch('/api/elimina-articolo.php', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ slug: slug })
@@ -528,46 +531,48 @@ const bozze      = articoli.filter(a => a.bozza).length;
       btnEl.textContent = 'Elimina';
     });
   }
-</script>
-<script>
-  const rows        = Array.from(document.querySelectorAll('#tbody tr:not(.empty-row)'));
-  const emptyRow    = document.getElementById('empty')!;
-  const countEl     = document.getElementById('count')!;
-  const footerCount = document.getElementById('footer-count')!;
-  const searchEl    = document.getElementById('search') as HTMLInputElement;
-  const filterBtns  = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
+  window.eliminaArticolo = eliminaArticolo;
 
-  let currentFilter = 'tutti';
-  let currentSearch = '';
+  // Search & filter
+  var rows        = Array.from(document.querySelectorAll('#tbody tr:not(.empty-row)'));
+  var emptyRow    = document.getElementById('empty');
+  var countEl     = document.getElementById('count');
+  var footerCount = document.getElementById('footer-count');
+  var searchEl    = document.getElementById('search');
+  var filterBtns  = document.querySelectorAll('.filter-btn');
+
+  var currentFilter = 'tutti';
+  var currentSearch = '';
 
   function applyFilters() {
-    let visible = 0;
-    rows.forEach(row => {
-      const statusMatch = currentFilter === 'tutti' || row.dataset.status === currentFilter;
-      const searchMatch = !currentSearch || (row.dataset.search ?? '').includes(currentSearch);
-      const show = statusMatch && searchMatch;
+    var visible = 0;
+    rows.forEach(function(row) {
+      var statusMatch = currentFilter === 'tutti' || row.dataset.status === currentFilter;
+      var searchMatch = !currentSearch || (row.dataset.search || '').indexOf(currentSearch) !== -1;
+      var show = statusMatch && searchMatch;
       row.classList.toggle('hidden', !show);
       if (show) visible++;
     });
-    emptyRow.style.display = visible === 0 ? '' : 'none';
-    const label = `${visible} articol${visible === 1 ? 'o' : 'i'}`;
-    countEl.textContent = label;
-    footerCount.textContent = label;
+    if (emptyRow) emptyRow.style.display = visible === 0 ? '' : 'none';
+    var label = visible + ' articol' + (visible === 1 ? 'o' : 'i');
+    if (countEl) countEl.textContent = label;
+    if (footerCount) footerCount.textContent = label;
   }
 
-  searchEl?.addEventListener('input', e => {
-    currentSearch = (e.target as HTMLInputElement).value.toLowerCase().trim();
+  if (searchEl) searchEl.addEventListener('input', function(e) {
+    currentSearch = e.target.value.toLowerCase().trim();
     applyFilters();
   });
 
-  filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      filterBtns.forEach(b => b.classList.remove('active'));
+  filterBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      filterBtns.forEach(function(b) { b.classList.remove('active'); });
       btn.classList.add('active');
-      currentFilter = btn.dataset.filter ?? 'tutti';
+      currentFilter = btn.dataset.filter || 'tutti';
       applyFilters();
     });
   });
+})();
 </script>
 
 </body>

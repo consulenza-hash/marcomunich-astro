@@ -1,12 +1,5 @@
 ---
-export const prerender = false;
-
-// ── Auth ──────────────────────────────────────────────────────────────────────
-const cookie      = Astro.cookies.get('stats_auth')?.value ?? '';
-const expectedPwd = (import.meta.env.STATS_PASSWORD || 'stats2024').trim();
-const isAuth      = cookie === expectedPwd;
-
-if (!isAuth) return Astro.redirect('/admin/login?redirect=/admin/social-piano');
+export const prerender = true;
 ---
 <!DOCTYPE html>
 <html lang="it">
@@ -109,7 +102,17 @@ if (!isAuth) return Astro.redirect('/admin/login?redirect=/admin/social-piano');
 </head>
 <body>
 
-  <div class="wrap">
+  <div id="login-wrap" style="display:none;min-height:100vh;align-items:center;justify-content:center;padding:20px">
+    <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:40px;width:100%;max-width:360px;text-align:center">
+      <div style="font-size:1.2rem;font-weight:700;color:#f59e0b;margin-bottom:6px">Piano Editoriale</div>
+      <div style="color:#475569;font-size:.83rem;margin-bottom:28px">Accesso riservato</div>
+      <form id="login-form" style="display:flex;flex-direction:column;gap:12px">
+        <input type="password" id="pwd" placeholder="Password" autofocus style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:12px 14px;color:#e2e8f0;font-size:.95rem;outline:none" />
+        <button type="submit" style="background:#f59e0b;color:#0a0f1a;font-weight:700;padding:12px;border-radius:8px;border:none;cursor:pointer;font-size:.95rem">Accedi</button>
+      </form>
+    </div>
+  </div>
+  <div id="content-wrap" class="wrap" style="display:none">
     <a class="back-link" href="/admin">&larr; Torna alla dashboard</a>
     <h1>Piano Editoriale Social</h1>
     <p class="subtitle">Genera 5 giorni di contenuti social a partire da un articolo del blog.</p>
@@ -143,9 +146,34 @@ if (!isAuth) return Astro.redirect('/admin/login?redirect=/admin/social-piano');
     </div>
   </div>
 
+  </div>
   <!-- ── Toast ──────────────────────────────────────────────────────── -->
   <div class="toast" id="toast"></div>
 
+  <script is:inline>
+  // Auth check
+  (function(){
+    var cookie = document.cookie;
+    var auth = cookie.split(';').find(function(c){return c.trim().startsWith('stats_auth=')});
+    if(auth){
+      document.getElementById('content-wrap').style.display='block';
+    } else {
+      document.getElementById('login-wrap').style.display='flex';
+    }
+    var form = document.getElementById('login-form');
+    if(form) form.addEventListener('submit', function(e){
+      e.preventDefault();
+      var pwd = document.getElementById('pwd').value;
+      fetch('/api/admin-auth.php', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({password:pwd})})
+      .then(function(r){return r.json()})
+      .then(function(d){
+        if(d.success) { document.cookie='stats_auth='+encodeURIComponent(pwd)+';path=/;max-age=604800'; location.reload(); }
+        else alert('Password errata');
+      })
+      .catch(function(){ alert('Errore di connessione'); });
+    });
+  })();
+  </script>
   <script is:inline>
     // ── State ──────────────────────────────────────────────────────────
     window.piano = [];
@@ -169,7 +197,7 @@ if (!isAuth) return Astro.redirect('/admin/login?redirect=/admin/social-piano');
       var sel = document.getElementById('sel-articolo');
       var btn = document.getElementById('btn-genera');
 
-      fetch('/api/lista-articoli')
+      fetch('/api/lista-articoli.php')
         .then(function(r) {
           if (!r.ok) throw new Error('HTTP ' + r.status);
           return r.json();
@@ -211,7 +239,7 @@ if (!isAuth) return Astro.redirect('/admin/login?redirect=/admin/social-piano');
       btn.innerHTML = '<span class="spinner"></span> Generazione in corso...';
       showStatus(status, 'info', '<span class="spinner"></span> Invio richiesta al server... Potrebbe richiedere 30-60 secondi.');
 
-      fetch('/api/social/piano-editoriale', {
+      fetch('/api/social/piano-editoriale.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ slug: slug })
@@ -318,7 +346,7 @@ if (!isAuth) return Astro.redirect('/admin/login?redirect=/admin/social-piano');
       btn.disabled = true;
       btn.innerHTML = '<span class="spinner"></span> Generazione...';
 
-      fetch('/api/social/genera-immagine', {
+      fetch('/api/social/genera-immagine.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -374,7 +402,7 @@ if (!isAuth) return Astro.redirect('/admin/login?redirect=/admin/social-piano');
         imgBtn.disabled = true;
         imgBtn.innerHTML = '<span class="spinner"></span> Generazione...';
 
-        fetch('/api/social/genera-immagine', {
+        fetch('/api/social/genera-immagine.php', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -437,7 +465,7 @@ if (!isAuth) return Astro.redirect('/admin/login?redirect=/admin/social-piano');
 
       showToast('Pubblicazione su ' + platform + '...', 'ok');
 
-      fetch('/api/social/pubblica', {
+      fetch('/api/social/pubblica.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

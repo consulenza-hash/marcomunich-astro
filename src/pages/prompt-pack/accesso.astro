@@ -1,48 +1,13 @@
 ---
-export const prerender = false;
+export const prerender = true;
 
-import {
-  validateToken,
-  getTokenFromCookie,
-  getTokenFromUrl,
-  buildAccessCookie,
-  isDevBypass,
-  type AccessTokenData,
-} from '@lib/prompt-pack-auth';
 import { aggiornamenti } from '../../data/prompt-updates';
 
-// ── Auth gate ────────────────────────────────────────────────────────────────
-let user: AccessTokenData | null = null;
-let setCookieHeader: string | null = null;
+// Data is rendered at build time; auth is handled client-side
+// The login form HTML is embedded below as a hidden div
+// The old inline Response login form has been removed
 
-if (isDevBypass()) {
-  // Sviluppo locale: bypass auth se PROMPT_PACK_DEV_BYPASS=true nel .env
-  user = {
-    email: 'dev@localhost',
-    name: 'Dev User',
-    createdAt: new Date().toISOString(),
-    stripeSessionId: 'dev_session',
-    stripeReceiptUrl: null,
-    newsletterConsent: false,
-  };
-} else {
-  const url = new URL(Astro.request.url);
-  const tokenFromUrl = getTokenFromUrl(url);
-  const tokenFromCookie = getTokenFromCookie(Astro.request);
-  const token = tokenFromUrl || tokenFromCookie;
-
-  if (token) {
-    user = await validateToken(token);
-    if (user && tokenFromUrl && !tokenFromCookie) {
-      // Prima visita via link email: imposta il cookie
-      setCookieHeader = buildAccessCookie(token);
-      Astro.response.headers.set('Set-Cookie', setCookieHeader);
-    }
-  }
-
-  if (!user) {
-    // Nessun token valido → mostra form di recupero accesso
-    return new Response(`<!DOCTYPE html>
+const loginFormHtml = `<!DOCTYPE html>
 <html lang="it">
 <head>
   <meta charset="UTF-8" />
@@ -190,7 +155,7 @@ if (isDevBypass()) {
       msgErr.style.display = 'none';
 
       try {
-        const res = await fetch('/api/prompt-pack/resend-access', {
+        const res = await fetch('/api/prompt-pack/resend-access.php', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email }),
@@ -213,9 +178,7 @@ if (isDevBypass()) {
     });
   </script>
 </body>
-</html>`, { status: 200, headers: { 'Content-Type': 'text/html' } });
-  }
-}
+</html>`;
 
 const categorie = [
   {
@@ -1325,6 +1288,12 @@ const releasedUpdates = aggiornamenti.filter(a => a.status === 'released');
 </head>
 <body>
 
+  <!-- Login form (shown if no pp_access cookie) -->
+  <div id="pp-login-wrap" style="display:none" set:html={loginFormHtml}></div>
+
+  <!-- Content (shown if pp_access cookie exists) -->
+  <div id="pp-content-wrap" style="display:none">
+
   <!-- HEADER -->
   <header class="topbar">
     <a href="/" class="topbar__brand">
@@ -1343,31 +1312,25 @@ const releasedUpdates = aggiornamenti.filter(a => a.status === 'released');
       <strong>{totalPrompts}</strong> prompt · <strong>{totalGPTs}</strong> GPT
     </div>
 
-    <!-- User menu -->
+    <!-- User menu — populated client-side -->
     <div class="user-menu" id="user-menu">
       <button class="user-menu__btn" id="user-menu-btn" aria-expanded="false" aria-haspopup="true">
-        <span class="user-menu__avatar">
-          {user!.name ? user!.name.charAt(0).toUpperCase() : '✦'}
-        </span>
-        <span class="user-menu__label">{user!.name ? user!.name.split(' ')[0] : 'Account'}</span>
+        <span class="user-menu__avatar" id="user-avatar">✦</span>
+        <span class="user-menu__label" id="user-label">Account</span>
       </button>
       <div class="user-menu__dropdown" id="user-menu-dropdown" role="menu">
         <div class="user-menu__header">
-          {user!.name && <div class="user-menu__name">{user!.name}</div>}
-          <div class="user-menu__email">{user!.email}</div>
-          <div class="user-menu__date">
-            Acquistato il {new Date(user!.createdAt).toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' })}
-          </div>
+          <div class="user-menu__name" id="user-name-display"></div>
+          <div class="user-menu__email" id="user-email-display"></div>
+          <div class="user-menu__date" id="user-date-display"></div>
         </div>
         <div class="user-menu__items">
-          {user!.stripeReceiptUrl && (
-            <a href={user!.stripeReceiptUrl} target="_blank" rel="noopener" class="user-menu__item" role="menuitem">
+          <a id="user-receipt-link" href="#" target="_blank" rel="noopener" class="user-menu__item" role="menuitem" style="display:none">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/>
               </svg>
               Visualizza ricevuta →
             </a>
-          )}
           <a href="mailto:marco@marcomunich.com?subject=Supporto Prompt Pack" class="user-menu__item" role="menuitem">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/>
@@ -1375,7 +1338,7 @@ const releasedUpdates = aggiornamenti.filter(a => a.status === 'released');
             Supporto via email
           </a>
           <div class="user-menu__divider"></div>
-          <a href="/api/prompt-pack/logout" class="user-menu__item user-menu__item--danger" role="menuitem">
+          <a href="#" onclick="document.cookie='pp_access=;path=/;max-age=0';location.reload();" class="user-menu__item user-menu__item--danger" role="menuitem">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16,17 21,12 16,7"/><line x1="21" y1="12" x2="9" y2="12"/>
             </svg>
@@ -1732,6 +1695,43 @@ const releasedUpdates = aggiornamenti.filter(a => a.status === 'released');
 
       searchEmpty.classList.toggle('visible', !anyVisible && q.length > 0);
     });
+  </script>
+
+  </div><!-- /pp-content-wrap -->
+
+  <script is:inline>
+  (function(){
+    // Check for pp_access cookie OR token in URL
+    var cookie = document.cookie;
+    var hasCookie = cookie.split(';').some(function(c){return c.trim().startsWith('pp_access=')});
+
+    // Also check for ?token= in URL (first visit from email link)
+    var urlParams = new URLSearchParams(window.location.search);
+    var tokenFromUrl = urlParams.get('token');
+
+    if (tokenFromUrl) {
+      // Validate token server-side and set cookie
+      fetch('/api/prompt-pack/validate-token.php?token=' + encodeURIComponent(tokenFromUrl))
+        .then(function(r){ return r.json(); })
+        .then(function(d){
+          if (d.valid) {
+            document.cookie = 'pp_access=' + encodeURIComponent(tokenFromUrl) + ';path=/;max-age=' + (86400*365) + ';SameSite=Lax';
+            document.getElementById('pp-content-wrap').style.display = 'block';
+          } else {
+            document.getElementById('pp-login-wrap').style.display = 'block';
+          }
+        })
+        .catch(function(){
+          // Fallback: show content if we have cookie, otherwise login
+          if (hasCookie) document.getElementById('pp-content-wrap').style.display = 'block';
+          else document.getElementById('pp-login-wrap').style.display = 'block';
+        });
+    } else if (hasCookie) {
+      document.getElementById('pp-content-wrap').style.display = 'block';
+    } else {
+      document.getElementById('pp-login-wrap').style.display = 'block';
+    }
+  })();
   </script>
 
 </body>

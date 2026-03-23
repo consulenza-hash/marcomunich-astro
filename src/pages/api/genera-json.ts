@@ -1,7 +1,6 @@
 import type { APIRoute } from 'astro';
 import Anthropic from '@anthropic-ai/sdk';
 
-export const prerender = false;
 
 // ── Tool definition — garantisce JSON valido via function calling ─────────────
 const TOOL_DEF: Anthropic.Tool = {

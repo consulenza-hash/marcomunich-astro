@@ -1,6 +1,5 @@
 import type { APIRoute } from 'astro';
 
-export const prerender = false;
 
 // Risolto da Vite a build time, bundlato nella funzione serverless
 const rawFiles = import.meta.glob('/src/content/articoli/*/index.mdoc', {

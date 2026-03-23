@@ -2,7 +2,6 @@ import type { APIRoute } from 'astro';
 import Anthropic from '@anthropic-ai/sdk';
 import { SOCIAL_SYSTEM_PROMPT, SOCIAL_TOOL_SCHEMA, buildSocialUserPrompt } from '../../../lib/social-prompts';
 
-export const prerender = false;
 
 export const POST: APIRoute = async ({ request }) => {
   const headers = { 'Content-Type': 'application/json' };

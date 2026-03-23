@@ -1,51 +1,5 @@
 ---
-export const prerender = false;
-
-import { getAllPurchasers } from '@lib/prompt-pack-auth';
-import { getExpectedAdminToken, isAdminRequest, buildAdminCookie, clearAdminCookie } from '@lib/admin-auth';
-
-// ── Auth ──────────────────────────────────────────────────────────────────────
-const EXPECTED_PWD = import.meta.env.STATS_PASSWORD || 'stats2024';
-let isLoggedIn = (Astro.cookies.get('stats_auth')?.value ?? '') === EXPECTED_PWD;
-let loginError = false;
-
-if (Astro.request.method === 'POST') {
-  const form = await Astro.request.formData();
-  const action = form.get('action')?.toString();
-
-  if (action === 'login') {
-    const pw = form.get('password')?.toString() || '';
-    if (pw === EXPECTED_PWD) {
-      Astro.cookies.set('stats_auth', EXPECTED_PWD, { path: '/', maxAge: 86400 * 7 });
-      return Astro.redirect('/admin/prompt-pack', 302);
-    } else {
-      loginError = true;
-    }
-  }
-
-  if (action === 'logout') {
-    Astro.cookies.delete('stats_auth', { path: '/' });
-    return Astro.redirect('/admin/prompt-pack', 302);
-  }
-}
-
-// ── Data ──────────────────────────────────────────────────────────────────────
-let purchasers: Awaited<ReturnType<typeof getAllPurchasers>> = [];
-let loadError = '';
-
-if (isLoggedIn) {
-  try {
-    purchasers = await getAllPurchasers();
-  } catch (e: any) {
-    loadError = e.message;
-  }
-}
-
-function fmtDate(iso: string): string {
-  return new Date(iso).toLocaleDateString('it-IT', { day: '2-digit', month: 'short', year: 'numeric' });
-}
-
-const lastPurchase = purchasers[0]?.createdAt ? fmtDate(purchasers[0].createdAt) : '—';
+export const prerender = true;
 ---
 
 <!DOCTYPE html>
@@ -54,310 +8,105 @@ const lastPurchase = purchasers[0]?.createdAt ? fmtDate(purchasers[0].createdAt)
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin — Prompt Pack</title>
+  <meta name="robots" content="noindex,nofollow" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      background: #0B0A10;
-      color: #e2e8f0;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-      min-height: 100vh;
-      font-size: 15px;
-    }
-
-    /* ── Layout ── */
+    body { background: #0B0A10; color: #e2e8f0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; min-height: 100vh; font-size: 15px; }
     .wrap { max-width: 1080px; margin: 0 auto; padding: 28px 20px 60px; }
-
-    /* ── Header ── */
-    .hdr {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding-bottom: 20px;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-      margin-bottom: 32px;
-    }
+    .hdr { display: flex; align-items: center; justify-content: space-between; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 32px; }
     .hdr__logo { font-size: 1rem; font-weight: 700; color: #f59e0b; letter-spacing: -0.01em; }
     .hdr__logo span { color: #64748b; font-weight: 400; margin-left: 6px; font-size: 0.85rem; }
-    .btn-logout {
-      background: transparent;
-      border: 1px solid rgba(255,255,255,0.12);
-      color: #64748b;
-      padding: 6px 14px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 0.82rem;
-      transition: all 0.15s;
-    }
-    .btn-logout:hover { border-color: rgba(255,255,255,0.25); color: #94a3b8; }
-
-    /* ── Stats ── */
+    .btn-logout { background: transparent; border: 1px solid rgba(255,255,255,0.12); color: #64748b; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 0.82rem; }
     .stats { display: flex; gap: 14px; margin-bottom: 36px; flex-wrap: wrap; }
-    .stat {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 10px;
-      padding: 16px 22px;
-      min-width: 160px;
-    }
+    .stat { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07); border-radius: 10px; padding: 16px 22px; min-width: 160px; }
     .stat__lbl { font-size: 0.72rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 8px; }
     .stat__val { font-size: 2rem; font-weight: 700; color: #f59e0b; line-height: 1; }
-
-    /* ── Section ── */
     .section { margin-bottom: 44px; }
-    .section__title {
-      font-size: 0.72rem;
-      font-weight: 600;
-      color: #475569;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 14px;
-    }
-
-    /* ── Error banner ── */
-    .error-banner {
-      background: rgba(239,68,68,0.08);
-      border: 1px solid rgba(239,68,68,0.25);
-      color: #fca5a5;
-      border-radius: 8px;
-      padding: 12px 16px;
-      font-size: 0.85rem;
-      margin-bottom: 24px;
-    }
-
-    /* ── Table ── */
+    .section__title { font-size: 0.72rem; font-weight: 600; color: #475569; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 14px; }
+    .error-banner { background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.25); color: #fca5a5; border-radius: 8px; padding: 12px 16px; font-size: 0.85rem; margin-bottom: 24px; }
     .tbl-wrap { overflow-x: auto; border-radius: 10px; border: 1px solid rgba(255,255,255,0.07); }
     .tbl { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
-    .tbl th {
-      text-align: left;
-      padding: 11px 14px;
-      font-size: 0.7rem;
-      font-weight: 600;
-      color: #475569;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      background: rgba(255,255,255,0.02);
-      border-bottom: 1px solid rgba(255,255,255,0.07);
-    }
-    .tbl td {
-      padding: 13px 14px;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-      vertical-align: middle;
-      color: #cbd5e1;
-    }
+    .tbl th { text-align: left; padding: 11px 14px; font-size: 0.7rem; font-weight: 600; color: #475569; text-transform: uppercase; letter-spacing: 0.06em; background: rgba(255,255,255,0.02); border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .tbl td { padding: 13px 14px; border-bottom: 1px solid rgba(255,255,255,0.05); vertical-align: middle; color: #cbd5e1; }
     .tbl tr:last-child td { border-bottom: none; }
     .tbl tr:hover td { background: rgba(255,255,255,0.02); }
-    .tbl__num { color: #475569; font-size: 0.8rem; }
     .tbl__name { color: #f1f5f9; font-weight: 500; }
     .tbl__email { color: #94a3b8; font-size: 0.85rem; }
     .tbl__date { color: #64748b; font-size: 0.82rem; white-space: nowrap; }
     .tbl__receipt a { color: #f59e0b; text-decoration: none; font-size: 0.82rem; }
-    .tbl__receipt a:hover { text-decoration: underline; }
     .tbl__empty { text-align: center; color: #475569; padding: 32px; font-size: 0.88rem; }
-
-    .btn-revoke {
-      background: transparent;
-      border: 1px solid rgba(239,68,68,0.25);
-      color: #f87171;
-      padding: 4px 11px;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 0.78rem;
-      transition: all 0.15s;
-    }
-    .btn-revoke:hover { background: rgba(239,68,68,0.08); border-color: rgba(239,68,68,0.5); }
+    .btn-revoke { background: transparent; border: 1px solid rgba(239,68,68,0.25); color: #f87171; padding: 4px 11px; border-radius: 5px; cursor: pointer; font-size: 0.78rem; }
     .btn-revoke:disabled { opacity: 0.4; cursor: not-allowed; }
-
-    /* ── Broadcast ── */
-    .broadcast {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 12px;
-      padding: 24px;
-    }
+    .broadcast { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 12px; padding: 24px; }
     .broadcast__fields { display: flex; flex-direction: column; gap: 14px; }
     .field { display: flex; flex-direction: column; gap: 6px; }
     .field label { font-size: 0.8rem; color: #64748b; font-weight: 500; }
-    .field input,
-    .field textarea {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 7px;
-      padding: 10px 12px;
-      color: #e2e8f0;
-      font-size: 0.9rem;
-      outline: none;
-      transition: border-color 0.15s;
-      font-family: inherit;
-    }
-    .field input:focus, .field textarea:focus { border-color: rgba(245,158,11,0.4); }
+    .field input, .field textarea { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 7px; padding: 10px 12px; color: #e2e8f0; font-size: 0.9rem; outline: none; font-family: inherit; }
     .field textarea { resize: vertical; }
-    .broadcast__note { font-size: 0.78rem; color: #475569; margin-top: 4px; }
     .broadcast__actions { display: flex; align-items: center; gap: 16px; margin-top: 4px; }
-
-    .btn-primary {
-      background: #f59e0b;
-      color: #0B0A10;
-      font-weight: 700;
-      padding: 10px 20px;
-      border-radius: 7px;
-      border: none;
-      cursor: pointer;
-      font-size: 0.88rem;
-      transition: background 0.15s;
-    }
-    .btn-primary:hover { background: #fbbf24; }
+    .btn-primary { background: #f59e0b; color: #0B0A10; font-weight: 700; padding: 10px 20px; border-radius: 7px; border: none; cursor: pointer; font-size: 0.88rem; }
     .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+    .res-ok { color: #4ade80; font-size: 0.83rem; }
+    .res-err { color: #f87171; font-size: 0.83rem; }
+    .loading-msg { text-align: center; padding: 3rem; color: #64748b; }
 
-    #broadcast-result { font-size: 0.83rem; }
-    .res-ok { color: #4ade80; }
-    .res-err { color: #f87171; }
-
-    /* ── Login ── */
-    .login-page {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-    .login-card {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 14px;
-      padding: 40px;
-      width: 100%;
-      max-width: 360px;
-    }
+    /* Login */
+    .login-page { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+    .login-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 40px; width: 100%; max-width: 360px; }
     .login-card__title { font-size: 1.2rem; font-weight: 700; color: #f59e0b; margin-bottom: 6px; }
     .login-card__sub { color: #475569; font-size: 0.83rem; margin-bottom: 28px; }
     .login-form { display: flex; flex-direction: column; gap: 12px; }
-    .login-form input {
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 8px;
-      padding: 12px 14px;
-      color: #e2e8f0;
-      font-size: 0.95rem;
-      outline: none;
-      transition: border-color 0.15s;
-    }
-    .login-form input:focus { border-color: rgba(245,158,11,0.45); }
-    .btn-login {
-      background: #f59e0b;
-      color: #0B0A10;
-      font-weight: 700;
-      padding: 12px;
-      border-radius: 8px;
-      border: none;
-      cursor: pointer;
-      font-size: 0.95rem;
-      margin-top: 4px;
-    }
-    .btn-login:hover { background: #fbbf24; }
-    .login-err {
-      background: rgba(239,68,68,0.08);
-      border: 1px solid rgba(239,68,68,0.25);
-      color: #fca5a5;
-      border-radius: 7px;
-      padding: 10px 14px;
-      font-size: 0.83rem;
-    }
+    .login-form input { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 12px 14px; color: #e2e8f0; font-size: 0.95rem; outline: none; }
+    .btn-login { background: #f59e0b; color: #0B0A10; font-weight: 700; padding: 12px; border-radius: 8px; border: none; cursor: pointer; font-size: 0.95rem; }
   </style>
-
 </head>
 <body>
 
-{!isLoggedIn ? (
-  <!-- ── Login ── -->
-  <div class="login-page">
-    <div class="login-card">
-      <div class="login-card__title">⚡ Prompt Pack Admin</div>
-      <div class="login-card__sub">Accesso riservato</div>
-      {loginError && <div class="login-err">Password errata.</div>}
-      <form method="POST" class="login-form">
-        <input type="hidden" name="action" value="login">
-        <input type="password" name="password" placeholder="Password" autofocus required>
-        <button type="submit" class="btn-login">Accedi</button>
-      </form>
-    </div>
+<div id="login-wrap" class="login-page" style="display:none">
+  <div class="login-card">
+    <div class="login-card__title">⚡ Prompt Pack Admin</div>
+    <div class="login-card__sub">Accesso riservato</div>
+    <form id="login-form" class="login-form">
+      <input type="password" id="pwd" placeholder="Password" autofocus required>
+      <button type="submit" class="btn-login">Accedi</button>
+    </form>
   </div>
-) : (
-  <!-- ── Dashboard ── -->
-  <div class="wrap">
+</div>
 
-    <!-- Header -->
+<div id="content-wrap" style="display:none">
+  <div class="wrap">
     <header class="hdr">
-      <div class="hdr__logo">
-        ⚡ Prompt Pack Admin
-        <span>marcomunich.com</span>
-      </div>
-      <form method="POST">
-        <input type="hidden" name="action" value="logout">
-        <button type="submit" class="btn-logout">Logout</button>
-      </form>
+      <div class="hdr__logo">⚡ Prompt Pack Admin <span>marcomunich.com</span></div>
+      <button class="btn-logout" onclick="document.cookie='stats_auth=;path=/;max-age=0';location.reload()">Logout</button>
     </header>
 
-    <!-- Stats -->
     <div class="stats">
       <div class="stat">
         <div class="stat__lbl">Acquirenti totali</div>
-        <div class="stat__val">{purchasers.length}</div>
+        <div class="stat__val" id="stat-total">—</div>
       </div>
       <div class="stat">
         <div class="stat__lbl">Ultimo acquisto</div>
-        <div class="stat__val" style="font-size:1.1rem;padding-top:6px">{lastPurchase}</div>
+        <div class="stat__val" id="stat-last" style="font-size:1.1rem;padding-top:6px">—</div>
       </div>
     </div>
 
-    {loadError && <div class="error-banner">Errore nel caricamento dati: {loadError}</div>}
+    <div id="error-banner" class="error-banner" style="display:none"></div>
 
-    <!-- Acquirenti -->
     <div class="section">
       <div class="section__title">Acquirenti</div>
       <div class="tbl-wrap">
         <table class="tbl">
           <thead>
-            <tr>
-              <th>#</th>
-              <th>Nome</th>
-              <th>Email</th>
-              <th>Acquistato il</th>
-              <th>Receipt</th>
-              <th></th>
-            </tr>
+            <tr><th>#</th><th>Nome</th><th>Email</th><th>Acquistato il</th><th>Receipt</th><th></th></tr>
           </thead>
           <tbody id="tbl-body">
-            {purchasers.length === 0 ? (
-              <tr><td class="tbl__empty" colspan="6">Nessun acquirente ancora.</td></tr>
-            ) : purchasers.map((p, i) => (
-              <tr id={`row-${p.token}`}>
-                <td class="tbl__num">{i + 1}</td>
-                <td class="tbl__name">{p.name}</td>
-                <td class="tbl__email">{p.email}</td>
-                <td class="tbl__date">{fmtDate(p.createdAt)}</td>
-                <td class="tbl__receipt">
-                  {p.stripeReceiptUrl
-                    ? <a href={p.stripeReceiptUrl} target="_blank" rel="noopener">Ricevuta ↗</a>
-                    : <span style="color:#475569">—</span>
-                  }
-                </td>
-                <td>
-                  <button
-                    class="btn-revoke"
-                    data-token={p.token}
-                    data-email={p.email}
-                    data-name={p.name}
-                  >Revoca</button>
-                </td>
-              </tr>
-            ))}
+            <tr><td class="tbl__empty" colspan="6">Caricamento...</td></tr>
           </tbody>
         </table>
       </div>
     </div>
 
-    <!-- Broadcast -->
     <div class="section">
       <div class="section__title">Email broadcast</div>
       <div class="broadcast">
@@ -368,97 +117,115 @@ const lastPurchase = purchasers[0]?.createdAt ? fmtDate(purchasers[0].createdAt)
           </div>
           <div class="field">
             <label for="bc-body">Messaggio</label>
-            <textarea id="bc-body" name="body" rows="7" placeholder="Scrivi il testo dell'email. Usa gli a capo normalmente." required></textarea>
+            <textarea id="bc-body" name="body" rows="7" placeholder="Scrivi il testo dell'email." required></textarea>
           </div>
           <div class="broadcast__actions">
-            <button type="submit" class="btn-primary" id="btn-send">
-              Invia a {purchasers.length} {purchasers.length === 1 ? 'acquirente' : 'acquirenti'}
-            </button>
+            <button type="submit" class="btn-primary" id="btn-send">Invia</button>
             <div id="broadcast-result"></div>
-          </div>
-          <div class="broadcast__note">
-            L'email viene inviata da <code>noreply@marcomunich.com</code> e include un link di accesso al pack.
           </div>
         </form>
       </div>
     </div>
-
   </div>
-)}
+</div>
 
 <script is:inline>
-  // ── Revoca ──────────────────────────────────────────────────────────────────
-  document.querySelectorAll('.btn-revoke').forEach(function(btn) {
-    btn.addEventListener('click', async function() {
-      var token = btn.dataset.token;
-      var email = btn.dataset.email;
-      var name  = btn.dataset.name;
-      if (!confirm('Revocare l\'accesso di ' + name + ' (' + email + ')?\nQuesta azione è irreversibile.')) return;
-
-      btn.disabled = true;
-      btn.textContent = '...';
-
-      try {
-        var res = await fetch('/api/admin/pp-revoke', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ token: token }),
-        });
-        if (res.ok) {
-          var row = document.getElementById('row-' + token);
-          if (row) row.remove();
-        } else {
-          var data = await res.json();
-          alert('Errore: ' + (data.error || 'sconosciuto'));
-          btn.disabled = false;
-          btn.textContent = 'Revoca';
-        }
-      } catch (err) {
-        alert('Errore di rete');
-        btn.disabled = false;
-        btn.textContent = 'Revoca';
-      }
-    });
+(function(){
+  var cookie = document.cookie;
+  var auth = cookie.split(';').find(function(c){return c.trim().startsWith('stats_auth=')});
+  if(auth){
+    document.getElementById('content-wrap').style.display='block';
+    loadPurchasers();
+  } else {
+    document.getElementById('login-wrap').style.display='flex';
+  }
+  var form = document.getElementById('login-form');
+  if(form) form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var pwd = document.getElementById('pwd').value;
+    fetch('/api/admin-auth.php', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({password:pwd})})
+    .then(function(r){return r.json()})
+    .then(function(d){
+      if(d.success) { document.cookie='stats_auth='+encodeURIComponent(pwd)+';path=/;max-age=604800'; location.reload(); }
+      else alert('Password errata');
+    })
+    .catch(function(){ alert('Errore di connessione'); });
   });
 
-  // ── Broadcast ───────────────────────────────────────────────────────────────
-  var broadcastForm = document.getElementById('broadcast-form');
-  if (broadcastForm) {
-    broadcastForm.addEventListener('submit', async function(e) {
-      e.preventDefault();
-      var subject = document.getElementById('bc-subject').value.trim();
-      var body    = document.getElementById('bc-body').value.trim();
-      var btn     = document.getElementById('btn-send');
-      var result  = document.getElementById('broadcast-result');
+  function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+  function fmtDate(iso){return new Date(iso).toLocaleDateString('it-IT',{day:'2-digit',month:'short',year:'numeric'});}
 
-      if (!subject || !body) return;
+  function loadPurchasers(){
+    fetch('/api/admin/pp-list.php')
+      .then(function(r){return r.json()})
+      .then(function(purchasers){
+        document.getElementById('stat-total').textContent=purchasers.length;
+        document.getElementById('stat-last').textContent=purchasers.length>0?fmtDate(purchasers[0].createdAt):'—';
+        document.getElementById('btn-send').textContent='Invia a '+purchasers.length+' acquirent'+(purchasers.length===1?'e':'i');
 
-      btn.disabled = true;
-      var originalText = btn.textContent;
-      btn.textContent = 'Invio in corso...';
-      result.innerHTML = '';
-
-      try {
-        var res = await fetch('/api/admin/pp-broadcast', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ subject: subject, body: body }),
-        });
-        var data = await res.json();
-        if (res.ok) {
-          result.innerHTML = '<span class="res-ok">✓ Inviate ' + data.sent + ' email' + (data.failed > 0 ? ', ' + data.failed + ' fallite' : '') + '</span>';
-          broadcastForm.reset();
-        } else {
-          result.innerHTML = '<span class="res-err">Errore: ' + (data.error || 'sconosciuto') + '</span>';
+        var tbody=document.getElementById('tbl-body');
+        if(!purchasers.length){
+          tbody.innerHTML='<tr><td class="tbl__empty" colspan="6">Nessun acquirente ancora.</td></tr>';
+          return;
         }
-      } catch (err) {
-        result.innerHTML = '<span class="res-err">Errore di rete</span>';
-      } finally {
-        btn.disabled = false;
-        btn.textContent = originalText;
-      }
+        var h='';
+        purchasers.forEach(function(p,i){
+          h+='<tr id="row-'+esc(p.token)+'">';
+          h+='<td style="color:#475569;font-size:.8rem">'+(i+1)+'</td>';
+          h+='<td class="tbl__name">'+esc(p.name)+'</td>';
+          h+='<td class="tbl__email">'+esc(p.email)+'</td>';
+          h+='<td class="tbl__date">'+fmtDate(p.createdAt)+'</td>';
+          h+='<td>';
+          if(p.stripeReceiptUrl) h+='<a href="'+esc(p.stripeReceiptUrl)+'" target="_blank" rel="noopener" style="color:#f59e0b;text-decoration:none;font-size:.82rem">Ricevuta ↗</a>';
+          else h+='<span style="color:#475569">—</span>';
+          h+='</td>';
+          h+='<td><button class="btn-revoke" data-token="'+esc(p.token)+'" data-email="'+esc(p.email)+'" data-name="'+esc(p.name)+'">Revoca</button></td>';
+          h+='</tr>';
+        });
+        tbody.innerHTML=h;
+        bindRevoke();
+      })
+      .catch(function(err){
+        document.getElementById('error-banner').style.display='block';
+        document.getElementById('error-banner').textContent='Errore nel caricamento: '+err.message;
+      });
+  }
+
+  function bindRevoke(){
+    document.querySelectorAll('.btn-revoke').forEach(function(btn){
+      btn.addEventListener('click',async function(){
+        var token=btn.dataset.token,email=btn.dataset.email,name=btn.dataset.name;
+        if(!confirm('Revocare l\'accesso di '+name+' ('+email+')?\nQuesta azione è irreversibile.'))return;
+        btn.disabled=true;btn.textContent='...';
+        try{
+          var res=await fetch('/api/admin/pp-revoke.php',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({token:token})});
+          if(res.ok){var row=document.getElementById('row-'+token);if(row)row.remove();}
+          else{var data=await res.json();alert('Errore: '+(data.error||'sconosciuto'));btn.disabled=false;btn.textContent='Revoca';}
+        }catch(err){alert('Errore di rete');btn.disabled=false;btn.textContent='Revoca';}
+      });
     });
   }
+
+  var broadcastForm=document.getElementById('broadcast-form');
+  if(broadcastForm){
+    broadcastForm.addEventListener('submit',async function(e){
+      e.preventDefault();
+      var subject=document.getElementById('bc-subject').value.trim();
+      var body=document.getElementById('bc-body').value.trim();
+      var btn=document.getElementById('btn-send');
+      var result=document.getElementById('broadcast-result');
+      if(!subject||!body)return;
+      btn.disabled=true;var originalText=btn.textContent;btn.textContent='Invio in corso...';result.innerHTML='';
+      try{
+        var res=await fetch('/api/admin/pp-broadcast.php',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({subject:subject,body:body})});
+        var data=await res.json();
+        if(res.ok){result.innerHTML='<span class="res-ok">✓ Inviate '+data.sent+' email'+(data.failed>0?', '+data.failed+' fallite':'')+'</span>';broadcastForm.reset();}
+        else{result.innerHTML='<span class="res-err">Errore: '+(data.error||'sconosciuto')+'</span>';}
+      }catch(err){result.innerHTML='<span class="res-err">Errore di rete</span>';}
+      finally{btn.disabled=false;btn.textContent=originalText;}
+    });
+  }
+})();
 </script>
 
 </body>

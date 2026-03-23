@@ -1,10 +1,5 @@
 ---
-/**
- * /prompt-pack/grazie
- * Pagina di ringraziamento post-acquisto Stripe.
- * Stripe redirige qui dopo checkout completato.
- */
-export const prerender = false;
+export const prerender = true;
 ---
 
 <!DOCTYPE html>
@@ -28,139 +23,113 @@ export const prerender = false;
     }
 
     html, body {
-      height: 100%;
       background: var(--bg);
       color: var(--cream);
-      font-family: Georgia, serif;
-    }
-
-    .page {
+      font-family: 'Bricolage Grotesque', system-ui, sans-serif;
       min-height: 100vh;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 2rem 1.5rem;
+      padding: 2rem 1rem;
+    }
+
+    .wrap {
+      max-width: 560px;
+      width: 100%;
       text-align: center;
     }
 
-    .icon {
-      width: 64px; height: 64px;
+    .check {
+      width: 80px;
+      height: 80px;
       background: rgba(197,138,55,0.12);
-      border: 1px solid rgba(197,138,55,0.3);
+      border: 2px solid var(--gold);
       border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       margin: 0 auto 2rem;
-      font-size: 1.75rem;
+      font-size: 2.5rem;
     }
 
-    .eyebrow {
-      font-family: 'Bricolage Grotesque', system-ui, sans-serif;
-      font-size: 0.72rem; font-weight: 600;
-      letter-spacing: 0.1em; text-transform: uppercase;
+    h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .sub {
+      font-size: 1rem;
+      color: var(--muted);
+      margin-bottom: 2.5rem;
+      line-height: 1.6;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      text-align: left;
+    }
+
+    .card h2 {
+      font-size: 1rem;
+      font-weight: 600;
       color: var(--gold);
       margin-bottom: 1rem;
     }
 
-    h1 {
-      font-family: 'Bricolage Grotesque', system-ui, sans-serif;
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      font-weight: 700; letter-spacing: -0.03em; line-height: 1.15;
-      color: #fff;
-      margin-bottom: 1.25rem;
-    }
-
-    h1 em {
-      font-style: normal; color: var(--gold);
-    }
-
-    .body {
-      font-size: 1rem; line-height: 1.6;
+    .card p {
+      font-size: 0.9rem;
       color: var(--muted);
-      max-width: 42ch;
-      margin: 0 auto 2.5rem;
+      line-height: 1.6;
+      margin-bottom: 0.75rem;
     }
 
-    .steps {
-      display: flex; flex-direction: column; gap: 1rem;
-      max-width: 420px; margin: 0 auto 3rem;
-      text-align: left;
-    }
-
-    .step {
-      display: flex; align-items: flex-start; gap: 1rem;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 10px;
-      padding: 1rem 1.25rem;
-    }
-
-    .step__num {
-      flex-shrink: 0;
-      width: 28px; height: 28px;
-      background: rgba(197,138,55,0.12);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'Bricolage Grotesque', system-ui, sans-serif;
-      font-size: 0.75rem; font-weight: 700;
-      color: var(--gold);
-    }
-
-    .step__text {
-      font-size: 0.9rem; line-height: 1.5;
-      color: rgba(240,235,227,0.7);
-    }
-
-    .step__text strong {
-      color: var(--cream); display: block; margin-bottom: 0.15rem;
-    }
-
-    .back-link {
-      font-size: 0.82rem;
-      color: var(--muted);
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.85rem 2rem;
+      background: var(--gold);
+      color: var(--bg);
+      font-weight: 700;
+      font-size: 0.95rem;
+      border-radius: 8px;
       text-decoration: none;
+      transition: background 0.15s;
     }
-    .back-link:hover { color: var(--gold); }
+    .btn:hover { background: #d4993f; }
+
+    .footer-note {
+      font-size: 0.78rem;
+      color: rgba(240,235,227,0.3);
+      margin-top: 2rem;
+    }
   </style>
 </head>
 <body>
-  <div class="page">
-    <div class="icon">✓</div>
-
-    <p class="eyebrow">Acquisto completato</p>
-
-    <h1>Il pagamento è andato<br>a <em>buon fine.</em></h1>
-
-    <p class="body">
-      Tra pochi secondi ricevi un'email con il link per accedere al tuo Prompt Pack.
-      Controlla la casella di posta — anche lo spam, per sicurezza.
+  <div class="wrap">
+    <div class="check">✓</div>
+    <h1>Acquisto completato!</h1>
+    <p class="sub">
+      Grazie per aver acquistato il Prompt Pack.<br>
+      A breve riceverai un'email con il link per accedere ai tuoi prompt.
     </p>
 
-    <div class="steps">
-      <div class="step">
-        <div class="step__num">1</div>
-        <div class="step__text">
-          <strong>Controlla la tua email</strong>
-          Trovi un messaggio da <em>noreply@marcomunich.com</em> con il link di accesso.
-        </div>
-      </div>
-      <div class="step">
-        <div class="step__num">2</div>
-        <div class="step__text">
-          <strong>Clicca il link nell'email</strong>
-          Il link è personale — aprilo dal dispositivo che preferisci e aggiungilo ai preferiti.
-        </div>
-      </div>
-      <div class="step">
-        <div class="step__num">3</div>
-        <div class="step__text">
-          <strong>Hai accesso per sempre</strong>
-          Il pack è tuo — tutti gli aggiornamenti futuri arrivano allo stesso link, senza costi aggiuntivi.
-        </div>
-      </div>
+    <div class="card">
+      <h2>Cosa succede ora?</h2>
+      <p>Controlla la tua casella email (anche spam/promozioni). Troverai un messaggio con il link di accesso al Prompt Pack.</p>
+      <p>Il link funziona senza password: basta cliccare per accedere ai tuoi prompt ogni volta che vuoi.</p>
     </div>
 
-    <a href="/" class="back-link">← Torna alla homepage</a>
+    <a href="/" class="btn">Torna alla home</a>
+
+    <p class="footer-note">marcomunich.com</p>
   </div>
 </body>
 </html>

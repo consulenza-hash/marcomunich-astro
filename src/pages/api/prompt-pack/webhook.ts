@@ -14,7 +14,6 @@ import { Resend } from 'resend';
 import { createAccessToken } from '@lib/prompt-pack-auth';
 import { randomUUID } from 'crypto';
 
-export const prerender = false;
 
 export const POST: APIRoute = async ({ request }) => {
   const stripe = new Stripe(import.meta.env.STRIPE_SECRET_KEY, {

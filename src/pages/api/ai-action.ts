@@ -1,7 +1,6 @@
 import type { APIRoute } from 'astro';
 import Anthropic from '@anthropic-ai/sdk';
 
-export const prerender = false;
 
 const SISTEMA = `Sei un ghostwriter italiano esperto di personal branding. Scrivi sempre in italiano naturale pulito.
 

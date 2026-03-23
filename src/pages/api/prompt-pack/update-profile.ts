@@ -7,7 +7,6 @@
 import type { APIRoute } from 'astro';
 import { getTokenFromCookie, validateToken } from '@lib/prompt-pack-auth';
 
-export const prerender = false;
 
 export const POST: APIRoute = async ({ request }) => {
   const token = getTokenFromCookie(request);

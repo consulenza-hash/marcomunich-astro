@@ -1,7 +1,6 @@
 import type { APIRoute } from 'astro';
 import { quoteTemplate, titleOverlayTemplate } from '../../../lib/social-image-templates';
 
-export const prerender = false;
 
 // Cache font buffers across warm invocations
 let fontRegular: ArrayBuffer | null = null;

@@ -6,7 +6,6 @@
 import type { APIRoute } from 'astro';
 import { clearAccessCookie } from '@lib/prompt-pack-auth';
 
-export const prerender = false;
 
 export const GET: APIRoute = ({ redirect }) => {
   return new Response(null, {

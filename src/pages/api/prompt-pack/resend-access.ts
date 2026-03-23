@@ -8,7 +8,6 @@ import type { APIRoute } from 'astro';
 import { Resend } from 'resend';
 import { getTokenByEmail } from '@lib/prompt-pack-auth';
 
-export const prerender = false;
 
 export const POST: APIRoute = async ({ request }) => {
   const resend = new Resend((process.env.RESEND_API_KEY || '').trim());

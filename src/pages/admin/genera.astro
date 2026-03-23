@@ -1,50 +1,5 @@
 ---
-export const prerender = false;
-
-// ── Auth ──────────────────────────────────────────────────────────────────────
-const cookie      = Astro.cookies.get('stats_auth')?.value ?? '';
-const expectedPwd = import.meta.env.STATS_PASSWORD || 'stats2024';
-const isAuth      = cookie === expectedPwd;
-
-if (Astro.request.method === 'POST' && !isAuth) {
-  const form = await Astro.request.formData();
-  const pwd  = form.get('password')?.toString() ?? '';
-  if (pwd === expectedPwd) {
-    Astro.cookies.set('stats_auth', pwd, { path: '/', maxAge: 86400 * 7 });
-    return Astro.redirect('/admin/genera');
-  }
-}
-
-// ── Params da URL (?slug=...&modo=...&autostart=1) ────────────────────────────
-const MODI_VALIDI = ['solo-articolo', 'solo-metadati', 'tutto-completo'];
-const paramSlug      = isAuth ? (Astro.url.searchParams.get('slug') ?? '') : '';
-const paramModoRaw   = isAuth ? (Astro.url.searchParams.get('modo')  ?? '') : '';
-const paramModo      = MODI_VALIDI.includes(paramModoRaw) ? paramModoRaw : 'solo-articolo';
-const paramAutostart = isAuth && Astro.url.searchParams.get('autostart') === '1';
-
-// ── Lista articoli da GitHub ──────────────────────────────────────────────────
-type ArticoloItem = { slug: string; label: string };
-let articoli: ArticoloItem[] = [];
-
-if (isAuth) {
-  try {
-    const token   = import.meta.env.GITHUB_TOKEN ?? '';
-    const ghHeaders: Record<string, string> = { Accept: 'application/vnd.github.v3+json' };
-    if (token) ghHeaders['Authorization'] = `token ${token}`;
-
-    const res = await fetch(
-      'https://api.github.com/repos/consulenza-hash/marcomunich-astro/contents/src/content/articoli?ref=main',
-      { headers: ghHeaders }
-    );
-    if (res.ok) {
-      const list = (await res.json()) as { name: string; type: string }[];
-      articoli = list
-        .filter(f => f.type === 'dir')
-        .map(f => ({ slug: f.name, label: f.name.replace(/-/g, ' ') }))
-        .sort((a, b) => a.label.localeCompare(b.label, 'it'));
-    }
-  } catch { /* silenzioso */ }
-}
+export const prerender = true;
 ---
 
 <!DOCTYPE html>
@@ -107,6 +62,7 @@ if (isAuth) {
       color: #e2e8f0;
       font-size: 1rem;
       margin-bottom: 1rem;
+      box-sizing: border-box;
     }
     .login-box button {
       width: 100%;
@@ -132,102 +88,45 @@ if (isAuth) {
       margin-bottom: .75rem;
     }
     .step-num {
-      width: 20px;
-      height: 20px;
-      background: #1e1b4b;
-      border: 1px solid #6366f1;
+      width: 20px; height: 20px;
+      background: #1e1b4b; border: 1px solid #6366f1;
       border-radius: 50%;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: .65rem;
-      font-weight: 700;
-      color: #818cf8;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: .65rem; font-weight: 700; color: #818cf8;
     }
 
     /* ── Card ── */
-    .card {
-      background: #1a1a2e;
-      border: 1px solid #2d2d4e;
-      border-radius: 12px;
-      padding: 1.5rem;
-      margin-bottom: 1.5rem;
-    }
+    .card { background: #1a1a2e; border: 1px solid #2d2d4e; border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; }
 
     /* ── Source tabs ── */
-    .source-tabs {
-      display: flex;
-      gap: .5rem;
-      margin-bottom: 1rem;
-    }
+    .source-tabs { display: flex; gap: .5rem; margin-bottom: 1rem; }
     .source-tab {
-      background: transparent;
-      border: 1px solid #2d2d4e;
-      border-radius: 6px;
-      padding: .4rem .9rem;
-      color: #64748b;
-      font-size: .85rem;
-      cursor: pointer;
-      transition: all .2s;
+      background: transparent; border: 1px solid #2d2d4e; border-radius: 6px;
+      padding: .4rem .9rem; color: #64748b; font-size: .85rem; cursor: pointer; transition: all .2s;
     }
-    .source-tab.active {
-      background: #1e1b4b;
-      border-color: #6366f1;
-      color: #818cf8;
-    }
+    .source-tab.active { background: #1e1b4b; border-color: #6366f1; color: #818cf8; }
 
     /* ── Select ── */
     .select-wrap { position: relative; }
     .select-wrap select {
-      width: 100%;
-      background: #0f0f1a;
-      border: 1px solid #2d2d4e;
-      border-radius: 8px;
-      padding: .75rem 1rem;
-      color: #e2e8f0;
-      font-size: .95rem;
-      appearance: none;
-      cursor: pointer;
+      width: 100%; background: #0f0f1a; border: 1px solid #2d2d4e; border-radius: 8px;
+      padding: .75rem 1rem; color: #e2e8f0; font-size: .95rem; appearance: none; cursor: pointer;
     }
-    .select-wrap::after {
-      content: '▾';
-      position: absolute;
-      right: 1rem;
-      top: 50%;
-      transform: translateY(-50%);
-      color: #64748b;
-      pointer-events: none;
-    }
+    .select-wrap::after { content: '▾'; position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); color: #64748b; pointer-events: none; }
 
     /* ── Textarea ── */
     textarea.prompt-input {
-      width: 100%;
-      background: #0f0f1a;
-      border: 1px solid #2d2d4e;
-      border-radius: 8px;
-      padding: .75rem 1rem;
-      color: #e2e8f0;
-      font-size: .9rem;
-      font-family: inherit;
-      resize: vertical;
-      min-height: 120px;
-      line-height: 1.6;
-      transition: border-color .2s;
+      width: 100%; background: #0f0f1a; border: 1px solid #2d2d4e; border-radius: 8px;
+      padding: .75rem 1rem; color: #e2e8f0; font-size: .9rem; font-family: inherit;
+      resize: vertical; min-height: 120px; line-height: 1.6; transition: border-color .2s;
     }
     textarea.prompt-input:focus { outline: none; border-color: #6366f1; }
 
-    /* ── Modalità ── */
+    /* ── Modalita ── */
     .modi { display: flex; gap: .75rem; flex-wrap: wrap; }
     .modo-btn {
-      flex: 1;
-      min-width: 200px;
-      background: #0f0f1a;
-      border: 2px solid #2d2d4e;
-      border-radius: 10px;
-      padding: 1rem 1.2rem;
-      cursor: pointer;
-      transition: all .2s;
-      text-align: left;
+      flex: 1; min-width: 200px; background: #0f0f1a; border: 2px solid #2d2d4e;
+      border-radius: 10px; padding: 1rem 1.2rem; cursor: pointer; transition: all .2s; text-align: left;
     }
     .modo-btn:hover { border-color: #4f46e5; }
     .modo-btn.active { border-color: #6366f1; background: #1e1b4b; }
@@ -238,445 +137,370 @@ if (isAuth) {
 
     /* ── Genera button ── */
     #btn-genera {
-      width: 100%;
-      background: linear-gradient(135deg, #6366f1, #8b5cf6);
-      color: #fff;
-      border: none;
-      border-radius: 10px;
-      padding: 1.1rem;
-      font-size: 1.05rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: opacity .2s, transform .1s;
-      margin-bottom: 1.5rem;
+      width: 100%; background: linear-gradient(135deg, #6366f1, #8b5cf6); color: #fff;
+      border: none; border-radius: 10px; padding: 1.1rem; font-size: 1.05rem; font-weight: 600;
+      cursor: pointer; transition: opacity .2s, transform .1s; margin-bottom: 1.5rem;
     }
     #btn-genera:hover { opacity: .9; }
     #btn-genera:active { transform: scale(.99); }
     #btn-genera:disabled { opacity: .5; cursor: not-allowed; }
 
     /* ── Progress ── */
-    #progress-wrap {
-      display: none;
-      background: #1a1a2e;
-      border: 1px solid #2d2d4e;
-      border-radius: 12px;
-      padding: 2.5rem 1.5rem;
-      text-align: center;
-      margin-bottom: 1.5rem;
-    }
+    #progress-wrap { display: none; background: #1a1a2e; border: 1px solid #2d2d4e; border-radius: 12px; padding: 2.5rem 1.5rem; text-align: center; margin-bottom: 1.5rem; }
     #progress-wrap.visible { display: block; }
-
-    .progress-icon {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-      display: block;
-    }
-    .progress-title {
-      font-size: 1.1rem;
-      font-weight: 600;
-      margin-bottom: .5rem;
-    }
-    #progress-status {
-      font-size: .85rem;
-      color: #64748b;
-      min-height: 1.4rem;
-      margin-bottom: 1.5rem;
-    }
-
-    /* Spinner */
-    .spinner {
-      width: 36px;
-      height: 36px;
-      border: 3px solid #2d2d4e;
-      border-top-color: #6366f1;
-      border-radius: 50%;
-      animation: spin .8s linear infinite;
-      margin: 0 auto 1rem;
-    }
+    .progress-icon { font-size: 2.5rem; margin-bottom: 1rem; display: block; }
+    .progress-title { font-size: 1.1rem; font-weight: 600; margin-bottom: .5rem; }
+    #progress-status { font-size: .85rem; color: #64748b; min-height: 1.4rem; margin-bottom: 1.5rem; }
+    .spinner { width: 36px; height: 36px; border: 3px solid #2d2d4e; border-top-color: #6366f1; border-radius: 50%; animation: spin .8s linear infinite; margin: 0 auto 1rem; }
     @keyframes spin { to { transform: rotate(360deg); } }
-
-    /* Progress bar */
-    .progress-bar-wrap {
-      background: #0f0f1a;
-      border-radius: 6px;
-      height: 4px;
-      overflow: hidden;
-      max-width: 300px;
-      margin: 0 auto;
-    }
-    .progress-bar-fill {
-      height: 100%;
-      background: linear-gradient(90deg, #6366f1, #8b5cf6);
-      border-radius: 6px;
-      animation: progress-indeterminate 2s ease-in-out infinite;
-      transform-origin: left;
-    }
-    @keyframes progress-indeterminate {
-      0%   { width: 0%; margin-left: 0%; }
-      50%  { width: 70%; margin-left: 15%; }
-      100% { width: 0%; margin-left: 100%; }
-    }
-
-    /* Success state */
+    .progress-bar-wrap { background: #0f0f1a; border-radius: 6px; height: 4px; overflow: hidden; max-width: 300px; margin: 0 auto; }
+    .progress-bar-fill { height: 100%; background: linear-gradient(90deg, #6366f1, #8b5cf6); border-radius: 6px; animation: progress-indeterminate 2s ease-in-out infinite; transform-origin: left; }
+    @keyframes progress-indeterminate { 0% { width: 0%; margin-left: 0%; } 50% { width: 70%; margin-left: 15%; } 100% { width: 0%; margin-left: 100%; } }
     .success-icon { font-size: 3rem; margin-bottom: .75rem; display: block; }
     .success-title { font-size: 1.1rem; font-weight: 600; color: #4ade80; margin-bottom: .5rem; }
     .success-sub { font-size: .85rem; color: #64748b; }
-
-    /* Error state */
-    .error-box {
-      display: none;
-      background: #1c0e0e;
-      border: 1px solid #7f1d1d;
-      border-radius: 10px;
-      padding: 1.25rem;
-      margin-bottom: 1.5rem;
-    }
+    .error-box { display: none; background: #1c0e0e; border: 1px solid #7f1d1d; border-radius: 10px; padding: 1.25rem; margin-bottom: 1.5rem; }
     .error-box.visible { display: block; }
     .error-box .error-title { font-weight: 600; color: #f87171; margin-bottom: .4rem; }
     .error-box .error-msg { font-size: .85rem; color: #fca5a5; font-family: monospace; }
-    .error-box button {
-      margin-top: .75rem;
-      background: transparent;
-      border: 1px solid #7f1d1d;
-      border-radius: 6px;
-      padding: .35rem .75rem;
-      color: #f87171;
-      font-size: .8rem;
-      cursor: pointer;
-    }
-
-    /* ── Timer ── */
+    .error-box button { margin-top: .75rem; background: transparent; border: 1px solid #7f1d1d; border-radius: 6px; padding: .35rem .75rem; color: #f87171; font-size: .8rem; cursor: pointer; }
     #timer { font-size: .75rem; color: #475569; margin-top: .5rem; }
   </style>
-
 </head>
 <body>
-  <div id="genera-cfg"
-    data-slug={paramSlug}
-    data-modo={paramModo}
-    data-autostart={paramAutostart ? '1' : ''}
-    style="display:none"></div>
   <div class="wrap">
 
-    {!isAuth ? (
+    <div id="login-wrap" style="display:none">
       <div class="login-box">
-        <h2>🔐 Admin — Accesso</h2>
-        <form method="POST">
-          <input type="password" name="password" placeholder="Password" autofocus />
+        <h2>Admin — Accesso</h2>
+        <form id="login-form">
+          <input type="password" id="pwd" placeholder="Password" autofocus />
           <button type="submit">Accedi</button>
         </form>
       </div>
-    ) : (
-      <>
-        <!-- Header -->
-        <header>
-          <h1>🤖 Generatore <span>AI</span></h1>
-          <nav class="nav-links">
-            <a href="/admin/">← Admin</a>
-            <a href="/keystatic">CMS</a>
-            <a href="/admin/riscrivi">Riscrivi</a>
-            <a href="/admin/statistiche">Statistiche</a>
-          </nav>
-        </header>
+    </div>
 
-        <!-- STEP 1: Sorgente -->
-        <div class="card">
-          <div class="step-label"><span class="step-num">1</span> Sorgente</div>
+    <div id="content-wrap" style="display:none">
+      <!-- Header -->
+      <header>
+        <h1>🤖 Generatore <span>AI</span></h1>
+        <nav class="nav-links">
+          <a href="/admin/">← Admin</a>
+          <a href="/keystatic">CMS</a>
+          <a href="/admin/riscrivi">Riscrivi</a>
+          <a href="/admin/statistiche">Statistiche</a>
+        </nav>
+      </header>
 
-          <div class="source-tabs">
-            <button class={`source-tab${!paramSlug ? ' active' : ''}`} onclick="switchSource('nuovo', this)">✨ Nuovo Articolo</button>
-            <button class={`source-tab${paramSlug ? ' active' : ''}`} onclick="switchSource('esistente', this)">📋 Articolo Esistente</button>
-          </div>
-
-          <!-- Nuovo: prompt libero -->
-          <div id="sorgente-nuovo" style={paramSlug ? 'display:none;' : ''}>
-            <textarea
-              class="prompt-input"
-              id="prompt-nuovo"
-              placeholder="Descrivi il tema dell'articolo. Es: Come i coach nel settore olistico possono alzare i prezzi senza perdere clienti..."
-            ></textarea>
-          </div>
-
-          <!-- Esistente: dropdown -->
-          <div id="sorgente-esistente" style={paramSlug ? '' : 'display:none;'}>
-            <div class="select-wrap">
-              <select id="articolo-select">
-                <option value="">— Scegli un articolo dalla lista —</option>
-                {articoli.map(a => (
-                  <option value={a.slug} selected={a.slug === paramSlug}>{a.label}</option>
-                ))}
-              </select>
-            </div>
-            <div id="anteprima-slug" style="font-size:.75rem;color:#64748b;margin-top:.5rem;min-height:1rem;"></div>
-          </div>
+      <!-- STEP 1: Sorgente -->
+      <div class="card">
+        <div class="step-label"><span class="step-num">1</span> Sorgente</div>
+        <div class="source-tabs">
+          <button class="source-tab active" onclick="switchSource('nuovo', this)">✨ Nuovo Articolo</button>
+          <button class="source-tab" onclick="switchSource('esistente', this)">📋 Articolo Esistente</button>
         </div>
-
-        <!-- STEP 2: Modalità -->
-        <div class="card">
-          <div class="step-label"><span class="step-num">2</span> Cosa generare</div>
-          <div class="modi">
-            <button class={`modo-btn${paramModo === 'solo-articolo' ? ' active' : ''}`} data-modo="solo-articolo" onclick="setModo(this)">
-              <div class="modo-icon">📝</div>
-              <div class="modo-label">Solo Articolo</div>
-              <div class="modo-desc">Scrive solo il corpo del testo</div>
-            </button>
-            <button class={`modo-btn${paramModo === 'solo-metadati' ? ' active' : ''}`} data-modo="solo-metadati" onclick="setModo(this)">
-              <div class="modo-icon">🏷️</div>
-              <div class="modo-label">Solo Metadati</div>
-              <div class="modo-desc">Genera SEO, GEO, AEO, FAQ schema</div>
-            </button>
-            <button class={`modo-btn${paramModo === 'tutto-completo' ? ' active' : ''}`} data-modo="tutto-completo" onclick="setModo(this)">
-              <div class="modo-icon">🚀</div>
-              <div class="modo-label">Tutto Completo</div>
-              <div class="modo-desc">Articolo + tutti i metadati da zero</div>
-            </button>
-          </div>
+        <div id="sorgente-nuovo">
+          <textarea class="prompt-input" id="prompt-nuovo" placeholder="Descrivi il tema dell'articolo. Es: Come i coach nel settore olistico possono alzare i prezzi senza perdere clienti..."></textarea>
         </div>
-
-        <!-- STEP 3: Genera -->
-        <button id="btn-genera" onclick="genera()">✨ Genera con Claude — Salva in Keystatic</button>
-
-        <!-- Progress -->
-        <div id="progress-wrap">
-          <div id="progress-idle">
-            <div class="spinner"></div>
-            <div class="progress-title" id="progress-title">Generazione in corso…</div>
-            <div id="progress-status">Elaborazione con Claude Sonnet 4.6</div>
-            <div class="progress-bar-wrap"><div class="progress-bar-fill"></div></div>
-            <div id="timer">0s</div>
+        <div id="sorgente-esistente" style="display:none;">
+          <div class="select-wrap">
+            <select id="articolo-select">
+              <option value="">Caricamento articoli...</option>
+            </select>
           </div>
-          <div id="progress-done" style="display:none;">
-            <span class="success-icon">✅</span>
-            <div class="success-title">Contenuto generato!</div>
-            <div class="success-sub" id="success-slug"></div>
-            <button
-              id="btn-applica"
-              onclick="applicaArticolo()"
-              style="margin-top:1.25rem;background:#4f46e5;color:#fff;border:none;padding:.85rem 1.75rem;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer;box-shadow:0 4px 14px rgba(79,70,229,.4);transition:transform .15s,box-shadow .15s;"
-              onmouseenter="this.style.transform='scale(1.03)';this.style.boxShadow='0 6px 20px rgba(79,70,229,.6)'"
-              onmouseleave="this.style.transform='scale(1)';this.style.boxShadow='0 4px 14px rgba(79,70,229,.4)'"
-            >✅ Applica all'articolo</button>
-          </div>
+          <div id="anteprima-slug" style="font-size:.75rem;color:#64748b;margin-top:.5rem;min-height:1rem;"></div>
         </div>
+      </div>
 
-        <!-- Error -->
-        <div class="error-box" id="error-box">
-          <div class="error-title">❌ Errore</div>
-          <div class="error-msg" id="error-msg"></div>
-          <button onclick="resetError()">Riprova</button>
+      <!-- STEP 2: Modalita -->
+      <div class="card">
+        <div class="step-label"><span class="step-num">2</span> Cosa generare</div>
+        <div class="modi">
+          <button class="modo-btn active" data-modo="solo-articolo" onclick="setModo(this)">
+            <div class="modo-icon">📝</div>
+            <div class="modo-label">Solo Articolo</div>
+            <div class="modo-desc">Scrive solo il corpo del testo</div>
+          </button>
+          <button class="modo-btn" data-modo="solo-metadati" onclick="setModo(this)">
+            <div class="modo-icon">🏷️</div>
+            <div class="modo-label">Solo Metadati</div>
+            <div class="modo-desc">Genera SEO, GEO, AEO, FAQ schema</div>
+          </button>
+          <button class="modo-btn" data-modo="tutto-completo" onclick="setModo(this)">
+            <div class="modo-icon">🚀</div>
+            <div class="modo-label">Tutto Completo</div>
+            <div class="modo-desc">Articolo + tutti i metadati da zero</div>
+          </button>
         </div>
-      </>
-    )}
+      </div>
+
+      <!-- STEP 3: Genera -->
+      <button id="btn-genera" onclick="genera()">✨ Genera con Claude — Salva in Keystatic</button>
+
+      <!-- Progress -->
+      <div id="progress-wrap">
+        <div id="progress-idle">
+          <div class="spinner"></div>
+          <div class="progress-title" id="progress-title">Generazione in corso…</div>
+          <div id="progress-status">Elaborazione con Claude Sonnet 4.6</div>
+          <div class="progress-bar-wrap"><div class="progress-bar-fill"></div></div>
+          <div id="timer">0s</div>
+        </div>
+        <div id="progress-done" style="display:none;">
+          <span class="success-icon">✅</span>
+          <div class="success-title">Contenuto generato!</div>
+          <div class="success-sub" id="success-slug"></div>
+          <button id="btn-applica" onclick="applicaArticolo()" style="margin-top:1.25rem;background:#4f46e5;color:#fff;border:none;padding:.85rem 1.75rem;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer;box-shadow:0 4px 14px rgba(79,70,229,.4);transition:transform .15s,box-shadow .15s;" onmouseenter="this.style.transform='scale(1.03)';this.style.boxShadow='0 6px 20px rgba(79,70,229,.6)'" onmouseleave="this.style.transform='scale(1)';this.style.boxShadow='0 4px 14px rgba(79,70,229,.4)'">✅ Applica all'articolo</button>
+        </div>
+      </div>
+
+      <!-- Error -->
+      <div class="error-box" id="error-box">
+        <div class="error-title">❌ Errore</div>
+        <div class="error-msg" id="error-msg"></div>
+        <button onclick="resetError()">Riprova</button>
+      </div>
+    </div>
 
   </div>
 
-  {isAuth && (
-    <script is:inline>
-      const _cfg           = document.getElementById('genera-cfg')?.dataset ?? {};
-      const _paramSlug     = _cfg.slug     || '';
-      const _paramModo     = _cfg.modo     || 'solo-articolo';
-      const _paramAutostart = _cfg.autostart === '1';
-      let sorgenteCorrente = _paramSlug ? 'esistente' : 'nuovo';
-      let modoCorrente     = _paramModo;
-      let timerInterval    = null;
-      let startTime        = 0;
-      let _keystatic_url   = '';
+  <script is:inline>
+  (function(){
+    // Auth check
+    var cookie = document.cookie;
+    var auth = cookie.split(';').find(function(c){return c.trim().startsWith('stats_auth=')});
+    if(auth){
+      document.getElementById('content-wrap').style.display='block';
+      loadArticoli();
+    } else {
+      document.getElementById('login-wrap').style.display='block';
+    }
+    var loginForm = document.getElementById('login-form');
+    if(loginForm) loginForm.addEventListener('submit', function(e){
+      e.preventDefault();
+      var pwd = document.getElementById('pwd').value;
+      fetch('/api/admin-auth.php', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({password:pwd})})
+      .then(function(r){return r.json()})
+      .then(function(d){
+        if(d.success) { document.cookie='stats_auth='+encodeURIComponent(pwd)+';path=/;max-age=604800'; location.reload(); }
+        else alert('Password errata');
+      })
+      .catch(function(){ alert('Errore di connessione'); });
+    });
 
-      function applicaArticolo() {
-        if (_keystatic_url) window.location.href = _keystatic_url;
+    // URL params
+    var urlParams = new URLSearchParams(window.location.search);
+    var _paramSlug = urlParams.get('slug') || '';
+    var _paramModoRaw = urlParams.get('modo') || '';
+    var MODI_VALIDI = ['solo-articolo', 'solo-metadati', 'tutto-completo'];
+    var _paramModo = MODI_VALIDI.indexOf(_paramModoRaw) !== -1 ? _paramModoRaw : 'solo-articolo';
+    var _paramAutostart = urlParams.get('autostart') === '1';
+
+    var sorgenteCorrente = _paramSlug ? 'esistente' : 'nuovo';
+    var modoCorrente = _paramModo;
+    var timerInterval = null;
+    var startTime = 0;
+    var _keystatic_url = '';
+
+    // Set initial modo
+    if (_paramModo !== 'solo-articolo') {
+      document.querySelectorAll('.modo-btn').forEach(function(b){ b.classList.remove('active'); });
+      var modoBtn = document.querySelector('.modo-btn[data-modo="'+_paramModo+'"]');
+      if(modoBtn) modoBtn.classList.add('active');
+    }
+
+    // Set initial source
+    if (_paramSlug) {
+      document.querySelectorAll('.source-tab').forEach(function(b){ b.classList.remove('active'); });
+      document.querySelectorAll('.source-tab')[1].classList.add('active');
+      document.getElementById('sorgente-nuovo').style.display = 'none';
+      document.getElementById('sorgente-esistente').style.display = '';
+    }
+
+    // Load articles from API
+    function loadArticoli() {
+      fetch('/api/lista-articoli.php')
+        .then(function(r){ return r.json(); })
+        .then(function(list){
+          var sel = document.getElementById('articolo-select');
+          sel.innerHTML = '<option value="">— Scegli un articolo dalla lista —</option>';
+          list.forEach(function(a){
+            var opt = document.createElement('option');
+            opt.value = a.slug;
+            opt.textContent = a.slug.replace(/-/g, ' ');
+            if(a.slug === _paramSlug) opt.selected = true;
+            sel.appendChild(opt);
+          });
+          if(_paramAutostart && auth) setTimeout(genera, 500);
+        })
+        .catch(function(){});
+    }
+
+    window.applicaArticolo = function() {
+      if (_keystatic_url) window.location.href = _keystatic_url;
+    };
+
+    window.switchSource = function(tipo, btn) {
+      sorgenteCorrente = tipo;
+      document.querySelectorAll('.source-tab').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      document.getElementById('sorgente-nuovo').style.display = tipo === 'nuovo' ? '' : 'none';
+      document.getElementById('sorgente-esistente').style.display = tipo === 'esistente' ? '' : 'none';
+    };
+
+    window.setModo = function(btn) {
+      document.querySelectorAll('.modo-btn').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      modoCorrente = btn.dataset.modo;
+    };
+
+    function startTimer() {
+      startTime = Date.now();
+      timerInterval = setInterval(function(){
+        var s = ((Date.now() - startTime) / 1000).toFixed(0);
+        var el = document.getElementById('timer');
+        if (el) el.textContent = s + 's';
+      }, 1000);
+    }
+    function stopTimer() { if (timerInterval) { clearInterval(timerInterval); timerInterval = null; } }
+
+    function setStatus(msg) { document.getElementById('progress-status').textContent = msg; }
+
+    window.resetError = function() {
+      document.getElementById('error-box').classList.remove('visible');
+      var btn = document.getElementById('btn-genera');
+      btn.disabled = false;
+      btn.textContent = '✨ Genera con Claude — Salva in Keystatic';
+    };
+
+    function showError(msg) {
+      stopTimer();
+      document.getElementById('progress-wrap').classList.remove('visible');
+      document.getElementById('error-box').classList.add('visible');
+      document.getElementById('error-msg').textContent = msg;
+      var btn = document.getElementById('btn-genera');
+      btn.disabled = false;
+      btn.textContent = '✨ Genera con Claude — Salva in Keystatic';
+    }
+
+    window.genera = async function() {
+      var promptInput = null;
+      var slug_esistente = null;
+
+      if (sorgenteCorrente === 'nuovo') {
+        promptInput = document.getElementById('prompt-nuovo').value.trim();
+        if (!promptInput) { alert('Inserisci il tema/prompt per il nuovo articolo.'); return; }
+      } else {
+        slug_esistente = document.getElementById('articolo-select').value;
+        if (!slug_esistente) { alert('Seleziona un articolo dalla lista.'); return; }
       }
 
-      // ── Switch sorgente ───────────────────────────────────────────────────
-      function switchSource(tipo, btn) {
-        sorgenteCorrente = tipo;
-        document.querySelectorAll('.source-tab').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        document.getElementById('sorgente-nuovo').style.display     = tipo === 'nuovo' ? '' : 'none';
-        document.getElementById('sorgente-esistente').style.display = tipo === 'esistente' ? '' : 'none';
+      if (modoCorrente === 'solo-metadati' && sorgenteCorrente === 'nuovo') {
+        alert('"Solo Metadati" richiede un articolo esistente.\nScegli "Articolo Esistente" oppure cambia modalità.');
+        return;
       }
 
-      // ── Switch modo ───────────────────────────────────────────────────────
-      function setModo(btn) {
-        document.querySelectorAll('.modo-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        modoCorrente = btn.dataset.modo;
-      }
+      var btn = document.getElementById('btn-genera');
+      btn.disabled = true;
+      btn.textContent = '⏳ Generazione in corso…';
+      document.getElementById('error-box').classList.remove('visible');
+      document.getElementById('progress-idle').style.display = '';
+      document.getElementById('progress-done').style.display = 'none';
+      document.getElementById('progress-wrap').classList.add('visible');
+      startTimer();
 
-      // ── Timer ─────────────────────────────────────────────────────────────
-      function startTimer() {
-        startTime = Date.now();
-        timerInterval = setInterval(() => {
-          const s = ((Date.now() - startTime) / 1000).toFixed(0);
-          const el = document.getElementById('timer');
-          if (el) el.textContent = `${s}s`;
-        }, 1000);
-      }
-      function stopTimer() {
-        if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
-      }
+      try {
+        var testoSorgente = promptInput || '';
+        var existing_titolo = '';
+        var existing_corpo = '';
+        var existing_immagine = '';
+        var existing_data = '';
 
-      // ── Stato UI ─────────────────────────────────────────────────────────
-      function setStatus(msg) {
-        document.getElementById('progress-status').textContent = msg;
-      }
+        if (slug_esistente) {
+          setStatus('📥 Caricamento articolo…');
+          var loadRes = await fetch('/api/articolo.php?slug=' + encodeURIComponent(slug_esistente));
+          if (!loadRes.ok) throw new Error('Errore caricamento articolo: ' + loadRes.status);
+          var loadData = await loadRes.json();
+          testoSorgente = loadData.testo;
 
-      function resetError() {
-        document.getElementById('error-box').classList.remove('visible');
-        const btn = document.getElementById('btn-genera');
-        btn.disabled    = false;
-        btn.textContent = '✨ Genera con Claude — Salva in Keystatic';
-      }
-
-      function showError(msg) {
-        stopTimer();
-        document.getElementById('progress-wrap').classList.remove('visible');
-        document.getElementById('error-box').classList.add('visible');
-        document.getElementById('error-msg').textContent = msg;
-        const btn = document.getElementById('btn-genera');
-        btn.disabled    = false;
-        btn.textContent = '✨ Genera con Claude — Salva in Keystatic';
-      }
-
-      // ── Flusso principale a 3 step ────────────────────────────────────────
-      async function genera() {
-        // Raccogli input
-        let promptInput    = null;
-        let slug_esistente = null;
-
-        if (sorgenteCorrente === 'nuovo') {
-          promptInput = document.getElementById('prompt-nuovo').value.trim();
-          if (!promptInput) { alert('Inserisci il tema/prompt per il nuovo articolo.'); return; }
-        } else {
-          slug_esistente = document.getElementById('articolo-select').value;
-          if (!slug_esistente) { alert('Seleziona un articolo dalla lista.'); return; }
+          var titleMatch = testoSorgente.match(/^titolo:\s*"?([^"\n]+)"?/m);
+          existing_titolo = titleMatch ? titleMatch[1].replace(/\\"/g, '"') : slug_esistente;
+          var immagineMatch = testoSorgente.match(/^immagine:\s*(.+)$/m);
+          existing_immagine = immagineMatch ? immagineMatch[1].trim() : '';
+          var dataMatch = testoSorgente.match(/^data:\s*(.+)$/m);
+          existing_data = dataMatch ? dataMatch[1].trim() : '';
+          var parts = testoSorgente.split(/^---$/m);
+          existing_corpo = parts.length >= 3 ? parts.slice(2).join('---').trim() : '';
         }
 
-        if (modoCorrente === 'solo-metadati' && sorgenteCorrente === 'nuovo') {
-          alert('"Solo Metadati" richiede un articolo esistente.\nScegli "Articolo Esistente" oppure cambia modalità.');
-          return;
+        var modeLabels = {
+          'solo-articolo': '✍️ Scrittura articolo con Claude…',
+          'solo-metadati': '🏷️ Generazione metadati SEO/AEO/GEO…',
+          'tutto-completo': '🚀 Generazione articolo + metadati completi…',
+        };
+        setStatus(modeLabels[modoCorrente] || 'Elaborazione…');
+
+        var genRes = await fetch('/api/genera-json.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ testo: testoSorgente, modo: modoCorrente, isNew: !slug_esistente }),
+        });
+        if (!genRes.ok) throw new Error('Errore API generazione: ' + genRes.status);
+
+        var reader = genRes.body.getReader();
+        var decoder = new TextDecoder();
+        var rawJson = '';
+        var chars = 0;
+
+        while (true) {
+          var chunk = await reader.read();
+          if (chunk.done) break;
+          var text = decoder.decode(chunk.value, { stream: true });
+          rawJson += text;
+          chars += text.length;
+          setStatus((modeLabels[modoCorrente] || 'Generazione…') + ' ' + chars.toLocaleString('it') + ' caratteri');
         }
 
-        // UI: avvia progress
-        const btn = document.getElementById('btn-genera');
-        btn.disabled    = true;
-        btn.textContent = '⏳ Generazione in corso…';
-        document.getElementById('error-box').classList.remove('visible');
-        document.getElementById('progress-idle').style.display = '';
-        document.getElementById('progress-done').style.display = 'none';
-        document.getElementById('progress-wrap').classList.add('visible');
-        startTimer();
+        if (rawJson.includes('"__error"')) {
+          var m = rawJson.match(/"__error":"([^"]+)"/);
+          throw new Error(m ? m[1] : 'Errore Claude durante la generazione');
+        }
 
+        setStatus('🔧 Parsing e salvataggio su GitHub…');
+        var art;
         try {
-          // ── STEP 1: Carica articolo esistente (se necessario) ────────────
-          let testoSorgente  = promptInput ?? '';
-          let existing_titolo = '';
-          let existing_corpo  = '';
-          let existing_immagine = '';
-          let existing_data = '';
-
-          if (slug_esistente) {
-            setStatus('📥 Caricamento articolo…');
-            const loadRes = await fetch(`/api/articolo?slug=${encodeURIComponent(slug_esistente)}`);
-            if (!loadRes.ok) throw new Error(`Errore caricamento articolo: ${loadRes.status}`);
-            const { testo } = await loadRes.json();
-            testoSorgente = testo;
-
-            // Estrai titolo, immagine, data e corpo dall'mdoc
-            const titleMatch    = testo.match(/^titolo:\s*"?([^"\n]+)"?/m);
-            existing_titolo     = titleMatch?.[1]?.replace(/\\"/g, '"') ?? slug_esistente;
-            const immagineMatch = testo.match(/^immagine:\s*(.+)$/m);
-            existing_immagine   = immagineMatch?.[1]?.trim() ?? '';
-            const dataMatch     = testo.match(/^data:\s*(.+)$/m);
-            existing_data       = dataMatch?.[1]?.trim() ?? '';
-            const parts = testo.split(/^---$/m);
-            existing_corpo   = parts.length >= 3 ? parts.slice(2).join('---').trim() : '';
-          }
-
-          // ── STEP 2: Genera con Claude (streaming) ────────────────────────
-          const modeLabels = {
-            'solo-articolo':   '✍️ Scrittura articolo con Claude…',
-            'solo-metadati':   '🏷️ Generazione metadati SEO/AEO/GEO…',
-            'tutto-completo':  '🚀 Generazione articolo + metadati completi…',
-          };
-          setStatus(modeLabels[modoCorrente] || 'Elaborazione…');
-
-          const genRes = await fetch('/api/genera-json', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ testo: testoSorgente, modo: modoCorrente, isNew: !slug_esistente }),
-          });
-          if (!genRes.ok) throw new Error(`Errore API generazione: ${genRes.status}`);
-
-          // Accumula stream con contatore live
-          const reader  = genRes.body.getReader();
-          const decoder = new TextDecoder();
-          let rawJson = '';
-          let chars   = 0;
-
-          while (true) {
-            const { done, value } = await reader.read();
-            if (done) break;
-            const chunk = decoder.decode(value, { stream: true });
-            rawJson += chunk;
-            chars   += chunk.length;
-            setStatus(`${modeLabels[modoCorrente] || 'Generazione…'} ${chars.toLocaleString('it')} caratteri`);
-          }
-
-          // Controlla errore nel JSON stream
-          if (rawJson.includes('"__error"')) {
-            const m = rawJson.match(/"__error":"([^"]+)"/);
-            throw new Error(m?.[1] ?? 'Errore Claude durante la generazione');
-          }
-
-          // ── STEP 3: Parsa JSON ────────────────────────────────────────────
-          // Con tool_use, rawJson è già JSON valido (l'escaping lo gestisce Claude)
-          setStatus('🔧 Parsing e salvataggio su GitHub…');
-          let art;
-          try {
-            const trimmed = rawJson.trim();
-            if (!trimmed) throw new Error('Risposta vuota dal server');
-            art = JSON.parse(trimmed);
-          } catch (parseErr) {
-            throw new Error(`Impossibile parsare il JSON: ${parseErr.message}. Riprova.`);
-          }
-
-          // ── STEP 4: Salva su GitHub ───────────────────────────────────────
-          const saveRes = await fetch('/api/salva-bozza', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ art, modo: modoCorrente, slug_esistente, existing_titolo, existing_corpo, existing_immagine, existing_data }),
-          });
-          const saveData = await saveRes.json();
-          if (!saveRes.ok || !saveData.success) {
-            throw new Error(saveData.error || `GitHub error ${saveRes.status}`);
-          }
-
-          // ── Successo → mostra bottone Applica ────────────────────────────
-          stopTimer();
-          _keystatic_url = saveData.keystatic_url;
-          const secs = ((Date.now() - startTime) / 1000).toFixed(1);
-          document.getElementById('progress-idle').style.display = 'none';
-          document.getElementById('progress-done').style.display = '';
-          document.getElementById('success-slug').textContent = `/${saveData.slug} — ${secs}s`;
-          // Aggiorna etichetta bottone con nome articolo
-          const articoloLabel = (slug_esistente || (art.titolo || saveData.slug || 'articolo'))
-            .replace(/-/g, ' ').substring(0, 40);
-          document.getElementById('btn-applica').textContent = `✅ Applica a "${articoloLabel}"`;
-
-        } catch (err) {
-          showError(err.message || 'Errore sconosciuto');
+          var trimmed = rawJson.trim();
+          if (!trimmed) throw new Error('Risposta vuota dal server');
+          art = JSON.parse(trimmed);
+        } catch (parseErr) {
+          throw new Error('Impossibile parsare il JSON: ' + parseErr.message + '. Riprova.');
         }
-      }
-    </script>
-  )}
 
-  {isAuth && paramAutostart && (
-    <script is:inline>
-      // Autostart: parte automaticamente se ?autostart=1 è nell'URL
-      window.addEventListener('load', function() {
-        setTimeout(genera, 500);
-      });
-    </script>
-  )}
+        var saveRes = await fetch('/api/salva-bozza.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ art: art, modo: modoCorrente, slug_esistente: slug_esistente, existing_titolo: existing_titolo, existing_corpo: existing_corpo, existing_immagine: existing_immagine, existing_data: existing_data }),
+        });
+        var saveData = await saveRes.json();
+        if (!saveRes.ok || !saveData.success) {
+          throw new Error(saveData.error || 'GitHub error ' + saveRes.status);
+        }
+
+        stopTimer();
+        _keystatic_url = saveData.keystatic_url;
+        var secs = ((Date.now() - startTime) / 1000).toFixed(1);
+        document.getElementById('progress-idle').style.display = 'none';
+        document.getElementById('progress-done').style.display = '';
+        document.getElementById('success-slug').textContent = '/' + saveData.slug + ' — ' + secs + 's';
+        var articoloLabel = (slug_esistente || (art.titolo || saveData.slug || 'articolo'))
+          .replace(/-/g, ' ').substring(0, 40);
+        document.getElementById('btn-applica').textContent = '✅ Applica a "' + articoloLabel + '"';
+
+      } catch (err) {
+        showError(err.message || 'Errore sconosciuto');
+      }
+    };
+  })();
+  </script>
 </body>
 </html>

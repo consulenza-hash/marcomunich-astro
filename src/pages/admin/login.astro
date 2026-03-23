@@ -1,4 +1,12 @@
 ---
-export const prerender = false;
-return Astro.redirect('/admin', 302);
+export const prerender = true;
 ---
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="refresh" content="0;url=/admin" />
+  <title>Redirect…</title>
+</head>
+<body></body>
+</html>

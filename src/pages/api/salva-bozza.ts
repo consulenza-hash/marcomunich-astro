@@ -1,6 +1,5 @@
 import type { APIRoute } from 'astro';
 
-export const prerender = false;
 
 function slugify(text: string): string {
   return text

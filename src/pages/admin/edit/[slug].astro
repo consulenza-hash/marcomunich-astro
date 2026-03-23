@@ -1,77 +1,21 @@
 ---
-export const prerender = false;
-
+export const prerender = true;
 import jsYaml from 'js-yaml';
 
-// ── Auth ──────────────────────────────────────────────────────────────────────
-const cookie      = Astro.cookies.get('stats_auth')?.value ?? '';
-const expectedPwd = (import.meta.env.STATS_PASSWORD || 'stats2024').trim();
-const isAuth      = cookie === expectedPwd;
+// ── getStaticPaths: genera una pagina per ogni articolo ──────────────────────
+export async function getStaticPaths() {
+  const files = import.meta.glob('/src/content/articoli/*/index.mdoc', {
+    eager: true,
+    as: 'raw',
+  }) as Record<string, string>;
 
-if (!isAuth) {
-  return Astro.redirect('/admin/articoli');
+  return Object.keys(files).map(filePath => {
+    const slug = filePath.match(/\/([^/]+)\/index\.mdoc$/)?.[1] ?? '';
+    return { params: { slug } };
+  });
 }
 
-// ── Carica articolo da GitHub ─────────────────────────────────────────────────
 const { slug } = Astro.params;
-const ghToken   = import.meta.env.GITHUB_TOKEN ?? '';
-const openAI    = Astro.url.searchParams.get('ai') === '1';
-
-interface ArticoloRaw {
-  slug: string;
-  titolo: string;
-  descrizione?: string;
-  data?: string;
-  seo_title?: string;
-  seo_description?: string;
-  seo_noindex?: boolean;
-  bozza?: boolean;
-  corpo: string;
-  sha?: string;
-}
-
-let articolo: ArticoloRaw | null = null;
-let errore: string | null = null;
-
-try {
-  const url = `https://api.github.com/repos/consulenza-hash/marcomunich-astro/contents/src/content/articoli/${encodeURIComponent(slug!)}/index.mdoc?ref=main`;
-  const ghHeaders: Record<string, string> = {
-    Accept: 'application/vnd.github.v3+json',
-    'User-Agent': 'marcomunich-astro',
-  };
-  if (ghToken) ghHeaders['Authorization'] = `token ${ghToken}`;
-
-  const res = await fetch(url, { headers: ghHeaders });
-
-  if (!res.ok) {
-    errore = `Articolo non trovato (${res.status})`;
-  } else {
-    const json = await res.json() as { content: string; sha: string };
-    const raw  = Buffer.from(json.content, 'base64').toString('utf-8');
-
-    const fmMatch = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/);
-    if (!fmMatch) {
-      errore = 'Formato file non valido (frontmatter mancante)';
-    } else {
-      const fm  = (jsYaml.load(fmMatch[1]) as Record<string, any>) ?? {};
-      const corpo = fmMatch[2].trim();
-      articolo = {
-        slug: slug!,
-        titolo:          fm.titolo          ?? slug,
-        descrizione:     fm.descrizione     ?? '',
-        data:            fm.data ? (fm.data instanceof Date ? fm.data.toISOString().split('T')[0] : String(fm.data)) : '',
-        seo_title:       fm.seo_title       ?? '',
-        seo_description: fm.seo_description ?? '',
-        seo_noindex:     fm.seo_noindex     ?? false,
-        bozza:           fm.bozza           ?? false,
-        corpo,
-        sha: json.sha,
-      };
-    }
-  }
-} catch (e: any) {
-  errore = `Errore: ${e.message}`;
-}
 ---
 
 <!DOCTYPE html>
@@ -79,7 +23,7 @@ try {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{articolo?.titolo ?? slug} — MM Admin</title>
+  <title>{slug} — MM Admin</title>
   <meta name="robots" content="noindex,nofollow" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -98,359 +42,142 @@ try {
       --r: 6px;
     }
 
-    body {
-      background: var(--black);
-      color: var(--paper);
-      font-family: system-ui, -apple-system, sans-serif;
-      font-size: 13px;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
+    body { background: var(--black); color: var(--paper); font-family: system-ui, -apple-system, sans-serif; font-size: 13px; min-height: 100vh; display: flex; flex-direction: column; }
 
-    /* ── HEADER ── */
-    header {
-      border-bottom: 1px solid var(--smoke);
-      height: 52px;
-      display: flex;
-      align-items: center;
-      padding: 0 1.25rem;
-      gap: 1rem;
-      position: sticky;
-      top: 0;
-      background: rgba(10,10,10,0.97);
-      backdrop-filter: blur(8px);
-      z-index: 200;
-    }
-
+    header { border-bottom: 1px solid var(--smoke); height: 52px; display: flex; align-items: center; padding: 0 1.25rem; gap: 1rem; position: sticky; top: 0; background: rgba(10,10,10,0.97); backdrop-filter: blur(8px); z-index: 200; }
     .logo { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); font-weight: 600; text-decoration: none; white-space: nowrap; }
     .logo span { color: var(--paper); opacity: 0.35; }
-
     .breadcrumb { display: flex; align-items: center; gap: 0.5rem; font-size: 11px; color: var(--muted); overflow: hidden; }
     .breadcrumb a { color: var(--muted); text-decoration: none; }
     .breadcrumb a:hover { color: var(--paper); }
     .breadcrumb .sep { opacity: 0.3; }
     .breadcrumb .current { color: var(--paper); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-style: italic; }
-
     .header-actions { margin-left: auto; display: flex; gap: 0.5rem; align-items: center; }
-
     .btn { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.4rem 0.9rem; border-radius: var(--r); border: 1px solid transparent; cursor: pointer; font-family: inherit; transition: all 0.15s; text-decoration: none; white-space: nowrap; }
     .btn-ghost { background: transparent; border-color: var(--smoke); color: var(--muted); }
     .btn-ghost:hover { border-color: var(--paper); color: var(--paper); }
-    .btn-save  { background: var(--gold); color: var(--black); border-color: var(--gold); font-weight: 600; }
+    .btn-save { background: var(--gold); color: var(--black); border-color: var(--gold); font-weight: 600; }
     .btn-save:hover { opacity: 0.85; }
     .btn-save:disabled { opacity: 0.4; cursor: not-allowed; }
     .btn-ai-open { background: var(--ai-soft); border-color: rgba(85,81,211,0.4); color: #9d9bef; font-weight: 500; }
     .btn-ai-open:hover { background: rgba(85,81,211,0.22); border-color: var(--ai); color: #c4c3f7; }
 
-    /* ── LAYOUT ── */
     .editor-layout { display: flex; flex: 1; overflow: hidden; }
-
-    /* ── SIDEBAR SINISTRA (metadati) ── */
-    .meta-panel {
-      width: 260px;
-      min-width: 260px;
-      border-right: 1px solid var(--smoke);
-      overflow-y: auto;
-      padding: 1.25rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
+    .meta-panel { width: 260px; min-width: 260px; border-right: 1px solid var(--smoke); overflow-y: auto; padding: 1.25rem; display: flex; flex-direction: column; gap: 1rem; }
     .meta-section { border-bottom: 1px solid var(--smoke); padding-bottom: 1rem; }
     .meta-section:last-child { border-bottom: none; }
     .meta-label { font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.4rem; display: block; }
-
-    .meta-input, .meta-textarea {
-      width: 100%;
-      background: var(--ink);
-      border: 1px solid var(--smoke);
-      color: var(--paper);
-      font-size: 12px;
-      padding: 0.45rem 0.55rem;
-      border-radius: var(--r);
-      outline: none;
-      font-family: inherit;
-      transition: border-color 0.15s;
-    }
+    .meta-input, .meta-textarea { width: 100%; background: var(--ink); border: 1px solid var(--smoke); color: var(--paper); font-size: 12px; padding: 0.45rem 0.55rem; border-radius: var(--r); outline: none; font-family: inherit; transition: border-color 0.15s; box-sizing: border-box; }
     .meta-input:focus, .meta-textarea:focus { border-color: var(--gold); }
     .meta-textarea { resize: vertical; min-height: 70px; line-height: 1.5; }
-
     .meta-check { display: flex; align-items: center; gap: 0.5rem; font-size: 12px; color: var(--muted); cursor: pointer; }
     .meta-check input { accent-color: var(--gold); }
-
     .status-toggle { display: flex; gap: 0.4rem; }
     .status-btn { flex: 1; font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.4rem; border-radius: var(--r); border: 1px solid var(--smoke); background: transparent; color: var(--muted); cursor: pointer; font-family: inherit; transition: all 0.15s; }
-    .status-btn.active-pub  { background: rgba(26,122,78,0.15); border-color: rgba(26,122,78,0.4); color: #4ade96; }
-    .status-btn.active-draft{ background: rgba(197,138,55,0.12); border-color: rgba(197,138,55,0.3); color: var(--gold); }
-
+    .status-btn.active-pub { background: rgba(26,122,78,0.15); border-color: rgba(26,122,78,0.4); color: #4ade96; }
+    .status-btn.active-draft { background: rgba(197,138,55,0.12); border-color: rgba(197,138,55,0.3); color: var(--gold); }
     .slug-display { font-family: 'Courier New', monospace; font-size: 10px; color: var(--muted); word-break: break-all; padding: 0.4rem 0.55rem; background: var(--ink); border-radius: var(--r); border: 1px solid var(--smoke); }
-
-    /* ── EDITOR CENTRALE ── */
-    .editor-main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
-
-    .editor-toolbar {
-      border-bottom: 1px solid var(--smoke);
-      padding: 0.5rem 1rem;
-      display: flex;
-      gap: 0.4rem;
-      align-items: center;
-      background: var(--ink);
-      flex-wrap: wrap;
-    }
-
-    .ed-btn {
-      background: transparent;
-      border: 1px solid var(--smoke);
-      color: var(--muted);
-      font-size: 11px;
-      padding: 0.25rem 0.55rem;
-      border-radius: 4px;
-      cursor: pointer;
-      font-family: 'Courier New', monospace;
-      transition: all 0.15s;
-    }
+    .editor-main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+    .editor-toolbar { border-bottom: 1px solid var(--smoke); padding: 0.5rem 1rem; display: flex; gap: 0.4rem; align-items: center; background: var(--ink); flex-wrap: wrap; }
+    .ed-btn { background: transparent; border: 1px solid var(--smoke); color: var(--muted); font-size: 11px; padding: 0.25rem 0.55rem; border-radius: 4px; cursor: pointer; font-family: 'Courier New', monospace; transition: all 0.15s; }
     .ed-btn:hover { color: var(--paper); border-color: var(--muted); }
-
     .word-count { margin-left: auto; font-size: 10px; color: var(--muted); white-space: nowrap; }
+    #corpo-editor { flex: 1; background: var(--black); color: var(--paper); border: none; outline: none; font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.75; padding: 1.5rem; resize: none; height: calc(100vh - 52px - 44px); }
 
-    #corpo-editor {
-      flex: 1;
-      background: var(--black);
-      color: var(--paper);
-      border: none;
-      outline: none;
-      font-family: 'Courier New', monospace;
-      font-size: 13px;
-      line-height: 1.75;
-      padding: 1.5rem;
-      resize: none;
-      height: calc(100vh - 52px - 44px);
-    }
-
-    /* ── AI PANEL ── */
-    .overlay {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 290;
-      opacity: 0; pointer-events: none; transition: opacity 0.2s;
-    }
+    .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 290; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
     .overlay.show { opacity: 1; pointer-events: all; }
-
-    .ai-panel {
-      position: fixed; right: 0; top: 0; bottom: 0; width: 380px;
-      background: var(--ink); border-left: 1px solid var(--smoke);
-      z-index: 300; display: flex; flex-direction: column;
-      transform: translateX(100%);
-      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-    }
+    .ai-panel { position: fixed; right: 0; top: 0; bottom: 0; width: 380px; background: var(--ink); border-left: 1px solid var(--smoke); z-index: 300; display: flex; flex-direction: column; transform: translateX(100%); transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1); }
     .ai-panel.open { transform: translateX(0); }
-
-    .ai-header {
-      padding: 1rem 1.25rem;
-      border-bottom: 1px solid var(--smoke);
-      display: flex; align-items: center; justify-content: space-between;
-    }
+    .ai-header { padding: 1rem 1.25rem; border-bottom: 1px solid var(--smoke); display: flex; align-items: center; justify-content: space-between; }
     .ai-title { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #9d9bef; display: flex; align-items: center; gap: 0.5rem; }
-
-    .close-btn {
-      background: transparent; border: 1px solid var(--smoke); color: var(--muted);
-      width: 26px; height: 26px; border-radius: 4px; cursor: pointer; font-size: 13px;
-      display: flex; align-items: center; justify-content: center; transition: all 0.15s;
-    }
+    .close-btn { background: transparent; border: 1px solid var(--smoke); color: var(--muted); width: 26px; height: 26px; border-radius: 4px; cursor: pointer; font-size: 13px; display: flex; align-items: center; justify-content: center; }
     .close-btn:hover { color: var(--paper); border-color: var(--paper); }
-
     .ai-actions { padding: 1rem 1.25rem; border-bottom: 1px solid var(--smoke); display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
-
-    .ai-action-btn {
-      background: rgba(255,255,255,0.03); border: 1px solid var(--smoke); color: var(--paper);
-      font-size: 11px; padding: 0.6rem 0.7rem; border-radius: var(--r); cursor: pointer;
-      text-align: left; font-family: inherit; transition: all 0.15s; line-height: 1.4;
-    }
+    .ai-action-btn { background: rgba(255,255,255,0.03); border: 1px solid var(--smoke); color: var(--paper); font-size: 11px; padding: 0.6rem 0.7rem; border-radius: var(--r); cursor: pointer; text-align: left; font-family: inherit; transition: all 0.15s; line-height: 1.4; }
     .ai-action-btn:hover { background: rgba(85,81,211,0.1); border-color: rgba(85,81,211,0.4); color: #c4c3f7; }
     .ai-action-btn .icon { display: block; font-size: 13px; margin-bottom: 2px; }
     .ai-action-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-
     .ai-custom { padding: 1rem 1.25rem; display: flex; flex-direction: column; gap: 0.6rem; flex: 1; }
     .ai-custom label { font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
-    .ai-custom textarea {
-      flex: 1; background: var(--black); border: 1px solid var(--smoke); color: var(--paper);
-      font-size: 12px; padding: 0.65rem; border-radius: var(--r); resize: none; outline: none;
-      font-family: inherit; min-height: 80px; transition: border-color 0.15s;
-    }
+    .ai-custom textarea { flex: 1; background: var(--black); border: 1px solid var(--smoke); color: var(--paper); font-size: 12px; padding: 0.65rem; border-radius: var(--r); resize: none; outline: none; font-family: inherit; min-height: 80px; }
     .ai-custom textarea:focus { border-color: var(--ai); }
-
-    .btn-run {
-      background: var(--ai); color: #fff; border: none; font-family: inherit;
-      font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.65rem 1rem;
-      border-radius: var(--r); cursor: pointer; display: flex; align-items: center;
-      justify-content: center; gap: 0.5rem; transition: opacity 0.15s;
-    }
-    .btn-run:hover { opacity: 0.85; }
+    .btn-run { background: var(--ai); color: #fff; border: none; font-family: inherit; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.65rem 1rem; border-radius: var(--r); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
     .btn-run:disabled { opacity: 0.4; cursor: not-allowed; }
-
-    /* ── RESULT PREVIEW ── */
-    .ai-result {
-      padding: 1rem 1.25rem; border-top: 1px solid var(--smoke);
-      display: none; flex-direction: column; gap: 0.6rem;
-      background: rgba(85,81,211,0.05);
-    }
+    .ai-result { padding: 1rem 1.25rem; border-top: 1px solid var(--smoke); display: none; flex-direction: column; gap: 0.6rem; background: rgba(85,81,211,0.05); }
     .ai-result.show { display: flex; }
     .ai-result-label { font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: #9d9bef; }
     .ai-result-text { font-size: 11px; color: var(--paper); line-height: 1.6; max-height: 120px; overflow-y: auto; white-space: pre-wrap; }
     .ai-result-actions { display: flex; gap: 0.4rem; }
-
-    .btn-apply { background: var(--green); color: #fff; border: none; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.4rem 0.8rem; border-radius: var(--r); cursor: pointer; font-family: inherit; transition: opacity 0.15s; }
-    .btn-apply:hover { opacity: 0.85; }
-    .btn-discard { background: transparent; border: 1px solid var(--smoke); color: var(--muted); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.4rem 0.8rem; border-radius: var(--r); cursor: pointer; font-family: inherit; transition: all 0.15s; }
-    .btn-discard:hover { color: var(--paper); border-color: var(--muted); }
-
-    /* ── TOAST ── */
-    .toast {
-      position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%) translateY(10px);
-      background: var(--ink); border: 1px solid var(--smoke); color: var(--paper);
-      font-size: 12px; padding: 0.65rem 1.25rem; border-radius: 20px; z-index: 500;
-      opacity: 0; transition: all 0.25s; pointer-events: none; white-space: nowrap;
-    }
+    .btn-apply { background: var(--green); color: #fff; border: none; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.4rem 0.8rem; border-radius: var(--r); cursor: pointer; font-family: inherit; }
+    .btn-discard { background: transparent; border: 1px solid var(--smoke); color: var(--muted); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.4rem 0.8rem; border-radius: var(--r); cursor: pointer; font-family: inherit; }
+    .toast { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%) translateY(10px); background: var(--ink); border: 1px solid var(--smoke); color: var(--paper); font-size: 12px; padding: 0.65rem 1.25rem; border-radius: 20px; z-index: 500; opacity: 0; transition: all 0.25s; pointer-events: none; white-space: nowrap; }
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
     .toast.success { border-color: rgba(26,122,78,0.5); color: #4ade96; }
-    .toast.error   { border-color: rgba(192,41,42,0.5); color: #f87171; }
-
-    /* ── SPINNER ── */
-    .spinner {
-      width: 14px; height: 14px; border: 2px solid rgba(255,255,255,0.2);
-      border-top-color: #fff; border-radius: 50%; animation: spin 0.6s linear infinite;
-    }
+    .toast.error { border-color: rgba(192,41,42,0.5); color: #f87171; }
+    .spinner { width: 14px; height: 14px; border: 2px solid rgba(255,255,255,0.2); border-top-color: #fff; border-radius: 50%; animation: spin 0.6s linear infinite; display: inline-block; }
     @keyframes spin { to { transform: rotate(360deg); } }
-
-    /* ── ERRORE ── */
     .error-wrap { display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; gap: 1rem; color: var(--muted); }
     .error-wrap h2 { color: var(--paper); font-size: 16px; font-weight: 400; }
-  </style>
+    .loading-msg { display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; gap: 1rem; color: var(--muted); font-size: 14px; }
 
+    /* Login */
+    .login-wrap { display: flex; align-items: center; justify-content: center; min-height: 100vh; position: fixed; inset: 0; background: var(--black); z-index: 300; }
+    .login-box { background: var(--ink); border: 1px solid var(--smoke); border-radius: 10px; padding: 2.5rem; width: 320px; text-align: center; }
+    .login-box h2 { font-size: 14px; color: var(--paper); margin-bottom: 1.5rem; }
+    .login-box input { width: 100%; background: var(--black); border: 1px solid var(--smoke); color: var(--paper); font-size: 14px; padding: 0.65rem 0.75rem; border-radius: var(--r); outline: none; margin-bottom: 0.75rem; box-sizing: border-box; }
+    .login-box button { width: 100%; background: var(--gold); color: var(--black); border: none; font-size: 12px; padding: 0.65rem; border-radius: var(--r); cursor: pointer; font-weight: 600; }
+  </style>
 </head>
 <body>
+
+<div id="login-wrap" class="login-wrap" style="display:none">
+  <div class="login-box">
+    <h2>Admin — Accesso</h2>
+    <form id="login-form">
+      <input type="password" id="pwd" placeholder="Password" autofocus />
+      <button type="submit">Accedi</button>
+    </form>
+  </div>
+</div>
+
+<div id="content-wrap" style="display:none;flex-direction:column;min-height:100vh">
 
 <header>
   <a href="/admin" class="logo">MM <span>/</span> Admin</a>
   <div class="breadcrumb">
     <a href="/admin/articoli">Articoli</a>
     <span class="sep">/</span>
-    <span class="current">{articolo?.titolo ?? slug}</span>
+    <span class="current" id="breadcrumb-title">{slug}</span>
   </div>
-  {articolo && (
-    <div class="header-actions">
-      <a href={`/${slug}`} target="_blank" class="btn btn-ghost">Anteprima ↗</a>
-      <button class="btn btn-ai-open" id="open-ai-btn">✦ AI</button>
-      <button class="btn btn-save" id="save-btn">Salva</button>
-    </div>
-  )}
+  <div class="header-actions">
+    <a href={`/${slug}`} target="_blank" class="btn btn-ghost">Anteprima ↗</a>
+    <button class="btn btn-ai-open" id="open-ai-btn">✦ AI</button>
+    <button class="btn btn-save" id="save-btn">Salva</button>
+  </div>
 </header>
 
-{errore ? (
-  <div class="error-wrap">
-    <h2>Articolo non trovato</h2>
-    <p>{errore}</p>
-    <a href="/admin/articoli" class="btn btn-ghost">← Torna alla lista</a>
-  </div>
-) : articolo ? (
-  <div class="editor-layout">
+<div id="editor-content" class="loading-msg">
+  <div class="spinner"></div>
+  <div>Caricamento articolo...</div>
+</div>
 
-    {/* ── META PANEL ── */}
-    <aside class="meta-panel">
-      <div class="meta-section">
-        <span class="meta-label">Slug</span>
-        <div class="slug-display">{articolo.slug}</div>
-      </div>
+</div>
 
-      <div class="meta-section">
-        <span class="meta-label">Stato</span>
-        <div class="status-toggle">
-          <button class={`status-btn ${!articolo.bozza ? 'active-pub' : ''}`} id="btn-pub" data-val="false">Pubblicato</button>
-          <button class={`status-btn ${articolo.bozza ? 'active-draft' : ''}`} id="btn-draft" data-val="true">Bozza</button>
-        </div>
-      </div>
-
-      <div class="meta-section">
-        <label class="meta-label" for="meta-titolo">Titolo</label>
-        <input id="meta-titolo" class="meta-input" type="text" value={articolo.titolo} />
-      </div>
-
-      <div class="meta-section">
-        <label class="meta-label" for="meta-descr">Descrizione</label>
-        <textarea id="meta-descr" class="meta-textarea">{articolo.descrizione}</textarea>
-      </div>
-
-      <div class="meta-section">
-        <label class="meta-label" for="meta-data">Data (YYYY-MM-DD)</label>
-        <input id="meta-data" class="meta-input" type="text" value={articolo.data} />
-      </div>
-
-      <div class="meta-section">
-        <span class="meta-label">SEO</span>
-        <label class="meta-label" for="meta-seo-title" style="font-size:9px;margin-top:0.4rem">SEO Title</label>
-        <input id="meta-seo-title" class="meta-input" type="text" value={articolo.seo_title} placeholder="Max 60 caratteri" style="margin-bottom:0.5rem" />
-        <label class="meta-label" for="meta-seo-desc">SEO Description</label>
-        <textarea id="meta-seo-desc" class="meta-textarea" placeholder="Max 155 caratteri" style="min-height:55px">{articolo.seo_description}</textarea>
-      </div>
-
-      <div class="meta-section">
-        <label class="meta-check">
-          <input type="checkbox" id="meta-noindex" checked={articolo.seo_noindex} />
-          noindex
-        </label>
-      </div>
-    </aside>
-
-    {/* ── EDITOR ── */}
-    <div class="editor-main">
-      <div class="editor-toolbar">
-        <button class="ed-btn" data-wrap="**" title="Grassetto">B</button>
-        <button class="ed-btn" data-wrap="_" title="Corsivo">I</button>
-        <button class="ed-btn" data-insert="### " title="Titolo H3">H3</button>
-        <button class="ed-btn" data-insert="- " title="Lista">—</button>
-        <button class="ed-btn" data-insert="\n\n---\n\n" title="Separatore">hr</button>
-        <span class="word-count" id="word-count">0 parole</span>
-      </div>
-      <textarea id="corpo-editor">{articolo.corpo}</textarea>
-    </div>
-
-  </div>
-) : null}
-
-{/* ── AI PANEL ── */}
+<!-- AI Panel -->
 <div class="overlay" id="overlay"></div>
-<div class={`ai-panel${openAI ? ' open' : ''}`} id="ai-panel">
+<div class="ai-panel" id="ai-panel">
   <div class="ai-header">
     <div class="ai-title"><span>✦</span> Modifica con AI</div>
     <button class="close-btn" id="close-ai-btn">✕</button>
   </div>
-
   <div class="ai-actions">
-    <button class="ai-action-btn" data-azione="migliora">
-      <span class="icon">✏️</span> Migliora testo
-    </button>
-    <button class="ai-action-btn" data-azione="seo">
-      <span class="icon">🎯</span> Ottimizza SEO
-    </button>
-    <button class="ai-action-btn" data-azione="riscrivi-intro">
-      <span class="icon">📝</span> Riscrivi intro
-    </button>
-    <button class="ai-action-btn" data-azione="aggiungi-cta">
-      <span class="icon">🔚</span> Aggiungi CTA
-    </button>
-    <button class="ai-action-btn" data-azione="meta-description">
-      <span class="icon">📋</span> Meta description
-    </button>
-    <button class="ai-action-btn" data-azione="link-interni">
-      <span class="icon">🔗</span> Link interni
-    </button>
+    <button class="ai-action-btn" data-azione="migliora"><span class="icon">✏️</span> Migliora testo</button>
+    <button class="ai-action-btn" data-azione="seo"><span class="icon">🎯</span> Ottimizza SEO</button>
+    <button class="ai-action-btn" data-azione="riscrivi-intro"><span class="icon">📝</span> Riscrivi intro</button>
+    <button class="ai-action-btn" data-azione="aggiungi-cta"><span class="icon">🔚</span> Aggiungi CTA</button>
+    <button class="ai-action-btn" data-azione="meta-description"><span class="icon">📋</span> Meta description</button>
+    <button class="ai-action-btn" data-azione="link-interni"><span class="icon">🔗</span> Link interni</button>
   </div>
-
   <div class="ai-result" id="ai-result">
     <div class="ai-result-label">Risultato AI</div>
     <div class="ai-result-text" id="ai-result-text"></div>
@@ -459,237 +186,242 @@ try {
       <button class="btn-discard" id="btn-discard">Scarta</button>
     </div>
   </div>
-
   <div class="ai-custom">
     <label for="ai-istruzione">Istruzione personalizzata</label>
-    <textarea id="ai-istruzione" placeholder="es. Accorcia l'articolo mantenendo i punti chiave. Tono diretto, senza fronzoli…"></textarea>
-    <button class="btn-run" id="btn-run">
-      <span>✦</span> Esegui con AI
-    </button>
+    <textarea id="ai-istruzione" placeholder="es. Accorcia l'articolo mantenendo i punti chiave..."></textarea>
+    <button class="btn-run" id="btn-run"><span>✦</span> Esegui con AI</button>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
-<script define:vars={{ slug: articolo?.slug, sha: articolo?.sha, bozzaIniziale: articolo?.bozza ?? false, openAI }}>
-  // ── State ──────────────────────────────────────────────────────────────────
-  let isBozza = bozzaIniziale;
-  let aiResult: Record<string, any> | null = null;
-  let pendingAzione: string | null = null;
+<script is:inline define:vars={{ slug }}>
+(function(){
+  // Auth check
+  var cookie = document.cookie;
+  var auth = cookie.split(';').find(function(c){return c.trim().startsWith('stats_auth=')});
+  if(auth){
+    document.getElementById('content-wrap').style.display='flex';
+    loadArticolo();
+  } else {
+    document.getElementById('login-wrap').style.display='flex';
+  }
+  var loginForm = document.getElementById('login-form');
+  if(loginForm) loginForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    var pwd = document.getElementById('pwd').value;
+    fetch('/api/admin-auth.php', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({password:pwd})})
+    .then(function(r){return r.json()})
+    .then(function(d){
+      if(d.success) { document.cookie='stats_auth='+encodeURIComponent(pwd)+';path=/;max-age=604800'; location.reload(); }
+      else alert('Password errata');
+    })
+    .catch(function(){ alert('Errore di connessione'); });
+  });
 
-  // ── Elements ───────────────────────────────────────────────────────────────
-  const aiPanel    = document.getElementById('ai-panel')!;
-  const overlay    = document.getElementById('overlay')!;
-  const openAIBtn  = document.getElementById('open-ai-btn');
-  const closeAIBtn = document.getElementById('close-ai-btn')!;
-  const saveBtn    = document.getElementById('save-btn') as HTMLButtonElement | null;
-  const corpoEl    = document.getElementById('corpo-editor') as HTMLTextAreaElement | null;
-  const toastEl    = document.getElementById('toast')!;
-  const wordCountEl= document.getElementById('word-count');
-  const aiResultEl = document.getElementById('ai-result')!;
-  const aiResultText = document.getElementById('ai-result-text')!;
-  const btnApply   = document.getElementById('btn-apply')!;
-  const btnDiscard = document.getElementById('btn-discard')!;
-  const btnRun     = document.getElementById('btn-run') as HTMLButtonElement;
-  const aiIstruzione = document.getElementById('ai-istruzione') as HTMLTextAreaElement;
+  var isBozza = false;
+  var aiResult = null;
+  var sha = '';
+  var openAI = new URLSearchParams(window.location.search).get('ai') === '1';
 
-  // ── Toast ──────────────────────────────────────────────────────────────────
-  let toastTimer: ReturnType<typeof setTimeout>;
-  function showToast(msg: string, type: 'success' | 'error' | '' = '') {
-    clearTimeout(toastTimer);
-    toastEl.textContent = msg;
-    toastEl.className = `toast show ${type}`;
-    toastTimer = setTimeout(() => toastEl.className = 'toast', 3000);
+  function loadArticolo() {
+    fetch('/api/articolo.php?slug=' + encodeURIComponent(slug) + '&parsed=1')
+      .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+      .then(function(data){
+        renderEditor(data);
+        if(openAI) openAIPanelFn();
+      })
+      .catch(function(err){
+        document.getElementById('editor-content').innerHTML =
+          '<div class="error-wrap"><h2>Articolo non trovato</h2><p>'+err.message+'</p><a href="/admin/articoli" class="btn btn-ghost">← Torna alla lista</a></div>';
+      });
   }
 
-  // ── Word count ─────────────────────────────────────────────────────────────
-  function updateWordCount() {
-    if (!corpoEl || !wordCountEl) return;
-    const words = corpoEl.value.trim().split(/\s+/).filter(Boolean).length;
-    wordCountEl.textContent = `${words} parol${words === 1 ? 'a' : 'e'}`;
+  function renderEditor(data) {
+    var art = data;
+    sha = data.sha || '';
+    isBozza = data.bozza || false;
+    document.getElementById('breadcrumb-title').textContent = data.titolo || slug;
+
+    document.getElementById('editor-content').className = 'editor-layout';
+    document.getElementById('editor-content').innerHTML =
+      '<aside class="meta-panel">' +
+        '<div class="meta-section"><span class="meta-label">Slug</span><div class="slug-display">'+esc(slug)+'</div></div>' +
+        '<div class="meta-section"><span class="meta-label">Stato</span><div class="status-toggle">' +
+          '<button class="status-btn '+(isBozza?'':'active-pub')+'" id="btn-pub">Pubblicato</button>' +
+          '<button class="status-btn '+(isBozza?'active-draft':'')+'" id="btn-draft">Bozza</button>' +
+        '</div></div>' +
+        '<div class="meta-section"><label class="meta-label" for="meta-titolo">Titolo</label><input id="meta-titolo" class="meta-input" type="text" value="'+escAttr(data.titolo||'')+'" /></div>' +
+        '<div class="meta-section"><label class="meta-label" for="meta-descr">Descrizione</label><textarea id="meta-descr" class="meta-textarea">'+esc(data.descrizione||'')+'</textarea></div>' +
+        '<div class="meta-section"><label class="meta-label" for="meta-data">Data (YYYY-MM-DD)</label><input id="meta-data" class="meta-input" type="text" value="'+escAttr(data.data||'')+'" /></div>' +
+        '<div class="meta-section"><span class="meta-label">SEO</span>' +
+          '<label class="meta-label" for="meta-seo-title" style="font-size:9px;margin-top:0.4rem">SEO Title</label><input id="meta-seo-title" class="meta-input" type="text" value="'+escAttr(data.seo_title||'')+'" placeholder="Max 60 caratteri" style="margin-bottom:0.5rem" />' +
+          '<label class="meta-label" for="meta-seo-desc">SEO Description</label><textarea id="meta-seo-desc" class="meta-textarea" placeholder="Max 155 caratteri" style="min-height:55px">'+esc(data.seo_description||'')+'</textarea>' +
+        '</div>' +
+        '<div class="meta-section"><label class="meta-check"><input type="checkbox" id="meta-noindex" '+(data.seo_noindex?'checked':'')+' /> noindex</label></div>' +
+      '</aside>' +
+      '<div class="editor-main">' +
+        '<div class="editor-toolbar">' +
+          '<button class="ed-btn" data-wrap="**" title="Grassetto">B</button>' +
+          '<button class="ed-btn" data-wrap="_" title="Corsivo">I</button>' +
+          '<button class="ed-btn" data-insert="### " title="Titolo H3">H3</button>' +
+          '<button class="ed-btn" data-insert="- " title="Lista">—</button>' +
+          '<button class="ed-btn" data-insert="\\n\\n---\\n\\n" title="Separatore">hr</button>' +
+          '<span class="word-count" id="word-count">0 parole</span>' +
+        '</div>' +
+        '<textarea id="corpo-editor">'+esc(data.corpo||'')+'</textarea>' +
+      '</div>';
+
+    bindEditorEvents();
   }
-  corpoEl?.addEventListener('input', updateWordCount);
-  updateWordCount();
 
-  // ── Editor toolbar ─────────────────────────────────────────────────────────
-  document.querySelectorAll<HTMLButtonElement>('.ed-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      if (!corpoEl) return;
-      const wrap   = btn.dataset.wrap;
-      const insert = btn.dataset.insert;
-      const start  = corpoEl.selectionStart;
-      const end    = corpoEl.selectionEnd;
-      const val    = corpoEl.value;
+  function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+  function escAttr(s){return esc(s).replace(/"/g,'&quot;');}
 
-      if (wrap) {
-        const selected = val.slice(start, end);
-        corpoEl.value = val.slice(0, start) + wrap + selected + wrap + val.slice(end);
-        corpoEl.setSelectionRange(start + wrap.length, end + wrap.length);
-      } else if (insert) {
-        corpoEl.value = val.slice(0, start) + insert + val.slice(start);
-        corpoEl.setSelectionRange(start + insert.length, start + insert.length);
-      }
-      corpoEl.focus();
-      updateWordCount();
+  function bindEditorEvents() {
+    var corpoEl = document.getElementById('corpo-editor');
+    var wordCountEl = document.getElementById('word-count');
+
+    function updateWordCount() {
+      if(!corpoEl||!wordCountEl) return;
+      var words = corpoEl.value.trim().split(/\s+/).filter(Boolean).length;
+      wordCountEl.textContent = words + ' parol' + (words===1?'a':'e');
+    }
+    corpoEl.addEventListener('input', updateWordCount);
+    updateWordCount();
+
+    // Editor toolbar
+    document.querySelectorAll('.ed-btn').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        if(!corpoEl) return;
+        var wrap = btn.dataset.wrap;
+        var insert = btn.dataset.insert;
+        var start = corpoEl.selectionStart;
+        var end = corpoEl.selectionEnd;
+        var val = corpoEl.value;
+        if(wrap){
+          var selected = val.slice(start, end);
+          corpoEl.value = val.slice(0,start)+wrap+selected+wrap+val.slice(end);
+          corpoEl.setSelectionRange(start+wrap.length, end+wrap.length);
+        } else if(insert){
+          corpoEl.value = val.slice(0,start)+insert+val.slice(start);
+          corpoEl.setSelectionRange(start+insert.length, start+insert.length);
+        }
+        corpoEl.focus();
+        updateWordCount();
+      });
     });
-  });
 
-  // ── Status toggle ──────────────────────────────────────────────────────────
-  document.getElementById('btn-pub')?.addEventListener('click', () => {
-    isBozza = false;
-    document.getElementById('btn-pub')?.classList.add('active-pub');
-    document.getElementById('btn-draft')?.classList.remove('active-draft');
-  });
-  document.getElementById('btn-draft')?.addEventListener('click', () => {
-    isBozza = true;
-    document.getElementById('btn-draft')?.classList.add('active-draft');
-    document.getElementById('btn-pub')?.classList.remove('active-pub');
-  });
+    // Status toggle
+    document.getElementById('btn-pub').addEventListener('click', function(){
+      isBozza=false;
+      document.getElementById('btn-pub').classList.add('active-pub');
+      document.getElementById('btn-draft').classList.remove('active-draft');
+    });
+    document.getElementById('btn-draft').addEventListener('click', function(){
+      isBozza=true;
+      document.getElementById('btn-draft').classList.add('active-draft');
+      document.getElementById('btn-pub').classList.remove('active-pub');
+    });
 
-  // ── AI Panel open/close ────────────────────────────────────────────────────
-  function openAIPanelFn() { aiPanel.classList.add('open'); overlay.classList.add('show'); }
-  function closeAIPanelFn() { aiPanel.classList.remove('open'); overlay.classList.remove('show'); }
+    // Save
+    document.getElementById('save-btn').addEventListener('click', async function(){
+      var saveBtn = document.getElementById('save-btn');
+      saveBtn.disabled=true; saveBtn.textContent='Salvo…';
+      var titolo = document.getElementById('meta-titolo').value.trim();
+      var descrizione = document.getElementById('meta-descr').value.trim();
+      var data = document.getElementById('meta-data').value.trim();
+      var seo_title = document.getElementById('meta-seo-title').value.trim();
+      var seo_description = document.getElementById('meta-seo-desc').value.trim();
+      var seo_noindex = document.getElementById('meta-noindex').checked;
+      var corpo = corpoEl.value;
+      var art = {titolo:titolo, descrizione:descrizione, seo_title:seo_title, seo_description:seo_description, seo_noindex:seo_noindex, bozza:isBozza};
+      try{
+        var res = await fetch('/api/salva-bozza.php', {
+          method:'POST', headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({art:art, modo:'manuale', slug_esistente:slug, existing_titolo:titolo, existing_corpo:corpo, data_override:data, sha:sha}),
+        });
+        var d = await res.json();
+        if(d.success) showToast('Salvato ✓','success');
+        else showToast(d.error||'Errore salvataggio','error');
+      }catch(e){showToast('Errore: '+e.message,'error');}
+      finally{saveBtn.disabled=false;saveBtn.textContent='Salva';}
+    });
 
-  openAIBtn?.addEventListener('click', openAIPanelFn);
-  closeAIBtn.addEventListener('click', closeAIPanelFn);
-  overlay.addEventListener('click', closeAIPanelFn);
-  if (openAI) openAIPanelFn();
+    // Keyboard shortcut
+    document.addEventListener('keydown',function(e){
+      if((e.metaKey||e.ctrlKey)&&e.key==='s'){e.preventDefault();document.getElementById('save-btn').click();}
+    });
 
-  // ── AI Actions ─────────────────────────────────────────────────────────────
-  async function runAI(azione: string, istruzione?: string) {
-    if (!corpoEl) return;
-    const corpo = corpoEl.value.trim();
-    if (!corpo) { showToast('Editor vuoto', 'error'); return; }
+    // AI actions
+    document.querySelectorAll('.ai-action-btn').forEach(function(btn){
+      btn.addEventListener('click',function(){runAI(btn.dataset.azione);});
+    });
 
-    pendingAzione = azione;
-    aiResult = null;
-    aiResultEl.classList.remove('show');
+    document.getElementById('btn-run').addEventListener('click',function(){
+      var istr=document.getElementById('ai-istruzione').value.trim();
+      if(!istr){showToast('Inserisci un\'istruzione','error');return;}
+      runAI('personalizzata',istr);
+    });
 
-    // Disable buttons
-    document.querySelectorAll<HTMLButtonElement>('.ai-action-btn, #btn-run').forEach(b => b.disabled = true);
-    btnRun.innerHTML = '<div class="spinner"></div>';
+    document.getElementById('btn-apply').addEventListener('click',function(){
+      if(!aiResult) return;
+      if(aiResult.corpo&&corpoEl){corpoEl.value=aiResult.corpo;updateWordCount();showToast('Testo applicato','success');}
+      if(aiResult.seo_title){var el=document.getElementById('meta-seo-title');if(el)el.value=aiResult.seo_title;}
+      if(aiResult.seo_description){var el=document.getElementById('meta-seo-desc');if(el)el.value=aiResult.seo_description;}
+      if(aiResult.descrizione){var el=document.getElementById('meta-descr');if(el)el.value=aiResult.descrizione;}
+      document.getElementById('ai-result').classList.remove('show');
+      aiResult=null;
+    });
 
-    try {
-      const res = await fetch('/api/ai-action', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify({ azione, corpo, istruzione }),
-      });
-      const data = await res.json();
+    document.getElementById('btn-discard').addEventListener('click',function(){
+      document.getElementById('ai-result').classList.remove('show');
+      aiResult=null;
+    });
+  }
 
-      if (!res.ok || data.error) {
-        showToast(data.error ?? 'Errore AI', 'error');
-        return;
-      }
-
-      aiResult = data;
-
-      // Mostra anteprima
-      const preview = data.corpo ?? data.seo_title ?? data.seo_description ?? JSON.stringify(data.suggerimenti ?? data, null, 2);
-      aiResultText.textContent = preview?.slice(0, 500) + (preview?.length > 500 ? '…' : '');
-      aiResultEl.classList.add('show');
-      showToast('AI completato ✓', 'success');
-
-    } catch (e: any) {
-      showToast(`Errore: ${e.message}`, 'error');
-    } finally {
-      document.querySelectorAll<HTMLButtonElement>('.ai-action-btn, #btn-run').forEach(b => b.disabled = false);
-      btnRun.innerHTML = '<span>✦</span> Esegui con AI';
+  async function runAI(azione, istruzione) {
+    var corpoEl = document.getElementById('corpo-editor');
+    if(!corpoEl) return;
+    var corpo = corpoEl.value.trim();
+    if(!corpo){showToast('Editor vuoto','error');return;}
+    aiResult=null;
+    document.getElementById('ai-result').classList.remove('show');
+    document.querySelectorAll('.ai-action-btn, #btn-run').forEach(function(b){b.disabled=true;});
+    document.getElementById('btn-run').innerHTML='<div class="spinner"></div>';
+    try{
+      var res=await fetch('/api/ai-action.php',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({azione:azione,corpo:corpo,istruzione:istruzione})});
+      var data=await res.json();
+      if(!res.ok||data.error){showToast(data.error||'Errore AI','error');return;}
+      aiResult=data;
+      var preview=data.corpo||data.seo_title||data.seo_description||JSON.stringify(data.suggerimenti||data,null,2);
+      document.getElementById('ai-result-text').textContent=(preview||'').slice(0,500)+(preview&&preview.length>500?'…':'');
+      document.getElementById('ai-result').classList.add('show');
+      showToast('AI completato ✓','success');
+    }catch(e){showToast('Errore: '+e.message,'error');}
+    finally{
+      document.querySelectorAll('.ai-action-btn, #btn-run').forEach(function(b){b.disabled=false;});
+      document.getElementById('btn-run').innerHTML='<span>✦</span> Esegui con AI';
     }
   }
 
-  document.querySelectorAll<HTMLButtonElement>('.ai-action-btn').forEach(btn => {
-    btn.addEventListener('click', () => runAI(btn.dataset.azione!));
-  });
+  // AI Panel
+  function openAIPanelFn(){document.getElementById('ai-panel').classList.add('open');document.getElementById('overlay').classList.add('show');}
+  function closeAIPanelFn(){document.getElementById('ai-panel').classList.remove('open');document.getElementById('overlay').classList.remove('show');}
+  document.getElementById('open-ai-btn').addEventListener('click',openAIPanelFn);
+  document.getElementById('close-ai-btn').addEventListener('click',closeAIPanelFn);
+  document.getElementById('overlay').addEventListener('click',closeAIPanelFn);
 
-  btnRun.addEventListener('click', () => {
-    const istr = aiIstruzione.value.trim();
-    if (!istr) { showToast('Inserisci un\'istruzione', 'error'); return; }
-    runAI('personalizzata', istr);
-  });
-
-  // ── Apply AI result ────────────────────────────────────────────────────────
-  btnApply.addEventListener('click', () => {
-    if (!aiResult) return;
-    if (aiResult.corpo && corpoEl) {
-      corpoEl.value = aiResult.corpo;
-      updateWordCount();
-      showToast('Testo applicato', 'success');
-    }
-    if (aiResult.seo_title) {
-      const el = document.getElementById('meta-seo-title') as HTMLInputElement;
-      if (el) el.value = aiResult.seo_title;
-    }
-    if (aiResult.seo_description) {
-      const el = document.getElementById('meta-seo-desc') as HTMLTextAreaElement;
-      if (el) el.value = aiResult.seo_description;
-    }
-    if (aiResult.descrizione) {
-      const el = document.getElementById('meta-descr') as HTMLTextAreaElement;
-      if (el) el.value = aiResult.descrizione;
-    }
-    aiResultEl.classList.remove('show');
-    aiResult = null;
-  });
-
-  btnDiscard.addEventListener('click', () => {
-    aiResultEl.classList.remove('show');
-    aiResult = null;
-  });
-
-  // ── Save ──────────────────────────────────────────────────────────────────
-  saveBtn?.addEventListener('click', async () => {
-    if (!corpoEl || !slug) return;
-    saveBtn.disabled = true;
-    saveBtn.textContent = 'Salvo…';
-
-    const titolo      = (document.getElementById('meta-titolo') as HTMLInputElement)?.value.trim() ?? '';
-    const descrizione = (document.getElementById('meta-descr') as HTMLTextAreaElement)?.value.trim() ?? '';
-    const data        = (document.getElementById('meta-data') as HTMLInputElement)?.value.trim() ?? '';
-    const seo_title   = (document.getElementById('meta-seo-title') as HTMLInputElement)?.value.trim() ?? '';
-    const seo_description = (document.getElementById('meta-seo-desc') as HTMLTextAreaElement)?.value.trim() ?? '';
-    const seo_noindex = (document.getElementById('meta-noindex') as HTMLInputElement)?.checked ?? false;
-    const corpo       = corpoEl.value;
-
-    const art = { titolo, descrizione, seo_title, seo_description, seo_noindex, bozza: isBozza };
-
-    try {
-      const res = await fetch('/api/salva-bozza', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify({
-          art,
-          modo: 'manuale',
-          slug_esistente: slug,
-          existing_titolo: titolo,
-          existing_corpo: corpo,
-          data_override: data,
-          sha,
-        }),
-      });
-      const d = await res.json();
-      if (d.success) {
-        showToast('Salvato ✓', 'success');
-      } else {
-        showToast(d.error ?? 'Errore salvataggio', 'error');
-      }
-    } catch (e: any) {
-      showToast(`Errore: ${e.message}`, 'error');
-    } finally {
-      saveBtn.disabled = false;
-      saveBtn.textContent = 'Salva';
-    }
-  });
-
-  // ── Keyboard shortcut: Cmd/Ctrl+S ─────────────────────────────────────────
-  document.addEventListener('keydown', e => {
-    if ((e.metaKey || e.ctrlKey) && e.key === 's') {
-      e.preventDefault();
-      saveBtn?.click();
-    }
-  });
+  // Toast
+  var toastTimer;
+  function showToast(msg,type){
+    clearTimeout(toastTimer);
+    var t=document.getElementById('toast');
+    t.textContent=msg;
+    t.className='toast show '+(type||'');
+    toastTimer=setTimeout(function(){t.className='toast';},3000);
+  }
+})();
 </script>
 
 </body>

@@ -1,7 +1,6 @@
 import type { APIRoute } from 'astro';
 import Anthropic from '@anthropic-ai/sdk';
 
-export const prerender = false;
 
 // ── Stile assoluto (stesso di genera.ts) ─────────────────────────────────────
 const SISTEMA = `Sei un ghostwriter italiano esperto. Scrivi sempre in italiano naturale seguendo queste regole assolute:

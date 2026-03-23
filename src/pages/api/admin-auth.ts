@@ -4,7 +4,6 @@ const ADMIN_PASSWORD = import.meta.env.ADMIN_PASSWORD;
 const COOKIE_NAME = 'mm_admin_session';
 const COOKIE_MAX_AGE = 60 * 60 * 24 * 365 * 10;
 
-export const prerender = false;
 
 export const POST: APIRoute = async ({ request, cookies, redirect }) => {
   const formData = await request.formData();

@@ -1,6 +1,5 @@
 import type { APIRoute } from 'astro';
 
-export const prerender = false;
 
 const REPO = 'consulenza-hash/marcomunich-astro';
 const FILE_PATH = 'src/data/clienti.json';
