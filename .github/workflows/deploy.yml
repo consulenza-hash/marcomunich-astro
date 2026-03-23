@@ -10,7 +10,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 30
 
     steps:
       - name: Checkout
@@ -31,18 +31,25 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Install production deps in dist
+      - name: Prepare deploy folder
         run: |
-          cp package.json dist/package.json
-          cp package-lock.json dist/package-lock.json
-          cd dist && npm install --omit=dev --ignore-scripts --legacy-peer-deps
+          mkdir -p deploy
+          # Static HTML pages go to public_html
+          cp -r dist/client/* deploy/
+          # PHP API files are already in public/api/ which is in dist/client/api/
+          # .env needs to be on server already (not in git)
+          echo "Deploy folder ready: $(find deploy -type f | wc -l) files"
 
-      - name: Deploy via FTP
+      - name: Deploy static files via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: 89.40.173.242
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./dist/
-          server-dir: /marcomunich-app/
-          dangerous-clean-slate: true
+          local-dir: ./deploy/
+          server-dir: /public_html/
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            **/_old-api/**
