@@ -34,6 +34,23 @@ jobs:
       - name: Count files
         run: echo "Files to deploy:" && find dist -type f | wc -l
 
+      - name: Create .env for server
+        run: |
+          cat > .env-server << 'ENVEOF'
+          STATS_PASSWORD=${{ secrets.STATS_PASSWORD }}
+          GITHUB_TOKEN=${{ secrets.GH_TOKEN }}
+          ANTHROPIC_API_KEY=${{ secrets.ANTHROPIC_API_KEY }}
+          STRIPE_SECRET_KEY=${{ secrets.STRIPE_SECRET_KEY }}
+          STRIPE_WEBHOOK_SECRET=${{ secrets.STRIPE_WEBHOOK_SECRET }}
+          STRIPE_PRICE_ID=${{ secrets.STRIPE_PRICE_ID }}
+          SITE_URL=https://marcomunich.com
+          RESEND_API_KEY=${{ secrets.RESEND_API_KEY }}
+          PP_GIST_ID=${{ secrets.PP_GIST_ID }}
+          FB_PAGE_ID=${{ secrets.FB_PAGE_ID }}
+          FB_PAGE_ACCESS_TOKEN=${{ secrets.FB_PAGE_ACCESS_TOKEN }}
+          ENVEOF
+          sed -i 's/^          //' .env-server
+
       - name: Deploy via lftp mirror
         run: |
           sudo apt-get install -y lftp > /dev/null 2>&1
@@ -46,6 +63,7 @@ jobs:
             set net:reconnect-interval-base 5;
             set mirror:parallel-transfer-count 5;
             open -u ${{ secrets.FTP_USERNAME }},${{ secrets.FTP_PASSWORD }} 89.40.173.242;
+            put .env-server -o /.env;
             mirror --reverse --delete --verbose --parallel=5 dist/ /public_html/;
             quit;
           "
