@@ -10,7 +10,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
 
     steps:
       - name: Checkout
@@ -31,23 +31,21 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Prepare deploy folder
-        run: |
-          # Astro static output is in dist/ (no client/ subfolder)
-          echo "Deploy folder ready: $(find dist -type f | wc -l) files"
+      - name: Count files
+        run: echo "Files to deploy:" && find dist -type f | wc -l
 
-      - name: Deploy static files via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: 89.40.173.242
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./dist/
-          server-dir: /public_html/
-          dangerous-clean-slate: true
-          timeout: 600000
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/node_modules/**
-            **/_old-api/**
+      - name: Deploy via lftp mirror
+        run: |
+          sudo apt-get install -y lftp > /dev/null 2>&1
+          lftp -c "
+            set ftp:ssl-allow yes;
+            set ftp:ssl-force no;
+            set net:timeout 30;
+            set net:max-retries 5;
+            set net:reconnect-interval-base 5;
+            set mirror:parallel-transfer-count 5;
+            open -u ${{ secrets.FTP_USERNAME }},${{ secrets.FTP_PASSWORD }} 89.40.173.242;
+            mirror --reverse --delete --verbose --parallel=5 dist/ /public_html/;
+            quit;
+          "
+          echo "Deploy complete!"
