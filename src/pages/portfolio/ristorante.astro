@@ -1,0 +1,905 @@
+---
+export const prerender = true;
+---
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Osteria del Borgo — Cucina Toscana Autentica dal 1985</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <!-- Noise overlay -->
+  <div class="noise"></div>
+
+  <!-- Back button -->
+  <a href="/dev/portfolio" class="back-btn">
+    <span class="back-arrow">&larr;</span> Torna al Portfolio
+  </a>
+
+  <!-- Hero -->
+  <header class="hero">
+    <img src="/images/portfolio/risto-interior.jpg" alt="Ristorante" loading="lazy" class="hero-bg" style="width:100%;height:100%;object-fit:cover;display:block;" />
+    <div class="candle c1"><div class="flame"></div></div>
+    <div class="candle c2"><div class="flame"></div></div>
+    <div class="hero-content fade-in">
+      <div class="ornament">&mdash;&nbsp;&nbsp;&#10038;&nbsp;&nbsp;&mdash;</div>
+      <h1 class="hero-title">Osteria del Borgo</h1>
+      <p class="hero-sub">Cucina toscana autentica dal 1985 — Greve in Chianti</p>
+      <div class="ornament">&mdash;&nbsp;&nbsp;&#10038;&nbsp;&nbsp;&mdash;</div>
+      <div class="hero-actions">
+        <a href="#menu" class="btn btn-gold">Scopri il Menu</a>
+        <a href="#prenota" class="btn btn-outline">Prenota un Tavolo</a>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <div class="hero-scroll-line"></div>
+    </div>
+  </header>
+
+  <!-- Gold ornament divider -->
+  <div class="divider parallax-divider">
+    <div class="divider-line"></div>
+    <div class="divider-diamond">&#9830;</div>
+    <div class="divider-line"></div>
+  </div>
+
+  <!-- Philosophy -->
+  <section class="philosophy">
+    <div class="section-inner">
+      <div class="phil-grid">
+        <div class="phil-image fade-in">
+          <img src="/images/portfolio/risto-chef.jpg" alt="Foto dello Chef" loading="lazy" class="phil-placeholder" style="width:100%;height:100%;object-fit:cover;display:block;" />
+        </div>
+        <div class="phil-text fade-in">
+          <span class="section-label">La Nostra Storia</span>
+          <h2 class="section-title">Tre generazioni di passione</h2>
+          <p class="phil-desc">L'Osteria del Borgo nasce nel 1985 dalla passione di Giovanni e Maria Conti per la cucina toscana autentica. Da tre generazioni portiamo in tavola i sapori della tradizione, usando materie prime locali e ricette tramandate nel tempo. Il nostro orto di 2.000 mq fornisce verdure ed erbe aromatiche fresche ogni giorno.</p>
+          <div class="phil-signature">
+            <span class="signature-name">Giovanni Conti</span>
+            <span class="signature-role">Fondatore &amp; Chef</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Parallax divider -->
+  <div class="parallax-section">
+    <div class="parallax-inner"></div>
+    <div class="parallax-overlay">
+      <p class="parallax-quote">"La semplicità è la forma più sofisticata di eleganza"</p>
+    </div>
+  </div>
+
+  <!-- Menu -->
+  <section id="menu" class="menu-section">
+    <div class="section-inner">
+      <div class="section-header fade-in">
+        <div class="ornament ornament-sm">&mdash;&nbsp;&#10038;&nbsp;&mdash;</div>
+        <span class="section-label">Il Menu</span>
+        <h2 class="section-title">La Carta</h2>
+        <p class="menu-price-note">I nostri piatti cambiano con le stagioni &middot; Coperto &euro;3</p>
+      </div>
+
+      <div class="menu-category fade-in">
+        <h3 class="menu-cat-title">Antipasti</h3>
+        <div class="gold-line-small"></div>
+      </div>
+
+      <div class="menu-item fade-in">
+        <div class="menu-item-header">
+          <h4 class="menu-item-name">Tartare di Manzo</h4>
+          <div class="menu-item-dots"></div>
+          <span class="menu-item-price">&euro;16</span>
+        </div>
+        <p class="menu-item-desc">Tuorlo d'uovo di fattoria, tartufo nero del Chianti, olio EVO nostrano</p>
+      </div>
+
+      <div class="menu-item fade-in">
+        <div class="menu-item-header">
+          <h4 class="menu-item-name">Burrata Pugliese</h4>
+          <div class="menu-item-dots"></div>
+          <span class="menu-item-price">&euro;14</span>
+        </div>
+        <p class="menu-item-desc">Pomodorini confit dell'orto, basilico fresco, pane toscano croccante</p>
+      </div>
+
+      <div class="menu-item fade-in">
+        <div class="menu-item-header">
+          <h4 class="menu-item-name">Carpaccio di Branzino</h4>
+          <div class="menu-item-dots"></div>
+          <span class="menu-item-price">&euro;18</span>
+        </div>
+        <p class="menu-item-desc">Agrumi di stagione, finocchietto selvatico, olio extravergine Moraiolo</p>
+      </div>
+
+      <div class="menu-item fade-in">
+        <div class="menu-item-header">
+          <h4 class="menu-item-name">Crostini Toscani</h4>
+          <div class="menu-item-dots"></div>
+          <span class="menu-item-price">&euro;10</span>
+        </div>
+        <p class="menu-item-desc">Fegatini di pollo alla tradizione, sfumati al vin santo, capperi e cipolla</p>
+      </div>
+
+      <div class="menu-category fade-in">
+        <h3 class="menu-cat-title">Primi Piatti</h3>
+        <div class="gold-line-small"></div>
+      </div>
+
+      <div class="menu-item fade-in">
+        <div class="menu-item-header">
+          <h4 class="menu-item-name">Pappardelle al Cinghiale</h4>
+          <div class="menu-item-dots"></div>
+          <span class="menu-item-price">&euro;16</span>
+        </div>
+        <p class="menu-item-desc">Ragu di cinghiale cotto lentamente per 6 ore, pecorino toscano stagionato</p>
+      </div>
+
+      <div class="menu-item fade-in">
+        <div class="menu-item-header">
+          <h4 class="menu-item-name">Risotto allo Zafferano con Ossobuco</h4>
+          <div class="menu-item-dots"></div>
+          <span class="menu-item-price">&euro;18</span>
+        </div>
+        <p class="menu-item-desc">Zafferano puro, ossobuco brasato al vino rosso, gremolata di agrumi</p>
+      </div>
+
+      <div class="menu-item fade-in">
+        <div class="menu-item-header">
+          <h4 class="menu-item-name">Ravioli Ricotta e Spinaci</h4>
+          <div class="menu-item-dots"></div>
+          <span class="menu-item-price">&euro;14</span>
+        </div>
+        <p class="menu-item-desc">Pasta fresca fatta a mano, burro fuso e salvia dell'orto, parmigiano 24 mesi</p>
+      </div>
+
+      <div class="menu-item fade-in">
+        <div class="menu-item-header">
+          <h4 class="menu-item-name">Spaghetti alle Vongole Veraci</h4>
+          <div class="menu-item-dots"></div>
+          <span class="menu-item-price">&euro;17</span>
+        </div>
+        <p class="menu-item-desc">Vongole fresche del Tirreno, aglio, prezzemolo, peperoncino, vino bianco</p>
+      </div>
+
+      <div class="menu-category fade-in">
+        <h3 class="menu-cat-title">Secondi</h3>
+        <div class="gold-line-small"></div>
+      </div>
+
+      <div class="menu-item fade-in">
+        <div class="menu-item-header">
+          <h4 class="menu-item-name">Filetto di Manzo alla Griglia</h4>
+          <div class="menu-item-dots"></div>
+          <span class="menu-item-price">&euro;28</span>
+        </div>
+        <p class="menu-item-desc">Chianina selezionata, verdure di stagione grigliate, riduzione al Chianti Classico</p>
+      </div>
+
+      <div class="menu-item fade-in">
+        <div class="menu-item-header">
+          <h4 class="menu-item-name">Branzino al Forno</h4>
+          <div class="menu-item-dots"></div>
+          <span class="menu-item-price">&euro;24</span>
+        </div>
+        <p class="menu-item-desc">Patate novelle arrosto, olive taggiasche, capperi di Pantelleria, pomodorini</p>
+      </div>
+
+      <div class="menu-item fade-in">
+        <div class="menu-item-header">
+          <h4 class="menu-item-name">Tagliata di Black Angus</h4>
+          <div class="menu-item-dots"></div>
+          <span class="menu-item-price">&euro;26</span>
+        </div>
+        <p class="menu-item-desc">Rucola selvatica, scaglie di Grana Padano 30 mesi, aceto balsamico tradizionale</p>
+      </div>
+
+      <div class="menu-item fade-in">
+        <div class="menu-item-header">
+          <h4 class="menu-item-name">Pollo Ruspante Arrosto</h4>
+          <div class="menu-item-dots"></div>
+          <span class="menu-item-price">&euro;18</span>
+        </div>
+        <p class="menu-item-desc">Allevamento locale, rosmarino e salvia dell'orto, patate al forno croccanti</p>
+      </div>
+
+      <div class="menu-category fade-in">
+        <h3 class="menu-cat-title">Dolci</h3>
+        <div class="gold-line-small"></div>
+      </div>
+
+      <div class="menu-item fade-in">
+        <div class="menu-item-header">
+          <h4 class="menu-item-name">Tiramisu della Casa</h4>
+          <div class="menu-item-dots"></div>
+          <span class="menu-item-price">&euro;8</span>
+        </div>
+        <p class="menu-item-desc">Ricetta della nonna Maria, mascarpone fresco, caffe espresso, cacao amaro</p>
+      </div>
+
+      <div class="menu-item fade-in">
+        <div class="menu-item-header">
+          <h4 class="menu-item-name">Panna Cotta alla Vaniglia</h4>
+          <div class="menu-item-dots"></div>
+          <span class="menu-item-price">&euro;7</span>
+        </div>
+        <p class="menu-item-desc">Vaniglia del Madagascar, coulis di frutti di bosco freschi del nostro orto</p>
+      </div>
+
+      <div class="menu-item fade-in">
+        <div class="menu-item-header">
+          <h4 class="menu-item-name">Tortino al Cioccolato Fondente</h4>
+          <div class="menu-item-dots"></div>
+          <span class="menu-item-price">&euro;9</span>
+        </div>
+        <p class="menu-item-desc">Cuore caldo fondente, gelato alla crema fatto in casa, cacao in polvere</p>
+      </div>
+
+      <div class="menu-item fade-in">
+        <div class="menu-item-header">
+          <h4 class="menu-item-name">Selezione di Formaggi Stagionati</h4>
+          <div class="menu-item-dots"></div>
+          <span class="menu-item-price">&euro;12</span>
+        </div>
+        <p class="menu-item-desc">Pecorino toscano, gorgonzola DOP, parmigiano 36 mesi con miele e noci</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Divider -->
+  <div class="divider parallax-divider">
+    <div class="divider-line"></div>
+    <div class="divider-diamond">&#9830;</div>
+    <div class="divider-line"></div>
+  </div>
+
+  <!-- Photo Gallery -->
+  <section class="gallery-section">
+    <div class="section-inner">
+      <div class="section-header fade-in">
+        <div class="ornament ornament-sm">&mdash;&nbsp;&#10038;&nbsp;&mdash;</div>
+        <span class="section-label">Galleria</span>
+        <h2 class="section-title">L'atmosfera</h2>
+      </div>
+      <div class="photo-grid">
+        <div class="photo-item photo-wide fade-in">
+          <img src="/images/portfolio/risto-sala.jpg" alt="Sala principale" loading="lazy" class="photo-placeholder" style="width:100%;height:100%;object-fit:cover;display:block;" />
+          <div class="photo-overlay">
+            <div class="photo-zoom-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="photo-item fade-in">
+          <img src="/images/portfolio/risto-piatto.jpg" alt="Piatto signature" loading="lazy" class="photo-placeholder" style="width:100%;height:100%;object-fit:cover;display:block;" />
+          <div class="photo-overlay">
+            <div class="photo-zoom-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="photo-item fade-in">
+          <img src="/images/portfolio/risto-vino.jpg" alt="Cantina vini" loading="lazy" class="photo-placeholder" style="width:100%;height:100%;object-fit:cover;display:block;" />
+          <div class="photo-overlay">
+            <div class="photo-zoom-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="photo-item fade-in">
+          <img src="/images/portfolio/risto-dessert.jpg" alt="Dessert" loading="lazy" class="photo-placeholder" style="width:100%;height:100%;object-fit:cover;display:block;" />
+          <div class="photo-overlay">
+            <div class="photo-zoom-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="photo-item photo-wide fade-in">
+          <img src="/images/portfolio/risto-terrazza.jpg" alt="Terrazza panoramica" loading="lazy" class="photo-placeholder" style="width:100%;height:100%;object-fit:cover;display:block;" />
+          <div class="photo-overlay">
+            <div class="photo-zoom-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Hours & Reservation -->
+  <section id="prenota" class="reservation-section">
+    <div class="section-inner">
+      <div class="res-grid">
+        <!-- Opening hours -->
+        <div class="res-hours fade-in">
+          <div class="ornament ornament-sm">&mdash;&nbsp;&#10038;&nbsp;&mdash;</div>
+          <h2 class="section-title">Orari di Apertura</h2>
+          <div class="clock-icon">
+            <svg class="clock-svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#d4a853" stroke-width="1.5">
+              <circle cx="12" cy="12" r="10"/>
+              <path class="clock-hand-h" d="M12 12L12 8" stroke-linecap="round"/>
+              <path class="clock-hand-m" d="M12 12L16 12" stroke-linecap="round"/>
+              <circle cx="12" cy="12" r="1" fill="#d4a853"/>
+            </svg>
+          </div>
+          <div class="hours-list">
+            <div class="hours-row">
+              <span class="hours-day">Luned&igrave;</span>
+              <span class="hours-dots"></span>
+              <span class="hours-time closed">Chiuso</span>
+            </div>
+            <div class="hours-row">
+              <span class="hours-day">Marted&igrave; — Sabato</span>
+              <span class="hours-dots"></span>
+              <span class="hours-time">12:00 — 14:30 &middot; 19:00 — 22:30</span>
+            </div>
+            <div class="hours-row">
+              <span class="hours-day">Domenica</span>
+              <span class="hours-dots"></span>
+              <span class="hours-time">12:00 — 15:00</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Reservation form -->
+        <div class="res-form-wrap fade-in">
+          <div class="ornament ornament-sm">&mdash;&nbsp;&#10038;&nbsp;&mdash;</div>
+          <h2 class="section-title">Prenota un Tavolo</h2>
+          <form class="res-form">
+            <div class="form-group anim-field" style="--delay: 0">
+              <label class="form-label">Nome completo</label>
+              <input type="text" class="form-input" placeholder="Mario Rossi" />
+            </div>
+            <div class="form-group anim-field" style="--delay: 1">
+              <label class="form-label">Email</label>
+              <input type="email" class="form-input" placeholder="mario@email.com" />
+            </div>
+            <div class="form-row">
+              <div class="form-group anim-field" style="--delay: 2">
+                <label class="form-label">Data</label>
+                <input type="text" class="form-input" placeholder="24/03/2026" />
+              </div>
+              <div class="form-group anim-field" style="--delay: 3">
+                <label class="form-label">Orario</label>
+                <input type="text" class="form-input" placeholder="20:30" />
+              </div>
+            </div>
+            <div class="form-group anim-field" style="--delay: 4">
+              <label class="form-label">Telefono</label>
+              <input type="tel" class="form-input" placeholder="+39 333 123 4567" />
+            </div>
+            <div class="form-row">
+              <div class="form-group anim-field" style="--delay: 5">
+                <label class="form-label">Numero ospiti</label>
+                <input type="number" class="form-input" placeholder="2" min="1" max="12" />
+              </div>
+              <div class="form-group anim-field" style="--delay: 6">
+                <label class="form-label">Occasione</label>
+                <input type="text" class="form-input" placeholder="Compleanno, anniversario..." />
+              </div>
+            </div>
+            <div class="form-group anim-field" style="--delay: 7">
+              <label class="form-label">Richieste speciali</label>
+              <textarea class="form-input form-textarea" placeholder="Allergie alimentari, intolleranze, seggiolone per bambini, tavolo in terrazza..." rows="3"></textarea>
+            </div>
+            <button type="button" class="btn btn-gold btn-block anim-field" style="--delay: 8">Conferma Prenotazione</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer fade-in">
+    <div class="footer-inner">
+      <div class="ornament">&mdash;&nbsp;&nbsp;&#10038;&nbsp;&nbsp;&mdash;</div>
+      <h3 class="footer-brand">Osteria del Borgo</h3>
+      <p class="footer-address">Via del Borgo Antico 23, Greve in Chianti (FI) &middot; +39 055 123 4567</p>
+      <p class="footer-address" style="margin-top:0.3em;font-size:0.85em;opacity:0.7;">4.8 su TripAdvisor &mdash; 342 recensioni</p>
+      <div class="footer-links">
+        <a href="#">Instagram</a>
+        <a href="#">Facebook</a>
+        <a href="#">TripAdvisor</a>
+        <a href="#">The Fork</a>
+      </div>
+      <div class="footer-copy">&copy; 2026 Osteria del Borgo di Conti G. &amp; C. Snc &middot; P.IVA 01234567890. Tutti i diritti riservati.</div>
+    </div>
+  </footer>
+
+  <!-- Floating candle decorations -->
+  <div class="floating-circle fg1"></div>
+  <div class="floating-circle fg2"></div>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const delay = entry.target.dataset.delay || 0;
+          setTimeout(() => entry.target.classList.add('visible'), Number(delay));
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach((el, i) => {
+      el.dataset.delay = (i % 5) * 120;
+      observer.observe(el);
+    });
+
+    // Animate form fields when section comes into view
+    const formObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.querySelectorAll('.anim-field').forEach(field => {
+            const d = getComputedStyle(field).getPropertyValue('--delay');
+            setTimeout(() => field.classList.add('field-visible'), Number(d) * 150);
+          });
+          formObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+
+    const resForm = document.querySelector('.res-form-wrap');
+    if (resForm) formObserver.observe(resForm);
+  </script>
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Lato', 'Segoe UI', sans-serif;
+      background: #0a0a0a;
+      color: #e8e0d4;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #0a0a0a; }
+    ::-webkit-scrollbar-thumb { background: #d4a853; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #c49a48; }
+
+    /* Noise */
+    .noise {
+      position: fixed; inset: 0; pointer-events: none; z-index: 9999; opacity: 0.04;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-repeat: repeat; background-size: 256px;
+    }
+
+    /* Fade-in */
+    .fade-in {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1);
+    }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* Form field animation */
+    .anim-field {
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .anim-field.field-visible { opacity: 1; transform: translateY(0); }
+
+    /* Floating circles */
+    .floating-circle { position: fixed; border-radius: 50%; pointer-events: none; z-index: -1; opacity: 0.03; background: #d4a853; }
+    .fg1 { width: 350px; height: 350px; top: 15%; right: -100px; animation: floatG 20s ease-in-out infinite; }
+    .fg2 { width: 200px; height: 200px; bottom: 10%; left: -60px; animation: floatG 25s ease-in-out infinite reverse; }
+    @keyframes floatG {
+      0%,100% { transform: translate(0,0); }
+      50% { transform: translate(25px,-20px); }
+    }
+
+    /* Ornaments */
+    .ornament {
+      font-size: 0.85rem;
+      color: #d4a853;
+      letter-spacing: 0.3em;
+      margin-bottom: 16px;
+      opacity: 0.6;
+    }
+    .ornament-sm { font-size: 0.75rem; margin-bottom: 12px; }
+
+    /* Sections */
+    .section-inner { max-width: 900px; margin: 0 auto; padding: 0 5vw; }
+    .section-header { text-align: center; margin-bottom: 60px; }
+    .section-label {
+      display: inline-block;
+      font-size: 0.7rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.2em;
+      color: #d4a853;
+      margin-bottom: 14px;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 400;
+      color: #fff;
+      line-height: 1.2;
+      background: linear-gradient(135deg, #fff 0%, #d4a853 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+
+    /* ===== BACK BUTTON ===== */
+    .back-btn {
+      position: fixed; top: 20px; left: 20px; z-index: 1000;
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 20px;
+      background: rgba(10,10,10,0.8);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(212,168,83,0.2);
+      border-radius: 0;
+      color: rgba(212,168,83,0.7);
+      text-decoration: none;
+      font-size: 0.78rem; font-weight: 400;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      transition: all 0.3s ease;
+    }
+    .back-btn:hover {
+      color: #d4a853; border-color: rgba(212,168,83,0.5);
+      transform: translateX(-4px);
+    }
+    .back-arrow { transition: transform 0.3s; }
+    .back-btn:hover .back-arrow { transform: translateX(-3px); }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; text-align: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%; object-fit: cover;
+      opacity: 0.3;
+    }
+    .hero-content { position: relative; z-index: 2; }
+    .hero-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(2.5rem, 7vw, 5rem);
+      font-weight: 400;
+      color: #fff;
+      letter-spacing: 0.08em;
+      margin: 16px 0;
+      background: linear-gradient(135deg, #ffffff 0%, #d4a853 60%, #ffffff 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .hero-sub {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.15rem;
+      font-style: italic;
+      color: rgba(212,168,83,0.6);
+      letter-spacing: 0.1em;
+      margin-bottom: 24px;
+    }
+    .hero-actions {
+      display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;
+      margin-top: 30px;
+    }
+
+    /* Candle effect */
+    .candle {
+      position: absolute; z-index: 1;
+    }
+    .c1 { bottom: 30%; left: 15%; }
+    .c2 { bottom: 25%; right: 18%; }
+    .flame {
+      width: 6px; height: 14px;
+      background: radial-gradient(ellipse at center, #d4a853 0%, #f5c542 40%, transparent 70%);
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+      animation: flicker 0.8s ease-in-out infinite alternate;
+      box-shadow: 0 0 20px rgba(212,168,83,0.5), 0 0 60px rgba(212,168,83,0.2);
+    }
+    @keyframes flicker {
+      0% { transform: scale(1) rotate(-2deg); opacity: 0.9; }
+      25% { transform: scale(1.05) rotate(1deg); opacity: 1; }
+      50% { transform: scale(0.95) rotate(-1deg); opacity: 0.85; }
+      75% { transform: scale(1.02) rotate(2deg); opacity: 0.95; }
+      100% { transform: scale(1) rotate(0deg); opacity: 1; }
+    }
+
+    .hero-scroll {
+      position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+    }
+    .hero-scroll-line {
+      width: 1px; height: 60px;
+      background: linear-gradient(to bottom, transparent, rgba(212,168,83,0.4));
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%,100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex; align-items: center;
+      padding: 14px 34px; border-radius: 0;
+      font-size: 0.8rem; font-weight: 700;
+      text-decoration: none; text-transform: uppercase;
+      letter-spacing: 0.12em; transition: all 0.4s ease;
+      cursor: pointer; font-family: inherit; border: none;
+    }
+    .btn-gold {
+      background: linear-gradient(135deg, #d4a853, #c49a48);
+      color: #0a0a0a;
+    }
+    .btn-gold:hover {
+      background: linear-gradient(135deg, #e0b563, #d4a853);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(212,168,83,0.3);
+    }
+    .btn-outline {
+      background: transparent;
+      color: #d4a853;
+      border: 1px solid rgba(212,168,83,0.4);
+    }
+    .btn-outline:hover {
+      border-color: #d4a853;
+      background: rgba(212,168,83,0.08);
+      transform: translateY(-3px);
+    }
+    .btn-block { width: 100%; justify-content: center; margin-top: 10px; }
+
+    /* Dividers */
+    .divider {
+      display: flex; align-items: center; justify-content: center; gap: 16px;
+      padding: 40px 5vw;
+    }
+    .divider-line {
+      height: 1px; width: 80px;
+      background: linear-gradient(to right, transparent, rgba(212,168,83,0.3), transparent);
+    }
+    .divider-diamond { color: #d4a853; font-size: 0.7rem; opacity: 0.5; }
+
+    /* Parallax section */
+    .parallax-section {
+      position: relative;
+      height: 300px;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .parallax-inner {
+      position: absolute; inset: -50px;
+      background: linear-gradient(135deg, #1a1510 0%, #0a0a0a 50%, #1a1510 100%);
+      background-attachment: fixed;
+    }
+    .parallax-overlay {
+      position: relative; z-index: 1; text-align: center;
+      padding: 0 5vw;
+    }
+    .parallax-quote {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+      font-style: italic;
+      color: rgba(212,168,83,0.5);
+      letter-spacing: 0.04em;
+    }
+
+    /* ===== PHILOSOPHY ===== */
+    .philosophy { padding: 80px 0; }
+    .phil-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+      align-items: center;
+    }
+    .phil-placeholder {
+      width: 100%; aspect-ratio: 3/4;
+      object-fit: cover;
+      border: 1px solid rgba(212,168,83,0.1);
+    }
+    .phil-text .section-label { margin-top: 0; }
+    .phil-desc {
+      font-size: 1rem; color: rgba(232,224,212,0.6);
+      line-height: 1.9; margin-top: 20px; margin-bottom: 30px;
+    }
+    .phil-signature { border-top: 1px solid rgba(212,168,83,0.15); padding-top: 20px; }
+    .signature-name {
+      display: block;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.1rem; font-style: italic; color: #d4a853;
+    }
+    .signature-role { font-size: 0.78rem; color: rgba(232,224,212,0.35); text-transform: uppercase; letter-spacing: 0.1em; }
+
+    /* ===== MENU ===== */
+    .menu-section { padding: 80px 0; }
+    .menu-price-note {
+      font-size: 0.85rem; color: rgba(212,168,83,0.5);
+      margin-top: 12px;
+    }
+    .menu-category {
+      text-align: center;
+      margin: 50px 0 30px;
+    }
+    .menu-cat-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.5rem; font-weight: 400; color: #d4a853;
+      margin-bottom: 8px;
+    }
+    .gold-line-small {
+      width: 40px; height: 1px; margin: 0 auto;
+      background: rgba(212,168,83,0.3);
+    }
+    .menu-item {
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      transition: all 0.3s ease;
+    }
+    .menu-item:hover {
+      padding-left: 10px;
+    }
+    .menu-item-header {
+      display: flex; align-items: baseline; gap: 12px;
+    }
+    .menu-item-name {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.15rem; font-weight: 500; color: #fff;
+      flex-shrink: 0;
+      position: relative;
+    }
+    .menu-item-name::after {
+      content: '';
+      position: absolute; bottom: -2px; left: 0;
+      width: 0; height: 1px;
+      background: #d4a853;
+      transition: width 0.5s cubic-bezier(0.16,1,0.3,1);
+    }
+    .menu-item:hover .menu-item-name::after { width: 100%; }
+    .menu-item-dots {
+      flex: 1; height: 1px; min-width: 20px;
+      background: repeating-linear-gradient(to right, rgba(212,168,83,0.15) 0, rgba(212,168,83,0.15) 2px, transparent 2px, transparent 8px);
+    }
+    .menu-item-price {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.1rem; color: #d4a853; flex-shrink: 0;
+    }
+    .menu-item-desc {
+      font-size: 0.82rem; color: rgba(232,224,212,0.4);
+      margin-top: 6px; line-height: 1.6;
+    }
+
+    /* ===== GALLERY ===== */
+    .gallery-section { padding: 80px 0; }
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .photo-item {
+      position: relative; overflow: hidden; cursor: pointer;
+    }
+    .photo-wide { grid-column: span 2; }
+    .photo-placeholder {
+      width: 100%; aspect-ratio: 16/10;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.16,1,0.3,1);
+    }
+    .photo-item:hover .photo-placeholder { transform: scale(1.05); }
+    .photo-overlay {
+      position: absolute; inset: 0;
+      background: rgba(10,10,10,0.7);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity 0.4s ease;
+    }
+    .photo-item:hover .photo-overlay { opacity: 1; }
+    .photo-zoom-icon { color: #d4a853; }
+
+    /* ===== RESERVATION ===== */
+    .reservation-section { padding: 80px 0 100px; }
+    .res-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+    }
+    .res-hours { text-align: center; }
+
+    /* Clock animation */
+    .clock-icon { margin: 30px 0; }
+    .clock-hand-h {
+      transform-origin: 12px 12px;
+      animation: clockH 12s linear infinite;
+    }
+    .clock-hand-m {
+      transform-origin: 12px 12px;
+      animation: clockM 4s linear infinite;
+    }
+    @keyframes clockH {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    @keyframes clockM {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .hours-list { display: flex; flex-direction: column; gap: 16px; margin-top: 10px; }
+    .hours-row { display: flex; align-items: baseline; gap: 10px; font-size: 0.88rem; }
+    .hours-day { color: rgba(232,224,212,0.7); flex-shrink: 0; }
+    .hours-dots {
+      flex: 1; height: 1px;
+      border-bottom: 1px dotted rgba(212,168,83,0.15);
+    }
+    .hours-time { color: #d4a853; flex-shrink: 0; font-size: 0.82rem; }
+    .hours-time.closed { color: rgba(232,224,212,0.25); }
+
+    /* Form */
+    .res-form { display: flex; flex-direction: column; gap: 18px; margin-top: 30px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-label {
+      display: block; font-size: 0.72rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      color: rgba(212,168,83,0.6); margin-bottom: 6px;
+    }
+    .form-input {
+      width: 100%; padding: 14px 16px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(212,168,83,0.12);
+      border-radius: 0; color: #e8e0d4;
+      font-size: 0.9rem; font-family: inherit;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      outline: none;
+    }
+    .form-input:focus {
+      border-color: rgba(212,168,83,0.5);
+      box-shadow: 0 0 20px rgba(212,168,83,0.08);
+    }
+    .form-input::placeholder { color: rgba(232,224,212,0.2); }
+    .form-textarea { resize: vertical; min-height: 80px; }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      background: #050505;
+      padding: 60px 5vw;
+      text-align: center;
+    }
+    .footer-inner { max-width: 600px; margin: 0 auto; }
+    .footer-brand {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.8rem; font-weight: 400; color: #d4a853;
+      margin: 12px 0 8px;
+    }
+    .footer-address {
+      font-size: 0.85rem; color: rgba(232,224,212,0.35);
+      margin-bottom: 24px;
+    }
+    .footer-links {
+      display: flex; justify-content: center; flex-wrap: wrap; gap: 28px;
+      margin-bottom: 28px;
+    }
+    .footer-links a {
+      color: rgba(232,224,212,0.35); text-decoration: none;
+      font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em;
+      transition: color 0.3s;
+    }
+    .footer-links a:hover { color: #d4a853; }
+    .footer-copy {
+      font-size: 0.72rem; color: rgba(232,224,212,0.15);
+      border-top: 1px solid rgba(212,168,83,0.08); padding-top: 20px;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
+      .phil-grid { grid-template-columns: 1fr; gap: 40px; }
+      .res-grid { grid-template-columns: 1fr; gap: 50px; }
+    }
+    @media (max-width: 768px) {
+      .photo-grid { grid-template-columns: 1fr; }
+      .photo-wide { grid-column: span 1; }
+      .form-row { grid-template-columns: 1fr; }
+      .back-btn { top: 12px; left: 12px; padding: 8px 14px; font-size: 0.72rem; }
+      .hero-actions { flex-direction: column; align-items: center; }
+      .candle { display: none; }
+      .hours-row { flex-wrap: wrap; }
+      .hours-time { width: 100%; text-align: right; }
+    }
+    @media (max-width: 480px) {
+      .hero-title { font-size: 2.2rem; }
+      .menu-item-header { flex-wrap: wrap; }
+      .menu-item-dots { display: none; }
+      .menu-item-price { margin-left: auto; }
+    }
+  </style>
+</body>
+</html>

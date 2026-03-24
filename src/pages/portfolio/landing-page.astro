@@ -1,0 +1,853 @@
+---
+export const prerender = true;
+---
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VelocityAI — Automazione Intelligente</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <!-- Noise overlay -->
+  <div class="noise"></div>
+
+  <!-- Scroll progress bar -->
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <!-- Back button -->
+  <a href="/dev/portfolio" class="back-btn">
+    <span class="back-arrow">&larr;</span> Torna al Portfolio
+  </a>
+
+  <!-- Floating CTA -->
+  <a href="#prezzi" class="floating-cta" id="floatingCta">
+    Inizia Gratis &rarr;
+  </a>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="mesh-bg"></div>
+    <div class="hero-content fade-in">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        Nuovo: Integrazione GPT-4 disponibile
+      </div>
+      <h1 class="hero-title">
+        <span class="typing-line" id="typingText"></span>
+        <span class="cursor">|</span>
+      </h1>
+      <h1 class="hero-title hero-title-static">
+        con <span class="gradient-text">VelocityAI</span>
+      </h1>
+      <p class="hero-sub">Automatizza il 60% delle attivit&agrave; ripetitive, ottieni previsioni accurate sui tempi di consegna e integra Slack, Jira e GitHub in un'unica piattaforma AI.</p>
+      <div class="hero-buttons">
+        <a href="#prezzi" class="btn-primary">
+          Prova Gratis per 14 Giorni
+          <span class="btn-shine"></span>
+        </a>
+        <a href="#demo" class="btn-secondary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+          Guarda la Demo
+        </a>
+      </div>
+    </div>
+    <div class="hero-mockup fade-in" style="--delay:0.3s;position:relative;z-index:2;max-width:900px;margin:48px auto 0;border-radius:12px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.4);">
+      <img src="/images/portfolio/landing-dashboard.jpg" alt="Dashboard screen" loading="eager" style="width:100%;height:100%;object-fit:cover;display:block;" />
+    </div>
+  </section>
+
+  <!-- Social proof marquee -->
+  <div class="marquee-section">
+    <p class="marquee-label">Usato da oltre 2.400 team in Italia</p>
+    <div class="marquee-wrapper">
+      <div class="marquee-track">
+        <div class="marquee-logo">TechCorp</div>
+        <div class="marquee-logo">DesignLab</div>
+        <div class="marquee-logo">FinanceHub</div>
+        <div class="marquee-logo">MediaFlow</div>
+        <div class="marquee-logo">DataSynth</div>
+        <div class="marquee-logo">CloudBase</div>
+        <div class="marquee-logo">SmartBiz</div>
+        <div class="marquee-logo">InnoVate</div>
+        <div class="marquee-logo">TechCorp</div>
+        <div class="marquee-logo">DesignLab</div>
+        <div class="marquee-logo">FinanceHub</div>
+        <div class="marquee-logo">MediaFlow</div>
+        <div class="marquee-logo">DataSynth</div>
+        <div class="marquee-logo">CloudBase</div>
+        <div class="marquee-logo">SmartBiz</div>
+        <div class="marquee-logo">InnoVate</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Features -->
+  <section class="features" id="funzionalita">
+    <div class="section-header fade-in">
+      <p class="section-tag">Funzionalità</p>
+      <h2 class="section-title">Tutto Quello che Serve per <span class="gradient-text">Automatizzare</span></h2>
+    </div>
+    <div class="feature-grid">
+      <div class="feature-card fade-in" style="--delay:0s">
+        <div class="feature-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
+        </div>
+        <h3>Automazione Istantanea</h3>
+        <p>Configura workflow complessi in pochi clic. Connetti le tue app preferite e lascia che l'AI faccia il lavoro pesante.</p>
+      </div>
+      <div class="feature-card fade-in" style="--delay:0.1s">
+        <div class="feature-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4M12 8h.01"></path></svg>
+        </div>
+        <h3>Analisi Predittiva</h3>
+        <p>Prevedi trend e comportamenti dei clienti grazie a modelli di machine learning addestrati sui tuoi dati.</p>
+      </div>
+      <div class="feature-card fade-in" style="--delay:0.2s">
+        <div class="feature-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+        </div>
+        <h3>Sicurezza Enterprise</h3>
+        <p>Crittografia end-to-end, conformità GDPR e SOC 2. I tuoi dati sono al sicuro con noi.</p>
+      </div>
+      <div class="feature-card fade-in" style="--delay:0.3s">
+        <div class="feature-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+        </div>
+        <h3>Dashboard in Tempo Reale</h3>
+        <p>Monitora ogni metrica importante con dashboard personalizzabili e aggiornamenti in tempo reale.</p>
+      </div>
+      <div class="feature-card fade-in" style="--delay:0.4s">
+        <div class="feature-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"></path></svg>
+        </div>
+        <h3>Collaborazione Team</h3>
+        <p>Workspace condiviso, permessi granulari e notifiche intelligenti per tutto il team.</p>
+      </div>
+      <div class="feature-card fade-in" style="--delay:0.5s">
+        <div class="feature-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><path d="M3 9h18M9 21V9"></path></svg>
+        </div>
+        <h3>Integrazioni Native</h3>
+        <p>Oltre 200 integrazioni pronte all'uso con CRM, ERP, email marketing e molto altro.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section class="stats-section fade-in">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <span class="stat-number" data-target="2400">0</span><span class="stat-suffix">+</span>
+        <span class="stat-label">Team in Italia</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number" data-target="5">0</span><span class="stat-suffix">M+</span>
+        <span class="stat-label">Task Automatizzati</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number" data-target="99">0</span><span class="stat-suffix">.9%</span>
+        <span class="stat-label">Uptime Garantito</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number" data-target="40">0</span><span class="stat-suffix">%</span>
+        <span class="stat-label">Risparmio Medio Costi</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section class="pricing" id="prezzi">
+    <div class="section-header fade-in">
+      <p class="section-tag">Prezzi</p>
+      <h2 class="section-title">Scegli il Piano <span class="gradient-text">Perfetto</span></h2>
+      <p class="section-desc">Prova gratis per 14 giorni &mdash; nessuna carta richiesta.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="pricing-card fade-in" style="--delay:0s">
+        <h3>Starter</h3>
+        <div class="pricing-amount">
+          <span class="price-currency">&euro;</span>
+          <span class="price-value">9</span>
+          <span class="price-period">/mese</span>
+        </div>
+        <ul class="pricing-features">
+          <li>3 progetti attivi</li>
+          <li>Fino a 5 utenti</li>
+          <li>Integrazioni base</li>
+          <li>Supporto email</li>
+        </ul>
+        <a href="#" class="btn-pricing">Prova Gratis per 14 Giorni</a>
+      </div>
+      <div class="pricing-card pricing-featured fade-in" style="--delay:0.1s">
+        <div class="pricing-popular">Pi&ugrave; Popolare</div>
+        <h3>Pro</h3>
+        <div class="pricing-amount">
+          <span class="price-currency">&euro;</span>
+          <span class="price-value">29</span>
+          <span class="price-period">/mese</span>
+        </div>
+        <ul class="pricing-features">
+          <li>Progetti illimitati</li>
+          <li>Fino a 20 utenti</li>
+          <li>Analytics avanzati</li>
+          <li>Tutte le integrazioni</li>
+          <li>Supporto prioritario</li>
+        </ul>
+        <a href="#" class="btn-pricing btn-pricing-primary">Prova Gratis per 14 Giorni</a>
+      </div>
+      <div class="pricing-card fade-in" style="--delay:0.2s">
+        <h3>Business</h3>
+        <div class="pricing-amount">
+          <span class="price-currency">&euro;</span>
+          <span class="price-value">79</span>
+          <span class="price-period">/mese</span>
+        </div>
+        <ul class="pricing-features">
+          <li>Tutto di Pro incluso</li>
+          <li>Accesso API completo</li>
+          <li>SSO e sicurezza avanzata</li>
+          <li>Supporto dedicato</li>
+          <li>Onboarding personalizzato</li>
+        </ul>
+        <a href="#" class="btn-pricing">Prova Gratis per 14 Giorni</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq">
+    <div class="section-header fade-in">
+      <h2 class="section-title">Domande <span class="gradient-text">Frequenti</span></h2>
+    </div>
+    <div class="faq-list">
+      <details class="faq-item fade-in" style="--delay:0s">
+        <summary>Posso provare VelocityAI prima di acquistare?</summary>
+        <p>Tutti i piani includono 14 giorni di prova gratuita senza necessità di inserire la carta di credito. Puoi esplorare tutte le funzionalità senza vincoli.</p>
+      </details>
+      <details class="faq-item fade-in" style="--delay:0.1s">
+        <summary>I miei dati sono al sicuro?</summary>
+        <p>La sicurezza è la nostra priorità. Utilizziamo crittografia AES-256, siamo conformi al GDPR e abbiamo ottenuto la certificazione SOC 2 Type II.</p>
+      </details>
+      <details class="faq-item fade-in" style="--delay:0.2s">
+        <summary>Posso cambiare piano in qualsiasi momento?</summary>
+        <p>Puoi effettuare upgrade o downgrade del piano in qualsiasi momento. Le modifiche si applicano immediatamente e il prezzo viene calcolato pro-rata.</p>
+      </details>
+      <details class="faq-item fade-in" style="--delay:0.3s">
+        <summary>Offrite assistenza per la configurazione?</summary>
+        <p>Tutti i piani Professional ed Enterprise includono assistenza dedicata alla configurazione. Per il piano Starter, offriamo documentazione dettagliata e video tutorial.</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="final-cta fade-in">
+    <div class="final-cta-inner">
+      <div class="cta-mesh"></div>
+      <h2>Pronto a <span class="gradient-text">Trasformare</span> il Tuo Business?</h2>
+      <p>Unisciti a oltre 2.400 team che hanno gi&agrave; automatizzato i loro processi con VelocityAI.</p>
+      <a href="#" class="btn-primary">Inizia la Prova Gratuita <span class="btn-shine"></span></a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <h3 class="gradient-text">VelocityAI</h3>
+        <p>Automazione intelligente per il tuo business.</p>
+      </div>
+      <div class="footer-cols">
+        <div>
+          <h4>Prodotto</h4>
+          <a href="#">Funzionalità</a>
+          <a href="#">Prezzi</a>
+          <a href="#">Integrazioni</a>
+          <a href="#">API</a>
+        </div>
+        <div>
+          <h4>Azienda</h4>
+          <a href="#">Chi Siamo</a>
+          <a href="#">Blog</a>
+          <a href="#">Lavora con Noi</a>
+        </div>
+        <div>
+          <h4>Supporto</h4>
+          <a href="#">Documentazione</a>
+          <a href="#">Contatti</a>
+          <a href="#">Status</a>
+        </div>
+      </div>
+    </div>
+    <p class="footer-copy">&copy; 2026 VelocityAI. Tutti i diritti riservati. &mdash; Demo template di Marco Munich</p>
+  </footer>
+
+  <script>
+    // Scroll progress bar
+    window.addEventListener('scroll', () => {
+      const scrolled = window.scrollY;
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = (scrolled / max) * 100;
+      document.getElementById('scrollProgress').style.width = progress + '%';
+
+      // Show/hide floating CTA
+      const cta = document.getElementById('floatingCta');
+      if (scrolled > 600) {
+        cta.classList.add('show');
+      } else {
+        cta.classList.remove('show');
+      }
+    });
+
+    // Typing effect
+    const phrases = [
+      'Automatizza il tuo business',
+      'Riduci i costi operativi',
+      'Scala senza limiti',
+      'Potenzia il tuo team',
+    ];
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    const typingEl = document.getElementById('typingText');
+
+    function typeEffect() {
+      const current = phrases[phraseIndex];
+      if (isDeleting) {
+        typingEl.textContent = current.substring(0, charIndex - 1);
+        charIndex--;
+      } else {
+        typingEl.textContent = current.substring(0, charIndex + 1);
+        charIndex++;
+      }
+      let delay = isDeleting ? 40 : 80;
+      if (!isDeleting && charIndex === current.length) {
+        delay = 2000;
+        isDeleting = true;
+      } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        phraseIndex = (phraseIndex + 1) % phrases.length;
+        delay = 500;
+      }
+      setTimeout(typeEffect, delay);
+    }
+    typeEffect();
+
+    // Fade-in observer
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Animated counters
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.querySelectorAll('.stat-number').forEach(counter => {
+            const target = parseInt(counter.dataset.target);
+            const duration = 2000;
+            const start = performance.now();
+            const animate = (now) => {
+              const p = Math.min((now - start) / duration, 1);
+              const eased = 1 - Math.pow(1 - p, 3);
+              counter.textContent = Math.floor(target * eased);
+              if (p < 1) requestAnimationFrame(animate);
+              else counter.textContent = target;
+            };
+            requestAnimationFrame(animate);
+          });
+          counterObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    document.querySelectorAll('.stats-section').forEach(el => counterObserver.observe(el));
+  </script>
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #050505;
+      color: #e0e0e0;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #050505; }
+    ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #22c55e, #3b82f6); border-radius: 4px; }
+
+    /* Noise */
+    .noise {
+      position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: 0.02;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #22c55e, #3b82f6);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+
+    .fade-in {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
+      transition-delay: var(--delay, 0s);
+    }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* ========== SCROLL PROGRESS ========== */
+    .scroll-progress {
+      position: fixed; top: 0; left: 0; height: 3px; width: 0;
+      background: linear-gradient(90deg, #22c55e, #3b82f6);
+      z-index: 9999; transition: width 0.1s linear;
+    }
+
+    /* ========== BACK BUTTON ========== */
+    .back-btn {
+      position: fixed; top: 24px; left: 24px; z-index: 100;
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 20px;
+      background: rgba(5,5,5,0.7);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(34,197,94,0.15);
+      border-radius: 50px;
+      color: #22c55e;
+      text-decoration: none;
+      font-size: 0.85rem; font-weight: 500;
+      transition: all 0.3s ease;
+    }
+    .back-btn:hover {
+      background: rgba(34,197,94,0.08);
+      border-color: rgba(34,197,94,0.4);
+      box-shadow: 0 0 20px rgba(34,197,94,0.1);
+    }
+    .back-arrow { transition: transform 0.3s ease; }
+    .back-btn:hover .back-arrow { transform: translateX(-3px); }
+
+    /* ========== FLOATING CTA ========== */
+    .floating-cta {
+      position: fixed; bottom: 24px; right: 24px; z-index: 100;
+      padding: 14px 28px;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: #050505;
+      text-decoration: none;
+      font-size: 0.85rem; font-weight: 700;
+      border-radius: 50px;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+      box-shadow: 0 4px 20px rgba(34,197,94,0.3);
+    }
+    .floating-cta.show { transform: translateY(0); opacity: 1; }
+    .floating-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(34,197,94,0.4);
+    }
+
+    /* ========== HERO ========== */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      padding: 120px 24px 100px;
+      overflow: hidden;
+    }
+    .mesh-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 50%, rgba(34,197,94,0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(59,130,246,0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 80%, rgba(34,197,94,0.05) 0%, transparent 50%);
+      animation: meshMove 20s ease-in-out infinite;
+    }
+    @keyframes meshMove {
+      0%, 100% { background-position: 0% 0%, 100% 0%, 50% 100%; }
+      33% { background-position: 30% 20%, 70% 30%, 40% 80%; }
+      66% { background-position: 10% 40%, 90% 10%, 60% 90%; }
+    }
+
+    .hero-content { position: relative; z-index: 2; text-align: center; max-width: 750px; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 20px;
+      background: rgba(34,197,94,0.08);
+      border: 1px solid rgba(34,197,94,0.2);
+      border-radius: 50px;
+      font-size: 0.8rem; color: #22c55e;
+      margin-bottom: 32px;
+    }
+    .badge-dot {
+      width: 8px; height: 8px;
+      background: #22c55e; border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(34,197,94,0.4); }
+      50% { box-shadow: 0 0 0 8px rgba(34,197,94,0); }
+    }
+
+    .hero-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(2.2rem, 5.5vw, 4rem);
+      line-height: 1.15;
+      font-weight: 700;
+      min-height: 1.3em;
+    }
+    .hero-title-static { margin-bottom: 24px; }
+    .cursor {
+      display: inline-block;
+      color: #22c55e;
+      animation: blink 1s step-end infinite;
+      font-weight: 300;
+    }
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+
+    .hero-sub {
+      font-size: 1.05rem; font-weight: 300;
+      color: rgba(224,224,224,0.6);
+      max-width: 560px; margin: 0 auto 40px;
+      line-height: 1.8;
+    }
+    .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+    .btn-primary {
+      position: relative; display: inline-block;
+      padding: 16px 36px;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: #050505;
+      text-decoration: none; font-size: 0.9rem; font-weight: 700;
+      border-radius: 50px; border: none; cursor: pointer;
+      overflow: hidden; transition: all 0.3s ease;
+      font-family: 'Inter', sans-serif;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(34,197,94,0.3);
+    }
+    .btn-shine {
+      position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.6s ease;
+    }
+    .btn-primary:hover .btn-shine { left: 100%; }
+
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 16px 36px;
+      background: transparent; color: #e0e0e0;
+      text-decoration: none; font-size: 0.9rem; font-weight: 500;
+      border-radius: 50px;
+      border: 1px solid rgba(255,255,255,0.15);
+      transition: all 0.3s ease;
+    }
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.05);
+      border-color: rgba(255,255,255,0.3);
+    }
+
+    /* ========== MARQUEE ========== */
+    .marquee-section {
+      padding: 48px 24px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .marquee-label {
+      text-align: center; font-size: 0.75rem;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: rgba(224,224,224,0.3); margin-bottom: 24px;
+    }
+    .marquee-wrapper { overflow: hidden; }
+    .marquee-track {
+      display: flex; gap: 60px;
+      white-space: nowrap;
+      animation: marqueeScroll 30s linear infinite;
+    }
+    .marquee-logo {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.1rem; font-weight: 700;
+      color: rgba(224,224,224,0.15);
+      letter-spacing: 3px; text-transform: uppercase;
+      flex-shrink: 0;
+    }
+    @keyframes marqueeScroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ========== FEATURES ========== */
+    .features { max-width: 1100px; margin: 0 auto; padding: 100px 24px; }
+    .section-header { text-align: center; margin-bottom: 60px; }
+    .section-tag {
+      font-size: 0.8rem; letter-spacing: 4px; text-transform: uppercase;
+      color: #22c55e; margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 700; margin-bottom: 12px;
+    }
+    .section-desc { color: rgba(224,224,224,0.4); max-width: 480px; margin: 0 auto; }
+
+    .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .feature-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 20px;
+      padding: 32px;
+      transition: all 0.4s ease;
+    }
+    .feature-card:hover {
+      border-color: rgba(34,197,94,0.2);
+      transform: perspective(1000px) rotateX(2deg) translateY(-4px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    .feature-icon {
+      width: 48px; height: 48px;
+      background: rgba(34,197,94,0.08);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      color: #22c55e;
+      margin-bottom: 20px;
+      transition: all 0.3s ease;
+    }
+    .feature-card:hover .feature-icon {
+      background: rgba(34,197,94,0.15);
+      box-shadow: 0 0 25px rgba(34,197,94,0.15);
+    }
+    .feature-card h3 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.1rem; font-weight: 600; margin-bottom: 12px;
+    }
+    .feature-card p { font-size: 0.9rem; color: rgba(224,224,224,0.45); line-height: 1.7; }
+
+    /* ========== STATS ========== */
+    .stats-section {
+      max-width: 1100px; margin: 0 auto; padding: 0 24px 100px;
+    }
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+      background: rgba(255,255,255,0.02);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 20px;
+      padding: 48px 32px;
+      text-align: center;
+    }
+    .stat-number {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.8rem; font-weight: 800;
+      background: linear-gradient(135deg, #22c55e, #3b82f6);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .stat-suffix {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2rem; font-weight: 700;
+      background: linear-gradient(135deg, #22c55e, #3b82f6);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .stat-label {
+      display: block; font-size: 0.75rem; letter-spacing: 1px;
+      text-transform: uppercase; color: rgba(224,224,224,0.35); margin-top: 4px;
+    }
+
+    /* ========== PRICING ========== */
+    .pricing { max-width: 1100px; margin: 0 auto; padding: 0 24px 100px; }
+    .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .pricing-card {
+      position: relative;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 24px;
+      padding: 40px 32px;
+      text-align: center;
+      transition: all 0.4s ease;
+    }
+    .pricing-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    .pricing-featured {
+      border-color: rgba(34,197,94,0.3);
+      background: linear-gradient(135deg, rgba(34,197,94,0.06), rgba(59,130,246,0.04));
+    }
+    .pricing-featured:hover {
+      box-shadow: 0 20px 60px rgba(34,197,94,0.1);
+    }
+    .pricing-popular {
+      position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+      padding: 6px 20px;
+      background: linear-gradient(135deg, #22c55e, #3b82f6);
+      color: #050505; font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 1px; text-transform: uppercase;
+      border-radius: 50px; white-space: nowrap;
+    }
+    .pricing-card h3 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.2rem; font-weight: 600; margin-bottom: 16px;
+    }
+    .pricing-amount { margin-bottom: 28px; }
+    .price-currency { font-size: 1.2rem; color: rgba(224,224,224,0.5); vertical-align: top; }
+    .price-value {
+      font-family: 'Outfit', sans-serif;
+      font-size: 3.5rem; font-weight: 800;
+    }
+    .price-period { font-size: 0.85rem; color: rgba(224,224,224,0.4); }
+    .pricing-features {
+      list-style: none; text-align: left; margin-bottom: 32px;
+    }
+    .pricing-features li {
+      padding: 10px 0; font-size: 0.9rem;
+      color: rgba(224,224,224,0.55);
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .pricing-features li::before {
+      content: '\2713'; margin-right: 10px; color: #22c55e; font-weight: 700;
+    }
+    .btn-pricing {
+      display: block; padding: 14px 24px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: #e0e0e0;
+      text-decoration: none; font-size: 0.85rem; font-weight: 600;
+      border-radius: 50px;
+      transition: all 0.3s ease;
+    }
+    .btn-pricing:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.2);
+    }
+    .btn-pricing-primary {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      border-color: transparent;
+      color: #050505;
+    }
+    .btn-pricing-primary:hover {
+      box-shadow: 0 4px 20px rgba(34,197,94,0.3);
+    }
+
+    /* ========== FAQ ========== */
+    .faq { max-width: 700px; margin: 0 auto; padding: 0 24px 100px; }
+    .faq-list { display: flex; flex-direction: column; gap: 12px; }
+    .faq-item {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: border-color 0.3s ease;
+    }
+    .faq-item[open] { border-color: rgba(34,197,94,0.2); }
+    .faq-item summary {
+      padding: 20px 24px;
+      cursor: pointer;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1rem; font-weight: 600;
+      list-style: none;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary::after {
+      content: '+'; font-size: 1.3rem; color: #22c55e;
+      transition: transform 0.3s ease;
+    }
+    .faq-item[open] summary::after { content: '-'; }
+    .faq-item p {
+      padding: 0 24px 20px;
+      font-size: 0.9rem; color: rgba(224,224,224,0.5);
+      line-height: 1.7;
+    }
+
+    /* ========== FINAL CTA ========== */
+    .final-cta { max-width: 900px; margin: 0 auto; padding: 0 24px 100px; }
+    .final-cta-inner {
+      position: relative;
+      background: rgba(34,197,94,0.04);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(34,197,94,0.12);
+      border-radius: 28px;
+      padding: 80px 40px;
+      text-align: center;
+      overflow: hidden;
+    }
+    .cta-mesh {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 30% 50%, rgba(34,197,94,0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 70% 50%, rgba(59,130,246,0.06) 0%, transparent 50%);
+    }
+    .final-cta-inner h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+      font-weight: 700; margin-bottom: 16px;
+      position: relative;
+    }
+    .final-cta-inner p {
+      color: rgba(224,224,224,0.5);
+      margin-bottom: 32px; position: relative;
+    }
+
+    /* ========== FOOTER ========== */
+    .footer {
+      border-top: 1px solid rgba(255,255,255,0.05);
+      padding: 60px 24px 24px;
+      max-width: 1100px; margin: 0 auto;
+    }
+    .footer-inner {
+      display: grid; grid-template-columns: 1fr 2fr;
+      gap: 40px; margin-bottom: 40px;
+    }
+    .footer-brand h3 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.6rem; font-weight: 700;
+    }
+    .footer-brand p { font-size: 0.85rem; color: rgba(224,224,224,0.35); margin-top: 4px; }
+    .footer-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .footer-cols h4 {
+      font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase;
+      color: rgba(224,224,224,0.5); margin-bottom: 12px;
+    }
+    .footer-cols a {
+      display: block; color: rgba(224,224,224,0.35);
+      text-decoration: none; font-size: 0.85rem;
+      margin-bottom: 8px; transition: color 0.3s ease;
+    }
+    .footer-cols a:hover { color: #22c55e; }
+    .footer-copy {
+      text-align: center; font-size: 0.7rem; color: rgba(224,224,224,0.2);
+      border-top: 1px solid rgba(255,255,255,0.04);
+      padding-top: 20px;
+    }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 900px) {
+      .feature-grid { grid-template-columns: repeat(2, 1fr); }
+      .pricing-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-inner { grid-template-columns: 1fr; }
+      .footer-cols { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .feature-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: 1fr; }
+      .hero { flex-direction: column; min-height: auto; padding: 100px 20px 60px; }
+      .hero-title { font-size: 1.6rem; }
+      .hero-content { max-width: 100%; }
+      .hero-buttons { flex-direction: column; align-items: center; }
+      .back-btn { font-size: 0.75rem; padding: 8px 14px; }
+      .final-cta-inner { padding: 48px 24px; }
+      .footer-cols { grid-template-columns: 1fr; }
+      .floating-cta { bottom: 16px; right: 16px; padding: 10px 20px; font-size: 0.8rem; }
+    }
+  </style>
+</body>
+</html>

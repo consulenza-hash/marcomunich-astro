@@ -1,0 +1,840 @@
+---
+export const prerender = true;
+---
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Punto di Vista — Cultura, Tecnologia, Storie</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,400&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <!-- Noise overlay -->
+  <div class="noise"></div>
+
+  <!-- Back button -->
+  <a href="/dev/portfolio" class="back-btn">
+    <span class="back-arrow">&larr;</span> Torna al Portfolio
+  </a>
+
+  <!-- Breaking news ticker -->
+  <div class="ticker">
+    <div class="ticker-label">ULTIME NOTIZIE</div>
+    <div class="ticker-track">
+      <div class="ticker-content">
+        <span>Biblioteche pubbliche: il ritorno come spazi di comunit&agrave;</span>
+        <span class="ticker-dot"></span>
+        <span>Cinque borghi italiani dove il tempo si &egrave; fermato</span>
+        <span class="ticker-dot"></span>
+        <span>Intervista: lo chef che ha lasciato la stella Michelin per tornare al paese</span>
+        <span class="ticker-dot"></span>
+        <span>Sei mesi nell'Artico: il diario di una ricercatrice italiana</span>
+        <span class="ticker-dot"></span>
+        <span>Biblioteche pubbliche: il ritorno come spazi di comunit&agrave;</span>
+        <span class="ticker-dot"></span>
+        <span>Cinque borghi italiani dove il tempo si &egrave; fermato</span>
+        <span class="ticker-dot"></span>
+        <span>Intervista: lo chef che ha lasciato la stella Michelin per tornare al paese</span>
+        <span class="ticker-dot"></span>
+        <span>Sei mesi nell'Artico: il diario di una ricercatrice italiana</span>
+        <span class="ticker-dot"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <header class="hero fade-in">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <div class="hero-category">Longform</div>
+        <h1 class="hero-title">Il ritorno delle biblioteche pubbliche come spazi di comunit&agrave;</h1>
+        <p class="hero-excerpt">
+          Da Milano a Palermo, le biblioteche stanno diventando molto pi&ugrave; di depositi di libri:
+          coworking, laboratori digitali, luoghi di incontro tra generazioni. Un viaggio nel cambiamento silenzioso
+          che sta ridefinendo lo spazio pubblico italiano.
+        </p>
+        <div class="hero-meta">
+          <span class="hero-author">di <strong>Chiara Ferrante</strong></span>
+          <span class="hero-date">18 Marzo 2026</span>
+          <span class="hero-read">14 min lettura</span>
+        </div>
+      </div>
+      <div class="hero-image">
+        <img src="/images/portfolio/blog-hero.jpg" alt="Foto di copertina" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+    </div>
+  </header>
+
+  <!-- Categories -->
+  <nav class="categories fade-in">
+    <div class="categories-inner">
+      <a href="#" class="cat-pill active">Tutti</a>
+      <a href="#" class="cat-pill">Tecnologia</a>
+      <a href="#" class="cat-pill">Cultura</a>
+      <a href="#" class="cat-pill">Economia</a>
+      <a href="#" class="cat-pill">Scienza</a>
+      <a href="#" class="cat-pill">Opinioni</a>
+      <a href="#" class="cat-pill">Longform</a>
+    </div>
+  </nav>
+
+  <!-- Main content -->
+  <main class="content">
+    <div class="content-inner">
+      <!-- Articles grid -->
+      <div class="articles">
+        <article class="card card-featured fade-in">
+          <div class="card-image">
+            <img src="/images/portfolio/blog-typing.jpg" alt="Borghi italiani" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;" />
+            <div class="card-category-badge">Cultura</div>
+          </div>
+          <div class="card-body">
+            <h2 class="card-title">Cinque borghi italiani dove il tempo si &egrave; fermato</h2>
+            <p class="card-excerpt">Da Civita di Bagnoregio a Castelmezzano, un viaggio tra i borghi dove la modernit&agrave; non &egrave; ancora arrivata &mdash; e forse non dovrebbe. Storie di resistenza, bellezza e comunit&agrave; che scelgono la lentezza.</p>
+            <div class="card-footer">
+              <span class="card-author">Alessandra Ferraro</span>
+              <span class="card-time">11 min</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="card fade-in">
+          <div class="card-image">
+            <img src="/images/portfolio/blog-coffee.jpg" alt="Intelligenza artificiale e giornalismo" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;" />
+          </div>
+          <div class="card-body">
+            <div class="card-category-tag">Tecnologia</div>
+            <h3 class="card-title">Come l'intelligenza artificiale sta cambiando il giornalismo locale</h3>
+            <p class="card-excerpt">Redazioni con due giornalisti usano l'AI per coprire consigli comunali, cronaca e sport. Opportunit&agrave; reale o rischio per la professione?</p>
+            <div class="card-footer">
+              <span class="card-author">Luca Manzoni</span>
+              <span class="card-time">8 min</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="card fade-in">
+          <div class="card-image">
+            <img src="/images/portfolio/blog-notebook.jpg" alt="Chef intervista" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;" />
+          </div>
+          <div class="card-body">
+            <div class="card-category-tag">Cultura</div>
+            <h3 class="card-title">Intervista: lo chef che ha lasciato la stella Michelin per tornare al paese</h3>
+            <p class="card-excerpt">Matteo Ferraris aveva tutto: una stella, il ristorante a Milano, la lista d'attesa. Poi ha scelto di tornare a cucinare nel borgo dove &egrave; nato. Ecco perch&eacute;.</p>
+            <div class="card-footer">
+              <span class="card-author">Giulia Moretti</span>
+              <span class="card-time">9 min</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="card fade-in">
+          <div class="card-image">
+            <img src="/images/portfolio/blog-books.jpg" alt="Ricercatrice artica" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;" />
+          </div>
+          <div class="card-body">
+            <div class="card-category-tag">Scienza</div>
+            <h3 class="card-title">Sei mesi nell'Artico: diario di una ricercatrice italiana</h3>
+            <p class="card-excerpt">Temperatura media: -32&deg;C. Sole assente per 67 giorni. Elena Ferraris racconta la sua missione scientifica alle Svalbard, tra ghiacci che si ritirano e scoperte inattese.</p>
+            <div class="card-footer">
+              <span class="card-author">Elena Ferraris</span>
+              <span class="card-time">18 min</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="card fade-in">
+          <div class="card-image">
+            <img src="/images/portfolio/blog-meeting.jpg" alt="Software libero" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;" />
+          </div>
+          <div class="card-body">
+            <div class="card-category-tag">Tecnologia</div>
+            <h3 class="card-title">Il codice sorgente della democrazia: software libero e partecipazione</h3>
+            <p class="card-excerpt">Comuni che pubblicano il codice delle piattaforme di voto, regioni che adottano Linux. Il software libero entra nelle istituzioni italiane.</p>
+            <div class="card-footer">
+              <span class="card-author">Roberto Ferretti</span>
+              <span class="card-time">7 min</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Pull Quote -->
+        <blockquote class="pull-quote fade-in">
+          <div class="pull-quote-mark">&ldquo;</div>
+          <p>Non servono grandi budget per fare buon giornalismo. Servono curiosit&agrave;, rigore e il coraggio di raccontare anche le storie scomode.</p>
+          <cite>&mdash; Maria Grazia Ferrante, direttrice editoriale di Punto di Vista</cite>
+        </blockquote>
+
+        <article class="card fade-in">
+          <div class="card-image">
+            <img src="/images/portfolio/blog-landscape.jpg" alt="Biblioteche come comunit&agrave;" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;" />
+          </div>
+          <div class="card-body">
+            <div class="card-category-tag">Longform</div>
+            <h3 class="card-title">Il ritorno delle biblioteche pubbliche come spazi di comunit&agrave;</h3>
+            <p class="card-excerpt">Coworking, fablab, sale prove musicali: le biblioteche italiane si reinventano. Un'inchiesta in cinque citt&agrave; su come lo spazio pubblico sta cambiando volto.</p>
+            <div class="card-footer">
+              <span class="card-author">Chiara Ferrante</span>
+              <span class="card-time">14 min</span>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="sidebar-sticky">
+          <div class="sidebar-section glass-card fade-in">
+            <h4 class="sidebar-title">Più Letti</h4>
+            <ol class="most-read">
+              <li>
+                <span class="most-read-num">01</span>
+                <a href="#">L'algoritmo che prevede le crisi economiche con 6 mesi di anticipo</a>
+              </li>
+              <li>
+                <span class="most-read-num">02</span>
+                <a href="#">Vivere senza smartphone: l'esperimento che ha cambiato la mia vita</a>
+              </li>
+              <li>
+                <span class="most-read-num">03</span>
+                <a href="#">Roma 2030: il piano urbanistico che divide gli esperti</a>
+              </li>
+              <li>
+                <span class="most-read-num">04</span>
+                <a href="#">Perché i giovani italiani tornano dai borghi</a>
+              </li>
+              <li>
+                <span class="most-read-num">05</span>
+                <a href="#">L'ultimo treno per la transizione energetica</a>
+              </li>
+            </ol>
+          </div>
+
+          <div class="sidebar-section glass-card fade-in">
+            <h4 class="sidebar-title">Newsletter</h4>
+            <p class="sidebar-text">Ogni venerd&igrave; nella tua casella. Niente spam, solo le storie che contano. 4.200 lettori.</p>
+            <form class="newsletter-form">
+              <input type="email" placeholder="La tua email" class="newsletter-input" />
+              <button type="button" class="newsletter-btn">Iscriviti</button>
+            </form>
+          </div>
+
+          <div class="sidebar-section glass-card fade-in">
+            <h4 class="sidebar-title">Tag Popolari</h4>
+            <div class="tag-cloud">
+              <a href="#" class="tag">Intelligenza Artificiale</a>
+              <a href="#" class="tag">Clima</a>
+              <a href="#" class="tag">Startup</a>
+              <a href="#" class="tag">Europa</a>
+              <a href="#" class="tag">Design</a>
+              <a href="#" class="tag">Innovazione</a>
+              <a href="#" class="tag">Sostenibilità</a>
+              <a href="#" class="tag">Cultura</a>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <!-- Floating decorations -->
+  <div class="floating-circle c1"></div>
+  <div class="floating-circle c2"></div>
+  <div class="floating-circle c3"></div>
+
+  <footer class="footer fade-in">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <h3>Punto di Vista</h3>
+        <p>Cultura, tecnologia e storie dal mondo reale.</p>
+      </div>
+      <div class="footer-links">
+        <a href="#">Redazione</a>
+        <a href="#">Chi siamo</a>
+        <a href="#">Pubblicit&agrave;</a>
+        <a href="#">Contatti</a>
+        <a href="#">Privacy</a>
+      </div>
+      <div class="footer-copy">&copy; 2026 Punto di Vista &mdash; Testata registrata al Tribunale di Milano n. 245/2020 &mdash; P.IVA 09876543210 &mdash; redazione@puntodivistamagazine.it</div>
+    </div>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const delay = el.dataset.delay || 0;
+          setTimeout(() => el.classList.add('visible'), Number(delay));
+          observer.unobserve(el);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach((el, i) => {
+      el.dataset.delay = (i % 5) * 100;
+      observer.observe(el);
+    });
+  </script>
+
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Source Sans 3', 'Segoe UI', sans-serif;
+      background: #ffffff;
+      color: #1a1a1a;
+      line-height: 1.7;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #f5f5f5; }
+    ::-webkit-scrollbar-thumb { background: #dc2626; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #b91c1c; }
+
+    /* Noise overlay */
+    .noise {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 256px 256px;
+    }
+
+    /* Fade-in animation */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Floating circles */
+    .floating-circle {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: -1;
+      opacity: 0.05;
+      background: #dc2626;
+    }
+    .c1 { width: 400px; height: 400px; top: 10%; right: -100px; animation: floatA 20s ease-in-out infinite; }
+    .c2 { width: 250px; height: 250px; bottom: 20%; left: -80px; animation: floatB 25s ease-in-out infinite; }
+    .c3 { width: 150px; height: 150px; top: 60%; right: 10%; animation: floatA 18s ease-in-out infinite reverse; }
+    @keyframes floatA {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(30px, -20px) scale(1.05); }
+      66% { transform: translate(-20px, 20px) scale(0.95); }
+    }
+    @keyframes floatB {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(40px, -30px); }
+    }
+
+    /* ===== BACK BUTTON ===== */
+    .back-btn {
+      position: fixed;
+      top: 58px;
+      left: 20px;
+      z-index: 1000;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(220,38,38,0.2);
+      border-radius: 50px;
+      color: #1a1a1a;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    }
+    .back-btn:hover {
+      background: #dc2626;
+      color: #fff;
+      border-color: #dc2626;
+      transform: translateX(-4px);
+      box-shadow: 0 4px 25px rgba(220,38,38,0.25);
+    }
+    .back-arrow { font-size: 1.1rem; transition: transform 0.3s ease; }
+    .back-btn:hover .back-arrow { transform: translateX(-3px); }
+
+    /* ===== TICKER ===== */
+    .ticker {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      height: 40px;
+      background: #dc2626;
+      color: #fff;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      overflow: hidden;
+    }
+    .ticker-label {
+      flex-shrink: 0;
+      padding: 0 20px;
+      background: #1a1a1a;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+    }
+    .ticker-track { flex: 1; overflow: hidden; }
+    .ticker-content {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      white-space: nowrap;
+      animation: ticker 40s linear infinite;
+    }
+    .ticker-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.5);
+      flex-shrink: 0;
+    }
+    @keyframes ticker {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ===== HERO ===== */
+    .hero { margin-top: 40px; padding: 80px 5vw 60px; }
+    .hero-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .hero-category {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #dc2626;
+      border: 1.5px solid #dc2626;
+      padding: 4px 14px;
+      border-radius: 3px;
+      margin-bottom: 24px;
+    }
+    .hero-title {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 900;
+      line-height: 1.15;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #0a0a0a 0%, #dc2626 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-excerpt {
+      font-size: 1.15rem;
+      color: #555;
+      line-height: 1.8;
+      margin-bottom: 24px;
+    }
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      font-size: 0.85rem;
+      color: #888;
+    }
+    .hero-meta strong { color: #1a1a1a; }
+    .hero-image {
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.08);
+    }
+    .hero-image img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      display: block;
+    }
+    .hero-image-lines {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      opacity: 0.15;
+    }
+    .hero-image-lines div {
+      width: 60%; height: 3px;
+      background: #aaa;
+      border-radius: 2px;
+    }
+
+    /* ===== CATEGORIES ===== */
+    .categories { padding: 0 5vw; margin-bottom: 50px; }
+    .categories-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 20px;
+    }
+    .cat-pill {
+      padding: 8px 22px;
+      border-radius: 50px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-decoration: none;
+      color: #666;
+      background: #f7f7f7;
+      border: 1.5px solid transparent;
+      transition: all 0.3s ease;
+    }
+    .cat-pill:hover, .cat-pill.active {
+      background: linear-gradient(135deg, #dc2626, #ef4444);
+      color: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(220,38,38,0.3);
+    }
+
+    /* ===== MAIN CONTENT ===== */
+    .content { padding: 0 5vw 80px; }
+    .content-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 50px;
+      align-items: start;
+    }
+    .articles {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    /* ===== CARDS ===== */
+    .card {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 24px;
+      padding: 24px;
+      border-radius: 16px;
+      background: #fff;
+      border: 1px solid #f0f0f0;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+    }
+    .card:hover {
+      border-color: rgba(220,38,38,0.15);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.06);
+      transform: translateY(-4px);
+    }
+    .card-featured {
+      grid-template-columns: 1fr;
+      background: linear-gradient(135deg, #fff 0%, #fef2f2 100%);
+      border-color: rgba(220,38,38,0.1);
+    }
+    .card-featured .card-image img { aspect-ratio: 16/8; }
+    .card-image { overflow: hidden; border-radius: 10px; }
+    .card-image img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      display: block;
+      border-radius: 10px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .card:hover .card-image img { transform: scale(1.08); }
+    .card-category-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: #dc2626;
+      color: #fff;
+      padding: 4px 12px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .card-body { display: flex; flex-direction: column; justify-content: center; }
+    .card-category-tag {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #dc2626;
+      margin-bottom: 8px;
+    }
+    .card-title {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      line-height: 1.4;
+      color: #111;
+      margin-bottom: 10px;
+      transition: color 0.3s ease;
+    }
+    .card:hover .card-title { color: #dc2626; }
+    .card-featured .card-title { font-size: 1.4rem; }
+    .card-excerpt {
+      font-size: 0.9rem;
+      color: #666;
+      line-height: 1.7;
+      margin-bottom: 14px;
+    }
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      color: #999;
+    }
+    .card-author { font-weight: 600; color: #555; }
+
+    /* ===== PULL QUOTE ===== */
+    .pull-quote {
+      position: relative;
+      padding: 50px 40px 40px 80px;
+      margin: 20px 0;
+      border-left: 4px solid #dc2626;
+      background: linear-gradient(135deg, #fef2f2, #fff);
+      border-radius: 0 16px 16px 0;
+    }
+    .pull-quote-mark {
+      position: absolute;
+      top: 10px;
+      left: 20px;
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 5rem;
+      color: #dc2626;
+      opacity: 0.2;
+      line-height: 1;
+    }
+    .pull-quote p {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 1.2rem;
+      font-style: italic;
+      color: #333;
+      line-height: 1.7;
+      margin-bottom: 12px;
+    }
+    .pull-quote cite {
+      font-style: normal;
+      font-size: 0.85rem;
+      color: #dc2626;
+      font-weight: 600;
+    }
+
+    /* ===== SIDEBAR ===== */
+    .sidebar-sticky {
+      position: sticky;
+      top: 60px;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+    .glass-card {
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(220,38,38,0.08);
+      border-radius: 16px;
+      padding: 28px;
+      transition: all 0.3s ease;
+    }
+    .glass-card:hover {
+      border-color: rgba(220,38,38,0.2);
+      box-shadow: 0 8px 30px rgba(220,38,38,0.06);
+    }
+    .sidebar-title {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #dc2626;
+      display: inline-block;
+    }
+    .most-read {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .most-read li {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .most-read-num {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: #eee;
+      flex-shrink: 0;
+      line-height: 1;
+      transition: color 0.3s ease;
+    }
+    .most-read li:hover .most-read-num { color: #dc2626; }
+    .most-read a {
+      font-size: 0.88rem;
+      color: #333;
+      text-decoration: none;
+      line-height: 1.5;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+    .most-read a:hover { color: #dc2626; }
+    .sidebar-text {
+      font-size: 0.88rem;
+      color: #666;
+      margin-bottom: 16px;
+      line-height: 1.6;
+    }
+    .newsletter-form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .newsletter-input {
+      padding: 12px 16px;
+      border: 1.5px solid #e5e5e5;
+      border-radius: 10px;
+      font-size: 0.88rem;
+      font-family: inherit;
+      transition: border-color 0.3s ease;
+      outline: none;
+    }
+    .newsletter-input:focus { border-color: #dc2626; }
+    .newsletter-btn {
+      padding: 12px;
+      background: #dc2626;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .newsletter-btn:hover {
+      background: #b91c1c;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(220,38,38,0.3);
+    }
+    .tag-cloud { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag {
+      padding: 6px 14px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #666;
+      background: #f5f5f5;
+      border-radius: 50px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    .tag:hover {
+      background: linear-gradient(135deg, #dc2626, #ef4444);
+      color: #fff;
+      transform: scale(1.05);
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      background: #0a0a0a;
+      color: #fff;
+      padding: 60px 5vw;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .footer-brand h3 {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 1.5rem;
+      margin-bottom: 8px;
+    }
+    .footer-brand p {
+      color: #888;
+      font-size: 0.9rem;
+      margin-bottom: 30px;
+    }
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 30px;
+      margin-bottom: 30px;
+    }
+    .footer-links a {
+      color: #888;
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: color 0.3s;
+    }
+    .footer-links a:hover { color: #dc2626; }
+    .footer-copy {
+      font-size: 0.78rem;
+      color: #555;
+      border-top: 1px solid #222;
+      padding-top: 24px;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
+      .content-inner { grid-template-columns: 1fr; }
+      .sidebar-sticky { position: static; }
+    }
+    @media (max-width: 768px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 30px; }
+      .hero { padding: 60px 5vw 40px; }
+      .card { grid-template-columns: 1fr; }
+      .card-image img { aspect-ratio: 16/9; }
+      .back-btn { top: 48px; left: 12px; padding: 8px 14px; font-size: 0.78rem; }
+      .pull-quote { padding: 40px 24px 30px 40px; }
+      .pull-quote-mark { font-size: 3rem; left: 10px; }
+      .pull-quote p { font-size: 1rem; }
+    }
+    @media (max-width: 480px) {
+      .hero-title { font-size: 1.6rem; }
+      .hero-meta { flex-direction: column; gap: 8px; }
+      .categories-inner { gap: 6px; }
+      .cat-pill { padding: 6px 14px; font-size: 0.75rem; }
+    }
+  </style>
+</body>
+</html>

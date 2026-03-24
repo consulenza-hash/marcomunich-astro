@@ -1,0 +1,487 @@
+---
+export const prerender = true;
+---
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mani Aperte ODV — Insieme per il cambiamento</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <a href="/dev/portfolio" class="back-btn">&larr; Torna al Portfolio</a>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg"><img src="/images/portfolio/np-volunteers.jpg" alt="Volontari al lavoro" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0;" /></div>
+    <div class="hero-content fade-in">
+      <span class="hero-tag">Mani Aperte ODV</span>
+      <h1 class="hero-title">Ogni gesto<br /><span class="gradient-text">conta davvero</span></h1>
+      <p class="hero-desc">Mani Aperte lavora dal 2012 per garantire accesso all'istruzione e all'acqua potabile nelle comunit&agrave; rurali dell'Africa subsahariana. Operiamo in Kenya, Tanzania e Uganda con progetti gestiti da team locali.</p>
+      <div class="hero-stats">
+        <div class="hero-stat fade-in" style="--delay: 0.1s">
+          <span class="hero-num counter" data-target="8450">0</span>
+          <span class="hero-stat-label">Persone aiutate</span>
+        </div>
+        <div class="hero-stat fade-in" style="--delay: 0.2s">
+          <span class="hero-num counter" data-target="14">0</span>
+          <span class="hero-stat-label">Progetti completati</span>
+        </div>
+        <div class="hero-stat fade-in" style="--delay: 0.3s">
+          <span class="hero-num">&euro;<span class="counter" data-target="320000">0</span></span>
+          <span class="hero-stat-label">Fondi raccolti</span>
+        </div>
+      </div>
+    </div>
+    <!-- Floating decorative shapes -->
+    <div class="hero-shape shape-1"></div>
+    <div class="hero-shape shape-2"></div>
+    <div class="hero-shape shape-3"></div>
+  </section>
+
+  <!-- Projects -->
+  <section class="projects">
+    <div class="section-header fade-in">
+      <span class="section-tag">I nostri progetti</span>
+      <h2 class="section-title">Dove il tuo aiuto <span class="gradient-text-warm">fa la differenza</span></h2>
+    </div>
+    <div class="projects-grid">
+      <div class="project-card fade-in" style="--delay: 0s">
+        <div class="project-img">
+          <img src="/images/portfolio/np-children.jpg" alt="Scuola di Kibera" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;" />
+        </div>
+        <div class="project-body">
+          <h3>Scuola di Kibera</h3>
+          <p>Costruzione e avviamento di una scuola primaria nello slum di Kibera, Nairobi. 120 bambini iscritti, 6 insegnanti locali. &euro;45.000 raccolti su &euro;58.000.</p>
+          <div class="progress-wrap">
+            <div class="progress-header">
+              <span>Avanzamento</span>
+              <span class="progress-pct">78%</span>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" style="--target: 78%"></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="project-card fade-in" style="--delay: 0.15s">
+        <div class="project-img">
+          <img src="/images/portfolio/np-garden.jpg" alt="Pozzi per Dodoma" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;" />
+        </div>
+        <div class="project-body">
+          <h3>Pozzi per Dodoma</h3>
+          <p>Perforazione di 8 pozzi con pompe solari nella regione di Dodoma, Tanzania. Acqua potabile per 3.200 persone. &euro;28.000 raccolti su &euro;30.500.</p>
+          <div class="progress-wrap">
+            <div class="progress-header">
+              <span>Avanzamento</span>
+              <span class="progress-pct">92%</span>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" style="--target: 92%"></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="project-card fade-in" style="--delay: 0.3s">
+        <div class="project-img">
+          <img src="/images/portfolio/np-building.jpg" alt="Laboratorio Informatico Nairobi" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;" />
+        </div>
+        <div class="project-body">
+          <h3>Laboratorio Informatico Nairobi</h3>
+          <p>Allestimento di un'aula informatica con 20 postazioni nella periferia di Nairobi. Corsi di coding per giovani 16-25 anni. &euro;15.000 raccolti su &euro;33.000.</p>
+          <div class="progress-wrap">
+            <div class="progress-header">
+              <span>Avanzamento</span>
+              <span class="progress-pct">45%</span>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" style="--target: 45%"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Donate section -->
+  <section class="donate-section">
+    <div class="donate-inner fade-in">
+      <h2 class="section-title light">Dona ora, <span class="gradient-text-warm">cambia una vita</span></h2>
+      <p class="donate-desc">&euro;10 = un kit scolastico completo. &euro;25 = un mese di acqua potabile per una famiglia. &euro;50 = una borsa di studio mensile. &euro;100 = materiale per un laboratorio.</p>
+      <div class="donate-amounts">
+        <button class="donate-btn" data-amount="10">&euro;10</button>
+        <button class="donate-btn featured" data-amount="25">&euro;25</button>
+        <button class="donate-btn" data-amount="50">&euro;50</button>
+        <button class="donate-btn" data-amount="100">&euro;100</button>
+      </div>
+      <button class="cta-btn">Procedi con la donazione &rarr;</button>
+    </div>
+  </section>
+
+  <!-- Events -->
+  <section class="events">
+    <div class="section-header fade-in">
+      <span class="section-tag">Prossimi eventi</span>
+      <h2 class="section-title">Partecipa e <span class="gradient-text-warm">fai la tua parte</span></h2>
+    </div>
+    <div class="events-grid">
+      <div class="event-card fade-in" style="--delay: 0s">
+        <div class="event-img"><img src="/images/portfolio/np-run.jpg" alt="Cena di Beneficenza" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:12px;" /></div>
+        <div class="event-date">
+          <span class="event-day">15</span>
+          <span class="event-month">Apr</span>
+        </div>
+        <div class="event-body">
+          <h3>Cena di Beneficenza</h3>
+          <p>Serata con menu a 4 portate e asta silenziosa. Ricavato destinato al progetto Scuola di Kibera. &euro;50 a persona.</p>
+          <span class="event-location">Villa Contarini, Padova</span>
+        </div>
+      </div>
+      <div class="event-card fade-in" style="--delay: 0.15s">
+        <div class="event-img"><img src="/images/portfolio/np-conference.jpg" alt="Corsa Solidale" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:12px;" /></div>
+        <div class="event-date">
+          <span class="event-day">01</span>
+          <span class="event-month">Mag</span>
+        </div>
+        <div class="event-body">
+          <h3>Corsa Solidale</h3>
+          <p>5 km non competitivi aperti a tutti. Iscrizione &euro;15, con maglietta e medaglia. Fondi per i Pozzi di Dodoma.</p>
+          <span class="event-location">Parco Sempione, Milano</span>
+        </div>
+      </div>
+      <div class="event-card fade-in" style="--delay: 0.3s">
+        <div class="event-date">
+          <span class="event-day">14</span>
+          <span class="event-month">Giu</span>
+        </div>
+        <div class="event-body">
+          <h3>Volontariato sul campo</h3>
+          <p>Due settimane in Kenya per allestire il Laboratorio Informatico di Nairobi. Vitto e alloggio inclusi, viaggio a carico del volontario.</p>
+          <span class="event-location">Nairobi, Kenya</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How to help (SVG icons) -->
+  <section class="help-section">
+    <div class="section-header fade-in">
+      <span class="section-tag">Come puoi aiutare</span>
+      <h2 class="section-title">Tre modi per <span class="gradient-text-warm">fare la differenza</span></h2>
+    </div>
+    <div class="help-grid">
+      <div class="help-card fade-in" style="--delay: 0s">
+        <div class="help-icon">
+          <svg class="draw-svg" viewBox="0 0 64 64" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="32" cy="32" r="28" />
+            <path d="M32 18v14l10 6" />
+          </svg>
+        </div>
+        <h3>Dona il tuo tempo</h3>
+        <p>Diventa volontario e partecipa alle missioni sul campo. Ogni ora conta.</p>
+      </div>
+      <div class="help-card fade-in" style="--delay: 0.15s">
+        <div class="help-icon">
+          <svg class="draw-svg" viewBox="0 0 64 64" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="8" y="20" width="48" height="30" rx="4" />
+            <path d="M8 28h48" />
+            <path d="M16 38h12" />
+          </svg>
+        </div>
+        <h3>Contributo economico</h3>
+        <p>Anche un piccolo importo pu&ograve; cambiare la vita di una famiglia intera.</p>
+      </div>
+      <div class="help-card fade-in" style="--delay: 0.3s">
+        <div class="help-icon">
+          <svg class="draw-svg" viewBox="0 0 64 64" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M32 8C18 8 8 20 8 32s24 24 24 24 24-12 24-24S46 8 32 8z" />
+            <circle cx="32" cy="28" r="8" />
+          </svg>
+        </div>
+        <h3>Diffondi la voce</h3>
+        <p>Condividi la nostra missione sui social e aiutaci a raggiungere pi&ugrave; persone.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Photo collage -->
+  <section class="collage-section">
+    <div class="section-header fade-in">
+      <span class="section-tag">Dal campo</span>
+      <h2 class="section-title">Momenti che <span class="gradient-text-warm">ispirano</span></h2>
+    </div>
+    <div class="collage-grid fade-in">
+      <div class="collage-item"><img src="/images/portfolio/np-teamwork.jpg" alt="Lavoro di squadra" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0;" /><span>Costruzione scuola</span></div>
+      <div class="collage-item tall"><img src="/images/portfolio/np-hands.jpg" alt="Mani che aiutano" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0;" /><span>Distribuzione acqua</span></div>
+      <div class="collage-item"><img src="/images/portfolio/np-group.jpg" alt="Foto di gruppo" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0;" /><span>Clinica mobile</span></div>
+      <div class="collage-item wide"><img src="/images/portfolio/np-donation.jpg" alt="Scatola donazioni" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0;" /><span>I volontari al lavoro</span></div>
+      <div class="collage-item"><img src="/images/portfolio/np-volunteers.jpg" alt="Volontari" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0;" /><span>Sorrisi dei bambini</span></div>
+      <div class="collage-item"><img src="/images/portfolio/np-building.jpg" alt="Costruzione" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0;" /><span>Inaugurazione pozzo</span></div>
+    </div>
+  </section>
+
+  <footer class="footer fade-in">
+    <p>&copy; 2026 Mani Aperte ODV &mdash; C.F. 92012345678 &mdash; Destina il tuo 5x1000: inserisci il nostro codice fiscale nella dichiarazione dei redditi.</p>
+  </footer>
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Open Sans', sans-serif; color: #1c1917; overflow-x: hidden; background: #fffbeb; }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #fef3c7; }
+    ::-webkit-scrollbar-thumb { background: #f59e0b; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #d97706; }
+
+    h1, h2, h3 { font-family: 'Poppins', sans-serif; }
+
+    /* Back button */
+    .back-btn {
+      position: fixed; top: 20px; left: 20px; z-index: 1000;
+      background: rgba(255,255,255,0.8); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(245,158,11,0.3); color: #92400e; padding: 10px 20px; border-radius: 12px;
+      text-decoration: none; font-size: 0.875rem; font-weight: 600; transition: all 0.3s ease;
+    }
+    .back-btn:hover {
+      background: rgba(245,158,11,0.15); transform: translateX(-4px);
+      box-shadow: 0 4px 20px rgba(245,158,11,0.2);
+    }
+
+    /* Gradient text */
+    .gradient-text { background: linear-gradient(135deg, #6366f1, #06b6d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .gradient-text-warm { background: linear-gradient(135deg, #f59e0b, #ef4444); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+    /* Section utils */
+    .section-header { text-align: center; margin-bottom: 48px; }
+    .section-tag {
+      display: inline-block; font-family: 'Poppins', sans-serif;
+      font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em;
+      color: #f59e0b; margin-bottom: 12px;
+    }
+    .section-title { font-size: 2.25rem; font-weight: 700; color: #1c1917; line-height: 1.2; }
+    .section-title.light { color: #fff; }
+
+    /* Fade in */
+    .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; transition-delay: var(--delay, 0s); }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* ===== HERO ===== */
+    .hero {
+      position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      overflow: hidden; padding: 80px 24px;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      z-index: 0;
+    }
+    .hero-bg::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(160deg, rgba(255,251,235,0.85) 0%, rgba(254,243,199,0.8) 30%, rgba(253,230,138,0.7) 70%, rgba(245,158,11,0.75) 100%);
+      z-index: 1;
+    }
+    .hero-content { position: relative; z-index: 2; text-align: center; max-width: 800px; }
+    .hero-tag {
+      display: inline-block; background: rgba(245,158,11,0.15); color: #92400e;
+      padding: 6px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 600;
+      margin-bottom: 24px; font-family: 'Poppins', sans-serif;
+    }
+    .hero-title { font-size: 3.5rem; font-weight: 800; line-height: 1.1; color: #1c1917; margin-bottom: 20px; }
+    .hero-desc { font-size: 1.15rem; color: #57534e; max-width: 600px; margin: 0 auto 48px; line-height: 1.7; }
+    .hero-stats { display: flex; justify-content: center; gap: 48px; flex-wrap: wrap; }
+    .hero-stat { text-align: center; }
+    .hero-num { font-family: 'Poppins', sans-serif; font-size: 2.5rem; font-weight: 800; color: #92400e; display: block; }
+    .hero-stat-label { font-size: 0.85rem; color: #78716c; font-weight: 500; }
+
+    /* Floating shapes */
+    .hero-shape { position: absolute; border-radius: 50%; opacity: 0.15; z-index: 1; }
+    .shape-1 { width: 300px; height: 300px; background: #f59e0b; top: -80px; right: -60px; animation: float1 15s ease-in-out infinite; }
+    .shape-2 { width: 200px; height: 200px; background: #ef4444; bottom: -40px; left: -30px; animation: float2 20s ease-in-out infinite; }
+    .shape-3 { width: 150px; height: 150px; background: #6366f1; top: 30%; left: 10%; animation: float3 18s ease-in-out infinite; }
+    @keyframes float1 { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(-30px, 40px) scale(1.05); } }
+    @keyframes float2 { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(40px, -30px) scale(1.1); } }
+    @keyframes float3 { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(20px, -20px); } }
+
+    /* ===== PROJECTS ===== */
+    .projects { padding: 100px 24px; max-width: 1200px; margin: 0 auto; }
+    .projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+    .project-card {
+      background: #fff; border-radius: 20px; overflow: hidden;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.06); transition: all 0.4s ease;
+      border: 1px solid rgba(245,158,11,0.1);
+    }
+    .project-card:hover { transform: translateY(-8px); box-shadow: 0 20px 60px rgba(245,158,11,0.15); }
+    .project-img {
+      height: 180px; display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .project-img::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to bottom, transparent 60%, rgba(0,0,0,0.1));
+    }
+    .project-body { padding: 24px; }
+    .project-body h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: 8px; color: #1c1917; }
+    .project-body p { font-size: 0.9rem; color: #57534e; line-height: 1.6; margin-bottom: 20px; }
+    .progress-wrap { margin-top: auto; }
+    .progress-header { display: flex; justify-content: space-between; font-size: 0.8rem; color: #78716c; margin-bottom: 8px; }
+    .progress-pct { font-weight: 700; color: #f59e0b; }
+    .progress-bar { height: 8px; background: #fef3c7; border-radius: 4px; overflow: hidden; }
+    .progress-fill {
+      height: 100%; width: 0; background: linear-gradient(90deg, #f59e0b, #ef4444);
+      border-radius: 4px; transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .progress-fill.animate { width: var(--target); }
+
+    /* ===== DONATE ===== */
+    .donate-section {
+      padding: 100px 24px;
+      background: linear-gradient(160deg, #1c1917 0%, #292524 100%);
+      position: relative; overflow: hidden;
+    }
+    .donate-section::before {
+      content: ''; position: absolute; top: -50%; right: -20%;
+      width: 600px; height: 600px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(245,158,11,0.15) 0%, transparent 70%);
+    }
+    .donate-inner { max-width: 700px; margin: 0 auto; text-align: center; position: relative; z-index: 1; }
+    .donate-desc { color: #a8a29e; font-size: 1.05rem; line-height: 1.7; margin: 16px 0 40px; }
+    .donate-amounts { display: flex; justify-content: center; gap: 16px; margin-bottom: 32px; flex-wrap: wrap; }
+    .donate-btn {
+      font-family: 'Poppins', sans-serif; font-size: 1.1rem; font-weight: 600;
+      padding: 16px 32px; border-radius: 14px; border: 2px solid rgba(245,158,11,0.3);
+      background: transparent; color: #fbbf24; cursor: pointer;
+      transition: all 0.3s ease; position: relative; overflow: hidden;
+    }
+    .donate-btn:hover, .donate-btn.featured {
+      background: #f59e0b; color: #1c1917; border-color: #f59e0b;
+      transform: scale(1.05); box-shadow: 0 8px 30px rgba(245,158,11,0.3);
+    }
+    .donate-btn:active { transform: scale(0.95); }
+    .donate-btn.featured { box-shadow: 0 0 20px rgba(245,158,11,0.4); }
+    .cta-btn {
+      font-family: 'Poppins', sans-serif; font-size: 1rem; font-weight: 600;
+      padding: 16px 40px; border-radius: 14px; border: none;
+      background: linear-gradient(135deg, #f59e0b, #ef4444); color: #fff;
+      cursor: pointer; transition: all 0.3s ease;
+    }
+    .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(245,158,11,0.4); }
+
+    /* ===== EVENTS ===== */
+    .events { padding: 100px 24px; max-width: 1000px; margin: 0 auto; }
+    .events-grid { display: flex; flex-direction: column; gap: 20px; }
+    .event-img { flex-shrink: 0; width: 160px; height: 100px; border-radius: 12px; overflow: hidden; }
+    .event-card {
+      display: flex; gap: 24px; background: #fff; border-radius: 16px; padding: 24px;
+      border: 1px solid rgba(245,158,11,0.1); transition: all 0.3s ease;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.04); align-items: center;
+    }
+    .event-card:hover { transform: translateX(8px); box-shadow: 0 8px 30px rgba(245,158,11,0.12); border-color: rgba(245,158,11,0.3); }
+    .event-date {
+      flex-shrink: 0; width: 72px; height: 72px; border-radius: 16px;
+      background: linear-gradient(135deg, #fef3c7, #fde68a);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      animation: datePulse 3s ease-in-out infinite;
+    }
+    @keyframes datePulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(245,158,11,0.2); }
+      50% { box-shadow: 0 0 0 8px rgba(245,158,11,0); }
+    }
+    .event-day { font-family: 'Poppins', sans-serif; font-size: 1.5rem; font-weight: 800; color: #92400e; line-height: 1; }
+    .event-month { font-family: 'Poppins', sans-serif; font-size: 0.75rem; font-weight: 600; color: #b45309; text-transform: uppercase; }
+    .event-body h3 { font-size: 1.1rem; font-weight: 700; color: #1c1917; margin-bottom: 6px; }
+    .event-body p { font-size: 0.875rem; color: #57534e; line-height: 1.6; margin-bottom: 8px; }
+    .event-location { font-size: 0.8rem; color: #f59e0b; font-weight: 600; }
+
+    /* ===== HOW TO HELP (SVG draw) ===== */
+    .help-section { padding: 100px 24px; background: #fef9ee; }
+    .help-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; max-width: 1000px; margin: 0 auto; }
+    .help-card {
+      text-align: center; padding: 40px 24px; border-radius: 20px; background: #fff;
+      border: 1px solid rgba(245,158,11,0.1); transition: all 0.4s ease;
+    }
+    .help-card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(245,158,11,0.12); }
+    .help-icon { width: 80px; height: 80px; margin: 0 auto 20px; }
+    .draw-svg {
+      width: 100%; height: 100%;
+      stroke-dasharray: 300; stroke-dashoffset: 300;
+      transition: stroke-dashoffset 1.5s ease;
+    }
+    .fade-in.visible .draw-svg { stroke-dashoffset: 0; }
+    .help-card h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 8px; color: #1c1917; }
+    .help-card p { font-size: 0.875rem; color: #57534e; line-height: 1.6; }
+
+    /* ===== PHOTO COLLAGE ===== */
+    .collage-section { padding: 100px 24px; max-width: 1200px; margin: 0 auto; }
+    .collage-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: 200px;
+      gap: 16px;
+    }
+    .collage-item {
+      border-radius: 16px; position: relative; overflow: hidden; cursor: pointer;
+      display: flex; align-items: flex-end; padding: 16px;
+      transition: transform 0.4s ease;
+    }
+    .collage-item.tall { grid-row: span 2; }
+    .collage-item.wide { grid-column: span 2; }
+    .collage-item span {
+      color: #fff; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 0.9rem;
+      opacity: 0; transform: translateY(10px); transition: all 0.3s ease;
+    }
+    .collage-item:hover { transform: scale(1.03); z-index: 2; }
+    .collage-item:hover span { opacity: 1; transform: translateY(0); }
+
+    /* Footer */
+    .footer { text-align: center; padding: 40px 24px; color: #78716c; font-size: 0.85rem; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero-title { font-size: 2.25rem; }
+      .hero-stats { gap: 24px; }
+      .hero-num { font-size: 2rem; }
+      .projects-grid, .help-grid { grid-template-columns: 1fr; }
+      .collage-grid { grid-template-columns: 1fr; grid-auto-rows: 180px; }
+      .collage-item.tall, .collage-item.wide { grid-row: span 1; grid-column: span 1; }
+      .event-card { flex-direction: column; gap: 12px; }
+      .donate-amounts { gap: 10px; }
+      .donate-btn { padding: 12px 24px; font-size: 1rem; }
+      .section-title { font-size: 1.75rem; }
+      .back-btn { top: 12px; left: 12px; font-size: 0.8rem; padding: 8px 14px; }
+    }
+  </style>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          // Animate progress bars
+          entry.target.querySelectorAll('.progress-fill').forEach(fill => fill.classList.add('animate'));
+          // Animate counters
+          entry.target.querySelectorAll('.counter').forEach(c => animateCounter(c));
+        }
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    function animateCounter(el) {
+      if (el.dataset.animated) return;
+      el.dataset.animated = 'true';
+      const target = parseFloat(el.dataset.target);
+      const duration = 2000;
+      const start = performance.now();
+      function update(now) {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.floor(target * eased).toLocaleString('it-IT');
+        if (progress < 1) requestAnimationFrame(update);
+      }
+      requestAnimationFrame(update);
+    }
+
+    // Donate button click animation
+    document.querySelectorAll('.donate-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.donate-btn').forEach(b => b.classList.remove('featured'));
+        btn.classList.add('featured');
+      });
+    });
+  </script>
+</body>
+</html>

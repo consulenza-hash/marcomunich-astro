@@ -1,0 +1,707 @@
+---
+export const prerender = true;
+---
+
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prezzi · Marco Munich Dev</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    [data-theme="dark"] {
+      --bg: #0a0e1a;
+      --bg-card: #111827;
+      --border: #1e293b;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --primary: #3b82f6;
+      --primary-hover: #60a5fa;
+      --accent: #818cf8;
+      --navbar-bg: rgba(10, 14, 26, 0.8);
+      --input-bg: #0f1629;
+    }
+    [data-theme="light"] {
+      --bg: #f8fafc;
+      --bg-card: #ffffff;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --text-dim: #94a3b8;
+      --primary: #2563eb;
+      --primary-hover: #3b82f6;
+      --accent: #818cf8;
+      --navbar-bg: rgba(248, 250, 252, 0.8);
+      --input-bg: #f1f5f9;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      transition: background 0.3s, color 0.3s;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* ── Navbar ── */
+    .navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: var(--navbar-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .navbar-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      transition: color 0.3s;
+    }
+    .nav-logo span { color: var(--primary); }
+    .nav-right { display: flex; align-items: center; gap: 2rem; }
+    .nav-links { display: flex; gap: 1.75rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      transition: color 0.2s;
+      position: relative;
+      padding-bottom: 4px;
+    }
+    .nav-links a:hover { color: var(--primary); }
+    .nav-links a.active { color: var(--primary); }
+    .nav-links a.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--primary);
+      border-radius: 1px;
+    }
+    .theme-toggle {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      width: 36px; height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: background 0.3s, border-color 0.3s;
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+    .theme-toggle:hover { border-color: var(--primary); color: var(--primary); }
+    [data-theme="dark"] .theme-toggle .icon-sun { display: none; }
+    [data-theme="dark"] .theme-toggle .icon-moon { display: inline; }
+    [data-theme="light"] .theme-toggle .icon-sun { display: inline; }
+    [data-theme="light"] .theme-toggle .icon-moon { display: none; }
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 22px; height: 2px;
+      background: var(--text);
+      margin: 5px 0;
+      transition: all 0.3s;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      text-align: center;
+      padding: 10rem 2rem 4rem;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .hero h1 {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 1rem;
+      transition: color 0.3s;
+    }
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      transition: color 0.3s;
+    }
+
+    /* ── Pricing Grid ── */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      max-width: 1050px;
+      margin: 0 auto;
+      padding: 0 2rem 3rem;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2.2rem 1.8rem;
+      display: flex;
+      flex-direction: column;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .card.featured {
+      border-color: var(--primary);
+      position: relative;
+    }
+    .badge {
+      position: absolute;
+      top: -0.75rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--primary);
+      color: #fff;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.25rem 1rem;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .card h3 {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.15rem;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+      transition: color 0.3s;
+    }
+    .price {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+    }
+    .price span {
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--text-muted);
+    }
+    .features {
+      list-style: none;
+      flex: 1;
+      margin-bottom: 1.8rem;
+    }
+    .features li {
+      padding: 0.4rem 0;
+      padding-left: 1.4rem;
+      position: relative;
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      transition: color 0.3s;
+    }
+    .features li::before {
+      content: '\2713';
+      position: absolute;
+      left: 0;
+      color: var(--primary);
+      font-weight: 700;
+    }
+    .card-btn {
+      display: block;
+      text-align: center;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 0.75rem 1.2rem;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+    .card-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+    .card.featured .card-btn {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+    }
+    .card.featured .card-btn:hover {
+      background: var(--primary-hover);
+      border-color: var(--primary-hover);
+    }
+
+    /* ── Included / Note ── */
+    .info-section {
+      max-width: 750px;
+      margin: 0 auto;
+      padding: 1rem 2rem 3rem;
+      text-align: center;
+    }
+    .included {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem 2rem;
+      margin-bottom: 1.2rem;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      transition: background 0.3s, border-color 0.3s, color 0.3s;
+    }
+    .included strong { color: var(--text); }
+    .note {
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      margin-bottom: 1.5rem;
+      transition: color 0.3s;
+    }
+    .recurring-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--primary);
+      border-radius: 10px;
+      padding: 1.5rem 2rem;
+      margin-top: 0.5rem;
+      margin-bottom: 2rem;
+      text-align: left;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .recurring-section strong { color: var(--text); font-size: 1rem; }
+    .recurring-list {
+      list-style: none;
+      padding: 0;
+      margin: 1rem 0 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .recurring-list li {
+      padding: 1rem;
+      background: var(--bg);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .recurring-label {
+      font-weight: 600;
+      color: var(--text);
+      margin-right: 0.5rem;
+    }
+    .recurring-price {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--primary);
+      font-weight: 700;
+    }
+    .recurring-detail {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+      display: inline-block;
+    }
+    .netsons-banner {
+      max-width: 900px;
+      margin: 0 auto 3rem;
+      text-align: center;
+      padding: 0 2rem;
+    }
+    .netsons-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1rem;
+    }
+    .netsons-link {
+      display: inline-block;
+      border-radius: 10px;
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+      border: 1px solid var(--border);
+    }
+    .netsons-link:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(59, 130, 246, 0.15);
+    }
+    .netsons-img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+    .netsons-mobile { display: none; }
+    .netsons-desktop { display: block; }
+    [data-theme="dark"] .netsons-dark-only { display: block; }
+    [data-theme="dark"] .netsons-light-only { display: none; }
+    [data-theme="light"] .netsons-dark-only { display: none; }
+    [data-theme="light"] .netsons-light-only { display: block; }
+    [data-theme="dark"] .netsons-mobile.netsons-dark-only { display: none; }
+    [data-theme="light"] .netsons-mobile.netsons-light-only { display: none; }
+    .netsons-note {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 1rem;
+      line-height: 1.5;
+    }
+    @media (max-width: 768px) {
+      .netsons-desktop { display: none !important; }
+      [data-theme="dark"] .netsons-mobile.netsons-dark-only { display: block !important; }
+      [data-theme="light"] .netsons-mobile.netsons-light-only { display: block !important; }
+    }
+
+    /* ── Types detail ── */
+    .types-section {
+      max-width: 800px;
+      margin: 80px auto 0;
+      padding: 0 24px;
+    }
+    .types-section h2 {
+      font-family: 'JetBrains Mono', monospace;
+      text-align: center;
+      font-size: 1.75rem;
+      margin-bottom: 12px;
+      color: var(--text);
+      transition: color 0.3s;
+    }
+    .types-section > p {
+      text-align: center;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto 48px;
+      font-size: 0.95rem;
+    }
+    .type-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--primary);
+      border-radius: 10px;
+      padding: 28px 32px;
+      margin-bottom: 20px;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .type-card h3 {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.2rem;
+      color: var(--text);
+      margin: 0 0 4px;
+      transition: color 0.3s;
+    }
+    .type-price {
+      color: var(--primary);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin: 0 0 16px;
+    }
+    .type-card p {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      line-height: 1.65;
+      margin: 0 0 12px;
+      transition: color 0.3s;
+    }
+    .type-card p:last-child { margin-bottom: 0; }
+    .type-card strong { color: var(--primary); }
+
+    /* ── FAQ ── */
+    .faq-section {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 0 2rem 4rem;
+    }
+    .faq-section h2 {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.5rem;
+      color: var(--text);
+      text-align: center;
+      margin-bottom: 2rem;
+      transition: color 0.3s;
+    }
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      padding: 1.2rem 0;
+      transition: border-color 0.3s;
+    }
+    .faq-item:first-of-type {
+      border-top: 1px solid var(--border);
+    }
+    .faq-q {
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.4rem;
+      font-size: 0.98rem;
+      transition: color 0.3s;
+    }
+    .faq-a {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      transition: color 0.3s;
+    }
+
+    /* ── Footer ── */
+    .footer {
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 2.5rem;
+      transition: border-color 0.3s;
+    }
+    .footer a {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+    .footer a:hover { color: var(--primary); }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 64px; left: 0; right: 0;
+        background: var(--navbar-bg);
+        backdrop-filter: blur(12px);
+        flex-direction: column;
+        padding: 1.5rem;
+        gap: 1rem;
+        border-bottom: 1px solid var(--border);
+      }
+      .nav-links.open { display: flex; }
+      .nav-toggle { display: block; }
+      .hero { padding: 7rem 1.5rem 2rem; }
+      .hero h1 { font-size: 2rem; }
+      .pricing-grid {
+        grid-template-columns: 1fr;
+        padding: 0 1.5rem 2rem;
+      }
+      .types-section { padding: 0 1.5rem; }
+      .type-card { padding: 20px 20px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="/dev/" class="nav-logo">Marco Munich <span>&middot; Dev</span></a>
+      <div class="nav-right">
+        <ul class="nav-links" id="navLinks">
+          <li><a href="/dev/come-lavoro">Come Lavoro</a></li>
+          <li><a href="/dev/vibe-coding">Vibe Coding</a></li>
+          <li><a href="/dev/portfolio">Portfolio</a></li>
+          <li><a href="/dev/prezzi" class="active">Prezzi</a></li>
+          <li><a href="/dev/contatti">Contatti</a></li>
+        </ul>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Cambia tema">
+          <span class="icon-sun">&#9728;</span>
+          <span class="icon-moon">&#127769;</span>
+        </button>
+        <button class="nav-toggle" aria-label="Menu" id="navToggle">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <h1>Prezzi chiari, tutto incluso.</h1>
+    <p>Scegli il pacchetto giusto per il tuo progetto. Ogni prezzo include tutto il necessario.</p>
+  </section>
+
+  <div class="pricing-grid">
+    <div class="card">
+      <h3>Sito Vetrina</h3>
+      <div class="price">&euro;1.500</div>
+      <ul class="features">
+        <li>Fino a 5 pagine</li>
+        <li>Design su misura</li>
+        <li>Ottimizzazione SEO base</li>
+        <li>Responsive mobile</li>
+        <li>Consegna in 7-10 giorni</li>
+      </ul>
+      <a href="/dev/contatti" class="card-btn">Scegli questo &rarr;</a>
+    </div>
+
+    <div class="card featured">
+      <span class="badge">Consigliato</span>
+      <h3>Sito Professionale</h3>
+      <div class="price">&euro;2.500</div>
+      <ul class="features">
+        <li>Fino a 10 pagine</li>
+        <li>Blog integrato</li>
+        <li>SEO avanzato</li>
+        <li>Form contatti</li>
+        <li>Analytics</li>
+        <li>Consegna in 14-21 giorni</li>
+      </ul>
+      <a href="/dev/contatti" class="card-btn">Scegli questo &rarr;</a>
+    </div>
+
+    <div class="card">
+      <h3>E-commerce / Custom</h3>
+      <div class="price">Da &euro;4.000</div>
+      <ul class="features">
+        <li>Pagine illimitate</li>
+        <li>Carrello e pagamenti</li>
+        <li>Area riservata</li>
+        <li>Integrazioni custom</li>
+        <li>Supporto prioritario</li>
+      </ul>
+      <a href="/dev/contatti" class="card-btn">Parliamone &rarr;</a>
+    </div>
+  </div>
+
+  <div class="info-section">
+    <div class="included"><strong>Tutti i prezzi includono:</strong> hosting primo anno, dominio primo anno, certificato SSL, formazione sull'uso del sito.</div>
+    <p class="note">Pagamento: 50% all'avvio del progetto, 50% alla consegna.</p>
+
+    <div class="recurring-section">
+      <strong>Costi annuali dal secondo anno:</strong>
+      <ul class="recurring-list">
+        <li><span class="recurring-label">Hosting + dominio</span><span class="recurring-price">&euro;40-50/anno</span><br><span class="recurring-detail">Pagati direttamente dal cliente a Netsons (datacenter in Italia). L'account è intestato al cliente, il sito resta suo al 100%.</span></li>
+        <li><span class="recurring-label">Mantenimento sito (opzionale)</span><span class="recurring-price">&euro;147/anno</span><br><span class="recurring-detail">Aggiornamenti tecnici, backup, monitoraggio e piccole modifiche testuali. Puoi scegliere di occupartene da solo, ma tieni presente che un sito web richiede aggiornamenti periodici di sicurezza, controlli sulle performance e interventi tecnici che, senza esperienza specifica, rischiano di creare più problemi di quelli che risolvono. Il pacchetto mantenimento ti toglie questo pensiero e ti garantisce che il sito resti veloce, sicuro e funzionante tutto l'anno.</span></li>
+        <li><span class="recurring-label">Pagine aggiuntive</span><span class="recurring-price">&euro;150 a pagina</span><br><span class="recurring-detail">Serve una nuova pagina servizi, una landing per una promozione o una sezione che prima non c'era? Mi scrivi, ne parliamo, e la costruisco io. Il tuo sito cresce con la tua attività senza che tu debba toccare niente di tecnico.</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="netsons-banner">
+    <p class="netsons-label">Hosting consigliato · Datacenter in Italia</p>
+    <a href="https://www.netsons.com/manage/aff.php?aff=7671" target="_blank" rel="noopener" class="netsons-link">
+      <img src="/images/netsons/banner-dark.png" alt="Netsons Hosting" class="netsons-img netsons-dark-only netsons-desktop" loading="lazy">
+      <img src="/images/netsons/banner-light.png" alt="Netsons Hosting" class="netsons-img netsons-light-only netsons-desktop" loading="lazy">
+      <img src="/images/netsons/banner-dark-mobile.png" alt="Netsons Hosting" class="netsons-img netsons-dark-only netsons-mobile" loading="lazy">
+      <img src="/images/netsons/banner-light-mobile.png" alt="Netsons Hosting" class="netsons-img netsons-light-only netsons-mobile" loading="lazy">
+    </a>
+    <p class="netsons-note">Hai già un hosting? Il prezzo si riduce di conseguenza. L'importante è che il tuo provider supporti le tecnologie necessarie per il tipo di sito che costruiamo insieme.</p>
+  </div>
+
+  <!-- DETTAGLIO TIPOLOGIE -->
+  <section class="types-section">
+    <h2>Cosa include ogni tipologia</h2>
+    <p>Ogni progetto è diverso, e qui trovi cosa comporta ogni tipologia e perché ha quel prezzo.</p>
+
+    <div class="type-card">
+      <h3>&#128722; E-commerce</h3>
+      <p class="type-price">Da &euro;4.000</p>
+      <p>Un e-commerce è un sistema completo che gestisce catalogo prodotti, varianti (taglie, colori), calcolo spedizioni, gateway di pagamento sicuro, gestione ordini, notifiche email automatiche e area cliente, dove ogni componente deve funzionare in modo affidabile perché ci passano soldi veri.</p>
+      <p><strong>Perché questo prezzo:</strong> Servono integrazioni con sistemi di pagamento (Stripe, PayPal), logica di inventario, email transazionali, pagine prodotto ottimizzate per la SEO e test approfonditi su ogni flusso d'acquisto, il tutto costruito su misura per il tuo business.</p>
+    </div>
+
+    <div class="type-card">
+      <h3>&#127891; Corso Online / Membership</h3>
+      <p class="type-price">Da &euro;2.500</p>
+      <p>Una piattaforma di corsi richiede un'area riservata con login, gestione degli accessi ai contenuti, player video, progressione delle lezioni e spesso un sistema di pagamento ricorrente per gli abbonamenti. Deve essere semplice da usare sia per te che per i tuoi studenti.</p>
+      <p><strong>Perché questo prezzo:</strong> L'area riservata con autenticazione è il cuore del progetto, perché ogni utente deve vedere solo i contenuti a cui ha accesso, e questo richiede integrazione video, gestione abbonamenti, email automatiche di benvenuto e promemoria.</p>
+    </div>
+
+    <div class="type-card">
+      <h3>&#128100; Sito Vetrina</h3>
+      <p class="type-price">Da &euro;1.500</p>
+      <p>Il sito vetrina è il tuo biglietto da visita digitale, con chi sei, cosa fai e come contattarti, e la differenza tra un sito vetrina che funziona e uno che resta vuoto sta nel design, nella struttura dei contenuti e nell'ottimizzazione per i motori di ricerca.</p>
+      <p><strong>Perché questo prezzo:</strong> Ogni pagina viene progettata su misura per struttura, testi, design e SEO, e il risultato è il tuo spazio online costruito intorno alla tua identità professionale, veloce, responsive e indicizzabile.</p>
+    </div>
+
+    <div class="type-card">
+      <h3>&#128640; Landing Page</h3>
+      <p class="type-price">Da &euro;1.500</p>
+      <p>Una landing page ha un solo obiettivo: convertire. Che si tratti di raccogliere email, vendere un prodotto o prenotare una consulenza, ogni elemento della pagina (dal titolo al pulsante) deve portare l'utente a compiere quell'azione.</p>
+      <p><strong>Perché questo prezzo:</strong> Una landing page efficace richiede copywriting strategico, design orientato alla conversione, A/B testing, velocità di caricamento estrema e integrazione con i tuoi strumenti di marketing (email, analytics, pixel). Poche pagine, molto lavoro su ogni dettaglio.</p>
+    </div>
+
+    <div class="type-card">
+      <h3>&#128197; Booking / Prenotazioni</h3>
+      <p class="type-price">Da &euro;2.500</p>
+      <p>Un sistema di prenotazioni deve gestire disponibilità in tempo reale, evitare doppie prenotazioni, inviare conferme automatiche e integrarsi con il tuo calendario. Per coach, terapeuti e professionisti olistici è lo strumento che ti libera dal gestire gli appuntamenti a mano.</p>
+      <p><strong>Perché questo prezzo:</strong> La logica di calendario è complessa e comprende gestione fusi orari, slot ricorrenti, eccezioni, notifiche email e SMS. Spesso include anche il pagamento anticipato della sessione, e il sistema deve funzionare senza intoppi perché gestisce il tuo tempo e quello dei tuoi clienti.</p>
+    </div>
+
+    <div class="type-card">
+      <h3>&#128240; Blog &amp; Magazine</h3>
+      <p class="type-price">Da &euro;1.500</p>
+      <p>Un blog professionale è un sito costruito per la velocità, l'indicizzazione e la lettura, con categorie, tag, ricerca, articoli correlati, sitemap automatica e schema markup per Google, ovvero tutto quello che serve perché i tuoi contenuti vengano trovati.</p>
+      <p><strong>Perché questo prezzo:</strong> L'ottimizzazione SEO tecnica è il cuore del lavoro, perché ogni articolo deve caricarsi in meno di un secondo, avere i metadati corretti, generare le anteprime social e posizionarsi su Google, e il CMS integrato ti permette di pubblicare senza toccare codice.</p>
+    </div>
+
+    <div class="type-card">
+      <h3>&#9889; SaaS / Web App</h3>
+      <p class="type-price">Da &euro;4.000</p>
+      <p>Un'applicazione web è un software che gira nel browser e comprende dashboard, gestione utenti, dati in tempo reale, grafici e notifiche, ed è il livello più complesso di sviluppo web perché ogni funzionalità deve essere progettata, sviluppata e testata individualmente.</p>
+      <p><strong>Perché questo prezzo:</strong> Una web app richiede architettura backend, database, autenticazione sicura, API, gestione ruoli e permessi. Il tempo di sviluppo è significativamente maggiore e ogni funzionalità aggiuntiva ha un impatto sulla complessità complessiva.</p>
+    </div>
+
+    <div class="type-card">
+      <h3>&#127968; Immobiliare</h3>
+      <p class="type-price">Da &euro;2.500</p>
+      <p>Un sito immobiliare deve gestire un catalogo di proprietà con filtri (zona, prezzo, metratura, tipologia), gallerie fotografiche, mappe interattive e form di contatto per ogni annuncio. Deve essere facile da aggiornare quando aggiungi o rimuovi proprietà.</p>
+      <p><strong>Perché questo prezzo:</strong> La ricerca filtrata è il cuore del sito, perché l'utente deve trovare quello che cerca in pochi click, e questo richiede mappe, gallerie ottimizzate, schede dettagliate per ogni proprietà e un pannello di gestione semplice per te.</p>
+    </div>
+
+    <div class="type-card">
+      <h3>&#128141; Wedding &amp; Eventi</h3>
+      <p class="type-price">Da &euro;1.500</p>
+      <p>Un sito per eventi include invito digitale, RSVP con gestione risposte, programma della giornata, gallery fotografica, e spesso integrazione con mappe e indicazioni per raggiungere la location. Deve essere elegante e semplice da navigare anche per gli invitati meno tecnologici.</p>
+      <p><strong>Perché questo prezzo:</strong> Il design deve essere perfetto perché è la prima impressione del tuo evento, e il sistema RSVP deve raccogliere risposte, gestire allergie alimentari e contare i partecipanti. Dopo l'evento la gallery diventa il ricordo digitale.</p>
+    </div>
+  </section>
+
+  <section class="faq-section">
+    <h2>Domande frequenti</h2>
+    <div class="faq-item">
+      <div class="faq-q">Ci sono costi nascosti?</div>
+      <div class="faq-a">Il prezzo che vedi nella pagina è il prezzo che paghi, senza aggiunte successive.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Posso pagare a rate?</div>
+      <div class="faq-a">Sì, possiamo organizzare un piano di pagamento.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Cosa succede dopo il primo anno?</div>
+      <div class="faq-a">L'hosting e il dominio li rinnovi tu direttamente con Netsons a circa &euro;40-50/anno, sul tuo account personale. Se vuoi anche il mantenimento tecnico del sito (aggiornamenti, backup, piccole modifiche) puoi attivare il pacchetto opzionale a &euro;147/anno. Per pagine nuove o sezioni aggiuntive, il costo è di &euro;150 a pagina: mi scrivi cosa ti serve e la costruisco io.</div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <a href="/">&larr; Torna a marcomunich.com</a>
+  </footer>
+
+  <script is:inline>
+    const toggle = document.getElementById('theme-toggle');
+    const html = document.documentElement;
+    const saved = localStorage.getItem('dev-theme') || 'dark';
+    html.setAttribute('data-theme', saved);
+    toggle.addEventListener('click', () => {
+      const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('dev-theme', next);
+    });
+
+    document.getElementById('navToggle')?.addEventListener('click', () => {
+      document.getElementById('navLinks')?.classList.toggle('open');
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,954 @@
+---
+export const prerender = true;
+---
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>La Tua Academy — Impara le Competenze del Futuro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <!-- Noise overlay -->
+  <div class="noise"></div>
+
+  <!-- Matrix rain background -->
+  <div class="matrix-rain" aria-hidden="true">
+    <div class="rain-col" style="--col:1;--speed:12s;--delay:0s">0 1 1 0 1 0 0 1 1 0 1 0 0 1 1 0 1 0</div>
+    <div class="rain-col" style="--col:2;--speed:15s;--delay:-3s">1 0 0 1 0 1 1 0 0 1 0 1 1 0 0 1 0 1</div>
+    <div class="rain-col" style="--col:3;--speed:10s;--delay:-1s">0 1 0 1 1 0 1 0 1 0 1 1 0 1 0 1 1 0</div>
+    <div class="rain-col" style="--col:4;--speed:18s;--delay:-7s">1 1 0 0 1 0 1 1 0 0 1 0 1 1 0 0 1 0</div>
+    <div class="rain-col" style="--col:5;--speed:14s;--delay:-2s">0 0 1 1 0 1 0 0 1 1 0 1 0 0 1 1 0 1</div>
+    <div class="rain-col" style="--col:6;--speed:11s;--delay:-5s">1 0 1 0 0 1 1 0 1 0 0 1 1 0 1 0 0 1</div>
+    <div class="rain-col" style="--col:7;--speed:16s;--delay:-4s">0 1 1 1 0 0 1 0 1 1 1 0 0 1 0 1 1 1</div>
+    <div class="rain-col" style="--col:8;--speed:13s;--delay:-6s">1 1 0 1 1 0 0 1 1 0 1 1 0 0 1 1 0 1</div>
+    <div class="rain-col" style="--col:9;--speed:17s;--delay:-8s">0 0 1 0 1 1 0 0 0 1 0 1 1 0 0 0 1 0</div>
+    <div class="rain-col" style="--col:10;--speed:12s;--delay:-1s">1 0 0 1 0 0 1 1 1 0 0 1 0 0 1 1 1 0</div>
+  </div>
+
+  <!-- Back button -->
+  <a href="/dev/portfolio" class="back-btn">
+    <span class="back-arrow">&larr;</span> Torna al Portfolio
+  </a>
+
+  <!-- Top nav bar -->
+  <div style="position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,1,24,0.85);backdrop-filter:blur(12px);border-bottom:1px solid rgba(124,58,237,0.2);padding:12px 24px;display:flex;justify-content:space-between;align-items:center;">
+    <span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.1rem;color:#fff;">La Tua Academy</span>
+    <div style="display:flex;gap:16px;align-items:center;">
+      <a href="#corsi" style="color:#94a3b8;text-decoration:none;font-size:0.9rem;">Corsi</a>
+      <a href="#faq" style="color:#94a3b8;text-decoration:none;font-size:0.9rem;">FAQ</a>
+      <a href="/portfolio/corso-online-login" style="color:#06b6d4;text-decoration:none;font-size:0.9rem;font-weight:600;">Accedi</a>
+      <a href="/portfolio/corso-online-dashboard" style="background:linear-gradient(135deg,#7c3aed,#06b6d4);color:#fff;text-decoration:none;font-size:0.85rem;font-weight:600;padding:6px 16px;border-radius:8px;">Area Studenti</a>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-glow hero-glow-1"></div>
+    <div class="hero-glow hero-glow-2"></div>
+    <div class="hero-content fade-in">
+      <div class="hero-badge">
+        <span class="pulse-dot"></span>
+        Nuovi corsi disponibili
+      </div>
+      <h1 class="hero-title">
+        Impara a <span class="gradient-text">Programmare</span><br />
+        il Tuo Futuro
+      </h1>
+      <p class="hero-sub">Corsi avanzati di sviluppo web, design e intelligenza artificiale. Lezioni pratiche, progetti reali, mentorship dedicata. Gi&agrave; 1.247 studenti hanno scelto La Tua Academy per costruire la loro carriera nel digitale.</p>
+      <div class="hero-buttons">
+        <a href="#corsi" class="btn-primary">
+          Esplora i Corsi
+          <span class="btn-glow"></span>
+        </a>
+        <a href="#demo" class="btn-secondary">Guarda una Demo Gratuita</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats bar -->
+  <section class="stats-bar fade-in">
+    <div class="stat-item">
+      <span class="stat-number" data-target="1247">0</span>
+      <span class="stat-label">Studenti Iscritti</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number" data-target="98">0</span><span class="stat-suffix">%</span>
+      <span class="stat-label">Tasso di Completamento</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number" data-target="47">0</span>
+      <span class="stat-label">Corsi Disponibili</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number" data-target="4">0</span><span class="stat-suffix">.8</span>
+      <span class="stat-label">Valutazione Media</span>
+    </div>
+  </section>
+
+  <!-- Courses -->
+  <section class="courses" id="corsi">
+    <div class="section-header fade-in">
+      <p class="section-tag">Percorsi Formativi</p>
+      <h2 class="section-title">I Nostri <span class="gradient-text">Corsi</span></h2>
+      <p class="section-desc">Scegli il percorso che si adatta al tuo livello e ai tuoi obiettivi professionali.</p>
+    </div>
+    <div class="course-grid">
+      <div class="course-card fade-in" style="--delay:0s">
+        <div class="course-thumb" style="aspect-ratio:16/10;overflow:hidden;border-radius:12px;margin-bottom:16px;">
+          <img src="/images/portfolio/corso-laptop.jpg" alt="Laptop coding" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;" />
+        </div>
+        <div class="course-level">Avanzato</div>
+        <h3>Full-Stack Web Development</h3>
+        <p>Impara a costruire applicazioni web complete partendo da zero. Dal frontend con React al backend con Node.js, fino al deploy in produzione. Include TypeScript, PostgreSQL e architetture moderne.</p>
+        <div class="course-meta">
+          <span>18 lezioni</span>
+          <span>24 ore di video</span>
+        </div>
+        <div class="course-instructor">
+          <div style="width:28px;height:28px;border-radius:50%;background:#6366f1;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:0.65rem;flex-shrink:0;">MF</div>
+          <span>Marco Ferretti</span>
+        </div>
+        <div class="course-progress-wrap">
+          <div class="course-progress-bar" style="--progress:75%"></div>
+        </div>
+        <div class="course-footer">
+          <span class="course-price">&euro;299</span>
+          <a href="#" class="course-cta">Inizia Ora &rarr;</a>
+        </div>
+      </div>
+      <div class="course-card featured-course fade-in" style="--delay:0.1s">
+        <div class="popular-badge">Piu Popolare</div>
+        <div class="course-thumb" style="aspect-ratio:16/10;overflow:hidden;border-radius:12px;margin-bottom:16px;">
+          <img src="/images/portfolio/corso-study.jpg" alt="Study desk" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;" />
+        </div>
+        <div class="course-level">Intermedio</div>
+        <h3>AI & Machine Learning</h3>
+        <p>Dalle basi del machine learning ai modelli di deep learning. Python, TensorFlow, progetti pratici con dataset reali. Imparerai a costruire, addestrare e deployare modelli predittivi.</p>
+        <div class="course-meta">
+          <span>16 lezioni</span>
+          <span>20 ore di video</span>
+        </div>
+        <div class="course-instructor">
+          <div style="width:28px;height:28px;border-radius:50%;background:#8b5cf6;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:0.65rem;flex-shrink:0;">EC</div>
+          <span>Elena Conti</span>
+        </div>
+        <div class="course-progress-wrap">
+          <div class="course-progress-bar" style="--progress:60%"></div>
+        </div>
+        <div class="course-footer">
+          <span class="course-price">&euro;399</span>
+          <a href="#" class="course-cta">Inizia Ora &rarr;</a>
+        </div>
+      </div>
+      <div class="course-card fade-in" style="--delay:0.2s">
+        <div class="course-thumb" style="aspect-ratio:16/10;overflow:hidden;border-radius:12px;margin-bottom:16px;">
+          <img src="/images/portfolio/corso-classroom.jpg" alt="Classroom" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;" />
+        </div>
+        <div class="course-level">Base</div>
+        <h3>UI/UX Design Masterclass</h3>
+        <p>Progetta interfacce che le persone vogliono usare. Figma, ricerca utente, prototipazione, design system. Dal wireframe al prototipo interattivo, passando per user testing e accessibilit&agrave;.</p>
+        <div class="course-meta">
+          <span>12 lezioni</span>
+          <span>16 ore di video</span>
+        </div>
+        <div class="course-instructor">
+          <div style="width:28px;height:28px;border-radius:50%;background:#a855f7;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:0.65rem;flex-shrink:0;">GR</div>
+          <span>Giulia Rossi</span>
+        </div>
+        <div class="course-progress-wrap">
+          <div class="course-progress-bar" style="--progress:40%"></div>
+        </div>
+        <div class="course-footer">
+          <span class="course-price">&euro;199</span>
+          <a href="#" class="course-cta">Inizia Ora &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="features">
+    <div class="section-header fade-in">
+      <p class="section-tag">Perché Sceglierci</p>
+      <h2 class="section-title">Un'Esperienza <span class="gradient-text">Completa</span></h2>
+    </div>
+    <div class="feature-grid">
+      <div class="feature-card fade-in" style="--delay:0s">
+        <div class="feature-icon-wrap">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+        </div>
+        <h3>Certificazione Riconosciuta</h3>
+        <p>Ogni corso rilascia un certificato verificabile e riconosciuto dalle aziende partner.</p>
+      </div>
+      <div class="feature-card fade-in" style="--delay:0.1s">
+        <div class="feature-icon-wrap">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 00-3-3.87"></path><path d="M16 3.13a4 4 0 010 7.75"></path></svg>
+        </div>
+        <h3>Mentorship 1-a-1</h3>
+        <p>Sessioni individuali con professionisti del settore per guidarti in ogni fase del percorso.</p>
+      </div>
+      <div class="feature-card fade-in" style="--delay:0.2s">
+        <div class="feature-icon-wrap">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+        </div>
+        <h3>Progetti Reali</h3>
+        <p>Costruisci portfolio professionale con progetti concreti durante ogni modulo del corso.</p>
+      </div>
+      <div class="feature-card fade-in" style="--delay:0.3s">
+        <div class="feature-icon-wrap">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+        </div>
+        <h3>Accesso Illimitato</h3>
+        <p>Studia quando vuoi, dove vuoi. Contenuti disponibili per sempre dopo l'acquisto.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="testimonials">
+    <div class="section-header fade-in">
+      <p class="section-tag">Storie di Successo</p>
+      <h2 class="section-title">I Nostri <span class="gradient-text">Studenti</span></h2>
+    </div>
+    <div class="testimonial-grid">
+      <div class="testimonial-card fade-in" style="--delay:0s">
+        <div class="testimonial-quote">"</div>
+        <p>Dopo il corso di Full-Stack Web Development sono passato da junior a mid-level in sei mesi. I progetti pratici con React e Node.js hanno fatto la differenza nei colloqui. Oggi lavoro in una startup fintech a Milano.</p>
+        <div class="testimonial-author">
+          <div style="width:40px;height:40px;border-radius:50%;background:#6366f1;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:0.85rem;flex-shrink:0;">LM</div>
+          <div>
+            <strong>Luca Martinelli</strong>
+            <span>Full-Stack Web Development &mdash; Software Engineer @ Fintech Startup</span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card fade-in" style="--delay:0.15s">
+        <div class="testimonial-quote">"</div>
+        <p>Il corso di AI & Machine Learning mi ha aperto le porte di un mondo completamente nuovo. La mentorship individuale con Elena Conti vale da sola il prezzo del corso. Oggi gestisco un team di data science in azienda.</p>
+        <div class="testimonial-author">
+          <div style="width:40px;height:40px;border-radius:50%;background:#8b5cf6;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:0.85rem;flex-shrink:0;">SC</div>
+          <div>
+            <strong>Sara Colombo</strong>
+            <span>AI & Machine Learning &mdash; Data Science Lead @ Enterprise</span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card fade-in" style="--delay:0.3s">
+        <div class="testimonial-quote">"</div>
+        <p>Venivo dal graphic design e volevo fare il salto verso l'UX. Il percorso di UI/UX Design Masterclass con Giulia Rossi mi ha dato metodo e strumenti concreti. Ora lavoro come UX designer freelance con clienti internazionali.</p>
+        <div class="testimonial-author">
+          <div style="width:40px;height:40px;border-radius:50%;background:#a855f7;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:0.85rem;flex-shrink:0;">AF</div>
+          <div>
+            <strong>Andrea Ferraro</strong>
+            <span>UI/UX Design Masterclass &mdash; UX Designer Freelance</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Instructors -->
+  <section class="instructors fade-in">
+    <div class="section-header fade-in">
+      <p class="section-tag">Il Nostro Team</p>
+      <h2 class="section-title">I <span class="gradient-text">Docenti</span></h2>
+    </div>
+    <div class="instructor-grid">
+      <div class="instructor-card fade-in" style="--delay:0s">
+        <div class="instructor-avatar" style="background:#6366f1;">MF</div>
+        <h3>Marco Ferretti</h3>
+        <p class="instructor-role">Full-Stack Development</p>
+        <p class="instructor-bio">Senior Developer con 12 anni di esperienza in aziende come Spotify e Shopify. Specializzato in architetture scalabili e performance web.</p>
+      </div>
+      <div class="instructor-card fade-in" style="--delay:0.1s">
+        <div class="instructor-avatar" style="background:#8b5cf6;">EC</div>
+        <h3>Elena Conti</h3>
+        <p class="instructor-role">AI & Machine Learning</p>
+        <p class="instructor-bio">PhD in Computer Science al Politecnico di Milano. 8 anni di ricerca in NLP e computer vision. Ex Google AI Research.</p>
+      </div>
+      <div class="instructor-card fade-in" style="--delay:0.2s">
+        <div class="instructor-avatar" style="background:#a855f7;">GR</div>
+        <h3>Giulia Rossi</h3>
+        <p class="instructor-role">UI/UX Design</p>
+        <p class="instructor-bio">Lead Designer con 10 anni di esperienza. Ha progettato interfacce per startup e grandi aziende tra cui Booking.com e N26.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq-section" id="faq">
+    <div class="section-header fade-in">
+      <p class="section-tag">Domande Frequenti</p>
+      <h2 class="section-title">Hai Qualche <span class="gradient-text">Dubbio</span>?</h2>
+    </div>
+    <div class="faq-list">
+      <details class="faq-item fade-in" style="--delay:0s">
+        <summary>Come funziona l'accesso ai corsi?</summary>
+        <p>Dopo l'acquisto ricevi immediatamente le credenziali per accedere alla piattaforma. Puoi iniziare a seguire le lezioni subito, senza limiti di tempo. L'accesso ai contenuti &egrave; illimitato e include tutti gli aggiornamenti futuri del corso.</p>
+      </details>
+      <details class="faq-item fade-in" style="--delay:0.05s">
+        <summary>Posso seguire i corsi da mobile?</summary>
+        <p>Assolutamente s&igrave;. La piattaforma &egrave; ottimizzata per smartphone e tablet. Puoi guardare le lezioni, completare gli esercizi e interagire con i mentor direttamente dal tuo dispositivo mobile, anche offline scaricando i contenuti.</p>
+      </details>
+      <details class="faq-item fade-in" style="--delay:0.1s">
+        <summary>Rilasciate certificati?</summary>
+        <p>S&igrave;, ogni corso rilascia un certificato di completamento verificabile con codice univoco. Il certificato attesta le competenze acquisite ed &egrave; riconosciuto dalle nostre aziende partner per processi di selezione e avanzamento di carriera.</p>
+      </details>
+      <details class="faq-item fade-in" style="--delay:0.15s">
+        <summary>Cosa succede se non finisco in tempo?</summary>
+        <p>Non c'&egrave; nessuna scadenza. Una volta acquistato il corso, l'accesso &egrave; tuo per sempre. Puoi procedere al tuo ritmo, mettere in pausa e riprendere quando vuoi. Aggiorniamo regolarmente i contenuti e avrai accesso anche a quelli.</p>
+      </details>
+      <details class="faq-item fade-in" style="--delay:0.2s">
+        <summary>Che livello di preparazione serve per iniziare?</summary>
+        <p>Dipende dal corso. I corsi base non richiedono conoscenze pregresse. Per i corsi intermedi e avanzati indichiamo i prerequisiti nella scheda del corso. In caso di dubbio, il nostro team &egrave; disponibile per consigliarti il percorso pi&ugrave; adatto.</p>
+      </details>
+      <details class="faq-item fade-in" style="--delay:0.25s">
+        <summary>Posso richiedere il rimborso?</summary>
+        <p>Offriamo una garanzia soddisfatti o rimborsati entro 30 giorni dall'acquisto, senza domande. Se il corso non soddisfa le tue aspettative, ti restituiamo il 100% dell'importo.</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta fade-in">
+    <div class="cta-glass">
+      <div class="cta-glow"></div>
+      <h2>Pronto a Iniziare il Tuo <span class="gradient-text">Percorso</span>?</h2>
+      <p>Iscriviti oggi e ottieni il 20% di sconto sul primo corso. Garanzia soddisfatti o rimborsati entro 30 giorni.</p>
+      <a href="#" class="btn-primary">Iscriviti Gratis <span class="btn-glow"></span></a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h3 class="gradient-text" style="font-family:'Space Grotesk',sans-serif;font-size:1.2rem;margin-bottom:12px;">LA TUA ACADEMY</h3>
+        <p style="font-size:0.85rem;color:rgba(224,220,232,0.5);line-height:1.7;">Impara. Costruisci. Cresci.<br />La piattaforma italiana per chi vuole costruire una carriera nel digitale.</p>
+        <p style="font-size:0.8rem;color:rgba(224,220,232,0.4);margin-top:12px;">Via Torino 68, 20123 Milano (MI)<br />supporto@latuaacademy.it<br />Tel. +39 02 8900 4567</p>
+      </div>
+      <div class="footer-col">
+        <h4>Piattaforma</h4>
+        <a href="#">Tutti i Corsi</a>
+        <a href="#">Piani e Prezzi</a>
+        <a href="#">Per le Aziende</a>
+        <a href="#">Blog</a>
+        <a href="#">Diventa Docente</a>
+      </div>
+      <div class="footer-col">
+        <h4>Supporto</h4>
+        <a href="#">Centro Assistenza</a>
+        <a href="#">Contattaci</a>
+        <a href="#">FAQ</a>
+        <a href="#">Community Discord</a>
+      </div>
+      <div class="footer-col">
+        <h4>Legale</h4>
+        <a href="#">Termini e Condizioni</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Cookie Policy</a>
+        <a href="#">Diritto di Recesso</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 La Tua Academy S.r.l. &mdash; P.IVA 98765432101 &mdash; Via Torino 68, Milano</p>
+      <p style="margin-top:8px;font-style:italic;">Demo template di Marco Munich</p>
+    </div>
+  </footer>
+
+  <script>
+    // Intersection Observer for fade-in
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Animated counters
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.querySelectorAll('.stat-number').forEach(counter => {
+            const target = parseInt(counter.dataset.target);
+            const duration = 2000;
+            const start = performance.now();
+            const animate = (now) => {
+              const p = Math.min((now - start) / duration, 1);
+              const eased = 1 - Math.pow(1 - p, 3);
+              counter.textContent = Math.floor(target * eased).toLocaleString('it-IT');
+              if (p < 1) requestAnimationFrame(animate);
+              else counter.textContent = target.toLocaleString('it-IT');
+            };
+            requestAnimationFrame(animate);
+          });
+          counterObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    document.querySelectorAll('.stats-bar').forEach(el => counterObserver.observe(el));
+
+    // Progress bar animation
+    const progressObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.querySelector('.course-progress-bar').style.width = entry.target.querySelector('.course-progress-bar').style.getPropertyValue('--progress');
+          progressObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    document.querySelectorAll('.course-progress-wrap').forEach(el => progressObserver.observe(el));
+  </script>
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0a0118;
+      color: #e0dce8;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #0a0118; }
+    ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #7c3aed, #06b6d4); border-radius: 4px; }
+
+    /* Noise */
+    .noise {
+      position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #7c3aed, #a78bfa, #06b6d4, #22d3ee);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+
+    .fade-in {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
+      transition-delay: var(--delay, 0s);
+    }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* ========== MATRIX RAIN ========== */
+    .matrix-rain {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+    }
+    .rain-col {
+      position: absolute;
+      top: -100%;
+      left: calc(var(--col) * 10%);
+      writing-mode: vertical-rl;
+      font-family: 'Space Grotesk', monospace;
+      font-size: 14px;
+      letter-spacing: 8px;
+      color: rgba(124, 58, 237, 0.08);
+      animation: rain var(--speed) linear var(--delay) infinite;
+      white-space: nowrap;
+    }
+    @keyframes rain {
+      0% { transform: translateY(-10%); }
+      100% { transform: translateY(110vh); }
+    }
+
+    /* ========== BACK BUTTON ========== */
+    .back-btn {
+      position: fixed; top: 24px; left: 24px; z-index: 100;
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 20px;
+      background: rgba(10,1,24,0.7);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(124,58,237,0.2);
+      border-radius: 50px;
+      color: #a78bfa;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+    .back-btn:hover {
+      background: rgba(124,58,237,0.1);
+      border-color: rgba(124,58,237,0.5);
+      box-shadow: 0 0 20px rgba(124,58,237,0.15);
+    }
+    .back-arrow { transition: transform 0.3s ease; }
+    .back-btn:hover .back-arrow { transform: translateX(-3px); }
+
+    /* ========== HERO ========== */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      padding: 120px 24px 80px;
+      overflow: hidden;
+    }
+    .hero-glow {
+      position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.3;
+    }
+    .hero-glow-1 {
+      width: 600px; height: 600px; top: -200px; left: -100px;
+      background: radial-gradient(circle, #7c3aed 0%, transparent 70%);
+      animation: glowPulse 8s ease-in-out infinite;
+    }
+    .hero-glow-2 {
+      width: 500px; height: 500px; bottom: -200px; right: -100px;
+      background: radial-gradient(circle, #06b6d4 0%, transparent 70%);
+      animation: glowPulse 8s ease-in-out infinite reverse;
+    }
+    @keyframes glowPulse {
+      0%, 100% { transform: scale(1); opacity: 0.2; }
+      50% { transform: scale(1.2); opacity: 0.35; }
+    }
+
+    .hero-content { position: relative; z-index: 2; text-align: center; max-width: 750px; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 20px;
+      background: rgba(124,58,237,0.1);
+      border: 1px solid rgba(124,58,237,0.25);
+      border-radius: 50px;
+      font-size: 0.8rem;
+      color: #a78bfa;
+      margin-bottom: 32px;
+    }
+    .pulse-dot {
+      width: 8px; height: 8px;
+      background: #22d3ee;
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(34,211,238,0.4); }
+      50% { opacity: 0.7; box-shadow: 0 0 0 8px rgba(34,211,238,0); }
+    }
+
+    .hero-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      line-height: 1.1;
+      font-weight: 700;
+      margin-bottom: 24px;
+    }
+    .hero-sub {
+      font-size: 1.1rem; font-weight: 300;
+      color: rgba(224,220,232,0.65);
+      max-width: 550px; margin: 0 auto 40px;
+      line-height: 1.8;
+    }
+    .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+    .btn-primary {
+      position: relative; display: inline-block;
+      padding: 14px 36px;
+      background: linear-gradient(135deg, #7c3aed, #6d28d9);
+      color: #fff;
+      text-decoration: none; font-size: 0.85rem; font-weight: 600;
+      letter-spacing: 0.5px; border-radius: 50px; border: none; cursor: pointer;
+      overflow: hidden; transition: all 0.3s ease;
+      font-family: 'Inter', sans-serif;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(124,58,237,0.4);
+    }
+    .btn-glow {
+      position: absolute; inset: -2px;
+      background: linear-gradient(135deg, #7c3aed, #06b6d4, #7c3aed);
+      background-size: 200% 200%;
+      border-radius: 50px;
+      z-index: -1;
+      animation: btnGlow 3s ease infinite;
+      filter: blur(8px);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .btn-primary:hover .btn-glow { opacity: 0.6; }
+    @keyframes btnGlow {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    .btn-secondary {
+      display: inline-block; padding: 14px 36px;
+      background: transparent; color: #a78bfa;
+      text-decoration: none; font-size: 0.85rem; font-weight: 500;
+      letter-spacing: 0.5px; border-radius: 50px;
+      border: 1px solid rgba(124,58,237,0.4);
+      transition: all 0.3s ease;
+    }
+    .btn-secondary:hover {
+      background: rgba(124,58,237,0.1);
+      border-color: #7c3aed;
+    }
+
+    /* ========== STATS ========== */
+    .stats-bar {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 24px; max-width: 900px; margin: 0 auto 80px;
+      padding: 40px 24px;
+      background: rgba(255,255,255,0.03);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(124,58,237,0.1);
+      border-radius: 20px;
+      text-align: center;
+    }
+    .stat-number {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.5rem; font-weight: 700;
+      background: linear-gradient(135deg, #a78bfa, #22d3ee);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .stat-suffix {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.5rem; font-weight: 700;
+      background: linear-gradient(135deg, #a78bfa, #22d3ee);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .stat-label {
+      display: block; font-size: 0.75rem; letter-spacing: 1px;
+      text-transform: uppercase; color: rgba(224,220,232,0.4); margin-top: 4px;
+    }
+
+    /* ========== COURSES ========== */
+    .courses { max-width: 1100px; margin: 0 auto; padding: 80px 24px; }
+    .section-header { text-align: center; margin-bottom: 60px; }
+    .section-tag {
+      font-size: 0.8rem; letter-spacing: 4px; text-transform: uppercase;
+      color: #a78bfa; margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; margin-bottom: 12px;
+    }
+    .section-desc {
+      font-weight: 300; color: rgba(224,220,232,0.5);
+      max-width: 500px; margin: 0 auto;
+    }
+
+    .course-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .course-card {
+      position: relative;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(124,58,237,0.1);
+      border-radius: 20px;
+      padding: 32px;
+      transition: all 0.4s ease;
+      display: flex; flex-direction: column;
+    }
+    .course-card:hover {
+      border-color: rgba(124,58,237,0.4);
+      transform: perspective(1000px) rotateX(2deg) translateY(-4px);
+      box-shadow: 0 20px 60px rgba(124,58,237,0.1), 0 0 30px rgba(124,58,237,0.05);
+    }
+    .featured-course {
+      border-color: rgba(124,58,237,0.3);
+      background: linear-gradient(135deg, rgba(124,58,237,0.08), rgba(6,182,212,0.05));
+    }
+    .popular-badge {
+      position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+      padding: 6px 16px;
+      background: linear-gradient(135deg, #7c3aed, #06b6d4);
+      color: #fff; font-size: 0.7rem; font-weight: 600;
+      letter-spacing: 1px; text-transform: uppercase; border-radius: 50px;
+      white-space: nowrap;
+    }
+
+    .course-icon {
+      width: 56px; height: 56px;
+      background: rgba(124,58,237,0.1);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      color: #a78bfa;
+      margin-bottom: 20px;
+    }
+    .course-level {
+      font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase;
+      color: #22d3ee; margin-bottom: 8px;
+    }
+    .course-card h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.2rem; font-weight: 600; margin-bottom: 12px;
+    }
+    .course-card p {
+      font-size: 0.9rem; color: rgba(224,220,232,0.5);
+      line-height: 1.7; margin-bottom: 20px; flex: 1;
+    }
+    .course-meta {
+      display: flex; gap: 16px;
+      font-size: 0.75rem; color: rgba(224,220,232,0.35);
+      margin-bottom: 16px;
+    }
+    .course-progress-wrap {
+      height: 4px; background: rgba(255,255,255,0.06);
+      border-radius: 2px; margin-bottom: 20px; overflow: hidden;
+    }
+    .course-progress-bar {
+      height: 100%; width: 0;
+      background: linear-gradient(90deg, #7c3aed, #06b6d4);
+      border-radius: 2px;
+      transition: width 1.5s cubic-bezier(0.16,1,0.3,1);
+    }
+    .course-footer {
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .course-price {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.3rem; font-weight: 700; color: #fff;
+    }
+    .course-cta {
+      color: #a78bfa; text-decoration: none; font-size: 0.85rem; font-weight: 500;
+      transition: color 0.3s ease;
+    }
+    .course-cta:hover { color: #22d3ee; }
+
+    /* ========== FEATURES ========== */
+    .features { max-width: 1100px; margin: 0 auto; padding: 80px 24px; }
+    .feature-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+    .feature-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(124,58,237,0.08);
+      border-radius: 16px;
+      padding: 28px;
+      transition: all 0.4s ease;
+      text-align: center;
+    }
+    .feature-card:hover {
+      border-color: rgba(124,58,237,0.3);
+      transform: translateY(-4px);
+    }
+    .feature-icon-wrap {
+      width: 48px; height: 48px;
+      background: rgba(124,58,237,0.1);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      color: #a78bfa;
+      margin: 0 auto 16px;
+      transition: all 0.3s ease;
+    }
+    .feature-card:hover .feature-icon-wrap {
+      background: rgba(124,58,237,0.2);
+      box-shadow: 0 0 20px rgba(124,58,237,0.2);
+    }
+    .feature-card h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem; font-weight: 600; margin-bottom: 8px;
+    }
+    .feature-card p { font-size: 0.85rem; color: rgba(224,220,232,0.45); line-height: 1.6; }
+
+    /* ========== TESTIMONIALS ========== */
+    .testimonials { max-width: 1100px; margin: 0 auto; padding: 80px 24px; }
+    .testimonial-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .testimonial-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(124,58,237,0.08);
+      border-radius: 20px;
+      padding: 32px;
+      transition: all 0.4s ease;
+      position: relative;
+    }
+    .testimonial-card:hover {
+      border-color: rgba(124,58,237,0.3);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+    }
+    .testimonial-card::before {
+      content: '';
+      position: absolute; inset: -1px;
+      border-radius: 20px;
+      padding: 1px;
+      background: linear-gradient(135deg, rgba(124,58,237,0.3), transparent, rgba(6,182,212,0.3));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    .testimonial-card:hover::before { opacity: 1; }
+    .testimonial-quote {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 3rem; font-weight: 700;
+      background: linear-gradient(135deg, #7c3aed, #06b6d4);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      line-height: 1; margin-bottom: 8px;
+    }
+    .testimonial-card > p {
+      font-size: 0.9rem; line-height: 1.7;
+      color: rgba(224,220,232,0.6); margin-bottom: 24px;
+      font-style: italic;
+    }
+    .testimonial-author { display: flex; align-items: center; gap: 12px; }
+    .avatar {
+      width: 40px; height: 40px;
+      background: linear-gradient(135deg, #7c3aed, #06b6d4);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 0.75rem; font-weight: 700; flex-shrink: 0;
+    }
+    .testimonial-author strong { display: block; font-size: 0.9rem; }
+    .testimonial-author span { font-size: 0.75rem; color: rgba(224,220,232,0.35); }
+
+    /* ========== CTA ========== */
+    .cta { max-width: 800px; margin: 0 auto 80px; padding: 0 24px; }
+    .cta-glass {
+      position: relative;
+      background: rgba(124,58,237,0.06);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(124,58,237,0.15);
+      border-radius: 24px;
+      padding: 64px 40px;
+      text-align: center;
+      overflow: hidden;
+    }
+    .cta-glow {
+      position: absolute; width: 300px; height: 300px;
+      top: 50%; left: 50%; transform: translate(-50%, -50%);
+      background: radial-gradient(circle, rgba(124,58,237,0.15) 0%, transparent 70%);
+      filter: blur(60px);
+      animation: ctaGlow 6s ease-in-out infinite;
+    }
+    @keyframes ctaGlow {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); }
+      50% { transform: translate(-50%, -50%) scale(1.3); }
+    }
+    .cta-glass h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 700; margin-bottom: 16px; position: relative;
+    }
+    .cta-glass p {
+      color: rgba(224,220,232,0.5);
+      margin-bottom: 32px; position: relative;
+    }
+
+    /* ========== COURSE INSTRUCTOR ========== */
+    .course-instructor {
+      display: flex; align-items: center; gap: 8px;
+      margin-top: 10px; font-size: 0.78rem; color: rgba(224,220,232,0.5);
+    }
+
+    /* ========== INSTRUCTORS ========== */
+    .instructors { max-width: 1100px; margin: 0 auto; padding: 80px 24px; }
+    .instructor-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 28px; max-width: 900px; margin: 0 auto;
+    }
+    .instructor-card {
+      background: rgba(124,58,237,0.04);
+      border: 1px solid rgba(124,58,237,0.1);
+      border-radius: 16px; padding: 32px 24px; text-align: center;
+      transition: all 0.4s ease;
+    }
+    .instructor-card:hover {
+      border-color: rgba(124,58,237,0.3);
+      box-shadow: 0 8px 32px rgba(124,58,237,0.08);
+    }
+    .instructor-avatar {
+      width: 64px; height: 64px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-weight: 700; font-size: 1.2rem;
+      margin: 0 auto 16px;
+    }
+    .instructor-card h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.05rem; font-weight: 600; margin-bottom: 4px;
+    }
+    .instructor-role {
+      font-size: 0.8rem; color: #a78bfa; margin-bottom: 12px; font-weight: 500;
+    }
+    .instructor-bio {
+      font-size: 0.82rem; color: rgba(224,220,232,0.5); line-height: 1.7;
+    }
+
+    /* ========== FAQ ========== */
+    .faq-section { max-width: 750px; margin: 0 auto; padding: 80px 24px; }
+    .faq-list { display: flex; flex-direction: column; gap: 12px; }
+    .faq-item {
+      background: rgba(124,58,237,0.04);
+      border: 1px solid rgba(124,58,237,0.1);
+      border-radius: 12px; overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    .faq-item[open] {
+      border-color: rgba(124,58,237,0.25);
+      background: rgba(124,58,237,0.06);
+    }
+    .faq-item summary {
+      padding: 18px 24px; cursor: pointer;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.95rem; font-weight: 500; color: #e0dce8;
+      list-style: none; display: flex; justify-content: space-between; align-items: center;
+    }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary::after {
+      content: '+'; font-size: 1.3rem; color: #7c3aed;
+      transition: transform 0.3s ease;
+    }
+    .faq-item[open] summary::after { content: '−'; }
+    .faq-item p {
+      padding: 0 24px 18px;
+      font-size: 0.88rem; color: rgba(224,220,232,0.6); line-height: 1.8;
+    }
+
+    /* ========== FOOTER ========== */
+    .footer {
+      border-top: 1px solid rgba(124,58,237,0.08);
+      padding: 60px 24px 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .footer-grid {
+      display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 40px; margin-bottom: 40px;
+    }
+    .footer-col { display: flex; flex-direction: column; gap: 4px; }
+    .footer-col h4 {
+      font-family: 'Space Grotesk', sans-serif; font-size: 0.85rem; font-weight: 600;
+      color: #e0dce8; margin-bottom: 12px; letter-spacing: 0.5px;
+    }
+    .footer-col a {
+      color: rgba(224,220,232,0.4); text-decoration: none; font-size: 0.82rem;
+      transition: color 0.3s ease; padding: 3px 0;
+    }
+    .footer-col a:hover { color: #a78bfa; }
+    .footer-bottom {
+      text-align: center; font-size: 0.7rem;
+      color: rgba(224,220,232,0.2);
+      border-top: 1px solid rgba(124,58,237,0.06);
+      padding-top: 20px;
+    }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 900px) {
+      .course-grid { grid-template-columns: repeat(2, 1fr); max-width: 700px; margin: 0 auto; }
+      .testimonial-grid { grid-template-columns: repeat(2, 1fr); }
+      .feature-grid { grid-template-columns: repeat(2, 1fr); }
+      .stats-bar { grid-template-columns: repeat(2, 1fr); }
+      .instructor-grid { grid-template-columns: 1fr; max-width: 400px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .course-grid { grid-template-columns: 1fr; max-width: 400px; }
+      .testimonial-grid { grid-template-columns: 1fr; }
+      .feature-grid { grid-template-columns: 1fr; }
+      .stats-bar { grid-template-columns: 1fr; }
+      .hero-title { font-size: 2.2rem; }
+      .hero-buttons { flex-direction: column; align-items: center; }
+      .back-btn { font-size: 0.75rem; padding: 8px 14px; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .cta-glass { padding: 48px 24px; }
+      .faq-item summary { font-size: 0.88rem; padding: 14px 18px; }
+      .faq-item p { padding: 0 18px 14px; }
+    }
+  </style>
+</body>
+</html>

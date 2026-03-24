@@ -1,0 +1,428 @@
+---
+export const prerender = true;
+---
+
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contatti · Marco Munich Dev</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    [data-theme="dark"] {
+      --bg: #0a0e1a;
+      --bg-card: #111827;
+      --border: #1e293b;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --primary: #3b82f6;
+      --primary-hover: #60a5fa;
+      --accent: #818cf8;
+      --navbar-bg: rgba(10, 14, 26, 0.8);
+      --input-bg: #0f1629;
+    }
+    [data-theme="light"] {
+      --bg: #f8fafc;
+      --bg-card: #ffffff;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --text-dim: #94a3b8;
+      --primary: #2563eb;
+      --primary-hover: #3b82f6;
+      --accent: #818cf8;
+      --navbar-bg: rgba(248, 250, 252, 0.8);
+      --input-bg: #f1f5f9;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      transition: background 0.3s, color 0.3s;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* ── Navbar ── */
+    .navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: var(--navbar-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .navbar-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      transition: color 0.3s;
+    }
+    .nav-logo span { color: var(--primary); }
+    .nav-right { display: flex; align-items: center; gap: 2rem; }
+    .nav-links { display: flex; gap: 1.75rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      transition: color 0.2s;
+      position: relative;
+      padding-bottom: 4px;
+    }
+    .nav-links a:hover { color: var(--primary); }
+    .nav-links a.active { color: var(--primary); }
+    .nav-links a.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--primary);
+      border-radius: 1px;
+    }
+    .theme-toggle {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      width: 36px; height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: background 0.3s, border-color 0.3s;
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+    .theme-toggle:hover { border-color: var(--primary); color: var(--primary); }
+    [data-theme="dark"] .theme-toggle .icon-sun { display: none; }
+    [data-theme="dark"] .theme-toggle .icon-moon { display: inline; }
+    [data-theme="light"] .theme-toggle .icon-sun { display: inline; }
+    [data-theme="light"] .theme-toggle .icon-moon { display: none; }
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 22px; height: 2px;
+      background: var(--text);
+      margin: 5px 0;
+      transition: all 0.3s;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      text-align: center;
+      padding: 10rem 2rem 4rem;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .hero h1 {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 1rem;
+      transition: color 0.3s;
+    }
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      transition: color 0.3s;
+    }
+
+    /* ── Contact grid ── */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 2.5rem;
+      max-width: 950px;
+      margin: 0 auto;
+      padding: 0 2rem 4rem;
+    }
+
+    /* ── Form ── */
+    .form-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .form-group { margin-bottom: 1.2rem; }
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+      transition: color 0.3s;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.7rem 0.9rem;
+      background: var(--input-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.92rem;
+      transition: border-color 0.2s, background 0.3s, color 0.3s;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+    .form-group textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+    .form-group select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2394a3b8' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.9rem center;
+      padding-right: 2.2rem;
+    }
+    .submit-btn {
+      width: 100%;
+      padding: 0.85rem;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 1rem;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .submit-btn:hover { background: var(--primary-hover); }
+
+    /* ── Info cards ── */
+    .info-col {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+    .info-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .info-card .icon {
+      font-size: 1.5rem;
+      margin-bottom: 0.6rem;
+    }
+    .info-card h3 {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      margin-bottom: 0.3rem;
+      transition: color 0.3s;
+    }
+    .info-card p {
+      font-size: 1.05rem;
+      color: var(--text);
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+    .info-card a {
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 1.05rem;
+      transition: color 0.2s;
+    }
+    .info-card a:hover { color: var(--primary-hover); }
+
+    /* ── Bottom note ── */
+    .bottom-note {
+      max-width: 650px;
+      margin: 0 auto;
+      text-align: center;
+      padding: 0 2rem 4rem;
+      color: var(--text-dim);
+      font-size: 0.95rem;
+      transition: color 0.3s;
+    }
+
+    /* ── Footer ── */
+    .footer {
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 2.5rem;
+      transition: border-color 0.3s;
+    }
+    .footer a {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+    .footer a:hover { color: var(--primary); }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 64px; left: 0; right: 0;
+        background: var(--navbar-bg);
+        backdrop-filter: blur(12px);
+        flex-direction: column;
+        padding: 1.5rem;
+        gap: 1rem;
+        border-bottom: 1px solid var(--border);
+      }
+      .nav-links.open { display: flex; }
+      .nav-toggle { display: block; }
+      .hero { padding: 7rem 1.5rem 2rem; }
+      .hero h1 { font-size: 2rem; }
+      .contact-grid {
+        grid-template-columns: 1fr;
+        padding: 0 1.5rem 3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="/dev/" class="nav-logo">Marco Munich <span>&middot; Dev</span></a>
+      <div class="nav-right">
+        <ul class="nav-links" id="navLinks">
+          <li><a href="/dev/come-lavoro">Come Lavoro</a></li>
+          <li><a href="/dev/vibe-coding">Vibe Coding</a></li>
+          <li><a href="/dev/portfolio">Portfolio</a></li>
+          <li><a href="/dev/prezzi">Prezzi</a></li>
+          <li><a href="/dev/contatti" class="active">Contatti</a></li>
+        </ul>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Cambia tema">
+          <span class="icon-sun">&#9728;</span>
+          <span class="icon-moon">&#127769;</span>
+        </button>
+        <button class="nav-toggle" aria-label="Menu" id="navToggle">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <h1>Parliamo del tuo progetto.</h1>
+    <p>Compila il form o scrivimi direttamente. Rispondo sempre entro 24 ore.</p>
+  </section>
+
+  <div class="contact-grid">
+    <div class="form-card">
+      <form>
+        <div class="form-group">
+          <label for="nome">Nome</label>
+          <input type="text" id="nome" name="nome" placeholder="Il tuo nome" />
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="la@tua.email" />
+        </div>
+        <div class="form-group">
+          <label for="tipo">Tipo progetto</label>
+          <select id="tipo" name="tipo">
+            <option value="" disabled selected>Seleziona...</option>
+            <option value="vetrina">Sito Vetrina</option>
+            <option value="professionale">Sito Professionale</option>
+            <option value="ecommerce">E-commerce</option>
+            <option value="landing">Landing Page</option>
+            <option value="altro">Altro</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="budget">Budget indicativo</label>
+          <select id="budget" name="budget">
+            <option value="" disabled selected>Seleziona...</option>
+            <option value="1200-2000">&euro;1.200 - 2.000</option>
+            <option value="2000-3000">&euro;2.000 - 3.000</option>
+            <option value="3000-5000">&euro;3.000 - 5.000</option>
+            <option value="over5000">&gt; &euro;5.000</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="messaggio">Messaggio</label>
+          <textarea id="messaggio" name="messaggio" placeholder="Raccontami il tuo progetto..."></textarea>
+        </div>
+        <button type="submit" class="submit-btn">Invia Richiesta</button>
+      </form>
+    </div>
+
+    <div class="info-col">
+      <div class="info-card">
+        <div class="icon">&#9993;</div>
+        <h3>Email</h3>
+        <p>ciao@marcomunich.com</p>
+      </div>
+      <div class="info-card">
+        <div class="icon">&#9200;</div>
+        <h3>Risposta media</h3>
+        <p>Entro 24 ore</p>
+      </div>
+      <div class="info-card">
+        <div class="icon">&#128172;</div>
+        <h3>Preferisci WhatsApp?</h3>
+        <a href="https://wa.me/393404131924" target="_blank" rel="noopener">Scrivimi su WhatsApp &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-note">
+    Anche se hai solo un'idea vaga, scrivimi e ne parliamo senza impegno.
+  </div>
+
+  <footer class="footer">
+    <a href="/">&larr; Torna a marcomunich.com</a>
+  </footer>
+
+  <script is:inline>
+    const toggle = document.getElementById('theme-toggle');
+    const html = document.documentElement;
+    const saved = localStorage.getItem('dev-theme') || 'dark';
+    html.setAttribute('data-theme', saved);
+    toggle.addEventListener('click', () => {
+      const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('dev-theme', next);
+    });
+
+    document.getElementById('navToggle')?.addEventListener('click', () => {
+      document.getElementById('navLinks')?.classList.toggle('open');
+    });
+  </script>
+</body>
+</html>
