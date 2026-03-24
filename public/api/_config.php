@@ -13,8 +13,6 @@ function loadEnv() {
             if (count($parts) !== 2) continue;
             $val = trim($parts[1]);
             $val = trim($val, '"\'');
-            $val = str_replace('\n', '', $val);
-            $val = str_replace('\r', '', $val);
             putenv(trim($parts[0]) . '=' . $val);
         }
     }
