@@ -26,6 +26,23 @@ export const prerender = true;
     <span class="dot dot-8"></span>
   </div>
 
+  <!-- Announcement bar -->
+  <div class="announcement-bar">
+    Spedizione gratuita sopra i &euro;150 &nbsp;|&nbsp; Reso facile entro 14 giorni
+  </div>
+
+  <!-- Navigation -->
+  <nav class="main-nav">
+    <a href="#" class="nav-logo gradient-text">LUXE NOIR</a>
+    <div class="nav-links">
+      <a href="#nuovi">Nuovi Arrivi</a>
+      <a href="#collezione">Donna</a>
+      <a href="#">Uomo</a>
+      <a href="#">Accessori</a>
+      <a href="#brand">Il Brand</a>
+    </div>
+  </nav>
+
   <!-- Back button -->
   <a href="/dev/portfolio" class="back-btn">
     <span class="back-arrow">&larr;</span> Torna al Portfolio
@@ -126,6 +143,7 @@ export const prerender = true;
         </div>
         <div class="product-info">
           <h3>Borsa Strutturata in Pelle</h3>
+          <p class="product-desc">Pelle di vitello pieno fiore lavorata a mano. Chiusura magnetica, tasca interna con zip, tracolla regolabile. Dimensioni: 28x22x12 cm.</p>
           <p class="product-brand">Bottega Veneta</p>
           <p class="product-price">&euro;2.450</p>
         </div>
@@ -139,6 +157,7 @@ export const prerender = true;
         </div>
         <div class="product-info">
           <h3>Giubbino Imbottito Premium</h3>
+          <p class="product-desc">Esterno in cashmere Storm System&reg; idrorepellente, imbottitura in piuma d'oca. Fodera interna in seta. Vestibilit&agrave; regular fit.</p>
           <p class="product-brand">Loro Piana</p>
           <p class="product-price">&euro;3.890</p>
         </div>
@@ -153,7 +172,8 @@ export const prerender = true;
         </div>
         <div class="product-info">
           <h3>Sneaker Limited Edition</h3>
-          <p class="product-brand">Nike</p>
+          <p class="product-desc">Edizione numerata 1/200. Tomaia in pelle scamosciata con dettagli in oro, suola in gomma vulcanizzata. Inclusa scatola da collezione.</p>
+          <p class="product-brand">Zegna x Nike</p>
           <p class="product-price"><span class="old-price">&euro;1.200</span> &euro;840</p>
         </div>
       </div>
@@ -166,6 +186,7 @@ export const prerender = true;
         </div>
         <div class="product-info">
           <h3>Orologio Automatico Oro Rosa</h3>
+          <p class="product-desc">Movimento automatico svizzero, cassa 40mm in oro rosa 18kt. Quadrante guilloché, cinturino in alligatore. Riserva di carica 72 ore.</p>
           <p class="product-brand">Manifattura Italiana</p>
           <p class="product-price">&euro;5.600</p>
         </div>
@@ -179,6 +200,7 @@ export const prerender = true;
         </div>
         <div class="product-info">
           <h3>Foulard in Seta Stampata</h3>
+          <p class="product-desc">Seta twill 100% con stampa esclusiva Maison. Rifiniture arrotolate a mano, dimensioni 90x90 cm. Prodotto in Italia.</p>
           <p class="product-brand">Valentino</p>
           <p class="product-price">&euro;680</p>
         </div>
@@ -193,6 +215,7 @@ export const prerender = true;
         </div>
         <div class="product-info">
           <h3>Occhiali da Sole Titanio</h3>
+          <p class="product-desc">Montatura ultraleggera in titanio giapponese. Lenti polarizzate con trattamento anti-riflesso. Custodia rigida in pelle inclusa.</p>
           <p class="product-brand">Zegna</p>
           <p class="product-price">&euro;520</p>
         </div>
@@ -257,11 +280,20 @@ export const prerender = true;
   <section class="newsletter fade-in">
     <div class="newsletter-glass">
       <h2 class="newsletter-title">Entra nel <span class="gradient-text">Club Esclusivo</span></h2>
-      <p class="newsletter-desc">Accesso anticipato alle nuove collezioni, inviti a eventi privati e offerte riservate ai membri.</p>
+      <p class="newsletter-desc">Iscriviti alla newsletter e ricevi il 10% di sconto sul primo ordine. Accesso anticipato alle nuove collezioni, inviti a eventi privati e offerte riservate ai membri. Oltre 12.000 iscritti.</p>
       <form class="newsletter-form" onsubmit="event.preventDefault()">
         <input type="email" placeholder="La tua email" class="newsletter-input" />
         <button type="submit" class="btn-primary">Iscriviti</button>
       </form>
+    </div>
+  </section>
+
+  <!-- Brand story -->
+  <section class="brand-story fade-in" id="brand">
+    <div class="brand-story-inner">
+      <p class="section-tag">La Nostra Storia</p>
+      <h2 class="section-title">Il <span class="gradient-text">Brand</span></h2>
+      <p class="brand-story-text">Luxe Noir nasce nel 2019 a Milano dall'idea di creare accessori che uniscono artigianalit&agrave; italiana e design contemporaneo. Ogni pezzo della collezione viene realizzato a mano nei nostri laboratori toscani, selezionando esclusivamente pellami e tessuti di prima scelta. La nostra missione &egrave; rendere il lusso autentico accessibile a chi apprezza la qualit&agrave; senza compromessi.</p>
     </div>
   </section>
 
@@ -271,19 +303,25 @@ export const prerender = true;
       <div class="footer-col">
         <h3 class="footer-logo gradient-text">LUXE NOIR</h3>
         <p class="footer-tagline">L'arte del lusso accessibile.</p>
+        <p class="footer-address">Via Montenapoleone 42, 20121 Milano (MI)</p>
+        <p class="footer-address">Tel. +39 02 7600 1234</p>
+        <p class="footer-address">info@luxenoir.it</p>
       </div>
       <div class="footer-col">
         <h4>Collezioni</h4>
+        <a href="#">Nuovi Arrivi</a>
         <a href="#">Donna</a>
         <a href="#">Uomo</a>
         <a href="#">Accessori</a>
-        <a href="#">Nuovi Arrivi</a>
+        <a href="#">Capsule Collection</a>
       </div>
       <div class="footer-col">
-        <h4>Assistenza</h4>
-        <a href="#">Spedizioni</a>
-        <a href="#">Resi</a>
-        <a href="#">Contatti</a>
+        <h4>Servizio Clienti</h4>
+        <a href="#">Spedizioni in 2-3 giorni lavorativi</a>
+        <a href="#">Reso gratuito entro 14 giorni</a>
+        <a href="#">Pagamenti sicuri</a>
+        <a href="#">Traccia il tuo ordine</a>
+        <a href="#">Contattaci</a>
         <a href="#">FAQ</a>
       </div>
       <div class="footer-col">
@@ -291,10 +329,17 @@ export const prerender = true;
         <a href="#">Instagram</a>
         <a href="#">Pinterest</a>
         <a href="#">Facebook</a>
+        <a href="#">TikTok</a>
       </div>
     </div>
     <div class="footer-bottom">
-      <p>&copy; 2026 Luxe Noir. Tutti i diritti riservati. &mdash; Demo template di Marco Munich</p>
+      <p>&copy; 2026 Luxe Noir S.r.l. &mdash; P.IVA 12345678901 &mdash; Via Montenapoleone 42, Milano</p>
+      <p class="footer-legal">
+        <a href="#">Termini e Condizioni</a> &bull;
+        <a href="#">Privacy Policy</a> &bull;
+        <a href="#">Cookie Policy</a>
+      </p>
+      <p class="footer-demo">Demo template di Marco Munich</p>
     </div>
   </footer>
 
@@ -485,7 +530,7 @@ export const prerender = true;
       position: relative;
       min-height: 100vh;
       display: flex; align-items: center; justify-content: center;
-      padding: 120px 24px 80px;
+      padding: 140px 24px 80px;
       overflow: hidden;
     }
     .hero-gradient {
@@ -742,7 +787,14 @@ export const prerender = true;
       font-family: 'Playfair Display', serif;
       font-size: 1.05rem;
       font-weight: 400;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
+    }
+    .product-desc {
+      font-size: 0.78rem;
+      color: rgba(232,224,212,0.5);
+      line-height: 1.6;
+      margin-bottom: 10px;
+      font-weight: 300;
     }
     .product-brand {
       font-size: 0.75rem;
@@ -923,6 +975,56 @@ export const prerender = true;
       text-align: center;
     }
     .footer-bottom p { font-size: 0.75rem; color: rgba(232,224,212,0.3); }
+    .footer-legal { margin-top: 8px; }
+    .footer-legal a { color: rgba(201,169,110,0.5); text-decoration: none; transition: color 0.3s ease; }
+    .footer-legal a:hover { color: #c9a96e; }
+    .footer-demo { margin-top: 12px; font-style: italic; }
+    .footer-address { font-size: 0.8rem; color: rgba(232,224,212,0.4); line-height: 1.7; }
+
+    /* ========== ANNOUNCEMENT BAR ========== */
+    .announcement-bar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 110;
+      background: linear-gradient(90deg, #c9a96e, #a67c3d);
+      color: #0a0a0a;
+      text-align: center;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      padding: 8px 16px;
+    }
+
+    /* ========== MAIN NAV ========== */
+    .main-nav {
+      position: fixed; top: 32px; left: 0; right: 0; z-index: 105;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 14px 40px;
+      background: rgba(10,10,10,0.75);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(201,169,110,0.1);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; font-weight: 700;
+      text-decoration: none; letter-spacing: 3px;
+    }
+    .nav-links { display: flex; gap: 28px; }
+    .nav-links a {
+      color: rgba(232,224,212,0.7); text-decoration: none;
+      font-size: 0.82rem; font-weight: 400; letter-spacing: 0.5px;
+      transition: color 0.3s ease;
+    }
+    .nav-links a:hover { color: #c9a96e; }
+
+    /* ========== BRAND STORY ========== */
+    .brand-story {
+      max-width: 800px; margin: 0 auto 60px; padding: 80px 24px;
+      text-align: center;
+    }
+    .brand-story-text {
+      font-size: 1rem; font-weight: 300; line-height: 2;
+      color: rgba(232,224,212,0.65);
+      max-width: 650px; margin: 24px auto 0;
+    }
 
     /* ========== RESPONSIVE ========== */
     @media (max-width: 900px) {
@@ -930,6 +1032,7 @@ export const prerender = true;
       .testimonial-grid { grid-template-columns: 1fr; }
       .footer-grid { grid-template-columns: 1fr 1fr; }
       .stats { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+      .nav-links { display: none; }
     }
     @media (max-width: 600px) {
       .product-grid { grid-template-columns: 1fr; max-width: 360px; margin: 0 auto; }
@@ -941,6 +1044,8 @@ export const prerender = true;
       .floating-mockups { display: none; }
       .back-btn { font-size: 0.75rem; padding: 8px 14px; }
       .featured-glass { padding: 48px 24px; }
+      .announcement-bar { font-size: 0.7rem; padding: 6px 12px; }
+      .main-nav { top: 28px; padding: 10px 20px; }
     }
   </style>
 </body>

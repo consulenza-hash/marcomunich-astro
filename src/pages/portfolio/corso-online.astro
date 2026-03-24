@@ -5,7 +5,7 @@ export const prerender = true;
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NebulaDev — Piattaforma Corsi Premium</title>
+  <title>La Tua Academy — Impara le Competenze del Futuro</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -35,7 +35,7 @@ export const prerender = true;
 
   <!-- Top nav bar -->
   <div style="position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,1,24,0.85);backdrop-filter:blur(12px);border-bottom:1px solid rgba(124,58,237,0.2);padding:12px 24px;display:flex;justify-content:space-between;align-items:center;">
-    <span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.1rem;color:#fff;">NebulaDev</span>
+    <span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.1rem;color:#fff;">La Tua Academy</span>
     <div style="display:flex;gap:16px;align-items:center;">
       <a href="#corsi" style="color:#94a3b8;text-decoration:none;font-size:0.9rem;">Corsi</a>
       <a href="#faq" style="color:#94a3b8;text-decoration:none;font-size:0.9rem;">FAQ</a>
@@ -57,7 +57,7 @@ export const prerender = true;
         Impara a <span class="gradient-text">Programmare</span><br />
         il Tuo Futuro
       </h1>
-      <p class="hero-sub">Corsi avanzati di sviluppo web, design e intelligenza artificiale. Lezioni pratiche, progetti reali, mentorship dedicata.</p>
+      <p class="hero-sub">Corsi avanzati di sviluppo web, design e intelligenza artificiale. Lezioni pratiche, progetti reali, mentorship dedicata. Gi&agrave; 1.247 studenti hanno scelto La Tua Academy per costruire la loro carriera nel digitale.</p>
       <div class="hero-buttons">
         <a href="#corsi" class="btn-primary">
           Esplora i Corsi
@@ -71,19 +71,19 @@ export const prerender = true;
   <!-- Stats bar -->
   <section class="stats-bar fade-in">
     <div class="stat-item">
-      <span class="stat-number" data-target="12500">0</span>
+      <span class="stat-number" data-target="1247">0</span>
       <span class="stat-label">Studenti Iscritti</span>
     </div>
     <div class="stat-item">
-      <span class="stat-number" data-target="95">0</span><span class="stat-suffix">%</span>
+      <span class="stat-number" data-target="98">0</span><span class="stat-suffix">%</span>
       <span class="stat-label">Tasso di Completamento</span>
     </div>
     <div class="stat-item">
-      <span class="stat-number" data-target="48">0</span>
+      <span class="stat-number" data-target="47">0</span>
       <span class="stat-label">Corsi Disponibili</span>
     </div>
     <div class="stat-item">
-      <span class="stat-number" data-target="4">0</span><span class="stat-suffix">.9</span>
+      <span class="stat-number" data-target="4">0</span><span class="stat-suffix">.8</span>
       <span class="stat-label">Valutazione Media</span>
     </div>
   </section>
@@ -101,11 +101,15 @@ export const prerender = true;
           <img src="/images/portfolio/corso-laptop.jpg" alt="Laptop coding" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;" />
         </div>
         <div class="course-level">Avanzato</div>
-        <h3>Full-Stack Development</h3>
-        <p>React, Node.js, TypeScript e architetture moderne. Dal frontend al backend con progetti reali.</p>
+        <h3>Full-Stack Web Development</h3>
+        <p>Impara a costruire applicazioni web complete partendo da zero. Dal frontend con React al backend con Node.js, fino al deploy in produzione. Include TypeScript, PostgreSQL e architetture moderne.</p>
         <div class="course-meta">
-          <span>48 lezioni</span>
-          <span>32 ore</span>
+          <span>18 lezioni</span>
+          <span>24 ore di video</span>
+        </div>
+        <div class="course-instructor">
+          <div style="width:28px;height:28px;border-radius:50%;background:#6366f1;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:0.65rem;flex-shrink:0;">MF</div>
+          <span>Marco Ferretti</span>
         </div>
         <div class="course-progress-wrap">
           <div class="course-progress-bar" style="--progress:75%"></div>
@@ -122,10 +126,14 @@ export const prerender = true;
         </div>
         <div class="course-level">Intermedio</div>
         <h3>AI & Machine Learning</h3>
-        <p>Python, TensorFlow, reti neurali e applicazioni pratiche dell'intelligenza artificiale.</p>
+        <p>Dalle basi del machine learning ai modelli di deep learning. Python, TensorFlow, progetti pratici con dataset reali. Imparerai a costruire, addestrare e deployare modelli predittivi.</p>
         <div class="course-meta">
-          <span>64 lezioni</span>
-          <span>45 ore</span>
+          <span>16 lezioni</span>
+          <span>20 ore di video</span>
+        </div>
+        <div class="course-instructor">
+          <div style="width:28px;height:28px;border-radius:50%;background:#8b5cf6;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:0.65rem;flex-shrink:0;">EC</div>
+          <span>Elena Conti</span>
         </div>
         <div class="course-progress-wrap">
           <div class="course-progress-bar" style="--progress:60%"></div>
@@ -140,11 +148,15 @@ export const prerender = true;
           <img src="/images/portfolio/corso-classroom.jpg" alt="Classroom" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;" />
         </div>
         <div class="course-level">Base</div>
-        <h3>UI/UX Design Moderno</h3>
-        <p>Figma, design system, prototipazione rapida e principi di usabilità avanzata.</p>
+        <h3>UI/UX Design Masterclass</h3>
+        <p>Progetta interfacce che le persone vogliono usare. Figma, ricerca utente, prototipazione, design system. Dal wireframe al prototipo interattivo, passando per user testing e accessibilit&agrave;.</p>
         <div class="course-meta">
-          <span>36 lezioni</span>
-          <span>24 ore</span>
+          <span>12 lezioni</span>
+          <span>16 ore di video</span>
+        </div>
+        <div class="course-instructor">
+          <div style="width:28px;height:28px;border-radius:50%;background:#a855f7;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:0.65rem;flex-shrink:0;">GR</div>
+          <span>Giulia Rossi</span>
         </div>
         <div class="course-progress-wrap">
           <div class="course-progress-bar" style="--progress:40%"></div>
@@ -204,37 +216,99 @@ export const prerender = true;
     <div class="testimonial-grid">
       <div class="testimonial-card fade-in" style="--delay:0s">
         <div class="testimonial-quote">"</div>
-        <p>Dopo il corso di Full-Stack sono passato da junior a mid-level in sei mesi. I progetti pratici hanno fatto la differenza nei colloqui.</p>
+        <p>Dopo il corso di Full-Stack Web Development sono passato da junior a mid-level in sei mesi. I progetti pratici con React e Node.js hanno fatto la differenza nei colloqui. Oggi lavoro in una startup fintech a Milano.</p>
         <div class="testimonial-author">
           <div style="width:40px;height:40px;border-radius:50%;background:#6366f1;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:0.85rem;flex-shrink:0;">LM</div>
           <div>
-            <strong>Luca Martini</strong>
-            <span>Full-Stack Developer @ Startup</span>
+            <strong>Luca Martinelli</strong>
+            <span>Full-Stack Web Development &mdash; Software Engineer @ Fintech Startup</span>
           </div>
         </div>
       </div>
       <div class="testimonial-card fade-in" style="--delay:0.15s">
         <div class="testimonial-quote">"</div>
-        <p>Il corso di AI mi ha aperto le porte di un mondo completamente nuovo. La mentorship individuale vale da sola il prezzo dell'abbonamento.</p>
+        <p>Il corso di AI & Machine Learning mi ha aperto le porte di un mondo completamente nuovo. La mentorship individuale con Elena Conti vale da sola il prezzo del corso. Oggi gestisco un team di data science in azienda.</p>
         <div class="testimonial-author">
           <div style="width:40px;height:40px;border-radius:50%;background:#8b5cf6;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:0.85rem;flex-shrink:0;">SC</div>
           <div>
             <strong>Sara Colombo</strong>
-            <span>Data Scientist @ Enterprise</span>
+            <span>AI & Machine Learning &mdash; Data Science Lead @ Enterprise</span>
           </div>
         </div>
       </div>
       <div class="testimonial-card fade-in" style="--delay:0.3s">
         <div class="testimonial-quote">"</div>
-        <p>Venivo dal graphic design e volevo capire meglio l'UX. Il percorso è strutturato in modo chiaro e i feedback dei mentor sono puntuali.</p>
+        <p>Venivo dal graphic design e volevo fare il salto verso l'UX. Il percorso di UI/UX Design Masterclass con Giulia Rossi mi ha dato metodo e strumenti concreti. Ora lavoro come UX designer freelance con clienti internazionali.</p>
         <div class="testimonial-author">
-          <div style="width:40px;height:40px;border-radius:50%;background:#a855f7;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:0.85rem;flex-shrink:0;">MF</div>
+          <div style="width:40px;height:40px;border-radius:50%;background:#a855f7;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:0.85rem;flex-shrink:0;">AF</div>
           <div>
-            <strong>Marco Ferraro</strong>
-            <span>UX Designer Freelance</span>
+            <strong>Andrea Ferraro</strong>
+            <span>UI/UX Design Masterclass &mdash; UX Designer Freelance</span>
           </div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- Instructors -->
+  <section class="instructors fade-in">
+    <div class="section-header fade-in">
+      <p class="section-tag">Il Nostro Team</p>
+      <h2 class="section-title">I <span class="gradient-text">Docenti</span></h2>
+    </div>
+    <div class="instructor-grid">
+      <div class="instructor-card fade-in" style="--delay:0s">
+        <div class="instructor-avatar" style="background:#6366f1;">MF</div>
+        <h3>Marco Ferretti</h3>
+        <p class="instructor-role">Full-Stack Development</p>
+        <p class="instructor-bio">Senior Developer con 12 anni di esperienza in aziende come Spotify e Shopify. Specializzato in architetture scalabili e performance web.</p>
+      </div>
+      <div class="instructor-card fade-in" style="--delay:0.1s">
+        <div class="instructor-avatar" style="background:#8b5cf6;">EC</div>
+        <h3>Elena Conti</h3>
+        <p class="instructor-role">AI & Machine Learning</p>
+        <p class="instructor-bio">PhD in Computer Science al Politecnico di Milano. 8 anni di ricerca in NLP e computer vision. Ex Google AI Research.</p>
+      </div>
+      <div class="instructor-card fade-in" style="--delay:0.2s">
+        <div class="instructor-avatar" style="background:#a855f7;">GR</div>
+        <h3>Giulia Rossi</h3>
+        <p class="instructor-role">UI/UX Design</p>
+        <p class="instructor-bio">Lead Designer con 10 anni di esperienza. Ha progettato interfacce per startup e grandi aziende tra cui Booking.com e N26.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq-section" id="faq">
+    <div class="section-header fade-in">
+      <p class="section-tag">Domande Frequenti</p>
+      <h2 class="section-title">Hai Qualche <span class="gradient-text">Dubbio</span>?</h2>
+    </div>
+    <div class="faq-list">
+      <details class="faq-item fade-in" style="--delay:0s">
+        <summary>Come funziona l'accesso ai corsi?</summary>
+        <p>Dopo l'acquisto ricevi immediatamente le credenziali per accedere alla piattaforma. Puoi iniziare a seguire le lezioni subito, senza limiti di tempo. L'accesso ai contenuti &egrave; illimitato e include tutti gli aggiornamenti futuri del corso.</p>
+      </details>
+      <details class="faq-item fade-in" style="--delay:0.05s">
+        <summary>Posso seguire i corsi da mobile?</summary>
+        <p>Assolutamente s&igrave;. La piattaforma &egrave; ottimizzata per smartphone e tablet. Puoi guardare le lezioni, completare gli esercizi e interagire con i mentor direttamente dal tuo dispositivo mobile, anche offline scaricando i contenuti.</p>
+      </details>
+      <details class="faq-item fade-in" style="--delay:0.1s">
+        <summary>Rilasciate certificati?</summary>
+        <p>S&igrave;, ogni corso rilascia un certificato di completamento verificabile con codice univoco. Il certificato attesta le competenze acquisite ed &egrave; riconosciuto dalle nostre aziende partner per processi di selezione e avanzamento di carriera.</p>
+      </details>
+      <details class="faq-item fade-in" style="--delay:0.15s">
+        <summary>Cosa succede se non finisco in tempo?</summary>
+        <p>Non c'&egrave; nessuna scadenza. Una volta acquistato il corso, l'accesso &egrave; tuo per sempre. Puoi procedere al tuo ritmo, mettere in pausa e riprendere quando vuoi. Aggiorniamo regolarmente i contenuti e avrai accesso anche a quelli.</p>
+      </details>
+      <details class="faq-item fade-in" style="--delay:0.2s">
+        <summary>Che livello di preparazione serve per iniziare?</summary>
+        <p>Dipende dal corso. I corsi base non richiedono conoscenze pregresse. Per i corsi intermedi e avanzati indichiamo i prerequisiti nella scheda del corso. In caso di dubbio, il nostro team &egrave; disponibile per consigliarti il percorso pi&ugrave; adatto.</p>
+      </details>
+      <details class="faq-item fade-in" style="--delay:0.25s">
+        <summary>Posso richiedere il rimborso?</summary>
+        <p>Offriamo una garanzia soddisfatti o rimborsati entro 30 giorni dall'acquisto, senza domande. Se il corso non soddisfa le tue aspettative, ti restituiamo il 100% dell'importo.</p>
+      </details>
     </div>
   </section>
 
@@ -250,20 +324,39 @@ export const prerender = true;
 
   <!-- Footer -->
   <footer class="footer">
-    <div class="footer-inner">
-      <div class="footer-brand">
-        <h3 class="gradient-text">NEBULADEV</h3>
-        <p>Impara. Costruisci. Cresci.</p>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h3 class="gradient-text" style="font-family:'Space Grotesk',sans-serif;font-size:1.2rem;margin-bottom:12px;">LA TUA ACADEMY</h3>
+        <p style="font-size:0.85rem;color:rgba(224,220,232,0.5);line-height:1.7;">Impara. Costruisci. Cresci.<br />La piattaforma italiana per chi vuole costruire una carriera nel digitale.</p>
+        <p style="font-size:0.8rem;color:rgba(224,220,232,0.4);margin-top:12px;">Via Torino 68, 20123 Milano (MI)<br />supporto@latuaacademy.it<br />Tel. +39 02 8900 4567</p>
       </div>
-      <div class="footer-links">
-        <a href="#">Corsi</a>
-        <a href="#">Prezzi</a>
+      <div class="footer-col">
+        <h4>Piattaforma</h4>
+        <a href="#">Tutti i Corsi</a>
+        <a href="#">Piani e Prezzi</a>
+        <a href="#">Per le Aziende</a>
         <a href="#">Blog</a>
-        <a href="#">Contatti</a>
-        <a href="#">Privacy</a>
+        <a href="#">Diventa Docente</a>
+      </div>
+      <div class="footer-col">
+        <h4>Supporto</h4>
+        <a href="#">Centro Assistenza</a>
+        <a href="#">Contattaci</a>
+        <a href="#">FAQ</a>
+        <a href="#">Community Discord</a>
+      </div>
+      <div class="footer-col">
+        <h4>Legale</h4>
+        <a href="#">Termini e Condizioni</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Cookie Policy</a>
+        <a href="#">Diritto di Recesso</a>
       </div>
     </div>
-    <p class="footer-copy">&copy; 2026 NebulaDev. Tutti i diritti riservati. &mdash; Demo template di Marco Munich</p>
+    <div class="footer-bottom">
+      <p>&copy; 2026 La Tua Academy S.r.l. &mdash; P.IVA 98765432101 &mdash; Via Torino 68, Milano</p>
+      <p style="margin-top:8px;font-style:italic;">Demo template di Marco Munich</p>
+    </div>
   </footer>
 
   <script>
@@ -737,28 +830,97 @@ export const prerender = true;
       margin-bottom: 32px; position: relative;
     }
 
+    /* ========== COURSE INSTRUCTOR ========== */
+    .course-instructor {
+      display: flex; align-items: center; gap: 8px;
+      margin-top: 10px; font-size: 0.78rem; color: rgba(224,220,232,0.5);
+    }
+
+    /* ========== INSTRUCTORS ========== */
+    .instructors { max-width: 1100px; margin: 0 auto; padding: 80px 24px; }
+    .instructor-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 28px; max-width: 900px; margin: 0 auto;
+    }
+    .instructor-card {
+      background: rgba(124,58,237,0.04);
+      border: 1px solid rgba(124,58,237,0.1);
+      border-radius: 16px; padding: 32px 24px; text-align: center;
+      transition: all 0.4s ease;
+    }
+    .instructor-card:hover {
+      border-color: rgba(124,58,237,0.3);
+      box-shadow: 0 8px 32px rgba(124,58,237,0.08);
+    }
+    .instructor-avatar {
+      width: 64px; height: 64px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-weight: 700; font-size: 1.2rem;
+      margin: 0 auto 16px;
+    }
+    .instructor-card h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.05rem; font-weight: 600; margin-bottom: 4px;
+    }
+    .instructor-role {
+      font-size: 0.8rem; color: #a78bfa; margin-bottom: 12px; font-weight: 500;
+    }
+    .instructor-bio {
+      font-size: 0.82rem; color: rgba(224,220,232,0.5); line-height: 1.7;
+    }
+
+    /* ========== FAQ ========== */
+    .faq-section { max-width: 750px; margin: 0 auto; padding: 80px 24px; }
+    .faq-list { display: flex; flex-direction: column; gap: 12px; }
+    .faq-item {
+      background: rgba(124,58,237,0.04);
+      border: 1px solid rgba(124,58,237,0.1);
+      border-radius: 12px; overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    .faq-item[open] {
+      border-color: rgba(124,58,237,0.25);
+      background: rgba(124,58,237,0.06);
+    }
+    .faq-item summary {
+      padding: 18px 24px; cursor: pointer;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.95rem; font-weight: 500; color: #e0dce8;
+      list-style: none; display: flex; justify-content: space-between; align-items: center;
+    }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary::after {
+      content: '+'; font-size: 1.3rem; color: #7c3aed;
+      transition: transform 0.3s ease;
+    }
+    .faq-item[open] summary::after { content: '−'; }
+    .faq-item p {
+      padding: 0 24px 18px;
+      font-size: 0.88rem; color: rgba(224,220,232,0.6); line-height: 1.8;
+    }
+
     /* ========== FOOTER ========== */
     .footer {
       border-top: 1px solid rgba(124,58,237,0.08);
-      padding: 40px 24px 24px;
+      padding: 60px 24px 24px;
       max-width: 1100px;
       margin: 0 auto;
     }
-    .footer-inner {
-      display: flex; justify-content: space-between; align-items: center;
-      margin-bottom: 24px; flex-wrap: wrap; gap: 16px;
+    .footer-grid {
+      display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 40px; margin-bottom: 40px;
     }
-    .footer-brand h3 {
-      font-family: 'Space Grotesk', sans-serif; font-size: 1.4rem; font-weight: 700;
+    .footer-col { display: flex; flex-direction: column; gap: 4px; }
+    .footer-col h4 {
+      font-family: 'Space Grotesk', sans-serif; font-size: 0.85rem; font-weight: 600;
+      color: #e0dce8; margin-bottom: 12px; letter-spacing: 0.5px;
     }
-    .footer-brand p { font-size: 0.8rem; color: rgba(224,220,232,0.35); }
-    .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
-    .footer-links a {
-      color: rgba(224,220,232,0.4); text-decoration: none; font-size: 0.85rem;
-      transition: color 0.3s ease;
+    .footer-col a {
+      color: rgba(224,220,232,0.4); text-decoration: none; font-size: 0.82rem;
+      transition: color 0.3s ease; padding: 3px 0;
     }
-    .footer-links a:hover { color: #a78bfa; }
-    .footer-copy {
+    .footer-col a:hover { color: #a78bfa; }
+    .footer-bottom {
       text-align: center; font-size: 0.7rem;
       color: rgba(224,220,232,0.2);
       border-top: 1px solid rgba(124,58,237,0.06);
@@ -771,6 +933,8 @@ export const prerender = true;
       .testimonial-grid { grid-template-columns: repeat(2, 1fr); }
       .feature-grid { grid-template-columns: repeat(2, 1fr); }
       .stats-bar { grid-template-columns: repeat(2, 1fr); }
+      .instructor-grid { grid-template-columns: 1fr; max-width: 400px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
     }
     @media (max-width: 600px) {
       .course-grid { grid-template-columns: 1fr; max-width: 400px; }
@@ -780,9 +944,10 @@ export const prerender = true;
       .hero-title { font-size: 2.2rem; }
       .hero-buttons { flex-direction: column; align-items: center; }
       .back-btn { font-size: 0.75rem; padding: 8px 14px; }
-      .footer-inner { flex-direction: column; text-align: center; }
-      .footer-links { justify-content: center; }
+      .footer-grid { grid-template-columns: 1fr; }
       .cta-glass { padding: 48px 24px; }
+      .faq-item summary { font-size: 0.88rem; padding: 14px 18px; }
+      .faq-item p { padding: 0 18px 14px; }
     }
   </style>
 </body>
