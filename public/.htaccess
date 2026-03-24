@@ -8,6 +8,14 @@ DirectoryIndex index.html index.php
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
 </IfModule>
 
+# ── HTML: no cache (evita CF a servire HTML con hash CSS obsoleti) ────────────
+<FilesMatch "\.html$">
+  <IfModule mod_headers.c>
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+  </IfModule>
+</FilesMatch>
+
 # ── Cache lunga per asset Astro con hash nel nome ─────────────────────────────
 <FilesMatch "\.(js|css|woff2|woff|ttf|eot|svg|ico|png|jpg|jpeg|gif|webp|avif)$">
   <IfModule mod_headers.c>
