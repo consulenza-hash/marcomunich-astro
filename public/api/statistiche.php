@@ -37,7 +37,7 @@ if (!$sa) jsonResponse(['error' => 'GOOGLE_SERVICE_ACCOUNT_JSON non valido'], 50
 $propertyId = getenv('GA4_PROPERTY_ID') ?: '';
 if (!$propertyId) jsonResponse(['error' => 'GA4_PROPERTY_ID mancante'], 500);
 
-$siteUrl = rtrim(getenv('GSC_SITE_URL') ?: 'https://marcomunich.com/', '/') . '/';
+$siteUrl = getenv('GSC_SITE_URL') ?: 'https://marcomunich.com/';
 
 // ── JWT / Token ───────────────────────────────────────────────────────────────
 function makeJwt(array $sa, array $scopes): string {
