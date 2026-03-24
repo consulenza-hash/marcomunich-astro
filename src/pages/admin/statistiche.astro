@@ -1,117 +1,5 @@
 ---
-/**
- * /admin/statistiche — Dashboard analytics SSR
- * Protetta da password (STATS_PASSWORD env var).
- * Mostra dati GA4 + Google Search Console.
- */
-export const prerender = false;
-
-import { fetchAnalyticsData } from '@lib/analytics';
-import type { AnalyticsData } from '@lib/analytics';
-
-// ── Auth ──────────────────────────────────────────────────────────────────────
-const STATS_PASSWORD = import.meta.env.STATS_PASSWORD ?? '';
-const AUTH_COOKIE    = 'stats_auth';
-
-function checkAuth(req: Request): boolean {
-  if (!STATS_PASSWORD) return true; // nessuna password impostata → aperto
-  const cookie = req.headers.get('cookie') ?? '';
-  const match  = cookie.match(new RegExp(`(?:^|;)\\s*${AUTH_COOKIE}=([^;]+)`));
-  return match?.[1] === STATS_PASSWORD;
-}
-
-let authorized = checkAuth(Astro.request);
-let loginError  = false;
-
-// Gestione POST (login form)
-if (Astro.request.method === 'POST') {
-  const form = await Astro.request.formData();
-  const pwd  = String(form.get('password') ?? '');
-  if (pwd === STATS_PASSWORD) {
-    return new Response(null, {
-      status: 302,
-      headers: {
-        Location: '/admin/statistiche',
-        'Set-Cookie': `${AUTH_COOKIE}=${STATS_PASSWORD}; Path=/; HttpOnly; SameSite=Strict; Max-Age=86400`,
-      },
-    });
-  }
-  loginError = true;
-}
-
-// ── Dati ──────────────────────────────────────────────────────────────────────
-let data: AnalyticsData | null = null;
-let error: string | null = null;
-
-const urlObj   = new URL(Astro.request.url);
-const daysParam = urlObj.searchParams.get('days') ?? '30';
-const fromParam = urlObj.searchParams.get('from') ?? '';
-const toParam   = urlObj.searchParams.get('to')   ?? '';
-
-// Valori validi per il preset
-const VALID_DAYS = [7, 14, 30, 90, 180, 0] as const; // 0 = sempre
-const isCustom   = !!(fromParam && toParam);
-const daysNum    = VALID_DAYS.includes(Number(daysParam) as any) ? Number(daysParam) : 30;
-const days       = isCustom ? 30 : daysNum; // usato solo come fallback per label
-
-// Data personalizzata: validazione formato YYYY-MM-DD
-const RE_DATE = /^\d{4}-\d{2}-\d{2}$/;
-const fromVal = isCustom && RE_DATE.test(fromParam) ? fromParam : '';
-const toVal   = isCustom && RE_DATE.test(toParam)   ? toParam   : '';
-
-if (authorized) {
-  try {
-    if (isCustom && fromVal && toVal) {
-      data = await fetchAnalyticsData(30, fromVal, toVal);
-    } else {
-      data = await fetchAnalyticsData(daysNum);
-    }
-  } catch (e) {
-    error = String(e);
-  }
-}
-
-// ── SVG Sparkline ─────────────────────────────────────────────────────────────
-function sparkline(points: { sessions: number }[], w = 700, h = 80): string {
-  if (!points.length) return '';
-  const vals = points.map(p => p.sessions);
-  const max  = Math.max(...vals, 1);
-  const step = w / (vals.length - 1 || 1);
-  const coords = vals.map((v, i) => `${i * step},${h - (v / max) * (h - 4) - 2}`);
-  const fill   = coords.map((c, i) => i === 0 ? `M${c}` : `L${c}`).join(' ');
-  const area   = `${fill} L${w},${h} L0,${h} Z`;
-  return `<svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" style="width:100%;height:80px">
-    <defs><linearGradient id="sg" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#6366f1" stop-opacity=".3"/>
-      <stop offset="100%" stop-color="#6366f1" stop-opacity="0"/>
-    </linearGradient></defs>
-    <path d="${area}" fill="url(#sg)"/>
-    <path d="${fill}" fill="none" stroke="#6366f1" stroke-width="2" stroke-linejoin="round"/>
-  </svg>`;
-}
-
-function fmtDur(sec: number): string {
-  const m = Math.floor(sec / 60);
-  const s = Math.round(sec % 60);
-  return `${m}:${s.toString().padStart(2,'0')}`;
-}
-
-function deltaClass(n: number): string {
-  return n > 0 ? 'delta-up' : n < 0 ? 'delta-down' : 'delta-neutral';
-}
-
-function deltaLabel(n: number): string {
-  return n === 0 ? '—' : (n > 0 ? `+${n}%` : `${n}%`);
-}
-
-function srcColor(ch: string): string {
-  const map: Record<string, string> = {
-    'Organic Search': '#22c55e', 'Direct': '#6366f1', 'Organic Social': '#f59e0b',
-    'Referral': '#3b82f6', 'Email': '#ec4899', 'Paid Search': '#f97316',
-    'Unassigned': '#94a3b8',
-  };
-  return map[ch] ?? '#94a3b8';
-}
+export const prerender = true;
 ---
 
 <!DOCTYPE html>
@@ -127,15 +15,14 @@ function srcColor(ch: string): string {
            background: #0f0f0f; color: #e2e8f0; min-height: 100vh; }
 
     /* ── Login ── */
-    .login-wrap { display:flex; align-items:center; justify-content:center; min-height:100vh; }
+    .login-wrap { display:flex; align-items:center; justify-content:center; min-height:100vh; position:fixed; inset:0; background:#0f0f0f; z-index:100; }
     .login-box  { background:#1e1e2e; border:1px solid #2d2d3d; border-radius:12px;
                   padding:2.5rem; width:360px; }
     .login-box h1 { font-size:1.25rem; margin-bottom:1.5rem; color:#fff; }
     .login-box input { width:100%; padding:.75rem 1rem; background:#111; border:1px solid #333;
-                       border-radius:8px; color:#fff; font-size:1rem; margin-bottom:1rem; }
+                       border-radius:8px; color:#fff; font-size:1rem; margin-bottom:1rem; box-sizing:border-box; }
     .login-box button { width:100%; padding:.75rem; background:#6366f1; color:#fff;
                         border:none; border-radius:8px; font-size:1rem; font-weight:600; cursor:pointer; }
-    .login-error { color:#f87171; font-size:.875rem; margin-bottom:.75rem; }
 
     /* ── Layout ── */
     .wrap  { max-width:1280px; margin:0 auto; padding:1.5rem 1.5rem 4rem; }
@@ -143,27 +30,11 @@ function srcColor(ch: string): string {
              flex-wrap:wrap; gap:1rem; margin-bottom:2rem; border-bottom:1px solid #222; padding-bottom:1.25rem; }
     header h1 { font-size:1.4rem; font-weight:700; }
     header h1 span { color:#6366f1; }
-    .period-note { font-size:.8rem; color:#64748b; }
 
     .days-tabs { display:flex; gap:.4rem; flex-wrap:wrap; }
     .days-tabs a { padding:.3rem .65rem; border-radius:6px; text-decoration:none; font-size:.8rem;
-                   color:#94a3b8; border:1px solid #2d2d3d; transition:all .15s; white-space:nowrap; }
+                   color:#94a3b8; border:1px solid #2d2d3d; transition:all .15s; white-space:nowrap; cursor:pointer; }
     .days-tabs a.active, .days-tabs a:hover { background:#6366f1; color:#fff; border-color:#6366f1; }
-    .days-tabs a.custom-btn { border-style:dashed; }
-
-    /* Custom date form */
-    .custom-form { display:flex; align-items:center; gap:.5rem; flex-wrap:wrap; margin-top:.5rem; }
-    .custom-form input[type=date] {
-      background:#1e1e2e; border:1px solid #333; border-radius:6px; color:#e2e8f0;
-      font-size:.8rem; padding:.3rem .6rem; outline:none; cursor:pointer;
-    }
-    .custom-form input[type=date]:focus { border-color:#6366f1; }
-    .custom-form button {
-      padding:.3rem .75rem; background:#6366f1; color:#fff; border:none;
-      border-radius:6px; font-size:.8rem; font-weight:600; cursor:pointer;
-    }
-    .custom-form button:hover { background:#4f46e5; }
-    .custom-form label { font-size:.78rem; color:#64748b; }
 
     /* ── Cards overview ── */
     .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:1rem; margin-bottom:2rem; }
@@ -181,12 +52,8 @@ function srcColor(ch: string): string {
     .section-title { font-size:.9rem; font-weight:600; text-transform:uppercase;
                      letter-spacing:.06em; color:#94a3b8; margin-bottom:1.25rem; }
 
-    /* ── Grid 2 col ── */
     .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:1.25rem; }
     @media (max-width:900px) { .grid2 { grid-template-columns:1fr; } }
-
-    /* ── Sparkline ── */
-    .spark-wrap { overflow:hidden; border-radius:6px; }
 
     /* ── Tabelle ── */
     table { width:100%; border-collapse:collapse; font-size:.875rem; }
@@ -196,25 +63,17 @@ function srcColor(ch: string): string {
     tr:last-child td { border-bottom:none; }
     tr:hover td { background:#252535; }
     .num  { text-align:right; font-variant-numeric:tabular-nums; }
-    .pos  { color:#22c55e; }
-    .td-path { max-width:280px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 
     /* ── Source bars ── */
     .src-row  { display:flex; align-items:center; gap:.75rem; margin-bottom:.65rem; }
-    .src-label{ width:160px; font-size:.85rem; color:#cbd5e1; white-space:nowrap;
-                overflow:hidden; text-overflow:ellipsis; flex-shrink:0; }
+    .src-label{ width:160px; font-size:.85rem; color:#cbd5e1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; flex-shrink:0; }
     .src-bar  { flex:1; background:#1a1a2a; border-radius:4px; height:8px; overflow:hidden; }
-    .src-fill { height:100%; border-radius:4px; transition:width .3s; }
+    .src-fill { height:100%; border-radius:4px; }
     .src-num  { width:80px; text-align:right; font-size:.8rem; color:#94a3b8; flex-shrink:0; }
 
-    /* ── Error ── */
-    .error-box { background:#2d1a1a; border:1px solid #7f1d1d; border-radius:10px;
-                 padding:1.5rem; color:#fca5a5; font-size:.9rem; white-space:pre-wrap; }
-
-    /* ── Nessun dato ── */
     .empty { color:#475569; font-size:.875rem; padding:1rem 0; }
-
-    /* ── Badge CTR / pos ── */
+    .loading-msg { text-align:center; padding:3rem; color:#64748b; font-size:1rem; }
+    .error-box { background:#2d1a1a; border:1px solid #7f1d1d; border-radius:10px; padding:1.5rem; color:#fca5a5; font-size:.9rem; }
     .badge { display:inline-block; padding:.15rem .5rem; border-radius:4px; font-size:.75rem; font-weight:600; }
     .badge-green { background:#14532d; color:#86efac; }
     .badge-blue  { background:#1e3a5f; color:#93c5fd; }
@@ -222,222 +81,199 @@ function srcColor(ch: string): string {
 </head>
 <body>
 
-{!authorized ? (
-  <!-- ── Login form ── -->
-  <div class="login-wrap">
-    <div class="login-box">
-      <h1>📊 Statistiche Sito</h1>
-      {loginError && <p class="login-error">Password errata.</p>}
-      <form method="POST">
-        <input type="password" name="password" placeholder="Password" autofocus />
-        <button type="submit">Accedi</button>
-      </form>
-    </div>
+<div id="login-wrap" class="login-wrap" style="display:none">
+  <div class="login-box">
+    <h1>📊 Statistiche Sito</h1>
+    <form id="login-form">
+      <input type="password" id="pwd" placeholder="Password" autofocus />
+      <button type="submit">Accedi</button>
+    </form>
   </div>
+</div>
 
-) : error ? (
-  <!-- ── Errore API ── -->
-  <div class="wrap">
-    <header><h1>📊 <span>Statistiche</span></h1></header>
-    <div class="error-box">
-      ❌ Errore nel caricamento dei dati:\n\n{error}\n\nVerifica le env vars:\n- GOOGLE_SERVICE_ACCOUNT_JSON\n- GA4_PROPERTY_ID\n- GSC_SITE_URL (opzionale, default: https://marcomunich.com/)
-    </div>
-  </div>
-
-) : data ? (
-  <!-- ── Dashboard ── -->
+<div id="content-wrap" style="display:none">
   <div class="wrap">
     <header>
       <div>
         <h1>📊 <span>Statistiche</span> marcomunich.com</h1>
-        <p class="period-note">GA4: {data.period.start} → {data.period.end} &nbsp;|&nbsp; GSC: {data.gscPeriod.start} → {data.gscPeriod.end}</p>
+        <p id="period-note" style="font-size:.8rem;color:#64748b"></p>
       </div>
       <div>
-        <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap;">
-          <nav class="days-tabs">
-            <a href="?days=7"   class={!isCustom && daysNum===7   ? 'active' : ''}>7gg</a>
-            <a href="?days=14"  class={!isCustom && daysNum===14  ? 'active' : ''}>14gg</a>
-            <a href="?days=30"  class={!isCustom && daysNum===30  ? 'active' : ''}>30gg</a>
-            <a href="?days=90"  class={!isCustom && daysNum===90  ? 'active' : ''}>90gg</a>
-            <a href="?days=180" class={!isCustom && daysNum===180 ? 'active' : ''}>180gg</a>
-            <a href="?days=0"   class={!isCustom && daysNum===0   ? 'active' : ''}>Sempre</a>
-            <a href="#custom"   class={`custom-btn${isCustom ? ' active' : ''}`}
-               onclick="document.getElementById('custom-form').style.display='flex';return false;">
-              📅 Personalizzato
-            </a>
-          </nav>
-          <a href="/keystatic" style="font-size:.8rem;color:#64748b;text-decoration:none;margin-left:.5rem;">← CMS</a>
-        </div>
-        <form id="custom-form" class="custom-form" method="GET" action=""
-              style={`display:${isCustom ? 'flex' : 'none'}`}>
-          <label>Dal</label>
-          <input type="date" name="from" value={fromVal || fromParam}
-                 max={new Date().toISOString().split('T')[0]} />
-          <label>al</label>
-          <input type="date" name="to"   value={toVal || toParam}
-                 max={new Date().toISOString().split('T')[0]} />
-          <button type="submit">Applica</button>
-        </form>
+        <nav class="days-tabs" id="days-tabs">
+          <a data-days="7">7gg</a>
+          <a data-days="14">14gg</a>
+          <a data-days="30" class="active">30gg</a>
+          <a data-days="90">90gg</a>
+          <a data-days="180">180gg</a>
+          <a data-days="0">Sempre</a>
+        </nav>
+        <a href="/admin" style="font-size:.8rem;color:#64748b;text-decoration:none;margin-left:.5rem;">← Admin</a>
       </div>
     </header>
 
-    <!-- ── Overview cards ── -->
-    <div class="cards">
-      <div class="card">
-        <div class="card-label">Sessioni</div>
-        <div class="card-value">{data.overview.sessions.toLocaleString('it-IT')}</div>
-        <div class={`card-delta ${deltaClass(data.overview.sessionsDelta)}`}>
-          {deltaLabel(data.overview.sessionsDelta)} vs periodo precedente
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-label">Utenti</div>
-        <div class="card-value">{data.overview.users.toLocaleString('it-IT')}</div>
-        <div class={`card-delta ${deltaClass(data.overview.usersDelta)}`}>
-          {deltaLabel(data.overview.usersDelta)} vs periodo precedente
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-label">Pagine viste</div>
-        <div class="card-value">{data.overview.pageviews.toLocaleString('it-IT')}</div>
-        <div class={`card-delta ${deltaClass(data.overview.pageviewsDelta)}`}>
-          {deltaLabel(data.overview.pageviewsDelta)} vs periodo precedente
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-label">Durata media</div>
-        <div class="card-value">{fmtDur(data.overview.avgDuration)}</div>
-        <div class="card-delta delta-neutral">min:sec per sessione</div>
-      </div>
-      <div class="card">
-        <div class="card-label">Bounce Rate</div>
-        <div class="card-value">{data.overview.bounceRate}%</div>
-        <div class={`card-delta ${deltaClass(-data.overview.bounceRate < -60 ? 1 : 0)}`}>
-          {data.overview.bounceRate < 40 ? '✓ Ottimo' : data.overview.bounceRate < 60 ? 'Nella media' : 'Da migliorare'}
-        </div>
-      </div>
+    <div id="stats-content">
+      <div class="loading-msg">⏳ Caricamento dati...</div>
     </div>
-
-    <!-- ── Andamento sessioni ── -->
-    <div class="section">
-      <div class="section-title">
-        Andamento sessioni —
-        {isCustom ? `${data.period.start} → ${data.period.end}` : daysNum === 0 ? 'tutto il periodo' : `ultimi ${daysNum} giorni`}
-      </div>
-      <div class="spark-wrap" set:html={sparkline(data.daily)} />
-      {data.daily.length === 0 && <p class="empty">Nessun dato disponibile.</p>}
-    </div>
-
-    <!-- ── Grid 2 col: sorgenti + top pages ── -->
-    <div class="grid2">
-
-      <!-- Sorgenti traffico -->
-      <div class="section">
-        <div class="section-title">Sorgenti di traffico</div>
-        {data.sources.length === 0
-          ? <p class="empty">Nessun dato.</p>
-          : data.sources.map(s => (
-            <div class="src-row">
-              <span class="src-label">{s.channel}</span>
-              <div class="src-bar">
-                <div class="src-fill" style={`width:${s.pct}%;background:${srcColor(s.channel)}`}></div>
-              </div>
-              <span class="src-num">{s.sessions.toLocaleString('it-IT')} ({s.pct}%)</span>
-            </div>
-          ))
-        }
-      </div>
-
-      <!-- Top pagine GA4 -->
-      <div class="section">
-        <div class="section-title">Pagine più visitate (GA4)</div>
-        {data.topPages.length === 0
-          ? <p class="empty">Nessun dato.</p>
-          : (
-            <table>
-              <thead><tr>
-                <th>Pagina</th>
-                <th class="num">Visualizz.</th>
-                <th class="num">Utenti</th>
-              </tr></thead>
-              <tbody>
-                {data.topPages.slice(0,12).map(p => (
-                  <tr>
-                    <td class="td-path"><a href={p.path} target="_blank" style="color:#93c5fd;text-decoration:none">{p.path}</a></td>
-                    <td class="num">{p.pageviews.toLocaleString('it-IT')}</td>
-                    <td class="num">{p.users.toLocaleString('it-IT')}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )
-        }
-      </div>
-
-    </div>
-
-    <!-- ── Parole chiave GSC ── -->
-    <div class="section">
-      <div class="section-title">Parole chiave su Google (Search Console) — {data.gscPeriod.start} → {data.gscPeriod.end}</div>
-      {data.keywords.length === 0
-        ? <p class="empty">{data.gscError ? `⚠️ Errore GSC: ${data.gscError}` : '⏳ Proprietà Search Console verificata oggi — i dati keyword appaiono entro 2-3 giorni.'}</p>
-        : (
-          <table>
-            <thead><tr>
-              <th>Query</th>
-              <th class="num">Click</th>
-              <th class="num">Impressioni</th>
-              <th class="num">CTR</th>
-              <th class="num">Posiz. media</th>
-            </tr></thead>
-            <tbody>
-              {data.keywords.map(k => (
-                <tr>
-                  <td>{k.query}</td>
-                  <td class="num">{k.clicks.toLocaleString('it-IT')}</td>
-                  <td class="num">{k.impressions.toLocaleString('it-IT')}</td>
-                  <td class="num"><span class="badge badge-green">{k.ctr}%</span></td>
-                  <td class="num"><span class="badge badge-blue">#{k.position}</span></td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )
-      }
-    </div>
-
-    <!-- ── Pagine da Google (GSC) ── -->
-    <div class="section">
-      <div class="section-title">Pagine più cliccate su Google (Search Console)</div>
-      {data.gscPages.length === 0
-        ? <p class="empty">Nessun dato.</p>
-        : (
-          <table>
-            <thead><tr>
-              <th>Pagina</th>
-              <th class="num">Click</th>
-              <th class="num">Impressioni</th>
-            </tr></thead>
-            <tbody>
-              {data.gscPages.map(p => (
-                <tr>
-                  <td class="td-path">
-                    <a href={p.page} target="_blank" style="color:#93c5fd;text-decoration:none">
-                      {p.page.replace('https://marcomunich.com', '')}
-                    </a>
-                  </td>
-                  <td class="num">{p.clicks.toLocaleString('it-IT')}</td>
-                  <td class="num">{p.impressions.toLocaleString('it-IT')}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )
-      }
-    </div>
-
   </div>
-) : null}
+</div>
+
+<script is:inline>
+(function(){
+  // Auth check
+  var cookie = document.cookie;
+  var auth = cookie.split(';').find(function(c){return c.trim().startsWith('stats_auth=')});
+  if(auth){
+    document.getElementById('content-wrap').style.display='block';
+    loadStats(30);
+  } else {
+    document.getElementById('login-wrap').style.display='flex';
+  }
+  var form = document.getElementById('login-form');
+  if(form) form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var pwd = document.getElementById('pwd').value;
+    fetch('/api/admin-auth.php', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({password:pwd})})
+    .then(function(r){return r.json()})
+    .then(function(d){
+      if(d.success) { document.cookie='stats_auth='+encodeURIComponent(pwd)+';path=/;max-age=604800'; location.reload(); }
+      else alert('Password errata');
+    })
+    .catch(function(){ alert('Errore di connessione'); });
+  });
+
+  // Days tabs
+  document.querySelectorAll('.days-tabs a').forEach(function(a){
+    a.addEventListener('click', function(){
+      document.querySelectorAll('.days-tabs a').forEach(function(b){ b.classList.remove('active'); });
+      a.classList.add('active');
+      loadStats(parseInt(a.dataset.days));
+    });
+  });
+
+  function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  function srcColor(ch) {
+    var map = { 'Organic Search':'#22c55e', 'Direct':'#6366f1', 'Organic Social':'#f59e0b',
+      'Referral':'#3b82f6', 'Email':'#ec4899', 'Paid Search':'#f97316', 'Unassigned':'#94a3b8' };
+    return map[ch] || '#94a3b8';
+  }
+
+  function fmtDur(sec) { var m=Math.floor(sec/60); var s=Math.round(sec%60); return m+':'+String(s).padStart(2,'0'); }
+  function deltaClass(n) { return n>0?'delta-up':n<0?'delta-down':'delta-neutral'; }
+  function deltaLabel(n) { return n===0?'—':n>0?'+'+n+'%':n+'%'; }
+
+  function loadStats(days) {
+    var content = document.getElementById('stats-content');
+    content.innerHTML = '<div class="loading-msg">⏳ Caricamento dati...</div>';
+
+    fetch('/api/statistiche.php?days=' + days)
+      .then(function(r){
+        if(!r.ok) throw new Error('HTTP ' + r.status);
+        return r.json();
+      })
+      .then(function(data){ renderStats(data, days); })
+      .catch(function(err){
+        content.innerHTML = '<div class="error-box">❌ Errore nel caricamento dei dati: ' + esc(err.message) + '</div>';
+      });
+  }
+
+  function renderStats(data, days) {
+    var content = document.getElementById('stats-content');
+    var note = document.getElementById('period-note');
+    note.textContent = 'GA4: ' + data.period.start + ' → ' + data.period.end +
+      ' | GSC: ' + data.gscPeriod.start + ' → ' + data.gscPeriod.end;
+
+    var h = '';
+
+    // Overview cards
+    h += '<div class="cards">';
+    h += card('Sessioni', data.overview.sessions.toLocaleString('it-IT'), data.overview.sessionsDelta);
+    h += card('Utenti', data.overview.users.toLocaleString('it-IT'), data.overview.usersDelta);
+    h += card('Pagine viste', data.overview.pageviews.toLocaleString('it-IT'), data.overview.pageviewsDelta);
+    h += '<div class="card"><div class="card-label">Durata media</div><div class="card-value">' + fmtDur(data.overview.avgDuration) + '</div><div class="card-delta delta-neutral">min:sec per sessione</div></div>';
+    h += '<div class="card"><div class="card-label">Bounce Rate</div><div class="card-value">' + data.overview.bounceRate + '%</div><div class="card-delta ' + deltaClass(data.overview.bounceRate<40?1:data.overview.bounceRate<60?0:-1) + '">' + (data.overview.bounceRate<40?'✓ Ottimo':data.overview.bounceRate<60?'Nella media':'Da migliorare') + '</div></div>';
+    h += '</div>';
+
+    // Sparkline
+    h += '<div class="section"><div class="section-title">Andamento sessioni — ' + (days===0?'tutto il periodo':'ultimi '+days+' giorni') + '</div>';
+    h += sparklineSvg(data.daily);
+    h += '</div>';
+
+    // Grid 2 col
+    h += '<div class="grid2">';
+    // Sources
+    h += '<div class="section"><div class="section-title">Sorgenti di traffico</div>';
+    if(!data.sources.length) h += '<p class="empty">Nessun dato.</p>';
+    else data.sources.forEach(function(s){
+      h += '<div class="src-row"><span class="src-label">' + esc(s.channel) + '</span>';
+      h += '<div class="src-bar"><div class="src-fill" style="width:'+s.pct+'%;background:'+srcColor(s.channel)+'"></div></div>';
+      h += '<span class="src-num">' + s.sessions.toLocaleString('it-IT') + ' (' + s.pct + '%)</span></div>';
+    });
+    h += '</div>';
+
+    // Top pages
+    h += '<div class="section"><div class="section-title">Pagine più visitate (GA4)</div>';
+    if(!data.topPages.length) h += '<p class="empty">Nessun dato.</p>';
+    else {
+      h += '<table><thead><tr><th>Pagina</th><th class="num">Visualizz.</th><th class="num">Utenti</th></tr></thead><tbody>';
+      data.topPages.slice(0,12).forEach(function(p){
+        h += '<tr><td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"><a href="'+esc(p.path)+'" target="_blank" style="color:#93c5fd;text-decoration:none">'+esc(p.path)+'</a></td>';
+        h += '<td class="num">'+p.pageviews.toLocaleString('it-IT')+'</td>';
+        h += '<td class="num">'+p.users.toLocaleString('it-IT')+'</td></tr>';
+      });
+      h += '</tbody></table>';
+    }
+    h += '</div></div>';
+
+    // Keywords
+    h += '<div class="section"><div class="section-title">Parole chiave su Google (Search Console)</div>';
+    if(!data.keywords.length) h += '<p class="empty">' + (data.gscError ? '⚠️ Errore GSC: '+esc(data.gscError) : '⏳ I dati keyword appaiono entro 2-3 giorni.') + '</p>';
+    else {
+      h += '<table><thead><tr><th>Query</th><th class="num">Click</th><th class="num">Impressioni</th><th class="num">CTR</th><th class="num">Posiz. media</th></tr></thead><tbody>';
+      data.keywords.forEach(function(k){
+        h += '<tr><td>'+esc(k.query)+'</td><td class="num">'+k.clicks.toLocaleString('it-IT')+'</td><td class="num">'+k.impressions.toLocaleString('it-IT')+'</td>';
+        h += '<td class="num"><span class="badge badge-green">'+k.ctr+'%</span></td>';
+        h += '<td class="num"><span class="badge badge-blue">#'+k.position+'</span></td></tr>';
+      });
+      h += '</tbody></table>';
+    }
+    h += '</div>';
+
+    // GSC Pages
+    h += '<div class="section"><div class="section-title">Pagine più cliccate su Google (Search Console)</div>';
+    if(!data.gscPages.length) h += '<p class="empty">Nessun dato.</p>';
+    else {
+      h += '<table><thead><tr><th>Pagina</th><th class="num">Click</th><th class="num">Impressioni</th></tr></thead><tbody>';
+      data.gscPages.forEach(function(p){
+        h += '<tr><td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"><a href="'+esc(p.page)+'" target="_blank" style="color:#93c5fd;text-decoration:none">'+esc(p.page.replace('https://marcomunich.com',''))+'</a></td>';
+        h += '<td class="num">'+p.clicks.toLocaleString('it-IT')+'</td><td class="num">'+p.impressions.toLocaleString('it-IT')+'</td></tr>';
+      });
+      h += '</tbody></table>';
+    }
+    h += '</div>';
+
+    content.innerHTML = h;
+  }
+
+  function card(label, value, delta) {
+    return '<div class="card"><div class="card-label">'+label+'</div><div class="card-value">'+value+'</div><div class="card-delta '+deltaClass(delta)+'">'+deltaLabel(delta)+' vs periodo precedente</div></div>';
+  }
+
+  function sparklineSvg(points) {
+    if(!points||!points.length) return '<p class="empty">Nessun dato disponibile.</p>';
+    var w=700,h=80;
+    var vals=points.map(function(p){return p.sessions;});
+    var max=Math.max.apply(null,vals.concat([1]));
+    var step=w/(vals.length-1||1);
+    var coords=vals.map(function(v,i){return (i*step)+','+(h-(v/max)*(h-4)-2);});
+    var fill=coords.map(function(c,i){return (i===0?'M':'L')+c;}).join(' ');
+    var area=fill+' L'+w+','+h+' L0,'+h+' Z';
+    return '<div style="overflow:hidden;border-radius:6px"><svg viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="none" style="width:100%;height:80px">' +
+      '<defs><linearGradient id="sg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#6366f1" stop-opacity=".3"/><stop offset="100%" stop-color="#6366f1" stop-opacity="0"/></linearGradient></defs>' +
+      '<path d="'+area+'" fill="url(#sg)"/><path d="'+fill+'" fill="none" stroke="#6366f1" stroke-width="2" stroke-linejoin="round"/></svg></div>';
+  }
+})();
+</script>
 
 </body>
 </html>

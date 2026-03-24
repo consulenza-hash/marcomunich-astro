@@ -1,7 +1,6 @@
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 import sitemap from '@astrojs/sitemap';
-import vercel from '@astrojs/vercel';
 // import keystatic from '@keystatic/astro';
 // import react from '@astrojs/react';
 import { fileURLToPath } from 'url';
@@ -14,12 +13,9 @@ export default defineConfig({
   // Sito in produzione
   site: 'https://marcomunich.com',
 
-  // Static con Vercel adapter: le pagine con prerender=false diventano serverless functions
+  // Output completamente statico — no adapter, no SSR
+  // Le API sono in PHP nella cartella /api/ su Netsons
   output: 'static',
-  adapter: vercel(),
-
-  // Necessario per form POST SSR (es. /admin/statistiche login)
-  security: { checkOrigin: false },
 
   integrations: [
     tailwind(),
