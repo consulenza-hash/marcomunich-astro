@@ -10,40 +10,93 @@ export const prerender = true;
   <meta name="robots" content="noindex, nofollow" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: #0f0f1a; color: #e2e8f0; font-family: system-ui, sans-serif; min-height: 100vh; }
-    .login-wrap { display: flex; align-items: center; justify-content: center; min-height: 100vh; position: fixed; inset: 0; background: #0f0f1a; z-index: 100; }
-    .login-box { background: #1a1a2e; border: 1px solid #2d2d3d; border-radius: 14px; padding: 2.5rem; width: 320px; text-align: center; }
-    .login-box h1 { font-size: 1rem; color: #64748b; margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: .1em; }
-    input[type=password] { width: 100%; padding: .75rem 1rem; background: #0f0f1a; border: 1px solid #2d2d3d; border-radius: 8px; color: #e2e8f0; font-size: .95rem; margin-bottom: .75rem; box-sizing: border-box; }
+    body { background: #0a0a12; color: #e2e8f0; font-family: system-ui, sans-serif; min-height: 100vh; }
+
+    /* ── Login ── */
+    .login-wrap { display: flex; align-items: center; justify-content: center; min-height: 100vh; position: fixed; inset: 0; background: #0a0a12; z-index: 100; }
+    .login-box { background: #111827; border: 1px solid #1f2937; border-radius: 14px; padding: 2.5rem; width: 320px; text-align: center; }
+    .login-box h1 { font-size: .9rem; color: #64748b; margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: .1em; }
+    input[type=password] { width: 100%; padding: .75rem 1rem; background: #0a0a12; border: 1px solid #1f2937; border-radius: 8px; color: #e2e8f0; font-size: .95rem; margin-bottom: .75rem; }
     button[type=submit] { width: 100%; padding: .75rem; background: #6366f1; border: none; border-radius: 8px; color: #fff; font-weight: 600; cursor: pointer; }
-    .page { max-width: 960px; margin: 0 auto; padding: 2.5rem 1.5rem; }
+
+    /* ── Layout ── */
+    .page { max-width: 1100px; margin: 0 auto; padding: 2.5rem 1.5rem; }
     .top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem; }
-    h1 { font-size: 1.25rem; font-weight: 700; }
+    h1 { font-size: 1.2rem; font-weight: 700; }
     .back { font-size: .85rem; color: #64748b; text-decoration: none; }
     .back:hover { color: #e2e8f0; }
+
+    /* ── Stats ── */
     .stats { display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap; }
-    .stat { background: #1a1a2e; border: 1px solid #2d2d3d; border-radius: 10px; padding: 1rem 1.5rem; flex: 1; min-width: 140px; }
+    .stat { background: #111827; border: 1px solid #1f2937; border-radius: 10px; padding: 1rem 1.5rem; flex: 1; min-width: 140px; }
     .stat-val { font-size: 2rem; font-weight: 800; color: #fff; line-height: 1; }
-    .stat-label { font-size: .75rem; color: #64748b; margin-top: .3rem; text-transform: uppercase; letter-spacing: .08em; }
+    .stat-label { font-size: .72rem; color: #64748b; margin-top: .3rem; text-transform: uppercase; letter-spacing: .08em; }
     .stat--green .stat-val { color: #4ade80; }
-    .filter { display: flex; gap: .5rem; margin-bottom: 1.25rem; }
-    .filter-btn { padding: .4rem .9rem; border-radius: 20px; border: 1px solid #2d2d3d; background: transparent; color: #94a3b8; font-size: .8rem; cursor: pointer; transition: all .15s; }
+    .stat--purple .stat-val { color: #a78bfa; }
+
+    /* ── Toolbar ── */
+    .toolbar { display: flex; gap: .5rem; margin-bottom: 1rem; flex-wrap: wrap; align-items: center; }
+    .filter-btn { padding: .4rem .9rem; border-radius: 20px; border: 1px solid #1f2937; background: transparent; color: #94a3b8; font-size: .8rem; cursor: pointer; transition: all .15s; }
     .filter-btn.active, .filter-btn:hover { background: #6366f1; border-color: #6366f1; color: #fff; }
+    .btn-grant { margin-left: auto; background: #C58A37; color: #0A0A0A; border: none; padding: .45rem 1rem; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: .85rem; display: flex; align-items: center; gap: .35rem; transition: opacity .15s; }
+    .btn-grant:hover { opacity: .85; }
+
+    /* ── Grant form ── */
+    .grant-form { display: none; background: #111827; border: 1px solid rgba(197,138,55,0.25); border-radius: 10px; padding: 1.2rem; margin-bottom: 1.25rem; }
+    .grant-form p { margin: 0 0 .75rem; font-size: .88rem; color: #94a3b8; }
+    .grant-inputs { display: flex; gap: .6rem; flex-wrap: wrap; }
+    .grant-inputs input { flex: 1; min-width: 180px; padding: .5rem .75rem; background: #0a0a12; border: 1px solid #1f2937; border-radius: 6px; color: #f1f5f9; font-size: .9rem; }
+    .btn-grant-send { background: #C58A37; color: #0A0A0A; border: none; padding: .5rem 1rem; border-radius: 6px; font-weight: 600; cursor: pointer; white-space: nowrap; }
+    .grant-msg { margin: .6rem 0 0; font-size: .82rem; display: none; }
+
+    /* ── Table card ── */
+    .table-card { background: #111827; border: 1px solid #1f2937; border-radius: 12px; overflow: hidden; }
     table { width: 100%; border-collapse: collapse; font-size: .875rem; }
-    th { text-align: left; padding: .5rem .75rem; color: #64748b; font-weight: 500; font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; border-bottom: 1px solid #2d2d3d; }
-    td { padding: .65rem .75rem; border-bottom: 1px solid #1a1a2a; color: #cbd5e1; vertical-align: middle; }
-    tr:hover td { background: #1a1a2e; }
-    .badge { display: inline-flex; align-items: center; gap: .3rem; font-size: .72rem; font-weight: 600; border-radius: 20px; padding: .2rem .6rem; }
-    .badge--yes { background: rgba(74,222,128,.12); color: #4ade80; border: 1px solid rgba(74,222,128,.25); }
-    .badge--no  { background: rgba(100,116,139,.1); color: #64748b; border: 1px solid rgba(100,116,139,.2); }
-    .name { font-weight: 500; color: #f1f5f9; }
-    .email-cell { color: #94a3b8; font-size: .82rem; }
-    .date-cell { color: #64748b; font-size: .8rem; white-space: nowrap; }
-    .empty { color: #64748b; text-align: center; padding: 3rem; }
-    .loading-msg { text-align: center; padding: 3rem; color: #64748b; }
+    thead { background: #0d1117; }
+    th { padding: .7rem 1rem; text-align: left; color: #4b5563; font-weight: 600; font-size: .7rem; text-transform: uppercase; letter-spacing: .08em; border-bottom: 1px solid #1f2937; white-space: nowrap; }
+    td { padding: .9rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.04); vertical-align: middle; }
+    tbody tr:last-child td { border-bottom: none; }
+    tbody tr:hover td { background: rgba(255,255,255,0.025); }
+
+    /* ── Cells ── */
+    .cell-name { display: flex; align-items: center; gap: .65rem; }
+    .avatar { width: 32px; height: 32px; border-radius: 50%; background: #1f2937; display: flex; align-items: center; justify-content: center; font-size: .72rem; font-weight: 700; color: #6366f1; flex-shrink: 0; text-transform: uppercase; }
+    .name-text { font-weight: 500; color: #f1f5f9; white-space: nowrap; }
+    .email-text { color: #6b7280; font-size: .82rem; }
+    .date-text { color: #6b7280; font-size: .8rem; white-space: nowrap; }
+
+    /* ── Badges ── */
+    .badge { display: inline-flex; align-items: center; gap: .25rem; font-size: .7rem; font-weight: 600; border-radius: 20px; padding: .18rem .55rem; white-space: nowrap; }
+    .badge--yes { background: rgba(74,222,128,.1); color: #4ade80; border: 1px solid rgba(74,222,128,.2); }
+    .badge--no  { background: rgba(100,116,139,.08); color: #4b5563; border: 1px solid rgba(100,116,139,.15); }
+    .badge--stripe { background: rgba(99,102,241,.1); color: #a5b4fc; border: 1px solid rgba(99,102,241,.2); }
+    .badge--manual { background: rgba(197,138,55,.1); color: #C58A37; border: 1px solid rgba(197,138,55,.2); }
+
+    /* ── Action buttons ── */
+    .actions { display: flex; gap: .35rem; align-items: center; }
+    .btn-action { display: inline-flex; align-items: center; gap: .3rem; padding: .3rem .6rem; border-radius: 6px; border: 1px solid transparent; font-size: .75rem; font-weight: 500; cursor: pointer; transition: all .15s; white-space: nowrap; background: transparent; }
+    .btn-action svg { width: 13px; height: 13px; flex-shrink: 0; }
+    .btn-copy  { color: #6b7280; border-color: #1f2937; }
+    .btn-copy:hover  { background: rgba(99,102,241,.1); border-color: rgba(99,102,241,.3); color: #a5b4fc; }
+    .btn-copy.copied { background: rgba(74,222,128,.1); border-color: rgba(74,222,128,.25); color: #4ade80; }
+    .btn-resend { color: #6b7280; border-color: #1f2937; }
+    .btn-resend:hover { background: rgba(197,138,55,.1); border-color: rgba(197,138,55,.3); color: #C58A37; }
+    .btn-resend.sent { background: rgba(74,222,128,.1); border-color: rgba(74,222,128,.25); color: #4ade80; }
+    .btn-delete { color: #6b7280; border-color: #1f2937; }
+    .btn-delete:hover { background: rgba(239,68,68,.1); border-color: rgba(239,68,68,.3); color: #f87171; }
+
+    /* ── Empty / Loading ── */
+    .empty { color: #4b5563; text-align: center; padding: 3rem; font-size: .9rem; }
+    .loading-msg { text-align: center; padding: 3rem; color: #4b5563; }
+
+    /* ── Toast ── */
+    .toast { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%); background: #1f2937; border: 1px solid #374151; border-radius: 8px; padding: .6rem 1.2rem; font-size: .85rem; color: #e2e8f0; opacity: 0; transition: opacity .2s; pointer-events: none; z-index: 999; white-space: nowrap; }
+    .toast.show { opacity: 1; }
   </style>
 </head>
 <body>
+
+<div class="toast" id="toast"></div>
 
 <div id="login-wrap" class="login-wrap" style="display:none">
   <div class="login-box">
@@ -57,149 +110,290 @@ export const prerender = true;
 
 <div id="content-wrap" style="display:none">
   <div class="page">
+
     <div class="top">
       <h1>🛒 Acquirenti Prompt Pack</h1>
       <a href="/admin" class="back">← Admin</a>
     </div>
 
     <div class="stats">
-      <div class="stat"><div class="stat-val" id="stat-total">—</div><div class="stat-label">Acquirenti totali</div></div>
+      <div class="stat"><div class="stat-val" id="stat-total">—</div><div class="stat-label">Totali</div></div>
       <div class="stat stat--green"><div class="stat-val" id="stat-newsletter">—</div><div class="stat-label">Newsletter sì</div></div>
-      <div class="stat"><div class="stat-val" id="stat-no-newsletter">—</div><div class="stat-label">Newsletter no</div></div>
+      <div class="stat"><div class="stat-val" id="stat-no-newsletter">—</div><div class="stat-label">Solo transaz.</div></div>
+      <div class="stat stat--purple"><div class="stat-val" id="stat-stripe">—</div><div class="stat-label">Via Stripe</div></div>
     </div>
 
-    <div class="filter">
+    <div class="toolbar">
       <button class="filter-btn active" data-filter="all">Tutti</button>
       <button class="filter-btn" data-filter="yes">Newsletter ✓</button>
       <button class="filter-btn" data-filter="no">Solo transaz.</button>
-      <button id="btn-grant" style="margin-left:auto;background:#C58A37;color:#0A0A0A;border:none;padding:0.45rem 1rem;border-radius:6px;font-weight:600;cursor:pointer;font-size:0.85rem;">+ Accesso manuale</button>
+      <button class="filter-btn" data-filter="stripe">Stripe</button>
+      <button class="filter-btn" data-filter="manual">Manuali</button>
+      <button id="btn-grant" class="btn-grant">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Accesso manuale
+      </button>
     </div>
 
-    <div id="grant-form" style="display:none;background:#1C1C1C;border:1px solid rgba(197,138,55,0.3);border-radius:8px;padding:1.2rem;margin-bottom:1rem;">
-      <p style="margin:0 0 0.75rem;font-size:0.9rem;color:#94a3b8;">Aggiungi accesso manualmente e invia email con link</p>
-      <div style="display:flex;gap:0.6rem;flex-wrap:wrap;">
-        <input id="grant-email" type="email" placeholder="email@cliente.it" style="flex:1;min-width:200px;padding:0.5rem 0.75rem;background:#0A0A0A;border:1px solid rgba(255,255,255,0.1);border-radius:6px;color:#f1f5f9;font-size:0.9rem;" />
-        <input id="grant-name" type="text" placeholder="Nome (opzionale)" style="flex:1;min-width:160px;padding:0.5rem 0.75rem;background:#0A0A0A;border:1px solid rgba(255,255,255,0.1);border-radius:6px;color:#f1f5f9;font-size:0.9rem;" />
-        <button id="btn-grant-send" style="background:#C58A37;color:#0A0A0A;border:none;padding:0.5rem 1rem;border-radius:6px;font-weight:600;cursor:pointer;">Invia</button>
+    <div class="grant-form" id="grant-form">
+      <p>Crea accesso manualmente e invia email con link personale</p>
+      <div class="grant-inputs">
+        <input id="grant-email" type="email" placeholder="email@cliente.it" />
+        <input id="grant-name" type="text" placeholder="Nome (opzionale)" />
+        <button class="btn-grant-send" id="btn-grant-send">Invia</button>
       </div>
-      <p id="grant-msg" style="margin:0.6rem 0 0;font-size:0.82rem;display:none;"></p>
+      <p class="grant-msg" id="grant-msg"></p>
     </div>
 
     <div id="table-wrap">
       <div class="loading-msg">Caricamento...</div>
     </div>
+
   </div>
 </div>
 
 <script is:inline>
 (function(){
+  var SITE_URL = 'https://marcomunich.com';
+
+  /* ── Auth ── */
   var cookie = document.cookie;
-  var auth = cookie.split(';').find(function(c){return c.trim().startsWith('stats_auth=')});
-  if(auth){
-    document.getElementById('content-wrap').style.display='block';
+  var auth = cookie.split(';').find(function(c){return c.trim().startsWith('stats_auth=');});
+  if (auth) {
+    document.getElementById('content-wrap').style.display = 'block';
     loadData();
   } else {
-    document.getElementById('login-wrap').style.display='flex';
+    document.getElementById('login-wrap').style.display = 'flex';
   }
   var form = document.getElementById('login-form');
-  if(form) form.addEventListener('submit', function(e){
+  if (form) form.addEventListener('submit', function(e){
     e.preventDefault();
     var pwd = document.getElementById('pwd').value;
     fetch('/api/admin-auth.php', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({password:pwd})})
-    .then(function(r){return r.json()})
-    .then(function(d){
-      if(d.success) { document.cookie='stats_auth='+encodeURIComponent(pwd)+';path=/;max-age=604800'; location.reload(); }
-      else alert('Password errata');
-    })
-    .catch(function(){ alert('Errore di connessione'); });
+      .then(function(r){return r.json();})
+      .then(function(d){
+        if (d.success) { document.cookie='stats_auth='+encodeURIComponent(pwd)+';path=/;max-age=604800'; location.reload(); }
+        else alert('Password errata');
+      })
+      .catch(function(){ alert('Errore di connessione'); });
   });
 
-  function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-  function fmtDate(iso){return new Date(iso).toLocaleDateString('it-IT',{day:'2-digit',month:'short',year:'numeric'});}
+  /* ── Utils ── */
+  function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function fmtDate(iso){ return new Date(iso).toLocaleDateString('it-IT',{day:'2-digit',month:'short',year:'numeric'}); }
+  function initials(name){
+    var parts = (name||'?').trim().split(/\s+/);
+    return parts.length >= 2 ? parts[0][0]+parts[1][0] : parts[0].substring(0,2);
+  }
 
+  function showToast(msg, type){
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.style.background = type==='error' ? '#450a0a' : type==='ok' ? '#052e16' : '#1f2937';
+    t.style.color = type==='error' ? '#fca5a5' : type==='ok' ? '#86efac' : '#e2e8f0';
+    t.style.borderColor = type==='error' ? '#7f1d1d' : type==='ok' ? '#14532d' : '#374151';
+    t.classList.add('show');
+    setTimeout(function(){ t.classList.remove('show'); }, 2800);
+  }
+
+  /* ── Load data ── */
   function loadData(){
     fetch('/api/admin/pp-list.php')
-      .then(function(r){return r.json()})
+      .then(function(r){return r.json();})
       .then(function(purchasers){
-        var total=purchasers.length;
-        var newsletter=purchasers.filter(function(p){return p.newsletterConsent}).length;
-        document.getElementById('stat-total').textContent=total;
-        document.getElementById('stat-newsletter').textContent=newsletter;
-        document.getElementById('stat-no-newsletter').textContent=total-newsletter;
+        var total = purchasers.length;
+        var newsletter = purchasers.filter(function(p){return p.newsletterConsent;}).length;
+        var stripe = purchasers.filter(function(p){return p.stripeSessionId && p.stripeSessionId !== 'manual-grant';}).length;
+        document.getElementById('stat-total').textContent = total;
+        document.getElementById('stat-newsletter').textContent = newsletter;
+        document.getElementById('stat-no-newsletter').textContent = total - newsletter;
+        document.getElementById('stat-stripe').textContent = stripe;
 
-        var wrap=document.getElementById('table-wrap');
-        if(!total){wrap.innerHTML='<p class="empty">Nessun acquirente ancora.</p>';return;}
+        var wrap = document.getElementById('table-wrap');
+        if (!total){ wrap.innerHTML='<div class="empty">Nessun acquirente ancora.</div>'; return; }
 
-        var h='<table id="purchasers-table"><thead><tr><th>Nome</th><th>Email</th><th>Newsletter</th><th>Data acquisto</th></tr></thead><tbody>';
+        var h = '<div class="table-card"><table id="purchasers-table"><thead><tr>';
+        h += '<th>Acquirente</th><th>Email</th><th>Newsletter</th><th>Origine</th><th>Data</th><th>Azioni</th>';
+        h += '</tr></thead><tbody>';
+
         purchasers.forEach(function(p){
-          h+='<tr data-newsletter="'+(p.newsletterConsent?'yes':'no')+'">';
-          h+='<td class="name">'+esc(p.name||'—')+'</td>';
-          h+='<td class="email-cell">'+esc(p.email)+'</td>';
-          h+='<td>'+(p.newsletterConsent?'<span class="badge badge--yes">✓ Sì</span>':'<span class="badge badge--no">No</span>')+'</td>';
-          h+='<td class="date-cell">'+fmtDate(p.createdAt)+'</td>';
-          h+='</tr>';
+          var isManual = !p.stripeSessionId || p.stripeSessionId === 'manual-grant';
+          var accessUrl = SITE_URL + '/prompt-pack/accesso?token=' + encodeURIComponent(p.token||'');
+          h += '<tr data-newsletter="'+(p.newsletterConsent?'yes':'no')+'" data-origin="'+(isManual?'manual':'stripe')+'"';
+          h += ' data-email="'+esc(p.email)+'" data-token="'+esc(p.token||'')+'">';
+
+          // Nome + avatar
+          h += '<td><div class="cell-name">';
+          h += '<div class="avatar">'+esc(initials(p.name))+'</div>';
+          h += '<span class="name-text">'+esc(p.name||'—')+'</span>';
+          h += '</div></td>';
+
+          // Email
+          h += '<td><span class="email-text">'+esc(p.email)+'</span></td>';
+
+          // Newsletter
+          h += '<td>'+(p.newsletterConsent
+            ? '<span class="badge badge--yes">✓ Sì</span>'
+            : '<span class="badge badge--no">No</span>')+'</td>';
+
+          // Origine
+          h += '<td>'+(isManual
+            ? '<span class="badge badge--manual">Manuale</span>'
+            : '<span class="badge badge--stripe">Stripe</span>')+'</td>';
+
+          // Data
+          h += '<td><span class="date-text">'+fmtDate(p.createdAt)+'</span></td>';
+
+          // Azioni
+          h += '<td><div class="actions">';
+
+          // Copia link
+          h += '<button class="btn-action btn-copy" title="Copia link accesso" onclick="copyLink(this,\''+esc(accessUrl)+'\')">';
+          h += '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>';
+          h += 'Link</button>';
+
+          // Reinvia email
+          h += '<button class="btn-action btn-resend" title="Reinvia email accesso" onclick="resendEmail(this,\''+esc(p.email)+'\')">';
+          h += '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>';
+          h += 'Email</button>';
+
+          // Elimina
+          h += '<button class="btn-action btn-delete" title="Rimuovi accesso" onclick="deleteUser(this,\''+esc(p.email)+'\')">';
+          h += '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>';
+          h += 'Rimuovi</button>';
+
+          h += '</div></td>';
+          h += '</tr>';
         });
-        h+='</tbody></table>';
-        wrap.innerHTML=h;
+
+        h += '</tbody></table></div>';
+        wrap.innerHTML = h;
         bindFilters();
       })
       .catch(function(err){
-        document.getElementById('table-wrap').innerHTML='<p class="empty">Errore: '+esc(err.message)+'</p>';
+        document.getElementById('table-wrap').innerHTML = '<div class="empty">Errore caricamento: '+esc(err.message)+'</div>';
       });
   }
 
-  // Grant manual access
-  document.getElementById('btn-grant').addEventListener('click', function(){
-    var f=document.getElementById('grant-form');
-    f.style.display = f.style.display==='none' ? 'block' : 'none';
-  });
-  document.getElementById('btn-grant-send').addEventListener('click', function(){
-    var email=document.getElementById('grant-email').value.trim();
-    var name=document.getElementById('grant-name').value.trim();
-    var msg=document.getElementById('grant-msg');
-    if(!email){document.getElementById('grant-email').focus();return;}
-    document.getElementById('btn-grant-send').disabled=true;
-    document.getElementById('btn-grant-send').textContent='Invio...';
-    fetch('/api/admin/pp-grant.php',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({email:email,name:name})
-    }).then(function(r){return r.json()}).then(function(d){
-      if(d.ok){
-        msg.style.color='#4ade80';
-        msg.textContent='✓ Accesso creato' + (d.emailSent ? ' ed email inviata a '+email : ' (email non inviata — controlla RESEND_API_KEY)');
-        msg.style.display='block';
-        document.getElementById('grant-email').value='';
-        document.getElementById('grant-name').value='';
-        loadData();
+  /* ── Copia link ── */
+  window.copyLink = function(btn, url){
+    navigator.clipboard.writeText(url).then(function(){
+      btn.classList.add('copied');
+      btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13"><polyline points="20 6 9 17 4 12"/></svg> Copiato';
+      showToast('Link copiato negli appunti', 'ok');
+      setTimeout(function(){
+        btn.classList.remove('copied');
+        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> Link';
+      }, 2000);
+    });
+  };
+
+  /* ── Reinvia email ── */
+  window.resendEmail = function(btn, email){
+    btn.disabled = true;
+    btn.textContent = '...';
+    fetch('/api/prompt-pack/resend-access.php', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({email: email})
+    }).then(function(r){return r.json();}).then(function(d){
+      btn.classList.add('sent');
+      btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13"><polyline points="20 6 9 17 4 12"/></svg> Inviata';
+      showToast('Email inviata a ' + email, 'ok');
+      setTimeout(function(){
+        btn.classList.remove('sent');
+        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Email';
+        btn.disabled = false;
+      }, 3000);
+    }).catch(function(err){
+      showToast('Errore: ' + err.message, 'error');
+      btn.textContent = 'Email';
+      btn.disabled = false;
+    });
+  };
+
+  /* ── Elimina ── */
+  window.deleteUser = function(btn, email){
+    if (!confirm('Rimuovere l\'accesso a ' + email + '?\n\nQuesta azione è irreversibile.')) return;
+    btn.disabled = true;
+    btn.textContent = '...';
+    fetch('/api/admin/pp-delete.php', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({email: email})
+    }).then(function(r){return r.json();}).then(function(d){
+      if (d.ok){
+        var row = btn.closest('tr');
+        row.style.transition = 'opacity .3s';
+        row.style.opacity = '0';
+        setTimeout(function(){ loadData(); }, 350);
+        showToast('Accesso rimosso per ' + email, 'ok');
       } else {
-        msg.style.color='#f87171';
-        msg.textContent='Errore: '+(d.error||'sconosciuto');
-        msg.style.display='block';
+        showToast('Errore: ' + (d.error||'sconosciuto'), 'error');
+        btn.textContent = 'Rimuovi';
+        btn.disabled = false;
       }
     }).catch(function(err){
-      msg.style.color='#f87171';
-      msg.textContent='Errore: '+err.message;
-      msg.style.display='block';
+      showToast('Errore: ' + err.message, 'error');
+      btn.textContent = 'Rimuovi';
+      btn.disabled = false;
+    });
+  };
+
+  /* ── Grant manuale ── */
+  document.getElementById('btn-grant').addEventListener('click', function(){
+    var f = document.getElementById('grant-form');
+    f.style.display = f.style.display === 'none' || f.style.display === '' ? 'block' : 'none';
+  });
+  document.getElementById('btn-grant-send').addEventListener('click', function(){
+    var email = document.getElementById('grant-email').value.trim();
+    var name  = document.getElementById('grant-name').value.trim();
+    var msg   = document.getElementById('grant-msg');
+    if (!email){ document.getElementById('grant-email').focus(); return; }
+    var btn = document.getElementById('btn-grant-send');
+    btn.disabled = true; btn.textContent = 'Invio...';
+    fetch('/api/admin/pp-grant.php', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({email: email, name: name})
+    }).then(function(r){return r.json();}).then(function(d){
+      if (d.ok){
+        msg.style.color = '#4ade80';
+        msg.textContent = '✓ Accesso creato' + (d.emailSent ? ' ed email inviata a '+email : ' (email non inviata — controlla RESEND_API_KEY)');
+        msg.style.display = 'block';
+        document.getElementById('grant-email').value = '';
+        document.getElementById('grant-name').value = '';
+        loadData();
+      } else {
+        msg.style.color = '#f87171';
+        msg.textContent = 'Errore: ' + (d.error||'sconosciuto');
+        msg.style.display = 'block';
+      }
+    }).catch(function(err){
+      msg.style.color = '#f87171';
+      msg.textContent = 'Errore: ' + err.message;
+      msg.style.display = 'block';
     }).finally(function(){
-      document.getElementById('btn-grant-send').disabled=false;
-      document.getElementById('btn-grant-send').textContent='Invia';
+      btn.disabled = false; btn.textContent = 'Invia';
     });
   });
 
+  /* ── Filtri ── */
   function bindFilters(){
     document.querySelectorAll('.filter-btn').forEach(function(btn){
-      btn.addEventListener('click',function(){
-        document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active')});
+      btn.addEventListener('click', function(){
+        document.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.remove('active'); });
         btn.classList.add('active');
-        var filter=btn.dataset.filter;
+        var filter = btn.dataset.filter;
         document.querySelectorAll('#purchasers-table tbody tr').forEach(function(row){
-          if(filter==='all') row.style.display='';
-          else row.style.display=row.dataset.newsletter===filter?'':'none';
+          if (filter === 'all') row.style.display = '';
+          else if (filter === 'yes' || filter === 'no') row.style.display = row.dataset.newsletter === filter ? '' : 'none';
+          else row.style.display = row.dataset.origin === filter ? '' : 'none';
         });
       });
     });
   }
+
 })();
 </script>
 
