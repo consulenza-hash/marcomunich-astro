@@ -31,6 +31,11 @@ try {
     $data[8] = chr(ord($data[8]) & 0x3f | 0x80);
     $token = vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
 
+    // Check Gist is configured
+    if (!getenv('PP_GIST_ID') || !getenv('GITHUB_TOKEN')) {
+        jsonResponse(['error' => 'PP_GIST_ID o GITHUB_TOKEN non configurati nei secrets'], 500);
+    }
+
     // Save to Gist
     $store = gistRead();
     $store["token:{$token}"] = [
