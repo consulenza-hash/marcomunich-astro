@@ -49,6 +49,12 @@ try {
     $store['email:' . $email] = $token;
     gistWrite($store);
 
+    // Verify write succeeded
+    $verify = gistRead();
+    if (!isset($verify["token:{$token}"])) {
+        jsonResponse(['error' => 'Gist write fallito — token non trovato dopo la scrittura. Controlla che GITHUB_TOKEN abbia il permesso "gist" e che PP_GIST_ID sia corretto.'], 500);
+    }
+
     // Send access email
     $accessUrl = "{$siteUrl}/prompt-pack/accesso?token={$token}";
 
