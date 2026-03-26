@@ -3,8 +3,8 @@
  * GET /api/admin/pp-list.php
  * Returns list of all Prompt Pack purchasers (admin only).
  */
-require_once __DIR__ . '/../../_config.php';
-require_once __DIR__ . '/../../_github.php';
+require_once __DIR__ . '/../_config.php';
+require_once __DIR__ . '/../_github.php';
 
 checkAuth();
 
