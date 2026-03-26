@@ -72,6 +72,17 @@ export const prerender = true;
       <button class="filter-btn active" data-filter="all">Tutti</button>
       <button class="filter-btn" data-filter="yes">Newsletter ✓</button>
       <button class="filter-btn" data-filter="no">Solo transaz.</button>
+      <button id="btn-grant" style="margin-left:auto;background:#C58A37;color:#0A0A0A;border:none;padding:0.45rem 1rem;border-radius:6px;font-weight:600;cursor:pointer;font-size:0.85rem;">+ Accesso manuale</button>
+    </div>
+
+    <div id="grant-form" style="display:none;background:#1C1C1C;border:1px solid rgba(197,138,55,0.3);border-radius:8px;padding:1.2rem;margin-bottom:1rem;">
+      <p style="margin:0 0 0.75rem;font-size:0.9rem;color:#94a3b8;">Aggiungi accesso manualmente e invia email con link</p>
+      <div style="display:flex;gap:0.6rem;flex-wrap:wrap;">
+        <input id="grant-email" type="email" placeholder="email@cliente.it" style="flex:1;min-width:200px;padding:0.5rem 0.75rem;background:#0A0A0A;border:1px solid rgba(255,255,255,0.1);border-radius:6px;color:#f1f5f9;font-size:0.9rem;" />
+        <input id="grant-name" type="text" placeholder="Nome (opzionale)" style="flex:1;min-width:160px;padding:0.5rem 0.75rem;background:#0A0A0A;border:1px solid rgba(255,255,255,0.1);border-radius:6px;color:#f1f5f9;font-size:0.9rem;" />
+        <button id="btn-grant-send" style="background:#C58A37;color:#0A0A0A;border:none;padding:0.5rem 1rem;border-radius:6px;font-weight:600;cursor:pointer;">Invia</button>
+      </div>
+      <p id="grant-msg" style="margin:0.6rem 0 0;font-size:0.82rem;display:none;"></p>
     </div>
 
     <div id="table-wrap">
@@ -136,6 +147,45 @@ export const prerender = true;
         document.getElementById('table-wrap').innerHTML='<p class="empty">Errore: '+esc(err.message)+'</p>';
       });
   }
+
+  // Grant manual access
+  document.getElementById('btn-grant').addEventListener('click', function(){
+    var f=document.getElementById('grant-form');
+    f.style.display = f.style.display==='none' ? 'block' : 'none';
+  });
+  document.getElementById('btn-grant-send').addEventListener('click', function(){
+    var email=document.getElementById('grant-email').value.trim();
+    var name=document.getElementById('grant-name').value.trim();
+    var msg=document.getElementById('grant-msg');
+    if(!email){document.getElementById('grant-email').focus();return;}
+    document.getElementById('btn-grant-send').disabled=true;
+    document.getElementById('btn-grant-send').textContent='Invio...';
+    fetch('/api/admin/pp-grant.php',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email:email,name:name})
+    }).then(function(r){return r.json()}).then(function(d){
+      if(d.ok){
+        msg.style.color='#4ade80';
+        msg.textContent='✓ Accesso creato' + (d.emailSent ? ' ed email inviata a '+email : ' (email non inviata — controlla RESEND_API_KEY)');
+        msg.style.display='block';
+        document.getElementById('grant-email').value='';
+        document.getElementById('grant-name').value='';
+        loadData();
+      } else {
+        msg.style.color='#f87171';
+        msg.textContent='Errore: '+(d.error||'sconosciuto');
+        msg.style.display='block';
+      }
+    }).catch(function(err){
+      msg.style.color='#f87171';
+      msg.textContent='Errore: '+err.message;
+      msg.style.display='block';
+    }).finally(function(){
+      document.getElementById('btn-grant-send').disabled=false;
+      document.getElementById('btn-grant-send').textContent='Invia';
+    });
+  });
 
   function bindFilters(){
     document.querySelectorAll('.filter-btn').forEach(function(btn){
