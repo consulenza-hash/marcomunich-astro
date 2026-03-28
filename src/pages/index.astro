@@ -33,6 +33,9 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
 
 <!-- ══ HERO ═══════════════════════════════════════════════════════════════ -->
 <section class="v2-hero">
+  <video id="hero-vid" class="v2-hero__video" autoplay muted loop playsinline poster="/og/marco-munich.png"></video>
+  <div class="v2-hero__overlay" aria-hidden="true"></div>
+
   <div class="v2-hero__inner">
 
     <div class="v2-hero__content">
@@ -69,12 +72,9 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
       </div>
     </div>
 
-    <div class="v2-hero__photo-col">
-      <video id="hero-vid" class="v2-hero__video" autoplay muted loop playsinline poster="/og/marco-munich.png"></video>
-      <span class="v2-hero__vid-caption">Coach · Counselor · Operatori Olistici</span>
-    </div>
-
   </div>
+
+  <span class="v2-hero__vid-caption" aria-hidden="true">Coach · Counselor · Operatori Olistici</span>
 
   <div class="v2-hero__rule" aria-hidden="true"></div>
 
@@ -423,8 +423,10 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
 
 .v2-hero__inner {
   display: grid;
-  grid-template-columns: 1fr 42%;
+  grid-template-columns: 54% 1fr;
   min-height: 96vh;
+  position: relative;
+  z-index: 2;
 }
 
 /* Content col */
@@ -506,15 +508,7 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
   flex-wrap: wrap;
 }
 
-/* Photo col */
-.v2-hero__photo-col {
-  position: relative;
-  overflow: hidden;
-  background: #0a0a0f url('/og/marco-munich.png') center top / cover no-repeat;
-  background-size: cover;
-  filter: grayscale(100%) contrast(1.08) brightness(0.92);
-}
-
+/* Video full-background */
 .v2-hero__video {
   position: absolute;
   inset: 0;
@@ -523,18 +517,34 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
   object-fit: cover;
   object-position: center;
   display: block;
-  filter: brightness(0.82) saturate(0.88);
+  filter: brightness(0.65) saturate(0.85);
+  z-index: 0;
+}
+
+/* Gradient overlay — dark on left for text, transparent on right */
+.v2-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    rgba(10,10,18,0.94) 0%,
+    rgba(10,10,18,0.82) 30%,
+    rgba(10,10,18,0.48) 58%,
+    rgba(10,10,18,0.10) 82%,
+    rgba(10,10,18,0.00) 100%
+  );
+  z-index: 1;
 }
 
 .v2-hero__vid-caption {
   position: absolute;
-  bottom: 2rem;
-  left: 1.5rem;
+  bottom: 4rem;
+  right: 2rem;
   font: 700 0.58rem/1 var(--sans);
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.3);
-  z-index: 1;
+  color: rgba(255,255,255,0.25);
+  z-index: 3;
 }
 
 /* Gold rule */
@@ -1029,13 +1039,13 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
   .v2-articles__grid { grid-template-columns: repeat(2, 1fr); }
   .v2-article:last-child { grid-column: 1 / -1; }
   .v2-article:last-child .v2-article__img-wrap { aspect-ratio: 21 / 9; }
-  .v2-hero__inner { grid-template-columns: 1fr; min-height: auto; }
+  .v2-hero__inner { grid-template-columns: 1fr; min-height: 100svh; }
+  .v2-hero__overlay { background: rgba(10,10,18,0.72); }
+  .v2-hero__vid-caption { display: none; }
   .v2-hero__content {
     padding: 5rem clamp(1.5rem, 5vw, 3rem) 4rem;
     max-width: 100%;
   }
-  .v2-hero__photo-col { width: 100%; aspect-ratio: 4 / 3; overflow: hidden; position: relative; }
-  .v2-hero__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
 
   .v2-manifesto__body { grid-template-columns: 1fr; }
   .v2-manifesto__aside { position: static; margin-top: 2.5rem; }
