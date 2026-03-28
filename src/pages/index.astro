@@ -1077,12 +1077,38 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
 
 <script is:inline>
 (function(){
-  var h = new Date().getHours();
-  var src = h >= 6 && h < 11  ? '/videos/hero-mattina.mp4'
-          : h >= 11 && h < 17 ? '/videos/hero-pomeriggio.mp4'
-          : h >= 17 && h < 20 ? '/videos/hero-sera.mp4'
-          : '/videos/hero-notte.mp4';
   var v = document.getElementById('hero-vid');
-  if (v) { v.src = src; v.load(); v.play().catch(function(){}); }
+  if (!v) return;
+
+  function setVideo(src) {
+    v.src = src; v.load(); v.play().catch(function(){});
+  }
+
+  function fallbackByHour() {
+    var h = new Date().getHours();
+    setVideo(h >= 6 && h < 11  ? '/videos/hero-mattina.mp4'
+           : h >= 11 && h < 17 ? '/videos/hero-pomeriggio.mp4'
+           : h >= 17 && h < 20 ? '/videos/hero-sera.mp4'
+           : '/videos/hero-notte.mp4');
+  }
+
+  function videoFromWeather(code, isDay) {
+    if (!isDay) return '/videos/hero-notte.mp4';
+    if (code === 0 || code === 1)              return '/videos/hero-sole.mp4';
+    if (code <= 3)                             return '/videos/hero-pomeriggio.mp4';
+    if (code <= 48)                            return '/videos/hero-mattina.mp4';
+    if (code <= 67 || (code >= 80 && code <= 82)) return '/videos/hero-pioggia.mp4';
+    if (code <= 77 || code === 85 || code === 86)  return '/videos/hero-neve.mp4';
+    if (code >= 95)                            return '/videos/hero-temporale.mp4';
+    return '/videos/hero-pomeriggio.mp4';
+  }
+
+  fetch('https://api.open-meteo.com/v1/forecast?latitude=45.5455&longitude=11.5354&current=weather_code,is_day')
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      var c = d.current;
+      setVideo(videoFromWeather(c.weather_code, c.is_day));
+    })
+    .catch(fallbackByHour);
 })();
 </script>
