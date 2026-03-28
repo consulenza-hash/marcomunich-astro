@@ -16,11 +16,9 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
     titolo:     (fm.titolo     as string) ?? slug,
     descrizione:(fm.descrizione as string) ?? '',
     data:       fm.data ? String(fm.data) : '',
-    immagine:   fm.immagine ? (String(fm.immagine).startsWith('/') ? fm.immagine : `/images/articoli/${fm.immagine}`) : '',
-    bozza:      fm.bozza === true,
+    immagine:   (fm.immagine   as string) ?? '',
   };
 })
-  .filter(p => !p.bozza)
   .sort((a, b) => new Date(b.data).getTime() - new Date(a.data).getTime())
   .slice(0, 3);
 ---
@@ -72,14 +70,8 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
     </div>
 
     <div class="v2-hero__photo-col">
-      <figure class="v2-hero__photo-frame">
-        <img
-          src="/og/marco-munich.png"
-          alt="Marco Munich"
-          loading="eager"
-        />
-        <figcaption>Coach · Counselor · Operatori Olistici</figcaption>
-      </figure>
+      <video id="hero-vid" class="v2-hero__video" autoplay muted loop playsinline poster="/og/marco-munich.png"></video>
+      <span class="v2-hero__vid-caption">Coach · Counselor · Operatori Olistici</span>
     </div>
 
   </div>
@@ -104,43 +96,6 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
           <span class="v2-ticker__dot">◆</span>
         </>
       ))}
-    </div>
-  </div>
-</section>
-
-<!-- ══ PROMPT PACK ════════════════════════════════════════════════════════ -->
-<section class="v2-pp">
-  <div class="v2-pp__inner">
-    <div class="v2-pp__text">
-      <span class="v2-label v2-label--gold">Strumento pratico</span>
-      <h2 class="v2-pp__title">147 prompt AI per chi si blocca sui contenuti</h2>
-      <p class="v2-pp__body">
-        Per Coach, Counselor e Operatori Olistici. Ogni prompt istruisce l'AI a farti
-        le domande giuste sul tuo lavoro reale — il contenuto viene da quello che rispondi tu,
-        non da formule generiche.
-      </p>
-      <div class="v2-pp__meta">
-        <span>147 prompt · 10 Custom GPT · 11 categorie</span>
-        <span class="v2-pp__price">€27 · una sola volta</span>
-      </div>
-      <a href="/prompt-pack" class="v2-btn v2-btn--pp">Scopri il Prompt Pack →</a>
-    </div>
-    <div class="v2-pp__aside">
-      <div class="v2-pp__card">
-        <div class="v2-pp__card-n">01</div>
-        <p>Scrivere dal vissuto reale</p>
-      </div>
-      <div class="v2-pp__card">
-        <div class="v2-pp__card-n">02</div>
-        <p>Trovare il tuo paradigma</p>
-      </div>
-      <div class="v2-pp__card">
-        <div class="v2-pp__card-n">03</div>
-        <p>Punto di vista scomodo</p>
-      </div>
-      <div class="v2-pp__card v2-pp__card--more">
-        <p>+ 8 categorie &amp; 10 Custom GPT</p>
-      </div>
     </div>
   </div>
 </section>
@@ -361,7 +316,7 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
           <div class="v2-article__img-wrap">
             {post.immagine
               ? <img
-                  src={post.immagine}
+                  src={`/images/articoli/${post.immagine}`}
                   alt={post.titolo}
                   loading="lazy"
                   class="v2-article__img"
@@ -431,16 +386,10 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
 .v2-btn svg { flex-shrink: 0; }
 
 .v2-btn--gold {
-  background: #25D366;
-  color: var(--white);
-}
-.v2-btn--gold:hover { background: #1DA851; transform: translateY(-1px); }
-
-.v2-btn--pp {
   background: var(--gold);
   color: var(--black);
 }
-.v2-btn--pp:hover { background: var(--gold-d); transform: translateY(-1px); }
+.v2-btn--gold:hover { background: var(--gold-d); transform: translateY(-1px); }
 
 .v2-btn--white {
   background: var(--white);
@@ -561,24 +510,23 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
 .v2-hero__photo-col {
   position: relative;
   overflow: hidden;
+  background: #0a0a0f url('/og/marco-munich.png') center top / cover no-repeat;
+  background-size: cover;
+  filter: grayscale(100%) contrast(1.08) brightness(0.92);
 }
 
-.v2-hero__photo-frame {
+.v2-hero__video {
   position: absolute;
   inset: 0;
-  margin: 0;
-}
-
-.v2-hero__photo-frame img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center top;
-  filter: grayscale(100%) contrast(1.08) brightness(0.92);
+  object-position: center;
   display: block;
+  filter: brightness(0.82) saturate(0.88);
 }
 
-.v2-hero__photo-frame figcaption {
+.v2-hero__vid-caption {
   position: absolute;
   bottom: 2rem;
   left: 1.5rem;
@@ -586,6 +534,7 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: rgba(255,255,255,0.3);
+  z-index: 1;
 }
 
 /* Gold rule */
@@ -1086,8 +1035,7 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
     max-width: 100%;
   }
   .v2-hero__photo-col { width: 100%; aspect-ratio: 4 / 3; overflow: hidden; position: relative; }
-  .v2-hero__photo-frame { position: static; width: 100%; height: 100%; display: block; }
-  .v2-hero__photo-frame img { position: static; width: 100%; height: 100%; object-fit: cover; display: block; }
+  .v2-hero__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
 
   .v2-manifesto__body { grid-template-columns: 1fr; }
   .v2-manifesto__aside { position: static; margin-top: 2.5rem; }
@@ -1121,100 +1069,20 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
 
   .v2-hero__ctas { flex-direction: column; align-items: flex-start; gap: 1rem; }
 
-  /* Avatar circolare in cima all'hero su mobile */
-  .v2-hero__photo-col {
-    order: -1;
-    width: 160px !important;
-    height: 160px !important;
-    aspect-ratio: unset !important;
-    border-radius: 50%;
-    overflow: hidden;
-    margin: 2.5rem auto 0;
-    align-self: center;
-  }
-  .v2-hero__photo-frame { position: static; width: 160px; height: 160px; }
-  .v2-hero__photo-frame img { width: 160px; height: 160px; object-fit: cover; border-radius: 50%; }
-  .v2-hero__photo-frame figcaption { display: none; }
-  
-  
+
   .v2-articles__header { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
   .v2-articles__grid { grid-template-columns: 1fr; gap: 2px; }
 }
-
-/* ── PROMPT PACK ─────────────────────────────────────────────────────────── */
-.v2-pp {
-  background: var(--black);
-  border-top: 1px solid rgba(197,138,55,0.2);
-}
-.v2-pp__inner {
-  max-width: var(--max);
-  margin: 0 auto;
-  padding: 5rem var(--pad);
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: center;
-}
-.v2-pp__title {
-  font: 700 clamp(1.6rem, 3vw, 2.4rem)/1.15 var(--display);
-  color: var(--white);
-  margin: 0.75rem 0 1rem;
-}
-.v2-pp__body {
-  font-size: 1rem;
-  line-height: 1.65;
-  color: rgba(255,255,255,0.55);
-  margin-bottom: 1.25rem;
-}
-.v2-pp__meta {
-  display: flex;
-  gap: 1.5rem;
-  font-size: 0.8rem;
-  color: rgba(255,255,255,0.3);
-  margin-bottom: 2rem;
-  flex-wrap: wrap;
-}
-.v2-pp__price {
-  color: var(--gold);
-}
-.v2-pp__aside {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.75rem;
-}
-.v2-pp__card {
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 10px;
-  padding: 1.1rem 1rem;
-}
-.v2-pp__card-n {
-  font: 700 0.65rem/1 var(--sans);
-  color: var(--gold);
-  letter-spacing: 0.08em;
-  margin-bottom: 0.5rem;
-}
-.v2-pp__card p {
-  font-size: 0.85rem;
-  color: rgba(255,255,255,0.65);
-  line-height: 1.4;
-}
-.v2-pp__card--more {
-  background: rgba(197,138,55,0.06);
-  border-color: rgba(197,138,55,0.2);
-}
-.v2-pp__card--more p {
-  color: var(--gold);
-  font-size: 0.8rem;
-}
-
-@media (max-width: 768px) {
-  .v2-pp__inner {
-    grid-template-columns: 1fr;
-    gap: 2.5rem;
-  }
-  .v2-pp__aside {
-    grid-template-columns: 1fr 1fr;
-  }
-}
 </style>
+
+<script is:inline>
+(function(){
+  var h = new Date().getHours();
+  var src = h >= 6 && h < 11  ? '/videos/hero-mattina.mp4'
+          : h >= 11 && h < 17 ? '/videos/hero-pomeriggio.mp4'
+          : h >= 17 && h < 20 ? '/videos/hero-sera.mp4'
+          : '/videos/hero-notte.mp4';
+  var v = document.getElementById('hero-vid');
+  if (v) { v.src = src; v.load(); v.play().catch(function(){}); }
+})();
+</script>
