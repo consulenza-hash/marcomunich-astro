@@ -1,50 +1,184 @@
 ---
-export const prerender = false;
+export const prerender = true;
 
-import {
-  validateToken,
-  getTokenFromCookie,
-  getTokenFromUrl,
-  buildAccessCookie,
-  isDevBypass,
-  type AccessTokenData,
-} from '@lib/prompt-pack-auth';
 import { aggiornamenti } from '../../data/prompt-updates';
 
-// ── Auth gate ────────────────────────────────────────────────────────────────
-let user: AccessTokenData | null = null;
-let setCookieHeader: string | null = null;
+// Data is rendered at build time; auth is handled client-side
+// The login form HTML is embedded below as a hidden div
+// The old inline Response login form has been removed
 
-if (isDevBypass()) {
-  // Sviluppo locale: bypass auth se PROMPT_PACK_DEV_BYPASS=true nel .env
-  user = {
-    email: 'dev@localhost',
-    name: 'Dev User',
-    createdAt: new Date().toISOString(),
-    stripeSessionId: 'dev_session',
-    stripeReceiptUrl: null,
-    newsletterConsent: false,
-  };
-} else {
-  const url = new URL(Astro.request.url);
-  const tokenFromUrl = getTokenFromUrl(url);
-  const tokenFromCookie = getTokenFromCookie(Astro.request);
-  const token = tokenFromUrl || tokenFromCookie;
-
-  if (token) {
-    user = await validateToken(token);
-    if (user && tokenFromUrl && !tokenFromCookie) {
-      // Prima visita via link email: imposta il cookie
-      setCookieHeader = buildAccessCookie(token);
-      Astro.response.headers.set('Set-Cookie', setCookieHeader);
+const loginFormHtml = `<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Accesso al Prompt Pack — Marco Munich</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #0C0B09;
+      color: #F0EBE3;
+      font-family: Georgia, serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
     }
-  }
+    .wrap {
+      max-width: 460px;
+      width: 100%;
+      text-align: center;
+    }
+    .logo {
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #C58A37;
+      margin-bottom: 2.5rem;
+    }
+    h1 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #F0EBE3;
+      margin-bottom: 0.75rem;
+      line-height: 1.3;
+    }
+    .desc {
+      font-size: 0.95rem;
+      color: rgba(240,235,227,0.6);
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+    .card {
+      background: #181612;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+    }
+    label {
+      display: block;
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(240,235,227,0.5);
+      margin-bottom: 0.5rem;
+      text-align: left;
+    }
+    input[type=email] {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      background: #0C0B09;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 8px;
+      color: #F0EBE3;
+      font-size: 1rem;
+      font-family: Georgia, serif;
+      margin-bottom: 1rem;
+      transition: border-color 0.2s;
+    }
+    input[type=email]:focus {
+      outline: none;
+      border-color: #C58A37;
+    }
+    button {
+      width: 100%;
+      padding: 0.9rem;
+      background: #C58A37;
+      color: #0A0A0A;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      font-family: Georgia, serif;
+      letter-spacing: 0.03em;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    button:hover { opacity: 0.88; }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+    .msg {
+      margin-top: 1rem;
+      font-size: 0.88rem;
+      line-height: 1.5;
+      display: none;
+    }
+    .msg--ok { color: #4ade80; }
+    .msg--err { color: #f87171; }
+    .back {
+      font-size: 0.82rem;
+      color: rgba(240,235,227,0.35);
+      text-decoration: none;
+    }
+    .back:hover { color: rgba(240,235,227,0.65); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="logo">Marco Munich</div>
+    <h1>Accedi al tuo Prompt Pack</h1>
+    <p class="desc">
+      Inserisci l'email con cui hai acquistato il pack.<br>
+      Ti mandiamo subito un nuovo link di accesso.
+    </p>
+    <div class="card">
+      <label for="email">La tua email</label>
+      <input type="email" id="email" placeholder="nome@email.it" autocomplete="email" />
+      <button id="btn">Invia il link di accesso</button>
+      <p class="msg msg--ok" id="msg-ok">
+        ✓ Controlla la tua casella — il link arriva in pochi secondi.<br>
+        <small style="opacity:.7">Se non lo vedi, guarda nello spam.</small>
+      </p>
+      <p class="msg msg--err" id="msg-err">
+        Qualcosa non ha funzionato. Riprova o scrivimi a <a href="mailto:marco@marcomunich.com" style="color:#C58A37">marco@marcomunich.com</a>.
+      </p>
+    </div>
+    <a href="/prompt-pack" class="back">← Torna alla pagina del Prompt Pack</a>
+  </div>
+  <script>
+    const btn = document.getElementById('btn');
+    const emailInput = document.getElementById('email');
+    const msgOk = document.getElementById('msg-ok');
+    const msgErr = document.getElementById('msg-err');
 
-  if (!user) {
-    // Nessun token valido → redirect alla landing
-    return Astro.redirect('/prompt-pack?accesso=negato', 302);
-  }
-}
+    btn.addEventListener('click', async () => {
+      const email = emailInput.value.trim();
+      if (!email || !email.includes('@')) {
+        emailInput.focus();
+        return;
+      }
+      btn.disabled = true;
+      btn.textContent = 'Invio in corso…';
+      msgOk.style.display = 'none';
+      msgErr.style.display = 'none';
+
+      try {
+        const res = await fetch('/api/prompt-pack/resend-access.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email }),
+        });
+        if (res.ok) {
+          msgOk.style.display = 'block';
+          btn.textContent = 'Link inviato ✓';
+        } else {
+          throw new Error('ko');
+        }
+      } catch {
+        msgErr.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = 'Invia il link di accesso';
+      }
+    });
+
+    emailInput.addEventListener('keydown', e => {
+      if (e.key === 'Enter') btn.click();
+    });
+  </script>
+</body>
+</html>`;
 
 const categorie = [
   {
@@ -53,16 +187,16 @@ const categorie = [
     sub: 'Trasformare esperienze concrete di lavoro in contenuti pubblicabili',
     count: 10,
     prompts: [
-      {n:1, text:`Ho fallito completamente nel mio lavoro in un momento specifico. Chiedimi di raccontartelo — non la versione "crescita personale", quella vera e cruda. Poi aiutami a trasformare quella lezione in un contenuto che parla direttamente a chi sta attraversando lo stesso fallimento adesso.`},
-      {n:2, text:`Chiedimi di descriverti il momento esatto in cui ho capito perché faccio questo lavoro. Non la versione da bio Instagram. Quella con l'ora del giorno, dove ero, cosa provavo nel corpo. Poi estrai da lì una cosa che posso dire al mio pubblico.`},
+      {n:1, text:`Voglio creare un contenuto su un mio fallimento professionale reale. Navighiamo insieme quel momento — non la versione "crescita personale", quella vera e cruda. Parti dal capire cosa è successo concretamente, poi aiutami a trasformare quella lezione in un contenuto che parla direttamente a chi sta attraversando lo stesso fallimento adesso.`},
+      {n:2, text:`Voglio creare un contenuto autentico sul momento esatto in cui ho capito perché faccio questo lavoro. Non la versione da bio Instagram. Esploriamo insieme quella scena: l'ora del giorno, dove ero, cosa provavo nel corpo. Poi estrai da lì una cosa che posso dire al mio pubblico.`},
       {n:3, text:`Prendi l'ultima volta che ho detto a un cliente "lo so, ci sono passato anch'io" e scrivici sopra un post. Parti da quella frase, non dai consigli generici.`},
-      {n:4, text:`Chiedimi quali sono le 3 cose che ho creduto sul mio lavoro nei primi anni e che si sono rivelate completamente false. Poi aiutami a scrivere cosa ho scoperto al loro posto.`},
-      {n:5, text:`Chiedimi di raccontarti una conversazione recente con un cliente che mi ha sorpreso: una domanda inaspettata, una reazione che non mi aspettavo. Quando te la racconto, aiutami a costruirci un contenuto sopra.`},
+      {n:4, text:`Inizia domandandomi quali sono le 3 cose che ho creduto sul mio lavoro nei primi anni e che si sono rivelate completamente false. Poi aiutami a scrivere cosa ho scoperto al loro posto.`},
+      {n:5, text:`Voglio trasformare in contenuto una conversazione recente con un cliente che mi ha sorpreso. Esploriamo insieme cosa è successo: una domanda inaspettata, una reazione che non mi aspettavo. Aiutami a costruirci un contenuto sopra.`},
       {n:6, text:`Qual è la cosa che i miei colleghi di settore non dicono mai? Quella che so essere vera ma che crea fastidio dirla. Aiutami a scriverla senza filtri, poi decidiamo insieme se e come pubblicarla.`},
       {n:7, text:`Scrivi un post partendo da questa frase: "Nessuno me lo aveva detto che [completa]." Riempi il vuoto con qualcosa che ho scoperto sulla strada, non nei libri.`},
-      {n:8, text:`Inizia chiedendomi di raccontarti la prima sessione o consulenza che ho fatto: com'era andata, cosa ricordo di preciso, cosa mi aveva sorpreso. Poi, da quello che ti racconto, aiutami a costruire un contenuto per chi sta iniziando adesso in questo lavoro.`},
-      {n:9, text:`Chiedimi qual è la cosa che faccio meglio nel mio lavoro — il mio cavallo di battaglia. Poi aiutami a scrivere la storia di come l'ho scoperto.`},
-      {n:10, text:`C'è una cosa che ho fatto per anni convinto fosse giusta e poi ho cambiato idea completamente. Chiedimi di raccontartela, poi scrivi il prima e il dopo senza abbellirlo.`},
+      {n:8, text:`Voglio creare un contenuto a partire dalla mia prima sessione o consulenza. Torniamo a quel momento: com'era andata, cosa ricordo di preciso, cosa mi aveva sorpreso. Esploriamo insieme quei dettagli, poi costruisci un contenuto per chi sta iniziando adesso in questo lavoro.`},
+      {n:9, text:`Inizia domandandomi qual è la cosa che faccio meglio nel mio lavoro — il mio cavallo di battaglia. Poi aiutami a scrivere la storia di come l'ho scoperto.`},
+      {n:10, text:`C'è una cosa che ho fatto per anni convinto fosse giusta e poi ho cambiato idea completamente. Navighiamo insieme quel cambio di prospettiva — cosa facevo, perché ci credevo, e cos'è successo che ha ribaltato tutto. Poi scrivi il prima e il dopo senza abbellirlo.`},
     ]
   },
   {
@@ -73,8 +207,8 @@ const categorie = [
     prompts: [
       {n:11, text:`Aiutami a completare questa frase 10 volte di fila senza filtrarla: "Io credo che nel mio settore la maggior parte delle persone si sbagli su [completa]." Fammele fare una alla volta, poi aiutami a trovare quella che vale la pena approfondire.`},
       {n:12, text:`Qual è la cosa che vedo fare continuamente nel mio settore e che mi fa pensare "ma perché nessuno parla di questo"? Aiutami a scriverla come presa di posizione, non come domanda.`},
-      {n:13, text:`Aiutami a trovare le mie credenze fondamentali sul lavoro che faccio. Chiedimele una alla volta, incluse quelle scomode o in contrasto con quello che dicono i guru del settore. Quando ne abbiamo identificata una che mi sembra forte, aiutami a costruirci un post sopra.`},
-      {n:14, text:`Chiedimi del cliente con cui ho lavorato meglio in assoluto. Cosa aveva di diverso dagli altri? Cosa capiva che gli altri faticavano a capire? Da quella comprensione, aiutami a estrarre il mio punto di vista distintivo e a scriverlo.`},
+      {n:13, text:`Aiutami a trovare le mie credenze fondamentali sul lavoro che faccio. Domandamele una alla volta, incluse quelle scomode o in contrasto con quello che dicono i guru del settore. Quando ne abbiamo identificata una che mi sembra forte, aiutami a costruirci un post sopra.`},
+      {n:14, text:`Voglio trovare il mio punto di vista distintivo partendo dal cliente con cui ho lavorato meglio in assoluto. Esploriamo insieme cosa aveva di diverso dagli altri, cosa capiva che gli altri faticavano a capire. Da quella comprensione, aiutami a estrarre il mio punto di vista e a scriverlo.`},
       {n:15, text:`Aiutami a completare questa frase: "Il vero problema di [il mio target] non è [il problema ovvio che tutti nominano]. È [il problema che nessuno nomina]." Aiutami a scriverla in un post senza smussare gli angoli.`},
       {n:16, text:`Se dovessi spiegare il mio approccio a qualcuno che non conosce il mio settore, senza usare nessun termine tecnico o spirituale, come lo faresti? Scrivi quella spiegazione.`},
       {n:17, text:`Qual è la domanda che vorrei che i miei clienti mi facessero più spesso, ma che non fanno mai? Scrivila e poi rispondici pubblicamente.`},
@@ -89,16 +223,16 @@ const categorie = [
     sub: 'Strutturare video e yapping che tengono l\'attenzione',
     count: 10,
     prompts: [
-      {n:21, text:`Aiutami a rispondere a questa domanda per un video breve: "Qual è la cosa che questa settimana un cliente mi ha fatto capire che non avevo ancora spiegato bene?" Chiedimi i dettagli e poi aiutami a strutturare una risposta di 2 minuti.`},
+      {n:21, text:`Voglio fare un video breve su questa domanda: "Qual è la cosa che questa settimana un cliente mi ha fatto capire che non avevo ancora spiegato bene?" Navighiamo insieme i dettagli di quel momento e poi aiutami a strutturare una risposta di 2 minuti.`},
       {n:22, text:`Ho 60 secondi. Aiutami a spiegare cos'è il mio lavoro a mia nonna. Senza termini tecnici, senza "percorso", senza "consapevolezza". Se lei capisce, il messaggio funziona.`},
       {n:23, text:`Aiutami a costruire un'apertura video in cui dico subito, nei primi 5 secondi, una cosa che nella mia nicchia non dice nessuno. Niente suspense, niente giri di parole. Prima la cosa, poi il contesto.`},
-      {n:24, text:`Chiedimi di raccontarti un episodio di questa settimana che mi ha fatto pensare. Non deve essere una lezione, non deve avere una morale perfetta. Poi aiutami a strutturarlo come video partendo da "Ieri è successa una cosa strana…"`},
+      {n:24, text:`Voglio fare un video su un episodio di questa settimana che mi ha fatto pensare. Non deve essere una lezione, non deve avere una morale perfetta. Esploriamo insieme cosa è successo, poi aiutami a strutturarlo come video partendo da "Ieri è successa una cosa strana…"`},
       {n:25, text:`Prendi il commento o il messaggio DM più interessante che ho ricevuto nell'ultimo mese. Aiutami a strutturare una risposta video pubblica. È il contenuto più autentico che posso fare: nasce da una domanda reale di una persona reale.`},
-      {n:26, text:`Aiutami a fare un video su una cosa che ho cambiato idea negli ultimi 12 mesi riguardo al mio lavoro. Chiedimi di cosa si tratta, poi aiutami a strutturarlo come: "Mi sbagliavo. Ecco perché."`},
+      {n:26, text:`Aiutami a fare un video su una cosa che ho cambiato idea negli ultimi 12 mesi riguardo al mio lavoro. Partiamo da lì: esploriamo insieme cosa pensavo prima, cosa è successo, e perché oggi la vedo diversamente. Poi strutturiamolo come: "Mi sbagliavo. Ecco perché."`},
       {n:27, text:`Voglio fare un video sul dietro le quinte del mio lavoro. Aiutami a strutturare un contenuto che mostri una cosa ordinaria che faccio: una preparazione, una riflessione pre-sessione, qualcosa di normale per me ma invisibile al mio pubblico.`},
       {n:28, text:`Ho una credenza sul mio settore che mi crea frizione con i colleghi. Aiutami a strutturare un video in cui la spiego con calma. La frizione è il contenuto, non il problema.`},
-      {n:29, text:`Aiutami a costruire un'apertura video diretta: "Si può fare [X] senza [Y]? Sì. Ti spiego come." Chiedimi qual è la domanda, poi strutturiamo la risposta senza ganci artificiali.`},
-      {n:30, text:`Aiutami a fare un video di smontaggio: prendi un consiglio comune nel mio settore e spiega perché, nella mia esperienza concreta, non funziona così. Chiedimi qual è il consiglio, poi aiutami a strutturare l'argomentazione.`},
+      {n:29, text:`Aiutami a costruire un'apertura video diretta: "Si può fare [X] senza [Y]? Sì. Ti spiego come." Partiamo da una convinzione diffusa nel mio settore che voglio sfidare, poi strutturiamo la risposta senza ganci artificiali.`},
+      {n:30, text:`Aiutami a fare un video di smontaggio: prendi un consiglio comune nel mio settore e spiega perché, nella mia esperienza concreta, non funziona così. Partiamo da un consiglio specifico che sento ripetere spesso, poi strutturiamo l'argomentazione insieme.`},
     ]
   },
   {
@@ -239,21 +373,21 @@ const categorie = [
     sub: 'L\'AI come interlocutore che mette in discussione te, le tue credenze e i tuoi punti ciechi',
     count: 15,
     prompts: [
-      {n:121, text:`Scegli una convinzione che ho sul mio lavoro e trovami tre argomenti seri contro di essa. Poi chiedimi cosa penso di quegli argomenti, uno alla volta, senza anticipare la risposta successiva.`},
-      {n:122, text:`Chiedimi di descriverti il tipo di cliente con cui lavoro meglio. Ascolta la risposta, poi dimmi cosa dice di me: di come mi vedo, di cosa evito, di cosa cerco nelle persone che aiuto.`},
-      {n:123, text:`Chiedimi qual è la cosa che trovo più difficile nel mio lavoro. Poi aiutami a capire se quella difficoltà viene da un limite reale o da una storia che mi racconto su me stesso.`},
+      {n:121, text:`Scegli una convinzione che ho sul mio lavoro e trovami tre argomenti seri contro di essa. Poi esploriamoli uno alla volta: presentami il primo, aspetta la mia reazione, e solo dopo passa al secondo. Senza anticipare dove vuoi arrivare.`},
+      {n:122, text:`Voglio capire cosa dice di me il tipo di cliente con cui lavoro meglio. Partiamo da lì: esploriamo insieme chi sono queste persone, poi aiutami a vedere cosa rivela di come mi vedo, di cosa evito, di cosa cerco nelle persone che aiuto.`},
+      {n:123, text:`Voglio esplorare la cosa che trovo più difficile nel mio lavoro. Navighiamo insieme quel punto: aiutami a capire se quella difficoltà viene da un limite reale o da una storia che mi racconto su me stesso.`},
       {n:124, text:`Fai finta di essere un professionista del mio settore con un approccio completamente opposto al mio. Presentati e spiegami perché il tuo metodo funziona meglio. Poi aspetta la mia risposta e discutiamo.`},
-      {n:125, text:`Chiedimi cosa mi ha spinto a scegliere questo lavoro. Ascolta la risposta, poi chiedimi cosa di quella storia è ancora vero oggi e cosa invece è cambiato senza che me ne sia accorto.`},
-      {n:126, text:`Chiedimi qual è il consiglio che do più spesso ai miei clienti. Poi chiedimi perché quello stesso consiglio per me è più difficile da seguire.`},
-      {n:127, text:`Dimmi tre cose che potrebbe dire un critico severo del modo in cui faccio il mio lavoro. Poi chiedimi quale di queste mi disturba di più, e aspetta che risponda prima di continuare.`},
-      {n:128, text:`Chiedimi di raccontarti una sessione o consulenza che è andata particolarmente bene. Poi aiutami a capire cosa ho fatto io di specifico che ha contribuito a quel risultato, al di là delle circostanze favorevoli.`},
-      {n:129, text:`Chiedimi qual è la credenza sul cambiamento delle persone che guida il mio lavoro. Poi chiedi di dove viene quella credenza, quando l'ho costruita, se ho mai visto qualcosa che la mettesse in discussione.`},
-      {n:130, text:`Chiedimi di identificare il tipo di cliente con cui faccio più fatica. Poi aiutami a esplorare se quella fatica dice qualcosa su di me che non ho ancora esaminato.`},
-      {n:131, text:`Chiedimi come spiego il mio lavoro a qualcuno che non lo conosce. Poi dimmi quali parole ho usato che rivelano come mi vedo in questo ruolo, e quali aspetti del mio lavoro ho tralasciato.`},
-      {n:132, text:`Chiedimi qual è la cosa del mio settore che mi fa arrabbiare. Poi aiutami a capire se quella rabbia protegge qualcosa di importante per me o se è solo abitudine.`},
-      {n:133, text:`Chiedimi dove mi vedo tra cinque anni. Poi analizza la risposta: cosa è concreto, cosa è vago, cosa ho evitato di dire.`},
+      {n:125, text:`Voglio capire cosa mi ha spinto a scegliere questo lavoro e cosa di quella storia è ancora vero oggi. Navighiamo insieme la motivazione originale, poi aiutami a vedere cosa è cambiato senza che me ne sia accorto.`},
+      {n:126, text:`Esploriamo insieme una contraddizione: il consiglio che do più spesso ai miei clienti e perché quello stesso consiglio per me è più difficile da seguire. Partiamo dal consiglio, poi andiamo a fondo.`},
+      {n:127, text:`Dimmi tre cose che potrebbe dire un critico severo del modo in cui faccio il mio lavoro. Poi esploriamo insieme quale di queste mi disturba di più — aspetta che risponda prima di continuare.`},
+      {n:128, text:`Voglio analizzare una sessione o consulenza che è andata particolarmente bene. Esploriamo insieme cosa è successo, poi aiutami a capire cosa ho fatto io di specifico che ha contribuito a quel risultato, al di là delle circostanze favorevoli.`},
+      {n:129, text:`Voglio esplorare la credenza sul cambiamento delle persone che guida il mio lavoro. Andiamo a fondo: da dove viene, quando l'ho costruita, se ho mai visto qualcosa che la mettesse in discussione.`},
+      {n:130, text:`Voglio capire perché con certi clienti faccio più fatica. Esploriamo insieme il tipo di persona che mi mette in difficoltà, poi aiutami a vedere se quella fatica dice qualcosa su di me che non ho ancora esaminato.`},
+      {n:131, text:`Voglio analizzare come spiego il mio lavoro a qualcuno che non lo conosce. Partiamo da lì: ti racconto come lo presento, poi tu dimmi quali parole ho usato che rivelano come mi vedo in questo ruolo, e quali aspetti ho tralasciato.`},
+      {n:132, text:`C'è una cosa del mio settore che mi fa arrabbiare. Esploriamo insieme quella rabbia: aiutami a capire se protegge qualcosa di importante per me o se è solo abitudine.`},
+      {n:133, text:`Voglio ragionare su dove mi vedo tra cinque anni. Navighiamo insieme questa visione, poi analizza la mia risposta: cosa è concreto, cosa è vago, cosa ho evitato di dire.`},
       {n:134, text:`Fai finta di essere il mio cliente più difficile degli ultimi anni. Raccontami com'è stata la nostra relazione dal suo punto di vista. Poi usciamo dal personaggio e ne parliamo.`},
-      {n:135, text:`Chiedimi qual è la domanda sul mio lavoro a cui faccio più fatica a rispondere. Poi aiutami a stare con quella domanda invece di risolverla subito.`},
+      {n:135, text:`C'è una domanda sul mio lavoro a cui faccio più fatica a rispondere. Esploriamola insieme — aiutami a stare con quella domanda invece di risolverla subito.`},
     ]
   },
   {
@@ -1154,6 +1288,12 @@ const releasedUpdates = aggiornamenti.filter(a => a.status === 'released');
 </head>
 <body>
 
+  <!-- Login form (shown if no pp_access cookie) -->
+  <div id="pp-login-wrap" style="display:none" set:html={loginFormHtml}></div>
+
+  <!-- Content (shown if pp_access cookie exists) -->
+  <div id="pp-content-wrap" style="display:none">
+
   <!-- HEADER -->
   <header class="topbar">
     <a href="/" class="topbar__brand">
@@ -1172,31 +1312,25 @@ const releasedUpdates = aggiornamenti.filter(a => a.status === 'released');
       <strong>{totalPrompts}</strong> prompt · <strong>{totalGPTs}</strong> GPT
     </div>
 
-    <!-- User menu -->
+    <!-- User menu — populated client-side -->
     <div class="user-menu" id="user-menu">
       <button class="user-menu__btn" id="user-menu-btn" aria-expanded="false" aria-haspopup="true">
-        <span class="user-menu__avatar">
-          {user!.name ? user!.name.charAt(0).toUpperCase() : '✦'}
-        </span>
-        <span class="user-menu__label">{user!.name ? user!.name.split(' ')[0] : 'Account'}</span>
+        <span class="user-menu__avatar" id="user-avatar">✦</span>
+        <span class="user-menu__label" id="user-label">Account</span>
       </button>
       <div class="user-menu__dropdown" id="user-menu-dropdown" role="menu">
         <div class="user-menu__header">
-          {user!.name && <div class="user-menu__name">{user!.name}</div>}
-          <div class="user-menu__email">{user!.email}</div>
-          <div class="user-menu__date">
-            Acquistato il {new Date(user!.createdAt).toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' })}
-          </div>
+          <div class="user-menu__name" id="user-name-display"></div>
+          <div class="user-menu__email" id="user-email-display"></div>
+          <div class="user-menu__date" id="user-date-display"></div>
         </div>
         <div class="user-menu__items">
-          {user!.stripeReceiptUrl && (
-            <a href={user!.stripeReceiptUrl} target="_blank" rel="noopener" class="user-menu__item" role="menuitem">
+          <a id="user-receipt-link" href="#" target="_blank" rel="noopener" class="user-menu__item" role="menuitem" style="display:none">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/>
               </svg>
               Visualizza ricevuta →
             </a>
-          )}
           <a href="mailto:marco@marcomunich.com?subject=Supporto Prompt Pack" class="user-menu__item" role="menuitem">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/>
@@ -1204,7 +1338,7 @@ const releasedUpdates = aggiornamenti.filter(a => a.status === 'released');
             Supporto via email
           </a>
           <div class="user-menu__divider"></div>
-          <a href="/api/prompt-pack/logout" class="user-menu__item user-menu__item--danger" role="menuitem">
+          <a href="#" onclick="document.cookie='pp_access=;path=/;max-age=0';location.reload();" class="user-menu__item user-menu__item--danger" role="menuitem">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16,17 21,12 16,7"/><line x1="21" y1="12" x2="9" y2="12"/>
             </svg>
@@ -1441,11 +1575,11 @@ const releasedUpdates = aggiornamenti.filter(a => a.status === 'released');
       const text = card.getAttribute('data-text') || '';
       navigator.clipboard.writeText(text).then(() => {
         btn.classList.add('done');
-        btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Copiato`;
+        btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13"><polyline points="20 6 9 17 4 12"/></svg> Copiato`;
         card.classList.add('copied');
         setTimeout(() => {
           btn.classList.remove('done');
-          btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> Copia`;
+          btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> Copia`;
           card.classList.remove('copied');
         }, 2000);
       });
@@ -1561,6 +1695,43 @@ const releasedUpdates = aggiornamenti.filter(a => a.status === 'released');
 
       searchEmpty.classList.toggle('visible', !anyVisible && q.length > 0);
     });
+  </script>
+
+  </div><!-- /pp-content-wrap -->
+
+  <script is:inline>
+  (function(){
+    // Check for pp_access cookie OR token in URL
+    var cookie = document.cookie;
+    var hasCookie = cookie.split(';').some(function(c){return c.trim().startsWith('pp_access=')});
+
+    // Also check for ?token= in URL (first visit from email link)
+    var urlParams = new URLSearchParams(window.location.search);
+    var tokenFromUrl = urlParams.get('token');
+
+    if (tokenFromUrl) {
+      // Validate token server-side and set cookie
+      fetch('/api/prompt-pack/validate-token.php?token=' + encodeURIComponent(tokenFromUrl))
+        .then(function(r){ return r.json(); })
+        .then(function(d){
+          if (d.valid) {
+            document.cookie = 'pp_access=' + encodeURIComponent(tokenFromUrl) + ';path=/;max-age=' + (86400*365) + ';SameSite=Lax';
+            document.getElementById('pp-content-wrap').style.display = 'block';
+          } else {
+            document.getElementById('pp-login-wrap').style.display = 'block';
+          }
+        })
+        .catch(function(){
+          // Fallback: show content if we have cookie, otherwise login
+          if (hasCookie) document.getElementById('pp-content-wrap').style.display = 'block';
+          else document.getElementById('pp-login-wrap').style.display = 'block';
+        });
+    } else if (hasCookie) {
+      document.getElementById('pp-content-wrap').style.display = 'block';
+    } else {
+      document.getElementById('pp-login-wrap').style.display = 'block';
+    }
+  })();
   </script>
 
 </body>
