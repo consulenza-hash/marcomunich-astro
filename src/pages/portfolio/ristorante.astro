@@ -414,7 +414,7 @@ export const prerender = true;
   <div class="floating-circle fg1"></div>
   <div class="floating-circle fg2"></div>
 
-  <script>
+  <script is:inline>
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -445,6 +445,78 @@ export const prerender = true;
 
     const resForm = document.querySelector('.res-form-wrap');
     if (resForm) formObserver.observe(resForm);
+
+    // ===== PRENOTAZIONE =====
+    document.querySelector('.btn-gold.btn-block').addEventListener('click', () => {
+      const inputs = document.querySelectorAll('.res-form .form-input');
+      const nome = inputs[0].value.trim();
+      const data = inputs[2].value.trim();
+      const orario = inputs[3].value.trim();
+      const ospiti = inputs[5].value.trim();
+      if (!nome || !data || !orario) {
+        showToast('Compila almeno nome, data e orario');
+        return;
+      }
+      document.getElementById('confirmNome').textContent = nome;
+      document.getElementById('confirmData').textContent = data + ' alle ' + (orario || '20:30');
+      document.getElementById('confirmOspiti').textContent = (ospiti || '2') + ' persone';
+      document.getElementById('confirmModal').classList.add('open');
+      document.getElementById('confirmOverlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    });
+
+    function closeConfirm() {
+      document.getElementById('confirmModal').classList.remove('open');
+      document.getElementById('confirmOverlay').classList.remove('open');
+      document.body.style.overflow = '';
+      document.querySelectorAll('.res-form .form-input').forEach(i => i.value = '');
+      showToast('✓ Prenotazione inviata! Ti confermeremo via email.');
+    }
+
+    // ===== GALLERY LIGHTBOX =====
+    const photos = [
+      { label: 'Sala Principale', emoji: '🍽️' },
+      { label: 'Piatto Signature', emoji: '👨‍🍳' },
+      { label: 'Cantina Vini', emoji: '🍷' },
+      { label: 'Dessert', emoji: '🍮' },
+      { label: 'Terrazza Panoramica', emoji: '🌄' },
+    ];
+    let currentPhoto = 0;
+
+    document.querySelectorAll('.photo-item').forEach((item, i) => {
+      item.style.cursor = 'pointer';
+      item.addEventListener('click', () => openLightbox(i));
+    });
+
+    function openLightbox(i) {
+      currentPhoto = i;
+      updateLightbox();
+      document.getElementById('lightbox').classList.add('open');
+      document.getElementById('lightboxOverlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+      document.getElementById('lightboxOverlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    function lightboxPrev() { currentPhoto = (currentPhoto - 1 + photos.length) % photos.length; updateLightbox(); }
+    function lightboxNext() { currentPhoto = (currentPhoto + 1) % photos.length; updateLightbox(); }
+    function updateLightbox() {
+      document.getElementById('lightboxEmoji').textContent = photos[currentPhoto].emoji;
+      document.getElementById('lightboxLabel').textContent = photos[currentPhoto].label;
+      document.getElementById('lightboxCounter').textContent = (currentPhoto + 1) + ' / ' + photos.length;
+    }
+
+    // ===== TOAST =====
+    let toastTimeout;
+    function showToast(msg) {
+      const t = document.getElementById('risto-toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => t.classList.remove('show'), 3200);
+    }
   </script>
 
   <style>
@@ -896,10 +968,81 @@ export const prerender = true;
     }
     @media (max-width: 480px) {
       .hero-title { font-size: 2.2rem; }
+      .philosophy { padding: 60px 0; }
+      .menu-section { padding: 60px 0; }
+      .phil-grid { gap: 24px; }
       .menu-item-header { flex-wrap: wrap; }
       .menu-item-dots { display: none; }
       .menu-item-price { margin-left: auto; }
     }
+
+    /* ===== CONFIRM MODAL ===== */
+    .r-overlay { position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:9998;opacity:0;pointer-events:none;transition:opacity 0.3s; }
+    .r-overlay.open { opacity:1;pointer-events:all; }
+    .confirm-modal { position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0.9);width:min(480px,90vw);background:#1a1208;border:1px solid rgba(212,168,83,0.3);border-radius:16px;padding:48px 40px;z-index:9999;opacity:0;pointer-events:none;transition:all 0.35s cubic-bezier(0.4,0,0.2,1);text-align:center; }
+    .confirm-modal.open { opacity:1;pointer-events:all;transform:translate(-50%,-50%) scale(1); }
+    .confirm-icon { font-size:3rem;margin-bottom:16px; }
+    .confirm-title { font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:#d4a853;margin-bottom:8px; }
+    .confirm-sub { font-size:0.9rem;color:rgba(232,224,212,0.7);margin-bottom:28px; }
+    .confirm-details { background:rgba(212,168,83,0.08);border:1px solid rgba(212,168,83,0.15);border-radius:10px;padding:20px;margin-bottom:28px;text-align:left; }
+    .confirm-row { display:flex;justify-content:space-between;align-items:center;padding:6px 0;font-size:0.875rem; }
+    .confirm-row:not(:last-child) { border-bottom:1px solid rgba(212,168,83,0.1); }
+    .confirm-key { color:rgba(232,224,212,0.5);text-transform:uppercase;letter-spacing:1px;font-size:0.72rem; }
+    .confirm-val { color:#d4a853;font-weight:600; }
+    .confirm-close-btn { background:linear-gradient(135deg,#d4a853,#b8883d);color:#1a1208;border:none;padding:14px 32px;border-radius:8px;font-size:0.9rem;font-weight:700;cursor:pointer;letter-spacing:1px;width:100%;transition:opacity 0.2s; }
+    .confirm-close-btn:hover { opacity:0.85; }
+
+    /* ===== LIGHTBOX ===== */
+    .lightbox { position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0.9);width:min(600px,92vw);background:#0d0a06;border:1px solid rgba(212,168,83,0.2);border-radius:12px;z-index:9999;opacity:0;pointer-events:none;transition:all 0.35s cubic-bezier(0.4,0,0.2,1);overflow:hidden; }
+    .lightbox.open { opacity:1;pointer-events:all;transform:translate(-50%,-50%) scale(1); }
+    .lightbox-img { height:320px;display:flex;align-items:center;justify-content:center;font-size:7rem;background:#111009; }
+    .lightbox-footer { display:flex;align-items:center;justify-content:space-between;padding:16px 24px; }
+    .lightbox-label { color:#d4a853;font-size:0.9rem; }
+    .lightbox-counter { color:rgba(232,224,212,0.4);font-size:0.8rem; }
+    .lightbox-nav { display:flex;gap:12px; }
+    .lb-btn { background:rgba(212,168,83,0.15);border:1px solid rgba(212,168,83,0.3);color:#d4a853;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:1rem;transition:background 0.2s; }
+    .lb-btn:hover { background:rgba(212,168,83,0.3); }
+    .lb-close { position:absolute;top:12px;right:12px;background:rgba(0,0,0,0.5);border:none;color:rgba(232,224,212,0.6);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:0.9rem;transition:color 0.2s; }
+    .lb-close:hover { color:#d4a853; }
+
+    /* ===== TOAST ===== */
+    #risto-toast { position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);background:#1a1208;border:1px solid rgba(212,168,83,0.5);color:#d4a853;padding:14px 28px;border-radius:50px;font-size:0.85rem;z-index:99999;opacity:0;transition:all 0.4s cubic-bezier(0.4,0,0.2,1);white-space:nowrap;pointer-events:none; }
+    #risto-toast.show { opacity:1;transform:translateX(-50%) translateY(0); }
   </style>
+
+  <!-- Confirm Modal -->
+  <div class="r-overlay" id="confirmOverlay" onclick="closeConfirm()"></div>
+  <div class="confirm-modal" id="confirmModal">
+    <div class="confirm-icon">🍽️</div>
+    <h3 class="confirm-title">Prenotazione Ricevuta!</h3>
+    <p class="confirm-sub">Ti aspettiamo all'Osteria del Borgo. Riceverai una conferma via email entro 30 minuti.</p>
+    <div class="confirm-details">
+      <div class="confirm-row"><span class="confirm-key">Nome</span><span class="confirm-val" id="confirmNome">—</span></div>
+      <div class="confirm-row"><span class="confirm-key">Quando</span><span class="confirm-val" id="confirmData">—</span></div>
+      <div class="confirm-row"><span class="confirm-key">Ospiti</span><span class="confirm-val" id="confirmOspiti">—</span></div>
+      <div class="confirm-row"><span class="confirm-key">Ristorante</span><span class="confirm-val">Osteria del Borgo</span></div>
+    </div>
+    <button class="confirm-close-btn" onclick="closeConfirm()">Perfetto, grazie!</button>
+  </div>
+
+  <!-- Lightbox -->
+  <div class="r-overlay" id="lightboxOverlay" onclick="closeLightbox()"></div>
+  <div class="lightbox" id="lightbox">
+    <button class="lb-close" onclick="closeLightbox()">✕</button>
+    <div class="lightbox-img"><span id="lightboxEmoji">🍽️</span></div>
+    <div class="lightbox-footer">
+      <div>
+        <div class="lightbox-label" id="lightboxLabel">Sala Principale</div>
+        <div class="lightbox-counter" id="lightboxCounter">1 / 5</div>
+      </div>
+      <div class="lightbox-nav">
+        <button class="lb-btn" onclick="lightboxPrev()">←</button>
+        <button class="lb-btn" onclick="lightboxNext()">→</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="risto-toast"></div>
 </body>
 </html>

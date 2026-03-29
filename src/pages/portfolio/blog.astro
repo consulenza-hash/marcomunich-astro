@@ -261,7 +261,7 @@ export const prerender = true;
     </div>
   </footer>
 
-  <script>
+  <script is:inline>
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -277,7 +277,54 @@ export const prerender = true;
       el.dataset.delay = (i % 5) * 100;
       observer.observe(el);
     });
+
+    // ===== CATEGORY FILTER =====
+    document.querySelectorAll('.cat-pill').forEach(pill => {
+      pill.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        const cat = pill.textContent.trim();
+        document.querySelectorAll('.article-card, .grid-card').forEach(card => {
+          const tag = card.querySelector('.card-category-tag, .card-category-badge');
+          const match = cat === 'Tutti' || (tag && tag.textContent.trim() === cat);
+          card.style.opacity = match ? '1' : '0.25';
+          card.style.transform = match ? '' : 'scale(0.97)';
+          card.style.transition = 'opacity 0.3s, transform 0.3s';
+        });
+      });
+    });
+
+    // ===== ARTICLE CLICK =====
+    document.querySelectorAll('.article-card, .grid-card').forEach(card => {
+      card.style.cursor = 'pointer';
+      card.addEventListener('click', () => {
+        const title = card.querySelector('h2, h3')?.textContent?.trim() || 'Articolo';
+        showBlogToast('📖 Aprendo: ' + title.substring(0, 40) + '...');
+      });
+    });
+
+    // ===== NEWSLETTER =====
+    document.querySelector('.newsletter-btn')?.addEventListener('click', () => {
+      const input = document.querySelector('.newsletter-input');
+      if (!input?.value) { showBlogToast('Inserisci la tua email'); return; }
+      input.value = '';
+      showBlogToast('✓ Iscritto! Benvenuto nella community di Punto di Vista.');
+    });
+
+    // ===== TOAST =====
+    let blogToastTimeout;
+    function showBlogToast(msg) {
+      const t = document.getElementById('blog-toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      clearTimeout(blogToastTimeout);
+      blogToastTimeout = setTimeout(() => t.classList.remove('show'), 3200);
+    }
   </script>
+
+  <div id="blog-toast" style="position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);background:#1a1a1a;border:1px solid #dc2626;color:#fca5a5;padding:13px 26px;border-radius:50px;font-size:0.84rem;z-index:99999;opacity:0;transition:all 0.4s cubic-bezier(0.4,0,0.2,1);white-space:nowrap;pointer-events:none;"></div>
+  <style>#blog-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}</style>
 
   <style>
     /* ===== RESET & BASE ===== */

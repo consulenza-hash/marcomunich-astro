@@ -478,9 +478,14 @@ export const prerender = true;
       .map-placeholder { height: 260px; }
       .back-btn { top: 12px; left: 12px; font-size: 0.8rem; padding: 8px 14px; }
     }
+    @media (max-width: 480px) {
+      .agents-grid { grid-template-columns: 1fr; }
+      .agents-section { padding: 60px 20px; }
+      .map-section { padding: 60px 20px; }
+    }
   </style>
 
-  <script>
+  <script is:inline>
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -515,8 +520,122 @@ export const prerender = true;
       pill.addEventListener('click', () => {
         document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
         pill.classList.add('active');
+        showImmoToast('Filtro: ' + pill.textContent.trim());
       });
     });
+
+    // ===== PROPERTY DATA =====
+    const properties = [
+      { title: 'Attico con terrazza panoramica', location: 'Verona, Centro Storico', price: '€385.000', type: 'Vendita', rooms: '3 camere', baths: '2 bagni', size: '145 m²', floor: '6° piano', year: '1932 (ristrutturato 2019)', desc: 'Splendido attico con terrazza panoramica sul centro storico di Verona. Travi a vista originali, parquet in rovere, cucina su misura. Vista sull\'Arena e sul Duomo.', emoji: '🏛️' },
+      { title: 'Bilocale ristrutturato arredato', location: 'Milano, Navigli', price: '€950/mese', type: 'Affitto', rooms: '1 camera', baths: '1 bagno', size: '55 m²', floor: '3° piano', year: 'Ristrutturato 2022', desc: 'Bilocale completamente arredato a 200m dalla fermata metro Porta Genova. Cucina a vista, bagno con doccia walk-in, armadi su misura. Disponibile subito.', emoji: '🏙️' },
+      { title: 'Villa con piscina vista lago', location: 'Lago di Garda, Lazise', price: '€720.000', type: 'Vendita', rooms: '4 camere', baths: '3 bagni', size: '280 m²', floor: 'Villa indipendente', year: '2005', desc: 'Prestigiosa villa con giardino di 1.500 mq e piscina privata. Vista lago dalle camere principali. Box triplo, taverna, locale tecnico. A 5 minuti dal centro di Lazise.', emoji: '🏡' },
+      { title: 'Trilocale in stabile d\'epoca', location: 'Milano, Brera', price: '€1.400/mese', type: 'Affitto', rooms: '2 camere', baths: '1 bagno', size: '85 m²', floor: '2° piano con ascensore', year: '1920 (facciata vincolata)', desc: 'Trilocale in elegante stabile liberty nel cuore di Brera. Soffitti alti 3.2m, parquet originale, cantina inclusa. A 5 min a piedi dal Castello Sforzesco.', emoji: '🏢' },
+      { title: 'Casale con terreno e dependance', location: 'Campagna Vicentina', price: '€495.000', type: 'Vendita', rooms: '5 camere', baths: '3 bagni', size: '320 m²', floor: 'Su 2 piani + dependance', year: 'Fine \'800 (ristrutturato 2015)', desc: 'Bellissimo casale di campagna completamente ristrutturato con 8.000 mq di terreno, dependance autonoma di 60 mq, cantina per vini, pozzo artesiano.', emoji: '🌾' },
+      { title: 'Monolocale luminoso zona università', location: 'Verona, Zona Università', price: '€650/mese', type: 'Affitto', rooms: 'Monolocale', baths: '1 bagno', size: '35 m²', floor: '1° piano', year: 'Ristrutturato 2021', desc: 'Monolocale luminoso con angolo cottura attrezzato. Spese condominiali incluse. Perfetto per studenti o lavoratori. A 10 min a piedi dall\'università e dal centro.', emoji: '🎓' },
+    ];
+
+    // ===== PROPERTY CARDS =====
+    document.querySelectorAll('.property-card').forEach((card, i) => {
+      card.style.cursor = 'pointer';
+      card.addEventListener('click', () => openPropertyModal(i));
+    });
+
+    function openPropertyModal(i) {
+      const p = properties[i];
+      document.getElementById('propEmoji').textContent = p.emoji;
+      document.getElementById('propType').textContent = p.type;
+      document.getElementById('propTitle').textContent = p.title;
+      document.getElementById('propLocation').textContent = p.location;
+      document.getElementById('propPrice').textContent = p.price;
+      document.getElementById('propDesc').textContent = p.desc;
+      document.getElementById('propDetails').innerHTML = `
+        <div class="pd-row"><span>🛏️ Camere</span><span>${p.rooms}</span></div>
+        <div class="pd-row"><span>🚿 Bagni</span><span>${p.baths}</span></div>
+        <div class="pd-row"><span>📐 Superficie</span><span>${p.size}</span></div>
+        <div class="pd-row"><span>🏗️ Piano</span><span>${p.floor}</span></div>
+        <div class="pd-row"><span>🏛️ Anno</span><span>${p.year}</span></div>
+      `;
+      document.getElementById('immoModal').classList.add('open');
+      document.getElementById('immoOverlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeImmoModal() {
+      document.getElementById('immoModal').classList.remove('open');
+      document.getElementById('immoOverlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function requestInfo() {
+      closeImmoModal();
+      showImmoToast('✓ Richiesta inviata! Un agente ti contatterà entro 24 ore.');
+    }
+
+    // ===== SEARCH =====
+    document.querySelector('.search-submit')?.addEventListener('click', () => {
+      showImmoToast('🔍 Ricerca in corso... trovati 6 immobili');
+    });
+
+    // ===== TOAST =====
+    let immoToastTimeout;
+    function showImmoToast(msg) {
+      const t = document.getElementById('immo-toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      clearTimeout(immoToastTimeout);
+      immoToastTimeout = setTimeout(() => t.classList.remove('show'), 3000);
+    }
   </script>
+
+  <!-- Property Modal -->
+  <div class="immo-overlay" id="immoOverlay" onclick="closeImmoModal()"></div>
+  <div class="immo-modal" id="immoModal">
+    <button class="immo-close" onclick="closeImmoModal()">✕</button>
+    <div class="immo-modal-top">
+      <div class="immo-modal-img"><span id="propEmoji" style="font-size:5rem"></span></div>
+      <div class="immo-modal-info">
+        <span class="immo-modal-badge" id="propType">Vendita</span>
+        <h3 class="immo-modal-title" id="propTitle"></h3>
+        <p class="immo-modal-loc" id="propLocation"></p>
+        <p class="immo-modal-price" id="propPrice"></p>
+        <p class="immo-modal-desc" id="propDesc"></p>
+      </div>
+    </div>
+    <div id="propDetails" class="prop-details"></div>
+    <div class="immo-modal-actions">
+      <button class="immo-btn-primary" onclick="requestInfo()">Richiedi informazioni →</button>
+      <button class="immo-btn-secondary" onclick="showImmoToast('📅 Prenotazione visita inviata!');closeImmoModal()">Prenota visita</button>
+    </div>
+  </div>
+  <div id="immo-toast"></div>
+
+  <style>
+    .immo-overlay { position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:9998;opacity:0;pointer-events:none;transition:opacity 0.3s; }
+    .immo-overlay.open { opacity:1;pointer-events:all; }
+    .immo-modal { position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0.9);width:min(640px,92vw);max-height:88vh;overflow-y:auto;background:#fff;border-radius:20px;z-index:9999;opacity:0;pointer-events:none;transition:all 0.35s cubic-bezier(0.4,0,0.2,1);color:#1a1a2e; }
+    .immo-modal.open { opacity:1;pointer-events:all;transform:translate(-50%,-50%) scale(1); }
+    .immo-close { position:absolute;top:16px;right:16px;background:#f0f0f0;border:none;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:1rem;z-index:1;transition:background 0.2s; }
+    .immo-close:hover { background:#e0e0e0; }
+    .immo-modal-top { display:grid;grid-template-columns:180px 1fr;gap:0; }
+    .immo-modal-img { background:linear-gradient(135deg,#e8f4fd,#dbeafe);display:flex;align-items:center;justify-content:center;min-height:240px;border-radius:20px 0 0 0; }
+    .immo-modal-info { padding:28px 28px 20px; }
+    .immo-modal-badge { display:inline-block;background:#2563eb;color:#fff;font-size:0.72rem;font-weight:700;letter-spacing:1px;padding:4px 12px;border-radius:20px;margin-bottom:12px;text-transform:uppercase; }
+    .immo-modal-title { font-size:1.15rem;font-weight:700;margin-bottom:8px;line-height:1.4;color:#1a1a2e; }
+    .immo-modal-loc { font-size:0.85rem;color:#64748b;margin-bottom:8px; }
+    .immo-modal-price { font-size:1.6rem;font-weight:800;color:#2563eb;margin-bottom:12px; }
+    .immo-modal-desc { font-size:0.84rem;color:#555;line-height:1.6; }
+    .prop-details { display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid #f0f0f0;border-bottom:1px solid #f0f0f0; }
+    .pd-row { display:flex;justify-content:space-between;padding:12px 28px;font-size:0.84rem;border-bottom:1px solid #f8f8f8; }
+    .pd-row span:first-child { color:#64748b; }
+    .pd-row span:last-child { font-weight:600;color:#1a1a2e; }
+    .immo-modal-actions { display:flex;gap:12px;padding:20px 28px; }
+    .immo-btn-primary { flex:1;background:#2563eb;color:#fff;border:none;padding:14px;border-radius:10px;font-weight:700;cursor:pointer;transition:opacity 0.2s; }
+    .immo-btn-primary:hover { opacity:0.9; }
+    .immo-btn-secondary { flex:1;background:#f0f4ff;color:#2563eb;border:2px solid #2563eb;padding:14px;border-radius:10px;font-weight:700;cursor:pointer;transition:all 0.2s; }
+    .immo-btn-secondary:hover { background:#2563eb;color:#fff; }
+    @media (max-width:520px) { .immo-modal-top{grid-template-columns:1fr} .immo-modal-img{min-height:140px;border-radius:20px 20px 0 0} .prop-details{grid-template-columns:1fr} }
+    #immo-toast { position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);background:#1a1a2e;border:1px solid #2563eb;color:#93c5fd;padding:13px 26px;border-radius:50px;font-size:0.84rem;z-index:99999;opacity:0;transition:all 0.4s cubic-bezier(0.4,0,0.2,1);white-space:nowrap;pointer-events:none; }
+    #immo-toast.show { opacity:1;transform:translateX(-50%) translateY(0); }
+  </style>
 </body>
 </html>

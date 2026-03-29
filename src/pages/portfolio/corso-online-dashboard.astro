@@ -375,7 +375,7 @@ export const prerender = true;
     .back-btn {
       position: fixed;
       top: 76px; left: 24px;
-      z-index: 100;
+      z-index: 9000;
       display: inline-flex;
       align-items: center;
       gap: 8px;
@@ -449,7 +449,7 @@ export const prerender = true;
       .courses-grid { grid-template-columns: 1fr; }
       .stats-row { grid-template-columns: repeat(2, 1fr); }
       .welcome h1 { font-size: 1.4rem; }
-      .back-btn { display: none; }
+      .back-btn { display: inline-flex; font-size: 0.75rem; padding: 6px 12px; }
       .user-name { display: none; }
       .schedule-time { min-width: auto; }
       .schedule-item { flex-wrap: wrap; gap: 8px; }
@@ -611,7 +611,7 @@ export const prerender = true;
     </main>
   </div>
 
-  <script>
+  <script is:inline>
     // Date
     const d = new Date();
     const months = ['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'];
@@ -663,6 +663,126 @@ export const prerender = true;
     }
     hamburger.addEventListener('click', toggleSidebar);
     overlay.addEventListener('click', toggleSidebar);
+
+    // ===== COURSE BUTTONS =====
+    document.querySelectorAll('.course-btn.purple').forEach((btn, i) => {
+      btn.addEventListener('click', () => openVideoPlayer(i));
+    });
+
+    document.querySelector('.course-btn.green')?.addEventListener('click', () => {
+      showDashToast('📜 Certificato scaricato! Controlla la cartella Download.');
+    });
+
+    // ===== VIDEO PLAYER =====
+    const courses = [
+      { title: 'Python per il Machine Learning', lesson: 'Lezione 7 — Reti Neurali Convoluzionali', duration: '42:18' },
+      { title: 'UX Design Avanzato', lesson: 'Lezione 3 — Design System e Atomic Design', duration: '38:55' },
+    ];
+
+    function openVideoPlayer(i) {
+      const c = courses[i] || courses[0];
+      document.getElementById('vpTitle').textContent = c.title;
+      document.getElementById('vpLesson').textContent = c.lesson;
+      document.getElementById('vpDuration').textContent = c.duration;
+      document.getElementById('vpProgress').style.width = '0%';
+      document.getElementById('vpPlaying').textContent = '▶';
+      document.getElementById('videoPlayer').classList.add('open');
+      document.getElementById('vpOverlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeVideoPlayer() {
+      document.getElementById('videoPlayer').classList.remove('open');
+      document.getElementById('vpOverlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    let vpInterval;
+    let vpSeconds = 0;
+    let vpPlaying = false;
+
+    function togglePlay() {
+      vpPlaying = !vpPlaying;
+      document.getElementById('vpPlaying').textContent = vpPlaying ? '⏸' : '▶';
+      if (vpPlaying) {
+        vpInterval = setInterval(() => {
+          vpSeconds += 1;
+          const pct = Math.min((vpSeconds / 120) * 100, 100);
+          document.getElementById('vpProgress').style.width = pct + '%';
+          const m = Math.floor(vpSeconds / 60);
+          const s = vpSeconds % 60;
+          document.getElementById('vpTime').textContent = m + ':' + String(s).padStart(2,'0');
+          if (vpSeconds >= 120) { clearInterval(vpInterval); vpPlaying = false; document.getElementById('vpPlaying').textContent = '▶'; }
+        }, 1000);
+      } else {
+        clearInterval(vpInterval);
+      }
+    }
+
+    // ===== NOTIFICATION BELL =====
+    document.querySelector('.notif-bell')?.addEventListener('click', () => {
+      showDashToast('🔔 3 nuove notifiche: lezione aggiunta, nuovo badge, messaggio dal tutor');
+    });
+
+    // ===== LOGOUT =====
+    document.querySelector('.sidebar-item.logout')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      showDashToast('👋 Arrivederci! Sessione terminata.');
+      setTimeout(() => window.location.href = '/portfolio/corso-online-login', 1500);
+    });
+
+    // ===== SCHEDULE LESSONS =====
+    document.querySelectorAll('.schedule-lesson').forEach(lesson => {
+      lesson.style.cursor = 'pointer';
+      lesson.addEventListener('click', () => {
+        showDashToast('📅 ' + lesson.textContent + ' — Promemoria impostato!');
+      });
+    });
+
+    // ===== TOAST =====
+    let dashToastTimeout;
+    function showDashToast(msg) {
+      const t = document.getElementById('dash-toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      clearTimeout(dashToastTimeout);
+      dashToastTimeout = setTimeout(() => t.classList.remove('show'), 3200);
+    }
   </script>
+
+  <!-- Video Player Modal -->
+  <div style="position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:9998;opacity:0;pointer-events:none;transition:opacity 0.3s" id="vpOverlay" onclick="closeVideoPlayer()"></div>
+  <div id="videoPlayer" style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0.9);width:min(700px,92vw);background:#0d0d1a;border:1px solid rgba(139,92,246,0.2);border-radius:16px;z-index:9999;opacity:0;pointer-events:none;transition:all 0.35s cubic-bezier(0.4,0,0.2,1);overflow:hidden;">
+    <button onclick="closeVideoPlayer()" style="position:absolute;top:12px;right:12px;background:rgba(255,255,255,0.08);border:none;color:rgba(255,255,255,0.6);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:0.9rem;z-index:1;">✕</button>
+    <!-- Fake video area -->
+    <div style="background:#050510;height:320px;display:flex;align-items:center;justify-content:center;position:relative;">
+      <div style="text-align:center">
+        <div style="font-size:4rem;margin-bottom:16px">🎓</div>
+        <p style="color:rgba(255,255,255,0.5);font-size:0.85rem" id="vpLesson">Lezione 7 — Reti Neurali</p>
+      </div>
+      <!-- Progress bar -->
+      <div style="position:absolute;bottom:0;left:0;right:0;height:4px;background:rgba(255,255,255,0.08)">
+        <div id="vpProgress" style="height:100%;background:linear-gradient(90deg,#8b5cf6,#06b6d4);width:0%;transition:width 0.5s linear;"></div>
+      </div>
+    </div>
+    <!-- Controls -->
+    <div style="padding:16px 24px;display:flex;align-items:center;gap:16px;border-bottom:1px solid rgba(255,255,255,0.06);">
+      <button onclick="togglePlay()" id="vpPlaying" style="background:linear-gradient(135deg,#8b5cf6,#06b6d4);border:none;color:#fff;width:44px;height:44px;border-radius:50%;cursor:pointer;font-size:1.1rem;">▶</button>
+      <div style="flex:1">
+        <div style="font-size:0.9rem;color:#fff;font-weight:600;margin-bottom:2px" id="vpTitle">Python ML</div>
+        <div style="font-size:0.75rem;color:rgba(255,255,255,0.4)"><span id="vpTime">0:00</span> / <span id="vpDuration">42:18</span></div>
+      </div>
+      <button onclick="showDashToast('🔖 Segnalibro salvato al momento ' + document.getElementById(\'vpTime\').textContent)" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);padding:8px 14px;border-radius:8px;cursor:pointer;font-size:0.8rem;">🔖 Segna</button>
+      <button onclick="showDashToast('📝 Note aggiunte!')" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);padding:8px 14px;border-radius:8px;cursor:pointer;font-size:0.8rem;">📝 Note</button>
+    </div>
+    <!-- Lesson list -->
+    <div style="padding:16px 24px;max-height:180px;overflow-y:auto;">
+      <p style="font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:12px">Prossime lezioni</p>
+      <div onclick="showDashToast('▶ Lezione 8 avviata')" style="padding:10px 12px;border-radius:8px;cursor:pointer;background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.2);margin-bottom:8px;font-size:0.85rem;color:#c4b5fd;">8 — Transfer Learning con TensorFlow <span style="float:right;opacity:0.5">38:42</span></div>
+      <div onclick="showDashToast('▶ Lezione 9 avviata')" style="padding:10px 12px;border-radius:8px;cursor:pointer;transition:background 0.2s;margin-bottom:8px;font-size:0.85rem;color:rgba(255,255,255,0.5);">9 — Ottimizzazione dei modelli <span style="float:right;opacity:0.5">45:10</span></div>
+      <div onclick="showDashToast('▶ Lezione 10 avviata')" style="padding:10px 12px;border-radius:8px;cursor:pointer;font-size:0.85rem;color:rgba(255,255,255,0.5);">10 — Deploy su cloud <span style="float:right;opacity:0.5">52:18</span></div>
+    </div>
+  </div>
+  <div id="dash-toast" style="position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);background:#0d0d1a;border:1px solid rgba(139,92,246,0.4);color:#c4b5fd;padding:13px 26px;border-radius:50px;font-size:0.84rem;z-index:99999;opacity:0;transition:all 0.4s cubic-bezier(0.4,0,0.2,1);white-space:nowrap;pointer-events:none;max-width:90vw;text-align:center;"></div>
+  <style>#videoPlayer.open,#vpOverlay.open{opacity:1!important;pointer-events:all!important;transform:translate(-50%,-50%) scale(1)!important}#dash-toast.show{opacity:1!important;transform:translateX(-50%) translateY(0)!important}</style>
 </body>
 </html>
