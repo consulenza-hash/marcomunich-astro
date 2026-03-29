@@ -12,17 +12,47 @@ Disallow: /consulenza-accettata/
 Disallow: /consulenza-non-accettata/
 Disallow: /conferma-registrazione-webinar-qa/
 
-Sitemap: https://marcomunich.com/sitemap-index.xml
+# Escludi area admin
+Disallow: /admin/
 
-# AI assistants
+# AI crawlers — accesso completo ai contenuti
 User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
 Allow: /
 
 User-agent: Claude-Web
 Allow: /
 
+User-agent: anthropic-ai
+Allow: /
+
 User-agent: PerplexityBot
+Allow: /
+
+User-agent: Googlebot-Extended
 Allow: /
 
 User-agent: Bingbot
 Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: YouBot
+Allow: /
+
+Sitemap: https://marcomunich.com/sitemap-index.xml

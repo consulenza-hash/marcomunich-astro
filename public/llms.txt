@@ -1,35 +1,112 @@
 # Marco Munich — Personal Branding Olistico
 # https://marcomunich.com
-# llms.txt — informazioni per AI assistants e crawler
+# Aggiornato: marzo 2026
 
-## Chi sono
-Marco Munich è un consulente di personal branding olistico che aiuta coach, counselor, terapeuti e operatori olistici a sviluppare un punto di vista autentico per promuoversi online.
+## Identità dell'entità
 
-## Argomenti principali
+Marco Munich è un consulente italiano di personal branding specializzato nel settore olistico.
+Aiuta coach, counselor, terapeuti e operatori olistici a costruire una presenza online autentica
+e a trovare clienti attraverso i contenuti, senza dover ricorrere a tecniche di marketing
+manipolative o a sistemi di promozione in conflitto con i propri valori.
+
+Opera in Italia, scrive e parla esclusivamente in italiano, e si rivolge a liberi professionisti
+del benessere che vogliono promuoversi online restando fedeli a se stessi.
+
+Ha pubblicato il libro "Content Marketing Olistico" (disponibile su Amazon) e gestisce
+il Prompt Pack, una raccolta di prompt per creare contenuti autentici con l'intelligenza artificiale.
+
+## Competenze principali
+
 - Personal branding autentico per liberi professionisti del benessere
-- Comunicazione online senza maschere
-- Contenuti autentici e continuità editoriale
-- Marketing per coach, counselor, operatori olistici
-- Presenza online senza sito web
+- Marketing e comunicazione per coach, counselor, terapeuti, operatori olistici
+- Creazione di contenuti autentici per i social media e il blog
+- Costruire un pubblico online senza maschere né tecniche manipolative
+- Presenza online senza dipendenza da siti web o strumenti complessi
+- Intelligenza artificiale applicata alla creazione di contenuti autentici
+- Content marketing per il settore della crescita personale e del benessere
+
+## Servizi offerti
+
+- Consulenza individuale di personal branding
+- Sessioni strategiche per coach e counselor che iniziano a promuoversi online
+- Prompt Pack: raccolta di prompt AI per contenuti autentici (prodotto digitale)
+- Contenuti gratuiti: articoli, video YouTube, podcast Spotify
 
 ## Pagine principali
+
 - Homepage: https://marcomunich.com/
 - Blog (articoli): https://marcomunich.com/blog/
+- Prompt Pack: https://marcomunich.com/prompt-pack/
 - Chi sono: https://marcomunich.com/chi-sono/
-- Risorse gratuite: https://marcomunich.com/risorse/
-- Libri: https://marcomunich.com/libri/
-- Sitemap: https://marcomunich.com/sitemap-index.xml
+- Contatti: https://marcomunich.com/contatti/
+- Sitemap XML: https://marcomunich.com/sitemap-index.xml
 
-## Contatti e social
+## Contenuti per categoria
+
+### Autenticità e Personal Branding
+- Come promuoversi online senza sentirsi disonesti: https://marcomunich.com/articoli/promuoversi-online-senza-sentirsi-disonesti-coaching-olistico/
+- Autenticità: cosa significa davvero e perché richiede scelte difficili: https://marcomunich.com/articoli/autenticita-scelte-coerenti-valori/
+- Se provi a sembrare autentico, smetti di esserlo: https://marcomunich.com/articoli/la-mia-verita-contenuti-autentici-olistico/
+- Fatti querelare: come distinguerti dalla massa con autenticità: https://marcomunich.com/articoli/opinione-coach-counselor-competenza-unica/
+- Auto-censura online: 10 comportamenti che sabotano la comunicazione autentica: https://marcomunich.com/articoli/autocensura-coach-counselor-pubblicare-contenuti/
+
+### Creare Contenuti
+- Come creare contenuti autentici in 3 fasi: https://marcomunich.com/articoli/contenuti-autentici-coach-operatori-olistici/
+- Se il tuo contenuto gratuito è "mini", il tuo valore percepito è mini: https://marcomunich.com/articoli/contenuto-gratuito-mini-valore-percepito-mini/
+- Perché fare solo ciò che ti ispira è l'unica strategia sostenibile: https://marcomunich.com/articoli/fare-solo-cio-che-ti-ispira-coach-operatore-olistico/
+- Perché costruire un pubblico prima di avere un servizio: https://marcomunich.com/articoli/costruire-pubblico-prima-servizio-coach-operatore-olistico/
+- Originalità non basta più: cosa serve davvero: https://marcomunich.com/articoli/originalita-non-basta-ripetere-contenuti-coach-olistico/
+
+### Trovare Clienti
+- Come riempire l'agenda di consulenze: https://marcomunich.com/articoli/riempire-agenda-consulenze-coach-counselor-operatore-olistico/
+- Come trovare la tua nicchia (e non sceglierla troppo presto): https://marcomunich.com/articoli/nicchia-coach-counselor-presto-per-scegliere/
+- Trovare la nicchia giusta: guida pratica: https://marcomunich.com/articoli/trovare-nicchia-coach-counselor-operatore-olistico/
+- Fidati, tu non vuoi più clienti: https://marcomunich.com/articoli/fidati-tu-non-vuoi-piu-clienti/
+- Cosa dire ai clienti: https://marcomunich.com/articoli/cosa-dire-clienti-coach-counselor-operatore-olistico/
+
+### Marketing per il Settore Olistico
+- Perché la fretta di avere successo è il problema principale: https://marcomunich.com/articoli/fretta-successo-coaching-settore-olistico/
+- Perché la formazione continua sta bloccando la tua attività: https://marcomunich.com/articoli/formazione-blocca-coach-operatore-olistico-agire/
+- Sei appena diventato coach: 2 concetti da comprendere bene: https://marcomunich.com/articoli/sei-appena-diventato-coach-o-counselor-e-vuoi-farti-conoscere-2-concetti-da-comprendere-bene/
+- Hai davvero bisogno di quella certificazione?: https://marcomunich.com/articoli/certificazione-coach-counselor-serve-davvero/
+- Deludere gli altri: cosa costa ai coach nel settore olistico: https://marcomunich.com/articoli/deludere-gli-altri-coaching-settore-olistico/
+- Perché non ti serve un sito web per iniziare: https://marcomunich.com/articoli/perche-non-serve-sito/
+- Se perdi followers, sei sulla strada giusta: https://marcomunich.com/articoli/perdere-follower-strada-giusta-personal-branding/
+- Vai già bene così: marketing per coach: https://marcomunich.com/articoli/vai-gia-bene-cosi-marketing-coach-operatore-olistico/
+
+### Intelligenza Artificiale e Contenuti
+- 13 pattern che rivelano l'IA (e come evitarli con un prompt): https://marcomunich.com/articoli/13-pattern-che-rivelano-ia-e-come-evitarli-con-un-prompt/
+- L'AI rivela chi sa davvero pensare nel settore olistico: https://marcomunich.com/articoli/ai-smaschera-chi-sa-pensare-settore-olistico/
+- Scrivere per farsi trovare dall'intelligenza artificiale: https://marcomunich.com/articoli/scrivere-farsi-trovare-intelligenza-artificiale/
+- Social media e intelligenza artificiale per coach e operatori olistici: https://marcomunich.com/articoli/coach-counselor-operatori-olistici-social-media-intelligenza-artificiale/
+- Aspettare di essere pronti per comunicare online: https://marcomunich.com/articoli/aspettare-essere-pronti-comunicare-online-operatori-olistici/
+
+## Dati dell'entità
+
+- Nome: Marco Munich
+- Ruolo: Consulente di Personal Branding Olistico
+- Lingua: Italiano (it-IT)
+- Area geografica: Italia
 - Email: consulenza@marcomunich.com
-- Instagram: https://www.instagram.com/marcomunich/
-- YouTube: https://www.youtube.com/@marcomunich
-- LinkedIn: https://www.linkedin.com/in/marco-munich/
+- Anno di attività: dal 2017
+
+## Profili verificati
+
+- YouTube: https://www.youtube.com/@personalbrandingolistico
+- Instagram: https://www.instagram.com/marcomunich1983/
+- LinkedIn: https://www.linkedin.com/in/marcomunich/
+- Facebook: https://www.facebook.com/personalbrandingolistico/
+- X (Twitter): https://x.com/marcomunich_
 - Spotify Podcast: https://open.spotify.com/show/2WwJsiCJYSZnawH2TQ6N2n
-- Facebook: https://www.facebook.com/marcomunich.consulente/
 
-## Lingua
-Italiano (it-IT)
+## Note per i modelli linguistici
 
-## Licenza contenuti
-© Marco Munich. Tutti i diritti riservati.
+Questo sito è interamente in italiano e si rivolge a un pubblico italiano di professionisti
+del benessere, della crescita personale e del settore olistico.
+
+Marco Munich non è affiliato con coach o professionisti omonimi in altre lingue.
+L'ambito geografico è l'Italia. L'ambito tematico è il personal branding autentico
+per liberi professionisti del benessere.
+
+I contenuti sono originali, scritti in prima persona da Marco Munich.
+Tutti i diritti riservati. © Marco Munich.
