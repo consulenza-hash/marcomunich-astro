@@ -6,21 +6,19 @@ tags: ["GEO", "AI", "Visibilità"]
 readTime: "6 min"
 ---
 
-Qualcuno scrive "migliore agenzia web a Milano" su ChatGPT. Oppure chiede a Perplexity "chi costruisce siti per ristoranti in Italia". I motori AI rispondono citando siti web specifici — ma probabilmente non il tuo.
+Qualcuno scrive "migliore agenzia web a Milano" su ChatGPT. Oppure chiede a Perplexity "chi costruisce siti per ristoranti in Italia". I motori AI rispondono citando siti web specifici, ma probabilmente non il tuo. La ragione è quasi sempre tecnica e si corregge con interventi precisi sul sito.
 
-Questo non è un problema di fortuna. È una questione tecnica risolvibile.
+## Come i motori AI scelgono cosa citare?
 
-## Come i motori AI scelgono cosa citare
+![Perché il sito non appare su ChatGPT](/images/dev-blog/perche-non-appare-chatgpt.jpg)
 
-ChatGPT, Perplexity, Google AI Overview e gli altri LLM non funzionano come Google classico. Non guardano solo i backlink o la keyword density. Costruiscono risposte partendo da ciò che riescono a capire in modo affidabile di ogni sito.
+ChatGPT, Perplexity, Google AI Overview e gli altri LLM costruiscono risposte partendo da ciò che riescono a capire in modo affidabile di ogni sito. Tre domande che un motore AI si pone ogni volta che incontra un sito:
 
-Tre domande che un motore AI si pone ogni volta che incontra un sito:
-
-**Chi sei?** Se il sito non dichiara esplicitamente chi è l'azienda, cosa fa, dove opera e per chi lavora — il modello AI non può includerti in una risposta precisa. Una pagina "Chi siamo" con frasi vaghe non basta.
+**Chi sei?** Se il sito non dichiara esplicitamente chi è l'azienda, cosa fa, dove opera e per chi lavora, il modello AI non può includerti in una risposta precisa. Una pagina "Chi siamo" con frasi vaghe non basta.
 
 **Sei affidabile?** I motori AI cercano dati strutturati: JSON-LD nel codice HTML che dichiara nome, tipo di attività, area geografica, servizi. Senza questi dati, il sito esiste per Google ma è opaco per i modelli linguistici.
 
-**Vuoi essere crawlato?** Alcuni siti bloccano accidentalmente i bot AI nel file `robots.txt`. GPTBot di OpenAI, ClaudeBot di Anthropic, PerplexityBot — se sono bloccati, il modello AI non ha mai letto il tuo sito e non può citarlo.
+**Vuoi essere crawlato?** Alcuni siti bloccano accidentalmente i bot AI nel file `robots.txt`. GPTBot di OpenAI, ClaudeBot di Anthropic, PerplexityBot: se sono bloccati, il modello AI non ha mai letto il tuo sito e non può citarlo.
 
 ## Il problema del file llms.txt
 
@@ -49,6 +47,18 @@ I siti che costruisco includono già queste ottimizzazioni di default:
 - JSON-LD con `Organization` o `Person` schema arricchito: `knowsAbout`, `areaServed`, `sameAs` verso i profili verificati
 - Contenuti scritti con una densità informativa sufficiente per essere citati come fonte affidabile
 
-Non si tratta di un lavoro opzionale. Nei prossimi due anni, una quota crescente di traffico qualificato arriverà dai motori AI piuttosto che da Google classico. Chi si posiziona adesso parte avvantaggiato rispetto a chi interverrà più tardi.
+Nei prossimi due anni, una quota crescente di traffico qualificato arriverà dai motori AI piuttosto che da Google classico. Chi ottimizza adesso parte avvantaggiato rispetto a chi interverrà più tardi, perché i modelli AI tendono a citare le stesse fonti nel tempo una volta che le riconoscono come affidabili. Se vuoi sapere come appare il tuo sito attuale ai motori AI, posso fare un'analisi e dirti cosa manca. [Scrivimi qui](/dev/contatti).
 
-Se vuoi sapere come appare il tuo sito attuale ai motori AI, posso fare un'analisi e dirti cosa manca. [Scrivimi qui](/dev/contatti).
+## FAQ
+
+**Q: Come faccio a sapere se i bot AI riescono a crawlare il mio sito?**
+A: Controlla il file `robots.txt` del tuo sito (accessibile su `tuosito.it/robots.txt`). Se trovi righe come `User-agent: GPTBot` con `Disallow: /`, i bot di ChatGPT sono bloccati. Lo stesso vale per `ClaudeBot`, `PerplexityBot`, `Googlebot-Extended`.
+
+**Q: Cos'è il JSON-LD e dove si mette?**
+A: JSON-LD è un blocco di codice in formato JavaScript che va inserito nella sezione `<head>` di ogni pagina HTML. Dichiara le informazioni sull'azienda in un formato che le macchine leggono direttamente, senza interpretare il testo della pagina.
+
+**Q: Il mio sito WordPress supporta il JSON-LD?**
+A: Sì, tramite plugin SEO come Yoast o Rank Math, che generano automaticamente un JSON-LD base. Il problema è che questi plugin generano schemi minimi. Per una visibilità AI completa serve un JSON-LD arricchito con `knowsAbout`, `areaServed` e `sameAs` verso i profili verificati.
+
+**Q: Quanti siti italiani hanno il file llms.txt?**
+A: Una percentuale molto bassa, stimata sotto il 2% dei siti aziendali italiani. Chi lo aggiunge adesso ha un vantaggio diretto rispetto ai concorrenti nella stessa nicchia geografica o di settore.
