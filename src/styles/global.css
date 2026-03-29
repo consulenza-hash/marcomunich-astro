@@ -2,8 +2,8 @@
    global.css — Stili base per marcomunich.com (Astro + Tailwind)
    ────────────────────────────────────────────────────────────────────────────── */
 
-/* Font: Host Grotesk + Design System v2 (Bricolage Grotesque, Cormorant, Syne) */
-@import url('https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300..800;1,300..800&family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Cormorant:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Syne:wght@400;500;600;700;800&display=swap');
+/* Font: Host Grotesk + Lora (serif display) */
+@import url('https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300..800;1,300..800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -24,8 +24,9 @@
   }
 
   body {
-    @apply text-brand-black bg-white;
-    color: rgba(10, 10, 10, 0.85);
+    @apply text-brand-ink;
+    background-color: #F5F0E8;
+    color: #1E2B2F;
     line-height: 1.7;
     overflow-x: hidden; /* blocco definitivo scroll orizzontale */
   }
@@ -108,7 +109,7 @@
 
   /* Sezione con sfondo bianco */
   .section-light {
-    @apply bg-white text-brand-black py-16 px-6;
+    @apply bg-brand-paper text-brand-ink py-16 px-6;
   }
 
   /* Breadcrumb */
@@ -188,16 +189,21 @@
    Usati da tutte le pagine che adottano lo stile della homepage.
    La homepage li ridefinisce localmente (nessun conflitto). */
 :root {
-  --gold:    #C58A37;
-  --gold-d:  #A06E22;
-  --black:   #0A0A0A;
-  --white:   #FFFFFF;
-  --ink:     #1C1C1C;
-  --paper:   #F2EFE9;
-  --muted:   rgba(10,10,10,0.42);
-  --serif:   'Cormorant', Georgia, serif;
-  --sans:    'Syne', system-ui, sans-serif;
-  --display: 'Bricolage Grotesque', system-ui, sans-serif;
+  --accent:   #A0614A;
+  --accent-d: #8A5240;
+  --ink:      #1E2B2F;
+  --night:    #141C1F;
+  --paper:    #F5F0E8;
+  --surface:  #EDE8DF;
+  --white:    #FFFFFF;
+  --muted:    #6B7B7F;
+  --serif:    'Lora', Georgia, serif;
+  --sans:     'Host Grotesk', system-ui, sans-serif;
+  --display:  'Lora', Georgia, serif;
+  /* legacy aliases */
+  --gold:     var(--accent);
+  --gold-d:   var(--accent-d);
+  --black:    var(--ink);
   --max:     1200px;
   --pad:     clamp(1.5rem, 5vw, 5rem);
   /* Thrive Architect compat */

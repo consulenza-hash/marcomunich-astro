@@ -33,6 +33,9 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
 
 <!-- ══ HERO ═══════════════════════════════════════════════════════════════ -->
 <section class="v2-hero">
+  <video id="hero-vid" class="v2-hero__video" autoplay muted loop playsinline poster="/og/marco-munich.png"></video>
+  <div class="v2-hero__overlay" aria-hidden="true"></div>
+
   <div class="v2-hero__inner">
 
     <div class="v2-hero__content">
@@ -69,18 +72,9 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
       </div>
     </div>
 
-    <div class="v2-hero__photo-col">
-      <figure class="v2-hero__photo-frame">
-        <img
-          src="/og/marco-munich.png"
-          alt="Marco Munich"
-          loading="eager"
-        />
-        <figcaption>Coach · Counselor · Operatori Olistici</figcaption>
-      </figure>
-    </div>
-
   </div>
+
+  <span class="v2-hero__vid-caption" aria-hidden="true">Coach · Counselor · Operatori Olistici</span>
 
   <div class="v2-hero__rule" aria-hidden="true"></div>
 
@@ -347,18 +341,23 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
 <style>
 /* ─── TOKENS ────────────────────────────────────────────────────────────── */
 :root {
-  --gold:   #C58A37;
-  --gold-d: #A06E22;
-  --black:  #0A0A0A;
-  --white:  #FFFFFF;
-  --ink:    #1C1C1C;
-  --paper:  #F2EFE9;
-  --muted:  rgba(10,10,10,0.42);
-  --serif:   'Cormorant', Georgia, serif;
-  --sans:    'Syne', system-ui, sans-serif;
-  --display: 'Bricolage Grotesque', system-ui, sans-serif;
-  --max:    1200px;
-  --pad:    clamp(1.5rem, 5vw, 5rem);
+  --accent:   #A0614A;
+  --accent-d: #8A5240;
+  --ink:      #1E2B2F;
+  --night:    #141C1F;
+  --paper:    #F5F0E8;
+  --surface:  #EDE8DF;
+  --white:    #FFFFFF;
+  --muted:    #6B7B7F;
+  --serif:    'Lora', Georgia, serif;
+  --sans:     'Host Grotesk', system-ui, sans-serif;
+  --display:  'Lora', Georgia, serif;
+  --max:      1200px;
+  --pad:      clamp(1.5rem, 5vw, 5rem);
+  /* legacy aliases */
+  --gold:     var(--accent);
+  --gold-d:   var(--accent-d);
+  --black:    var(--ink);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -422,15 +421,17 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
    HERO
 ════════════════════════════════════════════════════════════════════════ */
 .v2-hero {
-  background: var(--black);
+  background: var(--night);
   position: relative;
   overflow: hidden;
 }
 
 .v2-hero__inner {
   display: grid;
-  grid-template-columns: 1fr 42%;
+  grid-template-columns: 54% 1fr;
   min-height: 96vh;
+  position: relative;
+  z-index: 2;
 }
 
 /* Content col */
@@ -512,35 +513,43 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
   flex-wrap: wrap;
 }
 
-/* Photo col */
-.v2-hero__photo-col {
-  position: relative;
-  overflow: hidden;
-}
-
-.v2-hero__photo-frame {
+/* Video full-background */
+.v2-hero__video {
   position: absolute;
   inset: 0;
-  margin: 0;
-}
-
-.v2-hero__photo-frame img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center top;
-  filter: grayscale(100%) contrast(1.08) brightness(0.92);
+  object-position: center;
   display: block;
+  filter: brightness(0.65) saturate(0.85);
+  z-index: 0;
 }
 
-.v2-hero__photo-frame figcaption {
+/* Gradient overlay — dark on left for text, transparent on right */
+.v2-hero__overlay {
   position: absolute;
-  bottom: 2rem;
-  left: 1.5rem;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    rgba(20,28,31,0.94) 0%,
+    rgba(20,28,31,0.82) 30%,
+    rgba(20,28,31,0.48) 58%,
+    rgba(20,28,31,0.10) 82%,
+    rgba(20,28,31,0.00) 100%
+  );
+  z-index: 1;
+}
+
+.v2-hero__vid-caption {
+  position: absolute;
+  bottom: 4rem;
+  right: 2rem;
   font: 700 0.58rem/1 var(--sans);
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0.25);
+  z-index: 3;
 }
 
 /* Gold rule */
@@ -591,7 +600,7 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
 .v2-manifesto__header {
   margin-bottom: 3rem;
   padding-bottom: 2.5rem;
-  border-bottom: 1px solid rgba(10,10,10,0.1);
+  border-bottom: 1px solid rgba(30,43,47,0.1);
 }
 
 .v2-manifesto__title {
@@ -602,7 +611,7 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
 }
 .v2-manifesto__title em {
   font-style: italic;
-  color: rgba(10,10,10,0.4);
+  color: rgba(30,43,47,0.4);
 }
 
 /* Asymmetric layout: list left (wider), aside right (sticky) */
@@ -620,7 +629,7 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
   grid-template-columns: 2.25rem 1fr;
   gap: 0 1rem;
   padding: 1rem 0;
-  border-bottom: 1px solid rgba(10,10,10,0.06);
+  border-bottom: 1px solid rgba(30,43,47,0.06);
   align-items: baseline;
 }
 .v2-manifesto__item--verdict { border-bottom: none; }
@@ -635,7 +644,7 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
 
 .v2-manifesto__item p {
   font: 400 0.9rem/1.65 var(--sans);
-  color: rgba(10,10,10,0.65);
+  color: rgba(30,43,47,0.65);
 }
 
 /* Aside — sticky box */
@@ -659,7 +668,7 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
 
 .v2-manifesto__aside-sub {
   font: 400 0.85rem/1.55 var(--sans);
-  color: rgba(10,10,10,0.55);
+  color: rgba(30,43,47,0.55);
   margin-bottom: 1.5rem;
 }
 
@@ -810,7 +819,7 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
 .v2-process {
   background: var(--white);
   padding: 6rem var(--pad);
-  border-top: 1px solid #EBEBEB;
+  border-top: 1px solid #EDE8DF;
 }
 
 .v2-process__inner {
@@ -827,7 +836,7 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
 
 .v2-step {
   padding: 2.5rem 3rem 2.5rem 0;
-  border-right: 1px solid #EBEBEB;
+  border-right: 1px solid #EDE8DF;
   position: relative;
 }
 .v2-step:last-child { border-right: none; padding-right: 0; }
@@ -851,7 +860,7 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
 }
 .v2-step__body p {
   font: 400 0.88rem/1.7 var(--sans);
-  color: rgba(10,10,10,0.55);
+  color: rgba(30,43,47,0.55);
 }
 
 /* ════════════════════════════════════════════════════════════════════════
@@ -966,7 +975,7 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
   position: relative;
   aspect-ratio: 16 / 10;
   overflow: hidden;
-  background: #1a1a1a;
+  background: #141C1F;
 }
 .v2-article__img {
   width: 100%;
@@ -983,7 +992,7 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
 .v2-article__img-placeholder {
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, #1a1a1a 0%, #111 100%);
+  background: linear-gradient(135deg, #141C1F 0%, #1A2225 100%);
 }
 .v2-article__badge {
   position: absolute;
@@ -1012,7 +1021,7 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
 }
 .v2-article__desc {
   font: 400 0.82rem/1.55 var(--sans);
-  color: rgba(10,10,10,0.5);
+  color: rgba(30,43,47,0.5);
   margin: 0 0 1rem;
   flex: 1;
   display: -webkit-box;
@@ -1035,14 +1044,13 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
   .v2-articles__grid { grid-template-columns: repeat(2, 1fr); }
   .v2-article:last-child { grid-column: 1 / -1; }
   .v2-article:last-child .v2-article__img-wrap { aspect-ratio: 21 / 9; }
-  .v2-hero__inner { grid-template-columns: 1fr; min-height: auto; }
+  .v2-hero__inner { grid-template-columns: 1fr; min-height: 100svh; }
+  .v2-hero__overlay { background: rgba(20,28,31,0.72); }
+  .v2-hero__vid-caption { display: none; }
   .v2-hero__content {
     padding: 5rem clamp(1.5rem, 5vw, 3rem) 4rem;
     max-width: 100%;
   }
-  .v2-hero__photo-col { width: 100%; aspect-ratio: 4 / 3; overflow: hidden; position: relative; }
-  .v2-hero__photo-frame { position: static; width: 100%; height: 100%; display: block; }
-  .v2-hero__photo-frame img { position: static; width: 100%; height: 100%; object-fit: cover; display: block; }
 
   .v2-manifesto__body { grid-template-columns: 1fr; }
   .v2-manifesto__aside { position: static; margin-top: 2.5rem; }
@@ -1056,7 +1064,7 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
   .v2-have:nth-child(9) { border-bottom: none; }
 
   .v2-process__steps { grid-template-columns: 1fr; }
-  .v2-step { border-right: none; border-bottom: 1px solid #EBEBEB; padding: 2rem 0 !important; }
+  .v2-step { border-right: none; border-bottom: 1px solid #EDE8DF; padding: 2rem 0 !important; }
   .v2-step:last-child { border-bottom: none; }
 
   .v2-quote__inner { grid-template-columns: 1fr; gap: 3rem; }
@@ -1075,9 +1083,47 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
   .v2-articles { padding: 4rem 1.25rem; }
 
   .v2-hero__ctas { flex-direction: column; align-items: flex-start; gap: 1rem; }
-  
-  
+
+
   .v2-articles__header { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
   .v2-articles__grid { grid-template-columns: 1fr; gap: 2px; }
 }
 </style>
+
+<script is:inline>
+(function(){
+  var v = document.getElementById('hero-vid');
+  if (!v) return;
+
+  function setVideo(src) {
+    v.src = src; v.load(); v.play().catch(function(){});
+  }
+
+  function fallbackByHour() {
+    var h = new Date().getHours();
+    setVideo(h >= 6 && h < 11  ? '/videos/hero-mattina.mp4'
+           : h >= 11 && h < 17 ? '/videos/hero-pomeriggio.mp4'
+           : h >= 17 && h < 20 ? '/videos/hero-sera.mp4'
+           : '/videos/hero-notte.mp4');
+  }
+
+  function videoFromWeather(code, isDay) {
+    if (!isDay) return '/videos/hero-notte.mp4';
+    if (code === 0 || code === 1)              return '/videos/hero-sole.mp4';
+    if (code <= 3)                             return '/videos/hero-pomeriggio.mp4';
+    if (code <= 48)                            return '/videos/hero-mattina.mp4';
+    if (code <= 67 || (code >= 80 && code <= 82)) return '/videos/hero-pioggia.mp4';
+    if (code <= 77 || code === 85 || code === 86)  return '/videos/hero-neve.mp4';
+    if (code >= 95)                            return '/videos/hero-temporale.mp4';
+    return '/videos/hero-pomeriggio.mp4';
+  }
+
+  fetch('https://api.open-meteo.com/v1/forecast?latitude=45.5455&longitude=11.5354&current=weather_code,is_day')
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      var c = d.current;
+      setVideo(videoFromWeather(c.weather_code, c.is_day));
+    })
+    .catch(fallbackByHour);
+})();
+</script>

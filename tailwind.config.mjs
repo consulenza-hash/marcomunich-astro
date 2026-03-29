@@ -6,17 +6,25 @@ export default {
       // ── Palette colori di marcomunich.com ──────────────────────────────
       colors: {
         brand: {
-          black:    '#0A0A0A',   // testo principale
+          ink:      '#1E2B2F',   // testo principale
           white:    '#FFFFFF',
           gray:     '#858585',   // H1 in articolo
-          darkbg:   '#1E1E1F',   // sezioni scure
+          night:    '#141C1F',   // sezioni scure
+          paper:    '#F5F0E8',   // background chiaro
+          surface:  '#EDE8DF',   // card/superfici
+          accent:   '#A0614A',   // accento primario
+          muted:    '#6B7B7F',   // testo secondario
           border:   '#E5E5E5',
+          /* legacy aliases */
+          black:    '#1E2B2F',
+          darkbg:   '#141C1F',
         },
       },
 
       // ── Font: unico per tutto il sito ─────────────────────────────────
       fontFamily: {
         sans: ['"Host Grotesk"', 'system-ui', 'sans-serif'],
+        serif: ['"Lora"', 'Georgia', 'serif'],
       },
 
       // ── Scale tipografica fedele all'originale ──────────────────────────
