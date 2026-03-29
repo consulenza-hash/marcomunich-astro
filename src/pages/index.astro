@@ -341,18 +341,23 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
 <style>
 /* ─── TOKENS ────────────────────────────────────────────────────────────── */
 :root {
-  --gold:   #C58A37;
-  --gold-d: #A06E22;
-  --black:  #0A0A0A;
-  --white:  #FFFFFF;
-  --ink:    #1C1C1C;
-  --paper:  #F2EFE9;
-  --muted:  rgba(10,10,10,0.42);
-  --serif:   'Cormorant', Georgia, serif;
-  --sans:    'Syne', system-ui, sans-serif;
-  --display: 'Bricolage Grotesque', system-ui, sans-serif;
-  --max:    1200px;
-  --pad:    clamp(1.5rem, 5vw, 5rem);
+  --accent:   #A0614A;
+  --accent-d: #8A5240;
+  --ink:      #1E2B2F;
+  --night:    #141C1F;
+  --paper:    #F5F0E8;
+  --surface:  #EDE8DF;
+  --white:    #FFFFFF;
+  --muted:    #6B7B7F;
+  --serif:    'Lora', Georgia, serif;
+  --sans:     'Host Grotesk', system-ui, sans-serif;
+  --display:  'Lora', Georgia, serif;
+  --max:      1200px;
+  --pad:      clamp(1.5rem, 5vw, 5rem);
+  /* legacy aliases */
+  --gold:     var(--accent);
+  --gold-d:   var(--accent-d);
+  --black:    var(--ink);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -416,7 +421,7 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
    HERO
 ════════════════════════════════════════════════════════════════════════ */
 .v2-hero {
-  background: var(--black);
+  background: var(--night);
   position: relative;
   overflow: hidden;
 }
@@ -527,11 +532,11 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
   inset: 0;
   background: linear-gradient(
     105deg,
-    rgba(10,10,18,0.94) 0%,
-    rgba(10,10,18,0.82) 30%,
-    rgba(10,10,18,0.48) 58%,
-    rgba(10,10,18,0.10) 82%,
-    rgba(10,10,18,0.00) 100%
+    rgba(20,28,31,0.94) 0%,
+    rgba(20,28,31,0.82) 30%,
+    rgba(20,28,31,0.48) 58%,
+    rgba(20,28,31,0.10) 82%,
+    rgba(20,28,31,0.00) 100%
   );
   z-index: 1;
 }
@@ -595,7 +600,7 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
 .v2-manifesto__header {
   margin-bottom: 3rem;
   padding-bottom: 2.5rem;
-  border-bottom: 1px solid rgba(10,10,10,0.1);
+  border-bottom: 1px solid rgba(30,43,47,0.1);
 }
 
 .v2-manifesto__title {
@@ -606,7 +611,7 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
 }
 .v2-manifesto__title em {
   font-style: italic;
-  color: rgba(10,10,10,0.4);
+  color: rgba(30,43,47,0.4);
 }
 
 /* Asymmetric layout: list left (wider), aside right (sticky) */
@@ -624,7 +629,7 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
   grid-template-columns: 2.25rem 1fr;
   gap: 0 1rem;
   padding: 1rem 0;
-  border-bottom: 1px solid rgba(10,10,10,0.06);
+  border-bottom: 1px solid rgba(30,43,47,0.06);
   align-items: baseline;
 }
 .v2-manifesto__item--verdict { border-bottom: none; }
@@ -639,7 +644,7 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
 
 .v2-manifesto__item p {
   font: 400 0.9rem/1.65 var(--sans);
-  color: rgba(10,10,10,0.65);
+  color: rgba(30,43,47,0.65);
 }
 
 /* Aside — sticky box */
@@ -663,7 +668,7 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
 
 .v2-manifesto__aside-sub {
   font: 400 0.85rem/1.55 var(--sans);
-  color: rgba(10,10,10,0.55);
+  color: rgba(30,43,47,0.55);
   margin-bottom: 1.5rem;
 }
 
@@ -814,7 +819,7 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
 .v2-process {
   background: var(--white);
   padding: 6rem var(--pad);
-  border-top: 1px solid #EBEBEB;
+  border-top: 1px solid #EDE8DF;
 }
 
 .v2-process__inner {
@@ -831,7 +836,7 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
 
 .v2-step {
   padding: 2.5rem 3rem 2.5rem 0;
-  border-right: 1px solid #EBEBEB;
+  border-right: 1px solid #EDE8DF;
   position: relative;
 }
 .v2-step:last-child { border-right: none; padding-right: 0; }
@@ -855,7 +860,7 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
 }
 .v2-step__body p {
   font: 400 0.88rem/1.7 var(--sans);
-  color: rgba(10,10,10,0.55);
+  color: rgba(30,43,47,0.55);
 }
 
 /* ════════════════════════════════════════════════════════════════════════
@@ -970,7 +975,7 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
   position: relative;
   aspect-ratio: 16 / 10;
   overflow: hidden;
-  background: #1a1a1a;
+  background: #141C1F;
 }
 .v2-article__img {
   width: 100%;
@@ -987,7 +992,7 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
 .v2-article__img-placeholder {
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, #1a1a1a 0%, #111 100%);
+  background: linear-gradient(135deg, #141C1F 0%, #1A2225 100%);
 }
 .v2-article__badge {
   position: absolute;
@@ -1016,7 +1021,7 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
 }
 .v2-article__desc {
   font: 400 0.82rem/1.55 var(--sans);
-  color: rgba(10,10,10,0.5);
+  color: rgba(30,43,47,0.5);
   margin: 0 0 1rem;
   flex: 1;
   display: -webkit-box;
@@ -1040,7 +1045,7 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
   .v2-article:last-child { grid-column: 1 / -1; }
   .v2-article:last-child .v2-article__img-wrap { aspect-ratio: 21 / 9; }
   .v2-hero__inner { grid-template-columns: 1fr; min-height: 100svh; }
-  .v2-hero__overlay { background: rgba(10,10,18,0.72); }
+  .v2-hero__overlay { background: rgba(20,28,31,0.72); }
   .v2-hero__vid-caption { display: none; }
   .v2-hero__content {
     padding: 5rem clamp(1.5rem, 5vw, 3rem) 4rem;
@@ -1059,7 +1064,7 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
   .v2-have:nth-child(9) { border-bottom: none; }
 
   .v2-process__steps { grid-template-columns: 1fr; }
-  .v2-step { border-right: none; border-bottom: 1px solid #EBEBEB; padding: 2rem 0 !important; }
+  .v2-step { border-right: none; border-bottom: 1px solid #EDE8DF; padding: 2rem 0 !important; }
   .v2-step:last-child { border-bottom: none; }
 
   .v2-quote__inner { grid-template-columns: 1fr; gap: 3rem; }
