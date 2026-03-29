@@ -519,7 +519,7 @@ export const prerender = true;
     }
   </style>
 
-  <script>
+  <script is:inline>
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -553,6 +553,69 @@ export const prerender = true;
       }
       requestAnimationFrame(update);
     }
+
+    // ===== SIDEBAR NAV =====
+    const navSections = { 'Dashboard': '📊 Dashboard — Panoramica progetti', 'Utenti': '👥 Utenti — 1.284 utenti attivi', 'Analisi': '📈 Analisi — Report mensile disponibile', 'Impostazioni': '⚙️ Impostazioni — Configurazione account' };
+    document.querySelectorAll('.nav-item').forEach(item => {
+      item.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        item.classList.add('active');
+        const label = item.textContent.trim();
+        showSaasToast(navSections[label] || label);
+      });
+    });
+
+    // ===== SEARCH =====
+    const searchInput = document.querySelector('.search-box input');
+    if (searchInput) {
+      searchInput.addEventListener('input', () => {
+        const q = searchInput.value.toLowerCase();
+        document.querySelectorAll('.activity-table tbody tr').forEach(row => {
+          row.style.display = q === '' || row.textContent.toLowerCase().includes(q) ? '' : 'none';
+        });
+      });
+    }
+
+    // ===== NOTIFICATIONS =====
+    const notifBtn = document.querySelector('.notif-btn');
+    if (notifBtn) {
+      notifBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const existing = document.getElementById('notifDropdown');
+        if (existing) { existing.remove(); return; }
+        const drop = document.createElement('div');
+        drop.id = 'notifDropdown';
+        drop.innerHTML = `<div style="padding:16px;border-bottom:1px solid rgba(99,102,241,0.15);font-weight:600;font-size:0.85rem;">Notifiche (3)</div>
+          <div class="notif-item">🚀 <strong>Deploy completato</strong> — api-v2.nebula.dev<br><small>2 min fa</small></div>
+          <div class="notif-item">⚠️ <strong>Alert CPU</strong> — server-eu-3 al 89%<br><small>15 min fa</small></div>
+          <div class="notif-item">✅ <strong>Pagamento ricevuto</strong> — Piano Pro €49/mese<br><small>1 ora fa</small></div>`;
+        drop.style.cssText = 'position:absolute;top:calc(100% + 8px);right:0;width:300px;background:rgba(15,15,30,0.98);border:1px solid rgba(99,102,241,0.2);border-radius:12px;z-index:9999;backdrop-filter:blur(20px);overflow:hidden;';
+        drop.querySelectorAll && (drop.querySelectorAll = drop.querySelectorAll);
+        notifBtn.style.position = 'relative';
+        notifBtn.appendChild(drop);
+        const style = document.createElement('style');
+        style.textContent = '.notif-item{padding:14px 16px;font-size:0.82rem;border-bottom:1px solid rgba(99,102,241,0.08);cursor:pointer;transition:background 0.2s;line-height:1.5}.notif-item:hover{background:rgba(99,102,241,0.1)}.notif-item small{color:#6366f1}';
+        document.head.appendChild(style);
+        setTimeout(() => document.addEventListener('click', () => existing ? '' : drop.remove(), { once: true }), 100);
+      });
+    }
+
+    // ===== TOAST =====
+    let saasToastTimeout;
+    function showSaasToast(msg) {
+      let t = document.getElementById('saas-toast');
+      if (!t) { t = document.createElement('div'); t.id = 'saas-toast'; document.body.appendChild(t); }
+      t.textContent = msg;
+      t.classList.add('show');
+      clearTimeout(saasToastTimeout);
+      saasToastTimeout = setTimeout(() => t.classList.remove('show'), 2800);
+    }
   </script>
+
+  <style>
+    #saas-toast { position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:rgba(15,15,30,0.98);border:1px solid rgba(99,102,241,0.4);color:#a5b4fc;padding:12px 24px;border-radius:50px;font-size:0.83rem;z-index:99999;opacity:0;transition:all 0.4s cubic-bezier(0.4,0,0.2,1);white-space:nowrap;pointer-events:none; }
+    #saas-toast.show { opacity:1;transform:translateX(-50%) translateY(0); }
+  </style>
 </body>
 </html>

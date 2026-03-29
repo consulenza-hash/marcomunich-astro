@@ -461,9 +461,17 @@ export const prerender = true;
       .section-title { font-size: 2rem; }
       .back-btn { top: 12px; left: 12px; font-size: 0.8rem; padding: 8px 14px; }
     }
+    @media (max-width: 480px) {
+      .hero-title { font-size: 2rem; }
+      .hero { padding: 60px 20px; }
+      .countdown-num { width: 52px; height: 52px; font-size: 1.8rem; }
+      .countdown-sep { font-size: 1.6rem; padding-bottom: 14px; }
+      .timeline-section { padding: 60px 20px; }
+      .gallery-section { padding: 60px 20px; }
+    }
   </style>
 
-  <script>
+  <script is:inline>
     // Intersection Observer
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -569,6 +577,84 @@ export const prerender = true;
         animateConfetti();
       }
     });
+
+    // ===== RSVP FORM SUBMIT =====
+    document.getElementById('rsvp-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('rsvp-name').value.trim();
+      const guests = document.getElementById('rsvp-guests').value;
+      if (!name) { showWeddingToast('Inserisci il tuo nome'); return; }
+      // Trigger confetti
+      animating = true;
+      createConfetti();
+      animateConfetti();
+      // Show success message
+      const form = document.getElementById('rsvp-form');
+      form.style.display = 'none';
+      const success = document.createElement('div');
+      success.innerHTML = `<div style="text-align:center;padding:32px 0;">
+        <div style="font-size:3rem;margin-bottom:16px">🎊</div>
+        <h3 style="font-family:'Playfair Display',serif;font-size:1.5rem;color:#b76e79;margin-bottom:12px">Grazie, ${name}!</h3>
+        <p style="color:#8b7355;line-height:1.7">La tua presenza è confermata per ${guests || '1'} ${parseInt(guests) === 1 ? 'ospite' : 'ospiti'}.<br>Giulia & Alessandro non vedono l'ora di festeggiare con te!</p>
+      </div>`;
+      form.parentNode.insertBefore(success, form);
+    });
+
+    // ===== GALLERY LIGHTBOX =====
+    const weddingPhotos = ['💒','🌸','🥂','💃','🎂','🌹'];
+    const weddingLabels = ['La cerimonia','Decorazioni floreali','Il brindisi','Primo ballo','La torta','Bouquet'];
+    let wPhoto = 0;
+    document.querySelectorAll('.gallery-item').forEach((item, i) => {
+      item.style.cursor = 'pointer';
+      item.addEventListener('click', () => {
+        wPhoto = i % weddingPhotos.length;
+        document.getElementById('wLightboxEmoji').textContent = weddingPhotos[wPhoto];
+        document.getElementById('wLightboxLabel').textContent = weddingLabels[wPhoto];
+        document.getElementById('wLightboxCounter').textContent = (wPhoto+1) + ' / ' + weddingPhotos.length;
+        document.getElementById('wLightbox').classList.add('open');
+        document.getElementById('wLightboxOverlay').classList.add('open');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+    function closeWLightbox() {
+      document.getElementById('wLightbox').classList.remove('open');
+      document.getElementById('wLightboxOverlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    function wLightboxNav(dir) {
+      wPhoto = (wPhoto + dir + weddingPhotos.length) % weddingPhotos.length;
+      document.getElementById('wLightboxEmoji').textContent = weddingPhotos[wPhoto];
+      document.getElementById('wLightboxLabel').textContent = weddingLabels[wPhoto];
+      document.getElementById('wLightboxCounter').textContent = (wPhoto+1) + ' / ' + weddingPhotos.length;
+    }
+
+    let wToastTimeout;
+    function showWeddingToast(msg) {
+      const t = document.getElementById('w-toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      clearTimeout(wToastTimeout);
+      wToastTimeout = setTimeout(() => t.classList.remove('show'), 3000);
+    }
   </script>
+
+  <!-- Gallery Lightbox -->
+  <div style="position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:9998;opacity:0;pointer-events:none;transition:opacity 0.3s" id="wLightboxOverlay" onclick="closeWLightbox()"></div>
+  <div id="wLightbox" style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0.9);width:min(500px,90vw);background:#faf8f5;border-radius:16px;z-index:9999;opacity:0;pointer-events:none;transition:all 0.35s cubic-bezier(0.4,0,0.2,1);overflow:hidden;">
+    <button onclick="closeWLightbox()" style="position:absolute;top:12px;right:12px;background:rgba(0,0,0,0.1);border:none;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:0.9rem;color:#5a3e35;">✕</button>
+    <div style="height:260px;display:flex;align-items:center;justify-content:center;background:#f9f1ea;font-size:7rem" id="wLightboxEmoji">💒</div>
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 24px;">
+      <div>
+        <div style="font-family:'Playfair Display',serif;color:#b76e79;font-size:1rem" id="wLightboxLabel">La cerimonia</div>
+        <div style="font-size:0.75rem;color:#bbb" id="wLightboxCounter">1 / 6</div>
+      </div>
+      <div style="display:flex;gap:8px">
+        <button onclick="wLightboxNav(-1)" style="background:#f0e8e2;border:none;width:36px;height:36px;border-radius:50%;cursor:pointer;color:#b76e79;font-size:1rem;">←</button>
+        <button onclick="wLightboxNav(1)" style="background:#f0e8e2;border:none;width:36px;height:36px;border-radius:50%;cursor:pointer;color:#b76e79;font-size:1rem;">→</button>
+      </div>
+    </div>
+  </div>
+  <div id="w-toast" style="position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);background:#1a1208;border:1px solid #b76e79;color:#b76e79;padding:13px 26px;border-radius:50px;font-size:0.84rem;z-index:99999;opacity:0;transition:all 0.4s cubic-bezier(0.4,0,0.2,1);white-space:nowrap;pointer-events:none;"></div>
+  <style>#wLightbox.open,#wLightboxOverlay.open{opacity:1!important;pointer-events:all!important;transform:translate(-50%,-50%) scale(1)!important}#w-toast.show{opacity:1!important;transform:translateX(-50%) translateY(0)!important}</style>
 </body>
 </html>

@@ -284,7 +284,7 @@ export const prerender = true;
     <p class="footer-copy">&copy; 2026 VelocityAI. Tutti i diritti riservati. &mdash; Demo template di Marco Munich</p>
   </footer>
 
-  <script>
+  <script is:inline>
     // Scroll progress bar
     window.addEventListener('scroll', () => {
       const scrolled = window.scrollY;
@@ -368,7 +368,64 @@ export const prerender = true;
       });
     }, { threshold: 0.3 });
     document.querySelectorAll('.stats-section').forEach(el => counterObserver.observe(el));
+
+    // ===== PRICING CTAs =====
+    document.querySelectorAll('.btn-pricing, .btn-primary, .floating-cta').forEach(btn => {
+      if (btn.classList.contains('back-btn') || btn.href?.includes('#')) return;
+      btn.addEventListener('click', (e) => {
+        if (btn.tagName === 'A' && btn.getAttribute('href') === '#') {
+          e.preventDefault();
+          openSignupModal();
+        }
+      });
+    });
+    document.querySelectorAll('.btn-pricing').forEach(btn => {
+      btn.addEventListener('click', (e) => { e.preventDefault(); openSignupModal(); });
+    });
+    document.querySelector('.final-cta-inner .btn-primary')?.addEventListener('click', (e) => {
+      e.preventDefault(); openSignupModal();
+    });
+
+    function openSignupModal() {
+      document.getElementById('signupModal').classList.add('open');
+      document.getElementById('signupOverlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeSignupModal() {
+      document.getElementById('signupModal').classList.remove('open');
+      document.getElementById('signupOverlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    function submitSignup() {
+      const email = document.getElementById('signupEmail').value;
+      if (!email) { showLandingToast('Inserisci la tua email'); return; }
+      closeSignupModal();
+      showLandingToast('✓ Benvenuto! Controlla la tua email per iniziare.');
+    }
+
+    // ===== TOAST =====
+    let landingToastTimeout;
+    function showLandingToast(msg) {
+      const t = document.getElementById('landing-toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      clearTimeout(landingToastTimeout);
+      landingToastTimeout = setTimeout(() => t.classList.remove('show'), 3200);
+    }
   </script>
+
+  <!-- Signup Modal -->
+  <div style="position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:9998;opacity:0;pointer-events:none;transition:opacity 0.3s" id="signupOverlay" onclick="closeSignupModal()"></div>
+  <div id="signupModal" style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0.9);width:min(440px,90vw);background:#0f0f0f;border:1px solid rgba(34,197,94,0.3);border-radius:20px;padding:48px 36px;z-index:9999;opacity:0;pointer-events:none;transition:all 0.35s cubic-bezier(0.4,0,0.2,1);text-align:center;">
+    <div style="font-size:2.5rem;margin-bottom:16px">🚀</div>
+    <h3 style="font-family:'Inter',sans-serif;font-size:1.5rem;font-weight:700;margin-bottom:8px;color:#e0e0e0">Prova VelocityAI gratis</h3>
+    <p style="font-size:0.9rem;color:#666;margin-bottom:28px">14 giorni gratis · Nessuna carta di credito · Cancella quando vuoi</p>
+    <input type="email" id="signupEmail" placeholder="La tua email aziendale" style="width:100%;padding:14px 18px;background:#1a1a1a;border:1px solid #333;border-radius:10px;color:#e0e0e0;font-size:0.9rem;margin-bottom:12px;box-sizing:border-box;" />
+    <button onclick="submitSignup()" style="width:100%;padding:16px;background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;border:none;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer;margin-bottom:16px">Inizia la prova gratuita</button>
+    <button onclick="closeSignupModal()" style="background:none;border:none;color:#555;cursor:pointer;font-size:0.85rem;">No grazie</button>
+  </div>
+  <div id="landing-toast" style="position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);background:#0f0f0f;border:1px solid rgba(34,197,94,0.4);color:#86efac;padding:13px 26px;border-radius:50px;font-size:0.84rem;z-index:99999;opacity:0;transition:all 0.4s cubic-bezier(0.4,0,0.2,1);white-space:nowrap;pointer-events:none;"></div>
+  <style>#signupModal.open,#signupOverlay.open{opacity:1!important;pointer-events:all!important;transform:translate(-50%,-50%) scale(1)!important}#landing-toast.show{opacity:1!important;transform:translateX(-50%) translateY(0)!important}</style>
 
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -413,7 +470,7 @@ export const prerender = true;
 
     /* ========== BACK BUTTON ========== */
     .back-btn {
-      position: fixed; top: 24px; left: 24px; z-index: 100;
+      position: fixed; top: 24px; left: 24px; z-index: 9000;
       display: inline-flex; align-items: center; gap: 8px;
       padding: 10px 20px;
       background: rgba(5,5,5,0.7);
@@ -435,7 +492,7 @@ export const prerender = true;
 
     /* ========== FLOATING CTA ========== */
     .floating-cta {
-      position: fixed; bottom: 24px; right: 24px; z-index: 100;
+      position: fixed; bottom: 24px; right: 24px; z-index: 9000;
       padding: 14px 28px;
       background: linear-gradient(135deg, #22c55e, #16a34a);
       color: #050505;
@@ -839,7 +896,9 @@ export const prerender = true;
     @media (max-width: 600px) {
       .feature-grid { grid-template-columns: 1fr; }
       .stats-grid { grid-template-columns: 1fr; }
-      .hero { flex-direction: column; min-height: auto; padding: 100px 20px 60px; }
+      .hero { flex-direction: column; min-height: auto; padding: 80px 20px 48px; }
+      .features { padding: 60px 20px; }
+      .final-cta { padding: 0 20px 60px; }
       .hero-title { font-size: 1.6rem; }
       .hero-content { max-width: 100%; }
       .hero-buttons { flex-direction: column; align-items: center; }

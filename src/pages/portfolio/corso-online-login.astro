@@ -70,7 +70,7 @@ export const prerender = true;
     .back-btn {
       position: fixed;
       top: 24px; left: 24px;
-      z-index: 100;
+      z-index: 9000;
       display: inline-flex;
       align-items: center;
       gap: 8px;
@@ -466,7 +466,7 @@ export const prerender = true;
     <div class="card-footer">Hai bisogno di aiuto? <a href="#">Contattaci</a></div>
   </div>
 
-  <script>
+  <script is:inline>
     function togglePw(btn) {
       const input = btn.previousElementSibling;
       if (!input) return;
@@ -474,6 +474,42 @@ export const prerender = true;
       input.type = isPassword ? 'text' : 'password';
       btn.textContent = isPassword ? 'Nascondi' : 'Mostra';
     }
+
+    // ===== LOGIN FORM =====
+    document.querySelector('.btn-purple')?.addEventListener('click', () => {
+      const emailInput = document.querySelector('#tab-login ~ .tab-content-login input[type="email"], .tab-content-login input[type="email"]');
+      window.location.href = '/portfolio/corso-online-dashboard';
+    });
+
+    // Wire all login/register submit buttons
+    document.querySelectorAll('.btn-primary').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const text = btn.textContent.trim();
+        if (text === 'Accedi') {
+          showCoToast('✓ Accesso effettuato! Reindirizzamento...');
+          setTimeout(() => window.location.href = '/portfolio/corso-online-dashboard', 1200);
+        } else if (text === 'Crea Account') {
+          showCoToast('✓ Account creato! Benvenuto nell\'Accademia.');
+          setTimeout(() => window.location.href = '/portfolio/corso-online-dashboard', 1200);
+        }
+      });
+    });
+
+    document.querySelector('.btn-google')?.addEventListener('click', () => {
+      showCoToast('🔑 Accesso con Google...');
+      setTimeout(() => window.location.href = '/portfolio/corso-online-dashboard', 1500);
+    });
+
+    let coToastTimeout;
+    function showCoToast(msg) {
+      const t = document.getElementById('co-toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      clearTimeout(coToastTimeout);
+      coToastTimeout = setTimeout(() => t.classList.remove('show'), 3000);
+    }
   </script>
+  <div id="co-toast" style="position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);background:#1a1a2e;border:1px solid rgba(139,92,246,0.5);color:#c4b5fd;padding:13px 26px;border-radius:50px;font-size:0.84rem;z-index:99999;opacity:0;transition:all 0.4s cubic-bezier(0.4,0,0.2,1);white-space:nowrap;pointer-events:none;"></div>
+  <style>#co-toast.show{opacity:1!important;transform:translateX(-50%) translateY(0)!important}</style>
 </body>
 </html>

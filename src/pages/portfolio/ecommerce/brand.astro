@@ -1,0 +1,593 @@
+---
+export const prerender = true;
+---
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Il Brand — Luxe Noir</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <!-- Noise overlay -->
+  <div class="noise"></div>
+
+  <!-- Announcement bar -->
+  <div class="announcement-bar">
+    Spedizione gratuita sopra i &euro;150 &nbsp;|&nbsp; Reso facile entro 14 giorni
+  </div>
+
+  <!-- Navigation -->
+  <nav class="main-nav">
+    <a href="/portfolio/ecommerce" class="nav-logo gradient-text">LUXE NOIR</a>
+    <div class="nav-links">
+      <a href="/portfolio/ecommerce#nuovi">Nuovi Arrivi</a>
+      <a href="/portfolio/ecommerce#collezione">Donna</a>
+      <a href="#">Uomo</a>
+      <a href="#">Accessori</a>
+      <a href="/portfolio/ecommerce/brand" class="active">Il Brand</a>
+    </div>
+  </nav>
+
+  <!-- Cart icon -->
+  <a href="/portfolio/ecommerce/carrello" class="cart-icon">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"></path>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <path d="M16 10a4 4 0 01-8 0"></path>
+    </svg>
+    <span class="cart-badge">3</span>
+  </a>
+
+  <!-- Hero -->
+  <section class="brand-hero">
+    <div class="hero-gradient"></div>
+    <div class="hero-content">
+      <p class="hero-tag">La Nostra Essenza</p>
+      <h1 class="hero-title">
+        Il <span class="gradient-text">Brand</span>
+      </h1>
+      <p class="hero-sub">Dove l'artigianato incontra il design contemporaneo. Una storia di passione, materia e bellezza senza tempo.</p>
+    </div>
+    <!-- Decorative line -->
+    <div class="hero-line"></div>
+  </section>
+
+  <!-- Story -->
+  <section class="story-section">
+    <div class="story-inner">
+      <div class="story-content">
+        <p class="section-tag">La Nostra Storia</p>
+        <h2 class="section-title">Nato a <span class="gradient-text">Milano</span>, Fatto in <span class="gradient-text">Toscana</span></h2>
+        <p class="story-text">Luxe Noir nasce nel 2019 nel cuore di Milano, dall'intuizione di Alessandra Neri: creare una maison che restituisca al lusso il suo significato pi&ugrave; autentico. Non ostentazione, ma sostanza. Non tendenza, ma permanenza.</p>
+        <p class="story-text">Fin dal primo giorno, la filosofia &egrave; stata chiara: selezionare i migliori artigiani toscani, lavorare esclusivamente pellami e tessuti di prima scelta, e offrire un prodotto che resista al tempo &mdash; sia nella qualit&agrave; che nel design.</p>
+        <p class="story-text">Ogni borsa, ogni accessorio &egrave; il risultato di oltre 40 ore di lavoro manuale. Non esistono scorciatoie quando si tratta di eccellenza. Questo &egrave; il nostro patto con chi ci sceglie.</p>
+      </div>
+      <div class="story-visual">
+        <div class="visual-card">
+          <div class="visual-number">2019</div>
+          <div class="visual-label">Anno di Fondazione</div>
+        </div>
+        <div class="visual-card">
+          <div class="visual-number">40+</div>
+          <div class="visual-label">Ore per Ogni Pezzo</div>
+        </div>
+        <div class="visual-card">
+          <div class="visual-number">100%</div>
+          <div class="visual-label">Made in Italy</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Values -->
+  <section class="values-section">
+    <div class="section-header">
+      <p class="section-tag">La Nostra Promessa</p>
+      <h2 class="section-title">I Nostri <span class="gradient-text">Valori</span></h2>
+    </div>
+    <div class="values-grid">
+      <div class="value-card">
+        <div class="value-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#c9a96e" stroke-width="1.5">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <h3 class="value-title">Artigianalit&agrave;</h3>
+        <p class="value-desc">Ogni prodotto &egrave; interamente realizzato a mano dai nostri maestri artigiani. Nessuna catena di montaggio, nessun compromesso. Solo mani esperte che trasformano la materia prima in arte da indossare.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#c9a96e" stroke-width="1.5">
+            <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 6v6l4 2"/>
+          </svg>
+        </div>
+        <h3 class="value-title">Sostenibilit&agrave;</h3>
+        <p class="value-desc">Utilizziamo esclusivamente pellami certificati provenienti da concerie toscane che rispettano i pi&ugrave; alti standard ambientali. Ogni scarto viene riutilizzato. Il packaging &egrave; realizzato in carta riciclata e inchiostri vegetali.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#c9a96e" stroke-width="1.5">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+        </div>
+        <h3 class="value-title">Design Italiano</h3>
+        <p class="value-desc">Le nostre collezioni nascono dallo studio di forme essenziali e proporzioni equilibrate. Ogni linea &egrave; pensata per durare oltre le stagioni, con un'eleganza che non ha bisogno di gridare per farsi notare.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Workshop -->
+  <section class="workshop-section">
+    <div class="workshop-inner">
+      <div class="workshop-image">
+        <div class="workshop-placeholder">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(201,169,110,0.3)" stroke-width="1">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
+          </svg>
+          <span>Il Laboratorio</span>
+        </div>
+      </div>
+      <div class="workshop-content">
+        <p class="section-tag">Dove Nasce l'Eccellenza</p>
+        <h2 class="section-title">Il <span class="gradient-text">Laboratorio</span></h2>
+        <p class="workshop-text">Il nostro laboratorio si trova sulle colline tra Firenze e Siena, in un edificio storico del XVIII secolo che un tempo ospitava una stamperia tessile. Le mura in pietra conservano il ricordo di secoli di artigianato.</p>
+        <p class="workshop-text">Qui lavorano dodici maestri artigiani, alcuni dei quali con oltre trent'anni di esperienza nella pelletteria di alta gamma. Ogni fase della lavorazione &mdash; dal taglio alla cucitura, dalla tintura alla rifinitura &mdash; avviene sotto lo stesso tetto, garantendo un controllo di qualit&agrave; assoluto.</p>
+        <p class="workshop-text">Ogni stagione apriamo le porte del laboratorio ai nostri clienti pi&ugrave; fedeli per giornate esclusive di visita, dove &egrave; possibile assistere alla creazione dei pezzi e personalizzare il proprio accessorio.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Founder -->
+  <section class="founder-section">
+    <div class="founder-inner">
+      <div class="founder-content">
+        <p class="section-tag">La Visionaria</p>
+        <h2 class="section-title">La <span class="gradient-text">Fondatrice</span></h2>
+        <h3 class="founder-name">Alessandra Neri</h3>
+        <p class="founder-text">Nata a Milano nel 1987, Alessandra cresce tra i tessuti dell'atelier di sua nonna a Prato e le gallerie d'arte contemporanea di Brera. Dopo una laurea in Design al Politecnico di Milano e cinque anni come direttrice creativa in una delle pi&ugrave; importanti maison francesi, decide di tornare in Italia con un'idea precisa: dimostrare che il lusso autentico non ha bisogno di un logo visibile.</p>
+        <p class="founder-text">Nel 2019 fonda Luxe Noir con un investimento personale e tre artigiani. Oggi il team conta dodici persone e i prodotti sono distribuiti in quattordici Paesi. Ogni pezzo porta ancora la sua supervisione diretta.</p>
+      </div>
+      <div class="founder-image">
+        <div class="founder-placeholder">
+          <div class="founder-avatar">AN</div>
+          <span class="founder-caption">Alessandra Neri, Fondatrice</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quote -->
+  <section class="quote-section">
+    <div class="quote-inner">
+      <div class="quote-mark">&ldquo;</div>
+      <blockquote class="quote-text">
+        Ogni pezzo racconta una storia.<br />
+        La nostra sfida &egrave; far s&igrave; che sia anche la tua.
+      </blockquote>
+      <p class="quote-author">&mdash; Alessandra Neri</p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="cta-inner">
+      <h2 class="cta-title">Scopri la <span class="gradient-text">Collezione</span></h2>
+      <p class="cta-desc">Esplora i nostri pezzi unici, pensati per chi cerca l'eccellenza senza compromessi.</p>
+      <a href="/portfolio/ecommerce" class="btn-primary">Scopri la Collezione</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h3 class="footer-logo gradient-text">LUXE NOIR</h3>
+        <p class="footer-tagline">L'arte del lusso accessibile.</p>
+        <p class="footer-address">Via Montenapoleone 42, 20121 Milano (MI)</p>
+        <p class="footer-address">Tel. +39 02 7600 1234</p>
+        <p class="footer-address">info@luxenoir.it</p>
+      </div>
+      <div class="footer-col">
+        <h4>Collezioni</h4>
+        <a href="/portfolio/ecommerce#nuovi">Nuovi Arrivi</a>
+        <a href="/portfolio/ecommerce#collezione">Donna</a>
+        <a href="#">Uomo</a>
+        <a href="#">Accessori</a>
+        <a href="#">Capsule Collection</a>
+      </div>
+      <div class="footer-col">
+        <h4>Servizio Clienti</h4>
+        <a href="#">Spedizioni</a>
+        <a href="#">Reso gratuito</a>
+        <a href="#">Pagamenti sicuri</a>
+        <a href="#">Traccia il tuo ordine</a>
+        <a href="#">Contattaci</a>
+      </div>
+      <div class="footer-col">
+        <h4>Seguici</h4>
+        <a href="#">Instagram</a>
+        <a href="#">Pinterest</a>
+        <a href="#">Facebook</a>
+        <a href="#">TikTok</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Luxe Noir S.r.l. &mdash; P.IVA 12345678901 &mdash; Via Montenapoleone 42, Milano</p>
+      <p class="footer-legal">
+        <a href="#">Termini e Condizioni</a> &bull;
+        <a href="#">Privacy Policy</a> &bull;
+        <a href="#">Cookie Policy</a>
+      </p>
+      <p class="footer-demo">Demo template di Marco Munich</p>
+    </div>
+  </footer>
+
+<style>
+  /* ========== RESET & BASE ========== */
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background: #0a0a0a;
+    color: #e8e0d4;
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: #0a0a0a; }
+  ::-webkit-scrollbar-thumb { background: #c9a96e; border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: #dbb878; }
+
+  .noise {
+    position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+  }
+  .gradient-text {
+    background: linear-gradient(135deg, #c9a96e 0%, #f0d89c 40%, #c9a96e 60%, #a67c3d 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+
+  /* ========== ANNOUNCEMENT BAR ========== */
+  .announcement-bar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 110;
+    background: linear-gradient(90deg, #c9a96e, #a67c3d);
+    color: #0a0a0a; text-align: center;
+    font-size: 0.78rem; font-weight: 600; letter-spacing: 1px; padding: 8px 16px;
+  }
+
+  /* ========== NAV ========== */
+  .main-nav {
+    position: fixed; top: 32px; left: 0; right: 0; z-index: 105;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 14px 40px;
+    background: rgba(10,10,10,0.75); backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(201,169,110,0.1);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem; font-weight: 700; text-decoration: none; letter-spacing: 3px;
+  }
+  .nav-links { display: flex; gap: 28px; }
+  .nav-links a {
+    color: rgba(232,224,212,0.7); text-decoration: none;
+    font-size: 0.82rem; font-weight: 400; letter-spacing: 0.5px; transition: color 0.3s ease;
+  }
+  .nav-links a:hover, .nav-links a.active { color: #c9a96e; }
+
+  /* ========== CART ICON ========== */
+  .cart-icon {
+    position: fixed; top: 24px; right: 24px; z-index: 100;
+    width: 48px; height: 48px;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(10,10,10,0.7); backdrop-filter: blur(20px);
+    border: 1px solid rgba(201,169,110,0.2); border-radius: 50%;
+    color: #c9a96e; text-decoration: none; cursor: pointer; transition: all 0.3s ease;
+  }
+  .cart-icon:hover { background: rgba(201,169,110,0.1); border-color: rgba(201,169,110,0.5); }
+  .cart-badge {
+    position: absolute; top: -4px; right: -4px;
+    width: 20px; height: 20px; background: #c9a96e; color: #0a0a0a;
+    font-size: 0.7rem; font-weight: 700; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* ========== HERO ========== */
+  .brand-hero {
+    position: relative;
+    min-height: 60vh;
+    display: flex; align-items: center; justify-content: center;
+    padding: 160px 24px 80px;
+    overflow: hidden;
+    text-align: center;
+  }
+  .hero-gradient {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1207 30%, #0a0a0a 50%, #12090a 70%, #0a0a0a 100%);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+  }
+  @keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  .hero-content { position: relative; z-index: 2; max-width: 700px; }
+  .hero-tag {
+    font-size: 0.8rem; letter-spacing: 4px; text-transform: uppercase;
+    color: #c9a96e; margin-bottom: 24px;
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 7vw, 5rem);
+    line-height: 1.1; font-weight: 700; margin-bottom: 24px;
+  }
+  .hero-sub {
+    font-size: 1.05rem; font-weight: 300;
+    color: rgba(232,224,212,0.7);
+    max-width: 520px; margin: 0 auto; line-height: 1.8;
+  }
+  .hero-line {
+    position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 1px; height: 80px;
+    background: linear-gradient(to bottom, #c9a96e, transparent);
+  }
+
+  /* ========== SECTION SHARED ========== */
+  .section-header { text-align: center; margin-bottom: 60px; }
+  .section-tag {
+    font-size: 0.8rem; letter-spacing: 4px; text-transform: uppercase;
+    color: #c9a96e; margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem); font-weight: 700;
+  }
+
+  /* ========== STORY ========== */
+  .story-section {
+    max-width: 1200px; margin: 0 auto; padding: 100px 24px;
+  }
+  .story-inner {
+    display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 60px;
+    align-items: start;
+  }
+  .story-text {
+    font-size: 1rem; font-weight: 300; line-height: 2;
+    color: rgba(232,224,212,0.65);
+    margin-bottom: 20px;
+  }
+  .story-visual {
+    display: flex; flex-direction: column; gap: 20px;
+    padding-top: 60px;
+  }
+  .visual-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(201,169,110,0.08);
+    border-radius: 16px; padding: 28px;
+    text-align: center;
+    transition: border-color 0.3s ease;
+  }
+  .visual-card:hover { border-color: rgba(201,169,110,0.25); }
+  .visual-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.4rem; font-weight: 700; color: #c9a96e;
+    margin-bottom: 4px;
+  }
+  .visual-label {
+    font-size: 0.78rem; letter-spacing: 2px; text-transform: uppercase;
+    color: rgba(232,224,212,0.4);
+  }
+
+  /* ========== VALUES ========== */
+  .values-section {
+    max-width: 1200px; margin: 0 auto; padding: 0 24px 100px;
+  }
+  .values-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
+  }
+  .value-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(201,169,110,0.08);
+    border-radius: 20px; padding: 40px 32px;
+    text-align: center;
+    transition: all 0.4s ease;
+  }
+  .value-card:hover {
+    border-color: rgba(201,169,110,0.2);
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+  }
+  .value-icon {
+    width: 64px; height: 64px; margin: 0 auto 24px;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(201,169,110,0.06);
+    border-radius: 50%;
+  }
+  .value-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem; font-weight: 700; margin-bottom: 16px;
+  }
+  .value-desc {
+    font-size: 0.88rem; font-weight: 300; line-height: 1.8;
+    color: rgba(232,224,212,0.6);
+  }
+
+  /* ========== WORKSHOP ========== */
+  .workshop-section {
+    max-width: 1200px; margin: 0 auto; padding: 0 24px 100px;
+  }
+  .workshop-inner {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+    align-items: center;
+  }
+  .workshop-image {
+    aspect-ratio: 4/3; border-radius: 20px; overflow: hidden;
+    border: 1px solid rgba(201,169,110,0.08);
+  }
+  .workshop-placeholder {
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, #131313, #1a1a1a);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 16px;
+  }
+  .workshop-placeholder span {
+    font-size: 0.82rem; letter-spacing: 2px; text-transform: uppercase;
+    color: rgba(201,169,110,0.3);
+  }
+  .workshop-text {
+    font-size: 0.95rem; font-weight: 300; line-height: 1.9;
+    color: rgba(232,224,212,0.6);
+    margin-bottom: 16px;
+  }
+
+  /* ========== FOUNDER ========== */
+  .founder-section {
+    max-width: 1200px; margin: 0 auto; padding: 0 24px 100px;
+  }
+  .founder-inner {
+    display: grid; grid-template-columns: 1.3fr 0.7fr; gap: 60px;
+    align-items: center;
+  }
+  .founder-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem; font-weight: 700; color: #c9a96e;
+    margin-bottom: 20px;
+  }
+  .founder-text {
+    font-size: 0.95rem; font-weight: 300; line-height: 1.9;
+    color: rgba(232,224,212,0.6);
+    margin-bottom: 16px;
+  }
+  .founder-image { display: flex; justify-content: center; }
+  .founder-placeholder {
+    display: flex; flex-direction: column; align-items: center; gap: 20px;
+  }
+  .founder-avatar {
+    width: 180px; height: 180px;
+    background: linear-gradient(135deg, rgba(201,169,110,0.15), rgba(201,169,110,0.05));
+    border: 1px solid rgba(201,169,110,0.15);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem; font-weight: 700; color: #c9a96e;
+  }
+  .founder-caption {
+    font-size: 0.82rem; color: rgba(232,224,212,0.4);
+    letter-spacing: 1px;
+  }
+
+  /* ========== QUOTE ========== */
+  .quote-section {
+    padding: 80px 24px;
+    border-top: 1px solid rgba(201,169,110,0.06);
+    border-bottom: 1px solid rgba(201,169,110,0.06);
+  }
+  .quote-inner {
+    max-width: 700px; margin: 0 auto; text-align: center;
+  }
+  .quote-mark {
+    font-family: 'Playfair Display', serif;
+    font-size: 5rem; line-height: 1; color: rgba(201,169,110,0.2);
+    margin-bottom: -20px;
+  }
+  .quote-text {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.4rem, 3vw, 1.8rem);
+    font-style: italic; font-weight: 400;
+    line-height: 1.6; color: rgba(232,224,212,0.8);
+    margin-bottom: 24px;
+  }
+  .quote-author {
+    font-size: 0.88rem; color: #c9a96e; letter-spacing: 2px;
+  }
+
+  /* ========== CTA ========== */
+  .cta-section {
+    max-width: 800px; margin: 0 auto; padding: 100px 24px;
+    text-align: center;
+  }
+  .cta-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    font-weight: 700; margin-bottom: 16px;
+  }
+  .cta-desc {
+    font-size: 1rem; font-weight: 300;
+    color: rgba(232,224,212,0.6); line-height: 1.8;
+    max-width: 500px; margin: 0 auto 36px;
+  }
+  .btn-primary {
+    display: inline-block; padding: 16px 40px;
+    background: linear-gradient(135deg, #c9a96e, #a67c3d);
+    color: #0a0a0a; text-decoration: none;
+    font-size: 0.85rem; font-weight: 600; letter-spacing: 1.5px;
+    text-transform: uppercase; border-radius: 50px;
+    transition: all 0.3s ease;
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(201,169,110,0.3);
+  }
+
+  /* ========== FOOTER ========== */
+  .footer {
+    border-top: 1px solid rgba(201,169,110,0.08);
+    padding: 60px 24px 32px; max-width: 1200px; margin: 0 auto;
+  }
+  .footer-grid {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px; margin-bottom: 48px;
+  }
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem; font-weight: 700; margin-bottom: 8px;
+  }
+  .footer-tagline { font-size: 0.85rem; color: rgba(232,224,212,0.4); }
+  .footer-address { font-size: 0.8rem; color: rgba(232,224,212,0.4); line-height: 1.7; }
+  .footer-col h4 {
+    font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase;
+    color: #c9a96e; margin-bottom: 16px;
+  }
+  .footer-col a {
+    display: block; color: rgba(232,224,212,0.5);
+    text-decoration: none; font-size: 0.85rem;
+    margin-bottom: 8px; transition: color 0.3s ease;
+  }
+  .footer-col a:hover { color: #c9a96e; }
+  .footer-bottom {
+    border-top: 1px solid rgba(201,169,110,0.06);
+    padding-top: 24px; text-align: center;
+  }
+  .footer-bottom p { font-size: 0.75rem; color: rgba(232,224,212,0.3); }
+  .footer-legal { margin-top: 8px; }
+  .footer-legal a { color: rgba(201,169,110,0.5); text-decoration: none; transition: color 0.3s ease; }
+  .footer-legal a:hover { color: #c9a96e; }
+  .footer-demo { margin-top: 12px; font-style: italic; }
+
+  /* ========== RESPONSIVE ========== */
+  @media (max-width: 900px) {
+    .story-inner { grid-template-columns: 1fr; }
+    .story-visual {
+      flex-direction: row; padding-top: 0;
+    }
+    .values-grid { grid-template-columns: 1fr; max-width: 500px; margin: 0 auto; }
+    .workshop-inner { grid-template-columns: 1fr; }
+    .founder-inner { grid-template-columns: 1fr; }
+    .founder-image { order: -1; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .nav-links { display: none; }
+  }
+  @media (max-width: 600px) {
+    .story-visual { flex-direction: column; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .founder-avatar { width: 140px; height: 140px; font-size: 2.4rem; }
+    .announcement-bar { font-size: 0.7rem; padding: 6px 12px; }
+    .main-nav { top: 28px; padding: 10px 20px; }
+  }
+</style>
+</body>
+</html>

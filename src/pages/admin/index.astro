@@ -1,5 +1,6 @@
 ---
-export const prerender = true;
+export const prerender = false;
+// Redirect semplice a /keystatic con link rapido alle statistiche
 ---
 <!DOCTYPE html>
 <html lang="it">
@@ -26,96 +27,38 @@ export const prerender = true;
     .stats { background: #1a1a2e; }
     .ai { background: #1a1a2e; border-color: #3d2d4e; }
     .ai:hover { border-color: #8b5cf6; }
-
-    /* Login */
-    .login-wrap { display: flex; align-items: center; justify-content: center; min-height: 100vh; position: fixed; inset: 0; background: #0f172a; z-index: 100; }
-    .login-box { background: #1e293b; padding: 2rem; border-radius: 12px; width: 320px; text-align: center; }
-    .login-box p { color: #94a3b8; margin: 0 0 .5rem; font-size: .85rem; }
-    .login-box h2 { color: #f1f5f9; margin: 0 0 1.5rem; font-size: 1.2rem; }
-    .login-box input { width: 100%; box-sizing: border-box; padding: .75rem 1rem; border-radius: 8px; border: 1px solid #334155; background: #0f172a; color: #f1f5f9; font-size: 1rem; margin-bottom: .75rem; }
-    .login-box button { width: 100%; padding: .75rem; background: #6366f1; color: #fff; border: none; border-radius: 8px; font-size: 1rem; cursor: pointer; }
   </style>
 </head>
 <body>
-  <div id="login-wrap" class="login-wrap" style="display:none">
-    <div class="login-box">
-      <p>marcomunich.com</p>
-      <h2>Area admin</h2>
-      <form id="login-form">
-        <input type="password" name="password" id="pwd" placeholder="Password" autofocus />
-        <button type="submit">Accedi</button>
-      </form>
+  <div class="hub">
+    <h1>marcomunich.com — Admin</h1>
+    <div class="links">
+      <a href="/admin/articoli" class="cms">
+        <span class="icon">📄</span>
+        <span class="label">Articoli</span>
+        <span class="sub">Modifica & AI editor</span>
+      </a>
+      <a href="/admin/genera" class="ai">
+        <span class="icon">🤖</span>
+        <span class="label">Genera con AI</span>
+        <span class="sub">Crea articoli con Claude</span>
+      </a>
+      <a href="/admin/statistiche" class="stats">
+        <span class="icon">📊</span>
+        <span class="label">Statistiche</span>
+        <span class="sub">GA4 + Search Console</span>
+      </a>
+      <a href="/admin/acquirenti" class="stats">
+        <span class="icon">🛒</span>
+        <span class="label">Acquirenti</span>
+        <span class="sub">Prompt Pack · newsletter</span>
+      </a>
+      <a href="/admin/aggiornamenti" class="ai">
+        <span class="icon">📦</span>
+        <span class="label">Aggiornamenti</span>
+        <span class="sub">Prompt Pack · roadmap v2 v3 v4</span>
+      </a>
     </div>
   </div>
-  <div id="content-wrap" style="display:none">
-    <div class="hub">
-      <h1>marcomunich.com — Admin</h1>
-      <div class="links">
-        <a href="/admin/articoli" class="cms">
-          <span class="icon">📄</span>
-          <span class="label">Articoli</span>
-          <span class="sub">Modifica & AI editor</span>
-        </a>
-        <a href="/admin/genera" class="ai">
-          <span class="icon">🤖</span>
-          <span class="label">Genera con AI</span>
-          <span class="sub">Crea articoli con Claude</span>
-        </a>
-        <a href="/admin/statistiche" class="stats">
-          <span class="icon">📊</span>
-          <span class="label">Statistiche</span>
-          <span class="sub">GA4 + Search Console</span>
-        </a>
-        <a href="/admin/acquirenti" class="stats">
-          <span class="icon">🛒</span>
-          <span class="label">Acquirenti</span>
-          <span class="sub">Prompt Pack · newsletter</span>
-        </a>
-        <a href="/admin/aggiornamenti" class="ai">
-          <span class="icon">📦</span>
-          <span class="label">Aggiornamenti</span>
-          <span class="sub">Prompt Pack · roadmap v2 v3 v4</span>
-        </a>
-        <a href="/admin/social" class="ai">
-          <span class="icon">📱</span>
-          <span class="label">Social Media</span>
-          <span class="sub">Genera e pubblica su X, LinkedIn, Facebook</span>
-        </a>
-        <a href="/admin/social-piano" class="ai">
-          <span class="icon">📅</span>
-          <span class="label">Piano Editoriale</span>
-          <span class="sub">Grafiche + piano settimanale da articoli</span>
-        </a>
-        <a href="/admin/batch" class="cms">
-          <span class="icon">⚡</span>
-          <span class="label">Batch Rewrite</span>
-          <span class="sub">Riscrivi articoli in blocco con AI</span>
-        </a>
-      </div>
-    </div>
-  </div>
-  <script is:inline>
-  (function(){
-    var cookie = document.cookie;
-    var auth = cookie.split(';').find(function(c){return c.trim().startsWith('stats_auth=')});
-    if(auth){
-      document.getElementById('content-wrap').style.display='block';
-    } else {
-      document.getElementById('login-wrap').style.display='flex';
-    }
-    var form = document.getElementById('login-form');
-    if(form) form.addEventListener('submit', function(e){
-      e.preventDefault();
-      var pwd = document.getElementById('pwd').value;
-      fetch('/api/admin-auth.php', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({password:pwd})})
-      .then(function(r){return r.json()})
-      .then(function(d){
-        if(d.success) { document.cookie='stats_auth='+encodeURIComponent(pwd)+';path=/;max-age=604800'; location.reload(); }
-        else alert('Password errata');
-      })
-      .catch(function(){ alert('Errore di connessione'); });
-    });
-  })();
-  </script>
 </body>
 </html>

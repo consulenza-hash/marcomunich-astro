@@ -1,5 +1,5 @@
 ---
-export const prerender = true;
+export const prerender = false;
 import { aggiornamenti } from '../../data/prompt-updates';
 
 const now = new Date();
@@ -200,21 +200,9 @@ const nextRelease = scheduled.sort((a, b) => new Date(a.releaseDate).getTime() -
       .update-card__header { flex-wrap: wrap; }
     }
   </style>
-
 </head>
 <body>
 
-<div id="login-wrap" style="display:none;min-height:100vh;align-items:center;justify-content:center;background:#0f0f1a">
-  <div style="background:#1a1a2e;border:1px solid #2d2d3d;border-radius:12px;padding:2.5rem;width:320px;text-align:center">
-    <h2 style="color:#f1f5f9;margin:0 0 1.5rem;font-size:1.2rem">Area admin</h2>
-    <form id="login-form">
-      <input type="password" id="pwd" placeholder="Password" autofocus style="width:100%;box-sizing:border-box;padding:.75rem 1rem;border-radius:8px;border:1px solid #334155;background:#0f172a;color:#f1f5f9;font-size:1rem;margin-bottom:.75rem" />
-      <button type="submit" style="width:100%;padding:.75rem;background:#6366f1;color:#fff;border:none;border-radius:8px;font-size:1rem;cursor:pointer">Accedi</button>
-    </form>
-  </div>
-</div>
-
-<div id="content-wrap" style="display:none">
 <nav class="topbar">
   <a href="/admin" class="topbar__back">← Admin</a>
   <span class="topbar__title">Aggiornamenti Prompt Pack</span>
@@ -390,34 +378,9 @@ const nextRelease = scheduled.sort((a, b) => new Date(a.releaseDate).getTime() -
   )}
 
 </div>
-</div>
 
-<script is:inline>
-  // Auth check
-  (function(){
-    var cookie = document.cookie;
-    var auth = cookie.split(';').find(function(c){return c.trim().startsWith('stats_auth=')});
-    if(auth){
-      document.getElementById('content-wrap').style.display='block';
-    } else {
-      document.getElementById('login-wrap').style.display='flex';
-    }
-    var form = document.getElementById('login-form');
-    if(form) form.addEventListener('submit', function(e){
-      e.preventDefault();
-      var pwd = document.getElementById('pwd').value;
-      fetch('/api/admin-auth.php', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({password:pwd})})
-      .then(function(r){return r.json()})
-      .then(function(d){
-        if(d.success) { document.cookie='stats_auth='+encodeURIComponent(pwd)+';path=/;max-age=604800'; location.reload(); }
-        else alert('Password errata');
-      })
-      .catch(function(){ alert('Errore di connessione'); });
-    });
-  })();
-</script>
-<script is:inline>
-  function toggleCard(id) {
+<script>
+  function toggleCard(id: string) {
     const body = document.getElementById('body-' + id);
     const chevron = document.getElementById('chevron-' + id);
     if (!body || !chevron) return;
@@ -425,15 +388,15 @@ const nextRelease = scheduled.sort((a, b) => new Date(a.releaseDate).getTime() -
     chevron.classList.toggle('open');
   }
 
-  function toggleText(updateId, n) {
+  function toggleText(updateId: string, n: number) {
     const el = document.getElementById('text-' + updateId + '-' + n);
-    const btn = el?.nextElementSibling;
+    const btn = el?.nextElementSibling as HTMLButtonElement;
     if (!el) return;
     el.classList.toggle('expanded');
     if (btn) btn.textContent = el.classList.contains('expanded') ? 'mostra meno' : 'mostra tutto';
   }
 
-  function copyText(btn, text) {
+  function copyText(btn: HTMLButtonElement, text: string) {
     navigator.clipboard.writeText(text).then(() => {
       btn.textContent = 'Copiato ✓';
       btn.classList.add('copied');

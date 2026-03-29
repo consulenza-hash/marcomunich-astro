@@ -26,12 +26,15 @@ export const prerender = true;
   <!-- Nav -->
   <nav class="nav fade-in">
     <div class="nav-logo">Terraviva</div>
-    <div class="nav-links">
+    <div class="nav-links" id="navLinks">
       <a href="#servizi">Servizi</a>
       <a href="#progetti">Progetti</a>
       <a href="#chi-siamo">Chi Siamo</a>
       <a href="#contatti" class="nav-cta">Contattaci</a>
     </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
 
   <!-- Hero -->
@@ -289,7 +292,25 @@ export const prerender = true;
     <p class="footer-copy">&copy; 2026 Studio Terraviva di Arch. Francesca Moretti &mdash; P.IVA 04123456789 &mdash; Tutti i diritti riservati.</p>
   </footer>
 
-  <script>
+  <script is:inline>
+    // Hamburger menu
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => {
+      const isOpen = navLinks.classList.toggle('open');
+      hamburger.classList.toggle('open', isOpen);
+      hamburger.setAttribute('aria-expanded', isOpen);
+    });
+    navLinks.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        hamburger.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', false);
+      });
+    });
+  </script>
+
+  <script is:inline>
     // Fade-in observer
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -300,6 +321,42 @@ export const prerender = true;
       });
     }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // ===== CONTACT FORM =====
+    document.querySelector('.contact-form')?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const inputs = e.target.querySelectorAll('.form-input');
+      if (!inputs[0].value || !inputs[1].value) { showSvToast('Compila nome ed email'); return; }
+      inputs.forEach(i => i.value = '');
+      showSvToast('✓ Messaggio inviato! Ti risponderemo entro 24 ore.');
+    });
+
+    // ===== SERVICE LINKS =====
+    document.querySelectorAll('.service-link').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const service = link.closest('.service-card')?.querySelector('h3')?.textContent || '';
+        showSvToast('📩 Contattaci per un preventivo su: ' + service);
+      });
+    });
+
+    // ===== PROJECT CARDS =====
+    document.querySelectorAll('.project-card').forEach(card => {
+      card.style.cursor = 'pointer';
+      card.addEventListener('click', () => {
+        const title = card.querySelector('h3')?.textContent || 'Progetto';
+        showSvToast('📁 ' + title + ' — Galleria completa disponibile su richiesta');
+      });
+    });
+
+    let svToastTimeout;
+    function showSvToast(msg) {
+      const t = document.getElementById('sv-toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      clearTimeout(svToastTimeout);
+      svToastTimeout = setTimeout(() => t.classList.remove('show'), 3500);
+    }
   </script>
 
   <style>
@@ -360,7 +417,7 @@ export const prerender = true;
 
     /* ========== BACK BUTTON ========== */
     .back-btn {
-      position: fixed; top: 24px; left: 24px; z-index: 100;
+      position: fixed; top: 24px; left: 24px; z-index: 9000;
       display: inline-flex; align-items: center; gap: 8px;
       padding: 10px 20px;
       background: rgba(250,248,245,0.85);
@@ -393,6 +450,7 @@ export const prerender = true;
       font-size: 1.6rem; color: #2d2a26;
     }
     .nav-links { display: flex; gap: 32px; align-items: center; }
+    .hamburger { display: none; }
     .nav-links a {
       color: #6b6560; text-decoration: none; font-size: 0.9rem;
       transition: color 0.3s ease;
@@ -723,6 +781,33 @@ export const prerender = true;
       .about-image { max-width: 400px; margin: 0 auto; }
       .contact-inner { grid-template-columns: 1fr; padding: 40px; }
       .nav-links { display: none; }
+      .nav-links.open {
+        display: flex; flex-direction: column; gap: 0;
+        position: fixed; top: 0; left: 0; right: 0;
+        background: rgba(255,252,247,0.98); backdrop-filter: blur(20px);
+        padding: 80px 32px 40px; z-index: 200;
+      }
+      .nav-links.open a {
+        padding: 16px 0; font-size: 1rem; color: #2d2a26;
+        border-bottom: 1px solid rgba(0,0,0,0.08);
+      }
+      .nav-links.open .nav-cta {
+        margin-top: 16px; text-align: center;
+        padding: 12px 20px !important;
+      }
+      .hamburger {
+        display: flex; flex-direction: column; justify-content: space-between;
+        width: 24px; height: 18px; background: none; border: none;
+        cursor: pointer; padding: 0; z-index: 201;
+      }
+      .hamburger span {
+        display: block; height: 2px; width: 100%; background: #2d2a26;
+        transition: all 0.3s ease; transform-origin: center;
+      }
+      .hamburger.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+      .hamburger.open span:nth-child(2) { opacity: 0; }
+      .hamburger.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+      .hero { padding: 60px 24px 80px; }
     }
     @media (max-width: 600px) {
       .hero-title { font-size: 2rem; }
@@ -733,5 +818,7 @@ export const prerender = true;
       .testimonial-card { width: 300px; max-width: calc(100vw - 48px); padding: 24px; box-sizing: border-box; }
     }
   </style>
+  <div id="sv-toast" style="position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);background:#1e1e1e;border:1px solid #8b6f4e;color:#d4a678;padding:13px 26px;border-radius:50px;font-size:0.84rem;z-index:99999;opacity:0;transition:all 0.4s cubic-bezier(0.4,0,0.2,1);white-space:nowrap;pointer-events:none;max-width:90vw;text-align:center;"></div>
+  <style>#sv-toast.show{opacity:1!important;transform:translateX(-50%) translateY(0)!important}</style>
 </body>
 </html>

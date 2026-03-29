@@ -1,0 +1,682 @@
+---
+export const prerender = true;
+---
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Borsa Strutturata in Pelle — Luxe Noir</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <!-- Noise overlay -->
+  <div class="noise"></div>
+
+  <!-- Announcement bar -->
+  <div class="announcement-bar">
+    Spedizione gratuita sopra i &euro;150 &nbsp;|&nbsp; Reso facile entro 14 giorni
+  </div>
+
+  <!-- Navigation -->
+  <nav class="main-nav">
+    <a href="/portfolio/ecommerce" class="nav-logo gradient-text">LUXE NOIR</a>
+    <div class="nav-links">
+      <a href="/portfolio/ecommerce#nuovi">Nuovi Arrivi</a>
+      <a href="/portfolio/ecommerce#collezione">Donna</a>
+      <a href="#">Uomo</a>
+      <a href="#">Accessori</a>
+      <a href="/portfolio/ecommerce/brand">Il Brand</a>
+    </div>
+  </nav>
+
+  <!-- Cart icon -->
+  <a href="/portfolio/ecommerce/carrello" class="cart-icon">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"></path>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <path d="M16 10a4 4 0 01-8 0"></path>
+    </svg>
+    <span class="cart-badge">3</span>
+  </a>
+
+  <!-- Breadcrumb -->
+  <div class="breadcrumb">
+    <a href="/portfolio/ecommerce">Home</a>
+    <span class="sep">/</span>
+    <a href="/portfolio/ecommerce#collezione">Donna</a>
+    <span class="sep">/</span>
+    <a href="/portfolio/ecommerce#collezione">Borse</a>
+    <span class="sep">/</span>
+    <span class="current">Borsa Strutturata in Pelle</span>
+  </div>
+
+  <!-- Product Section -->
+  <section class="product-section">
+    <div class="product-gallery">
+      <div class="main-image">
+        <img src="/images/portfolio/ecom-borsa.jpg" alt="Borsa Strutturata in Pelle - vista frontale" loading="eager" />
+        <span class="badge">Nuovo</span>
+      </div>
+      <div class="thumb-row">
+        <div class="thumb active">
+          <img src="/images/portfolio/ecom-borsa.jpg" alt="Vista frontale" />
+        </div>
+        <div class="thumb">
+          <div class="thumb-placeholder">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 002 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+          </div>
+        </div>
+        <div class="thumb">
+          <div class="thumb-placeholder">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          </div>
+        </div>
+        <div class="thumb">
+          <div class="thumb-placeholder">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-details">
+      <p class="product-brand">LUXE NOIR</p>
+      <h1 class="product-name">Borsa Strutturata in Pelle</h1>
+      <div class="product-rating">
+        <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+        <span class="rating-text">4.8 (47 recensioni)</span>
+      </div>
+      <p class="product-price">&euro;289</p>
+      <p class="product-shipping">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c9a96e" stroke-width="1.5"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        Spedizione gratuita
+      </p>
+
+      <p class="product-desc">Pelle di vitello pieno fiore lavorata a mano nei nostri laboratori toscani. Chiusura magnetica con dettaglio in ottone spazzolato, tasca interna con zip in pelle scamosciata, tracolla regolabile e rimovibile. Dimensioni: 28&times;22&times;12 cm. Peso: 680g.</p>
+
+      <!-- Color selector -->
+      <div class="option-group">
+        <p class="option-label">Colore: <strong>Nero</strong></p>
+        <div class="color-options">
+          <button class="color-circle active" style="background:#1a1a1a" title="Nero" aria-label="Nero"></button>
+          <button class="color-circle" style="background:#8b5e3c" title="Cognac" aria-label="Cognac"></button>
+          <button class="color-circle" style="background:#5c1a2a" title="Bordeaux" aria-label="Bordeaux"></button>
+        </div>
+      </div>
+
+      <!-- Size -->
+      <div class="option-group">
+        <p class="option-label">Taglia: <strong>Unica</strong></p>
+      </div>
+
+      <!-- Add to cart -->
+      <button class="btn-add-cart">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        Aggiungi al Carrello
+      </button>
+
+      <!-- Trust -->
+      <div class="trust-row">
+        <div class="trust-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c9a96e" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span>Pagamento Sicuro</span>
+        </div>
+        <div class="trust-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c9a96e" stroke-width="1.5"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/></svg>
+          <span>Confezione Regalo</span>
+        </div>
+        <div class="trust-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c9a96e" stroke-width="1.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>
+          <span>Reso Gratuito</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tabs -->
+  <section class="tabs-section">
+    <input type="radio" name="tab" id="tab-dettagli" checked />
+    <input type="radio" name="tab" id="tab-spedizioni" />
+    <input type="radio" name="tab" id="tab-recensioni" />
+    <div class="tab-labels">
+      <label for="tab-dettagli">Dettagli</label>
+      <label for="tab-spedizioni">Spedizioni</label>
+      <label for="tab-recensioni">Recensioni</label>
+    </div>
+    <div class="tab-panels">
+      <div class="tab-panel panel-dettagli">
+        <h3>Materiali &amp; Composizione</h3>
+        <ul>
+          <li>Pelle di vitello pieno fiore (esterno)</li>
+          <li>Pelle scamosciata (fodera interna)</li>
+          <li>Dettagli in ottone spazzolato</li>
+          <li>Zip YKK in metallo</li>
+        </ul>
+        <h3>Cura del Prodotto</h3>
+        <ul>
+          <li>Conservare nella dust bag fornita quando non in uso</li>
+          <li>Evitare l'esposizione diretta alla luce solare prolungata</li>
+          <li>Trattare con crema nutriente per pelle ogni 3-4 mesi</li>
+          <li>In caso di pioggia, asciugare con un panno morbido e lasciar aerare</li>
+        </ul>
+      </div>
+      <div class="tab-panel panel-spedizioni">
+        <h3>Tempi di Consegna</h3>
+        <p>2-3 giorni lavorativi in Italia, 4-6 giorni in Europa. Reso gratuito entro 14 giorni.</p>
+        <h3>Spedizione Gratuita</h3>
+        <p>Tutti gli ordini superiori a &euro;150 beneficiano della spedizione gratuita con corriere espresso e tracking dedicato.</p>
+        <h3>Reso e Cambio</h3>
+        <p>Hai 14 giorni dalla ricezione per restituire o cambiare il prodotto. Il reso &egrave; sempre gratuito: troverai l'etichetta prepagata all'interno del pacco.</p>
+      </div>
+      <div class="tab-panel panel-recensioni">
+        <div class="reviews-header">
+          <div class="reviews-avg">
+            <span class="avg-number">4.8</span>
+            <span class="avg-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+            <span class="avg-count">47 recensioni</span>
+          </div>
+        </div>
+        <div class="review-list">
+          <div class="review-item">
+            <div class="review-top">
+              <div class="reviewer-avatar">FG</div>
+              <div>
+                <p class="reviewer-name">Francesca G.</p>
+                <span class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+              </div>
+            </div>
+            <p class="review-text">Qualit&agrave; eccezionale. La pelle &egrave; morbida ma resistente. Ho ricevuto tantissimi complimenti. La consiglio assolutamente.</p>
+          </div>
+          <div class="review-item">
+            <div class="review-top">
+              <div class="reviewer-avatar">MC</div>
+              <div>
+                <p class="reviewer-name">Marco C.</p>
+                <span class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
+              </div>
+            </div>
+            <p class="review-text">Regalata a mia moglie per il compleanno. Packaging curatissimo, il prodotto &egrave; elegante e versatile. Unica nota: la tracolla potrebbe essere un po' pi&ugrave; lunga.</p>
+          </div>
+          <div class="review-item">
+            <div class="review-top">
+              <div class="reviewer-avatar">SB</div>
+              <div>
+                <p class="reviewer-name">Sara B.</p>
+                <span class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+              </div>
+            </div>
+            <p class="review-text">La seconda borsa che acquisto da Luxe Noir. Artigianalit&agrave; italiana vera, non quella dei brand industriali. Vale ogni centesimo.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Related products -->
+  <section class="related">
+    <div class="section-header">
+      <p class="section-tag">Selezione Curata</p>
+      <h2 class="section-title">Potrebbe <span class="gradient-text">Piacerti Anche</span></h2>
+    </div>
+    <div class="related-grid">
+      <a href="/portfolio/ecommerce/prodotto" class="related-card">
+        <div class="related-image">
+          <img src="/images/portfolio/ecom-foulard.jpg" alt="Foulard in Seta Stampata" loading="lazy" />
+        </div>
+        <div class="related-info">
+          <h3>Foulard in Seta Stampata</h3>
+          <p class="related-price">&euro;145</p>
+        </div>
+      </a>
+      <a href="/portfolio/ecommerce/prodotto" class="related-card">
+        <div class="related-image">
+          <img src="/images/portfolio/ecom-occhiali.jpg" alt="Occhiali da Sole Titanio" loading="lazy" />
+        </div>
+        <div class="related-info">
+          <h3>Occhiali da Sole Titanio</h3>
+          <p class="related-price">&euro;520</p>
+        </div>
+      </a>
+      <a href="/portfolio/ecommerce/prodotto" class="related-card">
+        <div class="related-image">
+          <img src="/images/portfolio/ecom-orologio.jpg" alt="Orologio Automatico Oro Rosa" loading="lazy" />
+        </div>
+        <div class="related-info">
+          <h3>Orologio Automatico Oro Rosa</h3>
+          <p class="related-price">&euro;5.600</p>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- Back link -->
+  <div class="back-link">
+    <a href="/portfolio/ecommerce">&larr; Torna allo Shop</a>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h3 class="footer-logo gradient-text">LUXE NOIR</h3>
+        <p class="footer-tagline">L'arte del lusso accessibile.</p>
+        <p class="footer-address">Via Montenapoleone 42, 20121 Milano (MI)</p>
+        <p class="footer-address">Tel. +39 02 7600 1234</p>
+      </div>
+      <div class="footer-col">
+        <h4>Collezioni</h4>
+        <a href="/portfolio/ecommerce#nuovi">Nuovi Arrivi</a>
+        <a href="/portfolio/ecommerce#collezione">Donna</a>
+        <a href="#">Uomo</a>
+        <a href="#">Accessori</a>
+      </div>
+      <div class="footer-col">
+        <h4>Servizio Clienti</h4>
+        <a href="#">Spedizioni</a>
+        <a href="#">Reso gratuito</a>
+        <a href="#">Pagamenti sicuri</a>
+        <a href="#">Contattaci</a>
+      </div>
+      <div class="footer-col">
+        <h4>Seguici</h4>
+        <a href="#">Instagram</a>
+        <a href="#">Pinterest</a>
+        <a href="#">Facebook</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Luxe Noir S.r.l. &mdash; P.IVA 12345678901</p>
+      <p class="footer-demo">Demo template di Marco Munich</p>
+    </div>
+  </footer>
+
+<style>
+  /* ========== RESET & BASE ========== */
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background: #0a0a0a;
+    color: #e8e0d4;
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: #0a0a0a; }
+  ::-webkit-scrollbar-thumb { background: #c9a96e; border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: #dbb878; }
+
+  .noise {
+    position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+  }
+  .gradient-text {
+    background: linear-gradient(135deg, #c9a96e 0%, #f0d89c 40%, #c9a96e 60%, #a67c3d 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+
+  /* ========== ANNOUNCEMENT BAR ========== */
+  .announcement-bar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 110;
+    background: linear-gradient(90deg, #c9a96e, #a67c3d);
+    color: #0a0a0a; text-align: center;
+    font-size: 0.78rem; font-weight: 600; letter-spacing: 1px; padding: 8px 16px;
+  }
+
+  /* ========== NAV ========== */
+  .main-nav {
+    position: fixed; top: 32px; left: 0; right: 0; z-index: 105;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 14px 40px;
+    background: rgba(10,10,10,0.75); backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(201,169,110,0.1);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem; font-weight: 700; text-decoration: none; letter-spacing: 3px;
+  }
+  .nav-links { display: flex; gap: 28px; }
+  .nav-links a {
+    color: rgba(232,224,212,0.7); text-decoration: none;
+    font-size: 0.82rem; font-weight: 400; letter-spacing: 0.5px; transition: color 0.3s ease;
+  }
+  .nav-links a:hover { color: #c9a96e; }
+
+  /* ========== CART ICON ========== */
+  .cart-icon {
+    position: fixed; top: 24px; right: 24px; z-index: 100;
+    width: 48px; height: 48px;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(10,10,10,0.7); backdrop-filter: blur(20px);
+    border: 1px solid rgba(201,169,110,0.2); border-radius: 50%;
+    color: #c9a96e; text-decoration: none; cursor: pointer; transition: all 0.3s ease;
+  }
+  .cart-icon:hover { background: rgba(201,169,110,0.1); border-color: rgba(201,169,110,0.5); }
+  .cart-badge {
+    position: absolute; top: -4px; right: -4px;
+    width: 20px; height: 20px; background: #c9a96e; color: #0a0a0a;
+    font-size: 0.7rem; font-weight: 700; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* ========== BREADCRUMB ========== */
+  .breadcrumb {
+    max-width: 1200px; margin: 0 auto;
+    padding: 120px 24px 0;
+    font-size: 0.8rem;
+    color: rgba(232,224,212,0.4);
+  }
+  .breadcrumb a {
+    color: rgba(232,224,212,0.5); text-decoration: none; transition: color 0.3s ease;
+  }
+  .breadcrumb a:hover { color: #c9a96e; }
+  .breadcrumb .sep { margin: 0 8px; color: rgba(201,169,110,0.3); }
+  .breadcrumb .current { color: #c9a96e; }
+
+  /* ========== PRODUCT SECTION ========== */
+  .product-section {
+    max-width: 1200px; margin: 0 auto;
+    padding: 40px 24px 60px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+    align-items: start;
+  }
+  .main-image {
+    position: relative; aspect-ratio: 3/4;
+    background: linear-gradient(135deg, #131313, #1a1a1a);
+    border-radius: 16px; overflow: hidden;
+    border: 1px solid rgba(201,169,110,0.08);
+  }
+  .main-image img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+  }
+  .main-image .badge {
+    position: absolute; top: 16px; left: 16px;
+    padding: 6px 14px; background: #c9a96e; color: #0a0a0a;
+    font-size: 0.7rem; font-weight: 600; letter-spacing: 1px;
+    text-transform: uppercase; border-radius: 50px;
+  }
+  .thumb-row {
+    display: flex; gap: 12px; margin-top: 16px;
+  }
+  .thumb {
+    width: 72px; height: 72px; border-radius: 10px; overflow: hidden;
+    border: 2px solid rgba(201,169,110,0.1); cursor: pointer;
+    transition: border-color 0.3s ease;
+  }
+  .thumb.active { border-color: #c9a96e; }
+  .thumb:hover { border-color: rgba(201,169,110,0.4); }
+  .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .thumb-placeholder {
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, #131313, #1a1a1a);
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(201,169,110,0.3);
+  }
+
+  /* ========== PRODUCT DETAILS ========== */
+  .product-brand {
+    font-size: 0.75rem; letter-spacing: 3px; text-transform: uppercase;
+    color: rgba(201,169,110,0.6); margin-bottom: 8px;
+  }
+  .product-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 700;
+    margin-bottom: 12px; line-height: 1.2;
+  }
+  .product-rating {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 20px;
+  }
+  .stars { color: #c9a96e; font-size: 1rem; letter-spacing: 2px; }
+  .rating-text { font-size: 0.82rem; color: rgba(232,224,212,0.5); }
+  .product-price {
+    font-size: 2rem; font-weight: 700; color: #c9a96e;
+    margin-bottom: 8px;
+    font-family: 'Playfair Display', serif;
+  }
+  .product-shipping {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.82rem; color: rgba(201,169,110,0.7);
+    margin-bottom: 24px;
+  }
+  .product-details .product-desc {
+    font-size: 0.92rem; font-weight: 300; line-height: 1.8;
+    color: rgba(232,224,212,0.65); margin-bottom: 28px;
+  }
+
+  /* Color options */
+  .option-group { margin-bottom: 24px; }
+  .option-label {
+    font-size: 0.82rem; color: rgba(232,224,212,0.6); margin-bottom: 10px;
+  }
+  .option-label strong { color: #e8e0d4; }
+  .color-options { display: flex; gap: 12px; }
+  .color-circle {
+    width: 36px; height: 36px; border-radius: 50%;
+    border: 2px solid transparent; cursor: pointer;
+    transition: all 0.3s ease; outline: none;
+    box-shadow: inset 0 0 0 2px rgba(255,255,255,0.1);
+  }
+  .color-circle.active { border-color: #c9a96e; box-shadow: 0 0 0 2px #c9a96e; }
+  .color-circle:hover { border-color: rgba(201,169,110,0.5); }
+
+  /* Add to cart */
+  .btn-add-cart {
+    display: flex; align-items: center; justify-content: center; gap: 12px;
+    width: 100%; padding: 16px 36px;
+    background: linear-gradient(135deg, #c9a96e, #a67c3d);
+    color: #0a0a0a; border: none; border-radius: 50px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem; font-weight: 600; letter-spacing: 1.5px;
+    text-transform: uppercase; cursor: pointer;
+    transition: all 0.3s ease; margin-bottom: 24px;
+  }
+  .btn-add-cart:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(201,169,110,0.3);
+  }
+
+  /* Trust row */
+  .trust-row {
+    display: flex; gap: 20px; flex-wrap: wrap;
+    padding-top: 20px; border-top: 1px solid rgba(201,169,110,0.08);
+  }
+  .trust-item {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 0.75rem; color: rgba(232,224,212,0.5);
+  }
+
+  /* ========== TABS ========== */
+  .tabs-section {
+    max-width: 1200px; margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+  .tabs-section input[type="radio"] { display: none; }
+  .tab-labels {
+    display: flex; gap: 0;
+    border-bottom: 1px solid rgba(201,169,110,0.1);
+    margin-bottom: 32px;
+  }
+  .tab-labels label {
+    padding: 14px 28px;
+    font-size: 0.85rem; font-weight: 500; letter-spacing: 0.5px;
+    color: rgba(232,224,212,0.5);
+    cursor: pointer; transition: all 0.3s ease;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+  }
+  .tab-labels label:hover { color: #e8e0d4; }
+  #tab-dettagli:checked ~ .tab-labels label[for="tab-dettagli"],
+  #tab-spedizioni:checked ~ .tab-labels label[for="tab-spedizioni"],
+  #tab-recensioni:checked ~ .tab-labels label[for="tab-recensioni"] {
+    color: #c9a96e; border-bottom-color: #c9a96e;
+  }
+  .tab-panels { position: relative; }
+  .tab-panel { display: none; }
+  #tab-dettagli:checked ~ .tab-panels .panel-dettagli,
+  #tab-spedizioni:checked ~ .tab-panels .panel-spedizioni,
+  #tab-recensioni:checked ~ .tab-panels .panel-recensioni { display: block; }
+
+  .tab-panel h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem; font-weight: 700; margin-bottom: 16px; color: #e8e0d4;
+  }
+  .tab-panel h3:not(:first-child) { margin-top: 28px; }
+  .tab-panel p {
+    font-size: 0.9rem; font-weight: 300; line-height: 1.8;
+    color: rgba(232,224,212,0.6); margin-bottom: 12px;
+  }
+  .tab-panel ul {
+    list-style: none; margin-bottom: 12px;
+  }
+  .tab-panel ul li {
+    font-size: 0.88rem; font-weight: 300; color: rgba(232,224,212,0.6);
+    padding: 6px 0 6px 20px; position: relative; line-height: 1.6;
+  }
+  .tab-panel ul li::before {
+    content: ''; position: absolute; left: 0; top: 14px;
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #c9a96e; opacity: 0.5;
+  }
+
+  /* Reviews */
+  .reviews-header { margin-bottom: 28px; }
+  .reviews-avg { display: flex; align-items: center; gap: 12px; }
+  .avg-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.4rem; font-weight: 700; color: #c9a96e;
+  }
+  .avg-stars { color: #c9a96e; font-size: 1.1rem; letter-spacing: 2px; }
+  .avg-count { font-size: 0.82rem; color: rgba(232,224,212,0.4); }
+
+  .review-list { display: flex; flex-direction: column; gap: 24px; }
+  .review-item {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(201,169,110,0.08);
+    border-radius: 16px; padding: 24px;
+  }
+  .review-top { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .reviewer-avatar {
+    width: 40px; height: 40px;
+    background: linear-gradient(135deg, #c9a96e, #a67c3d);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    color: #0a0a0a; font-size: 0.75rem; font-weight: 700; flex-shrink: 0;
+  }
+  .reviewer-name { font-weight: 600; font-size: 0.88rem; }
+  .review-stars { color: #c9a96e; font-size: 0.85rem; letter-spacing: 1px; }
+  .review-text {
+    font-size: 0.88rem; font-weight: 300; line-height: 1.7;
+    color: rgba(232,224,212,0.6);
+  }
+
+  /* ========== RELATED PRODUCTS ========== */
+  .related {
+    max-width: 1200px; margin: 0 auto; padding: 0 24px 60px;
+  }
+  .section-header { text-align: center; margin-bottom: 40px; }
+  .section-tag {
+    font-size: 0.8rem; letter-spacing: 4px; text-transform: uppercase;
+    color: #c9a96e; margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 700;
+  }
+  .related-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+  }
+  .related-card {
+    text-decoration: none; color: inherit;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(201,169,110,0.08);
+    border-radius: 16px; overflow: hidden;
+    transition: all 0.4s ease;
+  }
+  .related-card:hover {
+    border-color: rgba(201,169,110,0.25);
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+  }
+  .related-image {
+    aspect-ratio: 3/4; overflow: hidden;
+    background: linear-gradient(135deg, #131313, #1a1a1a);
+  }
+  .related-image img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    transition: transform 0.5s ease;
+  }
+  .related-card:hover .related-image img { transform: scale(1.05); }
+  .related-info { padding: 16px; }
+  .related-info h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.95rem; font-weight: 400; margin-bottom: 6px;
+  }
+  .related-price { color: #c9a96e; font-weight: 600; font-size: 1rem; }
+
+  /* ========== BACK LINK ========== */
+  .back-link {
+    text-align: center; padding: 0 24px 60px;
+  }
+  .back-link a {
+    color: #c9a96e; text-decoration: none;
+    font-size: 0.88rem; font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: opacity 0.3s ease;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .back-link a:hover { opacity: 0.7; }
+
+  /* ========== FOOTER ========== */
+  .footer {
+    border-top: 1px solid rgba(201,169,110,0.08);
+    padding: 60px 24px 32px; max-width: 1200px; margin: 0 auto;
+  }
+  .footer-grid {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px; margin-bottom: 48px;
+  }
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem; font-weight: 700; margin-bottom: 8px;
+  }
+  .footer-tagline { font-size: 0.85rem; color: rgba(232,224,212,0.4); }
+  .footer-address { font-size: 0.8rem; color: rgba(232,224,212,0.4); line-height: 1.7; }
+  .footer-col h4 {
+    font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase;
+    color: #c9a96e; margin-bottom: 16px;
+  }
+  .footer-col a {
+    display: block; color: rgba(232,224,212,0.5);
+    text-decoration: none; font-size: 0.85rem;
+    margin-bottom: 8px; transition: color 0.3s ease;
+  }
+  .footer-col a:hover { color: #c9a96e; }
+  .footer-bottom {
+    border-top: 1px solid rgba(201,169,110,0.06);
+    padding-top: 24px; text-align: center;
+  }
+  .footer-bottom p { font-size: 0.75rem; color: rgba(232,224,212,0.3); }
+  .footer-demo { margin-top: 12px; font-style: italic; }
+
+  /* ========== RESPONSIVE ========== */
+  @media (max-width: 900px) {
+    .product-section { grid-template-columns: 1fr; gap: 40px; }
+    .related-grid { grid-template-columns: repeat(2, 1fr); }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .nav-links { display: none; }
+  }
+  @media (max-width: 600px) {
+    .related-grid { grid-template-columns: 1fr; max-width: 360px; margin: 0 auto; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .thumb-row { gap: 8px; }
+    .thumb { width: 56px; height: 56px; }
+    .tab-labels label { padding: 12px 16px; font-size: 0.78rem; }
+    .trust-row { flex-direction: column; gap: 12px; }
+    .announcement-bar { font-size: 0.7rem; padding: 6px 12px; }
+    .main-nav { top: 28px; padding: 10px 20px; }
+  }
+</style>
+</body>
+</html>
