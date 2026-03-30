@@ -1,5 +1,5 @@
 ---
-title: "Google Business Profile: come ottimizzarlo per essere trovato nel 2025"
+title: "Google Business Profile: come ottimizzarlo per essere trovato nel 2026"
 description: "Un profilo Google Business Profile ottimizzato fa apparire la tua azienda nelle ricerche locali, nelle mappe e nelle risposte AI. Ecco cosa cambiare questa settimana per essere trovato dai clienti nella tua zona."
 date: "2026-03-22"
 tags: ["Google", "SEO Locale", "Visibilità"]

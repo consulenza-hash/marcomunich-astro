@@ -1,12 +1,12 @@
 ---
-title: "Quanto costa un sito web professionale nel 2025"
+title: "Quanto costa un sito web professionale nel 2026"
 description: "Un sito vetrina professionale in Italia costa tra 1.200 e 3.500 euro. Un sito con blog o funzionalità personalizzate sale tra 2.500 e 8.000 euro. Ecco i prezzi reali e da cosa dipendono."
 date: "2026-03-29"
 tags: ["Prezzi", "Web", "Consulenza"]
 readTime: "5 min"
 ---
 
-Un sito web professionale in Italia costa tra 1.200 e 8.000 euro, a seconda del tipo di progetto. Un sito vetrina semplice con home, servizi e contatti parte da 1.200-2.000 euro. Un sito con blog aggiornabile, area riservata o integrazioni personalizzate sale tra 2.500 e 8.000 euro. Questi sono i prezzi reali del mercato italiano nel 2025, non stime ottimistiche.
+Un sito web professionale in Italia costa tra 1.200 e 8.000 euro, a seconda del tipo di progetto. Un sito vetrina semplice con home, servizi e contatti parte da 1.200-2.000 euro. Un sito con blog aggiornabile, area riservata o integrazioni personalizzate sale tra 2.500 e 8.000 euro. Questi sono i prezzi reali del mercato italiano nel 2026, non stime ottimistiche.
 
 ## Da cosa dipende il prezzo di un sito web?
 

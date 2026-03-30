@@ -1,5 +1,5 @@
 ---
-title: "WordPress o sito statico: quale scegliere nel 2025"
+title: "WordPress o sito statico: quale scegliere nel 2026"
 description: "WordPress è il CMS più diffuso al mondo. I siti statici moderni sono più veloci, più sicuri e meno costosi da mantenere. La scelta giusta dipende da quanti contenuti gestisci e con quale frequenza."
 date: "2026-03-26"
 tags: ["WordPress", "Performance", "Web"]
@@ -18,7 +18,7 @@ WordPress ha senso quando hai un volume elevato di contenuti che cambiano spesso
 
 Ogni visita a un sito WordPress genera una sequenza di operazioni: la richiesta arriva al server, il server interroga il database, PHP assembla la pagina, i plugin aggiungono CSS e JavaScript, il browser riceve il tutto e prova a renderizzarlo. Con un hosting lento, tre plugin attivi e immagini non ottimizzate, questa catena produce i 4-6 secondi di caricamento che Google penalizza nei risultati di ricerca. Un sito statico salta tutte queste fasi perché la pagina HTML è già pronta sul server e risponde in 50-100 millisecondi.
 
-## Cosa significa sito statico nel 2025?
+## Cosa significa sito statico nel 2026?
 
 Statico non significa immobile o difficile da aggiornare. Framework moderni come Astro, Next.js o Gatsby generano HTML al momento del deploy: quando si pubblica una modifica, le pagine vengono ricompilate e caricate sul server già pronte. Il CMS per aggiornare i contenuti esiste comunque, Keystatic, Contentful, Sanity, e il risultato per chi gestisce i contenuti è un'interfaccia visuale analoga a WordPress. La differenza è che il contenuto viene trasformato in HTML prima che qualcuno visiti il sito, invece che nel momento della richiesta.
 

@@ -1,16 +1,16 @@
 ---
-title: "SEO nel 2025: cosa è cambiato con l'intelligenza artificiale"
+title: "SEO nel 2026: cosa è cambiato con l'intelligenza artificiale"
 description: "Google non funziona più solo con le keyword. I motori AI hanno introdotto un nuovo tipo di ricerca che premia le aziende con identità chiara e contenuti concreti. Cosa serve oggi per essere trovati."
 date: "2026-03-17"
 tags: ["SEO", "AI", "Visibilità"]
 readTime: "5 min"
 ---
 
-Fare SEO nel 2025 richiede due strategie parallele: una per Google classico, una per i motori AI come ChatGPT e Perplexity. Le aziende che appaiono nelle risposte AI hanno siti con identità dichiarata in modo strutturato, contenuti con affermazioni concrete e dati coerenti su più piattaforme. Chi è assente dai risultati AI di solito manca di tutti e tre questi elementi.
+Fare SEO nel 2026 richiede due strategie parallele: una per Google classico, una per i motori AI come ChatGPT e Perplexity. Le aziende che appaiono nelle risposte AI hanno siti con identità dichiarata in modo strutturato, contenuti con affermazioni concrete e dati coerenti su più piattaforme. Chi è assente dai risultati AI di solito manca di tutti e tre questi elementi.
 
 ## Quali sono i due tipi di ricerca oggi?
 
-![SEO nel 2025 con l'intelligenza artificiale](/images/dev-blog/seo-nel-2025.png)
+![SEO nel 2026 con l'intelligenza artificiale](/images/dev-blog/seo-nel-2025.png)
 
 Quando un potenziale cliente cerca un servizio, usa almeno due canali che funzionano in modo opposto.
 
@@ -55,5 +55,5 @@ A: I modelli AI aggiornano la loro base di conoscenza con frequenza variabile. D
 **Q: Il file llms.txt è obbligatorio?**
 A: Non è uno standard ufficiale, ma è una convenzione emergente che aiuta i modelli AI a capire chi sei senza interpretare testo ambiguo. I siti che ce l'hanno tendono a essere citati con maggiore precisione.
 
-**Q: La SEO tradizionale è ancora utile nel 2025?**
+**Q: La SEO tradizionale è ancora utile nel 2026?**
 A: Sì. Google classico continua a gestire la maggior parte delle ricerche transazionali. Le due ottimizzazioni si sovrappongono in gran parte: dati strutturati, contenuti concreti e coerenza delle informazioni aiutano sia Google che i motori AI.
