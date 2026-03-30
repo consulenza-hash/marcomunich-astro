@@ -10,7 +10,7 @@ Se aggiorni i contenuti del sito più di una volta alla settimana e vuoi farlo i
 
 ## Quando ha senso usare WordPress?
 
-![WordPress o sito statico](/images/dev-blog/wordpress-vs-sito-statico.jpg)
+![WordPress o sito statico](/images/dev-blog/wordpress-vs-sito-statico.png)
 
 WordPress ha senso quando hai un volume elevato di contenuti che cambiano spesso e vuoi gestirli in autonomia. Un giornale online con venti articoli al giorno, un portale con centinaia di prodotti aggiornati settimanalmente, un sito con una redazione che pubblica ogni giorno: in questi casi la flessibilità di WordPress giustifica la complessità tecnica che porta con sé. Per la maggior parte delle aziende italiane con un sito vetrina da 5-10 pagine o un blog da aggiornare ogni tanto, WordPress introduce complessità inutile e rischi di sicurezza che si potevano evitare.
 

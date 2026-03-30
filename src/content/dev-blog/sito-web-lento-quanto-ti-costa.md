@@ -10,7 +10,7 @@ Google ha pubblicato un dato che vale la pena stampare e attaccare al muro: ogni
 
 ## Perché i siti lenti esistono ancora?
 
-![Sito web lento: quanto costa in clienti persi](/images/dev-blog/sito-web-lento.jpg)
+![Sito web lento: quanto costa in clienti persi](/images/dev-blog/sito-web-lento.png)
 
 La causa più comune è tecnica ma evitabile: siti costruiti su WordPress con dieci plugin attivi, immagini da 3MB non compresse, JavaScript che blocca il rendering, hosting condiviso con risorse limitate.
 

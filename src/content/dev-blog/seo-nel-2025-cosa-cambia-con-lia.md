@@ -10,7 +10,7 @@ Fare SEO nel 2025 richiede due strategie parallele: una per Google classico, una
 
 ## Quali sono i due tipi di ricerca oggi?
 
-![SEO nel 2025 con l'intelligenza artificiale](/images/dev-blog/seo-nel-2025.jpg)
+![SEO nel 2025 con l'intelligenza artificiale](/images/dev-blog/seo-nel-2025.png)
 
 Quando un potenziale cliente cerca un servizio, usa almeno due canali che funzionano in modo opposto.
 

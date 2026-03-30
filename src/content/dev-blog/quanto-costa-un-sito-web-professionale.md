@@ -10,7 +10,7 @@ Un sito web professionale in Italia costa tra 1.200 e 8.000 euro, a seconda del 
 
 ## Da cosa dipende il prezzo di un sito web?
 
-![Quanto costa un sito web professionale](/images/dev-blog/quanto-costa-sito-web.jpg)
+![Quanto costa un sito web professionale](/images/dev-blog/quanto-costa-sito-web.png)
 
 Il prezzo dipende principalmente da tre variabili: la tecnologia usata, il tempo necessario per costruirlo e l'esperienza di chi lo realizza.
 
