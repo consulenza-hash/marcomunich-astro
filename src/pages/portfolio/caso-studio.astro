@@ -1,0 +1,543 @@
+---
+export const prerender = true;
+---
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Caso Studio — Dal Riferimento al Risultato | Erba Pura</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #1c1c1c;
+      --ink-soft: #4a4a4a;
+      --warm-gray: #8a8480;
+      --cream: #f7f4ef;
+      --cream-dark: #ede9e1;
+      --sand: #c8b89a;
+      --sage: #7a9e7e;
+      --sage-pale: #eef3ef;
+      --white: #ffffff;
+      --accent: #2a2a2a;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--cream); color: var(--ink); overflow-x: hidden; }
+
+    /* Back */
+    .back-btn {
+      position: fixed; top: 1rem; left: 1rem; z-index: 1000;
+      background: rgba(255,255,255,0.92); backdrop-filter: blur(8px);
+      color: var(--ink); text-decoration: none;
+      padding: 0.5rem 1rem; border-radius: 50px;
+      font-size: 0.8rem; font-weight: 500;
+      border: 1px solid rgba(0,0,0,0.1);
+      display: flex; align-items: center; gap: 0.4rem;
+      transition: all 0.2s;
+    }
+    .back-btn:hover { background: var(--ink); color: var(--white); }
+
+    /* Hero */
+    .hero {
+      min-height: 70vh;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 5rem 5rem 4rem;
+      background: var(--ink);
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url('/images/portfolio/erba-pura-lifestyle.jpg') center/cover no-repeat;
+      opacity: 0.25;
+    }
+    .hero-label {
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--sand); margin-bottom: 1.5rem; position: relative;
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .hero-label::before { content: ''; display: block; width: 40px; height: 1px; background: var(--sand); }
+    .hero h1 {
+      font-family: 'Libre Baskerville', serif;
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 400; line-height: 1.1;
+      color: var(--white); position: relative;
+      max-width: 800px; margin-bottom: 1.5rem;
+    }
+    .hero h1 em { font-style: italic; color: var(--sand); }
+    .hero-meta { display: flex; gap: 3rem; position: relative; }
+    .meta-item { color: rgba(255,255,255,0.5); font-size: 0.8rem; }
+    .meta-item strong { display: block; color: rgba(255,255,255,0.85); font-weight: 500; margin-bottom: 0.2rem; font-size: 0.85rem; }
+
+    /* Container */
+    .container { max-width: 900px; margin: 0 auto; padding: 0 3rem; }
+
+    /* Brief section */
+    .brief-section { padding: 6rem 0; }
+    .brief-quote {
+      border-left: 3px solid var(--sand);
+      padding: 2rem 2.5rem;
+      background: var(--white);
+      border-radius: 0 16px 16px 0;
+      margin-bottom: 3rem;
+    }
+    .brief-quote blockquote {
+      font-family: 'Libre Baskerville', serif;
+      font-size: clamp(1.1rem, 2vw, 1.4rem);
+      font-style: italic; line-height: 1.7;
+      color: var(--ink); margin-bottom: 1rem;
+    }
+    .brief-quote cite { font-size: 0.82rem; color: var(--warm-gray); font-style: normal; }
+    .brief-quote cite strong { color: var(--ink); }
+    .brief-intro { font-size: 1rem; line-height: 1.8; color: var(--ink-soft); }
+
+    /* Section label */
+    .step-label {
+      display: flex; align-items: center; gap: 1rem;
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--warm-gray); margin-bottom: 2rem;
+    }
+    .step-num {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--ink); color: var(--white);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.7rem; font-weight: 700; flex-shrink: 0;
+    }
+
+    /* Inspiration section */
+    .inspiration-section { padding: 5rem 0; background: var(--cream-dark); }
+    .inspiration-section .container { }
+    .insp-card {
+      background: var(--white); border-radius: 20px; overflow: hidden;
+      display: grid; grid-template-columns: 1fr 1fr;
+      box-shadow: 0 4px 30px rgba(0,0,0,0.08);
+      margin-bottom: 3rem;
+    }
+    .insp-site {
+      padding: 2.5rem;
+      border-right: 1px solid var(--cream-dark);
+    }
+    .site-tag { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--warm-gray); margin-bottom: 1rem; }
+    .site-name { font-family: 'Libre Baskerville', serif; font-size: 1.8rem; font-weight: 400; color: var(--ink); margin-bottom: 0.3rem; }
+    .site-url { font-size: 0.78rem; color: var(--warm-gray); margin-bottom: 1.5rem; font-family: monospace; }
+    .site-desc { font-size: 0.88rem; line-height: 1.7; color: var(--ink-soft); margin-bottom: 1.5rem; }
+    .site-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .pill { padding: 0.3rem 0.8rem; border-radius: 50px; font-size: 0.72rem; font-weight: 500; border: 1px solid rgba(0,0,0,0.12); color: var(--ink-soft); }
+
+    .insp-quote {
+      padding: 2.5rem;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .insp-quote p {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 1rem; font-style: italic; line-height: 1.7;
+      color: var(--ink); margin-bottom: 1.5rem;
+    }
+    .insp-quote .client-name { font-size: 0.8rem; color: var(--warm-gray); }
+
+    /* Extracted elements */
+    .extracted-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 2rem; }
+    .extracted-card { background: var(--white); border-radius: 16px; padding: 1.5rem; }
+    .extracted-title { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--warm-gray); margin-bottom: 1rem; }
+    .palette { display: flex; gap: 0.4rem; margin-bottom: 0.8rem; }
+    .swatch { width: 32px; height: 32px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.06); }
+    .palette-desc { font-size: 0.8rem; color: var(--ink-soft); line-height: 1.5; }
+    .typo-sample { font-family: 'Libre Baskerville', serif; font-size: 1.5rem; font-weight: 400; color: var(--ink); margin-bottom: 0.3rem; }
+    .typo-sub { font-size: 0.8rem; color: var(--ink-soft); line-height: 1.5; }
+    .layout-lines { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 0.8rem; }
+    .layout-line { height: 3px; border-radius: 2px; background: var(--cream-dark); }
+    .layout-line.wide { width: 100%; }
+    .layout-line.medium { width: 75%; }
+    .layout-line.short { width: 50%; }
+    .layout-line.image { height: 48px; background: var(--cream-dark); border-radius: 6px; }
+    .layout-desc { font-size: 0.8rem; color: var(--ink-soft); line-height: 1.5; }
+
+    /* Translation section */
+    .translation-section { padding: 5rem 0; }
+    .translation-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 2rem; }
+    .trans-col h3 {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 1.1rem; margin-bottom: 1.2rem;
+      padding-bottom: 0.8rem; border-bottom: 1px solid var(--cream-dark);
+    }
+    .trans-col h3 span { color: var(--warm-gray); font-size: 0.72rem; font-weight: 400; font-family: 'Inter', sans-serif; letter-spacing: 0.08em; text-transform: uppercase; display: block; margin-bottom: 0.3rem; }
+    .trans-list { list-style: none; }
+    .trans-list li {
+      display: flex; gap: 0.8rem; padding: 0.8rem 0;
+      border-bottom: 1px solid rgba(0,0,0,0.04);
+      font-size: 0.85rem; line-height: 1.5; color: var(--ink-soft);
+      align-items: flex-start;
+    }
+    .trans-list li::before { font-size: 1rem; flex-shrink: 0; margin-top: 0.1rem; }
+    .trans-list.kept li::before { content: '✓'; color: var(--sage); }
+    .trans-list.changed li::before { content: '↗'; color: var(--sand); }
+
+    /* Result section */
+    .result-section { padding: 5rem 0; background: var(--cream-dark); }
+    .result-label { margin-bottom: 3rem; }
+
+    /* Mini-site demo */
+    .demo-frame {
+      background: var(--white);
+      border-radius: 20px; overflow: hidden;
+      box-shadow: 0 8px 50px rgba(0,0,0,0.12);
+    }
+    .demo-bar {
+      background: #f0eeea; padding: 0.7rem 1rem;
+      display: flex; align-items: center; gap: 0.6rem;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+    }
+    .demo-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .demo-dot.red { background: #ff5f57; }
+    .demo-dot.yellow { background: #febc2e; }
+    .demo-dot.green { background: #28c840; }
+    .demo-url { flex: 1; text-align: center; font-size: 0.72rem; color: var(--warm-gray); font-family: monospace; background: var(--white); padding: 0.2rem 0.8rem; border-radius: 4px; max-width: 240px; margin: 0 auto; }
+
+    /* Erba Pura mini-site */
+    .ep-nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.2rem 3rem;
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+    }
+    .ep-logo { font-family: 'Libre Baskerville', serif; font-size: 1.1rem; letter-spacing: 0.12em; color: var(--ink); }
+    .ep-nav-links { display: flex; gap: 2rem; font-size: 0.75rem; color: var(--warm-gray); letter-spacing: 0.06em; }
+    .ep-nav-cta { font-size: 0.72rem; background: var(--ink); color: var(--white); padding: 0.4rem 1rem; border-radius: 4px; }
+
+    .ep-hero {
+      display: grid; grid-template-columns: 1fr 1fr;
+      min-height: 460px;
+    }
+    .ep-hero-content {
+      padding: 4rem 3rem;
+      display: flex; flex-direction: column; justify-content: center;
+      background: var(--cream);
+    }
+    .ep-tag { font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--warm-gray); margin-bottom: 1.5rem; }
+    .ep-h1 { font-family: 'Libre Baskerville', serif; font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 400; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+    .ep-h1 em { font-style: italic; }
+    .ep-sub { font-size: 0.82rem; line-height: 1.8; color: var(--ink-soft); margin-bottom: 1.5rem; max-width: 340px; }
+    .ep-cta { display: inline-block; background: var(--ink); color: var(--white); padding: 0.7rem 1.6rem; font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; border-radius: 4px; text-decoration: none; }
+
+    .ep-hero-image { overflow: hidden; }
+    .ep-hero-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .ep-products { padding: 3rem; background: var(--white); }
+    .ep-products-title { font-family: 'Libre Baskerville', serif; font-size: 1.4rem; font-weight: 400; color: var(--ink); margin-bottom: 0.4rem; }
+    .ep-products-sub { font-size: 0.8rem; color: var(--warm-gray); margin-bottom: 2rem; }
+    .ep-product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .ep-product { }
+    .ep-product-img { aspect-ratio: 1; background: var(--cream); border-radius: 12px; overflow: hidden; margin-bottom: 0.8rem; }
+    .ep-product-img img { width: 100%; height: 100%; object-fit: cover; }
+    .ep-product-name { font-size: 0.82rem; font-weight: 600; color: var(--ink); margin-bottom: 0.2rem; }
+    .ep-product-desc { font-size: 0.73rem; color: var(--warm-gray); line-height: 1.5; margin-bottom: 0.5rem; }
+    .ep-product-price { font-family: 'Libre Baskerville', serif; font-size: 1rem; color: var(--ink); }
+
+    .ep-manifesto { padding: 3rem; background: var(--ink); color: var(--white); display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+    .ep-manifesto-text { }
+    .ep-manifesto-label { font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--sand); margin-bottom: 1rem; }
+    .ep-manifesto-title { font-family: 'Libre Baskerville', serif; font-size: 1.6rem; font-weight: 400; line-height: 1.3; margin-bottom: 1rem; }
+    .ep-manifesto-title em { font-style: italic; color: var(--sand); }
+    .ep-manifesto p { font-size: 0.82rem; line-height: 1.8; color: rgba(255,255,255,0.65); }
+    .ep-founder { }
+    .ep-founder img { width: 100%; border-radius: 12px; display: block; aspect-ratio: 4/5; object-fit: cover; object-position: top; }
+
+    /* Testimonial */
+    .testimonial-section { padding: 5rem 0; }
+    .testimonial-box {
+      background: var(--sage-pale); border-radius: 20px; padding: 3rem;
+      display: grid; grid-template-columns: auto 1fr; gap: 2rem; align-items: start;
+    }
+    .testimonial-avatar {
+      width: 64px; height: 64px; border-radius: 50%; overflow: hidden;
+    }
+    .testimonial-avatar img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+    .testimonial-quote {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 1.1rem; font-style: italic; line-height: 1.7;
+      color: var(--ink); margin-bottom: 1rem;
+    }
+    .testimonial-name { font-size: 0.82rem; color: var(--warm-gray); }
+    .testimonial-name strong { color: var(--ink); }
+
+    /* CTA */
+    .cta-section { padding: 5rem 0; text-align: center; }
+    .cta-section h2 { font-family: 'Libre Baskerville', serif; font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 400; color: var(--ink); margin-bottom: 1rem; }
+    .cta-section h2 em { font-style: italic; }
+    .cta-section p { font-size: 0.95rem; color: var(--ink-soft); max-width: 480px; margin: 0 auto 2rem; line-height: 1.7; }
+    .btn-primary { display: inline-block; background: var(--ink); color: var(--white); padding: 1rem 2.5rem; border-radius: 8px; text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: background 0.2s; }
+    .btn-primary:hover { background: #333; }
+    .btn-outline { display: inline-block; border: 1.5px solid var(--ink); color: var(--ink); padding: 1rem 2.5rem; border-radius: 8px; text-decoration: none; font-size: 0.9rem; font-weight: 400; transition: all 0.2s; margin-left: 1rem; }
+    .btn-outline:hover { background: var(--cream-dark); }
+
+    /* Divider */
+    .section-divider { border: none; border-top: 1px solid rgba(0,0,0,0.08); margin: 0; }
+
+    /* Fade */
+    .fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .hero { padding: 5rem 1.5rem 3rem; }
+      .container { padding: 0 1.5rem; }
+      .insp-card { grid-template-columns: 1fr; }
+      .insp-site { border-right: none; border-bottom: 1px solid var(--cream-dark); }
+      .extracted-grid { grid-template-columns: 1fr; }
+      .translation-grid { grid-template-columns: 1fr; }
+      .ep-nav-links { display: none; }
+      .ep-hero { grid-template-columns: 1fr; }
+      .ep-hero-image { height: 260px; }
+      .ep-product-grid { grid-template-columns: repeat(2, 1fr); }
+      .ep-manifesto { grid-template-columns: 1fr; gap: 1.5rem; }
+      .ep-founder { display: none; }
+      .testimonial-box { grid-template-columns: 1fr; }
+      .hero-meta { flex-wrap: wrap; gap: 1.5rem; }
+      .cta-section .btn-outline { margin-left: 0; margin-top: 0.8rem; display: block; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="/dev/portfolio" class="back-btn">← Torna al Portfolio</a>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-label">Caso Studio</div>
+    <h1>Dal riferimento<br />al <em>risultato</em></h1>
+    <div class="hero-meta">
+      <div class="meta-item"><strong>Cliente</strong>Erba Pura — Bologna</div>
+      <div class="meta-item"><strong>Settore</strong>Cosmesi naturale</div>
+      <div class="meta-item"><strong>Ispirazione</strong>aesop.com</div>
+      <div class="meta-item"><strong>Durata</strong>3 settimane</div>
+    </div>
+  </section>
+
+  <!-- Brief -->
+  <section class="brief-section">
+    <div class="container">
+      <div class="brief-quote fade-in">
+        <blockquote>"Ho visto il sito di Aesop e mi sono innamorata. Quella cura nei testi, la palette neutra, il senso di lusso discreto senza fronzoli. Voglio quella stessa sensazione per Erba Pura — ma deve essere nostra, italiana, con la nostra storia."</blockquote>
+        <cite><strong>Elisa Marchetti</strong>, fondatrice di Erba Pura</cite>
+      </div>
+      <p class="brief-intro fade-in">Elisa arriva con le idee chiare su un punto: l'estetica che vuole. Non sa ancora esattamente come traslarla per il suo brand. Il lavoro inizia dall'analisi del sito di riferimento — non per copiarlo, ma per capire cosa lo rende efficace e come quegli stessi principi si possono applicare a una storia diversa.</p>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- Inspiration -->
+  <section class="inspiration-section">
+    <div class="container">
+      <div class="step-label fade-in"><span class="step-num">1</span>Il Riferimento</div>
+
+      <div class="insp-card fade-in">
+        <div class="insp-site">
+          <div class="site-tag">Sito di Ispirazione</div>
+          <div class="site-name">Aesop</div>
+          <div class="site-url">aesop.com</div>
+          <p class="site-desc">Brand australiano di cura del corpo e della pelle fondato nel 1987. Il sito è costruito su un'estetica deliberatamente anti-commerciale: testo lungo e curato, fotografie che mostrano texture e materiali, nessuna promozione aggressiva. La fiducia si costruisce attraverso la profondità dei contenuti, non attraverso le offerte.</p>
+          <div class="site-pills">
+            <span class="pill">Palette neutra</span>
+            <span class="pill">Tipografia serif</span>
+            <span class="pill">Testo autorevole</span>
+            <span class="pill">Fotografia materica</span>
+            <span class="pill">No discount/urgenza</span>
+            <span class="pill">Gerarchia pulita</span>
+          </div>
+        </div>
+        <div class="insp-quote">
+          <p>"Non voglio sembrare il solito e-commerce con banner 'Sconto 30%'. Voglio che chi arriva sul sito senta che sta per scoprire qualcosa di valore."</p>
+          <span class="client-name">— Elisa Marchetti</span>
+        </div>
+      </div>
+
+      <div class="step-label fade-in"><span class="step-num">2</span>L'Analisi</div>
+      <div class="extracted-grid">
+        <div class="extracted-card fade-in">
+          <div class="extracted-title">Palette estratta</div>
+          <div class="palette">
+            <div class="swatch" style="background:#f2ede6"></div>
+            <div class="swatch" style="background:#d4c5b0"></div>
+            <div class="swatch" style="background:#8a7d6e"></div>
+            <div class="swatch" style="background:#2a2520"></div>
+            <div class="swatch" style="background:#6b8c6b"></div>
+          </div>
+          <p class="palette-desc">Creme caldi, sabbia, terra scura. Un verde botanico come accento. Zero colori artificiali o saturi — tutto rimanda alla natura e all'artigianalità.</p>
+        </div>
+        <div class="extracted-card fade-in" style="transition-delay: 0.1s">
+          <div class="extracted-title">Sistema tipografico</div>
+          <div class="typo-sample">Erba Pura</div>
+          <p class="typo-sub">Libre Baskerville per titoli e copy importante: eleganza senza ostentazione. Inter per etichette, prezzi e UI: pulizia tecnica. Nessun font display decorativo.</p>
+        </div>
+        <div class="extracted-card fade-in" style="transition-delay: 0.2s">
+          <div class="extracted-title">Pattern di layout</div>
+          <div class="layout-lines">
+            <div class="layout-line image"></div>
+            <div class="layout-line wide" style="background:#c8b89a; height:6px; margin-top:0.6rem;"></div>
+            <div class="layout-line medium"></div>
+            <div class="layout-line short"></div>
+          </div>
+          <p class="layout-desc">Immagine grande in primo piano, titolo serif sotto, testo breve. Prodotti senza sfondo bianco forzato — sul loro materiale naturale. Molto spazio bianco.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- Translation -->
+  <section class="translation-section">
+    <div class="container">
+      <div class="step-label fade-in"><span class="step-num">3</span>La Traduzione</div>
+      <div class="translation-grid">
+        <div class="trans-col fade-in">
+          <h3><span>Cosa rimane</span>L'estetica, adattata</h3>
+          <ul class="trans-list kept">
+            <li>Palette neutra calda — crema, sabbia, verde botanico</li>
+            <li>Tipografia mista serif + sans per creare gerarchia senza rigidità</li>
+            <li>Fotografia che mostra ingredienti e texture, non solo il prodotto confezionato</li>
+            <li>Testo lungo nella pagina "Chi siamo" — la storia conta quanto il prodotto</li>
+            <li>Nessun elemento di urgenza artificiale (countdown, "ultimi pezzi")</li>
+          </ul>
+        </div>
+        <div class="trans-col fade-in" style="transition-delay: 0.15s">
+          <h3><span>Cosa cambia</span>L'identità di Erba Pura</h3>
+          <ul class="trans-list changed">
+            <li>Tono italiano invece di internazionale distaccato — più calore, più racconto personale</li>
+            <li>La fondatrice è presente nella homepage — Aesop è anonimo, Erba Pura ha un volto</li>
+            <li>Menzione esplicita dell'origine bolognese e degli ingredienti locali</li>
+            <li>Sezione ingredienti con spiegazioni — il pubblico italiano vuole capire cosa usa</li>
+            <li>Prezzi sempre visibili — niente "aggiungi al carrello per vedere il prezzo"</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Result -->
+  <section class="result-section">
+    <div class="container">
+      <div class="step-label result-label fade-in"><span class="step-num">4</span>Il Risultato</div>
+    </div>
+
+    <div style="padding: 0 3rem; max-width: 1100px; margin: 0 auto;">
+      <div class="demo-frame fade-in">
+        <div class="demo-bar">
+          <div class="demo-dot red"></div>
+          <div class="demo-dot yellow"></div>
+          <div class="demo-dot green"></div>
+          <div class="demo-url">erbapura.it</div>
+        </div>
+
+        <!-- Nav -->
+        <div class="ep-nav">
+          <div class="ep-logo">ERBA PURA</div>
+          <div class="ep-nav-links">
+            <span>Prodotti</span>
+            <span>Ingredienti</span>
+            <span>La nostra storia</span>
+            <span>Rivenditori</span>
+          </div>
+          <div class="ep-nav-cta">Acquista</div>
+        </div>
+
+        <!-- Hero -->
+        <div class="ep-hero">
+          <div class="ep-hero-content">
+            <div class="ep-tag">Cosmesi naturale · Bologna, dal 2018</div>
+            <h2 class="ep-h1">Ingredienti che<br /><em>conosci</em>,<br />sulla pelle che ami</h2>
+            <p class="ep-sub">Ogni prodotto Erba Pura nasce da ingredienti raccolti in Italia, trasformati a mano nel nostro laboratorio. Niente di superfluo. Tutto di necessario.</p>
+            <a href="#" class="ep-cta">Scopri i prodotti</a>
+          </div>
+          <div class="ep-hero-image">
+            <img src="/images/portfolio/erba-pura-lifestyle.jpg" alt="Erba Pura" />
+          </div>
+        </div>
+
+        <!-- Products -->
+        <div class="ep-products">
+          <h3 class="ep-products-title">I nostri bestseller</h3>
+          <p class="ep-products-sub">Formulati senza siliconi, parabeni o profumi sintetici.</p>
+          <div class="ep-product-grid">
+            <div class="ep-product">
+              <div class="ep-product-img">
+                <img src="/images/portfolio/erba-pura-prodotti.jpg" alt="Siero Botanico" style="object-position: left top;" />
+              </div>
+              <div class="ep-product-name">Siero Botanico</div>
+              <div class="ep-product-desc">Rosa canina, calendula, vitamina C naturale</div>
+              <div class="ep-product-price">€42</div>
+            </div>
+            <div class="ep-product">
+              <div class="ep-product-img">
+                <img src="/images/portfolio/erba-pura-prodotti.jpg" alt="Crema Nutriente" style="object-position: center;" />
+              </div>
+              <div class="ep-product-name">Crema Nutriente</div>
+              <div class="ep-product-desc">Burro di karitè biologico, olio di mandorle</div>
+              <div class="ep-product-price">€38</div>
+            </div>
+            <div class="ep-product">
+              <div class="ep-product-img">
+                <img src="/images/portfolio/erba-pura-prodotti.jpg" alt="Olio Rigenerante" style="object-position: right top;" />
+              </div>
+              <div class="ep-product-name">Olio Rigenerante</div>
+              <div class="ep-product-desc">Argan marocchino, rosa damascena, jojoba</div>
+              <div class="ep-product-price">€56</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Manifesto -->
+        <div class="ep-manifesto">
+          <div class="ep-manifesto-text">
+            <div class="ep-manifesto-label">La nostra storia</div>
+            <h3 class="ep-manifesto-title">Nata da una<br /><em>necessità vera</em></h3>
+            <p>Ho iniziato a formulare in cucina nel 2018 dopo anni di reazioni ai cosmetici industriali. Cercavo ingredienti che potessi pronunciare, prodotti che potessi capire. Quello che ho trovato è diventato Erba Pura — e oggi lo uso io ogni giorno, prima di chiunque altro.</p>
+          </div>
+          <div class="ep-founder">
+            <img src="/images/portfolio/erba-pura-founder.jpg" alt="Elisa Marchetti, fondatrice" />
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonial -->
+  <section class="testimonial-section">
+    <div class="container">
+      <div class="testimonial-box fade-in">
+        <div class="testimonial-avatar">
+          <img src="/images/portfolio/erba-pura-founder.jpg" alt="Elisa Marchetti" />
+        </div>
+        <div>
+          <p class="testimonial-quote">"Ho mostrato il sito ai miei clienti abituali senza dire nulla. Tutti hanno detto che sembrava 'più serio'. Una di loro mi ha chiesto se avevo alzato i prezzi — aveva l'impressione che i prodotti valessero di più. Questo mi ha detto che il lavoro era andato nella direzione giusta."</p>
+          <div class="testimonial-name"><strong>Elisa Marchetti</strong> — Fondatrice, Erba Pura · Bologna</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="container">
+      <h2 class="fade-in">Hai un sito che ti <em>ispira</em>?</h2>
+      <p class="fade-in">Mandami il link. Analizzo cosa lo rende efficace e costruiamo qualcosa di simile — ma completamente tuo.</p>
+      <div class="fade-in">
+        <a href="/dev/contatti" class="btn-primary">Parliamone</a>
+        <a href="/dev/portfolio" class="btn-outline">Torna al Portfolio</a>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
