@@ -166,10 +166,10 @@
     .risultato-intro { max-width: 620px; margin-bottom: 2.5rem; }
     .risultato-intro h3 { font-family: var(--serif); font-size: 1.8rem; font-weight: 300; margin-bottom: 0.8rem; }
     .risultato-intro p { font-size: 0.9rem; line-height: 1.8; color: var(--muted); }
-    .risultato-grid { display: grid; grid-template-columns: 1fr 1.4fr; grid-template-rows: auto auto; gap: 1rem; }
+    .risultato-grid { display: grid; grid-template-columns: 1fr 1.4fr; grid-template-rows: 280px 280px; gap: 1rem; }
     .risultato-item { overflow: hidden; position: relative; }
     .risultato-item.tall { grid-row: span 2; }
-    .risultato-item img { width: 100%; height: 100%; object-fit: cover; min-height: 260px; display: block; }
+    .risultato-item img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
     .risultato-caption {
       position: absolute; bottom: 0; left: 0; right: 0;
       background: linear-gradient(to top, rgba(10,10,10,0.8), transparent);
