@@ -160,57 +160,58 @@
     .demo-dot.green { background: #28c840; }
     .demo-url { font-size: 0.72rem; color: #8a8a8a; font-family: var(--sans); margin-left: 0.5rem; }
 
-    /* ── Chiara Martini mini-site ── */
+    /* ── Chiara Martini mini-site — BOLD personal brand ── */
     .cm-site { background: #fff; font-family: var(--sans); }
 
-    /* Nav */
-    .cm-nav { display: flex; justify-content: space-between; align-items: center; padding: 1.4rem 3rem; border-bottom: 1px solid #f0ede8; }
-    .cm-logo { font-family: var(--serif); font-size: 1rem; letter-spacing: 0.06em; color: var(--ink); }
-    .cm-nav-links { display: flex; gap: 2rem; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: #8a8078; }
-    .cm-nav-cta { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; background: var(--terra); color: white; padding: 0.5rem 1.4rem; }
+    /* Nav — bold uppercase sans */
+    .cm-nav { display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 2.5rem; background: white; border-bottom: 2px solid var(--ink); }
+    .cm-logo { font-family: var(--sans); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink); }
+    .cm-nav-links { display: flex; gap: 2rem; font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: #8a8078; }
+    .cm-nav-cta { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; background: var(--terra); color: white; padding: 0.5rem 1.4rem; font-weight: 600; }
 
-    /* Hero */
-    .cm-hero { display: grid; grid-template-columns: 1fr 1fr; min-height: 420px; }
-    .cm-hero-content { padding: 4rem 3rem; display: flex; flex-direction: column; justify-content: center; background: #faf8f5; }
-    .cm-hero-eyebrow { font-size: 0.62rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--terra); margin-bottom: 1.2rem; }
-    .cm-hero h2 { font-family: var(--serif); font-size: 2rem; font-weight: 400; line-height: 1.25; color: var(--ink); margin-bottom: 1.2rem; }
-    .cm-hero h2 em { font-style: italic; color: var(--terra); }
-    .cm-hero-sub { font-size: 0.83rem; line-height: 1.9; color: #6a6058; margin-bottom: 2rem; max-width: 320px; }
-    .cm-hero-cta { display: inline-block; font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; background: var(--ink); color: white; padding: 0.75rem 2rem; align-self: flex-start; }
-    .cm-hero-img { overflow: hidden; }
-    .cm-hero-img img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+    /* Hero — dark full-bleed, portrait faded right, big headline left */
+    .cm-hero { background: var(--ink); position: relative; overflow: hidden; padding: 3.5rem 2.5rem 3rem; min-height: 340px; display: flex; align-items: flex-end; }
+    .cm-hero-bg-img { position: absolute; top: 0; right: 0; width: 44%; height: 100%; object-fit: cover; object-position: top; opacity: 0.28; display: block; }
+    .cm-hero-content { position: relative; max-width: 54%; }
+    .cm-hero-eyebrow { font-size: 0.6rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--terra); margin-bottom: 1rem; display: block; }
+    .cm-hero h2 { font-family: var(--serif); font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 700; line-height: 1.05; color: white; margin-bottom: 1.5rem; }
+    .cm-hero-cta { display: inline-block; font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase; background: var(--terra); color: white; padding: 0.7rem 1.8rem; font-weight: 600; }
 
-    /* About strip */
-    .cm-about { background: var(--ink); padding: 3rem; display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; align-items: center; }
-    .cm-about-label { font-size: 0.6rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--terra); margin-bottom: 0.8rem; }
-    .cm-about-name { font-family: var(--serif); font-size: 1.6rem; font-weight: 400; color: var(--cream); font-style: italic; }
-    .cm-about-title { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(250,248,245,0.4); margin-top: 0.3rem; }
-    .cm-about-bio { font-size: 0.83rem; line-height: 2; color: rgba(250,248,245,0.55); }
+    /* Services — numbered horizontal rows (no cards) */
+    .cm-servizi { background: white; padding: 2.5rem; }
+    .cm-servizi-label { font-size: 0.6rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--terra); margin-bottom: 1.5rem; display: block; }
+    .cm-row { display: grid; grid-template-columns: 64px 1fr 1fr; gap: 1.5rem; padding: 1.5rem 0; border-bottom: 1px solid rgba(0,0,0,0.07); align-items: start; }
+    .cm-row:first-of-type { border-top: 1px solid rgba(0,0,0,0.07); }
+    .cm-row-num { font-family: var(--serif); font-size: 2.8rem; font-weight: 700; color: var(--terra); opacity: 0.12; line-height: 1; }
+    .cm-row-title { font-family: var(--serif); font-size: 1.05rem; color: var(--ink); padding-top: 0.3rem; }
+    .cm-row-desc { font-size: 0.78rem; line-height: 1.8; color: #6a6058; }
 
-    /* Servizi */
-    .cm-servizi { padding: 3rem; background: var(--cream); }
-    .cm-servizi-label { font-size: 0.6rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--terra); margin-bottom: 2rem; }
-    .cm-servizi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-    .cm-card { border: 1px solid #e8e3dc; padding: 1.8rem 1.5rem; background: white; }
-    .cm-card-num { font-family: var(--serif); font-size: 1.8rem; font-weight: 400; color: var(--terra); opacity: 0.3; margin-bottom: 0.8rem; line-height: 1; }
-    .cm-card-title { font-family: var(--serif); font-size: 1rem; font-weight: 400; color: var(--ink); margin-bottom: 0.6rem; font-style: italic; }
-    .cm-card-desc { font-size: 0.78rem; line-height: 1.8; color: #6a6058; }
+    /* About — photo left panel, dark text right */
+    .cm-about { display: grid; grid-template-columns: 1fr 1fr; }
+    .cm-about-img { overflow: hidden; min-height: 280px; }
+    .cm-about-img img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+    .cm-about-text { padding: 2.5rem; background: var(--ink); display: flex; flex-direction: column; justify-content: center; }
+    .cm-about-label { font-size: 0.58rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--terra); margin-bottom: 0.8rem; }
+    .cm-about-name { font-family: var(--serif); font-size: 1.4rem; font-weight: 400; color: white; font-style: italic; margin-bottom: 0.3rem; }
+    .cm-about-title { font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(250,248,245,0.3); margin-bottom: 1.2rem; }
+    .cm-about-bio { font-size: 0.78rem; line-height: 1.9; color: rgba(250,248,245,0.5); }
 
-    /* Testimonianza */
-    .cm-testi { background: var(--terra); padding: 3rem; text-align: center; }
-    .cm-testi-quote { font-family: var(--serif); font-size: 1.3rem; font-weight: 400; color: white; font-style: italic; line-height: 1.6; max-width: 560px; margin: 0 auto 1rem; }
-    .cm-testi-author { font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.65); }
+    /* Testimonial — cream, big quotemark, no strip */
+    .cm-testi { background: var(--cream); padding: 2.5rem; }
+    .cm-testi-mark { font-family: var(--serif); font-size: 5rem; color: var(--terra); opacity: 0.22; line-height: 0.6; margin-bottom: 1rem; display: block; }
+    .cm-testi-quote { font-family: var(--serif); font-size: 1.15rem; font-weight: 400; color: var(--ink); font-style: italic; line-height: 1.65; max-width: 540px; margin-bottom: 1rem; }
+    .cm-testi-author { font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--warm-gray); }
 
-    /* CTA */
-    .cm-cta { background: #faf8f5; padding: 3.5rem 3rem; text-align: center; border-top: 1px solid var(--cream-dark); }
-    .cm-cta h3 { font-family: var(--serif); font-size: 1.6rem; font-weight: 400; color: var(--ink); font-style: italic; margin-bottom: 0.8rem; }
-    .cm-cta p { font-size: 0.82rem; color: var(--warm-gray); margin-bottom: 1.8rem; }
-    .cm-cta-btn { display: inline-block; font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; background: var(--terra); color: white; padding: 0.75rem 2.2rem; }
+    /* CTA — split layout dark */
+    .cm-cta { background: var(--ink); padding: 2.5rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
+    .cm-cta-text h3 { font-family: var(--serif); font-size: 1.3rem; font-weight: 400; color: white; font-style: italic; margin-bottom: 0.3rem; }
+    .cm-cta-text p { font-size: 0.78rem; color: rgba(250,248,245,0.4); }
+    .cm-cta-btn { flex-shrink: 0; font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; background: var(--terra); color: white; padding: 0.8rem 2rem; white-space: nowrap; display: block; }
 
     /* Footer */
-    .cm-footer { background: var(--ink); padding: 1.4rem 3rem; display: flex; justify-content: space-between; align-items: center; }
-    .cm-footer-name { font-family: var(--serif); font-size: 0.82rem; color: rgba(250,248,245,0.5); font-style: italic; }
-    .cm-footer-addr { font-size: 0.62rem; letter-spacing: 0.08em; color: rgba(250,248,245,0.3); }
+    .cm-footer { background: #0a0a0a; padding: 1.2rem 2.5rem; display: flex; justify-content: space-between; align-items: center; }
+    .cm-footer-name { font-family: var(--serif); font-size: 0.75rem; color: rgba(250,248,245,0.35); font-style: italic; }
+    .cm-footer-addr { font-size: 0.6rem; letter-spacing: 0.08em; color: rgba(250,248,245,0.2); }
 
     /* CTA section */
     .cta-section {
@@ -245,14 +246,17 @@
       .traduzione-grid { grid-template-columns: 1fr; }
       .step4 .demo-frame { margin: 0 -1.5rem; border-radius: 8px; }
       .cm-nav-links { display: none; }
-      .cm-hero { grid-template-columns: 1fr; }
-      .cm-hero-img { height: 260px; }
-      .cm-about { grid-template-columns: 1fr; gap: 1.5rem; padding: 2rem 1.5rem; }
+      .cm-hero { padding: 2.5rem 1.5rem; }
+      .cm-hero-bg-img { opacity: 0.15; }
+      .cm-hero-content { max-width: 100%; }
       .cm-servizi { padding: 2rem 1.5rem; }
-      .cm-servizi-grid { grid-template-columns: 1fr; }
+      .cm-row { grid-template-columns: 44px 1fr; }
+      .cm-row-desc { grid-column: 2; }
+      .cm-about { grid-template-columns: 1fr; }
+      .cm-about-img { min-height: 220px; }
       .cm-testi { padding: 2rem 1.5rem; }
-      .cm-cta { padding: 2.5rem 1.5rem; }
-      .cm-footer { flex-direction: column; gap: 0.5rem; text-align: center; padding: 1.2rem 1.5rem; }
+      .cm-cta { flex-direction: column; gap: 1.5rem; padding: 2rem 1.5rem; }
+      .cm-footer { flex-direction: column; gap: 0.4rem; text-align: center; padding: 1rem 1.5rem; }
       .cta-section { margin: 4rem -1.5rem 0; padding: 3.5rem 1.5rem; }
     }
   </style>
@@ -387,79 +391,72 @@
         </div>
 
         <div class="cm-site">
-          <!-- Nav -->
           <div class="cm-nav">
             <div class="cm-logo">Chiara Martini</div>
             <div class="cm-nav-links">
               <span>Chi sono</span>
               <span>Percorsi</span>
-              <span>Testimonianze</span>
               <span>Contatti</span>
             </div>
-            <div class="cm-nav-cta">Prima sessione gratuita</div>
+            <div class="cm-nav-cta">Sessione gratuita →</div>
           </div>
 
-          <!-- Hero -->
           <div class="cm-hero">
+            <img class="cm-hero-bg-img" src="/images/portfolio/coach-hero.jpg" alt="" />
             <div class="cm-hero-content">
-              <div class="cm-hero-eyebrow">Life & Business Coach · Milano</div>
-              <h2>Smetti di aspettare.<br /><em>Inizia a costruire</em><br />la versione giusta di te.</h2>
-              <p class="cm-hero-sub">Lavoro con professionisti e imprenditori che sanno già cosa vogliono ma non riescono a muoversi. Un percorso pratico, senza psicologia da quattro soldi.</p>
-              <a href="#" class="cm-hero-cta">Prenota una call gratuita</a>
+              <span class="cm-hero-eyebrow">Life & Business Coach · Milano</span>
+              <h2>Smetti di<br />aspettare.<br />Inizia adesso.</h2>
+              <a href="#" class="cm-hero-cta">Prima sessione gratuita →</a>
             </div>
-            <div class="cm-hero-img">
+          </div>
+
+          <div class="cm-servizi">
+            <span class="cm-servizi-label">I percorsi</span>
+            <div class="cm-row">
+              <div class="cm-row-num">01</div>
+              <div class="cm-row-title">Chiarezza</div>
+              <p class="cm-row-desc">4 sessioni per uscire dal loop mentale e capire dove vuoi andare e perché non ci sei già.</p>
+            </div>
+            <div class="cm-row">
+              <div class="cm-row-num">02</div>
+              <div class="cm-row-title">Momentum</div>
+              <p class="cm-row-desc">3 mesi di lavoro settimanale per costruire sistemi che reggono anche quando la motivazione cala.</p>
+            </div>
+            <div class="cm-row">
+              <div class="cm-row-num">03</div>
+              <div class="cm-row-title">Leadership</div>
+              <p class="cm-row-desc">Per chi guida un team o vuole farlo. Come comunicare, decidere e stare nel ruolo senza esaurirti.</p>
+            </div>
+          </div>
+
+          <div class="cm-about">
+            <div class="cm-about-img">
               <img src="/images/portfolio/coach-hero.jpg" alt="Chiara Martini" />
             </div>
-          </div>
-
-          <!-- About -->
-          <div class="cm-about">
-            <div>
+            <div class="cm-about-text">
               <div class="cm-about-label">Chi sono</div>
               <div class="cm-about-name">Chiara Martini</div>
               <div class="cm-about-title">ICF Certified Coach · Dal 2016</div>
-            </div>
-            <p class="cm-about-bio">Ho lasciato un lavoro in consulenza per fare quello che funzionava davvero: aiutare le persone a smettere di girarsi intorno e iniziare. Otto anni, oltre 200 clienti, un metodo che non assomiglia a nessun altro perché è costruito su conversazioni vere, non su framework importati.</p>
-          </div>
-
-          <!-- Servizi -->
-          <div class="cm-servizi">
-            <div class="cm-servizi-label">I percorsi</div>
-            <div class="cm-servizi-grid">
-              <div class="cm-card">
-                <div class="cm-card-num">01</div>
-                <div class="cm-card-title">Chiarezza</div>
-                <p class="cm-card-desc">4 sessioni per uscire dal loop mentale e capire esattamente dove vuoi andare e perché non ci sei già.</p>
-              </div>
-              <div class="cm-card">
-                <div class="cm-card-num">02</div>
-                <div class="cm-card-title">Momentum</div>
-                <p class="cm-card-desc">3 mesi di lavoro settimanale per costruire abitudini e sistemi che reggono anche quando la motivazione cala.</p>
-              </div>
-              <div class="cm-card">
-                <div class="cm-card-num">03</div>
-                <div class="cm-card-title">Leadership</div>
-                <p class="cm-card-desc">Per chi guida un team o vuole farlo. Come comunicare, decidere e stare nel ruolo senza esaurirti.</p>
-              </div>
+              <p class="cm-about-bio">Ho lasciato un lavoro in consulenza per fare quello che funzionava davvero: aiutare le persone a smettere di girarsi intorno e iniziare. Otto anni, oltre 200 clienti, un metodo costruito su conversazioni vere, non su framework importati.</p>
             </div>
           </div>
 
-          <!-- Testimonianza -->
           <div class="cm-testi">
-            <p class="cm-testi-quote">"Dopo tre mesi con Chiara ho lasciato un lavoro che mi soffocava e avviato il mio studio. Non mi ha convinto lei — mi ha fatto capire che lo avevo già deciso."</p>
+            <span class="cm-testi-mark">"</span>
+            <p class="cm-testi-quote">Dopo tre mesi con Chiara ho lasciato un lavoro che mi soffocava e avviato il mio studio. Non mi ha convinto lei — mi ha fatto capire che lo avevo già deciso.</p>
             <div class="cm-testi-author">Marco T. — Architetto, 34 anni</div>
           </div>
 
-          <!-- CTA -->
           <div class="cm-cta">
-            <h3>Parliamo di dove sei e dove vuoi andare.</h3>
-            <p>Prima sessione gratuita, 45 minuti, senza impegno. Se ha senso continuare, lo capisci tu.</p>
+            <div class="cm-cta-text">
+              <h3>Parliamo di dove sei<br />e dove vuoi andare.</h3>
+              <p>45 minuti, gratuiti, senza impegno.</p>
+            </div>
             <a href="#" class="cm-cta-btn">Prenota adesso</a>
           </div>
 
-          <!-- Footer -->
           <div class="cm-footer">
-            <div class="cm-footer-name">Chiara Martini — Life & Business Coach</div>
+            <div class="cm-footer-name">Chiara Martini — Coach</div>
             <div class="cm-footer-addr">Milano · chiara@chiaramartini.it</div>
           </div>
         </div>
