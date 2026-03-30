@@ -157,6 +157,17 @@
     .footer-name { font-family: var(--serif); font-size: 0.8rem; color: var(--muted); font-style: italic; }
     .footer-addr { font-size: 0.62rem; letter-spacing: 0.08em; color: var(--muted); }
 
+    /* ── Back btn ── */
+    .back-btn {
+      position: fixed; top: 1.2rem; left: 1.5rem; z-index: 999;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--navy); color: rgba(245,241,234,0.7);
+      text-decoration: none; font-family: var(--sans);
+      font-size: 0.8rem; letter-spacing: 0.05em; padding: 0.55rem 1rem;
+      border-radius: 2rem; transition: all 0.2s;
+    }
+    .back-btn:hover { color: var(--cream); }
+
     /* ── Responsive ── */
     @media (max-width: 768px) {
       .nav-links { display: none; }
@@ -169,6 +180,7 @@
   </style>
 </head>
 <body>
+  <a href="/dev/portfolio" class="back-btn">← Portfolio</a>
 
   <nav class="nav">
     <div class="nav-logo">Ferrini & Associati</div>
