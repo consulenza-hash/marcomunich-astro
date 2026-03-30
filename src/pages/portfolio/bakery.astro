@@ -1,0 +1,261 @@
+---
+// Forno Rossi — mockup pasticceria artigianale
+---
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Forno Rossi — Pasticceria Artigianale Verona</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #faf5ee;
+      --cream-dark: #f0e9dc;
+      --espresso: #2c1a10;
+      --espresso-mid: #4a2e1e;
+      --amber: #d4874a;
+      --amber-light: #e6a870;
+      --text: #2c1a10;
+      --muted: #7a5f4a;
+      --serif: 'Playfair Display', Georgia, serif;
+      --sans: 'Inter', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--sans); background: var(--cream); color: var(--text); line-height: 1.6; }
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ── Nav ── */
+    .nav {
+      background: var(--cream); border-bottom: 1px solid var(--cream-dark);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.1rem 2.5rem;
+    }
+    .nav-logo {
+      font-family: var(--serif); font-size: 1rem; color: var(--espresso); font-weight: 400;
+      letter-spacing: 0.04em;
+    }
+    .nav-links {
+      display: flex; gap: 2rem; font-size: 0.65rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--muted);
+    }
+    .nav-links a:hover { color: var(--espresso); }
+    .nav-orario {
+      font-size: 0.62rem; color: var(--muted); letter-spacing: 0.06em;
+      text-align: right; line-height: 1.5;
+    }
+
+    /* ── Hero ── */
+    .hero { overflow: hidden; height: 480px; }
+    .hero img { width: 100%; height: 100%; object-fit: cover; }
+    .hero-caption {
+      background: var(--cream); padding: 2.8rem 2.5rem 3.2rem;
+      border-bottom: 1px solid var(--cream-dark);
+    }
+    .hero-caption-eyebrow {
+      font-size: 0.6rem; letter-spacing: 0.26em; text-transform: uppercase;
+      color: var(--amber); margin-bottom: 0.9rem;
+    }
+    .hero-caption h1 {
+      font-family: var(--serif); font-size: 2.2rem; font-weight: 400;
+      color: var(--espresso); line-height: 1.25; max-width: 500px;
+    }
+    .hero-caption h1 em { font-style: italic; color: var(--espresso-mid); }
+    .hero-caption-sub {
+      margin-top: 1rem; font-size: 0.82rem; color: var(--muted); line-height: 1.8; max-width: 440px;
+    }
+
+    /* ── Prodotti ── */
+    .prodotti { display: grid; grid-template-columns: 1.1fr 1fr; min-height: 380px; }
+    .prodotti-img { overflow: hidden; }
+    .prodotti-img img { width: 100%; height: 100%; object-fit: cover; min-height: 380px; }
+    .prodotti-text {
+      background: var(--espresso); padding: 3.5rem 3rem;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .prodotti-eyebrow {
+      font-size: 0.6rem; letter-spacing: 0.24em; text-transform: uppercase;
+      color: var(--amber); margin-bottom: 1.5rem;
+    }
+    .prodotti-text h2 {
+      font-family: var(--serif); font-size: 1.6rem; font-weight: 400; color: var(--cream);
+      font-style: italic; margin-bottom: 1.5rem; line-height: 1.3;
+    }
+    .prodotti-list { list-style: none; display: flex; flex-direction: column; gap: 0.9rem; }
+    .prodotti-list li {
+      display: flex; justify-content: space-between; align-items: baseline;
+      border-bottom: 1px dotted rgba(245,241,234,0.15); padding-bottom: 0.9rem;
+      font-size: 0.85rem;
+    }
+    .prodotti-list li:last-child { border-bottom: none; padding-bottom: 0; }
+    .prodotti-list .name { color: var(--cream); font-family: var(--serif); font-style: italic; }
+    .prodotti-list .price { font-size: 0.72rem; color: var(--amber); letter-spacing: 0.06em; }
+
+    /* ── Baker ── */
+    .baker { display: grid; grid-template-columns: 1fr 1.1fr; min-height: 360px; }
+    .baker-text {
+      background: var(--cream); padding: 3.5rem 3rem;
+      display: flex; flex-direction: column; justify-content: center;
+      border-right: 1px solid var(--cream-dark);
+    }
+    .baker-eyebrow {
+      font-size: 0.6rem; letter-spacing: 0.24em; text-transform: uppercase;
+      color: var(--amber); margin-bottom: 1.2rem;
+    }
+    .baker-name {
+      font-family: var(--serif); font-size: 1.8rem; font-weight: 400;
+      color: var(--espresso); font-style: italic; margin-bottom: 0.4rem;
+    }
+    .baker-title {
+      font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 1.4rem;
+    }
+    .baker-bio { font-size: 0.82rem; line-height: 2; color: var(--muted); max-width: 340px; }
+    .baker-link {
+      display: inline-block; margin-top: 1.5rem; font-size: 0.62rem; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--espresso); border-bottom: 1px solid var(--espresso);
+      padding-bottom: 2px;
+    }
+    .baker-img { overflow: hidden; }
+    .baker-img img { width: 100%; height: 100%; object-fit: cover; object-position: top; min-height: 360px; }
+
+    /* ── Orari strip ── */
+    .orari-strip {
+      background: var(--amber); padding: 1.8rem 2.5rem;
+      display: flex; justify-content: center; gap: 4rem; align-items: center;
+    }
+    .orario-item { text-align: center; }
+    .orario-label {
+      font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(44,26,16,0.65); margin-bottom: 0.3rem;
+    }
+    .orario-val { font-family: var(--serif); font-size: 1rem; color: var(--espresso); font-style: italic; }
+
+    /* ── CTA ── */
+    .cta {
+      background: var(--espresso); padding: 4rem 2.5rem; text-align: center;
+    }
+    .cta-eyebrow {
+      font-size: 0.6rem; letter-spacing: 0.28em; text-transform: uppercase;
+      color: var(--amber); margin-bottom: 1.2rem; display: block;
+    }
+    .cta h2 {
+      font-family: var(--serif); font-size: 1.9rem; font-weight: 400; color: var(--cream);
+      font-style: italic; margin-bottom: 0.8rem; line-height: 1.3;
+    }
+    .cta-sub { font-size: 0.8rem; color: rgba(250,245,238,0.5); margin-bottom: 2rem; }
+    .cta-btn {
+      display: inline-block; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--espresso); background: var(--amber); padding: 0.75rem 2.2rem;
+    }
+
+    /* ── Footer ── */
+    .footer {
+      background: var(--cream); border-top: 1px solid var(--cream-dark);
+      padding: 1.5rem 2.5rem; display: flex; justify-content: space-between; align-items: center;
+    }
+    .footer-name { font-family: var(--serif); font-size: 0.85rem; color: var(--muted); font-style: italic; }
+    .footer-addr { font-size: 0.62rem; letter-spacing: 0.06em; color: var(--muted); }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-orario { display: none; }
+      .hero { height: 300px; }
+      .prodotti { grid-template-columns: 1fr; }
+      .prodotti-img img { min-height: 260px; max-height: 300px; }
+      .baker { grid-template-columns: 1fr; }
+      .baker-img img { min-height: 260px; max-height: 300px; }
+      .orari-strip { flex-wrap: wrap; gap: 1.5rem; }
+      .footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-logo">Forno Rossi</div>
+    <div class="nav-links">
+      <a href="#">Il forno</a>
+      <a href="#">Specialità</a>
+      <a href="#">Prenotazioni</a>
+      <a href="#">Dove siamo</a>
+    </div>
+    <div class="nav-orario">
+      Lun–Sab 6:30–13:00<br />Dom 7:00–12:00
+    </div>
+  </nav>
+
+  <div class="hero">
+    <img src="/images/portfolio/bakery-hero.jpg" alt="Forno Rossi — Verona" />
+  </div>
+  <div class="hero-caption">
+    <div class="hero-caption-eyebrow">Verona · Artigianale dal 1962</div>
+    <h1>Pane fatto a mano.<br /><em>Ogni mattina, come una volta.</em></h1>
+    <p class="hero-caption-sub">Tre generazioni di famiglia Rossi, lo stesso lievito madre da sessant'anni, farine macinate a pietra dal Molino Quaglia.</p>
+  </div>
+
+  <div class="prodotti">
+    <div class="prodotti-img">
+      <img src="/images/portfolio/bakery-product.jpg" alt="Cornetti e pasticceria" />
+    </div>
+    <div class="prodotti-text">
+      <div class="prodotti-eyebrow">Le nostre specialità</div>
+      <h2>Ogni pezzo ha<br />la sua storia</h2>
+      <ul class="prodotti-list">
+        <li><span class="name">Cornetto al burro</span><span class="price">€ 1,40</span></li>
+        <li><span class="name">Pane di pasta madre</span><span class="price">€ 6,50 / kg</span></li>
+        <li><span class="name">Focaccia al rosmarino</span><span class="price">€ 3,20</span></li>
+        <li><span class="name">Ciabatta integrale</span><span class="price">€ 2,80</span></li>
+        <li><span class="name">Torta di mele della nonna</span><span class="price">€ 18 intera</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="baker">
+    <div class="baker-text">
+      <div class="baker-eyebrow">Il fornaio</div>
+      <div class="baker-name">Gianni Rossi</div>
+      <div class="baker-title">Terza generazione · Maestro Artigiano</div>
+      <p class="baker-bio">Ho imparato da mio padre, che ha imparato dal suo. Il segreto non è una ricetta segreta — è il rispetto dei tempi. Il lievito madre non aspetta, bisogna imparare il suo ritmo.</p>
+      <a href="#" class="baker-link">La nostra storia</a>
+    </div>
+    <div class="baker-img">
+      <img src="/images/portfolio/bakery-baker.jpg" alt="Gianni Rossi" />
+    </div>
+  </div>
+
+  <div class="orari-strip">
+    <div class="orario-item">
+      <div class="orario-label">Lunedì – Sabato</div>
+      <div class="orario-val">6:30 – 13:00</div>
+    </div>
+    <div class="orario-item">
+      <div class="orario-label">Domenica</div>
+      <div class="orario-val">7:00 – 12:00</div>
+    </div>
+    <div class="orario-item">
+      <div class="orario-label">Prenotazioni torte</div>
+      <div class="orario-val">48 ore prima</div>
+    </div>
+  </div>
+
+  <div class="cta">
+    <span class="cta-eyebrow">Torte su ordinazione</span>
+    <h2>Per compleanni, matrimoni<br />e ogni occasione speciale.</h2>
+    <p class="cta-sub">Consulenza gratuita · Degustazione su appuntamento · Consegna a domicilio in provincia</p>
+    <a href="#" class="cta-btn">Scrivi per ordinare</a>
+  </div>
+
+  <div class="footer">
+    <div class="footer-name">Forno Rossi — Pasticceria Artigianale</div>
+    <div class="footer-addr">Verona · Via Mazzini 14 · +39 045 803 2218</div>
+  </div>
+
+</body>
+</html>
