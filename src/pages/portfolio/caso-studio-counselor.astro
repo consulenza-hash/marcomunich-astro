@@ -126,56 +126,58 @@
     .demo-dot.green { background: #28c840; }
     .demo-url { font-size: 0.72rem; color: #8a8a8a; margin-left: 0.5rem; }
 
-    /* ── Giulia Ferretti mini-site ── */
-    .gf-site { background: #faf7f2; font-family: var(--sans); }
+    /* ── Giulia Ferretti mini-site — EDITORIAL white, airy, centered ── */
+    .gf-site { background: white; font-family: var(--sans); }
 
-    .gf-nav { display: flex; justify-content: space-between; align-items: center; padding: 1.4rem 3rem; background: white; border-bottom: 1px solid #ede7dc; }
-    .gf-logo { font-family: var(--serif); font-size: 1.05rem; font-weight: 300; letter-spacing: 0.06em; color: var(--ink); }
-    .gf-nav-links { display: flex; gap: 2rem; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--warm-gray); }
-    .gf-nav-cta { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--sage); border-bottom: 1px solid var(--sage); padding-bottom: 1px; }
+    /* Nav — minimal, serif italic logo */
+    .gf-nav { padding: 1.4rem 2.5rem; display: flex; justify-content: space-between; align-items: center; background: white; border-bottom: 1px solid #f0ede8; }
+    .gf-logo { font-family: var(--serif); font-size: 1.1rem; font-style: italic; font-weight: 300; color: var(--ink); }
+    .gf-nav-links { display: flex; gap: 2rem; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: #ccc; }
+    .gf-nav-cta { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--sage); border-bottom: 1px solid var(--sage); padding-bottom: 2px; }
 
-    /* Hero 2-col: testo + foto */
-    .gf-hero { display: grid; grid-template-columns: 1fr 1fr; min-height: 400px; }
-    .gf-hero-text { padding: 4rem 3rem; display: flex; flex-direction: column; justify-content: center; background: white; }
-    .gf-hero-eyebrow { font-size: 0.6rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--sage); margin-bottom: 1.4rem; }
-    .gf-hero h2 { font-family: var(--serif); font-size: 2.2rem; font-weight: 300; line-height: 1.2; color: var(--ink); margin-bottom: 1.4rem; font-style: italic; }
-    .gf-hero-sub { font-size: 0.82rem; line-height: 2; color: var(--ink-soft); margin-bottom: 2rem; max-width: 320px; }
-    .gf-hero-cta { display: inline-block; font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: white; background: var(--sage); padding: 0.7rem 1.8rem; align-self: flex-start; }
-    .gf-hero-img { overflow: hidden; }
-    .gf-hero-img img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+    /* Hero — centered, portrait circle above headline */
+    .gf-hero { padding: 3.5rem 2.5rem 3rem; text-align: center; background: white; display: flex; flex-direction: column; align-items: center; }
+    .gf-hero-portrait { width: 96px; height: 96px; border-radius: 50%; overflow: hidden; margin: 0 auto 2rem; border: 3px solid #ede7dc; }
+    .gf-hero-portrait img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+    .gf-hero-eyebrow { font-size: 0.6rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--sage); margin-bottom: 1.2rem; }
+    .gf-hero h2 { font-family: var(--serif); font-size: clamp(1.7rem, 3vw, 2.5rem); font-weight: 300; font-style: italic; line-height: 1.3; color: var(--ink); max-width: 500px; margin-bottom: 1.2rem; }
+    .gf-hero-sub { font-size: 0.83rem; line-height: 1.9; color: #999; max-width: 400px; margin-bottom: 2rem; }
+    .gf-hero-cta { font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--sage); border: 1px solid var(--sage); padding: 0.6rem 1.8rem; display: inline-block; }
 
-    /* Citazione */
-    .gf-quote { background: var(--sage); padding: 2.8rem 3rem; text-align: center; }
-    .gf-quote p { font-family: var(--serif); font-size: 1.25rem; font-weight: 300; color: white; font-style: italic; line-height: 1.7; max-width: 540px; margin: 0 auto; }
+    /* Studio — full-width photo */
+    .gf-studio-full { overflow: hidden; }
+    .gf-studio-full img { width: 100%; height: 260px; object-fit: cover; object-position: center; display: block; }
 
-    /* Approccio */
-    .gf-approccio { padding: 3.5rem 3rem; background: white; }
-    .gf-approccio-label { font-size: 0.6rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--sage); margin-bottom: 2rem; }
-    .gf-approccio-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; }
-    .gf-approccio-text h3 { font-family: var(--serif); font-size: 1.5rem; font-weight: 300; color: var(--ink); font-style: italic; margin-bottom: 1rem; line-height: 1.3; }
-    .gf-approccio-text p { font-size: 0.82rem; line-height: 2; color: var(--ink-soft); }
-    .gf-studio-img { overflow: hidden; }
-    .gf-studio-img img { width: 100%; height: 280px; object-fit: cover; object-position: center; display: block; }
+    /* About — side-by-side on cream */
+    .gf-about { padding: 2.5rem; background: var(--cream); display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; align-items: start; }
+    .gf-about-label { font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--sage); margin-bottom: 0.5rem; }
+    .gf-about-name { font-family: var(--serif); font-size: 1.1rem; font-weight: 300; font-style: italic; color: var(--ink); }
+    .gf-about-title { font-size: 0.62rem; color: #bbb; margin-top: 0.2rem; }
+    .gf-about-bio { font-size: 0.82rem; line-height: 2; color: #5a5248; }
 
-    /* Percorsi */
-    .gf-percorsi { padding: 3rem; background: var(--cream); }
-    .gf-percorsi-label { font-size: 0.6rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--sage); margin-bottom: 2rem; }
-    .gf-percorsi-list { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--cream-dark); background: white; }
-    .gf-percorso { display: grid; grid-template-columns: 60px 1fr; border-bottom: 1px solid var(--cream-dark); padding: 1.5rem 2rem; gap: 1.5rem; align-items: start; }
-    .gf-percorso:last-child { border-bottom: none; }
-    .gf-percorso-num { font-family: var(--serif); font-size: 2rem; font-weight: 300; color: var(--sage); opacity: 0.4; line-height: 1; }
-    .gf-percorso-title { font-family: var(--serif); font-size: 1rem; font-weight: 400; color: var(--ink); font-style: italic; margin-bottom: 0.4rem; }
-    .gf-percorso-desc { font-size: 0.78rem; line-height: 1.8; color: var(--ink-soft); }
+    /* Services — minimal text list with thin lines */
+    .gf-servizi { padding: 2.5rem; background: white; }
+    .gf-servizi-label { font-size: 0.58rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--sage); margin-bottom: 2rem; display: block; }
+    .gf-item { display: grid; grid-template-columns: 36px 1fr; gap: 1.5rem; padding: 1.5rem 0; border-bottom: 1px solid #f5f2ed; align-items: start; }
+    .gf-item:first-of-type { border-top: 1px solid #f5f2ed; }
+    .gf-item-num { font-family: var(--serif); font-size: 0.85rem; font-weight: 300; color: var(--sage); opacity: 0.5; padding-top: 0.2rem; }
+    .gf-item-title { font-family: var(--serif); font-size: 1rem; font-weight: 300; font-style: italic; color: var(--ink); margin-bottom: 0.4rem; }
+    .gf-item-desc { font-size: 0.78rem; line-height: 1.8; color: #999; }
 
-    /* CTA */
-    .gf-cta { background: var(--dark); padding: 3.5rem 3rem; text-align: center; }
-    .gf-cta h3 { font-family: var(--serif); font-size: 1.7rem; font-weight: 300; color: var(--cream); font-style: italic; margin-bottom: 0.8rem; line-height: 1.3; }
-    .gf-cta p { font-size: 0.8rem; color: rgba(250,247,242,0.5); margin-bottom: 1.8rem; line-height: 1.9; max-width: 420px; margin-left: auto; margin-right: auto; }
-    .gf-cta-btn { display: inline-block; font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--dark); background: var(--sage); padding: 0.75rem 2rem; }
+    /* Testimonial — floating, no colored strip */
+    .gf-testi { padding: 2.5rem; background: #faf7f2; text-align: center; }
+    .gf-testi-quote { font-family: var(--serif); font-size: 1.1rem; font-weight: 300; font-style: italic; color: var(--ink); line-height: 1.8; max-width: 460px; margin: 0 auto 0.8rem; }
+    .gf-testi-author { font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: #ccc; }
 
-    .gf-footer { background: #faf7f2; border-top: 1px solid var(--cream-dark); padding: 1.4rem 3rem; display: flex; justify-content: space-between; align-items: center; }
-    .gf-footer-name { font-family: var(--serif); font-size: 0.82rem; color: var(--warm-gray); font-weight: 300; }
-    .gf-footer-addr { font-size: 0.62rem; letter-spacing: 0.08em; color: var(--warm-gray); }
+    /* CTA — minimal, outline button */
+    .gf-cta { background: white; padding: 2.5rem; text-align: center; border-top: 1px solid #f0ede8; }
+    .gf-cta h3 { font-family: var(--serif); font-size: 1.4rem; font-weight: 300; font-style: italic; color: var(--ink); margin-bottom: 0.8rem; }
+    .gf-cta p { font-size: 0.78rem; color: #999; margin-bottom: 1.5rem; }
+    .gf-cta-btn { display: inline-block; font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--sage); border: 1px solid var(--sage); padding: 0.7rem 2rem; }
+
+    .gf-footer { background: white; padding: 1.2rem 2.5rem; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #f0ede8; }
+    .gf-footer-name { font-family: var(--serif); font-size: 0.78rem; color: #ccc; font-style: italic; }
+    .gf-footer-addr { font-size: 0.6rem; letter-spacing: 0.08em; color: #ddd; }
 
     /* CTA section */
     .cta-section { padding: 5rem 2rem; text-align: center; background: var(--dark); margin: 4rem -2rem 0; }
@@ -198,14 +200,12 @@
       .traduzione-grid { grid-template-columns: 1fr; }
       .step4 .demo-frame { margin: 0 -1.5rem; border-radius: 8px; }
       .gf-nav-links { display: none; }
-      .gf-hero { grid-template-columns: 1fr; }
-      .gf-hero-img { height: 260px; }
-      .gf-approccio { padding: 2.5rem 1.5rem; }
-      .gf-approccio-grid { grid-template-columns: 1fr; }
-      .gf-percorsi { padding: 2rem 1.5rem; }
-      .gf-quote { padding: 2rem 1.5rem; }
-      .gf-cta { padding: 2.5rem 1.5rem; }
-      .gf-footer { flex-direction: column; gap: 0.5rem; text-align: center; padding: 1.2rem 1.5rem; }
+      .gf-hero { padding: 2.5rem 1.5rem 2rem; }
+      .gf-about { grid-template-columns: 1fr; gap: 1rem; padding: 2rem 1.5rem; }
+      .gf-servizi { padding: 2rem 1.5rem; }
+      .gf-testi { padding: 2rem 1.5rem; }
+      .gf-cta { padding: 2rem 1.5rem; }
+      .gf-footer { flex-direction: column; gap: 0.5rem; text-align: center; padding: 1rem 1.5rem; }
       .cta-section { margin: 4rem -1.5rem 0; padding: 3.5rem 1.5rem; }
     }
   </style>
@@ -340,7 +340,6 @@
             <div class="gf-logo">Giulia Ferretti</div>
             <div class="gf-nav-links">
               <span>Chi sono</span>
-              <span>Il mio approccio</span>
               <span>Percorsi</span>
               <span>Contatti</span>
             </div>
@@ -348,70 +347,67 @@
           </div>
 
           <div class="gf-hero">
-            <div class="gf-hero-text">
-              <div class="gf-hero-eyebrow">Counselor Relazionale · Firenze</div>
-              <h2>Un posto dove<br />puoi dire le cose<br />come stanno.</h2>
-              <p class="gf-hero-sub">Lavoro con persone che si sentono bloccate nelle relazioni, nel lavoro, con se stesse. Non ti dico cosa fare — ti aiuto a capire cosa senti davvero.</p>
-              <a href="#" class="gf-hero-cta">Parliamo, è gratuito</a>
-            </div>
-            <div class="gf-hero-img">
+            <div class="gf-hero-portrait">
               <img src="/images/portfolio/counselor-hero.jpg" alt="Giulia Ferretti" />
             </div>
+            <div class="gf-hero-eyebrow">Counselor Relazionale · Firenze</div>
+            <h2>Un posto dove<br />puoi dire le cose<br />come stanno.</h2>
+            <p class="gf-hero-sub">Lavoro con persone che si sentono bloccate nelle relazioni, nel lavoro, con se stesse. Non ti dico cosa fare — ti aiuto a capire cosa senti davvero.</p>
+            <a href="#" class="gf-hero-cta">Parliamo, è gratuito</a>
           </div>
 
-          <div class="gf-quote">
-            <p>"Il cambiamento non comincia quando capisci qualcosa. Comincia quando lo senti."</p>
+          <div class="gf-studio-full">
+            <img src="/images/portfolio/counselor-studio.jpg" alt="Lo studio di Giulia" />
           </div>
 
-          <div class="gf-approccio">
-            <div class="gf-approccio-label">Il mio approccio</div>
-            <div class="gf-approccio-grid">
-              <div class="gf-approccio-text">
-                <h3>Ascolto prima,<br />parlo dopo.</h3>
-                <p>Il mio lavoro non è darti risposte — è aiutarti a fare le domande giuste. Ogni percorso è diverso perché ogni persona lo è. Uso un approccio integrato che mescola counseling relazionale, lavoro sul corpo e tecniche narrative.</p>
+          <div class="gf-about">
+            <div>
+              <div class="gf-about-label">Chi sono</div>
+              <div class="gf-about-name">Giulia Ferretti</div>
+              <div class="gf-about-title">Counselor Relazionale · Dal 2018</div>
+            </div>
+            <p class="gf-about-bio">Il mio lavoro non è darti risposte — è aiutarti a fare le domande giuste. Ogni percorso è diverso perché ogni persona lo è. Uso un approccio integrato che mescola counseling relazionale, lavoro sul corpo e tecniche narrative.</p>
+          </div>
+
+          <div class="gf-servizi">
+            <span class="gf-servizi-label">I percorsi</span>
+            <div class="gf-item">
+              <div class="gf-item-num">01</div>
+              <div>
+                <div class="gf-item-title">Colloquio di orientamento</div>
+                <p class="gf-item-desc">Un incontro gratuito di 30 minuti per capire se il mio approccio fa per te. Senza impegno, senza fretta.</p>
               </div>
-              <div class="gf-studio-img">
-                <img src="/images/portfolio/counselor-studio.jpg" alt="Lo studio di Giulia" />
+            </div>
+            <div class="gf-item">
+              <div class="gf-item-num">02</div>
+              <div>
+                <div class="gf-item-title">Percorso breve (6 sedute)</div>
+                <p class="gf-item-desc">Per chi attraversa un momento specifico di difficoltà e vuole strumenti concreti per uscirne.</p>
+              </div>
+            </div>
+            <div class="gf-item">
+              <div class="gf-item-num">03</div>
+              <div>
+                <div class="gf-item-title">Percorso continuativo</div>
+                <p class="gf-item-desc">Per chi vuole lavorare in profondità su schemi relazionali ricorrenti, con incontri settimanali o quindicinali.</p>
               </div>
             </div>
           </div>
 
-          <div class="gf-percorsi">
-            <div class="gf-percorsi-label">I percorsi</div>
-            <div class="gf-percorsi-list">
-              <div class="gf-percorso">
-                <div class="gf-percorso-num">01</div>
-                <div>
-                  <div class="gf-percorso-title">Colloquio di orientamento</div>
-                  <p class="gf-percorso-desc">Un incontro gratuito di 30 minuti per capire se il mio approccio fa per te. Senza impegno, senza fretta.</p>
-                </div>
-              </div>
-              <div class="gf-percorso">
-                <div class="gf-percorso-num">02</div>
-                <div>
-                  <div class="gf-percorso-title">Percorso breve (6 sedute)</div>
-                  <p class="gf-percorso-desc">Per chi attraversa un momento specifico di difficoltà e vuole strumenti concreti per uscirne.</p>
-                </div>
-              </div>
-              <div class="gf-percorso">
-                <div class="gf-percorso-num">03</div>
-                <div>
-                  <div class="gf-percorso-title">Percorso continuativo</div>
-                  <p class="gf-percorso-desc">Per chi vuole lavorare in profondità su schemi relazionali ricorrenti, con incontri settimanali o quindicinali.</p>
-                </div>
-              </div>
-            </div>
+          <div class="gf-testi">
+            <p class="gf-testi-quote">"Non mi aspettavo di sentirmi così a mio agio dalla prima sessione. Giulia non giudica — e questo fa tutta la differenza."</p>
+            <div class="gf-testi-author">Alessia M. — 33 anni, Firenze</div>
           </div>
 
           <div class="gf-cta">
-            <h3>Il primo passo è solo una conversazione.</h3>
-            <p>Scrivimi o chiamami. Non devi sapere già cosa dire — anzi, se non sai da dove cominciare è perfettamente normale.</p>
+            <h3>Il primo passo è solo<br />una conversazione.</h3>
+            <p>Scrivimi o chiamami. Non devi sapere già cosa dire.</p>
             <a href="#" class="gf-cta-btn">Prenota il colloquio gratuito</a>
           </div>
 
           <div class="gf-footer">
-            <div class="gf-footer-name">Giulia Ferretti — Counselor Relazionale</div>
-            <div class="gf-footer-addr">Firenze · Via dei Servi, 18 · giulia@giuliaferretti.it</div>
+            <div class="gf-footer-name">Giulia Ferretti — Counselor</div>
+            <div class="gf-footer-addr">Firenze · giulia@giuliaferretti.it</div>
           </div>
         </div>
       </div>
