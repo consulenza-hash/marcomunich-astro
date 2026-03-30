@@ -164,25 +164,26 @@
     .cm-site { background: #fff; font-family: var(--sans); }
 
     /* Nav — bold uppercase sans */
-    .cm-nav { display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 2.5rem; background: white; border-bottom: 2px solid var(--ink); }
-    .cm-logo { font-family: var(--sans); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink); }
+    .cm-nav { display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 2.5rem; background: white; border-bottom: 1px solid rgba(0,0,0,0.06); }
+    .cm-logo { font-family: var(--serif); font-size: 1.1rem; font-weight: 300; font-style: italic; color: var(--ink); }
     .cm-nav-links { display: flex; gap: 2rem; font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: #8a8078; }
-    .cm-nav-cta { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; background: var(--terra); color: white; padding: 0.5rem 1.4rem; font-weight: 600; }
+    .cm-nav-cta { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; background: white; color: var(--ink); border: 1px solid rgba(0,0,0,0.15); padding: 0.5rem 1.4rem; font-weight: 600; text-decoration: none; }
 
     /* Hero — dark full-bleed, portrait faded right, big headline left */
     .cm-hero { background: var(--ink); position: relative; overflow: hidden; padding: 3.5rem 2.5rem 3rem; min-height: 340px; display: flex; align-items: flex-end; }
-    .cm-hero-bg-img { position: absolute; top: 0; right: 0; width: 44%; height: 100%; object-fit: cover; object-position: top; opacity: 0.28; display: block; }
+    .cm-hero-bg-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top; opacity: 1; display: block; }
+    .cm-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to right, rgba(5,5,10,0.92) 0%, rgba(5,5,10,0.6) 50%, rgba(5,5,10,0.15) 100%); }
     .cm-hero-content { position: relative; max-width: 54%; }
-    .cm-hero-eyebrow { font-size: 0.6rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--terra); margin-bottom: 1rem; display: block; }
+    .cm-hero-eyebrow { font-size: 0.6rem; letter-spacing: 0.24em; text-transform: uppercase; color: #d4426e; margin-bottom: 1.2rem; display: block; }
     .cm-hero h2 { font-family: var(--serif); font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 700; line-height: 1.05; color: white; margin-bottom: 1.5rem; }
-    .cm-hero-cta { display: inline-block; font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase; background: var(--terra); color: white; padding: 0.7rem 1.8rem; font-weight: 600; }
+    .cm-hero-cta { display: inline-block; font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase; background: #d4426e; color: white; padding: 0.7rem 1.8rem; font-weight: 600; }
 
     /* Services — numbered horizontal rows (no cards) */
     .cm-servizi { background: white; padding: 2.5rem; }
-    .cm-servizi-label { font-size: 0.6rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--terra); margin-bottom: 1.5rem; display: block; }
+    .cm-servizi-label { font-size: 0.6rem; letter-spacing: 0.24em; text-transform: uppercase; color: #d4426e; margin-bottom: 1.5rem; display: block; }
     .cm-row { display: grid; grid-template-columns: 64px 1fr 1fr; gap: 1.5rem; padding: 1.5rem 0; border-bottom: 1px solid rgba(0,0,0,0.07); align-items: start; }
     .cm-row:first-of-type { border-top: 1px solid rgba(0,0,0,0.07); }
-    .cm-row-num { font-family: var(--serif); font-size: 2.8rem; font-weight: 700; color: var(--terra); opacity: 0.12; line-height: 1; }
+    .cm-row-num { font-family: var(--serif); font-size: 2.8rem; font-weight: 700; color: #d4426e; opacity: 0.12; line-height: 1; }
     .cm-row-title { font-family: var(--serif); font-size: 1.05rem; color: var(--ink); padding-top: 0.3rem; }
     .cm-row-desc { font-size: 0.78rem; line-height: 1.8; color: #6a6058; }
 
@@ -191,14 +192,14 @@
     .cm-about-img { overflow: hidden; min-height: 280px; }
     .cm-about-img img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
     .cm-about-text { padding: 2.5rem; background: var(--ink); display: flex; flex-direction: column; justify-content: center; }
-    .cm-about-label { font-size: 0.58rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--terra); margin-bottom: 0.8rem; }
+    .cm-about-label { font-size: 0.58rem; letter-spacing: 0.24em; text-transform: uppercase; color: #d4426e; margin-bottom: 0.8rem; }
     .cm-about-name { font-family: var(--serif); font-size: 1.4rem; font-weight: 400; color: white; font-style: italic; margin-bottom: 0.3rem; }
     .cm-about-title { font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(250,248,245,0.3); margin-bottom: 1.2rem; }
     .cm-about-bio { font-size: 0.78rem; line-height: 1.9; color: rgba(250,248,245,0.5); }
 
     /* Testimonial — cream, big quotemark, no strip */
     .cm-testi { background: var(--cream); padding: 2.5rem; }
-    .cm-testi-mark { font-family: var(--serif); font-size: 5rem; color: var(--terra); opacity: 0.22; line-height: 0.6; margin-bottom: 1rem; display: block; }
+    .cm-testi-mark { font-family: var(--serif); font-size: 5rem; color: #d4426e; opacity: 0.22; line-height: 0.6; margin-bottom: 1rem; display: block; }
     .cm-testi-quote { font-family: var(--serif); font-size: 1.15rem; font-weight: 400; color: var(--ink); font-style: italic; line-height: 1.65; max-width: 540px; margin-bottom: 1rem; }
     .cm-testi-author { font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--warm-gray); }
 
@@ -206,7 +207,7 @@
     .cm-cta { background: var(--ink); padding: 2.5rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
     .cm-cta-text h3 { font-family: var(--serif); font-size: 1.3rem; font-weight: 400; color: white; font-style: italic; margin-bottom: 0.3rem; }
     .cm-cta-text p { font-size: 0.78rem; color: rgba(250,248,245,0.4); }
-    .cm-cta-btn { flex-shrink: 0; font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; background: var(--terra); color: white; padding: 0.8rem 2rem; white-space: nowrap; display: block; }
+    .cm-cta-btn { flex-shrink: 0; font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; background: #d4426e; color: white; padding: 0.8rem 2rem; white-space: nowrap; display: block; }
 
     /* Footer */
     .cm-footer { background: #0a0a0a; padding: 1.2rem 2.5rem; display: flex; justify-content: space-between; align-items: center; }
@@ -247,7 +248,8 @@
       .step4 .demo-frame { margin: 0 -1.5rem; border-radius: 8px; }
       .cm-nav-links { display: none; }
       .cm-hero { padding: 2.5rem 1.5rem; }
-      .cm-hero-bg-img { opacity: 0.15; }
+      .cm-hero-bg-img { opacity: 1; }
+      .cm-hero-overlay { background: linear-gradient(to bottom, rgba(5,5,10,0.5) 0%, rgba(5,5,10,0.85) 100%); }
       .cm-hero-content { max-width: 100%; }
       .cm-servizi { padding: 2rem 1.5rem; }
       .cm-row { grid-template-columns: 44px 1fr; }
@@ -398,11 +400,12 @@
               <span>Percorsi</span>
               <span>Contatti</span>
             </div>
-            <div class="cm-nav-cta">Sessione gratuita →</div>
+            <a href="#" class="cm-nav-cta">Sessione gratuita</a>
           </div>
 
           <div class="cm-hero">
             <img class="cm-hero-bg-img" src="/images/portfolio/coach-hero.jpg" alt="" />
+            <div class="cm-hero-overlay"></div>
             <div class="cm-hero-content">
               <span class="cm-hero-eyebrow">Life & Business Coach · Milano</span>
               <h2>Smetti di<br />aspettare.<br />Inizia adesso.</h2>

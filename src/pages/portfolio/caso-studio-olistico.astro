@@ -161,57 +161,67 @@
     .demo-dot.green { background: #28c840; }
     .demo-url { font-size: 0.72rem; color: #8a8a8a; font-family: var(--sans); margin-left: 0.5rem; }
 
-    /* ── Letizia Amato mini-site — MAGAZINE atmospheric, slow ── */
-    .la-site { background: var(--sand); font-family: var(--sans); }
+    /* ── Letizia Amato mini-site — QC TERME style luxury wellness ── */
+    .la-site { background: #f5f0e8; font-family: var(--sans); }
 
-    /* Nav — minimal sand background */
-    .la-nav { display: flex; justify-content: space-between; align-items: center; padding: 1.4rem 2.5rem; background: var(--sand); border-bottom: 1px solid rgba(0,0,0,0.07); }
-    .la-logo { font-family: var(--serif); font-size: 0.95rem; font-style: italic; font-weight: 300; color: var(--deep); }
-    .la-nav-links { display: flex; gap: 2rem; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--warm-gray); }
-    .la-nav-cta { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ochre); }
+    /* Hero wrapper — full-bleed with nav overlaid on top */
+    .la-hero { position: relative; min-height: 460px; overflow: hidden; background: #1a1410; display: flex; flex-direction: column; justify-content: flex-end; }
+    .la-hero-bg-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(0.55); }
 
-    /* Hero — full-width image opening, text below centered */
-    .la-hero-img-full { overflow: hidden; }
-    .la-hero-img-full img { width: 100%; height: 300px; object-fit: cover; object-position: center; display: block; }
-    .la-hero-text { padding: 3rem 2.5rem 2.5rem; background: var(--sand); text-align: center; }
-    .la-hero-eyebrow { font-size: 0.58rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--sage); margin-bottom: 1.2rem; display: block; }
-    .la-hero h2 { font-family: var(--serif); font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 300; line-height: 1.3; color: var(--deep); font-style: italic; margin-bottom: 1.2rem; }
-    .la-hero-sub { font-size: 0.83rem; line-height: 1.9; color: var(--warm-gray); max-width: 400px; margin: 0 auto 2rem; }
-    .la-hero-cta { display: inline-block; font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; background: var(--sage); color: white; padding: 0.7rem 2rem; }
+    /* Nav — transparent, absolute on hero */
+    .la-nav { position: absolute; top: 0; left: 0; right: 0; display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 2rem; z-index: 10; }
+    .la-nav-logo-wrapper { position: absolute; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; text-align: center; }
+    .la-logo-circle { width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.6); display: flex; align-items: center; justify-content: center; }
+    .la-logo-inner { font-family: var(--serif); font-size: 1.1rem; color: rgba(255,255,255,0.9); font-weight: 300; }
+    .la-logo-sub { font-size: 0.4rem; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(255,255,255,0.55); margin-top: 0.3rem; }
+    .la-nav-links { display: flex; gap: 1.8rem; font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.75); }
+
+    /* Hero content — centered text over image */
+    .la-hero-content { position: relative; text-align: center; padding: 5rem 2rem 3rem; }
+    .la-hero h2 { font-family: var(--serif); font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 300; font-style: italic; color: white; line-height: 1.1; margin-bottom: 2rem; }
+    .la-hero-cta { display: inline-block; font-size: 0.58rem; letter-spacing: 0.22em; text-transform: uppercase; color: white; border: 1px solid rgba(255,255,255,0.65); padding: 0.7rem 2.5rem; border-radius: 30px; }
+    .la-hero-pause { position: absolute; bottom: 1.2rem; left: 1.2rem; width: 30px; height: 30px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.4); display: flex; align-items: center; justify-content: center; font-size: 0.55rem; color: rgba(255,255,255,0.7); letter-spacing: 0.05em; }
+
+    /* Intro section — QC SPA OF WONDERS style */
+    .la-intro { padding: 3rem 2.5rem; background: #f5f0e8; text-align: center; }
+    .la-intro-label { font-size: 0.55rem; letter-spacing: 0.28em; text-transform: uppercase; color: #8a7460; margin-bottom: 1.5rem; display: block; }
+    .la-intro h3 { font-family: var(--serif); font-size: clamp(1.4rem, 2.5vw, 2rem); font-weight: 300; font-style: italic; color: #1a1410; line-height: 1.4; max-width: 500px; margin: 0 auto 1rem; }
+    .la-intro-sub { font-size: 0.82rem; line-height: 2; color: #7a6a58; max-width: 360px; margin: 0 auto; }
+
+    /* Services cards carousel-style */
+    .la-servizi { padding: 0 2.5rem 2.5rem; background: #f5f0e8; }
+    .la-servizi-label { font-size: 0.55rem; letter-spacing: 0.28em; text-transform: uppercase; color: #8a7460; margin-bottom: 1.5rem; display: block; }
+    .la-servizi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(0,0,0,0.06); }
+    .la-service-card { background: white; padding: 2rem 1.5rem; }
+    .la-service-symbol { font-size: 1.3rem; color: #b89860; opacity: 0.6; margin-bottom: 1rem; display: block; }
+    .la-service-title { font-family: var(--serif); font-size: 1rem; font-weight: 300; font-style: italic; color: #1a1410; margin-bottom: 0.6rem; }
+    .la-service-desc { font-size: 0.75rem; line-height: 1.9; color: #7a6a58; }
+    .la-service-link { font-size: 0.58rem; letter-spacing: 0.14em; text-transform: uppercase; color: #1a1410; margin-top: 1rem; display: inline-block; }
 
     /* About — dark text left, portrait right */
     .la-about { display: grid; grid-template-columns: 1fr 1fr; }
-    .la-about-text { padding: 3rem 2.5rem; background: var(--deep-mid); display: flex; flex-direction: column; justify-content: center; }
-    .la-about-label { font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ochre); margin-bottom: 0.8rem; }
-    .la-about h3 { font-family: var(--serif); font-size: 1.4rem; font-weight: 300; color: var(--sand); font-style: italic; line-height: 1.35; margin-bottom: 1rem; }
-    .la-about-bio { font-size: 0.78rem; line-height: 2; color: rgba(248,244,237,0.5); }
+    .la-about-text { padding: 3rem 2.5rem; background: #1a1410; display: flex; flex-direction: column; justify-content: center; }
+    .la-about-label { font-size: 0.55rem; letter-spacing: 0.22em; text-transform: uppercase; color: #b89860; margin-bottom: 0.8rem; }
+    .la-about h3 { font-family: var(--serif); font-size: 1.4rem; font-weight: 300; color: #f5f0e8; font-style: italic; line-height: 1.35; margin-bottom: 1rem; }
+    .la-about-bio { font-size: 0.78rem; line-height: 2; color: rgba(245,240,232,0.5); }
     .la-about-img { overflow: hidden; }
     .la-about-img img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; min-height: 260px; }
 
-    /* Services — staggered text list (no cards) */
-    .la-servizi { padding: 3rem 2.5rem; background: white; }
-    .la-servizi-label { font-size: 0.58rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--sage); margin-bottom: 2rem; display: block; }
-    .la-service-item { display: grid; grid-template-columns: 2.5rem 1fr; gap: 1.5rem; padding: 1.8rem 0; border-bottom: 1px solid rgba(0,0,0,0.06); align-items: start; }
-    .la-service-item:first-of-type { border-top: 1px solid rgba(0,0,0,0.06); }
-    .la-service-symbol { font-size: 1.4rem; color: var(--ochre); opacity: 0.35; line-height: 1.1; }
-    .la-service-title { font-family: var(--serif); font-size: 1.05rem; font-weight: 300; font-style: italic; color: var(--deep); margin-bottom: 0.4rem; }
-    .la-service-desc { font-size: 0.78rem; line-height: 1.9; color: var(--warm-gray); }
+    /* Testimonial */
+    .la-quote { padding: 3rem 2.5rem; background: #f5f0e8; text-align: center; }
+    .la-quote-text { font-family: var(--serif); font-size: 1.2rem; font-weight: 300; font-style: italic; color: #1a1410; line-height: 1.75; max-width: 460px; margin: 0 auto 0.8rem; }
+    .la-quote-author { font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: #b89860; }
 
-    /* Testimonial — atmospheric floating, on sand */
-    .la-quote { padding: 3rem 2.5rem; background: var(--sand); text-align: center; border-top: 1px solid rgba(0,0,0,0.05); }
-    .la-quote-text { font-family: var(--serif); font-size: 1.2rem; font-weight: 300; font-style: italic; color: var(--deep); line-height: 1.75; max-width: 460px; margin: 0 auto 0.8rem; }
-    .la-quote-author { font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--warm-gray); }
-
-    /* CTA — sage strip */
-    .la-cta { background: var(--sage); padding: 2.5rem; text-align: center; }
-    .la-cta h3 { font-family: var(--serif); font-size: 1.4rem; font-weight: 300; color: white; font-style: italic; margin-bottom: 0.6rem; }
-    .la-cta p { font-size: 0.78rem; color: rgba(255,255,255,0.6); margin-bottom: 1.5rem; }
-    .la-cta-btn { display: inline-block; font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; background: white; color: var(--sage); padding: 0.7rem 2rem; }
+    /* CTA — dark luxury */
+    .la-cta { background: #1a1410; padding: 2.5rem; text-align: center; }
+    .la-cta h3 { font-family: var(--serif); font-size: 1.4rem; font-weight: 300; color: #f5f0e8; font-style: italic; margin-bottom: 0.6rem; }
+    .la-cta p { font-size: 0.78rem; color: rgba(245,240,232,0.5); margin-bottom: 1.5rem; }
+    .la-cta-btn { display: inline-block; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: #f5f0e8; border: 1px solid rgba(245,240,232,0.5); padding: 0.7rem 2.5rem; border-radius: 30px; }
 
     /* Footer */
-    .la-footer { background: var(--deep); padding: 1.2rem 2.5rem; display: flex; justify-content: space-between; align-items: center; }
-    .la-footer-name { font-family: var(--serif); font-size: 0.75rem; color: rgba(248,244,237,0.35); font-style: italic; }
-    .la-footer-addr { font-size: 0.6rem; letter-spacing: 0.08em; color: rgba(248,244,237,0.2); }
+    .la-footer { background: #0f0c09; padding: 1.2rem 2.5rem; display: flex; justify-content: space-between; align-items: center; }
+    .la-footer-name { font-family: var(--serif); font-size: 0.75rem; color: rgba(245,240,232,0.35); font-style: italic; }
+    .la-footer-addr { font-size: 0.6rem; letter-spacing: 0.08em; color: rgba(245,240,232,0.2); }
 
     /* CTA section */
     .cta-section {
@@ -246,8 +256,9 @@
       .traduzione-grid { grid-template-columns: 1fr; }
       .step4 .demo-frame { margin: 0 -1.5rem; border-radius: 8px; }
       .la-nav-links { display: none; }
+      .la-servizi-grid { grid-template-columns: 1fr; }
       .la-about { grid-template-columns: 1fr; }
-      .la-about-img { min-height: 220px; }
+      .la-about-img { min-height: 200px; }
       .la-servizi { padding: 2rem 1.5rem; }
       .la-quote { padding: 2rem 1.5rem; }
       .la-cta { padding: 2rem 1.5rem; }
@@ -263,13 +274,13 @@
   <section class="hero">
     <div class="hero-left">
       <span class="hero-tag">Caso Studio</span>
-      <h1>Dal silenzio<br />di <em>un ritiro</em><br />a Torino</h1>
+      <h1>Dal lusso calmo<br />di <em>QC Terme</em><br />a Torino</h1>
       <p class="hero-sub">Come si costruisce un sito per un'operatrice olistica che vuole trasmettere profondità, non esoterismo.</p>
     </div>
     <div class="hero-meta">
       <div class="hero-meta-item"><span class="hero-meta-label">Cliente</span><span class="hero-meta-val">Letizia Amato — Torino</span></div>
       <div class="hero-meta-item"><span class="hero-meta-label">Settore</span><span class="hero-meta-val">Reiki · Sound Healing</span></div>
-      <div class="hero-meta-item"><span class="hero-meta-label">Ispirazione</span><span class="hero-meta-val">Estetica wellness retreat</span></div>
+      <div class="hero-meta-item"><span class="hero-meta-label">Ispirazione</span><span class="hero-meta-val">qcterme.com</span></div>
       <div class="hero-meta-item"><span class="hero-meta-label">Tempo</span><span class="hero-meta-val">Costruito in 2 giorni</span></div>
     </div>
   </section>
@@ -281,19 +292,19 @@
       <div class="step-label fade-in"><span class="step-num">1</span>Il Riferimento</div>
       <div class="insp-card fade-in">
         <div class="insp-screenshot">
-          <img src="/images/portfolio/sixsenses-screenshot.jpg" alt="Screenshot reale di sixsenses.com" />
-          <span class="screenshot-label">sixsenses.com — screenshot reale</span>
+          <img src="/images/portfolio/qcterme-screenshot.jpg" alt="Screenshot reale di qcterme.com" />
+          <span class="screenshot-label">qcterme.com — screenshot reale</span>
         </div>
         <div class="insp-info">
           <div class="site-tag">Fonte di ispirazione</div>
-          <div class="site-name">Six Senses</div>
-          <div class="site-url">sixsenses.com</div>
+          <div class="site-name">QC Terme</div>
+          <div class="site-url">qcterme.com</div>
           <div class="tags">
-            <span class="tag">Molto spazio bianco</span>
-            <span class="tag">Palette terra</span>
+            <span class="tag">luxury wellness italiano</span>
+            <span class="tag">Palette terra scura</span>
             <span class="tag">Serif lento</span>
-            <span class="tag">Foto d'ambiente</span>
-            <span class="tag">Linguaggio diretto</span>
+            <span class="tag">Hero full-bleed moody</span>
+            <span class="tag">Nav trasparente</span>
           </div>
           <div class="insp-quote">
             <p>"Non voglio un sito che sembri una boutique new age con cristalli e simboli. Voglio qualcosa di pulito, sereno — che faccia capire che questo è un lavoro serio, che parte dal corpo."</p>
@@ -386,24 +397,31 @@
         </div>
 
         <div class="la-site">
-          <div class="la-nav">
-            <div class="la-logo">Letizia Amato</div>
-            <div class="la-nav-links">
-              <span>Chi sono</span>
-              <span>Sedute</span>
-              <span>Contatti</span>
+          <div class="la-hero">
+            <img class="la-hero-bg-img" src="/images/portfolio/olistico-space.jpg" alt="" />
+            <nav class="la-nav">
+              <div></div>
+              <div class="la-nav-logo-wrapper">
+                <div class="la-logo-circle"><span class="la-logo-inner">L</span></div>
+                <div class="la-logo-sub">Wellness · Torino</div>
+              </div>
+              <div class="la-nav-links">
+                <span>Prenota</span>
+                <span>Gift</span>
+                <span>Percorsi</span>
+              </div>
+            </nav>
+            <div class="la-hero-content">
+              <h2>Un'ora per<br />tornare a te stessa.</h2>
+              <a href="#" class="la-hero-cta">Tutte le sedute</a>
             </div>
-            <div class="la-nav-cta">Prenota una seduta</div>
+            <div class="la-hero-pause">II</div>
           </div>
 
-          <div class="la-hero-img-full">
-            <img src="/images/portfolio/olistico-space.jpg" alt="Lo spazio di Letizia" />
-          </div>
-          <div class="la-hero-text">
-            <span class="la-hero-eyebrow">Reiki · Sound Healing · Torino</span>
-            <h2>Un'ora per<br />tornare a te stessa.</h2>
-            <p class="la-hero-sub">Lavoro con il corpo e con il suono per aiutare chi sente di aver perso il filo. Non serve credere a nulla — serve solo presentarsi.</p>
-            <a href="#" class="la-hero-cta">Prenota una seduta</a>
+          <div class="la-intro">
+            <span class="la-intro-label">Letizia Amato</span>
+            <h3>Reiki, Sound Healing<br />e presenza.</h3>
+            <p class="la-intro-sub">Un'operatrice olistica a Torino che lavora con il corpo e con il suono per chi sente di aver perso il filo.</p>
           </div>
 
           <div class="la-about">
@@ -419,25 +437,30 @@
 
           <div class="la-servizi">
             <span class="la-servizi-label">Le sedute</span>
-            <div class="la-service-item">
-              <div class="la-service-symbol">✦</div>
-              <div>
+            <div class="la-servizi-grid">
+              <div class="la-service-card">
+                <span class="la-service-symbol">✦</span>
                 <div class="la-service-title">Seduta di Reiki</div>
                 <p class="la-service-desc">60 minuti di trattamento energetico sul corpo. Per chi vuole sciogliere tensioni fisiche o attraversa un periodo di stanchezza profonda.</p>
+                <span class="la-service-link">Scopri di più →</span>
               </div>
-            </div>
-            <div class="la-service-item">
-              <div class="la-service-symbol">◎</div>
-              <div>
+              <div class="la-service-card">
+                <span class="la-service-symbol">◎</span>
                 <div class="la-service-title">Bagno di Suono</div>
-                <p class="la-service-desc">75 minuti con bol tibetani e campane cristallo. Le vibrazioni agiscono sul sistema nervoso in modo diretto, senza mediazioni mentali.</p>
+                <p class="la-service-desc">75 minuti con bol tibetani e campane cristallo. Le vibrazioni agiscono sul sistema nervoso in modo diretto.</p>
+                <span class="la-service-link">Scopri di più →</span>
               </div>
-            </div>
-            <div class="la-service-item">
-              <div class="la-service-symbol">∿</div>
-              <div>
+              <div class="la-service-card">
+                <span class="la-service-symbol">∿</span>
                 <div class="la-service-title">Percorso Mensile</div>
-                <p class="la-service-desc">4 incontri nel mese, alternando reiki e suono. Per chi vuole lavorare su un tema specifico o crearsi uno spazio fisso di cura.</p>
+                <p class="la-service-desc">4 incontri nel mese, alternando reiki e suono. Per chi vuole lavorare su un tema specifico.</p>
+                <span class="la-service-link">Scopri di più →</span>
+              </div>
+              <div class="la-service-card">
+                <span class="la-service-symbol">◇</span>
+                <div class="la-service-title">Prima seduta</div>
+                <p class="la-service-desc">Un incontro introduttivo a prezzo ridotto per capire quale seduta fa per te.</p>
+                <span class="la-service-link">Prenota →</span>
               </div>
             </div>
           </div>
