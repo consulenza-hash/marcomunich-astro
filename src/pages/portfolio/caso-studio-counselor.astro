@@ -129,23 +129,27 @@
     /* ── Giulia Ferretti mini-site — ESTHER PEREL style ── */
     .gf-site { background: white; font-family: var(--sans); }
 
-    /* Nav — white card bar, serif name, pill subscribe button */
-    .gf-nav { padding: 1.2rem 2.5rem; display: flex; justify-content: space-between; align-items: center; background: white; box-shadow: 0 1px 0 rgba(0,0,0,0.08); }
+    /* Nav — white floating rounded card, serif name, orange pill */
+    .gf-nav { margin: 0.8rem; border-radius: 14px; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; background: white; box-shadow: 0 4px 22px rgba(0,0,0,0.1); }
     .gf-logo { font-family: var(--serif); font-size: 1.1rem; font-weight: 400; color: var(--ink); letter-spacing: 0.01em; }
-    .gf-nav-links { display: flex; gap: 2rem; font-size: 0.68rem; letter-spacing: 0.08em; color: #888; }
-    .gf-nav-cta { font-size: 0.68rem; letter-spacing: 0.08em; background: #e07a2a; color: white; padding: 0.45rem 1.1rem; border-radius: 20px; display: inline-block; }
+    .gf-nav-links { display: flex; gap: 1.3rem; font-size: 0.68rem; color: #555; }
+    .gf-nav-cta { font-size: 0.68rem; background: #e07a2a; color: white; padding: 0.4rem 1rem; border-radius: 20px; display: inline-flex; align-items: center; gap: 0.3rem; }
 
-    /* Hero — full-bleed portrait on deep blue/steel-blue background */
-    .gf-hero { position: relative; overflow: hidden; background: #22344a; }
-    .gf-hero-bg-img { width: 100%; height: 100%; position: absolute; inset: 0; object-fit: cover; object-position: center top; display: block; }
-    .gf-hero-overlay { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(15,28,48,0.75) 0%, rgba(15,28,48,0.3) 55%, rgba(15,28,48,0.05) 100%); }
-    .gf-hero-content { position: relative; padding: 2.5rem 2.5rem 4rem; min-height: 400px; display: flex; flex-direction: column; justify-content: flex-end; }
-    .gf-hero-eyebrow { font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.55); margin-bottom: 0.8rem; display: block; }
-    .gf-hero h2 { font-family: var(--serif); font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 400; line-height: 1.2; color: white; max-width: 420px; margin-bottom: 1.8rem; }
-    .gf-hero-cta { display: inline-block; font-size: 0.7rem; letter-spacing: 0.06em; background: white; color: var(--ink); padding: 0.65rem 1.6rem; border-radius: 28px; font-weight: 500; }
-    .gf-hero-dots { position: absolute; bottom: 1.5rem; left: 2.5rem; display: flex; gap: 0.5rem; }
-    .gf-hero-dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.35); }
-    .gf-hero-dot.active { background: white; }
+    /* Hero — warm beige/sand bg, two-column: text left, portrait right */
+    .gf-hero { background: #c8b09a; display: grid; grid-template-columns: 1fr 1fr; position: relative; min-height: 400px; overflow: hidden; }
+    .gf-hero-text { padding: 2.5rem 2.5rem 5rem 2.5rem; display: flex; flex-direction: column; justify-content: center; position: relative; }
+    .gf-hero-category { display: inline-block; background: #1c2d3e; color: white; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.06em; padding: 0.22rem 0.6rem; margin-bottom: 1.2rem; width: fit-content; }
+    .gf-hero h2 { font-family: var(--serif); font-size: clamp(1.5rem, 2.8vw, 2.2rem); font-weight: 400; color: #1c2d3e; line-height: 1.2; margin-bottom: 1rem; }
+    .gf-hero-desc { font-size: 0.78rem; color: #3a4050; line-height: 1.7; margin-bottom: 1.5rem; max-width: 260px; }
+    .gf-hero-cta { display: inline-block; background: white; color: #1c2d3e; padding: 0.65rem 1.6rem; border-radius: 28px; font-size: 0.7rem; font-weight: 500; width: fit-content; text-decoration: none; }
+    .gf-hero-image { overflow: hidden; }
+    .gf-hero-image img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
+    .gf-hero-bottom { position: absolute; bottom: 1.5rem; left: 2.5rem; right: 2.5rem; display: flex; justify-content: space-between; align-items: center; }
+    .gf-hero-dots { display: flex; gap: 0.5rem; }
+    .gf-hero-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(28,45,62,0.22); }
+    .gf-hero-dot.active { background: #1c2d3e; }
+    .gf-hero-arrows { display: flex; gap: 0.6rem; }
+    .gf-arrow-btn { width: 34px; height: 34px; border-radius: 50%; background: #1c2d3e; color: white; border: none; display: flex; align-items: center; justify-content: center; font-size: 0.82rem; cursor: pointer; }
 
     /* Topics pills */
     .gf-topics { padding: 1.8rem 2.5rem; background: #f6f2ec; }
@@ -205,7 +209,10 @@
       .traduzione-grid { grid-template-columns: 1fr; }
       .step4 .demo-frame { margin: 0 -1.5rem; border-radius: 8px; }
       .gf-nav-links { display: none; }
-      .gf-hero-content { padding: 1.5rem 1.5rem 3rem; }
+      .gf-nav { margin: 0.5rem; padding: 0.85rem 1.2rem; }
+      .gf-hero { grid-template-columns: 1fr; }
+      .gf-hero-text { padding: 2rem 1.5rem 5rem; }
+      .gf-hero-image { min-height: 240px; }
       .gf-about { grid-template-columns: 1fr; gap: 1rem; padding: 2rem 1.5rem; }
       .gf-servizi { padding: 2rem 1.5rem; }
       .gf-testi { padding: 2rem 1.5rem; }
@@ -344,27 +351,37 @@
           <div class="gf-nav">
             <div class="gf-logo">Giulia Ferretti</div>
             <div class="gf-nav-links">
-              <span>Chi sono</span>
-              <span>Percorsi</span>
-              <span>Contatti</span>
+              <span>Risorse ▾</span>
+              <span>Percorsi ▾</span>
+              <span>Temi ▾</span>
+              <span>Su di me</span>
+              <span><em>Sessioni Live</em></span>
             </div>
-            <a href="#" class="gf-nav-cta">Prima consultazione gratuita</a>
+            <a href="#" class="gf-nav-cta">🔖 Iscriviti</a>
           </div>
 
           <div class="gf-hero">
-            <img class="gf-hero-bg-img" src="/images/portfolio/counselor-hero.jpg" alt="" />
-            <div class="gf-hero-overlay"></div>
-            <div class="gf-hero-content">
-              <span class="gf-hero-eyebrow">Counselor Relazionale · Torino</span>
+            <div class="gf-hero-text">
+              <div class="gf-hero-category">Counseling Relazionale</div>
               <h2>Un posto dove<br />puoi dire le cose<br />come stanno.</h2>
+              <p class="gf-hero-desc">Giulia ti aiuta a trovare chiarezza nelle relazioni difficili — con gli altri, e con te stessa.</p>
               <a href="#" class="gf-hero-cta">Parliamo, è gratuito</a>
             </div>
-            <div class="gf-hero-dots">
-              <div class="gf-hero-dot active"></div>
-              <div class="gf-hero-dot"></div>
-              <div class="gf-hero-dot"></div>
-              <div class="gf-hero-dot"></div>
-              <div class="gf-hero-dot"></div>
+            <div class="gf-hero-image">
+              <img src="/images/portfolio/counselor-hero.jpg" alt="" />
+            </div>
+            <div class="gf-hero-bottom">
+              <div class="gf-hero-dots">
+                <div class="gf-hero-dot active"></div>
+                <div class="gf-hero-dot"></div>
+                <div class="gf-hero-dot"></div>
+                <div class="gf-hero-dot"></div>
+                <div class="gf-hero-dot"></div>
+              </div>
+              <div class="gf-hero-arrows">
+                <button class="gf-arrow-btn">←</button>
+                <button class="gf-arrow-btn">→</button>
+              </div>
             </div>
           </div>
 

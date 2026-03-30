@@ -164,23 +164,22 @@
     /* ── Letizia Amato mini-site — QC TERME style luxury wellness ── */
     .la-site { background: #f5f0e8; font-family: var(--sans); }
 
-    /* Hero wrapper — full-bleed with nav overlaid on top */
-    .la-hero { position: relative; min-height: 460px; overflow: hidden; background: #1a1410; display: flex; flex-direction: column; justify-content: flex-end; }
-    .la-hero-bg-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(0.55); }
+    /* Hero wrapper — full-bleed with nav overlaid on top (QC Terme style: no headline) */
+    .la-hero { position: relative; min-height: 460px; overflow: hidden; background: #1a1410; display: flex; flex-direction: column; justify-content: center; padding-bottom: 2rem; }
+    .la-hero-bg-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(0.5); }
 
     /* Nav — transparent, absolute on hero */
     .la-nav { position: absolute; top: 0; left: 0; right: 0; display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 2rem; z-index: 10; }
     .la-nav-logo-wrapper { position: absolute; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; text-align: center; }
-    .la-logo-circle { width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.6); display: flex; align-items: center; justify-content: center; }
-    .la-logo-inner { font-family: var(--serif); font-size: 1.1rem; color: rgba(255,255,255,0.9); font-weight: 300; }
-    .la-logo-sub { font-size: 0.4rem; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(255,255,255,0.55); margin-top: 0.3rem; }
-    .la-nav-links { display: flex; gap: 1.8rem; font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.75); }
+    .la-logo-circle { width: 46px; height: 46px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.75); display: flex; align-items: center; justify-content: center; }
+    .la-logo-inner { font-family: var(--serif); font-size: 1.2rem; color: rgba(255,255,255,0.95); font-weight: 300; }
+    .la-logo-sub { font-size: 0.38rem; letter-spacing: 0.32em; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-top: 0.3rem; }
+    .la-nav-links { display: flex; gap: 1.8rem; font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.8); }
 
-    /* Hero content — centered text over image */
-    .la-hero-content { position: relative; text-align: center; padding: 5rem 2rem 3rem; }
-    .la-hero h2 { font-family: var(--serif); font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 300; font-style: italic; color: white; line-height: 1.1; margin-bottom: 2rem; }
-    .la-hero-cta { display: inline-block; font-size: 0.58rem; letter-spacing: 0.22em; text-transform: uppercase; color: white; border: 1px solid rgba(255,255,255,0.65); padding: 0.7rem 2.5rem; border-radius: 30px; }
-    .la-hero-pause { position: absolute; bottom: 1.2rem; left: 1.2rem; width: 30px; height: 30px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.4); display: flex; align-items: center; justify-content: center; font-size: 0.55rem; color: rgba(255,255,255,0.7); letter-spacing: 0.05em; }
+    /* Hero content — NO headline, just centered CTA pill (QC Terme style) */
+    .la-hero-content { position: relative; z-index: 2; text-align: center; padding: 0 2rem; flex: 1; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 2.5rem; }
+    .la-hero-cta { display: inline-block; font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: #1a1410; background: rgba(255,255,255,0.93); border: 1.5px solid rgba(26,20,16,0.7); padding: 0.8rem 3rem; border-radius: 30px; font-weight: 500; text-decoration: none; }
+    .la-hero-pause { position: absolute; bottom: 1.2rem; left: 1.2rem; width: 32px; height: 32px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.5); background: rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; font-size: 0.55rem; color: white; z-index: 10; }
 
     /* Intro section — QC SPA OF WONDERS style */
     .la-intro { padding: 3rem 2.5rem; background: #f5f0e8; text-align: center; }
@@ -412,10 +411,9 @@
               </div>
             </nav>
             <div class="la-hero-content">
-              <h2>Un'ora per<br />tornare a te stessa.</h2>
-              <a href="#" class="la-hero-cta">Tutte le sedute</a>
+              <a href="#" class="la-hero-cta">Tutte le destinazioni</a>
             </div>
-            <div class="la-hero-pause">II</div>
+            <div class="la-hero-pause">⏸</div>
           </div>
 
           <div class="la-intro">
