@@ -198,6 +198,9 @@ export const prerender = true;
     .demo-dot.green { background: #28c840; }
     .demo-url { flex: 1; text-align: center; font-size: 0.72rem; color: var(--warm-gray); font-family: monospace; background: var(--white); padding: 0.2rem 0.8rem; border-radius: 4px; max-width: 240px; margin: 0 auto; }
 
+    /* Demo wrapper */
+    .demo-wrap { padding: 0 3rem; max-width: 1100px; margin: 0 auto; }
+
     /* Erba Pura mini-site */
     .ep-nav {
       display: flex; justify-content: space-between; align-items: center;
@@ -313,11 +316,15 @@ export const prerender = true;
       .insp-site { border-right: none; border-bottom: 1px solid var(--cream-dark); }
       .extracted-grid { grid-template-columns: 1fr; }
       .translation-grid { grid-template-columns: 1fr; }
+      .demo-wrap { padding: 0; }
       .ep-nav-links { display: none; }
+      .ep-nav { padding: 1rem 1.2rem; }
       .ep-hero { grid-template-columns: 1fr; }
+      .ep-hero-content { padding: 2.5rem 1.5rem; }
       .ep-hero-image { height: 260px; }
+      .ep-products { padding: 2rem 1.5rem; }
       .ep-product-grid { grid-template-columns: repeat(2, 1fr); }
-      .ep-manifesto { grid-template-columns: 1fr; gap: 1.5rem; }
+      .ep-manifesto { grid-template-columns: 1fr; gap: 1.5rem; padding: 2rem 1.5rem; }
       .ep-founder { display: none; }
       .testimonial-box { grid-template-columns: 1fr; }
       .hero-meta { flex-wrap: wrap; gap: 1.5rem; }
@@ -459,7 +466,7 @@ export const prerender = true;
       <div class="step-label result-label fade-in"><span class="step-num">4</span>Il Risultato</div>
     </div>
 
-    <div style="padding: 0 3rem; max-width: 1100px; margin: 0 auto;">
+    <div class="demo-wrap">
       <div class="demo-frame fade-in">
         <div class="demo-bar">
           <div class="demo-dot red"></div>
