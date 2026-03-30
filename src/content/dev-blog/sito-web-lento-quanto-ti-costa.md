@@ -6,54 +6,56 @@ tags: ["Performance", "Web", "Conversioni"]
 readTime: "5 min"
 ---
 
-Google ha pubblicato un dato che vale la pena stampare e attaccare al muro: ogni secondo di ritardo nel caricamento di una pagina mobile riduce le conversioni del 20%. È il risultato dell'analisi su milioni di sessioni reali. Se il tuo sito impiega 4 secondi a caricarsi, stai perdendo circa il 60% delle persone che ci arrivano prima ancora che vedano cosa vendi.
+Google ha pubblicato un dato concreto: ogni secondo di ritardo nel caricamento di una pagina mobile riduce le conversioni del 20%. È il risultato dell'analisi su milioni di sessioni reali. Se il tuo sito impiega 4 secondi a caricarsi, stai perdendo circa il 60% delle persone che ci arrivano prima ancora che vedano cosa vendi.
 
 ## Perché i siti lenti esistono ancora?
 
 ![Sito web lento: quanto costa in clienti persi](/images/dev-blog/sito-web-lento.png)
 
-La causa più comune è tecnica ma evitabile: siti costruiti su WordPress con dieci plugin attivi, immagini da 3MB non compresse, JavaScript che blocca il rendering, hosting condiviso con risorse limitate.
+La causa più comune è tecnica ma evitabile: siti costruiti con molti componenti aggiuntivi che si caricano tutti insieme, immagini pesanti non ottimizzate, e server che devono fare molto lavoro prima di mostrare qualcosa all'utente.
 
-Ogni plugin aggiunto a WordPress carica CSS e JavaScript aggiuntivi. Ogni immagine non ottimizzata occupa banda. Ogni script di terze parti (chat, analitici, pixel di tracciamento) rallenta il caricamento della pagina prima che l'utente veda qualcosa. Il risultato è un sito che funziona bene sul computer dell'agenzia che l'ha costruito, con connessione veloce e cache del browser piena, e male sul telefono di un nuovo visitatore con una connessione 4G normale.
+Ogni funzionalità aggiunta a un sito porta del codice extra che il browser del visitatore deve scaricare ed eseguire. Ogni immagine da 3MB occupa banda. Ogni servizio di terze parti — chat dal vivo, strumenti di analisi, pixel pubblicitari — rallenta il caricamento. Il risultato è un sito che sembra veloce sul computer di chi lo ha costruito, con la cache piena e una connessione rapida, ma lento sul telefono di un nuovo visitatore con una connessione normale.
 
 ## Come Google misura la velocità?
 
-Google usa i Core Web Vitals come segnale di ranking diretto. I tre parametri principali sono:
+Google usa tre parametri specifici per valutare la velocità di un sito e usarla come fattore di posizionamento nei risultati di ricerca.
 
-**LCP (Largest Contentful Paint).** Quanto tempo passa prima che il contenuto principale della pagina sia visibile. Google considera buono meno di 2,5 secondi. Sopra i 4 secondi, il sito viene classificato come lento.
+**Quanto tempo passa prima che la pagina sia visibile.** Google considera buono meno di 2,5 secondi. Sopra i 4 secondi, il sito viene classificato come lento e penalizzato nel ranking.
 
-**INP (Interaction to Next Paint).** Quanto aspetta l'utente tra il click su un elemento e la risposta del browser. Rilevante per siti con molto JavaScript.
+**Quanto aspetta l'utente dopo aver cliccato su qualcosa.** Se il sito è appesantito da molti script, risponde lentamente anche ai click, e questo conta nel punteggio finale.
 
-**CLS (Cumulative Layout Shift).** Quanto si muovono gli elementi della pagina mentre carica. Gli annunci che appaiono e spostano il testo, i font che cambiano le dimensioni dei titoli: tutto contribuisce a un punteggio negativo.
+**Quanto si muovono gli elementi della pagina mentre carica.** Annunci che appaiono e spostano il testo, immagini che cambiano posizione: ogni spostamento inaspettato abbassa il punteggio e rende l'esperienza frustrante su mobile.
 
-Un sito con Core Web Vitals nella zona rossa viene penalizzato nel ranking rispetto a siti concorrenti con contenuto simile ma tempi di caricamento migliori.
+Un sito con questi parametri nella zona rossa viene penalizzato rispetto a siti concorrenti con contenuto simile ma tempi di caricamento migliori.
 
 ## Perché i siti statici caricano più velocemente?
 
-La differenza di performance più netta è tra siti statici e siti dinamici generati a runtime. Un sito WordPress, ogni volta che un visitatore apre una pagina, fa una query al database, assembla l'HTML, applica i template e esegue i plugin, tutto questo prima di inviare qualcosa al browser. Anche con un buon hosting, questo processo richiede centinaia di millisecondi.
+La differenza di performance più netta è tra siti costruiti in due modi diversi.
 
-Un sito statico, con HTML pre-generato al momento del deploy, risponde in 20-50ms perché il file esiste già sul server. Per la maggior parte dei siti aziendali (vetrina, landing page, portfolio, blog) non c'è nessuna ragione tecnica per usare un'architettura dinamica: i siti statici moderni gestiscono aggiornamenti di contenuto tramite CMS visuale, ma servono pagine pre-generate a velocità molto superiori.
+Un sito WordPress, ogni volta che qualcuno apre una pagina, deve fare una serie di operazioni: interrogare il database, assemblare la pagina, applicare il tema e tutti i componenti aggiuntivi installati, e solo a questo punto invia qualcosa al browser. Anche con un buon server, questo processo richiede tempo.
+
+Un sito statico funziona diversamente: la pagina è già pronta sul server prima che qualcuno la richieda. Non c'è nulla da calcolare al momento della visita. Il browser riceve il file già pronto e lo mostra in pochi decimi di secondo. Per la maggior parte dei siti aziendali — vetrina, landing page, portfolio, blog — non c'è nessuna ragione tecnica per usare un'architettura più lenta.
 
 ## Come incide la velocità sulla visibilità AI?
 
-I motori AI crawlano i siti per costruire la loro base di conoscenza. I bot AI hanno un budget di crawling limitato e lo usano su siti che rispondono velocemente. Un sito che impiega 4 secondi a rispondere viene visitato con frequenza molto inferiore rispetto a uno che risponde in 200ms, il che significa che i contenuti vengono indicizzati più lentamente e in alcuni casi non vengono indicizzati affatto.
+I motori AI visitano i siti per raccogliere informazioni. Hanno però un limite al numero di pagine che possono visitare ogni giorno, e lo usano principalmente sui siti che rispondono velocemente. Un sito che impiega 4 secondi a rispondere viene visitato con molta meno frequenza rispetto a uno che risponde in meno di un secondo, il che significa che i contenuti vengono aggiornati più lentamente nelle basi di conoscenza dei motori AI.
 
 ## Cosa cambia con un sito ben costruito?
 
-I siti che realizzo con Astro ottengono punteggi Lighthouse tra 95 e 100 su performance anche senza ottimizzazioni post-lancio, perché l'architettura di default è già corretta. Le immagini vengono ottimizzate automaticamente in formato WebP, il JavaScript viene caricato solo dove necessario, il CSS non blocca il rendering e l'hosting su CDN distribuita garantisce tempi di risposta bassi da qualsiasi posizione geografica.
+I siti che realizzo ottengono punteggi molto alti sui test di velocità di Google anche senza ottimizzazioni specifiche post-lancio, perché l'architettura di partenza è già corretta. Le immagini vengono ottimizzate automaticamente, il codice si carica solo dove serve, e il sito è distribuito su server in tutto il mondo in modo che risponda velocemente da qualsiasi posizione geografica.
 
-Se vuoi vedere come si posiziona il tuo sito attuale, puoi testarlo su PageSpeed Insights (pagespeed.web.dev): è gratuito e restituisce i Core Web Vitals reali dei tuoi visitatori negli ultimi 28 giorni. Se il punteggio è sotto 70, vale la pena parlarne. [Contattami qui](/dev/contatti).
+Se vuoi vedere come si posiziona il tuo sito attuale, puoi testarlo su PageSpeed Insights (pagespeed.web.dev): è gratuito e mostra i dati reali dei tuoi visitatori degli ultimi 28 giorni. Se il punteggio è sotto 70, vale la pena parlarne. [Contattami qui](/dev/contatti).
 
 ## FAQ
 
 **Q: Qual è il punteggio PageSpeed minimo accettabile?**
-A: Google considera buoni i punteggi sopra 90. Tra 50 e 89 c'è margine di miglioramento. Sotto 50, il sito ha problemi di performance che incidono sul ranking e sul tasso di abbandono degli utenti mobile.
+A: Google considera buoni i punteggi sopra 90. Tra 50 e 89 c'è margine di miglioramento. Sotto 50, il sito ha problemi che incidono sul ranking e sulla percentuale di persone che abbandonano la pagina prima di vedere il contenuto.
 
-**Q: Un sito WordPress può raggiungere punteggi alti su PageSpeed?**
-A: Sì, con un tema leggero, pochi plugin e un hosting ottimizzato. Raggiungere 90+ su WordPress richiede però configurazione continua e attenzione a ogni plugin aggiunto. Un sito statico parte già a 95+ senza ottimizzazioni specifiche.
+**Q: Un sito WordPress può essere veloce?**
+A: Sì, ma richiede configurazione continua e attenzione a ogni modifica apportata. Un sito statico parte già con punteggi alti senza bisogno di interventi specifici.
 
 **Q: Quanto incide la velocità sul tasso di conversione?**
 A: Secondo i dati Google, ogni secondo di ritardo riduce le conversioni del 20%. Un sito che passa da 4 secondi a 1 secondo può vedere un aumento delle conversioni del 30-50%, a parità di traffico e contenuto.
 
-**Q: Il mio hosting influisce sulla velocità del sito?**
-A: Molto. Un hosting condiviso economico può aggiungere 500ms-2 secondi solo per il Time to First Byte (TTFB). Un sito statico su CDN (Cloudflare Pages, Netlify) ha TTFB sotto i 50ms da qualsiasi posizione geografica.
+**Q: L'hosting influisce sulla velocità del sito?**
+A: Molto. Un hosting condiviso economico può aggiungere 1-2 secondi solo per il tempo di risposta iniziale del server. Un sito statico su infrastruttura distribuita ha tempi di risposta bassi da qualsiasi posizione geografica.
