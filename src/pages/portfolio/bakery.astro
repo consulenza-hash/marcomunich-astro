@@ -6,7 +6,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Forno Rossi — Pasticceria Artigianale Verona</title>
+  <title>Forno Rossi — Panificio Artigianale Verona</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
@@ -162,6 +162,17 @@
     .footer-name { font-family: var(--serif); font-size: 0.85rem; color: var(--muted); font-style: italic; }
     .footer-addr { font-size: 0.62rem; letter-spacing: 0.06em; color: var(--muted); }
 
+    /* ── Back btn ── */
+    .back-btn {
+      position: fixed; bottom: 2rem; left: 1.5rem; z-index: 999;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--espresso); color: rgba(250,245,238,0.7);
+      text-decoration: none; font-family: var(--sans);
+      font-size: 0.8rem; letter-spacing: 0.05em; padding: 0.55rem 1rem;
+      border-radius: 2rem; transition: all 0.2s;
+    }
+    .back-btn:hover { color: var(--cream); }
+
     /* ── Responsive ── */
     @media (max-width: 768px) {
       .nav-links { display: none; }
@@ -177,6 +188,7 @@
   </style>
 </head>
 <body>
+  <a href="/dev/portfolio" class="back-btn">← Portfolio</a>
 
   <nav class="nav">
     <div class="nav-logo">Forno Rossi</div>
@@ -195,9 +207,9 @@
     <img src="/images/portfolio/bakery-hero.jpg" alt="Forno Rossi — Verona" />
   </div>
   <div class="hero-caption">
-    <div class="hero-caption-eyebrow">Verona · Artigianale dal 1962</div>
+    <div class="hero-caption-eyebrow">Verona · Panificio dal 1962</div>
     <h1>Pane fatto a mano.<br /><em>Ogni mattina, come una volta.</em></h1>
-    <p class="hero-caption-sub">Tre generazioni di famiglia Rossi, lo stesso lievito madre da sessant'anni, farine macinate a pietra dal Molino Quaglia.</p>
+    <p class="hero-caption-sub">Tre generazioni di famiglia Rossi, lo stesso lievito madre da sessant'anni, farine macinate a pietra dal Mulino Quaglia di Vighizzolo.</p>
   </div>
 
   <div class="prodotti">
@@ -205,14 +217,14 @@
       <img src="/images/portfolio/bakery-product.jpg" alt="Cornetti e pasticceria" />
     </div>
     <div class="prodotti-text">
-      <div class="prodotti-eyebrow">Le nostre specialità</div>
-      <h2>Ogni pezzo ha<br />la sua storia</h2>
+      <div class="prodotti-eyebrow">Dal nostro forno</div>
+      <h2>Ogni pane ha<br />la sua storia</h2>
       <ul class="prodotti-list">
-        <li><span class="name">Cornetto al burro</span><span class="price">€ 1,40</span></li>
         <li><span class="name">Pane di pasta madre</span><span class="price">€ 6,50 / kg</span></li>
+        <li><span class="name">Pane di segale</span><span class="price">€ 5,80 / kg</span></li>
         <li><span class="name">Focaccia al rosmarino</span><span class="price">€ 3,20</span></li>
         <li><span class="name">Ciabatta integrale</span><span class="price">€ 2,80</span></li>
-        <li><span class="name">Torta di mele della nonna</span><span class="price">€ 18 intera</span></li>
+        <li><span class="name">Grissini artigianali</span><span class="price">€ 2,20</span></li>
       </ul>
     </div>
   </div>
@@ -253,7 +265,7 @@
   </div>
 
   <div class="footer">
-    <div class="footer-name">Forno Rossi — Pasticceria Artigianale</div>
+    <div class="footer-name">Forno Rossi — Panificio Artigianale</div>
     <div class="footer-addr">Verona · Via Mazzini 14 · +39 045 803 2218</div>
   </div>
 
