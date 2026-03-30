@@ -179,35 +179,51 @@
     .demo-dot.green { background: #28c840; }
     .demo-url { flex: 1; text-align: center; font-size: 0.72rem; color: #888; font-family: monospace; background: white; padding: 0.2rem 0.8rem; border-radius: 4px; max-width: 220px; margin: 0 auto; }
 
-    /* Vigna dei Colli mini-site */
-    .vdc-nav { display: flex; justify-content: space-between; align-items: center; padding: 1rem 2.5rem; border-bottom: 1px solid rgba(0,0,0,0.06); }
-    .vdc-logo { font-family: var(--serif); font-size: 0.95rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--dark); font-weight: 400; }
-    .vdc-links { display: flex; gap: 2rem; font-size: 0.72rem; color: var(--muted); letter-spacing: 0.06em; }
-    .vdc-book { font-size: 0.7rem; background: var(--dark); color: var(--cream); padding: 0.4rem 1.1rem; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; }
-    .vdc-hero { display: grid; grid-template-columns: 1fr 1fr; min-height: 380px; }
-    .vdc-hero-text { padding: 3rem 2.5rem; display: flex; flex-direction: column; justify-content: center; background: var(--bg); }
-    .vdc-hero-tag { font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.2rem; }
-    .vdc-hero-text h2 { font-family: var(--serif); font-size: clamp(1.4rem, 2.5vw, 2rem); font-weight: 300; line-height: 1.2; color: var(--dark); margin-bottom: 0.8rem; }
-    .vdc-hero-text h2 em { color: var(--terra); font-style: italic; }
-    .vdc-hero-text p { font-size: 0.8rem; line-height: 1.7; color: var(--muted); margin-bottom: 1.5rem; max-width: 300px; }
-    .vdc-hero-cta { display: inline-block; background: var(--terra); color: white; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.6rem 1.4rem; text-decoration: none; width: fit-content; }
-    .vdc-hero-img { overflow: hidden; }
-    .vdc-hero-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .vdc-rooms { padding: 2.5rem; background: white; }
-    .vdc-rooms-label { font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--terra); margin-bottom: 0.4rem; }
-    .vdc-rooms h3 { font-family: var(--serif); font-size: 1.4rem; font-weight: 300; color: var(--dark); margin-bottom: 1.5rem; }
-    .vdc-rooms-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
-    .vdc-room-img { aspect-ratio: 4/3; overflow: hidden; margin-bottom: 0.8rem; }
-    .vdc-room-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .vdc-room-name { font-family: var(--serif); font-size: 0.95rem; font-weight: 400; color: var(--dark); margin-bottom: 0.2rem; }
-    .vdc-room-price { font-size: 0.75rem; color: var(--muted); }
-    .vdc-about { display: grid; grid-template-columns: 1fr 1.4fr; background: var(--dark); }
+    /* Vigna dei Colli mini-site — Aman-inspired */
+    /* Hero wrapper: nav floats over the image */
+    .vdc-hero-wrapper { position: relative; height: 480px; overflow: hidden; }
+    .vdc-nav {
+      position: absolute; top: 0; left: 0; right: 0; z-index: 10;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.4rem 2.5rem;
+    }
+    .vdc-logo { font-family: var(--serif); font-size: 0.65rem; letter-spacing: 0.38em; text-transform: uppercase; color: white; font-weight: 400; }
+    .vdc-links { display: flex; gap: 2rem; font-size: 0.58rem; color: rgba(255,255,255,0.72); letter-spacing: 0.12em; text-transform: uppercase; }
+    .vdc-reserve { font-size: 0.58rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.72); border-bottom: 1px solid rgba(255,255,255,0.35); padding-bottom: 2px; cursor: pointer; }
+    /* Full-bleed image */
+    .vdc-hero-img-wrap { width: 100%; height: 100%; }
+    .vdc-hero-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(0.78); }
+    /* Text overlay centered on hero */
+    .vdc-hero-text {
+      position: absolute; inset: 0; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; text-align: center; padding: 2rem;
+    }
+    .vdc-hero-eyebrow { font-size: 0.57rem; letter-spacing: 0.28em; text-transform: uppercase; color: rgba(255,255,255,0.62); margin-bottom: 1.4rem; }
+    .vdc-hero-text h2 { font-family: var(--serif); font-size: 2.8rem; font-weight: 300; color: white; line-height: 1.15; font-style: italic; margin-bottom: 1.8rem; }
+    .vdc-hero-link { font-size: 0.58rem; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.72); border-bottom: 1px solid rgba(255,255,255,0.32); padding-bottom: 3px; text-decoration: none; }
+    /* Intro block — breathing room */
+    .vdc-intro { padding: 4rem 3rem; text-align: center; background: #f7f4ee; }
+    .vdc-intro p { font-family: var(--serif); font-size: 1rem; line-height: 2; color: #5c5044; max-width: 380px; margin: 0 auto; font-style: italic; font-weight: 300; }
+    /* Room panels — alternating full-width, image + info */
+    .vdc-room-panel { display: grid; grid-template-columns: 1fr 1fr; min-height: 320px; }
+    .vdc-room-photo { overflow: hidden; }
+    .vdc-room-photo img { width: 100%; height: 100%; object-fit: cover; display: block; min-height: 320px; }
+    .vdc-room-info { padding: 3.5rem 2.8rem; display: flex; flex-direction: column; justify-content: center; background: #f7f4ee; }
+    .vdc-room-eyebrow { font-size: 0.57rem; letter-spacing: 0.22em; text-transform: uppercase; color: #a08a78; margin-bottom: 1.2rem; }
+    .vdc-room-name { font-family: var(--serif); font-size: 1.5rem; font-weight: 300; color: #1a1612; font-style: italic; margin-bottom: 0.8rem; }
+    .vdc-room-desc { font-size: 0.78rem; line-height: 2; color: #6b5f52; margin-bottom: 1.4rem; }
+    .vdc-room-price { font-size: 0.65rem; letter-spacing: 0.1em; color: #1a1612; }
+    .vdc-room-discover { display: inline-block; margin-top: 1.2rem; font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase; color: #1a1612; border-bottom: 1px solid #1a1612; padding-bottom: 2px; text-decoration: none; }
+    .vdc-room-panel.vdc-reverse { direction: rtl; }
+    .vdc-room-panel.vdc-reverse > * { direction: ltr; }
+    /* About founder — dark */
+    .vdc-about { display: grid; grid-template-columns: 1fr 1fr; background: #1a1612; min-height: 320px; }
     .vdc-about-img { overflow: hidden; }
-    .vdc-about-img img { width: 100%; height: 100%; object-fit: cover; display: block; min-height: 280px; object-position: top; }
-    .vdc-about-text { padding: 2.5rem; display: flex; flex-direction: column; justify-content: center; }
-    .vdc-about-label { font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--terra-light); margin-bottom: 0.6rem; }
-    .vdc-about-text h3 { font-family: var(--serif); font-size: 1.5rem; font-weight: 300; color: var(--cream); margin-bottom: 0.8rem; }
-    .vdc-about-text p { font-size: 0.82rem; line-height: 1.8; color: rgba(245,240,232,0.65); }
+    .vdc-about-img img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; min-height: 320px; }
+    .vdc-about-text { padding: 3.5rem 2.8rem; display: flex; flex-direction: column; justify-content: center; }
+    .vdc-about-eyebrow { font-size: 0.57rem; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(247,244,238,0.32); margin-bottom: 1.2rem; }
+    .vdc-about-text h3 { font-family: var(--serif); font-size: 1.7rem; font-weight: 300; color: #f7f4ee; font-style: italic; line-height: 1.3; margin-bottom: 1rem; }
+    .vdc-about-text p { font-size: 0.78rem; line-height: 2; color: rgba(247,244,238,0.48); }
 
     /* CTA */
     .cta-section {
@@ -233,10 +249,12 @@
       .analisi-grid { grid-template-columns: 1fr; }
       .step3 { margin: 0 -1.5rem; padding-left: 1.5rem; padding-right: 1.5rem; }
       .traduzione-grid { grid-template-columns: 1fr; }
-      .vdc-nav .vdc-links { display: none; }
-      .vdc-hero { grid-template-columns: 1fr; }
-      .vdc-hero-img { height: 240px; }
-      .vdc-rooms-grid { grid-template-columns: 1fr; }
+      .vdc-links { display: none; }
+      .vdc-hero-wrapper { height: 320px; }
+      .vdc-hero-text h2 { font-size: 1.8rem; }
+      .vdc-room-panel { grid-template-columns: 1fr; }
+      .vdc-room-panel.vdc-reverse { direction: ltr; }
+      .vdc-room-photo img { min-height: 240px; max-height: 280px; }
       .vdc-about { grid-template-columns: 1fr; }
       .cta-section { margin: 4rem -1.5rem 0; padding: 3.5rem 1.5rem; }
     }
@@ -370,50 +388,59 @@
           <div class="demo-dot green"></div>
           <div class="demo-url">vignadeicolli.it</div>
         </div>
-        <nav class="vdc-nav">
-          <div class="vdc-logo">Vigna dei Colli</div>
-          <div class="vdc-links">
-            <span>Camere</span><span>Esperienze</span><span>Vigneto</span><span>La storia</span>
-          </div>
-          <div class="vdc-book">Prenota</div>
-        </nav>
-        <div class="vdc-hero">
-          <div class="vdc-hero-text">
-            <div class="vdc-hero-tag">Siena · Chianti · dal 1987</div>
-            <h2>Dormire <em>tra le vigne</em></h2>
-            <p>Sette ettari di vigneto, quattro camere, una cucina di stagione. Il Chianti fuori dalla finestra ogni mattina.</p>
-            <a href="#" class="vdc-hero-cta">Scopri le camere →</a>
-          </div>
-          <div class="vdc-hero-img">
+        <!-- Hero con nav trasparente sovrapposta — stile Aman -->
+        <div class="vdc-hero-wrapper">
+          <nav class="vdc-nav">
+            <div class="vdc-links"><span>Camere</span><span>Esperienze</span><span>Vigneto</span></div>
+            <div class="vdc-logo">Vigna dei Colli</div>
+            <div class="vdc-reserve">Prenota</div>
+          </nav>
+          <div class="vdc-hero-img-wrap">
             <img src="/images/portfolio/agriturismo-hero.jpg" alt="Vigna dei Colli" loading="lazy" />
           </div>
-        </div>
-        <div class="vdc-rooms">
-          <div class="vdc-rooms-label">Le sistemazioni</div>
-          <h3>Quattro camere, ognuna diversa</h3>
-          <div class="vdc-rooms-grid">
-            <div class="vdc-room">
-              <div class="vdc-room-img">
-                <img src="/images/portfolio/agriturismo-room.jpg" alt="Camera della Vigna" loading="lazy" />
-              </div>
-              <div class="vdc-room-name">Camera della Vigna</div>
-              <div class="vdc-room-price">da €180 / notte · colazione inclusa</div>
-            </div>
-            <div class="vdc-room">
-              <div class="vdc-room-img">
-                <img src="/images/portfolio/agriturismo-dining.jpg" alt="Suite del Podere" loading="lazy" />
-              </div>
-              <div class="vdc-room-name">Suite del Podere</div>
-              <div class="vdc-room-price">da €240 / notte · colazione + cena incluse</div>
-            </div>
+          <div class="vdc-hero-text">
+            <div class="vdc-hero-eyebrow">Siena · Chianti · dal 1987</div>
+            <h2>Dormire<br />tra le vigne</h2>
+            <a href="#" class="vdc-hero-link">Scopri le camere</a>
           </div>
         </div>
+        <!-- Intro — spazio, poche parole -->
+        <div class="vdc-intro">
+          <p>Sette ettari di vigneto in Chianti, quattro camere affacciate sulle colline, una cucina che segue le stagioni. La quiete come esperienza.</p>
+        </div>
+        <!-- Camera 1 — foto sinistra, testo destra -->
+        <div class="vdc-room-panel">
+          <div class="vdc-room-photo">
+            <img src="/images/portfolio/agriturismo-room.jpg" alt="Camera della Vigna" loading="lazy" />
+          </div>
+          <div class="vdc-room-info">
+            <div class="vdc-room-eyebrow">Le sistemazioni</div>
+            <div class="vdc-room-name">Camera della Vigna</div>
+            <p class="vdc-room-desc">Vista sulle vigne, luce del mattino. Travi a vista, lenzuola di lino, nessuna televisione.</p>
+            <div class="vdc-room-price">da € 180 · notte · colazione inclusa</div>
+            <a href="#" class="vdc-room-discover">Scopri</a>
+          </div>
+        </div>
+        <!-- Camera 2 — testo sinistra, foto destra -->
+        <div class="vdc-room-panel vdc-reverse">
+          <div class="vdc-room-photo">
+            <img src="/images/portfolio/agriturismo-dining.jpg" alt="Suite del Podere" loading="lazy" />
+          </div>
+          <div class="vdc-room-info">
+            <div class="vdc-room-eyebrow">Le sistemazioni</div>
+            <div class="vdc-room-name">Suite del Podere</div>
+            <p class="vdc-room-desc">Ingresso indipendente, vasca freestanding, terrazza privata. Colazione e cena con i prodotti dell'azienda.</p>
+            <div class="vdc-room-price">da € 240 · notte · colazione + cena</div>
+            <a href="#" class="vdc-room-discover">Scopri</a>
+          </div>
+        </div>
+        <!-- Fondatrice — pannello scuro -->
         <div class="vdc-about">
           <div class="vdc-about-img">
             <img src="/images/portfolio/agriturismo-founder.jpg" alt="Sara Conti" loading="lazy" />
           </div>
           <div class="vdc-about-text">
-            <div class="vdc-about-label">La fondatrice</div>
+            <div class="vdc-about-eyebrow">La fondatrice</div>
             <h3>Sara Conti</h3>
             <p>Ho ereditato questa terra da mio padre nel 2009. Quello che aveva piantato come hobby è diventato il mio progetto di vita — e il posto dove voglio che i miei ospiti si sentano a casa.</p>
           </div>
