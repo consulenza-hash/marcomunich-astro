@@ -160,23 +160,23 @@
     .demo-dot.green { background: #28c840; }
     .demo-url { font-size: 0.72rem; color: #8a8a8a; font-family: var(--sans); margin-left: 0.5rem; }
 
-    /* ── Chiara Martini mini-site — BOLD personal brand ── */
+    /* ── Chiara Martini mini-site — MARIE FORLEO style ── */
     .cm-site { background: #fff; font-family: var(--sans); }
 
-    /* Nav — bold uppercase sans */
-    .cm-nav { display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 2.5rem; background: white; border-bottom: 1px solid rgba(0,0,0,0.06); }
-    .cm-logo { font-family: var(--serif); font-size: 1.1rem; font-weight: 300; font-style: italic; color: var(--ink); }
-    .cm-nav-links { display: flex; gap: 2rem; font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: #8a8078; }
-    .cm-nav-cta { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; background: white; color: var(--ink); border: 1px solid rgba(0,0,0,0.15); padding: 0.5rem 1.4rem; font-weight: 600; text-decoration: none; }
+    /* Nav — white, bold serif logo, lime-green pill CTA */
+    .cm-nav { display: flex; justify-content: space-between; align-items: center; padding: 1.1rem 2.5rem; background: white; border-bottom: 1px solid rgba(0,0,0,0.07); }
+    .cm-logo { font-family: var(--serif); font-size: 1rem; font-weight: 700; color: #1a1a1a; letter-spacing: 0.04em; font-style: normal; }
+    .cm-nav-links { display: flex; gap: 1.5rem; font-size: 0.73rem; color: #333; letter-spacing: 0; text-transform: none; }
+    .cm-nav-cta { font-size: 0.73rem; background: #c8f03a; color: #1a1a1a; border: none; padding: 0.45rem 1.1rem; border-radius: 24px; font-weight: 600; text-decoration: none; }
 
-    /* Hero — dark full-bleed, portrait faded right, big headline left */
-    .cm-hero { background: var(--ink); position: relative; overflow: hidden; padding: 3.5rem 2.5rem 3rem; min-height: 340px; display: flex; align-items: flex-end; }
-    .cm-hero-bg-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top; opacity: 1; display: block; }
-    .cm-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to right, rgba(5,5,10,0.92) 0%, rgba(5,5,10,0.6) 50%, rgba(5,5,10,0.15) 100%); }
-    .cm-hero-content { position: relative; max-width: 54%; }
-    .cm-hero-eyebrow { font-size: 0.6rem; letter-spacing: 0.24em; text-transform: uppercase; color: #d4426e; margin-bottom: 1.2rem; display: block; }
-    .cm-hero h2 { font-family: var(--serif); font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 700; line-height: 1.05; color: white; margin-bottom: 1.5rem; }
-    .cm-hero-cta { display: inline-block; font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase; background: #d4426e; color: white; padding: 0.7rem 1.8rem; font-weight: 600; }
+    /* Hero — full-bleed dark photo, huge serif headline, pink italic last word */
+    .cm-hero { background: #111; position: relative; overflow: hidden; padding: 2.5rem 2.5rem 3.5rem; min-height: 380px; display: flex; align-items: flex-end; }
+    .cm-hero-bg-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
+    .cm-hero-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.38); }
+    .cm-hero-content { position: relative; z-index: 2; }
+    .cm-hero h2 { font-family: var(--serif); font-size: clamp(2.4rem, 6vw, 4.2rem); font-weight: 400; line-height: 1.04; color: white; margin: 0; }
+    .cm-hero-love { color: #e8a4b8; font-style: italic; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }
+    .cm-hero-watch { position: absolute; bottom: 1.5rem; right: 2rem; font-size: 0.72rem; color: white; display: flex; align-items: center; gap: 0.45rem; z-index: 2; text-decoration: none; opacity: 0.9; }
 
     /* Services — numbered horizontal rows (no cards) */
     .cm-servizi { background: white; padding: 2.5rem; }
@@ -394,10 +394,12 @@
 
         <div class="cm-site">
           <div class="cm-nav">
-            <div class="cm-logo">Chiara Martini</div>
+            <div class="cm-logo">CHIARA MARTINI</div>
             <div class="cm-nav-links">
               <span>Chi sono</span>
-              <span>Percorsi</span>
+              <span>Percorsi ▾</span>
+              <span>Video</span>
+              <span>Podcast</span>
               <span>Contatti</span>
             </div>
             <a href="#" class="cm-nav-cta">Sessione gratuita</a>
@@ -407,10 +409,9 @@
             <img class="cm-hero-bg-img" src="/images/portfolio/coach-hero.jpg" alt="" />
             <div class="cm-hero-overlay"></div>
             <div class="cm-hero-content">
-              <span class="cm-hero-eyebrow">Life & Business Coach · Milano</span>
-              <h2>Smetti di<br />aspettare.<br />Inizia adesso.</h2>
-              <a href="#" class="cm-hero-cta">Prima sessione gratuita →</a>
+              <h2>Crea il lavoro<br />e la vita che<br /><span class="cm-hero-love">ami.</span></h2>
             </div>
+            <a href="#" class="cm-hero-watch">▶ Guarda il video</a>
           </div>
 
           <div class="cm-servizi">
