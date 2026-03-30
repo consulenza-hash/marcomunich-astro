@@ -208,6 +208,51 @@ export const prerender = true;
       transition: color 0.3s;
     }
 
+    /* ── Vibe Coding Disclaimer ── */
+    .vibe-disclaimer {
+      max-width: 750px; margin: 0 auto;
+      padding: 0 2rem 3rem;
+    }
+    .vd-inner {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--primary);
+      border-radius: 12px;
+      padding: 2rem 2.5rem;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .vd-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--primary); display: block; margin-bottom: 1rem;
+    }
+    .vd-title {
+      font-family: 'Lora', Georgia, serif;
+      font-size: 1.4rem; font-weight: 700;
+      color: var(--text); line-height: 1.3; margin-bottom: 1rem;
+      transition: color 0.3s;
+    }
+    .vd-body {
+      font-size: 0.9rem; color: var(--text-muted); line-height: 1.75;
+      margin-bottom: 1.5rem; transition: color 0.3s;
+    }
+    .vd-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .vd-col { border-radius: 8px; padding: 1.2rem 1.4rem; font-size: 0.85rem; line-height: 1.7; }
+    .vd-col.no { background: rgba(180,60,60,0.06); border: 1px solid rgba(180,60,60,0.15); }
+    .vd-col.yes { background: rgba(60,160,90,0.06); border: 1px solid rgba(60,160,90,0.15); }
+    .vd-col-label {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.7rem; display: block;
+    }
+    .vd-col.no .vd-col-label { color: #c05050; }
+    .vd-col.yes .vd-col-label { color: #3a9060; }
+    .vd-col ul { list-style: none; color: var(--text-muted); }
+    .vd-col ul li { padding: 0.3rem 0; }
+    .vd-col.no ul li::before { content: '✕  '; color: #c05050; font-size: 0.78rem; }
+    .vd-col.yes ul li::before { content: '✓  '; color: #3a9060; font-size: 0.78rem; }
+    @media (max-width: 600px) { .vd-cols { grid-template-columns: 1fr; } }
+
     /* ── CTA ── */
     .cta-section {
       text-align: center;
@@ -274,6 +319,7 @@ export const prerender = true;
           <li><a href="/dev/vibe-coding">Vibe Coding</a></li>
           <li><a href="/dev/portfolio">Portfolio</a></li>
           <li><a href="/dev/prezzi">Prezzi</a></li>
+          <li><a href="/dev/blog/">Blog</a></li>
           <li><a href="/dev/contatti">Contatti</a></li>
         </ul>
         <button class="theme-toggle" id="theme-toggle" aria-label="Cambia tema">
@@ -290,6 +336,34 @@ export const prerender = true;
   <section class="hero">
     <h1>Dal tuo bisogno al sito online.</h1>
     <p>Un processo semplice, trasparente, pensato per darti il controllo su ogni fase.</p>
+  </section>
+
+  <section class="vibe-disclaimer">
+    <div class="vd-inner">
+      <span class="vd-tag">Prima di tutto — leggi questo</span>
+      <div class="vd-title">Uso l'intelligenza artificiale per costruire siti web.<br />Se pensi che sia una puttanata, fermati qui.</div>
+      <p class="vd-body">Il mio metodo si chiama vibe coding: sviluppo assistito dall'AI che mi permette di fare in giorni quello che prima richiedeva settimane. Non è una scorciatoia per fare roba di bassa qualità — è semplicemente come si costruisce software nel 2026. Le 18 demo nel portfolio sono fatte così, e parlano da sole.</p>
+      <div class="vd-cols">
+        <div class="vd-col no">
+          <span class="vd-col-label">Non siamo fatti per lavorare insieme se...</span>
+          <ul>
+            <li>pensi che l'AI produca solo roba mediocre</li>
+            <li>vuoi sapere ogni riga di codice come è stata scritta</li>
+            <li>hai bisogno di "tutto artigianale, senza AI"</li>
+            <li>l'idea ti mette a disagio e vuoi convincermi a cambiare metodo</li>
+          </ul>
+        </div>
+        <div class="vd-col yes">
+          <span class="vd-col-label">Lavoriamo bene insieme se...</span>
+          <ul>
+            <li>hai visto le demo e hai pensato "voglio qualcosa così"</li>
+            <li>ti interessa il risultato, non come è stato costruito</li>
+            <li>hai un'attività da far crescere e vuoi muoverti adesso</li>
+            <li>capisci che il 2026 non è il 2015</li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </section>
 
   <section class="timeline-section">
