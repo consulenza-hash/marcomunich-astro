@@ -87,32 +87,28 @@
     }
     .area-desc { font-size: 0.78rem; line-height: 1.9; color: rgba(245,241,234,0.5); }
 
-    /* ── Partner ── */
-    .partner { display: grid; grid-template-columns: 1fr 1fr; min-height: 380px; }
-    .partner-img { overflow: hidden; }
-    .partner-img img { width: 100%; height: 100%; object-fit: cover; object-position: top; min-height: 380px; }
-    .partner-text {
-      background: var(--cream); padding: 3.5rem 3rem;
-      display: flex; flex-direction: column; justify-content: center;
+    /* ── Team ── */
+    .team { background: var(--cream); padding: 4rem 2.5rem; border-bottom: 1px solid var(--cream-dark); }
+    .team-label {
+      font-size: 0.6rem; letter-spacing: 0.28em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 2.5rem;
     }
-    .partner-eyebrow {
-      font-size: 0.6rem; letter-spacing: 0.24em; text-transform: uppercase;
-      color: var(--gold); margin-bottom: 1.2rem;
+    .team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5rem; }
+    .team-card { display: flex; flex-direction: column; }
+    .team-card-img {
+      width: 100%; aspect-ratio: 3/4; overflow: hidden; margin-bottom: 1.4rem;
     }
-    .partner-name {
-      font-family: var(--serif); font-size: 2rem; font-weight: 300; color: var(--navy);
-      font-style: italic; margin-bottom: 0.4rem;
+    .team-card-img img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+    .team-card-name {
+      font-family: var(--serif); font-size: 1.3rem; font-weight: 300; color: var(--navy);
+      font-style: italic; margin-bottom: 0.3rem;
     }
-    .partner-title {
-      font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--muted); margin-bottom: 1.5rem;
+    .team-card-title {
+      font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 0.9rem; padding-bottom: 0.9rem;
+      border-bottom: 1px solid var(--cream-dark);
     }
-    .partner-bio { font-size: 0.82rem; line-height: 2; color: #4a5a66; max-width: 360px; }
-    .partner-link {
-      display: inline-block; margin-top: 1.5rem; font-size: 0.62rem; letter-spacing: 0.18em;
-      text-transform: uppercase; color: var(--navy); border-bottom: 1px solid var(--navy);
-      padding-bottom: 2px;
-    }
+    .team-card-spec { font-size: 0.78rem; line-height: 1.8; color: #4a5a66; }
 
     /* ── Detail strip ── */
     .detail-strip { height: 280px; overflow: hidden; }
@@ -173,8 +169,7 @@
       .nav-links { display: none; }
       .hero { height: 300px; }
       .areas-grid { grid-template-columns: 1fr; gap: 1.5rem; }
-      .partner { grid-template-columns: 1fr; }
-      .partner-img img { min-height: 260px; max-height: 300px; }
+      .team-grid { grid-template-columns: 1fr; gap: 2rem; }
       .footer { flex-direction: column; gap: 0.5rem; text-align: center; }
     }
   </style>
@@ -222,16 +217,33 @@
     </div>
   </div>
 
-  <div class="partner">
-    <div class="partner-img">
-      <img src="/images/portfolio/legale-partner.jpg" alt="Avv. Marco Ferrini" />
-    </div>
-    <div class="partner-text">
-      <div class="partner-eyebrow">Il fondatore</div>
-      <div class="partner-name">Marco Ferrini</div>
-      <div class="partner-title">Avvocato · Fondatore e Senior Partner</div>
-      <p class="partner-bio">Laureato con lode alla Statale di Milano, abilitato al patrocinio davanti alle giurisdizioni superiori. Trent'anni di esperienza in diritto civile e commerciale, con una specializzazione nelle operazioni cross-border tra Italia ed Europa.</p>
-      <a href="#" class="partner-link">Curriculum completo</a>
+  <div class="team">
+    <div class="team-label">Il team</div>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-card-img">
+          <img src="/images/portfolio/legale-partner.jpg" alt="Avv. Marco Ferrini" />
+        </div>
+        <div class="team-card-name">Marco Ferrini</div>
+        <div class="team-card-title">Fondatore · Senior Partner</div>
+        <p class="team-card-spec">Diritto civile e commerciale, operazioni cross-border. Abilitato al patrocinio davanti alle giurisdizioni superiori.</p>
+      </div>
+      <div class="team-card">
+        <div class="team-card-img">
+          <img src="/images/portfolio/legale-avv2.jpg" alt="Avv. Sara Conti" />
+        </div>
+        <div class="team-card-name">Sara Conti</div>
+        <div class="team-card-title">Associate · Diritto del Lavoro</div>
+        <p class="team-card-spec">Specializzata in diritto del lavoro e relazioni industriali. Consulenza a imprese multinazionali e manager di primo livello.</p>
+      </div>
+      <div class="team-card">
+        <div class="team-card-img">
+          <img src="/images/portfolio/legale-avv3.jpg" alt="Avv. Luca Mancini" />
+        </div>
+        <div class="team-card-name">Luca Mancini</div>
+        <div class="team-card-title">Associate · M&amp;A e Societario</div>
+        <p class="team-card-spec">M&amp;A, governance societaria e startup. Esperienza in operazioni di venture capital e ristrutturazioni aziendali.</p>
+      </div>
     </div>
   </div>
 
