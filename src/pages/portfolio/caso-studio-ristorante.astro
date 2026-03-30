@@ -166,17 +166,40 @@
     .risultato-intro { max-width: 620px; margin-bottom: 2.5rem; }
     .risultato-intro h3 { font-family: var(--serif); font-size: 1.8rem; font-weight: 300; margin-bottom: 0.8rem; }
     .risultato-intro p { font-size: 0.9rem; line-height: 1.8; color: var(--muted); }
-    .risultato-grid { display: grid; grid-template-columns: 1fr 1.4fr; grid-template-rows: 280px 280px; gap: 1rem; }
-    .risultato-item { overflow: hidden; position: relative; }
-    .risultato-item.tall { grid-row: span 2; }
-    .risultato-item img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
-    .risultato-caption {
-      position: absolute; bottom: 0; left: 0; right: 0;
-      background: linear-gradient(to top, rgba(10,10,10,0.8), transparent);
-      padding: 1.5rem 1rem 0.8rem;
-    }
-    .risultato-caption .cap-label { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); display: block; }
-    .risultato-caption .cap-title { font-family: var(--serif); font-size: 1rem; color: var(--cream); }
+    /* Browser chrome */
+    .demo-frame { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 50px rgba(0,0,0,0.12); border: 1px solid var(--cream-dark); }
+    .demo-bar { background: #f0eeea; padding: 0.7rem 1rem; display: flex; align-items: center; gap: 0.6rem; border-bottom: 1px solid rgba(0,0,0,0.08); }
+    .demo-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .demo-dot.red { background: #ff5f57; } .demo-dot.yellow { background: #febc2e; } .demo-dot.green { background: #28c840; }
+    .demo-url { flex: 1; text-align: center; font-size: 0.72rem; color: #888; font-family: monospace; background: white; padding: 0.2rem 0.8rem; border-radius: 4px; max-width: 220px; margin: 0 auto; }
+
+    /* Convivio mini-site */
+    .conv-nav { display: flex; justify-content: space-between; align-items: center; padding: 1rem 2.5rem; border-bottom: 1px solid rgba(0,0,0,0.06); background: white; }
+    .conv-nav-link { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-decoration: none; }
+    .conv-logo { font-family: var(--serif); font-size: 1rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--dark); font-weight: 300; }
+    .conv-hero { position: relative; height: 420px; overflow: hidden; }
+    .conv-hero img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .conv-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.2) 60%, transparent 100%); display: flex; align-items: flex-end; padding: 2.5rem; }
+    .conv-hero-content { }
+    .conv-hero-tag { font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 0.6rem; }
+    .conv-hero-content h2 { font-family: var(--serif); font-size: 2.2rem; font-weight: 300; color: white; line-height: 1.1; margin-bottom: 0.4rem; }
+    .conv-hero-content p { font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-bottom: 1.2rem; letter-spacing: 0.05em; }
+    .conv-cta { display: inline-block; border: 1px solid rgba(255,255,255,0.5); color: white; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.5rem 1.3rem; text-decoration: none; background: transparent; transition: background 0.2s; }
+    .conv-menu { padding: 2.5rem; background: white; }
+    .conv-menu-label { font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--green); margin-bottom: 0.4rem; }
+    .conv-menu h3 { font-family: var(--serif); font-size: 1.4rem; font-weight: 300; color: var(--dark); margin-bottom: 1.5rem; }
+    .conv-dishes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .conv-dish-img { aspect-ratio: 4/3; overflow: hidden; margin-bottom: 0.7rem; }
+    .conv-dish-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .conv-dish-name { font-family: var(--serif); font-size: 0.92rem; color: var(--dark); margin-bottom: 0.2rem; }
+    .conv-dish-price { font-size: 0.75rem; color: var(--muted); }
+    .conv-chef { display: grid; grid-template-columns: 1fr 1.5fr; background: var(--green); }
+    .conv-chef-img { overflow: hidden; }
+    .conv-chef-img img { width: 100%; height: 100%; object-fit: cover; display: block; min-height: 260px; object-position: top; }
+    .conv-chef-text { padding: 2.5rem; display: flex; flex-direction: column; justify-content: center; }
+    .conv-chef-label { font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.6rem; }
+    .conv-chef-text h3 { font-family: var(--serif); font-size: 1.5rem; font-weight: 300; color: var(--cream); margin-bottom: 0.8rem; }
+    .conv-chef-text p { font-size: 0.82rem; line-height: 1.8; color: rgba(248,245,240,0.65); }
 
     /* CTA */
     .cta-section {
@@ -202,8 +225,10 @@
       .analisi-grid { grid-template-columns: 1fr; }
       .step3 { margin: 0 -1.5rem; padding: 2.5rem 1.5rem; }
       .traduzione-grid { grid-template-columns: 1fr; }
-      .risultato-grid { grid-template-columns: 1fr; }
-      .risultato-item.tall { grid-row: span 1; }
+      .conv-nav-link { display: none; }
+      .conv-hero { height: 280px; }
+      .conv-dishes { grid-template-columns: 1fr; }
+      .conv-chef { grid-template-columns: 1fr; }
       .cta-section { margin: 4rem -1.5rem 0; padding: 3.5rem 1.5rem; }
     }
   </style>
@@ -326,29 +351,67 @@
     <section class="step4">
       <div class="step-label"><span class="step-num">4</span>Il Risultato</div>
       <div class="risultato-intro">
-        <h3>Convivio — il sito finale</h3>
-        <p>Il sito di Convivio mantiene la disciplina visiva di Eleven Madison Park ma porta l'identità di Luca: il verde bosco dell'Isola milanese, la stagionalità della cucina italiana, la persona dietro i piatti.</p>
+        <h3>convivio.it — il sito finale</h3>
+        <p>Il rigore visivo di EMP tradotto in italiano: il verde bosco dell'Isola, il piatto come protagonista, Luca in primo piano. Stessa disciplina, identità tutta milanese.</p>
       </div>
-      <div class="risultato-grid">
-        <div class="risultato-item">
-          <img src="/images/portfolio/ristorante-dish.jpg" alt="Convivio — il piatto" loading="lazy" />
-          <div class="risultato-caption">
-            <span class="cap-label">Hero principale</span>
-            <span class="cap-title">Il piatto come protagonista assoluto</span>
+      <div class="demo-frame">
+        <div class="demo-bar">
+          <div class="demo-dot red"></div>
+          <div class="demo-dot yellow"></div>
+          <div class="demo-dot green"></div>
+          <div class="demo-url">convivio.it</div>
+        </div>
+        <nav class="conv-nav">
+          <a href="#" class="conv-nav-link">Riserva</a>
+          <div class="conv-logo">Convivio</div>
+          <a href="#" class="conv-nav-link">About</a>
+        </nav>
+        <div class="conv-hero">
+          <img src="/images/portfolio/ristorante-dish.jpg" alt="Convivio" loading="lazy" />
+          <div class="conv-hero-overlay">
+            <div class="conv-hero-content">
+              <span class="conv-hero-tag">Milano · Isola · 24 coperti · tutto su prenotazione</span>
+              <h2>Convivio</h2>
+              <p>Cucina contemporanea italiana</p>
+              <a href="#" class="conv-cta">Prenota un tavolo</a>
+            </div>
           </div>
         </div>
-        <div class="risultato-item tall">
-          <img src="/images/portfolio/ristorante-hero.jpg" alt="Convivio — la sala" loading="lazy" />
-          <div class="risultato-caption">
-            <span class="cap-label">La sala</span>
-            <span class="cap-title">Verde bosco, ottone, lino bianco</span>
+        <div class="conv-menu">
+          <div class="conv-menu-label">Il menu</div>
+          <h3>Stagione primaverile</h3>
+          <div class="conv-dishes">
+            <div class="conv-dish">
+              <div class="conv-dish-img">
+                <img src="/images/portfolio/ristorante-detail.jpg" alt="Risotto" loading="lazy" />
+              </div>
+              <div class="conv-dish-name">Risotto al Tartufo Nero</div>
+              <div class="conv-dish-price">€28</div>
+            </div>
+            <div class="conv-dish">
+              <div class="conv-dish-img">
+                <img src="/images/portfolio/ristorante-dish.jpg" alt="Secondo" loading="lazy" />
+              </div>
+              <div class="conv-dish-name">Maialino di Latte, agrumi</div>
+              <div class="conv-dish-price">€32</div>
+            </div>
+            <div class="conv-dish">
+              <div class="conv-dish-img">
+                <img src="/images/portfolio/ristorante-hero.jpg" alt="Sala" loading="lazy" />
+              </div>
+              <div class="conv-dish-name">Millefoglie al Caramello</div>
+              <div class="conv-dish-price">€14</div>
+            </div>
           </div>
         </div>
-        <div class="risultato-item">
-          <img src="/images/portfolio/ristorante-chef.jpg" alt="Convivio — lo chef" loading="lazy" />
-          <div class="risultato-caption">
-            <span class="cap-label">Chi siamo</span>
-            <span class="cap-title">Luca Motta — la persona dietro il menu</span>
+        <div class="conv-chef">
+          <div class="conv-chef-img">
+            <img src="/images/portfolio/ristorante-chef.jpg" alt="Luca Motta" loading="lazy" />
+          </div>
+          <div class="conv-chef-text">
+            <div class="conv-chef-label">Lo chef</div>
+            <h3>Luca Motta</h3>
+            <p>Tre anni di Convivio, una cucina italiana contemporanea senza compromessi. I produttori li conosco tutti di persona — e questo si sente nel piatto.</p>
           </div>
         </div>
       </div>
