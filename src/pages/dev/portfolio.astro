@@ -201,6 +201,66 @@ export const prerender = true;
     }
     .project-link:hover { color: var(--primary-hover); }
 
+    /* ── Casi Studio ── */
+    .cs-section {
+      padding: 3rem 2rem 3.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .cs-header {
+      display: flex; align-items: baseline; gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .cs-tag {
+      font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: #c8b89a;
+    }
+    .cs-header h2 {
+      font-size: 1.1rem; font-weight: 600;
+      color: var(--text);
+    }
+    .cs-header p {
+      font-size: 0.85rem; color: var(--text-muted);
+      margin-left: auto;
+    }
+    .cs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.2rem;
+    }
+    .cs-card {
+      display: flex; flex-direction: column; gap: 0.6rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-top: 3px solid #c8b89a;
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-decoration: none;
+      transition: border-color 0.2s, transform 0.15s, box-shadow 0.2s;
+    }
+    .cs-card:hover {
+      border-color: #c8b89a;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+    .cs-card-brand {
+      font-size: 1rem; font-weight: 700;
+      color: var(--text);
+    }
+    .cs-card-vs {
+      font-size: 0.75rem; color: var(--text-muted);
+      letter-spacing: 0.04em;
+    }
+    .cs-card-vs span { color: #c8b89a; font-weight: 600; }
+    .cs-card-desc {
+      font-size: 0.82rem; line-height: 1.6;
+      color: var(--text-muted); flex: 1;
+    }
+    .cs-card-cta {
+      font-size: 0.8rem; font-weight: 600;
+      color: #c8b89a; margin-top: 0.2rem;
+    }
+
     /* ── CTA ── */
     .cta-section {
       text-align: center;
@@ -262,6 +322,10 @@ export const prerender = true;
         grid-template-columns: 1fr;
         padding: 0 1.5rem 3rem;
       }
+      .cs-section { padding: 2rem 1.5rem; }
+      .cs-header { flex-direction: column; gap: 0.3rem; }
+      .cs-header p { margin-left: 0; }
+      .cs-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -276,6 +340,7 @@ export const prerender = true;
           <li><a href="/dev/vibe-coding">Vibe Coding</a></li>
           <li><a href="/dev/portfolio" class="active">Portfolio</a></li>
           <li><a href="/dev/prezzi">Prezzi</a></li>
+          <li><a href="/dev/blog/">Blog</a></li>
           <li><a href="/dev/contatti">Contatti</a></li>
         </ul>
         <button class="theme-toggle" id="theme-toggle" aria-label="Cambia tema">
@@ -290,8 +355,37 @@ export const prerender = true;
   </nav>
 
   <section class="hero">
-    <h1>12 demo navigabili.</h1>
+    <h1>16 demo navigabili.</h1>
     <p>Ogni progetto è diverso, e puoi esplorare le demo per farti un'idea concreta del risultato.</p>
+  </section>
+
+  <!-- Casi Studio — sezione prominente sopra la griglia -->
+  <section class="cs-section">
+    <div class="cs-header">
+      <span class="cs-tag">Casi Studio</span>
+      <h2>Hai un sito che ti ispira? Guarda come parte l'ispirazione e dove arriva il risultato.</h2>
+      <p>3 esempi completi</p>
+    </div>
+    <div class="cs-grid">
+      <a href="/portfolio/caso-studio" class="cs-card">
+        <div class="cs-card-brand">🌿 Erba Pura</div>
+        <div class="cs-card-vs">ispirata a <span>aesop.com</span></div>
+        <p class="cs-card-desc">Cosmesi naturale bolognese. Dal lusso discreto di Aesop a un'identità italiana autentica, con ingredienti locali e la fondatrice in primo piano.</p>
+        <span class="cs-card-cta">Leggi il caso studio →</span>
+      </a>
+      <a href="/portfolio/caso-studio-agriturismo" class="cs-card">
+        <div class="cs-card-brand">🏡 Vigna dei Colli</div>
+        <div class="cs-card-vs">ispirata a <span>aman.com</span></div>
+        <p class="cs-card-desc">Agriturismo in Chianti. Dal silenzio visivo di Aman a un racconto toscano caldo e personale, con la storia di Sara e le stagioni della terra.</p>
+        <span class="cs-card-cta">Leggi il caso studio →</span>
+      </a>
+      <a href="/portfolio/caso-studio-ristorante" class="cs-card">
+        <div class="cs-card-brand">🍽 Convivio</div>
+        <div class="cs-card-vs">ispirata a <span>elevenmadisonpark.com</span></div>
+        <p class="cs-card-desc">Ristorante gastronomico milanese. Dal rigore assoluto di Eleven Madison Park a un'identità italiana essenziale, con il verde bosco dell'Isola.</p>
+        <span class="cs-card-cta">Leggi il caso studio →</span>
+      </a>
+    </div>
   </section>
 
   <div class="portfolio-grid">
@@ -376,6 +470,34 @@ export const prerender = true;
       <div class="project-icon">&#127969;</div>
       <h3>Bed &amp; Breakfast</h3>
       <p>Sito per agriturismi e B&amp;B con camere, prenotazioni e gallery.</p>
+      <span class="project-link">Naviga la demo &rarr;</span>
+    </a>
+
+    <a href="/portfolio/yoga-studio" class="project-card">
+      <div class="project-icon">&#129339;</div>
+      <h3>Yoga &amp; Benessere</h3>
+      <p>Studio yoga con classi, orari, abbonamenti e prenotazione online.</p>
+      <span class="project-link">Naviga la demo &rarr;</span>
+    </a>
+
+    <a href="/portfolio/studio-medico" class="project-card">
+      <div class="project-icon">&#129338;</div>
+      <h3>Studio Medico</h3>
+      <p>Sito per medici e specialisti con servizi, prenotazione e teleconsulto.</p>
+      <span class="project-link">Naviga la demo &rarr;</span>
+    </a>
+
+    <a href="/portfolio/fotografo" class="project-card">
+      <div class="project-icon">📷</div>
+      <h3>Fotografo / Videografo</h3>
+      <p>Portfolio fotografico dark con gallery full-screen, servizi e sezione premi.</p>
+      <span class="project-link">Naviga la demo &rarr;</span>
+    </a>
+
+    <a href="/portfolio/barberia" class="project-card">
+      <div class="project-icon">✂️</div>
+      <h3>Salone di Bellezza</h3>
+      <p>Barberia premium con listino servizi, prenotazione online integrata e recensioni.</p>
       <span class="project-link">Naviga la demo &rarr;</span>
     </a>
   </div>
