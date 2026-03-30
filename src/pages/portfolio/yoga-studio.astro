@@ -1,0 +1,444 @@
+---
+export const prerender = true;
+---
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Koru Yoga Studio — Yoga & Benessere a Firenze</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --sage: #7a9e7e;
+      --sage-light: #b5cdb7;
+      --sage-pale: #eef3ef;
+      --sand: #e8dcc8;
+      --sand-dark: #c4a882;
+      --cream: #faf7f2;
+      --charcoal: #2c2c2c;
+      --warm-gray: #6b6560;
+      --white: #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--cream); color: var(--charcoal); overflow-x: hidden; }
+
+    /* Back button */
+    .back-btn {
+      position: fixed; top: 1rem; left: 1rem; z-index: 1000;
+      background: rgba(255,255,255,0.9); backdrop-filter: blur(8px);
+      color: var(--charcoal); text-decoration: none;
+      padding: 0.5rem 1rem; border-radius: 50px;
+      font-size: 0.8rem; font-weight: 500;
+      border: 1px solid rgba(0,0,0,0.1);
+      display: flex; align-items: center; gap: 0.4rem;
+      transition: all 0.2s;
+    }
+    .back-btn:hover { background: var(--charcoal); color: var(--white); }
+
+    /* Nav */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 1.2rem 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(250,247,242,0.92); backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      transition: all 0.3s;
+    }
+    .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 400; letter-spacing: 0.05em; color: var(--charcoal); }
+    .nav-logo span { color: var(--sage); }
+    .nav-links { display: flex; align-items: center; gap: 2rem; }
+    .nav-links a { text-decoration: none; color: var(--warm-gray); font-size: 0.85rem; font-weight: 400; letter-spacing: 0.02em; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--sage); }
+    .nav-cta { background: var(--sage) !important; color: var(--white) !important; padding: 0.5rem 1.2rem !important; border-radius: 50px; transition: background 0.2s !important; }
+    .nav-cta:hover { background: #5d8461 !important; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: var(--charcoal); transition: all 0.3s; }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: grid; grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 7rem 4rem 4rem;
+      gap: 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 80% 50%, rgba(122,158,126,0.08) 0%, transparent 60%);
+    }
+    .hero-tag { font-size: 0.75rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--sage); margin-bottom: 1.2rem; }
+    .hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.8rem, 5vw, 4.5rem); font-weight: 300; line-height: 1.1; color: var(--charcoal); margin-bottom: 1.5rem; }
+    .hero h1 em { font-style: italic; color: var(--sage); }
+    .hero-sub { font-size: 1rem; line-height: 1.7; color: var(--warm-gray); max-width: 480px; margin-bottom: 2.5rem; }
+    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary { background: var(--sage); color: var(--white); text-decoration: none; padding: 0.9rem 2rem; border-radius: 50px; font-size: 0.9rem; font-weight: 500; transition: background 0.2s; display: inline-block; }
+    .btn-primary:hover { background: #5d8461; }
+    .btn-outline { border: 1.5px solid var(--sand-dark); color: var(--charcoal); text-decoration: none; padding: 0.9rem 2rem; border-radius: 50px; font-size: 0.9rem; font-weight: 400; transition: all 0.2s; display: inline-block; }
+    .btn-outline:hover { background: var(--sand); }
+    .hero-image { position: relative; height: 580px; border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%; overflow: hidden; }
+    .hero-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .hero-badge { position: absolute; bottom: 2rem; left: -1.5rem; background: var(--white); padding: 1rem 1.4rem; border-radius: 16px; box-shadow: 0 8px 30px rgba(0,0,0,0.1); }
+    .hero-badge .badge-num { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 600; color: var(--sage); line-height: 1; }
+    .hero-badge .badge-text { font-size: 0.72rem; color: var(--warm-gray); margin-top: 0.1rem; }
+
+    /* Stats */
+    .stats { background: var(--sage); padding: 2.5rem 4rem; display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
+    .stat-item { text-align: center; color: var(--white); }
+    .stat-num { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 600; line-height: 1; }
+    .stat-label { font-size: 0.78rem; opacity: 0.85; margin-top: 0.3rem; letter-spacing: 0.03em; }
+
+    /* Section base */
+    section { padding: 5rem 4rem; }
+    .section-tag { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--sage); margin-bottom: 0.8rem; }
+    .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 300; line-height: 1.2; color: var(--charcoal); margin-bottom: 1rem; }
+    .section-title em { font-style: italic; color: var(--sage); }
+    .section-intro { font-size: 1rem; line-height: 1.7; color: var(--warm-gray); max-width: 560px; }
+
+    /* Classes */
+    .classes { background: var(--cream); }
+    .classes-header { text-align: center; margin-bottom: 3rem; }
+    .classes-header .section-intro { margin: 0 auto; }
+    .classes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .class-card { background: var(--white); border-radius: 20px; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s; cursor: pointer; }
+    .class-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(0,0,0,0.1); }
+    .class-img { height: 200px; overflow: hidden; }
+    .class-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+    .class-card:hover .class-img img { transform: scale(1.05); }
+    .class-info { padding: 1.5rem; }
+    .class-level { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--sage); margin-bottom: 0.4rem; }
+    .class-name { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 400; color: var(--charcoal); margin-bottom: 0.6rem; }
+    .class-desc { font-size: 0.85rem; line-height: 1.6; color: var(--warm-gray); margin-bottom: 1rem; }
+    .class-meta { display: flex; gap: 1rem; font-size: 0.78rem; color: var(--warm-gray); }
+    .class-meta span { display: flex; align-items: center; gap: 0.3rem; }
+
+    /* Schedule */
+    .schedule { background: var(--sage-pale); }
+    .schedule-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 3rem; }
+    .schedule-day { background: var(--white); border-radius: 16px; padding: 1.5rem; }
+    .day-name { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 600; color: var(--sage); margin-bottom: 1rem; border-bottom: 1px solid var(--sage-pale); padding-bottom: 0.7rem; }
+    .time-slot { display: flex; justify-content: space-between; align-items: center; padding: 0.6rem 0; border-bottom: 1px solid rgba(0,0,0,0.04); }
+    .time-slot:last-child { border-bottom: none; }
+    .slot-time { font-size: 0.8rem; font-weight: 600; color: var(--charcoal); min-width: 70px; }
+    .slot-class { font-size: 0.82rem; color: var(--warm-gray); }
+    .slot-badge { font-size: 0.68rem; padding: 0.2rem 0.6rem; border-radius: 50px; background: var(--sage-pale); color: var(--sage); font-weight: 500; }
+    .slot-badge.hot { background: #fef3e8; color: #c47a1e; }
+
+    /* Pricing */
+    .pricing { background: var(--cream); }
+    .pricing-header { text-align: center; margin-bottom: 3rem; }
+    .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; max-width: 900px; margin: 0 auto; }
+    .price-card { background: var(--white); border-radius: 24px; padding: 2.5rem 2rem; text-align: center; border: 2px solid transparent; transition: all 0.3s; position: relative; }
+    .price-card.featured { background: var(--sage); border-color: var(--sage); }
+    .price-card.featured * { color: var(--white) !important; }
+    .price-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--sage); margin-bottom: 0.5rem; }
+    .price-name { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 600; color: var(--charcoal); margin-bottom: 1.5rem; }
+    .price-amount { font-family: 'Cormorant Garamond', serif; font-size: 3rem; font-weight: 600; color: var(--charcoal); line-height: 1; }
+    .price-period { font-size: 0.8rem; color: var(--warm-gray); margin-bottom: 1.5rem; }
+    .price-features { list-style: none; margin-bottom: 2rem; }
+    .price-features li { font-size: 0.85rem; color: var(--warm-gray); padding: 0.5rem 0; border-bottom: 1px solid rgba(0,0,0,0.05); display: flex; align-items: center; gap: 0.5rem; }
+    .price-features li::before { content: '✓'; color: var(--sage); font-weight: 600; }
+    .price-card.featured .price-features li::before { color: rgba(255,255,255,0.8); }
+    .price-cta { display: block; padding: 0.8rem 1.5rem; border-radius: 50px; text-decoration: none; font-size: 0.85rem; font-weight: 500; transition: all 0.2s; border: 1.5px solid var(--sage); color: var(--sage); }
+    .price-card.featured .price-cta { background: var(--white); color: var(--sage); border-color: var(--white); }
+
+    /* About */
+    .about { background: var(--sand); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+    .about-image { position: relative; }
+    .about-image img { width: 100%; border-radius: 30px; display: block; }
+    .about-quote { position: absolute; bottom: -1.5rem; right: -1.5rem; background: var(--white); padding: 1.5rem; border-radius: 16px; max-width: 240px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+    .about-quote p { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-style: italic; line-height: 1.5; color: var(--charcoal); }
+    .about-quote cite { font-size: 0.72rem; color: var(--warm-gray); margin-top: 0.5rem; display: block; }
+    .about h2 { font-family: 'Cormorant Garamond', serif; font-size: 2.4rem; font-weight: 300; line-height: 1.2; color: var(--charcoal); margin-bottom: 1.2rem; }
+    .about h2 em { font-style: italic; color: var(--sage); }
+    .about p { font-size: 0.95rem; line-height: 1.8; color: var(--warm-gray); margin-bottom: 1rem; }
+    .certifications { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1.5rem; }
+    .cert-badge { background: var(--white); padding: 0.4rem 0.9rem; border-radius: 50px; font-size: 0.75rem; color: var(--charcoal); font-weight: 500; }
+
+    /* CTA */
+    .cta-section { background: var(--charcoal); color: var(--white); text-align: center; padding: 5rem 4rem; }
+    .cta-section h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 300; margin-bottom: 1rem; }
+    .cta-section h2 em { font-style: italic; color: var(--sage-light); }
+    .cta-section p { font-size: 1rem; color: rgba(255,255,255,0.7); max-width: 500px; margin: 0 auto 2.5rem; line-height: 1.7; }
+
+    /* Footer */
+    footer { background: #1a1a1a; color: rgba(255,255,255,0.6); padding: 2rem 4rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; }
+    footer a { color: rgba(255,255,255,0.4); text-decoration: none; }
+
+    /* Animations */
+    .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .hero { grid-template-columns: 1fr; padding: 6rem 1.5rem 3rem; gap: 2rem; text-align: center; }
+      .hero-image { height: 300px; border-radius: 20px; }
+      .hero-badge { display: none; }
+      .hero-actions { justify-content: center; }
+      .stats { grid-template-columns: repeat(2, 1fr); padding: 2rem 1.5rem; gap: 1.5rem; }
+      section { padding: 3rem 1.5rem; }
+      .classes-grid { grid-template-columns: 1fr; }
+      .schedule-grid { grid-template-columns: 1fr; }
+      .pricing-grid { grid-template-columns: 1fr; max-width: 360px; }
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .about-quote { display: none; }
+      .cta-section { padding: 3rem 1.5rem; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; padding: 1.5rem; }
+      .nav-links { display: none; flex-direction: column; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--cream); justify-content: center; align-items: center; gap: 2rem; z-index: 99; }
+      .nav-links.open { display: flex; }
+      .nav-links a { font-size: 1.2rem; }
+      .hamburger { display: flex; z-index: 101; }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="/dev/portfolio" class="back-btn">← Torna al Portfolio</a>
+
+  <nav>
+    <div class="nav-logo">K<span>o</span>ru</div>
+    <div class="nav-links" id="navLinks">
+      <a href="#classi">Classi</a>
+      <a href="#orari">Orari</a>
+      <a href="#prezzi">Abbonamenti</a>
+      <a href="#chi-siamo">Chi Siamo</a>
+      <a href="#contatti" class="nav-cta">Prova Gratuita</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content fade-in">
+      <p class="hero-tag">Yoga &amp; Benessere &mdash; Firenze, Oltrarno</p>
+      <h1>Lo spazio per<br /><em>ritrovare</em><br />il tuo centro</h1>
+      <p class="hero-sub">Koru è uno studio di yoga e meditazione nel cuore di Firenze. Classi per tutti i livelli, insegnanti certificati, ambiente autentico. Il tuo primo mese a prezzo speciale.</p>
+      <div class="hero-actions">
+        <a href="#prezzi" class="btn-primary">Inizia Oggi</a>
+        <a href="#classi" class="btn-outline">Scopri le Classi</a>
+      </div>
+    </div>
+    <div class="hero-image fade-in" style="--delay:0.2s">
+      <img src="/images/portfolio/yoga-hero-person.jpg" alt="Yoga a Firenze" loading="eager" />
+      <div class="hero-badge">
+        <div class="badge-num">8+</div>
+        <div class="badge-text">anni di pratica<br />a Firenze</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <div class="stats fade-in">
+    <div class="stat-item"><div class="stat-num">320+</div><div class="stat-label">Studenti attivi</div></div>
+    <div class="stat-item"><div class="stat-num">18</div><div class="stat-label">Classi a settimana</div></div>
+    <div class="stat-item"><div class="stat-num">4</div><div class="stat-label">Insegnanti certificati</div></div>
+    <div class="stat-item"><div class="stat-num">8</div><div class="stat-label">Anni a Firenze</div></div>
+  </div>
+
+  <!-- Classes -->
+  <section class="classes" id="classi">
+    <div class="classes-header fade-in">
+      <p class="section-tag">Le Nostre Classi</p>
+      <h2 class="section-title">Una pratica per <em>ogni percorso</em></h2>
+      <p class="section-intro">Che tu sia alla prima lezione o pratichi da anni, trovi qui una classe adatta al tuo momento. Nessun giudizio, nessuna fretta.</p>
+    </div>
+    <div class="classes-grid">
+      <div class="class-card fade-in">
+        <div class="class-img">
+          <img src="/images/portfolio/yoga-studio-hero.jpg" alt="Hatha Yoga" loading="lazy" />
+        </div>
+        <div class="class-info">
+          <div class="class-level">Tutti i livelli</div>
+          <div class="class-name">Hatha Yoga</div>
+          <p class="class-desc">La pratica classica. Posture, respiro e rilassamento finale. Perfetta per chi inizia e per chi vuole una pratica lenta e consapevole.</p>
+          <div class="class-meta">
+            <span>⏱ 75 min</span>
+            <span>👥 max 14 persone</span>
+          </div>
+        </div>
+      </div>
+      <div class="class-card fade-in" style="transition-delay: 0.1s">
+        <div class="class-img">
+          <img src="/images/portfolio/yoga-class.jpg" alt="Vinyasa Flow" loading="lazy" />
+        </div>
+        <div class="class-info">
+          <div class="class-level">Intermedio / Avanzato</div>
+          <div class="class-name">Vinyasa Flow</div>
+          <p class="class-desc">Movimento fluido sincronizzato con il respiro. Costruisce forza, flessibilità e concentrazione. Richiede una base di pratica precedente.</p>
+          <div class="class-meta">
+            <span>⏱ 60 min</span>
+            <span>👥 max 12 persone</span>
+          </div>
+        </div>
+      </div>
+      <div class="class-card fade-in" style="transition-delay: 0.2s">
+        <div class="class-img">
+          <img src="/images/portfolio/yoga-studio-hero.jpg" alt="Yin Yoga" loading="lazy" style="object-position: bottom;" />
+        </div>
+        <div class="class-info">
+          <div class="class-level">Tutti i livelli</div>
+          <div class="class-name">Yin &amp; Meditazione</div>
+          <p class="class-desc">Posture passive tenute a lungo, meditazione guidata, nidra. Ideale la sera per scaricare la tensione accumulata durante la settimana.</p>
+          <div class="class-meta">
+            <span>⏱ 90 min</span>
+            <span>👥 max 16 persone</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Schedule -->
+  <section class="schedule" id="orari">
+    <div class="fade-in">
+      <p class="section-tag">Orari Settimanali</p>
+      <h2 class="section-title"><em>Trova</em> il tuo momento</h2>
+    </div>
+    <div class="schedule-grid">
+      <div class="schedule-day fade-in">
+        <div class="day-name">Lunedì &amp; Mercoledì</div>
+        <div class="time-slot"><span class="slot-time">07:00</span><span class="slot-class">Hatha Morning</span><span class="slot-badge">4 posti</span></div>
+        <div class="time-slot"><span class="slot-time">10:00</span><span class="slot-class">Hatha Lento</span><span class="slot-badge">disponibile</span></div>
+        <div class="time-slot"><span class="slot-time">18:30</span><span class="slot-class">Vinyasa Flow</span><span class="slot-badge hot">quasi pieno</span></div>
+        <div class="time-slot"><span class="slot-time">20:00</span><span class="slot-class">Yin &amp; Meditazione</span><span class="slot-badge">disponibile</span></div>
+      </div>
+      <div class="schedule-day fade-in" style="transition-delay: 0.1s">
+        <div class="day-name">Martedì &amp; Giovedì</div>
+        <div class="time-slot"><span class="slot-time">07:00</span><span class="slot-class">Vinyasa Mattina</span><span class="slot-badge">disponibile</span></div>
+        <div class="time-slot"><span class="slot-time">12:00</span><span class="slot-class">Lunch Break Yoga</span><span class="slot-badge">4 posti</span></div>
+        <div class="time-slot"><span class="slot-time">17:30</span><span class="slot-class">Hatha Principianti</span><span class="slot-badge">disponibile</span></div>
+        <div class="time-slot"><span class="slot-time">19:30</span><span class="slot-class">Vinyasa Flow</span><span class="slot-badge hot">quasi pieno</span></div>
+      </div>
+      <div class="schedule-day fade-in" style="transition-delay: 0.2s">
+        <div class="day-name">Venerdì</div>
+        <div class="time-slot"><span class="slot-time">07:00</span><span class="slot-class">Hatha Morning</span><span class="slot-badge">disponibile</span></div>
+        <div class="time-slot"><span class="slot-time">18:00</span><span class="slot-class">Vinyasa Weekend</span><span class="slot-badge hot">quasi pieno</span></div>
+        <div class="time-slot"><span class="slot-time">20:00</span><span class="slot-class">Yin Deep Relax</span><span class="slot-badge">disponibile</span></div>
+      </div>
+      <div class="schedule-day fade-in" style="transition-delay: 0.3s">
+        <div class="day-name">Sabato &amp; Domenica</div>
+        <div class="time-slot"><span class="slot-time">09:00</span><span class="slot-class">Hatha Weekend</span><span class="slot-badge hot">4 posti</span></div>
+        <div class="time-slot"><span class="slot-time">10:30</span><span class="slot-class">Workshop Mensile</span><span class="slot-badge">disponibile</span></div>
+        <div class="time-slot"><span class="slot-time">18:00</span><span class="slot-class">Yin &amp; Suoni</span><span class="slot-badge">disponibile</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section class="pricing" id="prezzi">
+    <div class="pricing-header fade-in">
+      <p class="section-tag">Abbonamenti</p>
+      <h2 class="section-title">Inizia con una <em>prova gratuita</em></h2>
+      <p class="section-intro" style="margin: 0 auto">Prima lezione gratuita, senza impegno. Poi scegli il piano che si adatta alla tua vita.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="price-card fade-in">
+        <div class="price-label">Base</div>
+        <div class="price-name">4 Lezioni</div>
+        <div class="price-amount">€60</div>
+        <div class="price-period">valide 30 giorni</div>
+        <ul class="price-features">
+          <li>4 lezioni a scelta</li>
+          <li>Tutti i tipi di classe</li>
+          <li>Tappetino incluso</li>
+          <li>App per prenotare</li>
+        </ul>
+        <a href="#contatti" class="price-cta">Inizia Ora</a>
+      </div>
+      <div class="price-card featured fade-in" style="transition-delay: 0.1s">
+        <div class="price-label">Più Scelto</div>
+        <div class="price-name">Mensile Unlimited</div>
+        <div class="price-amount">€110</div>
+        <div class="price-period">al mese, disdici quando vuoi</div>
+        <ul class="price-features">
+          <li>Classi illimitate</li>
+          <li>Priorità prenotazione</li>
+          <li>Workshop mensile incluso</li>
+          <li>1 lezione privata inclusa</li>
+        </ul>
+        <a href="#contatti" class="price-cta">Inizia Ora</a>
+      </div>
+      <div class="price-card fade-in" style="transition-delay: 0.2s">
+        <div class="price-label">Flessibile</div>
+        <div class="price-name">10 Lezioni</div>
+        <div class="price-amount">€130</div>
+        <div class="price-period">valide 3 mesi</div>
+        <ul class="price-features">
+          <li>10 lezioni a scelta</li>
+          <li>Tutti i tipi di classe</li>
+          <li>Tappetino incluso</li>
+          <li>Trasferibili a 1 amico</li>
+        </ul>
+        <a href="#contatti" class="price-cta">Inizia Ora</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="about" id="chi-siamo">
+    <div class="about-grid">
+      <div class="about-image fade-in">
+        <img src="/images/portfolio/yoga-hero-person.jpg" alt="Chiara Mancini — insegnante Koru" />
+        <div class="about-quote">
+          <p>"Lo yoga non è una prestazione. È un invito a incontrare te stesso."</p>
+          <cite>— Chiara Mancini, fondatrice Koru</cite>
+        </div>
+      </div>
+      <div class="fade-in" style="transition-delay: 0.15s">
+        <p class="section-tag">Chi Siamo</p>
+        <h2>Chiara &amp; il team <em>Koru</em></h2>
+        <p>Koru nasce nel 2016 con un'idea semplice: creare uno spazio dove lo yoga fosse accessibile a tutti, senza competizione e senza performance. Chiara Mancini ha iniziato a praticare a 22 anni durante un periodo difficile e ha trovato nello yoga uno strumento reale di trasformazione.</p>
+        <p>Oggi Koru è uno studio con quattro insegnanti certificati, più di 320 studenti attivi e un ambiente dove si viene per stare bene — non per fare bella figura. Le classi hanno un numero massimo di partecipanti proprio per garantire attenzione individuale.</p>
+        <div class="certifications">
+          <span class="cert-badge">RYT 500 Yoga Alliance</span>
+          <span class="cert-badge">Yin Yoga Certified</span>
+          <span class="cert-badge">Mindfulness MBSR</span>
+          <span class="cert-badge">Trauma Sensitive Yoga</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section" id="contatti">
+    <h2 class="fade-in">La prima lezione è <em>gratuita</em></h2>
+    <p class="fade-in">Nessun impegno, nessuna carta di credito. Scegli una classe, prenota il posto, e vieni a vedere di persona.</p>
+    <a href="tel:+390551234567" class="btn-primary fade-in" style="font-size: 1rem; padding: 1rem 2.5rem;">Prenota la tua prima lezione</a>
+  </section>
+
+  <footer>
+    <span>© 2026 Koru Yoga Studio — Via Maggio 18, Firenze</span>
+    <span>P.IVA 06123456789 &nbsp;|&nbsp; <a href="#">Privacy</a></span>
+  </footer>
+
+  <script>
+    // Hamburger
+    const btn = document.getElementById('hamburger');
+    const nav = document.getElementById('navLinks');
+    btn?.addEventListener('click', () => {
+      const open = nav.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open);
+    });
+    nav?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      nav.classList.remove('open');
+      btn?.setAttribute('aria-expanded', 'false');
+    }));
+
+    // Scroll fade
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
