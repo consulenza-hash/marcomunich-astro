@@ -173,40 +173,32 @@
     .demo-dot.red { background: #ff5f57; } .demo-dot.yellow { background: #febc2e; } .demo-dot.green { background: #28c840; }
     .demo-url { flex: 1; text-align: center; font-size: 0.72rem; color: #888; font-family: monospace; background: white; padding: 0.2rem 0.8rem; border-radius: 4px; max-width: 220px; margin: 0 auto; }
 
-    /* Convivio mini-site — EMP-inspired dark minimal */
-    .conv-site-wrap { background: #080808; }
-    .conv-nav {
-      background: #080808; border-bottom: 1px solid rgba(255,255,255,0.05);
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 1.3rem 2.5rem;
-    }
-    .conv-logo { font-family: var(--serif); font-size: 0.7rem; letter-spacing: 0.42em; text-transform: uppercase; color: #e8e0d4; font-weight: 300; }
-    .conv-nav-link { font-size: 0.58rem; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(232,224,212,0.42); text-decoration: none; }
-    /* Hero — large full-bleed, centered text overlay */
-    .conv-hero { position: relative; height: 440px; overflow: hidden; }
-    .conv-hero-img { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(0.6); }
-    .conv-hero-overlay {
-      position: absolute; inset: 0; display: flex; flex-direction: column;
-      align-items: center; justify-content: center; text-align: center;
-    }
-    .conv-hero-eyebrow { font-size: 0.57rem; letter-spacing: 0.24em; text-transform: uppercase; color: rgba(232,224,212,0.5); margin-bottom: 1.2rem; }
-    .conv-hero-title { font-family: var(--serif); font-size: 3.2rem; font-weight: 300; color: #e8e0d4; font-style: italic; line-height: 1; margin-bottom: 1.8rem; }
-    .conv-hero-reserve { font-size: 0.58rem; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(232,224,212,0.65); border: 1px solid rgba(232,224,212,0.2); padding: 0.55rem 1.8rem; text-decoration: none; }
-    /* Signature dish — photo + minimal text */
-    .conv-signature { display: grid; grid-template-columns: 1fr 1fr; background: #0d0d0d; min-height: 300px; }
-    .conv-sig-img { overflow: hidden; }
-    .conv-sig-img img { width: 100%; height: 100%; object-fit: cover; display: block; min-height: 300px; }
-    .conv-sig-text { padding: 3.5rem 2.8rem; display: flex; flex-direction: column; justify-content: center; border-left: 1px solid rgba(255,255,255,0.04); }
-    .conv-sig-eyebrow { font-size: 0.57rem; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(232,224,212,0.28); margin-bottom: 1.4rem; }
-    .conv-sig-name { font-family: var(--serif); font-size: 1.5rem; font-weight: 300; color: #e8e0d4; font-style: italic; margin-bottom: 0.7rem; }
-    .conv-sig-desc { font-size: 0.77rem; line-height: 2; color: rgba(232,224,212,0.42); margin-bottom: 1.5rem; }
-    .conv-sig-price { font-size: 0.65rem; letter-spacing: 0.14em; color: rgba(232,224,212,0.28); }
-    /* Reserve panel */
-    .conv-reserve { padding: 4rem 2.5rem; text-align: center; background: #080808; border-top: 1px solid rgba(255,255,255,0.04); }
-    .conv-reserve-eyebrow { font-size: 0.57rem; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(232,224,212,0.28); margin-bottom: 1.5rem; }
-    .conv-reserve h3 { font-family: var(--serif); font-size: 1.8rem; font-weight: 300; color: #e8e0d4; font-style: italic; margin-bottom: 0.5rem; line-height: 1.3; }
-    .conv-reserve-sub { font-size: 0.72rem; color: rgba(232,224,212,0.35); margin-bottom: 2rem; letter-spacing: 0.06em; }
-    .conv-reserve-cta { display: inline-block; font-size: 0.58rem; letter-spacing: 0.22em; text-transform: uppercase; color: #e8e0d4; border: 1px solid rgba(232,224,212,0.22); padding: 0.65rem 2rem; text-decoration: none; }
+    /* Convivio mini-site — EMP-inspired: bianco, logo centrato, foto pulita */
+    .conv-site-wrap { background: #fff; font-family: var(--serif); }
+    /* Header: logo centrato, nav centrata sotto */
+    .conv-header { background: white; padding: 2rem 2.5rem 0; text-align: center; }
+    .conv-logo-icon { font-size: 1.1rem; color: #2a2a2a; display: block; margin-bottom: 0.4rem; letter-spacing: 0.08em; }
+    .conv-logo { display: block; font-family: var(--serif); font-size: 0.7rem; letter-spacing: 0.55em; text-transform: uppercase; color: #1a1a1a; font-weight: 300; margin-bottom: 1.4rem; }
+    .conv-nav { background: white; display: flex; justify-content: center; gap: 0; border-top: 1px solid #e8e4de; border-bottom: 1px solid #e8e4de; padding: 0.8rem 0; flex-wrap: wrap; }
+    .conv-nav-link { font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase; color: #555; text-decoration: none; padding: 0 1.2rem; border-right: 1px solid #ddd; line-height: 1; }
+    .conv-nav-link:last-child { border-right: none; }
+    /* Hero — foto full-bleed, nessun testo sopra */
+    .conv-hero { overflow: hidden; height: 420px; }
+    .conv-hero-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    /* CTA minima sotto la foto */
+    .conv-book { text-align: center; padding: 1.8rem 2.5rem; background: white; }
+    .conv-book-link { font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase; color: #1a1a1a; border-bottom: 1px solid #1a1a1a; padding-bottom: 2px; text-decoration: none; }
+    /* Sezione chef — 2 colonne, bianco */
+    .conv-chef { display: grid; grid-template-columns: 1fr 1fr; background: white; border-top: 1px solid #f0ece6; min-height: 280px; }
+    .conv-chef-img { overflow: hidden; }
+    .conv-chef-img img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; min-height: 280px; }
+    .conv-chef-text { padding: 3rem 2.5rem; display: flex; flex-direction: column; justify-content: center; }
+    .conv-chef-eyebrow { font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: #999; margin-bottom: 1rem; }
+    .conv-chef-name { font-family: var(--serif); font-size: 1.5rem; font-weight: 300; color: #1a1a1a; font-style: italic; margin-bottom: 0.8rem; }
+    .conv-chef-desc { font-size: 0.78rem; line-height: 2; color: #666; }
+    /* Footer minimal */
+    .conv-footer { background: #f8f5f0; padding: 1.8rem 2.5rem; text-align: center; border-top: 1px solid #ede9e3; }
+    .conv-footer-addr { font-size: 0.65rem; letter-spacing: 0.1em; color: #888; line-height: 1.9; }
 
     /* CTA */
     .cta-section {
@@ -232,11 +224,10 @@
       .analisi-grid { grid-template-columns: 1fr; }
       .step3 { margin: 0 -1.5rem; padding: 2.5rem 1.5rem; }
       .traduzione-grid { grid-template-columns: 1fr; }
-      .conv-nav-link { display: none; }
-      .conv-hero { height: 280px; }
-      .conv-hero-title { font-size: 2rem; }
-      .conv-signature { grid-template-columns: 1fr; }
-      .conv-sig-img img { min-height: 240px; max-height: 280px; }
+      .conv-nav { gap: 0; }
+      .conv-nav-link { padding: 0 0.6rem; font-size: 0.52rem; }
+      .conv-hero { height: 260px; }
+      .conv-chef { grid-template-columns: 1fr; }
       .cta-section { margin: 4rem -1.5rem 0; padding: 3.5rem 1.5rem; }
     }
   </style>
@@ -362,7 +353,7 @@
         <h3>convivio.it — il sito finale</h3>
         <p>Il rigore visivo di EMP tradotto in italiano: il verde bosco dell'Isola, il piatto come protagonista, Luca in primo piano. Stessa disciplina, identità tutta milanese.</p>
       </div>
-      <div class="demo-frame" style="background:#080808;">
+      <div class="demo-frame">
         <div class="demo-bar">
           <div class="demo-dot red"></div>
           <div class="demo-dot yellow"></div>
@@ -370,39 +361,40 @@
           <div class="demo-url">convivio.it</div>
         </div>
         <div class="conv-site-wrap">
-          <!-- Nav — dark, minimalissimo -->
+          <!-- Header: logo centrato + nav centrata — stile EMP -->
+          <div class="conv-header">
+            <span class="conv-logo-icon">✦ ✦ ✦</span>
+            <span class="conv-logo">Convivio</span>
+          </div>
           <nav class="conv-nav">
             <a href="#" class="conv-nav-link">Riserva</a>
-            <div class="conv-logo">Convivio</div>
             <a href="#" class="conv-nav-link">About</a>
+            <a href="#" class="conv-nav-link">Menu</a>
+            <a href="#" class="conv-nav-link">Lo Chef</a>
+            <a href="#" class="conv-nav-link">Contatti</a>
           </nav>
-          <!-- Hero — foto full-bleed, testo centrato sovrapposto -->
+          <!-- Hero — foto full-bleed, nessun testo sovrapposto -->
           <div class="conv-hero">
-            <img class="conv-hero-img" src="/images/portfolio/ristorante-hero.jpg" alt="Convivio" loading="lazy" />
-            <div class="conv-hero-overlay">
-              <div class="conv-hero-eyebrow">Milano · Isola · 24 coperti · tutto su prenotazione</div>
-              <div class="conv-hero-title">Convivio</div>
-              <a href="#" class="conv-hero-reserve">Prenota un tavolo</a>
+            <img class="conv-hero-img" src="/images/portfolio/ristorante-hero.jpg" alt="Convivio — Milano" loading="lazy" />
+          </div>
+          <!-- CTA sotto la foto -->
+          <div class="conv-book">
+            <a href="#" class="conv-book-link">Prenota un tavolo</a>
+          </div>
+          <!-- Chef — 2 colonne -->
+          <div class="conv-chef">
+            <div class="conv-chef-img">
+              <img src="/images/portfolio/ristorante-chef.jpg" alt="Luca Motta" loading="lazy" />
+            </div>
+            <div class="conv-chef-text">
+              <div class="conv-chef-eyebrow">Lo Chef</div>
+              <div class="conv-chef-name">Luca Motta</div>
+              <p class="conv-chef-desc">Tre anni di Convivio, una cucina italiana contemporanea senza compromessi. I produttori li conosco tutti di persona — e questo si sente nel piatto.</p>
             </div>
           </div>
-          <!-- Piatto della stagione — foto + testo minimal su scuro -->
-          <div class="conv-signature">
-            <div class="conv-sig-img">
-              <img src="/images/portfolio/ristorante-dish.jpg" alt="Risotto al Tartufo" loading="lazy" />
-            </div>
-            <div class="conv-sig-text">
-              <div class="conv-sig-eyebrow">Piatto della stagione</div>
-              <div class="conv-sig-name">Risotto al Tartufo Nero</div>
-              <p class="conv-sig-desc">Tartufo nero pregiato, brodo di pollo artigianale, parmigiano 36 mesi. Servito per due.</p>
-              <div class="conv-sig-price">€ 56 per due · solo su prenotazione</div>
-            </div>
-          </div>
-          <!-- Riserva — centrato, scuro, sobrio -->
-          <div class="conv-reserve">
-            <div class="conv-reserve-eyebrow">Riserva</div>
-            <h3>Luca Motta</h3>
-            <div class="conv-reserve-sub">Cucina italiana contemporanea · 24 coperti · tutto su prenotazione</div>
-            <a href="#" class="conv-reserve-cta">Prenota un tavolo</a>
+          <!-- Footer minimal -->
+          <div class="conv-footer">
+            <div class="conv-footer-addr">Milano · Isola · Via Pastrengo 14<br />24 coperti · tutto su prenotazione</div>
           </div>
         </div>
       </div>
