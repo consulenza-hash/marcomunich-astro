@@ -1,0 +1,552 @@
+---
+// Forte Barberia — mockup barbershop premium
+---
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Forte Barberia — Torino</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f5f0e8;
+      --dark: #1a1a1a;
+      --green: #1d3828;
+      --green-light: #2a5039;
+      --gold: #b8960c;
+      --gold-light: #d4ac22;
+      --cream: #f5f0e8;
+      --text: #1a1a1a;
+      --muted: #6b6356;
+      --serif: 'Oswald', sans-serif;
+      --sans: 'Inter', system-ui, sans-serif;
+      --red: #8b1a1a;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: var(--sans); overflow-x: hidden; }
+
+    /* BACK BTN */
+    .back-btn {
+      position: fixed; top: 1.2rem; left: 1.5rem; z-index: 999;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--dark); color: rgba(245,240,232,0.7);
+      text-decoration: none; font-family: var(--sans);
+      font-size: 0.8rem; letter-spacing: 0.05em; padding: 0.55rem 1rem;
+      border-radius: 2rem; transition: all 0.2s;
+    }
+    .back-btn:hover { color: var(--cream); }
+
+    /* NAV */
+    nav {
+      background: var(--green); padding: 0 3rem;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 70px; position: sticky; top: 0; z-index: 100;
+    }
+    .nav-logo {
+      font-family: var(--serif); font-size: 1.4rem; font-weight: 700;
+      color: var(--cream); letter-spacing: 0.1em; text-decoration: none;
+      text-transform: uppercase;
+    }
+    .nav-logo span { color: var(--gold); }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      color: rgba(245,240,232,0.7); text-decoration: none;
+      font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--cream); }
+    .nav-book {
+      background: var(--gold); color: var(--dark);
+      text-decoration: none; font-family: var(--serif);
+      font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; padding: 0.6rem 1.5rem;
+      transition: background 0.2s;
+    }
+    .nav-book:hover { background: var(--gold-light); }
+
+    /* HERO */
+    .hero {
+      position: relative; height: calc(100vh - 70px);
+      display: grid; grid-template-columns: 1fr 1fr;
+      overflow: hidden;
+    }
+    .hero-left {
+      background: var(--green);
+      display: flex; flex-direction: column;
+      justify-content: center; padding: 5rem 4rem 5rem 5rem;
+      position: relative; z-index: 2;
+    }
+    .hero-left::after {
+      content: '';
+      position: absolute; right: -2.5rem; top: 0; bottom: 0;
+      width: 5rem; background: var(--green);
+      clip-path: polygon(0 0, 0 100%, 100% 100%);
+      z-index: 3;
+    }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      color: var(--gold); font-size: 0.7rem;
+      letter-spacing: 0.25em; text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+    .hero-tag::before {
+      content: ''; display: block; width: 2rem; height: 1px;
+      background: var(--gold);
+    }
+    .hero h1 {
+      font-family: var(--serif); font-size: clamp(3.5rem, 6vw, 5.5rem);
+      font-weight: 700; color: var(--cream); line-height: 0.95;
+      text-transform: uppercase; letter-spacing: -0.02em;
+      margin-bottom: 0.3rem;
+    }
+    .hero h1 span { color: var(--gold); }
+    .hero-city {
+      font-family: var(--serif); font-size: 1rem; font-weight: 300;
+      color: rgba(245,240,232,0.5); letter-spacing: 0.3em;
+      text-transform: uppercase; margin-bottom: 2.5rem;
+    }
+    .hero-desc {
+      color: rgba(245,240,232,0.7); font-size: 0.9rem;
+      line-height: 1.8; max-width: 380px; margin-bottom: 3rem;
+    }
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-gold {
+      background: var(--gold); color: var(--dark);
+      text-decoration: none; font-family: var(--serif);
+      font-size: 0.85rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; padding: 0.9rem 2rem;
+      transition: background 0.2s;
+    }
+    .btn-gold:hover { background: var(--gold-light); }
+    .btn-ghost {
+      border: 1px solid rgba(245,240,232,0.3); color: var(--cream);
+      text-decoration: none; font-family: var(--serif);
+      font-size: 0.85rem; font-weight: 400; letter-spacing: 0.1em;
+      text-transform: uppercase; padding: 0.9rem 2rem;
+      transition: border-color 0.2s;
+    }
+    .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+
+    .hero-right {
+      position: relative; overflow: hidden;
+    }
+    .hero-right img {
+      width: 100%; height: 100%; object-fit: cover;
+      object-position: center;
+    }
+    .hero-right::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(29,56,40,0.3) 0%, transparent 60%);
+      z-index: 1;
+    }
+    .hero-badge {
+      position: absolute; bottom: 2.5rem; right: 2.5rem;
+      background: var(--gold); color: var(--dark);
+      font-family: var(--serif); font-weight: 700;
+      font-size: 0.7rem; letter-spacing: 0.15em;
+      text-transform: uppercase; padding: 0.8rem 1.2rem;
+      z-index: 2;
+    }
+
+    /* INFO STRIP */
+    .info-strip {
+      background: var(--dark); display: flex;
+      justify-content: center; align-items: center;
+    }
+    .info-inner {
+      display: flex; max-width: 900px; width: 100%;
+    }
+    .info-item {
+      flex: 1; display: flex; align-items: center; gap: 1rem;
+      padding: 1.5rem 2.5rem;
+      border-right: 1px solid rgba(255,255,255,0.08);
+    }
+    .info-item:last-child { border-right: none; }
+    .info-icon { font-size: 1.2rem; flex-shrink: 0; }
+    .info-text-label { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(245,240,232,0.4); }
+    .info-text-val { font-size: 0.85rem; color: var(--cream); margin-top: 0.1rem; }
+
+    /* SERVICES */
+    .services-section { padding: 6rem 3rem; }
+    .services-section .section-hd {
+      text-align: center; margin-bottom: 4rem;
+    }
+    .section-tag {
+      font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--gold); display: block; margin-bottom: 1rem;
+    }
+    .services-section h2 {
+      font-family: var(--serif); font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+    }
+    .services-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; background: #d4c9b8;
+      border: 1px solid #d4c9b8; max-width: 1100px; margin: 0 auto;
+    }
+    .service-card {
+      background: var(--cream); padding: 2.5rem;
+      transition: background 0.3s;
+    }
+    .service-card:hover { background: white; }
+    .service-card .num {
+      font-family: var(--serif); font-size: 3rem; font-weight: 700;
+      color: rgba(26,26,26,0.06); line-height: 1; margin-bottom: 0.5rem;
+    }
+    .service-card h3 {
+      font-family: var(--serif); font-size: 1.3rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.05em;
+      margin-bottom: 0.8rem; color: var(--green);
+    }
+    .service-card p {
+      font-size: 0.85rem; line-height: 1.7; color: var(--muted);
+      margin-bottom: 1.5rem;
+    }
+    .service-duration {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 1.2rem; border-top: 1px solid rgba(26,26,26,0.1);
+    }
+    .service-time { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.05em; }
+    .service-price { font-family: var(--serif); font-weight: 600; font-size: 1.1rem; color: var(--green); }
+
+    /* BOOKING BANNER */
+    .booking-banner {
+      background: var(--green); padding: 4rem 3rem;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 2rem; flex-wrap: wrap;
+    }
+    .booking-banner-text h3 {
+      font-family: var(--serif); font-size: clamp(1.5rem, 3vw, 2.2rem);
+      font-weight: 700; color: var(--cream);
+      text-transform: uppercase; margin-bottom: 0.5rem;
+    }
+    .booking-banner-text p {
+      color: rgba(245,240,232,0.6); font-size: 0.9rem;
+    }
+    .booking-slots {
+      display: flex; gap: 0.8rem; flex-wrap: wrap;
+    }
+    .slot {
+      background: rgba(245,240,232,0.08); border: 1px solid rgba(245,240,232,0.15);
+      color: var(--cream); font-size: 0.8rem; padding: 0.5rem 1rem;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .slot:hover, .slot.active { background: var(--gold); border-color: var(--gold); color: var(--dark); }
+    .booking-btn {
+      background: var(--gold); color: var(--dark);
+      text-decoration: none; font-family: var(--serif);
+      font-size: 0.9rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; padding: 1rem 2.5rem;
+      white-space: nowrap; transition: background 0.2s;
+    }
+    .booking-btn:hover { background: var(--gold-light); }
+
+    /* GALLERY STRIP */
+    .gallery-strip {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 0; height: 480px;
+    }
+    .gallery-strip-item {
+      overflow: hidden; position: relative;
+    }
+    .gallery-strip-item img {
+      width: 100%; height: 100%;
+      object-fit: cover; transition: transform 0.6s;
+    }
+    .gallery-strip-item:hover img { transform: scale(1.05); }
+    .gallery-strip-item .overlay {
+      position: absolute; inset: 0;
+      background: rgba(29,56,40,0); transition: background 0.3s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .gallery-strip-item:hover .overlay { background: rgba(29,56,40,0.5); }
+    .gallery-strip-item .overlay span {
+      font-family: var(--serif); font-weight: 600;
+      font-size: 1.2rem; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--cream);
+      opacity: 0; transform: translateY(10px); transition: all 0.3s;
+    }
+    .gallery-strip-item:hover .overlay span { opacity: 1; transform: translateY(0); }
+
+    /* ABOUT */
+    .about-section {
+      display: grid; grid-template-columns: 1fr 1fr;
+      min-height: 600px;
+    }
+    .about-img { overflow: hidden; }
+    .about-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .about-content {
+      background: var(--green); padding: 5rem 4rem;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .about-content .label {
+      font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--gold); display: block; margin-bottom: 1.5rem;
+    }
+    .about-content h2 {
+      font-family: var(--serif); font-size: clamp(2rem, 3.5vw, 2.8rem);
+      font-weight: 700; color: var(--cream);
+      text-transform: uppercase; margin-bottom: 1.5rem; line-height: 1.1;
+    }
+    .about-content p {
+      color: rgba(245,240,232,0.7); font-size: 0.9rem;
+      line-height: 1.9; margin-bottom: 1rem;
+    }
+    .about-sep {
+      width: 3rem; height: 2px; background: var(--gold);
+      margin: 1.5rem 0;
+    }
+    .about-sig {
+      font-family: var(--serif); font-size: 1.6rem; font-style: italic;
+      color: var(--gold-light); font-weight: 300; letter-spacing: 0.05em;
+    }
+
+    /* REVIEWS */
+    .reviews-section { padding: 5rem 3rem; background: white; }
+    .reviews-section .section-hd { text-align: center; margin-bottom: 3rem; }
+    .reviews-section h2 {
+      font-family: var(--serif); font-size: clamp(1.8rem, 3vw, 2.5rem);
+      font-weight: 700; text-transform: uppercase;
+    }
+    .reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; max-width: 1100px; margin: 0 auto; }
+    .review-card {
+      background: var(--cream); padding: 2rem;
+      border-left: 3px solid var(--gold);
+    }
+    .review-stars { color: var(--gold); font-size: 0.9rem; margin-bottom: 0.8rem; letter-spacing: 0.1em; }
+    .review-text { font-size: 0.85rem; line-height: 1.7; color: var(--text); margin-bottom: 1rem; font-style: italic; }
+    .review-author { font-size: 0.8rem; color: var(--muted); font-weight: 500; }
+
+    @media (max-width: 768px) {
+      nav { padding: 0 1.5rem; }
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; height: auto; }
+      .hero-left { padding: 5rem 1.5rem 3rem; }
+      .hero-left::after { display: none; }
+      .hero-right { height: 300px; }
+      .hero-badge { display: none; }
+      .info-inner { flex-direction: column; }
+      .info-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); padding: 1rem 1.5rem; }
+      .services-section { padding: 4rem 1.5rem; }
+      .services-grid { grid-template-columns: 1fr; }
+      .booking-banner { padding: 3rem 1.5rem; flex-direction: column; }
+      .gallery-strip { grid-template-columns: 1fr; height: auto; }
+      .gallery-strip-item { height: 220px; }
+      .about-section { grid-template-columns: 1fr; }
+      .about-img { height: 300px; }
+      .about-content { padding: 3rem 1.5rem; }
+      .reviews-section { padding: 4rem 1.5rem; }
+      .reviews-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <a href="/dev/portfolio" class="back-btn">← Portfolio</a>
+
+  <nav>
+    <a href="#" class="nav-logo">Forte<span>.</span>Barberia</a>
+    <ul class="nav-links">
+      <li><a href="#servizi">Servizi</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#about">About</a></li>
+    </ul>
+    <a href="#prenota" class="nav-book">Prenota ora</a>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-left">
+      <span class="hero-tag">Dal 2009 — Torino</span>
+      <h1>Arte del<br /><span>Rasoio.</span></h1>
+      <p class="hero-city">Via Roma, Torino</p>
+      <p class="hero-desc">Non un taglio, un rituale. Ogni cliente merita tempo, precisione e un'esperienza che vale il prezzo.</p>
+      <div class="hero-btns">
+        <a href="#prenota" class="btn-gold">Prenota il tuo posto →</a>
+        <a href="#servizi" class="btn-ghost">Scopri i servizi</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <img src="/images/portfolio/barber-hero.jpg" alt="Forte Barberia interno" />
+      <div class="hero-badge">Torino dal 2009</div>
+    </div>
+  </section>
+
+  <div class="info-strip">
+    <div class="info-inner">
+      <div class="info-item">
+        <div class="info-icon">📍</div>
+        <div>
+          <div class="info-text-label">Indirizzo</div>
+          <div class="info-text-val">Via Roma 47, Torino</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">🕐</div>
+        <div>
+          <div class="info-text-label">Orari</div>
+          <div class="info-text-val">Mar–Sab 9:00–19:30</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">📞</div>
+        <div>
+          <div class="info-text-label">Telefono</div>
+          <div class="info-text-val">011 234 5678</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">⭐</div>
+        <div>
+          <div class="info-text-label">Valutazione</div>
+          <div class="info-text-val">4.9 / 5 · 320 recensioni</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="services-section" id="servizi">
+    <div class="section-hd">
+      <span class="section-tag">I nostri servizi</span>
+      <h2>Il catalogo completo</h2>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="num">01</div>
+        <h3>Taglio classico</h3>
+        <p>Forbici e macchinetta, rifinitura con rasoio a mano libera sul collo e sulle basette. Il fondamentale, fatto bene.</p>
+        <div class="service-duration">
+          <span class="service-time">⏱ 45 min</span>
+          <span class="service-price">25 €</span>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="num">02</div>
+        <h3>Taglio + barba</h3>
+        <p>Il servizio completo: taglio capelli e barba con rasoio a mano libera, asciugamano caldo, prodotti premium.</p>
+        <div class="service-duration">
+          <span class="service-time">⏱ 75 min</span>
+          <span class="service-price">45 €</span>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="num">03</div>
+        <h3>Rifinisura barba</h3>
+        <p>Solo barba: modellatura, rifinitura con rasoio e olio da barba calmante. Ideale tra un taglio e l'altro.</p>
+        <div class="service-duration">
+          <span class="service-time">⏱ 30 min</span>
+          <span class="service-price">20 €</span>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="num">04</div>
+        <h3>Rasatura classica</h3>
+        <p>Rasatura completa con rasoio dritto, pre-shave, schiuma calda e asciugamano caldo. Un'esperienza d'altri tempi.</p>
+        <div class="service-duration">
+          <span class="service-time">⏱ 40 min</span>
+          <span class="service-price">30 €</span>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="num">05</div>
+        <h3>Trattamento cute</h3>
+        <p>Massaggio al cuoio capelluto con siero nutriente. Riduce la caduta, stimola la circolazione, rilassa profondamente.</p>
+        <div class="service-duration">
+          <span class="service-time">⏱ 20 min</span>
+          <span class="service-price">18 €</span>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="num">06</div>
+        <h3>Pacchetto sposo</h3>
+        <p>Taglio, barba e trattamento completo per il giorno del matrimonio. Solo su appuntamento con prova inclusa.</p>
+        <div class="service-duration">
+          <span class="service-time">⏱ 2h</span>
+          <span class="service-price">90 €</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="booking-banner" id="prenota">
+    <div class="booking-banner-text">
+      <h3>Prenota il tuo posto</h3>
+      <p>Scegli un orario disponibile questa settimana</p>
+    </div>
+    <div class="booking-slots">
+      <div class="slot active">Lun 10:00</div>
+      <div class="slot">Lun 14:30</div>
+      <div class="slot">Mar 11:00</div>
+      <div class="slot">Mar 16:00</div>
+      <div class="slot">Mer 09:30</div>
+      <div class="slot">Gio 15:00</div>
+    </div>
+    <a href="#prenota" class="booking-btn">Conferma appuntamento →</a>
+  </section>
+
+  <div class="gallery-strip" id="gallery">
+    <div class="gallery-strip-item">
+      <img src="/images/portfolio/barber-hero.jpg" alt="Interno barberia" loading="lazy" />
+      <div class="overlay"><span>Ambiente</span></div>
+    </div>
+    <div class="gallery-strip-item">
+      <img src="/images/portfolio/barber-work.jpg" alt="Maestro al lavoro" loading="lazy" />
+      <div class="overlay"><span>Il lavoro</span></div>
+    </div>
+    <div class="gallery-strip-item">
+      <img src="/images/portfolio/barber-result.jpg" alt="Risultato" loading="lazy" />
+      <div class="overlay"><span>Il risultato</span></div>
+    </div>
+  </div>
+
+  <section class="about-section" id="about">
+    <div class="about-img">
+      <img src="/images/portfolio/barber-exterior.jpg" alt="Forte Barberia esterno" loading="lazy" />
+    </div>
+    <div class="about-content">
+      <span class="label">La storia</span>
+      <h2>Forza,<br />precisione,<br />stile.</h2>
+      <p>Forte Barberia nasce nel 2009 dall'idea di Marco Forte: riportare a Torino l'esperienza del barbiere di una volta, senza nostalgia ma con la stessa cura artigianale.</p>
+      <p>Ogni barbitonsore del team ha almeno 8 anni di esperienza e si aggiorna ogni anno con i master italiani e internazionali più riconosciuti.</p>
+      <div class="about-sep"></div>
+      <div class="about-sig">Marco Forte</div>
+    </div>
+  </section>
+
+  <section class="reviews-section">
+    <div class="section-hd">
+      <span class="section-tag">Recensioni Google</span>
+      <h2>Cosa dicono i clienti</h2>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Il miglior barbiere che abbia mai frequentato a Torino. Prendono il tempo per capire cosa vuoi e il risultato è sempre impeccabile."</p>
+        <div class="review-author">Andrea M. — Cliente dal 2018</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Ho fatto il pacchetto sposo qui e non potevo chiedere di meglio. Professionali, precisi, e l'atmosfera è fantastica."</p>
+        <div class="review-author">Davide R. — Sposo 2024</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Ci vado ogni tre settimane da quattro anni. Non ci rinuncio. Il taglio + barba è un'esperienza, non solo un servizio."</p>
+        <div class="review-author">Luca T. — Cliente fidelizzato</div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    document.querySelectorAll('.slot').forEach(slot => {
+      slot.addEventListener('click', () => {
+        document.querySelectorAll('.slot').forEach(s => s.classList.remove('active'));
+        slot.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>
