@@ -180,30 +180,26 @@
     .demo-url { flex: 1; text-align: center; font-size: 0.72rem; color: #888; font-family: monospace; background: white; padding: 0.2rem 0.8rem; border-radius: 4px; max-width: 220px; margin: 0 auto; }
 
     /* Vigna dei Colli mini-site — Aman-inspired */
-    /* Hero wrapper: nav floats over the image */
-    .vdc-hero-wrapper { position: relative; height: 480px; overflow: hidden; }
-    .vdc-nav {
-      position: absolute; top: 0; left: 0; right: 0; z-index: 10;
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 1.4rem 2.5rem;
+    /* Header: sfondo crema, logo centrato, menu + prenota ai lati */
+    .vdc-header {
+      background: #f2efe8; display: flex; align-items: center;
+      justify-content: space-between; padding: 1.1rem 2rem;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
     }
-    .vdc-logo { font-family: var(--serif); font-size: 0.65rem; letter-spacing: 0.38em; text-transform: uppercase; color: white; font-weight: 400; }
-    .vdc-links { display: flex; gap: 2rem; font-size: 0.58rem; color: rgba(255,255,255,0.72); letter-spacing: 0.12em; text-transform: uppercase; }
-    .vdc-reserve { font-size: 0.58rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.72); border-bottom: 1px solid rgba(255,255,255,0.35); padding-bottom: 2px; cursor: pointer; }
-    /* Full-bleed image */
-    .vdc-hero-img-wrap { width: 100%; height: 100%; }
-    .vdc-hero-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(0.78); }
-    /* Text overlay centered on hero */
-    .vdc-hero-text {
-      position: absolute; inset: 0; display: flex; flex-direction: column;
-      align-items: center; justify-content: center; text-align: center; padding: 2rem;
-    }
-    .vdc-hero-eyebrow { font-size: 0.57rem; letter-spacing: 0.28em; text-transform: uppercase; color: rgba(255,255,255,0.62); margin-bottom: 1.4rem; }
-    .vdc-hero-text h2 { font-family: var(--serif); font-size: 2.8rem; font-weight: 300; color: white; line-height: 1.15; font-style: italic; margin-bottom: 1.8rem; }
-    .vdc-hero-link { font-size: 0.58rem; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.72); border-bottom: 1px solid rgba(255,255,255,0.32); padding-bottom: 3px; text-decoration: none; }
+    .vdc-menu { font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: #3a342c; display: flex; align-items: center; gap: 0.4rem; }
+    .vdc-logo { font-family: var(--serif); font-size: 0.65rem; letter-spacing: 0.42em; text-transform: uppercase; color: #1a1612; font-weight: 400; }
+    .vdc-reserve-btn { font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: white; background: #1a1612; padding: 0.45rem 1.1rem; cursor: pointer; border: none; }
+    /* Hero — foto full-bleed, nessun testo sopra */
+    .vdc-hero { overflow: hidden; height: 460px; }
+    .vdc-hero img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    /* Caption sotto la foto — come Aman */
+    .vdc-caption { background: #f2efe8; padding: 2.5rem 2.5rem 3rem; }
+    .vdc-caption-location { font-size: 0.57rem; letter-spacing: 0.28em; text-transform: uppercase; color: #9a8a7a; margin-bottom: 0.8rem; }
+    .vdc-caption h2 { font-family: var(--serif); font-size: 1.8rem; font-weight: 300; color: #1a1612; line-height: 1.3; font-style: italic; margin-bottom: 1.2rem; }
+    .vdc-caption-link { font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: #1a1612; border-bottom: 1px solid #1a1612; padding-bottom: 2px; text-decoration: none; }
     /* Intro block — breathing room */
-    .vdc-intro { padding: 4rem 3rem; text-align: center; background: #f7f4ee; }
-    .vdc-intro p { font-family: var(--serif); font-size: 1rem; line-height: 2; color: #5c5044; max-width: 380px; margin: 0 auto; font-style: italic; font-weight: 300; }
+    .vdc-intro { padding: 3rem 2.5rem; background: #f7f4ee; border-top: 1px solid rgba(0,0,0,0.05); }
+    .vdc-intro p { font-family: var(--serif); font-size: 0.95rem; line-height: 2; color: #5c5044; max-width: 400px; font-style: italic; font-weight: 300; }
     /* Room panels — alternating full-width, image + info */
     .vdc-room-panel { display: grid; grid-template-columns: 1fr 1fr; min-height: 320px; }
     .vdc-room-photo { overflow: hidden; }
@@ -249,9 +245,8 @@
       .analisi-grid { grid-template-columns: 1fr; }
       .step3 { margin: 0 -1.5rem; padding-left: 1.5rem; padding-right: 1.5rem; }
       .traduzione-grid { grid-template-columns: 1fr; }
-      .vdc-links { display: none; }
-      .vdc-hero-wrapper { height: 320px; }
-      .vdc-hero-text h2 { font-size: 1.8rem; }
+      .vdc-hero { height: 280px; }
+      .vdc-caption h2 { font-size: 1.3rem; }
       .vdc-room-panel { grid-template-columns: 1fr; }
       .vdc-room-panel.vdc-reverse { direction: ltr; }
       .vdc-room-photo img { min-height: 240px; max-height: 280px; }
@@ -388,25 +383,25 @@
           <div class="demo-dot green"></div>
           <div class="demo-url">vignadeicolli.it</div>
         </div>
-        <!-- Hero con nav trasparente sovrapposta — stile Aman -->
-        <div class="vdc-hero-wrapper">
-          <nav class="vdc-nav">
-            <div class="vdc-links"><span>Camere</span><span>Esperienze</span><span>Vigneto</span></div>
-            <div class="vdc-logo">Vigna dei Colli</div>
-            <div class="vdc-reserve">Prenota</div>
-          </nav>
-          <div class="vdc-hero-img-wrap">
-            <img src="/images/portfolio/agriturismo-hero.jpg" alt="Vigna dei Colli" loading="lazy" />
-          </div>
-          <div class="vdc-hero-text">
-            <div class="vdc-hero-eyebrow">Siena · Chianti · dal 1987</div>
-            <h2>Dormire<br />tra le vigne</h2>
-            <a href="#" class="vdc-hero-link">Scopri le camere</a>
-          </div>
+        <!-- Header: sfondo crema, logo centrato, menu + prenota ai lati — stile Aman -->
+        <header class="vdc-header">
+          <div class="vdc-menu">≡ Menu</div>
+          <div class="vdc-logo">Vigna dei Colli</div>
+          <div class="vdc-reserve-btn">Prenota</div>
+        </header>
+        <!-- Hero — foto full-bleed, nessun testo sopra -->
+        <div class="vdc-hero">
+          <img src="/images/portfolio/agriturismo-hero.jpg" alt="Vigna dei Colli" loading="lazy" />
         </div>
-        <!-- Intro — spazio, poche parole -->
+        <!-- Caption sotto foto — stile Aman (location + titolo + link) -->
+        <div class="vdc-caption">
+          <div class="vdc-caption-location">Siena, Toscana</div>
+          <h2>La quiete che cercavi<br />è qui</h2>
+          <a href="#" class="vdc-caption-link">Scopri le camere</a>
+        </div>
+        <!-- Intro -->
         <div class="vdc-intro">
-          <p>Sette ettari di vigneto in Chianti, quattro camere affacciate sulle colline, una cucina che segue le stagioni. La quiete come esperienza.</p>
+          <p>Sette ettari di vigneto in Chianti, quattro camere affacciate sulle colline, una cucina che segue le stagioni.</p>
         </div>
         <!-- Camera 1 — foto sinistra, testo destra -->
         <div class="vdc-room-panel">
