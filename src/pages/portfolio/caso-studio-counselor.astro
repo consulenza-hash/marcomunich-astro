@@ -1,0 +1,436 @@
+---
+// Giulia Ferretti — caso studio counselor Firenze
+---
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Caso Studio — Counselor | Giulia Ferretti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #2a2520;
+      --ink-soft: #5a5048;
+      --cream: #faf7f2;
+      --cream-dark: #ede7dc;
+      --sage: #7a9070;
+      --sage-light: #96a88c;
+      --sand: #c8b898;
+      --warm-gray: #8a8070;
+      --white: #ffffff;
+      --dark: #1e1a16;
+      --serif: 'Cormorant Garamond', Georgia, serif;
+      --sans: 'Inter', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--sans); background: var(--cream); color: var(--ink); line-height: 1.6; overflow-x: hidden; }
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+
+    .mockup-bar {
+      background: var(--dark); color: rgba(250,247,242,0.55);
+      text-align: center; font-size: 0.75rem; padding: 0.6rem 1.5rem;
+      font-family: var(--sans); letter-spacing: 0.03em;
+    }
+
+    .back-btn {
+      position: fixed; bottom: 2rem; left: 1.5rem; z-index: 999;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(10,10,10,0.85); backdrop-filter: blur(8px);
+      color: rgba(250,247,242,0.8); text-decoration: none;
+      font-size: 0.8rem; letter-spacing: 0.04em; padding: 0.5rem 1rem;
+      border-radius: 2rem; transition: all 0.2s;
+    }
+    .back-btn:hover { color: var(--cream); }
+
+    /* HERO */
+    .hero {
+      background: var(--dark); min-height: 480px;
+      display: grid; grid-template-columns: 1fr 1fr;
+      align-items: center; gap: 3rem; padding: 6rem 3rem 4rem;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: url('/images/portfolio/counselor-bg.jpg') center/cover no-repeat;
+      opacity: 0.2;
+    }
+    .hero-left { position: relative; }
+    .hero-tag { font-size: 0.65rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--sage); margin-bottom: 1.2rem; display: block; }
+    .hero h1 { font-family: var(--serif); font-size: clamp(2.2rem, 4vw, 3.4rem); font-weight: 300; color: var(--cream); line-height: 1.15; margin-bottom: 1.2rem; }
+    .hero h1 em { font-style: italic; color: rgba(250,247,242,0.45); }
+    .hero-sub { font-size: 0.88rem; color: rgba(250,247,242,0.5); line-height: 1.8; max-width: 380px; }
+    .hero-meta { position: relative; display: flex; flex-direction: column; gap: 1.5rem; }
+    .hero-meta-item { border-top: 1px solid rgba(250,247,242,0.1); padding-top: 1rem; }
+    .hero-meta-label { font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--warm-gray); display: block; margin-bottom: 0.3rem; }
+    .hero-meta-val { font-size: 0.85rem; color: rgba(250,247,242,0.7); }
+
+    .main { max-width: 860px; margin: 0 auto; padding: 0 2rem; }
+
+    .step-label {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--warm-gray); margin-bottom: 2.5rem; padding-top: 3rem;
+    }
+    .step-num { width: 22px; height: 22px; border-radius: 50%; background: var(--sage); color: white; font-size: 0.6rem; display: inline-flex; align-items: center; justify-content: center; }
+
+    .step1 { padding: 3rem 0; }
+    .insp-card { display: grid; grid-template-columns: 1.1fr 1fr; border: 1px solid var(--cream-dark); background: white; overflow: hidden; }
+    .insp-screenshot { grid-column: 1 / -1; border-bottom: 1px solid var(--cream-dark); position: relative; }
+    .insp-screenshot img { width: 100%; display: block; max-height: 220px; object-fit: cover; object-position: top; }
+    .screenshot-label { position: absolute; bottom: 0.6rem; left: 0.8rem; background: rgba(0,0,0,0.55); color: rgba(255,255,255,0.85); font-size: 0.68rem; padding: 0.25rem 0.6rem; border-radius: 4px; backdrop-filter: blur(4px); }
+    .insp-info { padding: 2rem; }
+    .site-tag { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--sage); margin-bottom: 0.5rem; }
+    .site-name { font-family: var(--serif); font-size: 1.3rem; font-weight: 400; margin-bottom: 0.3rem; }
+    .site-url { font-size: 0.72rem; color: var(--warm-gray); margin-bottom: 1.2rem; }
+    .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .tag { font-size: 0.68rem; letter-spacing: 0.08em; padding: 0.3rem 0.7rem; background: var(--cream); color: var(--warm-gray); }
+    .insp-quote { margin-top: 1.5rem; padding: 1rem 1.2rem; background: var(--cream); border-left: 2px solid var(--sage); }
+    .insp-quote p { font-size: 0.82rem; line-height: 1.75; color: var(--ink-soft); font-style: italic; }
+
+    .step2 { padding: 3rem 0; }
+    .analisi-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; }
+    .analisi-card { background: white; border: 1px solid var(--cream-dark); padding: 1.5rem; }
+    .analisi-card-label { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--sage); margin-bottom: 1rem; display: block; }
+    .palette { display: flex; gap: 0.5rem; margin-bottom: 0.8rem; }
+    .swatch { width: 32px; height: 32px; border-radius: 2px; }
+    .palette-names { font-size: 0.72rem; color: var(--warm-gray); line-height: 1.8; }
+    .font-sample { font-family: var(--serif); font-size: 1.6rem; font-weight: 300; margin-bottom: 0.3rem; }
+    .font-name { font-size: 0.72rem; color: var(--warm-gray); }
+    .keyword-list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+    .keyword-list li { font-size: 0.82rem; color: var(--ink-soft); display: flex; align-items: center; gap: 0.5rem; }
+    .keyword-list li::before { content: '→'; color: var(--sage); font-size: 0.72rem; }
+
+    .step3 { padding: 3rem 0; background: var(--cream-dark); margin: 0 -2rem; padding-left: 2rem; padding-right: 2rem; }
+    .traduzione-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .trans-col h3 { font-family: var(--serif); font-size: 1.1rem; margin-bottom: 1.2rem; padding-bottom: 0.8rem; border-bottom: 1px solid rgba(0,0,0,0.1); }
+    .trans-col h3 span { color: var(--warm-gray); font-size: 0.72rem; font-weight: 300; font-family: var(--sans); letter-spacing: 0.08em; text-transform: uppercase; display: block; margin-bottom: 0.3rem; }
+    .trans-list { list-style: none; }
+    .trans-list li { display: flex; gap: 0.8rem; padding: 0.8rem 0; border-bottom: 1px solid rgba(0,0,0,0.05); font-size: 0.85rem; line-height: 1.5; color: var(--ink-soft); align-items: flex-start; }
+    .trans-list li .icon { color: var(--sage); flex-shrink: 0; margin-top: 0.1rem; }
+
+    .step4 { padding: 3rem 0; }
+    .risultato-intro { max-width: 620px; margin-bottom: 2rem; }
+    .risultato-intro h3 { font-family: var(--serif); font-size: 1.8rem; font-weight: 300; margin-bottom: 0.8rem; }
+    .risultato-intro p { font-size: 0.9rem; line-height: 1.8; color: var(--warm-gray); }
+    .demo-frame { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 50px rgba(0,0,0,0.1); border: 1px solid var(--cream-dark); }
+    .demo-bar { background: #f0eeea; padding: 0.7rem 1rem; display: flex; align-items: center; gap: 0.6rem; border-bottom: 1px solid rgba(0,0,0,0.08); }
+    .demo-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .demo-dot.red { background: #ff5f57; }
+    .demo-dot.yellow { background: #febc2e; }
+    .demo-dot.green { background: #28c840; }
+    .demo-url { font-size: 0.72rem; color: #8a8a8a; margin-left: 0.5rem; }
+
+    /* ── Giulia Ferretti mini-site ── */
+    .gf-site { background: #faf7f2; font-family: var(--sans); }
+
+    .gf-nav { display: flex; justify-content: space-between; align-items: center; padding: 1.4rem 3rem; background: white; border-bottom: 1px solid #ede7dc; }
+    .gf-logo { font-family: var(--serif); font-size: 1.05rem; font-weight: 300; letter-spacing: 0.06em; color: var(--ink); }
+    .gf-nav-links { display: flex; gap: 2rem; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--warm-gray); }
+    .gf-nav-cta { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--sage); border-bottom: 1px solid var(--sage); padding-bottom: 1px; }
+
+    /* Hero 2-col: testo + foto */
+    .gf-hero { display: grid; grid-template-columns: 1fr 1fr; min-height: 400px; }
+    .gf-hero-text { padding: 4rem 3rem; display: flex; flex-direction: column; justify-content: center; background: white; }
+    .gf-hero-eyebrow { font-size: 0.6rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--sage); margin-bottom: 1.4rem; }
+    .gf-hero h2 { font-family: var(--serif); font-size: 2.2rem; font-weight: 300; line-height: 1.2; color: var(--ink); margin-bottom: 1.4rem; font-style: italic; }
+    .gf-hero-sub { font-size: 0.82rem; line-height: 2; color: var(--ink-soft); margin-bottom: 2rem; max-width: 320px; }
+    .gf-hero-cta { display: inline-block; font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: white; background: var(--sage); padding: 0.7rem 1.8rem; align-self: flex-start; }
+    .gf-hero-img { overflow: hidden; }
+    .gf-hero-img img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+
+    /* Citazione */
+    .gf-quote { background: var(--sage); padding: 2.8rem 3rem; text-align: center; }
+    .gf-quote p { font-family: var(--serif); font-size: 1.25rem; font-weight: 300; color: white; font-style: italic; line-height: 1.7; max-width: 540px; margin: 0 auto; }
+
+    /* Approccio */
+    .gf-approccio { padding: 3.5rem 3rem; background: white; }
+    .gf-approccio-label { font-size: 0.6rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--sage); margin-bottom: 2rem; }
+    .gf-approccio-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; }
+    .gf-approccio-text h3 { font-family: var(--serif); font-size: 1.5rem; font-weight: 300; color: var(--ink); font-style: italic; margin-bottom: 1rem; line-height: 1.3; }
+    .gf-approccio-text p { font-size: 0.82rem; line-height: 2; color: var(--ink-soft); }
+    .gf-studio-img { overflow: hidden; }
+    .gf-studio-img img { width: 100%; height: 280px; object-fit: cover; object-position: center; display: block; }
+
+    /* Percorsi */
+    .gf-percorsi { padding: 3rem; background: var(--cream); }
+    .gf-percorsi-label { font-size: 0.6rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--sage); margin-bottom: 2rem; }
+    .gf-percorsi-list { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--cream-dark); background: white; }
+    .gf-percorso { display: grid; grid-template-columns: 60px 1fr; border-bottom: 1px solid var(--cream-dark); padding: 1.5rem 2rem; gap: 1.5rem; align-items: start; }
+    .gf-percorso:last-child { border-bottom: none; }
+    .gf-percorso-num { font-family: var(--serif); font-size: 2rem; font-weight: 300; color: var(--sage); opacity: 0.4; line-height: 1; }
+    .gf-percorso-title { font-family: var(--serif); font-size: 1rem; font-weight: 400; color: var(--ink); font-style: italic; margin-bottom: 0.4rem; }
+    .gf-percorso-desc { font-size: 0.78rem; line-height: 1.8; color: var(--ink-soft); }
+
+    /* CTA */
+    .gf-cta { background: var(--dark); padding: 3.5rem 3rem; text-align: center; }
+    .gf-cta h3 { font-family: var(--serif); font-size: 1.7rem; font-weight: 300; color: var(--cream); font-style: italic; margin-bottom: 0.8rem; line-height: 1.3; }
+    .gf-cta p { font-size: 0.8rem; color: rgba(250,247,242,0.5); margin-bottom: 1.8rem; line-height: 1.9; max-width: 420px; margin-left: auto; margin-right: auto; }
+    .gf-cta-btn { display: inline-block; font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--dark); background: var(--sage); padding: 0.75rem 2rem; }
+
+    .gf-footer { background: #faf7f2; border-top: 1px solid var(--cream-dark); padding: 1.4rem 3rem; display: flex; justify-content: space-between; align-items: center; }
+    .gf-footer-name { font-family: var(--serif); font-size: 0.82rem; color: var(--warm-gray); font-weight: 300; }
+    .gf-footer-addr { font-size: 0.62rem; letter-spacing: 0.08em; color: var(--warm-gray); }
+
+    /* CTA section */
+    .cta-section { padding: 5rem 2rem; text-align: center; background: var(--dark); margin: 4rem -2rem 0; }
+    .cta-section .label { font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--sage); display: block; margin-bottom: 1rem; }
+    .cta-section h2 { font-family: var(--serif); font-size: clamp(2rem,4vw,3rem); font-weight: 300; color: var(--cream); margin-bottom: 1rem; }
+    .cta-section p { color: rgba(250,247,242,0.55); font-size: 0.9rem; max-width: 500px; margin: 0 auto 2.5rem; line-height: 1.8; }
+    .btn-sage { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--sage); color: white; text-decoration: none; font-size: 0.82rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.9rem 2.2rem; transition: background 0.2s; }
+    .btn-sage:hover { background: var(--sage-light); }
+
+    .section-divider { border: none; border-top: 1px solid rgba(0,0,0,0.07); margin: 0; }
+    .fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 768px) {
+      .hero { grid-template-columns: 1fr; padding: 4rem 1.5rem 3rem; gap: 2rem; min-height: auto; }
+      .main { padding: 0 1.5rem; }
+      .insp-card { grid-template-columns: 1fr; }
+      .analisi-grid { grid-template-columns: 1fr; }
+      .step3 { margin: 0 -1.5rem; padding-left: 1.5rem; padding-right: 1.5rem; }
+      .traduzione-grid { grid-template-columns: 1fr; }
+      .step4 .demo-frame { margin: 0 -1.5rem; border-radius: 8px; }
+      .gf-nav-links { display: none; }
+      .gf-hero { grid-template-columns: 1fr; }
+      .gf-hero-img { height: 260px; }
+      .gf-approccio { padding: 2.5rem 1.5rem; }
+      .gf-approccio-grid { grid-template-columns: 1fr; }
+      .gf-percorsi { padding: 2rem 1.5rem; }
+      .gf-quote { padding: 2rem 1.5rem; }
+      .gf-cta { padding: 2.5rem 1.5rem; }
+      .gf-footer { flex-direction: column; gap: 0.5rem; text-align: center; padding: 1.2rem 1.5rem; }
+      .cta-section { margin: 4rem -1.5rem 0; padding: 3.5rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="mockup-bar">🌿 Mockup di caso studio — Giulia Ferretti è un personaggio di fantasia creato per illustrare il processo di lavoro</div>
+  <a href="/dev/portfolio" class="back-btn">← Portfolio</a>
+
+  <section class="hero">
+    <div class="hero-left">
+      <span class="hero-tag">Caso Studio</span>
+      <h1>Dalla cura di<br /><em>Headspace</em><br />a Firenze</h1>
+      <p class="hero-sub">Come si costruisce un sito per una counselor che vuole far sentire le persone al sicuro ancora prima di scriverle.</p>
+    </div>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><span class="hero-meta-label">Cliente</span><span class="hero-meta-val">Giulia Ferretti — Firenze</span></div>
+      <div class="hero-meta-item"><span class="hero-meta-label">Settore</span><span class="hero-meta-val">Counseling Relazionale</span></div>
+      <div class="hero-meta-item"><span class="hero-meta-label">Ispirazione</span><span class="hero-meta-val">headspace.com</span></div>
+      <div class="hero-meta-item"><span class="hero-meta-label">Tempo</span><span class="hero-meta-val">Costruito in 2 giorni</span></div>
+    </div>
+  </section>
+
+  <div class="main">
+
+    <section class="step1">
+      <div class="step-label fade-in"><span class="step-num">1</span>Il Riferimento</div>
+      <div class="insp-card fade-in">
+        <div class="insp-screenshot">
+          <img src="/images/portfolio/counselor-bg.jpg" alt="Ispirazione — ambiente terapeutico caldo" />
+          <span class="screenshot-label">headspace.com — calm, trustworthy, warm</span>
+        </div>
+        <div class="insp-info">
+          <div class="site-tag">Fonte di ispirazione</div>
+          <div class="site-name">Headspace</div>
+          <div class="site-url">headspace.com</div>
+          <div class="tags">
+            <span class="tag">Verde salvia</span>
+            <span class="tag">Spazio bianco</span>
+            <span class="tag">Tono caldo</span>
+            <span class="tag">Serif leggero</span>
+            <span class="tag">Niente fretta</span>
+          </div>
+          <div class="insp-quote">
+            <p>"Le persone che vengono da me sono spesso in un momento difficile. Voglio che già dal sito si sentano accolte, non giudicate. Come se entrassero in un posto sicuro."</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider" />
+
+    <section class="step2">
+      <div class="step-label fade-in"><span class="step-num">2</span>L'Analisi</div>
+      <div class="analisi-grid fade-in">
+        <div class="analisi-card">
+          <span class="analisi-card-label">Palette colori</span>
+          <div class="palette">
+            <div class="swatch" style="background:#faf7f2; border:1px solid #ede7dc;"></div>
+            <div class="swatch" style="background:#7a9070;"></div>
+            <div class="swatch" style="background:#ffffff; border:1px solid #ede7dc;"></div>
+            <div class="swatch" style="background:#2a2520;"></div>
+          </div>
+          <div class="palette-names">Crema · Verde salvia<br />Bianco · Inchiostro caldo</div>
+        </div>
+        <div class="analisi-card">
+          <span class="analisi-card-label">Tipografia</span>
+          <div class="font-sample" style="font-weight:300;">Cormorant</div>
+          <div class="font-name">Serif leggero — delicatezza</div>
+          <div style="margin-top:0.8rem; font-family:'Inter',sans-serif; font-size:0.8rem; font-weight:300; letter-spacing:0.08em; text-transform: uppercase;">inter light</div>
+          <div class="font-name">Sans sottile — rispetto del silenzio</div>
+        </div>
+        <div class="analisi-card">
+          <span class="analisi-card-label">Elementi chiave</span>
+          <ul class="keyword-list">
+            <li>Foto dello studio, non solo della persona</li>
+            <li>Linguaggio in prima persona, diretto</li>
+            <li>Percorsi descritti senza gergo tecnico</li>
+            <li>Prima consultazione gratuita visibile</li>
+            <li>Nessuna fretta, ritmo lento</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider" />
+
+    <section class="step3">
+      <div class="step-label fade-in"><span class="step-num">3</span>La Traduzione</div>
+      <p class="fade-in" style="font-size:0.9rem; color:var(--ink-soft); line-height:1.8; max-width:600px; margin-bottom:2rem;">
+        Da un'app meditativa internazionale a uno studio professionale fiorentino. La sensazione di calma rimane, ma il sito racconta una persona reale in un posto reale.
+      </p>
+      <div class="traduzione-grid fade-in">
+        <div class="trans-col">
+          <h3><span>Ispirazione</span>Headspace</h3>
+          <ul class="trans-list">
+            <li><span class="icon">→</span> Verde menta brillante, tono giocoso</li>
+            <li><span class="icon">→</span> Illustrazioni e personaggi animati</li>
+            <li><span class="icon">→</span> Linguaggio inclusivo americano</li>
+            <li><span class="icon">→</span> Prodotto digitale, nessuna persona fisica</li>
+            <li><span class="icon">→</span> Iscrizione e abbonamento</li>
+          </ul>
+        </div>
+        <div class="trans-col">
+          <h3><span>Risultato</span>Giulia Ferretti</h3>
+          <ul class="trans-list">
+            <li><span class="icon">→</span> Verde salvia più maturo, tono raccogliente</li>
+            <li><span class="icon">→</span> Fotografie reali dello studio e della persona</li>
+            <li><span class="icon">→</span> Italiano diretto, senza eufemismi</li>
+            <li><span class="icon">→</span> La presenza di Giulia al centro</li>
+            <li><span class="icon">→</span> Prima consultazione gratuita come punto d'ingresso</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="step4">
+      <div class="step-label fade-in"><span class="step-num">4</span>Il Risultato</div>
+      <div class="risultato-intro fade-in">
+        <h3>Il sito di Giulia Ferretti</h3>
+        <p>Un sito che si legge lentamente. Ogni scelta visiva comunica: qui sei al sicuro, prenditi il tuo tempo.</p>
+      </div>
+      <div class="demo-frame fade-in">
+        <div class="demo-bar">
+          <div class="demo-dot red"></div>
+          <div class="demo-dot yellow"></div>
+          <div class="demo-dot green"></div>
+          <div class="demo-url">giuliaferretti-counselor.it</div>
+        </div>
+
+        <div class="gf-site">
+          <div class="gf-nav">
+            <div class="gf-logo">Giulia Ferretti</div>
+            <div class="gf-nav-links">
+              <span>Chi sono</span>
+              <span>Il mio approccio</span>
+              <span>Percorsi</span>
+              <span>Contatti</span>
+            </div>
+            <a href="#" class="gf-nav-cta">Prima consultazione gratuita</a>
+          </div>
+
+          <div class="gf-hero">
+            <div class="gf-hero-text">
+              <div class="gf-hero-eyebrow">Counselor Relazionale · Firenze</div>
+              <h2>Un posto dove<br />puoi dire le cose<br />come stanno.</h2>
+              <p class="gf-hero-sub">Lavoro con persone che si sentono bloccate nelle relazioni, nel lavoro, con se stesse. Non ti dico cosa fare — ti aiuto a capire cosa senti davvero.</p>
+              <a href="#" class="gf-hero-cta">Parliamo, è gratuito</a>
+            </div>
+            <div class="gf-hero-img">
+              <img src="/images/portfolio/counselor-hero.jpg" alt="Giulia Ferretti" />
+            </div>
+          </div>
+
+          <div class="gf-quote">
+            <p>"Il cambiamento non comincia quando capisci qualcosa. Comincia quando lo senti."</p>
+          </div>
+
+          <div class="gf-approccio">
+            <div class="gf-approccio-label">Il mio approccio</div>
+            <div class="gf-approccio-grid">
+              <div class="gf-approccio-text">
+                <h3>Ascolto prima,<br />parlo dopo.</h3>
+                <p>Il mio lavoro non è darti risposte — è aiutarti a fare le domande giuste. Ogni percorso è diverso perché ogni persona lo è. Uso un approccio integrato che mescola counseling relazionale, lavoro sul corpo e tecniche narrative.</p>
+              </div>
+              <div class="gf-studio-img">
+                <img src="/images/portfolio/counselor-studio.jpg" alt="Lo studio di Giulia" />
+              </div>
+            </div>
+          </div>
+
+          <div class="gf-percorsi">
+            <div class="gf-percorsi-label">I percorsi</div>
+            <div class="gf-percorsi-list">
+              <div class="gf-percorso">
+                <div class="gf-percorso-num">01</div>
+                <div>
+                  <div class="gf-percorso-title">Colloquio di orientamento</div>
+                  <p class="gf-percorso-desc">Un incontro gratuito di 30 minuti per capire se il mio approccio fa per te. Senza impegno, senza fretta.</p>
+                </div>
+              </div>
+              <div class="gf-percorso">
+                <div class="gf-percorso-num">02</div>
+                <div>
+                  <div class="gf-percorso-title">Percorso breve (6 sedute)</div>
+                  <p class="gf-percorso-desc">Per chi attraversa un momento specifico di difficoltà e vuole strumenti concreti per uscirne.</p>
+                </div>
+              </div>
+              <div class="gf-percorso">
+                <div class="gf-percorso-num">03</div>
+                <div>
+                  <div class="gf-percorso-title">Percorso continuativo</div>
+                  <p class="gf-percorso-desc">Per chi vuole lavorare in profondità su schemi relazionali ricorrenti, con incontri settimanali o quindicinali.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="gf-cta">
+            <h3>Il primo passo è solo una conversazione.</h3>
+            <p>Scrivimi o chiamami. Non devi sapere già cosa dire — anzi, se non sai da dove cominciare è perfettamente normale.</p>
+            <a href="#" class="gf-cta-btn">Prenota il colloquio gratuito</a>
+          </div>
+
+          <div class="gf-footer">
+            <div class="gf-footer-name">Giulia Ferretti — Counselor Relazionale</div>
+            <div class="gf-footer-addr">Firenze · Via dei Servi, 18 · giulia@giuliaferretti.it</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section fade-in">
+      <span class="label">Il tuo sito</span>
+      <h2>Sei un counselor o uno psicologo?<br />Costruiamo il tuo insieme.</h2>
+      <p>Stesso processo, identità tua. Un sito che le persone sentono prima ancora di leggerlo.</p>
+      <a href="/dev/contatti" class="btn-sage">Parliamo del tuo progetto →</a>
+    </section>
+
+  </div>
+
+  <script>
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

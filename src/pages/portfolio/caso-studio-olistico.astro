@@ -1,0 +1,499 @@
+---
+// Letizia Amato — caso studio operatore olistico Torino
+---
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Caso Studio — Operatore Olistico | Letizia Amato</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --deep: #1e1b14;
+      --deep-mid: #2e2a20;
+      --sand: #f8f4ed;
+      --sand-dark: #ede7dc;
+      --ochre: #b8832a;
+      --ochre-light: #cfa04a;
+      --sage: #687c58;
+      --sage-light: #7e9470;
+      --warm-gray: #7a7060;
+      --ink-soft: #4a4438;
+      --white: #ffffff;
+      --serif: 'Cormorant Garamond', Georgia, serif;
+      --sans: 'Inter', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--sans); background: var(--sand); color: var(--deep); line-height: 1.6; overflow-x: hidden; }
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+
+    /* Mockup bar */
+    .mockup-bar {
+      background: var(--deep); color: rgba(248,244,237,0.5);
+      text-align: center; font-size: 0.75rem; padding: 0.6rem 1.5rem;
+      font-family: var(--sans); letter-spacing: 0.03em;
+    }
+
+    /* BACK */
+    .back-btn {
+      position: fixed; bottom: 2rem; left: 1.5rem; z-index: 999;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(30,27,20,0.85); backdrop-filter: blur(8px);
+      color: rgba(248,244,237,0.8); text-decoration: none;
+      font-size: 0.8rem; letter-spacing: 0.04em; padding: 0.5rem 1rem;
+      border-radius: 2rem; transition: all 0.2s;
+    }
+    .back-btn:hover { color: var(--sand); }
+
+    /* HERO */
+    .hero {
+      background: var(--deep); min-height: 480px;
+      display: grid; grid-template-columns: 1fr 1fr;
+      align-items: center; gap: 3rem; padding: 6rem 3rem 4rem;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: url('/images/portfolio/olistico-bg.jpg') center/cover no-repeat;
+      opacity: 0.15;
+    }
+    .hero-left { position: relative; }
+    .hero-tag {
+      font-size: 0.65rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--ochre); margin-bottom: 1.2rem; display: block;
+    }
+    .hero h1 {
+      font-family: var(--serif); font-size: clamp(2.2rem, 4vw, 3.4rem);
+      font-weight: 300; color: var(--sand); line-height: 1.15; margin-bottom: 1.2rem;
+    }
+    .hero h1 em { font-style: italic; color: rgba(248,244,237,0.5); }
+    .hero-sub { font-size: 0.88rem; color: rgba(248,244,237,0.5); line-height: 1.8; max-width: 380px; }
+    .hero-meta { position: relative; display: flex; flex-direction: column; gap: 1.5rem; }
+    .hero-meta-item { border-top: 1px solid rgba(248,244,237,0.1); padding-top: 1rem; }
+    .hero-meta-label { font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--warm-gray); display: block; margin-bottom: 0.3rem; }
+    .hero-meta-val { font-size: 0.85rem; color: rgba(248,244,237,0.7); }
+
+    /* CONTAINER */
+    .container { max-width: 860px; margin: 0 auto; padding: 0 2rem; }
+    .main { max-width: 860px; margin: 0 auto; padding: 0 2rem; }
+
+    /* STEP LABELS */
+    .step-label {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--warm-gray); margin-bottom: 2.5rem; padding-top: 3rem;
+    }
+    .step-num {
+      width: 22px; height: 22px; border-radius: 50%;
+      background: var(--sage); color: white;
+      font-size: 0.6rem; display: inline-flex; align-items: center; justify-content: center;
+    }
+
+    /* STEP 1 — RIFERIMENTO */
+    .step1 { padding: 3rem 0; }
+    .insp-card {
+      display: grid; grid-template-columns: 1.1fr 1fr;
+      border: 1px solid var(--sand-dark); background: white; overflow: hidden;
+    }
+    .insp-screenshot { grid-column: 1 / -1; border-bottom: 1px solid var(--sand-dark); position: relative; }
+    .insp-screenshot img { width: 100%; display: block; max-height: 220px; object-fit: cover; object-position: top; }
+    .screenshot-label {
+      position: absolute; bottom: 0.6rem; left: 0.8rem;
+      background: rgba(0,0,0,0.55); color: rgba(255,255,255,0.85);
+      font-size: 0.68rem; padding: 0.25rem 0.6rem; border-radius: 4px;
+      backdrop-filter: blur(4px);
+    }
+    .insp-info { padding: 2rem; grid-column: 1 / -1; }
+    .site-tag { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--sage); margin-bottom: 0.5rem; }
+    .site-name { font-family: var(--serif); font-size: 1.3rem; font-weight: 400; margin-bottom: 0.3rem; }
+    .site-url { font-size: 0.72rem; color: var(--warm-gray); margin-bottom: 1.2rem; }
+    .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .tag { font-size: 0.68rem; letter-spacing: 0.08em; padding: 0.3rem 0.7rem; background: var(--sand); color: var(--warm-gray); }
+    .insp-quote { margin-top: 1.5rem; padding: 1rem 1.2rem; background: var(--sand); border-left: 2px solid var(--sage); }
+    .insp-quote p { font-size: 0.82rem; line-height: 1.75; color: var(--ink-soft); font-style: italic; }
+
+    /* STEP 2 — ANALISI */
+    .step2 { padding: 3rem 0; }
+    .analisi-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; }
+    .analisi-card { background: white; border: 1px solid var(--sand-dark); padding: 1.5rem; }
+    .analisi-card-label { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--sage); margin-bottom: 1rem; display: block; }
+    .palette { display: flex; gap: 0.5rem; margin-bottom: 0.8rem; }
+    .swatch { width: 32px; height: 32px; border-radius: 2px; }
+    .palette-names { font-size: 0.72rem; color: var(--warm-gray); line-height: 1.8; }
+    .font-sample { font-family: var(--serif); font-size: 1.4rem; margin-bottom: 0.3rem; }
+    .font-name { font-size: 0.72rem; color: var(--warm-gray); }
+    .keyword-list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+    .keyword-list li { font-size: 0.82rem; color: var(--ink-soft); display: flex; align-items: center; gap: 0.5rem; }
+    .keyword-list li::before { content: '→'; color: var(--sage); font-size: 0.72rem; }
+
+    /* STEP 3 — TRADUZIONE */
+    .step3 { padding: 3rem 0; background: var(--sand-dark); margin: 0 -2rem; padding-left: 2rem; padding-right: 2rem; }
+    .traduzione-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .trans-col h3 {
+      font-family: var(--serif); font-size: 1.1rem; margin-bottom: 1.2rem;
+      padding-bottom: 0.8rem; border-bottom: 1px solid rgba(0,0,0,0.1);
+    }
+    .trans-col h3 span { color: var(--warm-gray); font-size: 0.72rem; font-weight: 400; font-family: var(--sans); letter-spacing: 0.08em; text-transform: uppercase; display: block; margin-bottom: 0.3rem; }
+    .trans-list { list-style: none; }
+    .trans-list li {
+      display: flex; gap: 0.8rem; padding: 0.8rem 0;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      font-size: 0.85rem; line-height: 1.5; color: var(--ink-soft); align-items: flex-start;
+    }
+    .trans-list li .icon { color: var(--sage); flex-shrink: 0; margin-top: 0.1rem; }
+
+    /* STEP 4 — RISULTATO */
+    .step4 { padding: 3rem 0; }
+    .risultato-intro { max-width: 620px; margin-bottom: 2rem; }
+    .risultato-intro h3 { font-family: var(--serif); font-size: 1.8rem; font-weight: 300; margin-bottom: 0.8rem; }
+    .risultato-intro p { font-size: 0.9rem; line-height: 1.8; color: var(--warm-gray); }
+    .demo-frame { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 50px rgba(0,0,0,0.12); border: 1px solid var(--sand-dark); }
+    .demo-bar { background: #f0ede8; padding: 0.7rem 1rem; display: flex; align-items: center; gap: 0.6rem; border-bottom: 1px solid rgba(0,0,0,0.08); }
+    .demo-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .demo-dot.red { background: #ff5f57; }
+    .demo-dot.yellow { background: #febc2e; }
+    .demo-dot.green { background: #28c840; }
+    .demo-url { font-size: 0.72rem; color: #8a8a8a; font-family: var(--sans); margin-left: 0.5rem; }
+
+    /* ── Letizia Amato mini-site ── */
+    .la-site { background: var(--sand); font-family: var(--sans); }
+
+    /* Nav */
+    .la-nav { display: flex; justify-content: space-between; align-items: center; padding: 1.4rem 3rem; border-bottom: 1px solid var(--sand-dark); background: var(--white); }
+    .la-logo { font-family: var(--serif); font-size: 1rem; letter-spacing: 0.06em; color: var(--deep); font-style: italic; }
+    .la-nav-links { display: flex; gap: 2rem; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--warm-gray); }
+    .la-nav-cta { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; border: 1px solid var(--sage); color: var(--sage); padding: 0.5rem 1.4rem; }
+
+    /* Hero */
+    .la-hero { display: grid; grid-template-columns: 1fr 1fr; min-height: 420px; }
+    .la-hero-content { padding: 4rem 3rem; display: flex; flex-direction: column; justify-content: center; background: var(--white); }
+    .la-hero-eyebrow { font-size: 0.62rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--sage); margin-bottom: 1.2rem; }
+    .la-hero h2 { font-family: var(--serif); font-size: 2rem; font-weight: 300; line-height: 1.3; color: var(--deep); margin-bottom: 1.2rem; }
+    .la-hero h2 em { font-style: italic; color: var(--sage); }
+    .la-hero-sub { font-size: 0.83rem; line-height: 1.9; color: var(--warm-gray); margin-bottom: 2rem; max-width: 320px; }
+    .la-hero-cta { display: inline-block; font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; background: var(--sage); color: white; padding: 0.75rem 2rem; align-self: flex-start; }
+    .la-hero-img { overflow: hidden; }
+    .la-hero-img img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+
+    /* Citazione sage */
+    .la-quote { background: var(--sage); padding: 2.5rem 3rem; text-align: center; }
+    .la-quote-text { font-family: var(--serif); font-size: 1.3rem; font-weight: 300; color: white; font-style: italic; line-height: 1.7; max-width: 580px; margin: 0 auto; }
+
+    /* Approccio */
+    .la-approccio { background: var(--sand); padding: 3.5rem 3rem; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+    .la-approccio-label { font-size: 0.6rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--sage); margin-bottom: 0.8rem; }
+    .la-approccio h3 { font-family: var(--serif); font-size: 1.5rem; font-weight: 300; color: var(--deep); margin-bottom: 1.2rem; font-style: italic; }
+    .la-approccio p { font-size: 0.83rem; line-height: 2; color: var(--ink-soft); }
+    .la-approccio-img { overflow: hidden; border-radius: 2px; }
+    .la-approccio-img img { width: 100%; height: 280px; object-fit: cover; display: block; }
+
+    /* Servizi */
+    .la-servizi { padding: 3.5rem 3rem; background: var(--white); }
+    .la-servizi-label { font-size: 0.6rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--sage); margin-bottom: 2rem; }
+    .la-servizi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .la-card { border: 1px solid var(--sand-dark); padding: 2rem 1.5rem; background: var(--sand); }
+    .la-card-icon { font-family: var(--serif); font-size: 2rem; font-weight: 300; color: var(--ochre); opacity: 0.5; margin-bottom: 0.8rem; line-height: 1; }
+    .la-card-title { font-family: var(--serif); font-size: 1rem; font-weight: 400; color: var(--deep); margin-bottom: 0.6rem; font-style: italic; }
+    .la-card-desc { font-size: 0.78rem; line-height: 1.8; color: var(--warm-gray); }
+
+    /* Testimonianza */
+    .la-testi { background: var(--deep-mid); padding: 3rem; text-align: center; }
+    .la-testi-quote { font-family: var(--serif); font-size: 1.3rem; font-weight: 300; color: var(--sand); font-style: italic; line-height: 1.7; max-width: 560px; margin: 0 auto 1rem; }
+    .la-testi-author { font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(248,244,237,0.45); }
+
+    /* CTA */
+    .la-cta { background: var(--sand); padding: 3.5rem 3rem; text-align: center; border-top: 1px solid var(--sand-dark); }
+    .la-cta h3 { font-family: var(--serif); font-size: 1.6rem; font-weight: 300; color: var(--deep); font-style: italic; margin-bottom: 0.8rem; }
+    .la-cta p { font-size: 0.82rem; color: var(--warm-gray); margin-bottom: 1.8rem; max-width: 420px; margin-left: auto; margin-right: auto; }
+    .la-cta-btn { display: inline-block; font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; background: var(--ochre); color: white; padding: 0.75rem 2.2rem; }
+
+    /* Footer */
+    .la-footer { background: var(--deep); padding: 1.4rem 3rem; display: flex; justify-content: space-between; align-items: center; }
+    .la-footer-name { font-family: var(--serif); font-size: 0.82rem; color: rgba(248,244,237,0.45); font-style: italic; }
+    .la-footer-addr { font-size: 0.62rem; letter-spacing: 0.08em; color: rgba(248,244,237,0.25); }
+
+    /* CTA section */
+    .cta-section {
+      padding: 5rem 2rem; text-align: center;
+      background: var(--deep); margin: 4rem -2rem 0;
+    }
+    .cta-section .label { font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ochre); display: block; margin-bottom: 1rem; }
+    .cta-section h2 { font-family: var(--serif); font-size: clamp(2rem,4vw,3rem); font-weight: 300; color: var(--sand); margin-bottom: 1rem; }
+    .cta-section p { color: rgba(248,244,237,0.5); font-size: 0.9rem; max-width: 500px; margin: 0 auto 2.5rem; line-height: 1.8; }
+    .btn-sage {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--sage); color: white; text-decoration: none;
+      font-size: 0.82rem; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 0.9rem 2.2rem; transition: background 0.2s;
+    }
+    .btn-sage:hover { background: var(--sage-light); }
+
+    /* Divider */
+    .section-divider { border: none; border-top: 1px solid rgba(0,0,0,0.07); margin: 0; }
+
+    /* Fade */
+    .fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .hero { grid-template-columns: 1fr; padding: 4rem 1.5rem 3rem; gap: 2rem; min-height: auto; }
+      .main { padding: 0 1.5rem; }
+      .insp-card { grid-template-columns: 1fr; }
+      .analisi-grid { grid-template-columns: 1fr; }
+      .step3 { margin: 0 -1.5rem; padding-left: 1.5rem; padding-right: 1.5rem; }
+      .traduzione-grid { grid-template-columns: 1fr; }
+      .step4 .demo-frame { margin: 0 -1.5rem; border-radius: 8px; }
+      .la-nav-links { display: none; }
+      .la-hero { grid-template-columns: 1fr; }
+      .la-hero-img { height: 260px; }
+      .la-quote { padding: 2rem 1.5rem; }
+      .la-approccio { grid-template-columns: 1fr; gap: 1.5rem; padding: 2rem 1.5rem; }
+      .la-servizi { padding: 2rem 1.5rem; }
+      .la-servizi-grid { grid-template-columns: 1fr; }
+      .la-testi { padding: 2rem 1.5rem; }
+      .la-cta { padding: 2.5rem 1.5rem; }
+      .la-footer { flex-direction: column; gap: 0.5rem; text-align: center; padding: 1.2rem 1.5rem; }
+      .cta-section { margin: 4rem -1.5rem 0; padding: 3.5rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="mockup-bar">🌿 Mockup di caso studio — Letizia Amato è un personaggio di fantasia creato per illustrare il processo di lavoro</div>
+  <a href="/dev/portfolio" class="back-btn">← Portfolio</a>
+
+  <section class="hero">
+    <div class="hero-left">
+      <span class="hero-tag">Caso Studio</span>
+      <h1>Dal silenzio<br />di <em>un ritiro</em><br />a Torino</h1>
+      <p class="hero-sub">Come si costruisce un sito per un'operatrice olistica che vuole trasmettere profondità, non esoterismo.</p>
+    </div>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><span class="hero-meta-label">Cliente</span><span class="hero-meta-val">Letizia Amato — Torino</span></div>
+      <div class="hero-meta-item"><span class="hero-meta-label">Settore</span><span class="hero-meta-val">Reiki · Sound Healing</span></div>
+      <div class="hero-meta-item"><span class="hero-meta-label">Ispirazione</span><span class="hero-meta-val">Estetica wellness retreat</span></div>
+      <div class="hero-meta-item"><span class="hero-meta-label">Tempo</span><span class="hero-meta-val">Costruito in 2 giorni</span></div>
+    </div>
+  </section>
+
+  <div class="main">
+
+    <!-- STEP 1 -->
+    <section class="step1">
+      <div class="step-label fade-in"><span class="step-num">1</span>Il Riferimento</div>
+      <div class="insp-card fade-in">
+        <div class="insp-screenshot">
+          <img src="/images/portfolio/olistico-bg.jpg" alt="Ispirazione — estetica wellness retreat" />
+          <span class="screenshot-label">Wellness retreat — estetica terra e silenzio</span>
+        </div>
+        <div class="insp-info">
+          <div class="site-tag">Fonte di ispirazione</div>
+          <div class="site-name">Siti di wellness retreat premium</div>
+          <div class="site-url">Six Senses · COMO Hotels · retreat booking sites</div>
+          <div class="tags">
+            <span class="tag">Molto spazio bianco</span>
+            <span class="tag">Palette terra</span>
+            <span class="tag">Serif lento</span>
+            <span class="tag">Foto d'ambiente</span>
+            <span class="tag">Linguaggio diretto</span>
+          </div>
+          <div class="insp-quote">
+            <p>"Non voglio un sito che sembri una boutique new age con cristalli e simboli. Voglio qualcosa di pulito, sereno — che faccia capire che questo è un lavoro serio, che parte dal corpo."</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider" />
+
+    <!-- STEP 2 -->
+    <section class="step2">
+      <div class="step-label fade-in"><span class="step-num">2</span>L'Analisi</div>
+      <div class="analisi-grid fade-in">
+        <div class="analisi-card">
+          <span class="analisi-card-label">Palette colori</span>
+          <div class="palette">
+            <div class="swatch" style="background:#f8f4ed; border:1px solid #ddd;"></div>
+            <div class="swatch" style="background:#1e1b14;"></div>
+            <div class="swatch" style="background:#687c58;"></div>
+            <div class="swatch" style="background:#b8832a;"></div>
+          </div>
+          <div class="palette-names">Sabbia calda · Inchiostro scuro<br />Verde salvia · Ocra ambrata</div>
+        </div>
+        <div class="analisi-card">
+          <span class="analisi-card-label">Tipografia</span>
+          <div class="font-sample" style="font-family:'Cormorant Garamond',serif; font-weight:300;">Cormorant Garamond</div>
+          <div class="font-name">Serif lenta — profondità e cura</div>
+          <div style="margin-top:0.8rem; font-family:'Inter',sans-serif; font-size:0.85rem; letter-spacing:0.08em; color:#687c58;">INTER LIGHT CAPS</div>
+          <div class="font-name">Sans leggero — struttura discreta</div>
+        </div>
+        <div class="analisi-card">
+          <span class="analisi-card-label">Elementi chiave</span>
+          <ul class="keyword-list">
+            <li>Ampio spazio bianco che respira</li>
+            <li>Foto di ambiente, non di prodotto</li>
+            <li>Testo lento, senza fretta</li>
+            <li>Pochi servizi, spiegati bene</li>
+            <li>Nessun simbolo esoterico</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider" />
+
+    <!-- STEP 3 -->
+    <section class="step3">
+      <div class="step-label fade-in"><span class="step-num">3</span>La Traduzione</div>
+      <p class="fade-in" style="font-size:0.9rem; color:var(--ink-soft); line-height:1.8; max-width:600px; margin-bottom:2rem;">
+        Dall'estetica dei grandi retreat internazionali a un'identità accessibile e radicata. Stessa calma visiva — ma in un appartamento di Torino, con appuntamenti reali e prezzi chiari.
+      </p>
+      <div class="traduzione-grid fade-in">
+        <div class="trans-col">
+          <h3><span>Ispirazione</span>Wellness retreat premium</h3>
+          <ul class="trans-list">
+            <li><span class="icon">→</span> Resort con piscine e natura tropicale</li>
+            <li><span class="icon">→</span> Pacchetti da migliaia di euro a settimana</li>
+            <li><span class="icon">→</span> Foto di location esotiche</li>
+            <li><span class="icon">→</span> Brand internazionale, lontano</li>
+            <li><span class="icon">→</span> Esperienza irraggiungibile per i più</li>
+          </ul>
+        </div>
+        <div class="trans-col">
+          <h3><span>Risultato</span>Letizia Amato</h3>
+          <ul class="trans-list">
+            <li><span class="icon">→</span> Studio accogliente nel cuore di Torino</li>
+            <li><span class="icon">→</span> Sedute singole e percorsi mensili</li>
+            <li><span class="icon">→</span> Foto dello spazio reale, warm e curato</li>
+            <li><span class="icon">→</span> Presenza locale, fiducia vicina</li>
+            <li><span class="icon">→</span> Prima seduta introduttiva a prezzo agevolato</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 4 -->
+    <section class="step4">
+      <div class="step-label fade-in"><span class="step-num">4</span>Il Risultato</div>
+      <div class="risultato-intro fade-in">
+        <h3>Il sito di Letizia Amato</h3>
+        <p>Calma visiva senza distanza. Un sito che si legge lentamente — e che fa venire voglia di fermarsi.</p>
+      </div>
+      <div class="demo-frame fade-in">
+        <div class="demo-bar">
+          <div class="demo-dot red"></div>
+          <div class="demo-dot yellow"></div>
+          <div class="demo-dot green"></div>
+          <div class="demo-url">letiziaolistica.it</div>
+        </div>
+
+        <div class="la-site">
+          <!-- Nav -->
+          <div class="la-nav">
+            <div class="la-logo">Letizia Amato</div>
+            <div class="la-nav-links">
+              <span>Chi sono</span>
+              <span>Sedute</span>
+              <span>Lo spazio</span>
+              <span>Contatti</span>
+            </div>
+            <div class="la-nav-cta">Prenota una seduta</div>
+          </div>
+
+          <!-- Hero -->
+          <div class="la-hero">
+            <div class="la-hero-content">
+              <div class="la-hero-eyebrow">Reiki · Sound Healing · Torino</div>
+              <h2>Un'ora per<br /><em>tornare</em><br />a te stessa.</h2>
+              <p class="la-hero-sub">Lavoro con il corpo e con il suono per aiutare chi sente di aver perso il filo. Non serve credere a nulla — serve solo presentarsi.</p>
+              <a href="#" class="la-hero-cta">Prenota una seduta</a>
+            </div>
+            <div class="la-hero-img">
+              <img src="/images/portfolio/olistico-hero.jpg" alt="Letizia Amato" />
+            </div>
+          </div>
+
+          <!-- Quote bar -->
+          <div class="la-quote">
+            <p class="la-quote-text">"Il silenzio non è vuoto. È il punto da cui si ricomincia."</p>
+          </div>
+
+          <!-- Approccio -->
+          <div class="la-approccio">
+            <div>
+              <div class="la-approccio-label">Il mio approccio</div>
+              <h3>Pratica, ascolto,<br />presenza.</h3>
+              <p>Ho studiato reiki tradizionale Usui per otto anni e sound healing con i bol tibetani per cinque. Ma quello che ho imparato di più l'ho imparato dalle persone che hanno attraversato il mio studio: che il corpo sa già dove andare — spesso ha solo bisogno di qualcuno che stia fermo con lui.</p>
+            </div>
+            <div class="la-approccio-img">
+              <img src="/images/portfolio/olistico-space.jpg" alt="Lo spazio di Letizia" />
+            </div>
+          </div>
+
+          <!-- Servizi -->
+          <div class="la-servizi">
+            <div class="la-servizi-label">Le sedute</div>
+            <div class="la-servizi-grid">
+              <div class="la-card">
+                <div class="la-card-icon">✦</div>
+                <div class="la-card-title">Seduta di Reiki</div>
+                <p class="la-card-desc">60 minuti di trattamento energetico sul corpo. Per chi vuole sciogliere tensioni fisiche o attraversa un periodo di stanchezza profonda.</p>
+              </div>
+              <div class="la-card">
+                <div class="la-card-icon">◎</div>
+                <div class="la-card-title">Bagno di Suono</div>
+                <p class="la-card-desc">75 minuti con bol tibetani e campane cristallo. Le vibrazioni agiscono sul sistema nervoso in modo diretto, senza mediazioni mentali.</p>
+              </div>
+              <div class="la-card">
+                <div class="la-card-icon">∿</div>
+                <div class="la-card-title">Percorso Mensile</div>
+                <p class="la-card-desc">4 incontri nel corso di un mese, alternando reiki e suono. Per chi vuole lavorare su un tema specifico o semplicemente crearsi uno spazio fisso.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Testimonianza -->
+          <div class="la-testi">
+            <p class="la-testi-quote">"Sono arrivata scettica. Sono uscita in silenzio — ma era un silenzio diverso, pieno. Non riesco a spiegarlo meglio di così."</p>
+            <div class="la-testi-author">Federica R. — 41 anni, Torino</div>
+          </div>
+
+          <!-- CTA -->
+          <div class="la-cta">
+            <h3>Cominciamo con una seduta.</h3>
+            <p>Prima seduta introduttiva a prezzo ridotto. Senza impegni — puoi capire se fa per te prima di decidere altro.</p>
+            <a href="#" class="la-cta-btn">Prenota adesso</a>
+          </div>
+
+          <!-- Footer -->
+          <div class="la-footer">
+            <div class="la-footer-name">Letizia Amato — Reiki e Sound Healing</div>
+            <div class="la-footer-addr">Torino · letizia@letiziaolistica.it</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section fade-in">
+      <span class="label">Il tuo sito</span>
+      <h2>Hai un'attività simile?<br />Costruiamo insieme il tuo.</h2>
+      <p>Stesso processo, identità tua. In pochi giorni hai un sito che ti rappresenta davvero.</p>
+      <a href="/dev/contatti" class="btn-sage">Parliamo del tuo progetto →</a>
+    </section>
+
+  </div>
+
+  <script>
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
