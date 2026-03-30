@@ -114,6 +114,7 @@ export const prerender = true;
     .insp-card {
       background: var(--white); border-radius: 20px; overflow: hidden;
       display: grid; grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto;
       box-shadow: 0 4px 30px rgba(0,0,0,0.08);
       margin-bottom: 3rem;
     }
@@ -273,6 +274,31 @@ export const prerender = true;
     .btn-outline { display: inline-block; border: 1.5px solid var(--ink); color: var(--ink); padding: 1rem 2.5rem; border-radius: 8px; text-decoration: none; font-size: 0.9rem; font-weight: 400; transition: all 0.2s; margin-left: 1rem; }
     .btn-outline:hover { background: var(--cream-dark); }
 
+    /* Mockup bar */
+    .mockup-bar {
+      background: #1c1c1c; color: rgba(255,255,255,0.6);
+      text-align: center; font-size: 0.75rem; padding: 0.6rem 1.5rem;
+      letter-spacing: 0.02em;
+    }
+    .mockup-icon { margin-right: 0.4rem; }
+
+    /* Screenshot */
+    .insp-screenshot {
+      grid-column: 1 / -1;
+      border-bottom: 1px solid var(--cream-dark);
+      position: relative;
+    }
+    .insp-screenshot img {
+      width: 100%; display: block;
+      max-height: 320px; object-fit: cover; object-position: top;
+    }
+    .screenshot-label {
+      position: absolute; bottom: 0.6rem; left: 0.8rem;
+      background: rgba(0,0,0,0.55); color: rgba(255,255,255,0.85);
+      font-size: 0.68rem; padding: 0.25rem 0.6rem; border-radius: 4px;
+      backdrop-filter: blur(4px);
+    }
+
     /* Divider */
     .section-divider { border: none; border-top: 1px solid rgba(0,0,0,0.08); margin: 0; }
 
@@ -305,6 +331,12 @@ export const prerender = true;
   <a href="/dev/portfolio" class="back-btn">← Torna al Portfolio</a>
 
   <!-- Hero -->
+  <!-- Mockup disclaimer -->
+  <div class="mockup-bar">
+    <span class="mockup-icon">⚗</span>
+    Mockup di caso studio — Erba Pura è un brand di fantasia creato per illustrare il processo di lavoro
+  </div>
+
   <section class="hero">
     <div class="hero-label">Caso Studio</div>
     <h1>Dal riferimento<br />al <em>risultato</em></h1>
@@ -335,6 +367,10 @@ export const prerender = true;
       <div class="step-label fade-in"><span class="step-num">1</span>Il Riferimento</div>
 
       <div class="insp-card fade-in">
+        <div class="insp-screenshot">
+          <div class="screenshot-label">aesop.com — screenshot reale</div>
+          <img src="/images/portfolio/aesop-screenshot.jpg" alt="Screenshot del sito Aesop" />
+        </div>
         <div class="insp-site">
           <div class="site-tag">Sito di Ispirazione</div>
           <div class="site-name">Aesop</div>
