@@ -127,17 +127,17 @@
     .demo-url { font-size: 0.72rem; color: #8a8a8a; margin-left: 0.5rem; }
 
     /* ── Giulia Ferretti mini-site — ESTHER PEREL style ── */
-    .gf-site { background: white; font-family: var(--sans); }
+    .gf-site { background: white; font-family: var(--sans); position: relative; }
 
-    /* Nav — white floating rounded card, serif name, orange pill */
-    .gf-nav { margin: 0.8rem; border-radius: 14px; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; background: white; box-shadow: 0 4px 22px rgba(0,0,0,0.1); }
+    /* Nav — white floating rounded card, positioned absolute over hero */
+    .gf-nav { position: absolute; top: 0; left: 0; right: 0; z-index: 10; margin: 0.8rem; border-radius: 14px; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; background: white; box-shadow: 0 4px 22px rgba(0,0,0,0.1); }
     .gf-logo { font-family: var(--serif); font-size: 1.1rem; font-weight: 400; color: var(--ink); letter-spacing: 0.01em; }
     .gf-nav-links { display: flex; gap: 1.3rem; font-size: 0.68rem; color: #555; }
     .gf-nav-cta { font-size: 0.68rem; background: #e07a2a; color: white; padding: 0.4rem 1rem; border-radius: 20px; display: inline-flex; align-items: center; gap: 0.3rem; }
 
     /* Hero — warm beige/sand bg, two-column: text left, portrait right */
-    .gf-hero { background: #c8b09a; display: grid; grid-template-columns: 1fr 1fr; position: relative; min-height: 400px; overflow: hidden; }
-    .gf-hero-text { padding: 2.5rem 2.5rem 5rem 2.5rem; display: flex; flex-direction: column; justify-content: center; position: relative; }
+    .gf-hero { background: #c8b09a; display: grid; grid-template-columns: 1fr 1fr; position: relative; min-height: 440px; overflow: hidden; }
+    .gf-hero-text { padding: 5.5rem 2.5rem 5rem 2.5rem; display: flex; flex-direction: column; justify-content: center; position: relative; }
     .gf-hero-category { display: inline-block; background: #1c2d3e; color: white; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.06em; padding: 0.22rem 0.6rem; margin-bottom: 1.2rem; width: fit-content; }
     .gf-hero h2 { font-family: var(--serif); font-size: clamp(1.5rem, 2.8vw, 2.2rem); font-weight: 400; color: #1c2d3e; line-height: 1.2; margin-bottom: 1rem; }
     .gf-hero-desc { font-size: 0.78rem; color: #3a4050; line-height: 1.7; margin-bottom: 1.5rem; max-width: 260px; }
