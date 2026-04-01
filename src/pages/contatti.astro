@@ -3,177 +3,191 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 ---
 
 <BaseLayout
-  title="Contatti - Marco Munich"
-  description="Contatta Marco Munich per informazioni su consulenze e percorsi di marketing olistico. Email: consulenza@marcomunich.com"
+  title="Contatti — Marco Munich"
+  description="Contatta Marco Munich per una consulenza gratuita di personal branding olistico. Email, telefono e WhatsApp."
   currentPath="/contatti/"
 >
 
-<!-- ══ HERO ═══════════════════════════════════════════════════════════════ -->
-<section class="ct-hero">
-  <div class="ct-hero__inner">
-    <span class="ct-label">Parliamoci</span>
-    <h1 class="ct-hero__title">
-      <span class="ct-hl-plain">Contatti.</span>
-    </h1>
-    <p class="ct-hero__sub">Vuoi approfondire? Sentiamoci.</p>
-  </div>
-</section>
+<div class="mm-page">
 
-<!-- ══ CONTATTI ═══════════════════════════════════════════════════════════ -->
-<section class="ct-body">
-  <div class="ct-body__inner">
-
-    <div class="ct-list">
-
-      <div class="ct-item">
-        <span class="ct-item__label">Email</span>
-        <a href="mailto:consulenza@marcomunich.com" class="ct-item__value">
-          consulenza@marcomunich.com
+  <!-- HERO -->
+  <section class="ct-hero">
+    <div class="mm-container ct-hero__inner">
+      <div>
+        <p class="mm-tag" style="margin-bottom:1.2rem">Parliamoci</p>
+        <h1 class="mm-h1" style="margin-bottom:2rem">Contatti.</h1>
+        <p style="font-size:1.05rem;line-height:1.75;color:rgba(255,255,255,0.65);max-width:480px;font-weight:300">
+          Il modo più diretto è una chiacchierata su WhatsApp. Gratuita, senza impegno. Ti dico subito se posso aiutarti e come.
+        </p>
+      </div>
+      <div class="ct-hero__cta-block">
+        <a href="https://wa.link/eemovr" target="_blank" rel="noopener noreferrer" class="ct-wa-btn">
+          <svg viewBox="0 0 448 512" width="20" height="20" fill="currentColor" aria-hidden="true">
+            <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
+          </svg>
+          Scrivi su WhatsApp
         </a>
+        <a href="mailto:consulenza@marcomunich.com" class="mm-btn mm-btn-outline" style="font-size:0.82rem">Email →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTATTI DETTAGLI -->
+  <section class="mm-section-light ct-info">
+    <div class="mm-container ct-info__grid">
+
+      <div class="ct-info__col">
+        <p class="mm-tag mm-tag-dark" style="margin-bottom:1.5rem">Contatti diretti</p>
+        <div class="ct-list">
+
+          <div class="ct-item">
+            <span class="ct-item__label">Email</span>
+            <a href="mailto:consulenza@marcomunich.com" class="ct-item__value">
+              consulenza@marcomunich.com
+            </a>
+          </div>
+
+          <div class="ct-item">
+            <span class="ct-item__label">Telefono</span>
+            <a href="tel:+393895776332" class="ct-item__value">
+              +39 389 577 6332
+            </a>
+          </div>
+
+          <div class="ct-item">
+            <span class="ct-item__label">Disponibilità</span>
+            <span class="ct-item__value ct-item__value--muted">
+              Lunedì – Venerdì, 9:00 – 17:00
+            </span>
+          </div>
+
+          <div class="ct-item">
+            <span class="ct-item__label">Sede</span>
+            <span class="ct-item__value ct-item__value--muted">
+              Vicenza, Italia
+            </span>
+          </div>
+
+        </div>
       </div>
 
-      <div class="ct-item">
-        <span class="ct-item__label">Telefono</span>
-        <a href="tel:+393895776332" class="ct-item__value">
-          +39 389 577 6332
-        </a>
-      </div>
+      <div class="ct-info__col">
+        <p class="mm-tag mm-tag-dark" style="margin-bottom:1.5rem">Prima di scrivere</p>
+        <div class="ct-faq">
 
-      <div class="ct-item">
-        <span class="ct-item__label">Disponibilità</span>
-        <span class="ct-item__value ct-item__value--muted">
-          Lunedì – Venerdì, 9:00 – 17:00
-        </span>
+          <div class="ct-faq__item">
+            <h3 class="ct-faq__q">Offri una consulenza gratuita?</h3>
+            <p class="ct-faq__a">Sì. La prima chiacchierata è sempre gratuita. In 20-30 minuti capisco la tua situazione e ti dico onestamente se posso aiutarti e con quale percorso.</p>
+          </div>
+
+          <div class="ct-faq__item">
+            <h3 class="ct-faq__q">Lavori solo con operatori olistici?</h3>
+            <p class="ct-faq__a">Principalmente sì. Sette anni a lavorare in questo settore mi hanno dato un punto di vista specifico che non avrei altrove. Valuto comunque ogni situazione.</p>
+          </div>
+
+          <div class="ct-faq__item">
+            <h3 class="ct-faq__q">Quanto tempo richiede un percorso?</h3>
+            <p class="ct-faq__a">Dipende dal punto di partenza. Un sito base richiede 3-4 settimane. Un percorso di personal branding completo va dai 2 ai 4 mesi.</p>
+          </div>
+
+        </div>
       </div>
 
     </div>
+  </section>
 
-    <div class="ct-cta">
-      <p class="ct-cta__text">
-        Il modo più veloce per iniziare è una chiacchierata su WhatsApp.
-        Gratuita, senza impegno.
-      </p>
-      <a href="https://wa.link/eemovr" target="_blank" rel="noopener noreferrer" class="ct-btn">
-        <svg viewBox="0 0 448 512" width="16" height="16" fill="currentColor" aria-hidden="true">
-          <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
-        </svg>
-        Scrivi su WhatsApp
-      </a>
-    </div>
-
-  </div>
-</section>
+</div>
 
 </BaseLayout>
 
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-/* ══ HERO ══════════════════════════════════════════════════════════════════ */
-.ct-label {
-  font: 700 0.62rem/1 var(--sans);
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--gold);
-  display: block;
-  margin-bottom: 1.5rem;
-}
-.ct-hero {
-  background: var(--black);
-  padding: 7rem var(--pad) 6rem;
-}
-.ct-hero__inner {
-  max-width: var(--max);
-  margin: 0 auto;
-  max-width: 700px;
-}
-.ct-hero__title {
-  line-height: 0.92;
-  margin-bottom: 1.5rem;
-}
-.ct-hl-plain {
-  font: 800 clamp(3.2rem, 7vw, 7rem)/1 var(--display);
-  color: var(--white);
-  display: block;
-  letter-spacing: -0.03em;
-}
-.ct-hero__sub {
-  font: 300 1rem/1.6 var(--sans);
-  color: rgba(255,255,255,0.38);
-}
-
-/* ══ BODY ══════════════════════════════════════════════════════════════════ */
-.ct-body {
-  background: var(--white);
-  padding: 6rem var(--pad) 8rem;
-}
-.ct-body__inner {
-  max-width: 640px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 6rem;
-  align-items: start;
-}
-
-/* ── Contact list ──────────────────────────────────────────────────────── */
-.ct-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-.ct-item {
-  padding: 1.75rem 0;
-  border-bottom: 1px solid rgba(10,10,10,0.07);
-}
-.ct-item:first-child { padding-top: 0; }
-.ct-item__label {
-  display: block;
-  font: 700 0.6rem/1 var(--sans);
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 0.6rem;
-}
-.ct-item__value {
-  font: 400 1rem/1.4 var(--sans);
-  color: var(--black);
-  text-decoration: none;
-  transition: color 0.15s;
-}
-a.ct-item__value:hover { color: var(--gold); opacity: 1; }
-.ct-item__value--muted { color: var(--muted); }
-
-/* ── CTA ───────────────────────────────────────────────────────────────── */
-.ct-cta {
-  background: var(--paper);
-  padding: 2.5rem;
-}
-.ct-cta__text {
-  font: 300 0.92rem/1.7 var(--sans);
-  color: var(--muted);
-  margin-bottom: 1.75rem;
-}
-.ct-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  font: 700 0.78rem/1 var(--sans);
-  letter-spacing: 0.04em;
-  text-decoration: none;
-  padding: 0.9rem 1.75rem;
-  border-radius: 1px;
-  background: var(--gold);
-  color: var(--white);
-  transition: background 0.15s, transform 0.12s;
-}
-.ct-btn:hover { background: var(--gold-d); transform: translateY(-1px); opacity: 1; }
-
-/* ── Responsive ─────────────────────────────────────────────────────────── */
-@media (max-width: 640px) {
-  .ct-body__inner {
-    grid-template-columns: 1fr;
-    gap: 3rem;
+  .ct-hero {
+    background: #0d0d0d;
+    padding: 9rem 0 5rem;
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
   }
-}
+  .ct-hero__inner {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+  .ct-hero__cta-block {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+  .ct-wa-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: #25d366;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding: 0.9rem 1.8rem;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: background 0.15s;
+  }
+  .ct-wa-btn:hover { background: #1fb959; opacity: 1; }
+
+  /* Info section */
+  .ct-info { padding: 5rem 0; }
+  .ct-info__grid {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 5rem;
+    align-items: start;
+  }
+  .ct-list { display: flex; flex-direction: column; gap: 0; }
+  .ct-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    padding: 1.2rem 0;
+    border-bottom: 1px solid #e8e8e8;
+  }
+  .ct-item:first-child { border-top: 1px solid #e8e8e8; }
+  .ct-item__label {
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #aaa;
+  }
+  .ct-item__value {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #0d0d0d;
+    text-decoration: none;
+  }
+  .ct-item__value:hover { color: #e85d00; opacity: 1; }
+  .ct-item__value--muted { font-weight: 400; color: #666; }
+
+  /* FAQ */
+  .ct-faq { display: flex; flex-direction: column; gap: 1.5rem; }
+  .ct-faq__item {}
+  .ct-faq__q {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 0.88rem;
+    color: #0d0d0d;
+    margin-bottom: 0.4rem;
+    letter-spacing: -0.01em;
+  }
+  .ct-faq__a {
+    font-size: 0.85rem;
+    line-height: 1.75;
+    color: #555;
+  }
+
+  @media (max-width: 768px) {
+    .ct-hero__inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    .ct-info__grid { grid-template-columns: 1fr; gap: 3rem; }
+  }
 </style>

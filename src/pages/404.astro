@@ -3,19 +3,45 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 export const prerender = true;
 ---
 <BaseLayout
-  title="Pagina non trovata"
+  title="Pagina non trovata — Marco Munich"
   description="La pagina che stai cercando non esiste o è stata rimossa."
   currentPath="/404/"
   noIndex={true}
 >
-  <div style="text-align:center; padding: 80px 20px; max-width: 600px; margin: 0 auto;">
-    <h1 style="font-size: 5rem; font-weight: 900; margin: 0; line-height: 1;">404</h1>
-    <h2 style="font-size: 1.5rem; margin: 16px 0 24px;">Pagina non trovata</h2>
-    <p style="color: #666; margin-bottom: 32px;">
-      La pagina che stai cercando non esiste o è stata rimossa.
-    </p>
-    <a href="/" style="display:inline-block; padding: 12px 28px; background:#111; color:#fff; text-decoration:none; font-weight:700; letter-spacing:0.05em;">
-      TORNA ALLA HOME
-    </a>
-  </div>
+
+<div class="mm-page">
+  <section class="err-section">
+    <div class="mm-container err-inner">
+      <div class="err-num">404</div>
+      <p class="mm-tag" style="margin-bottom:1rem;margin-top:1.5rem">Pagina non trovata</p>
+      <h1 class="mm-h2" style="margin-bottom:1.2rem">Questa pagina non esiste.</h1>
+      <p style="font-size:0.9rem;line-height:1.75;color:rgba(255,255,255,0.5);max-width:380px;margin-bottom:2.5rem">
+        È stata rimossa, spostata o l'indirizzo era sbagliato. Torna alla home per trovare quello che cerchi.
+      </p>
+      <div style="display:flex;gap:1rem;flex-wrap:wrap">
+        <a href="/" class="mm-btn mm-btn-orange">Torna alla home →</a>
+        <a href="/blog/" class="mm-btn mm-btn-outline">Leggi gli articoli</a>
+      </div>
+    </div>
+  </section>
+</div>
+
 </BaseLayout>
+
+<style>
+  .err-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 6rem 0;
+  }
+  .err-num {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: clamp(6rem, 20vw, 14rem);
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    color: #1a1a1a;
+    user-select: none;
+  }
+</style>

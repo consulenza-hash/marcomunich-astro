@@ -1,540 +1,263 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
-
-const steps = [
-  {
-    n: '01',
-    tag: 'Se sei all\'inizio',
-    titolo: 'Metterci la faccia online',
-    desc: 'Il punto di partenza per chiunque voglia promuoversi online in modo autentico, senza vergogna e senza fingere di essere qualcun altro.',
-    href: '/metterci-la-faccia-online/',
-    cta: 'Video-Corso Gratuito',
-    secondary: { href: '/libri/', cta: 'I miei libri' },
-    color: '#D4840A',
-    bg: '#FEF6EC',
-    border: '#F0A040',
-  },
-  {
-    n: '02',
-    tag: 'Il corso fondamentale',
-    titolo: 'Creazione del Messaggio Autentico',
-    desc: 'Quando senti di avere qualcosa da dire, questo corso ti aiuta a trovare il tuo punto di vista unico e a strutturare un messaggio che rispecchi chi sei davvero.',
-    href: '/creazione-messaggio-autentico/',
-    cta: 'Scopri il Corso',
-    color: '#5551D3',
-    bg: '#EEEEFF',
-    border: '#5551D3',
-  },
-  {
-    n: '03',
-    tag: 'Dopo aver iniziato a scrivere',
-    titolo: 'Creazione Video Autentici',
-    desc: 'Quando hai già iniziato a scrivere e creare contenuti, questo corso ti aiuta a superare la vergogna di fare video e a parlare davanti alla camera in modo naturale.',
-    href: '/creazione-video-autentici/',
-    cta: 'Video-Corso Gratuito',
-    color: '#C0292A',
-    bg: '#FEF0F0',
-    border: '#C0292A',
-  },
-  {
-    n: '04',
-    tag: 'Dopo almeno 30 video',
-    titolo: 'Lavorare Senza Sito Web',
-    desc: 'Quando avrai fatto almeno trenta video parlando dal tuo centro, questo corso ti mostra come costruire un sistema di acquisizione clienti senza dipendere da un sito.',
-    href: '/lavorare-senzasito/',
-    cta: 'Guarda il Corso',
-    color: '#1A7A4E',
-    bg: '#EBF7EF',
-    border: '#1A7A4E',
-  },
-];
-
-const socials = [
-  {
-    href: 'https://www.facebook.com/profile.php?id=61569131883012',
-    label: 'Facebook',
-    icon: `<svg viewBox="0 0 264 512" fill="currentColor"><path d="M76.7 512V283H0v-91h76.7v-71.7C76.7 42.4 124.3 0 193.8 0c33.3 0 61.9 2.5 70.2 3.6V85h-48.2c-37.8 0-45.1 18-45.1 44.3V192H256l-11.7 91h-73.6v229"/></svg>`,
-  },
-  {
-    href: 'https://www.instagram.com/marcomunich1983',
-    label: 'Instagram',
-    icon: `<svg viewBox="0 0 448 512" fill="currentColor"><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg>`,
-  },
-  {
-    href: 'https://open.spotify.com/show/2WwJsiCJYSZnawH2TQ6N2n',
-    label: 'Spotify',
-    icon: `<svg viewBox="0 0 496 512" fill="currentColor"><path d="M248 8C111.1 8 0 119.1 0 256s111.1 248 248 248 248-111.1 248-248S384.9 8 248 8zm100.7 364.9c-4.2 0-6.8-1.3-10.7-3.6-62.4-37.6-135-39.2-206.7-24.5-3.9 1-9 2.6-11.9 2.6-9.7 0-15.8-7.7-15.8-15.8 0-10.3 6.1-15.2 13.6-16.8 81.9-18.1 165.6-16.5 237 26.2 6.1 3.9 9.7 7.4 9.7 16.5s-7.1 15.4-15.2 15.4zm26.9-65.6c-5.2 0-8.7-2.3-12.3-4.2-62.5-37-155.7-51.9-238.6-29.4-4.8 1.3-7.4 2.6-11.9 2.6-10.7 0-19.4-8.7-19.4-19.4s5.2-17.8 15.5-20.7c27.8-7.8 56.2-13.6 97.8-13.6 64.9 0 127.6 16.1 177 45.5 8.1 4.8 11.3 11 11.3 19.7-.1 10.8-8.5 19.5-19.4 19.5zm31-76.2c-5.2 0-8.4-1.3-12.9-3.9-71.2-42.5-198.5-52.7-280.9-29.7-3.6 1-8.1 2.6-12.9 2.6-13.2 0-23.3-10.3-23.3-23.6 0-13.6 8.4-21.3 17.4-23.9 35.2-10.3 74.6-15.2 117.5-15.2 73 0 149.5 15.2 205.4 47.8 7.8 4.5 12.9 10.7 12.9 22.6 0 13.6-11 23.3-23.2 23.3z"/></svg>`,
-  },
-  {
-    href: 'https://www.linkedin.com/in/marcomunich',
-    label: 'LinkedIn',
-    icon: `<svg viewBox="0 0 448 512" fill="currentColor"><path d="M100.3 480H7.4V180.9h92.9V480zM53.8 140.1C24.1 140.1 0 115.5 0 85.8 0 56.1 24.1 32 53.8 32c29.7 0 53.8 24.1 53.8 53.8 0 29.7-24.1 54.3-53.8 54.3zM448 480h-92.7V334.4c0-34.7-.7-79.2-48.3-79.2-48.3 0-55.7 37.7-55.7 76.7V480h-92.8V180.9h89.1v40.8h1.3c12.4-23.5 42.7-48.3 87.9-48.3 94 0 111.3 61.9 111.3 142.3V480z"/></svg>`,
-  },
-  {
-    href: 'https://www.youtube.com/channel/UCh9LH2mnDSJ2l3jfDVsGSIA',
-    label: 'YouTube',
-    icon: `<svg viewBox="0 0 576 512" fill="currentColor"><path d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"/></svg>`,
-  },
-];
 ---
 
 <BaseLayout
   title="Risorse — Marco Munich"
-  description="Il percorso completo per sviluppare un Personal Branding Olistico autentico. Corsi gratuiti, libri, podcast e tutto quello che serve per promuoverti come voce diversa."
+  description="Corsi gratuiti, libri, podcast e strumenti per costruire un personal branding olistico autentico. Tutto quello che serve, in un posto solo."
   currentPath="/risorse/"
 >
 
-<!-- ══ HERO ═══════════════════════════════════════════════════════════════ -->
-<section class="rs-hero">
-  <div class="rs-hero__inner">
+<div class="mm-page">
 
-    <div class="rs-hero__profile">
-      <img class="rs-hero__avatar" src="/og/marco-munich.png" alt="Marco Munich" width="88" height="88" />
-      <div>
-        <p class="rs-hero__name">Marco Munich</p>
-        <p class="rs-hero__role">Personal Branding Olistico</p>
-      </div>
+  <!-- HERO -->
+  <section class="rs-hero">
+    <div class="rs-hero__inner mm-container">
+      <p class="mm-tag" style="margin-bottom:1.2rem">Materiale gratuito e a pagamento</p>
+      <h1 class="mm-h1" style="margin-bottom:2rem">Risorse.</h1>
+      <p style="font-size:1.05rem;line-height:1.75;color:rgba(255,255,255,0.65);max-width:500px;font-weight:300">
+        Tutto quello che ho costruito in sette anni di lavoro con coach, counselor e operatori olistici. Corsi, libri, podcast, strumenti. La maggior parte è gratuita.
+      </p>
     </div>
+  </section>
 
-    <h1 class="rs-hero__claim">
-      Sviluppa un punto di vista per promuoverti online come voce diversa dalle altre.
-    </h1>
+  <!-- PERCORSO FORMATIVO -->
+  <section class="mm-section-light rs-percorso">
+    <div class="mm-container">
+      <p class="mm-tag mm-tag-dark" style="margin-bottom:1rem">Percorso consigliato</p>
+      <h2 class="mm-h2" style="color:#0d0d0d;margin-bottom:0.8rem">Da dove partire.</h2>
+      <p style="font-size:0.85rem;line-height:1.75;color:#777;margin-bottom:3rem;max-width:480px">
+        Questi corsi hanno una sequenza precisa. Ognuno costruisce su quello precedente.
+      </p>
+      <div class="rs-steps">
 
-    <div class="rs-hero__audio-wrap">
-      <p class="rs-hero__audio-label">Ascolta il messaggio di benvenuto</p>
-      <audio controls class="rs-hero__audio" controlslist="nodownload" playsinline>
-        <source src="/audio/nuovo-benvenuto-sito.mp3" type="audio/mpeg" />
-      </audio>
-    </div>
-
-    <div class="rs-hero__social">
-      {socials.map(s => (
-        <a href={s.href} target="_blank" rel="nofollow" aria-label={s.label} class="rs-social-link">
-          <Fragment set:html={s.icon} />
-        </a>
-      ))}
-    </div>
-
-    <a href="https://wa.link/eemovr" target="_blank" class="rs-btn rs-btn--gold">
-      <svg viewBox="0 0 448 512" width="16" height="16" fill="currentColor" aria-hidden="true">
-        <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
-      </svg>
-      Chiacchierata Introduttiva
-    </a>
-
-  </div>
-</section>
-
-<!-- ══ PERCORSO ════════════════════════════════════════════════════════════ -->
-<section class="rs-percorso">
-  <div class="rs-percorso__inner">
-
-    <div class="rs-section-head">
-      <span class="rs-label">Il percorso</span>
-      <h2 class="rs-section-title">Da dove <em>iniziare</em></h2>
-      <p class="rs-section-sub">Segui questi passi nell'ordine che ti propongo. Ogni risorsa si appoggia sulla precedente.</p>
-    </div>
-
-    <div class="rs-steps">
-      {steps.map((step) => (
-        <div class="rs-step" style={`background:${step.bg};border-top:3px solid ${step.border};`}>
-          <span class="rs-step__n" style={`color:${step.color};`}>{step.n}</span>
-          <div class="rs-step__content">
-            <span class="rs-step__tag" style={`color:${step.color};`}>{step.tag}</span>
-            <h3 class="rs-step__title">{step.titolo}</h3>
-            <p class="rs-step__desc">{step.desc}</p>
-            <div class="rs-step__actions">
-              <a href={step.href} class="rs-btn" style={`background:${step.color};color:#fff;`}>{step.cta} →</a>
-              {step.secondary && (
-                <a href={step.secondary.href} class="rs-btn rs-btn--ghost">{step.secondary.cta}</a>
-              )}
-            </div>
+        <div class="rs-step">
+          <div class="rs-step__n">01</div>
+          <div class="rs-step__body">
+            <p class="rs-step__tag">Se sei all'inizio</p>
+            <h3 class="rs-step__title">Metterci la faccia online</h3>
+            <p class="rs-step__desc">Il punto di partenza. Come promuoverti senza dover fingere di essere qualcun altro. Video-corso gratuito.</p>
+            <a href="/metterci-la-faccia-online/" class="mm-btn mm-btn-orange" style="font-size:0.8rem;padding:0.6rem 1.4rem">Guarda gratis →</a>
           </div>
         </div>
-      ))}
-    </div>
 
-  </div>
-</section>
+        <div class="rs-step">
+          <div class="rs-step__n">02</div>
+          <div class="rs-step__body">
+            <p class="rs-step__tag">Il corso fondamentale</p>
+            <h3 class="rs-step__title">Creazione del Messaggio Autentico</h3>
+            <p class="rs-step__desc">Come trovare il tuo punto di vista unico e costruire un messaggio che rispecchia chi sei, senza copiare nessuno.</p>
+            <a href="/creazione-messaggio-autentico/" class="mm-btn mm-btn-orange" style="font-size:0.8rem;padding:0.6rem 1.4rem">Scopri il corso →</a>
+          </div>
+        </div>
 
-<!-- ══ VIDEO ═══════════════════════════════════════════════════════════════ -->
-<section class="rs-video">
-  <div class="rs-video__inner">
-    <div class="rs-video__wrap">
-      <iframe
-        src="https://www.youtube.com/embed/DW-Mj8QxPg8?rel=0&modestbranding=1"
-        title="Marco Munich — Personal Branding Olistico"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen
-        loading="lazy"
-      ></iframe>
-    </div>
-  </div>
-</section>
+        <div class="rs-step">
+          <div class="rs-step__n">03</div>
+          <div class="rs-step__body">
+            <p class="rs-step__tag">Dopo aver iniziato a scrivere</p>
+            <h3 class="rs-step__title">Creazione Video Autentici</h3>
+            <p class="rs-step__desc">Come parlare davanti alla camera in modo naturale. Superare la vergogna, trovare il tono giusto.</p>
+            <a href="/creazione-video-autentici/" class="mm-btn mm-btn-orange" style="font-size:0.8rem;padding:0.6rem 1.4rem">Guarda gratis →</a>
+          </div>
+        </div>
 
-<!-- ══ DELEGATE ════════════════════════════════════════════════════════════ -->
-<section class="rs-delegate">
-  <div class="rs-delegate__inner">
-    <span class="rs-label rs-label--light">Collaborazione</span>
-    <h2 class="rs-delegate__title">Vuoi delegarmi <em>del lavoro?</em></h2>
-    <p class="rs-delegate__sub">
-      Se senti di avere già un messaggio autentico e cerchi qualcuno che ti
-      metta in piedi un sistema di acquisizione clienti, considera una di queste opzioni.
-    </p>
+        <div class="rs-step">
+          <div class="rs-step__n">04</div>
+          <div class="rs-step__body">
+            <p class="rs-step__tag">Dopo almeno 30 video</p>
+            <h3 class="rs-step__title">Lavorare Senza Sito Web</h3>
+            <p class="rs-step__desc">Come costruire un sistema di acquisizione clienti che funziona anche partendo dai social, senza investire in un sito.</p>
+            <a href="/lavorare-senzasito/" class="mm-btn mm-btn-orange" style="font-size:0.8rem;padding:0.6rem 1.4rem">Guarda il corso →</a>
+          </div>
+        </div>
 
-    <div class="rs-delegate__grid">
-      <div class="rs-delegate__item rs-delegate__item--highlight">
-        <h3 class="rs-delegate__item-title">Sviluppo Siti Web ad Alte Prestazioni</h3>
-        <p class="rs-delegate__item-desc">Siti veloci, ottimizzati per i motori di ricerca e costruiti per convertire. Niente template generici: ogni progetto viene pensato attorno al tuo messaggio.</p>
-        <a href="/sviluppo-siti-web" class="rs-delegate__cta">Scopri →</a>
-      </div>
-      <div class="rs-delegate__item">
-        <h3 class="rs-delegate__item-title">Sistema di Prenotazione Appuntamenti</h3>
-        <p class="rs-delegate__item-desc">Installazione e configurazione del sistema automatico di prenotazione, così i tuoi clienti possono fissare una call senza passare per i messaggi.</p>
-      </div>
-      <div class="rs-delegate__item">
-        <h3 class="rs-delegate__item-title">Creazione Corso Online</h3>
-        <p class="rs-delegate__item-desc">Trasformo le tue conoscenze in un corso strutturato e vendibile, dalla piattaforma alla pagina di vendita.</p>
       </div>
     </div>
+  </section>
 
-    <a href="https://wa.link/eemovr" target="_blank" class="rs-btn rs-btn--gold">
-      <svg viewBox="0 0 448 512" width="16" height="16" fill="currentColor" aria-hidden="true">
-        <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
-      </svg>
-      Contattami su WhatsApp
-    </a>
-  </div>
-</section>
+  <!-- RISORSE EXTRA -->
+  <section class="mm-section-dark rs-extra">
+    <div class="mm-container">
+      <p class="mm-tag" style="margin-bottom:1rem">Altre risorse</p>
+      <h2 class="mm-h2" style="margin-bottom:3rem">Libri, podcast e strumenti.</h2>
+      <div class="rs-extra__grid">
 
-<!-- ══ QUICK LINKS ═════════════════════════════════════════════════════════ -->
-<section class="rs-quicklinks">
-  <div class="rs-quicklinks__inner">
-    <a href="https://open.spotify.com/show/2WwJsiCJYSZnawH2TQ6N2n" target="_blank" class="rs-quicklink">
-      <span class="rs-quicklink__label">Podcast</span>
-      <span class="rs-quicklink__name">Ascoltami su Spotify →</span>
-    </a>
-    <a href="/blog/" class="rs-quicklink">
-      <span class="rs-quicklink__label">Contenuti</span>
-      <span class="rs-quicklink__name">Leggi il Blog →</span>
-    </a>
-    <a href="/chi-sono/" class="rs-quicklink">
-      <span class="rs-quicklink__label">La storia</span>
-      <span class="rs-quicklink__name">Chi sono →</span>
-    </a>
-  </div>
-</section>
+        <a href="/libri/" class="rs-extra-card">
+          <div class="rs-extra-card__icon">📚</div>
+          <h3 class="rs-extra-card__title">I miei libri</h3>
+          <p class="rs-extra-card__desc">Letture consigliate e i libri che ho scritto sul personal branding nel settore olistico.</p>
+          <span class="rs-extra-card__link">Vedi i libri →</span>
+        </a>
+
+        <a href="https://open.spotify.com/show/2WwJsiCJYSZnawH2TQ6N2n" target="_blank" rel="noopener" class="rs-extra-card">
+          <div class="rs-extra-card__icon">🎙️</div>
+          <h3 class="rs-extra-card__title">Podcast</h3>
+          <p class="rs-extra-card__desc">Episodi su personal branding olistico, marketing autentico e mindset per i professionisti del benessere.</p>
+          <span class="rs-extra-card__link">Ascolta su Spotify →</span>
+        </a>
+
+        <a href="/prompt-pack/" class="rs-extra-card">
+          <div class="rs-extra-card__icon">🤖</div>
+          <h3 class="rs-extra-card__title">Prompt Pack AI</h3>
+          <p class="rs-extra-card__desc">Una raccolta di prompt per usare l'intelligenza artificiale nel tuo lavoro di coach o counselor, mantenendo la tua voce.</p>
+          <span class="rs-extra-card__link">Scarica il pack →</span>
+        </a>
+
+        <a href="/blog/" class="rs-extra-card">
+          <div class="rs-extra-card__icon">✍️</div>
+          <h3 class="rs-extra-card__title">Blog</h3>
+          <p class="rs-extra-card__desc">Oltre duecento articoli su personal branding, marketing etico e presenza online per il settore olistico.</p>
+          <span class="rs-extra-card__link">Leggi gli articoli →</span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- AUDIO MESSAGGIO -->
+  <section class="mm-section-light rs-audio">
+    <div class="mm-container rs-audio__inner">
+      <div>
+        <p class="mm-tag mm-tag-dark" style="margin-bottom:0.8rem">Messaggio di benvenuto</p>
+        <h2 class="mm-h2" style="color:#0d0d0d;margin-bottom:0.8rem">Ascolta prima di iniziare.</h2>
+        <p style="font-size:0.85rem;line-height:1.75;color:#777;max-width:420px">
+          Un breve audio in cui spiego il metodo e come usare le risorse che trovi qui. Meno di 5 minuti.
+        </p>
+      </div>
+      <div class="rs-audio__player">
+        <audio controls class="rs-audio__ctrl" controlslist="nodownload" playsinline>
+          <source src="/audio/nuovo-benvenuto-sito.mp3" type="audio/mpeg" />
+        </audio>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="home-cta">
+    <div class="mm-container home-cta__inner">
+      <div>
+        <h2 class="mm-h2">Preferisci lavorare insieme?</h2>
+        <p style="color:rgba(255,255,255,0.75);font-size:0.9rem;margin-top:0.5rem">Una chiamata gratuita. Capisco la tua situazione e ti dico cosa farei.</p>
+      </div>
+      <a href="/contatti/" class="mm-btn mm-btn-white">Parliamo →</a>
+    </div>
+  </section>
+
+</div>
 
 </BaseLayout>
 
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  .rs-hero {
+    background: #0d0d0d;
+    padding: 9rem 0 5rem;
+    min-height: 55vh;
+    display: flex;
+    align-items: center;
+  }
+  .rs-percorso { padding: 5rem 0; }
+  .rs-steps { display: flex; flex-direction: column; gap: 0; }
+  .rs-step {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 2.5rem;
+    padding: 2.5rem 0;
+    border-bottom: 1px solid #e8e8e8;
+    align-items: start;
+  }
+  .rs-step:first-child { border-top: 1px solid #e8e8e8; }
+  .rs-step__n {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: 2.8rem;
+    color: #eee;
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+  .rs-step__tag {
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #e85d00;
+    margin-bottom: 0.4rem;
+  }
+  .rs-step__title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: #0d0d0d;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.5rem;
+  }
+  .rs-step__desc {
+    font-size: 0.85rem;
+    line-height: 1.75;
+    color: #666;
+    margin-bottom: 1rem;
+    max-width: 480px;
+  }
 
-.rs-label {
-  font: 700 0.62rem/1 var(--sans);
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--gold);
-  display: block;
-  margin-bottom: 1.5rem;
-}
-.rs-label--light { color: rgba(255,255,255,0.35); }
+  /* Extra grid */
+  .rs-extra { padding: 5rem 0; }
+  .rs-extra__grid {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 1px;
+    background: #1a1a1a;
+    border: 1px solid #1a1a1a;
+  }
+  .rs-extra-card {
+    background: #0d0d0d;
+    padding: 2.5rem 2rem;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    transition: background 0.15s;
+  }
+  .rs-extra-card:hover { background: #141414; opacity: 1; }
+  .rs-extra-card__icon { font-size: 1.8rem; margin-bottom: 0.4rem; }
+  .rs-extra-card__title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: 1.05rem;
+    color: #fff;
+    letter-spacing: -0.01em;
+  }
+  .rs-extra-card__desc {
+    font-size: 0.8rem;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.4);
+    flex: 1;
+  }
+  .rs-extra-card__link {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #e85d00;
+    margin-top: 0.5rem;
+  }
 
-/* ── Buttons ─────────────────────────────────────────────────────────────── */
-.rs-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  font: 700 0.78rem/1 var(--sans);
-  letter-spacing: 0.04em;
-  text-decoration: none;
-  padding: 0.85rem 1.6rem;
-  border-radius: 1px;
-  transition: background 0.15s, color 0.15s, transform 0.12s;
-  white-space: nowrap;
-}
-.rs-btn--gold  { background: #25D366; color: #fff; }
-.rs-btn--gold:hover { background: #1da851; transform: translateY(-1px); opacity: 1; }
-.rs-btn--dark  { background: #25D366; color: #fff; }
-.rs-btn--dark:hover { background: #1da851; transform: translateY(-1px); opacity: 1; }
-.rs-btn--ghost { background: transparent; color: var(--muted); padding-left: 0; }
-.rs-btn--ghost:hover { color: var(--black); opacity: 1; }
+  /* Audio */
+  .rs-audio { padding: 4rem 0; }
+  .rs-audio__inner {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  .rs-audio__ctrl {
+    width: 100%;
+    accent-color: #e85d00;
+  }
 
-/* ══ HERO ══════════════════════════════════════════════════════════════════ */
-.rs-hero {
-  background: var(--black);
-  padding: 6rem var(--pad) 5rem;
-}
-.rs-hero__inner {
-  max-width: 600px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 2rem;
-}
-.rs-hero__profile {
-  display: flex;
-  align-items: center;
-  gap: 1.25rem;
-}
-.rs-hero__avatar {
-  width: 80px; height: 80px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 1px solid rgba(255,255,255,0.12);
-  flex-shrink: 0;
-}
-.rs-hero__name {
-  font: 700 0.72rem/1 var(--sans);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--white);
-  margin-bottom: 0.35rem;
-  text-align: left;
-}
-.rs-hero__role {
-  font: 300 0.85rem/1.3 var(--sans);
-  color: rgba(255,255,255,0.38);
-  text-align: left;
-}
-.rs-hero__claim {
-  font: 300 clamp(1.4rem, 3vw, 2rem)/1.5 var(--serif);
-  font-style: italic;
-  color: rgba(255,255,255,0.85);
-  max-width: 480px;
-}
-.rs-hero__audio-wrap { width: 100%; max-width: 420px; }
-.rs-hero__audio-label {
-  display: block;
-  font: 400 0.62rem/1 var(--sans);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.25);
-  margin-bottom: 0.6rem;
-}
-.rs-hero__audio {
-  width: 100%;
-  height: 36px;
-  accent-color: var(--gold);
-}
-.rs-hero__social {
-  display: flex;
-  gap: 1.25rem;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-.rs-social-link {
-  width: 32px; height: 32px;
-  display: flex; align-items: center; justify-content: center;
-  color: rgba(255,255,255,0.7);
-  transition: color 0.15s;
-}
-.rs-social-link:hover { color: var(--gold); opacity: 1; }
-.rs-social-link svg { width: 16px; height: 16px; fill: currentColor; }
+  .home-cta { background: #e85d00; padding: 4.5rem 0; }
+  .home-cta__inner { display: flex; justify-content: space-between; align-items: center; gap: 2rem; }
 
-/* ══ PERCORSO ═══════════════════════════════════════════════════════════════ */
-.rs-percorso {
-  background: var(--white);
-  padding: 6rem var(--pad);
-}
-.rs-percorso__inner {
-  max-width: 760px;
-  margin: 0 auto;
-}
-.rs-section-head { margin-bottom: 3.5rem; }
-.rs-section-title {
-  font: 300 clamp(2rem, 3.5vw, 3rem)/1.15 var(--serif);
-  color: var(--black);
-  margin-bottom: 0.75rem;
-  letter-spacing: -0.01em;
-}
-.rs-section-title em { font-style: italic; color: var(--gold); }
-.rs-section-sub {
-  font: 300 0.95rem/1.7 var(--sans);
-  color: var(--muted);
-}
-.rs-steps { display: flex; flex-direction: column; }
-.rs-step {
-  display: grid;
-  grid-template-columns: 3rem 1fr;
-  gap: 0 1.75rem;
-  padding: 2rem 1.5rem;
-  border-radius: 8px;
-  margin-bottom: 1rem;
-  align-items: start;
-}
-.rs-step__n {
-  font: 300 2.2rem/0.9 var(--serif);
-  font-style: italic;
-  opacity: 0.6;
-  letter-spacing: -0.04em;
-  padding-top: 0.2rem;
-}
-.rs-step__tag {
-  display: block;
-  font: 700 0.58rem/1 var(--sans);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  margin-bottom: 0.6rem;
-}
-.rs-step__title {
-  font: 700 1.15rem/1.25 var(--sans);
-  color: var(--black);
-  margin-bottom: 0.6rem;
-}
-.rs-step__desc {
-  font: 300 0.9rem/1.7 var(--sans);
-  color: rgba(10,10,10,0.6);
-  margin-bottom: 1.25rem;
-  max-width: 520px;
-}
-.rs-step__actions {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-  align-items: center;
-}
-
-/* ══ VIDEO ══════════════════════════════════════════════════════════════════ */
-.rs-video {
-  background: var(--ink);
-  padding: 5rem var(--pad);
-}
-.rs-video__inner {
-  max-width: 760px;
-  margin: 0 auto;
-}
-.rs-video__wrap {
-  position: relative;
-  padding-bottom: 56.25%;
-  height: 0;
-  overflow: hidden;
-}
-.rs-video__wrap iframe {
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  border: 0;
-}
-
-/* ══ DELEGATE ════════════════════════════════════════════════════════════════ */
-.rs-delegate {
-  background: var(--black);
-  padding: 6rem var(--pad);
-}
-.rs-delegate__inner {
-  max-width: var(--max);
-  margin: 0 auto;
-  max-width: 900px;
-}
-.rs-delegate__title {
-  font: 300 clamp(2rem, 3.5vw, 3rem)/1.15 var(--serif);
-  color: var(--white);
-  margin-bottom: 1rem;
-  letter-spacing: -0.01em;
-}
-.rs-delegate__title em { font-style: italic; color: var(--gold); }
-.rs-delegate__sub {
-  font: 300 0.92rem/1.7 var(--sans);
-  color: rgba(255,255,255,0.4);
-  margin-bottom: 3rem;
-  max-width: 560px;
-}
-.rs-delegate__grid {
-  display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr;
-  gap: 0;
-  margin-bottom: 3rem;
-  border-top: 1px solid rgba(255,255,255,0.06);
-}
-.rs-delegate__item {
-  padding: 2rem 2.5rem 2rem 0;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-}
-.rs-delegate__item:last-child { padding-right: 0; }
-.rs-delegate__item--highlight {
-  border-left: 3px solid var(--gold);
-  padding-left: 1.5rem;
-  background: rgba(197,138,55,0.06);
-  border-radius: 0 4px 4px 0;
-}
-.rs-delegate__cta {
-  display: inline-block;
-  margin-top: 1rem;
-  font: 600 0.78rem/1 var(--sans);
-  letter-spacing: 0.06em;
-  color: var(--gold);
-  text-decoration: none;
-  border-bottom: 1px solid rgba(197,138,55,0.4);
-  padding-bottom: 2px;
-  transition: border-color 0.2s, color 0.2s;
-}
-.rs-delegate__cta:hover { color: #fff; border-color: #fff; }
-.rs-delegate__item-title {
-  font: 600 0.95rem/1.3 var(--sans);
-  color: var(--white);
-  margin-bottom: 0.75rem;
-}
-.rs-delegate__item-desc {
-  font: 300 0.84rem/1.65 var(--sans);
-  color: rgba(255,255,255,0.38);
-}
-
-/* ══ QUICK LINKS ════════════════════════════════════════════════════════════ */
-.rs-quicklinks {
-  background: var(--paper);
-  padding: 4rem var(--pad);
-}
-.rs-quicklinks__inner {
-  max-width: var(--max);
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0;
-  border-top: 1px solid rgba(10,10,10,0.08);
-  border-bottom: 1px solid rgba(10,10,10,0.08);
-}
-.rs-quicklink {
-  padding: 2rem var(--pad) 2rem 0;
-  border-right: 1px solid rgba(10,10,10,0.08);
-  text-decoration: none;
-  transition: background 0.15s;
-  display: block;
-}
-.rs-quicklink:last-child { border-right: none; padding-right: 0; }
-.rs-quicklink:not(:first-child) { padding-left: var(--pad); }
-.rs-quicklink:hover { opacity: 1; }
-.rs-quicklink:hover .rs-quicklink__name { color: var(--gold); }
-.rs-quicklink__label {
-  display: block;
-  font: 700 0.58rem/1 var(--sans);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 0.5rem;
-}
-.rs-quicklink__name {
-  display: block;
-  font: 400 0.95rem/1.3 var(--sans);
-  color: var(--black);
-  transition: color 0.15s;
-}
-
-/* ── Responsive ─────────────────────────────────────────────────────────── */
-@media (max-width: 768px) {
-  .rs-delegate__grid { grid-template-columns: 1fr; }
-  .rs-delegate__item,
-  .rs-delegate__item--highlight { padding: 1.75rem 0; border-left: none; padding-left: 0; }
-  .rs-delegate__item--highlight { border-top: 2px solid var(--gold); }
-  .rs-quicklinks__inner { grid-template-columns: 1fr; }
-  .rs-quicklink,
-  .rs-quicklink:not(:first-child) { padding: 1.5rem 0; border-right: none; }
-}
-@media (max-width: 480px) {
-  .rs-step { grid-template-columns: 1fr; gap: 0.75rem; }
-  .rs-step__n { display: none; }
-}
+  @media (max-width: 768px) {
+    .rs-step { grid-template-columns: 60px 1fr; gap: 1.5rem; }
+    .rs-extra__grid { grid-template-columns: 1fr; }
+    .rs-audio__inner { grid-template-columns: 1fr; gap: 2rem; }
+    .home-cta__inner { flex-direction: column; align-items: flex-start; }
+  }
 </style>
