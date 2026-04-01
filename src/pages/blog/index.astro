@@ -1,15 +1,11 @@
 ---
 /**
  * blog/index.astro
- * Pagina blog — griglia 3 colonne con tutti gli articoli.
- * Replica esatta della pagina /blog-consulenza-marketing/
- * con header scuro, hero banner, search (statica) e griglia card.
+ * Pagina blog — lista articoli con ricerca client-side
  */
 import BaseLayout from '@layouts/BaseLayout.astro';
-import PostCard from '@components/PostCard.astro';
 import jsYaml from 'js-yaml';
 
-// Legge tutti i .mdoc a build time tramite import.meta.glob (no fetch API)
 const rawFiles = import.meta.glob('/src/content/articoli/*/index.mdoc', {
   eager: true,
   as: 'raw',
@@ -24,211 +20,181 @@ const posts = Object.entries(rawFiles).map(([filePath, content]) => {
     titolo:     (fm.titolo     as string) ?? slug,
     descrizione:(fm.descrizione as string) ?? '',
     data:       fm.data ? String(fm.data) : '',
-    immagine:   fm.immagine ? (String(fm.immagine).startsWith('/') ? fm.immagine : `/images/articoli/${fm.immagine}`) : null,
-    bozza:      fm.bozza === true,
+    categoria:  (fm.categoria  as string) ?? '',
+    immagine:   fm.immagine ? `/images/articoli/${fm.immagine}` : null,
   };
 }).filter(p => !p.bozza).sort((a, b) => new Date(b.data).getTime() - new Date(a.data).getTime());
 ---
 
 <BaseLayout
-  title="Blog Marketing Olistico - Marco Munich"
-  description="Articoli su personal branding autentico, marketing etico e mindset per coach, counselor e operatori olistici."
+  title="Articoli — Marco Munich"
+  description="Oltre 200 articoli su personal branding olistico, marketing autentico e presenza online per coach, counselor e operatori olistici."
   currentPath="/blog/"
 >
 
-  <!-- ── Hero banner blog ─────────────────────────────────────────────────── -->
-  <section class="blog-hero">
-    <div class="blog-hero__overlay"></div>
-    <div class="blog-hero__content">
-      <h1 class="blog-hero__title">Blog Marketing Olistico</h1>
-      <p class="blog-hero__subtitle">Benvenuto</p>
+<div class="mm-page">
+
+  <!-- HERO -->
+  <section class="bl-hero">
+    <div class="bl-hero__inner mm-container">
+      <p class="mm-tag" style="margin-bottom:1.2rem">Articoli</p>
+      <h1 class="mm-h1" style="margin-bottom:2rem">Blog.</h1>
+      <p style="font-size:1rem;line-height:1.75;color:rgba(255,255,255,0.55);max-width:480px;font-weight:300">
+        {posts.length} articoli su personal branding olistico, marketing autentico e presenza online per chi lavora nel settore del benessere.
+      </p>
     </div>
   </section>
 
-  <!-- ── Corpo pagina ─────────────────────────────────────────────────────── -->
-  <div class="blog-body site-wrapper">
+  <!-- RICERCA + LISTA -->
+  <section class="mm-section-light bl-body">
+    <div class="mm-container">
 
-    <!-- Search (statica — filtra via JS leggero) -->
-    <div class="blog-search">
-      <input
-        type="search"
-        id="blog-search-input"
-        placeholder="Cerca"
-        aria-label="Cerca articoli"
-        class="blog-search__input"
-      />
-      <button class="blog-search__btn" aria-label="Cerca">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
-        </svg>
-        Cerca
-      </button>
+      <!-- Search -->
+      <div class="bl-search">
+        <input
+          type="search"
+          id="bl-search-input"
+          placeholder="Cerca tra gli articoli…"
+          aria-label="Cerca articoli"
+          class="bl-search__input"
+        />
+      </div>
+
+      <!-- Lista articoli -->
+      <div id="bl-grid">
+        {posts.map((post, i) => (
+          <a
+            href={`/${post.slug}/`}
+            class="bl-item"
+            data-search={`${post.titolo} ${post.categoria} ${post.descrizione}`.toLowerCase()}
+          >
+            <span class="bl-item__num">{String(i + 1).padStart(2, '0')}</span>
+            <span class="bl-item__cat">{post.categoria || 'Articolo'}</span>
+            <span class="bl-item__title">{post.titolo}</span>
+            <span class="bl-item__arrow">→</span>
+          </a>
+        ))}
+      </div>
+
+      <p class="bl-noresults" id="bl-noresults" aria-live="polite" hidden>
+        Nessun articolo trovato.
+      </p>
+
     </div>
+  </section>
 
-    <!-- Griglia articoli -->
-    <div class="blog-grid" id="blog-grid">
-      {posts.map((post) => (
-        <PostCard post={post} />
-      ))}
-    </div>
-
-    <!-- Nessun risultato (nascosto di default) -->
-    <p class="blog-noresults" id="blog-noresults" aria-live="polite" hidden>
-      Nessun articolo trovato per questa ricerca.
-    </p>
-
-  </div>
+</div>
 
 </BaseLayout>
 
-<!-- Search client-side minimale (filtra per titolo, categoria e tag via data-search) -->
 <script>
-  function setupBlogSearch() {
-    const input  = document.getElementById('blog-search-input') as HTMLInputElement;
-    const btn    = document.querySelector('.blog-search__btn');
-    const grid   = document.getElementById('blog-grid');
-    const noRes  = document.getElementById('blog-noresults');
-    const cards  = grid?.querySelectorAll('.post-card');
+  function setupSearch() {
+    const input = document.getElementById('bl-search-input') as HTMLInputElement;
+    const grid  = document.getElementById('bl-grid');
+    const noRes = document.getElementById('bl-noresults');
+    const items = grid?.querySelectorAll('.bl-item');
 
-    function performSearch() {
-      const query = input.value.trim().toLowerCase();
+    input?.addEventListener('input', () => {
+      const q = input.value.trim().toLowerCase();
       let visible = 0;
-
-      cards?.forEach((card) => {
-        const searchData = card.getAttribute('data-search') ?? '';
-        const show = !query || searchData.includes(query);
-        (card as HTMLElement).style.display = show ? '' : 'none';
-        if (show) visible++;
+      items?.forEach((item) => {
+        const match = !q || (item.getAttribute('data-search') ?? '').includes(q);
+        (item as HTMLElement).style.display = match ? '' : 'none';
+        if (match) visible++;
       });
-
       if (noRes) noRes.hidden = visible > 0;
-    }
-
-    input?.addEventListener('input', performSearch);
-    
-    // Supporto click bottone e tasto Enter
-    btn?.addEventListener('click', performSearch);
-    input?.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        performSearch();
-      }
     });
-
-    console.log('Blog search setup complete');
   }
-
-  // Esegui al caricamento e dopo eventuali navigazioni Astro
-  setupBlogSearch();
-  document.addEventListener('astro:page-load', setupBlogSearch);
+  setupSearch();
+  document.addEventListener('astro:page-load', setupSearch);
 </script>
 
 <style>
-  /* ── Hero banner ─────────────────────────────────────────────────────────── */
-  .blog-hero {
-    position: relative;
-    height: 280px;
-    background-image: url('https://marcomunich.com/wp-content/uploads/thrive-theme/images/Blog-List-simple-_02-1-8-1.jpg');
-    background-size: cover;
-    background-position: center;
+  .bl-hero {
+    background: #0d0d0d;
+    padding: 9rem 0 5rem;
+    min-height: 50vh;
     display: flex;
     align-items: center;
-    justify-content: center;
-    /* Fallback colore se immagine manca */
-    background-color: #2a2a2a;
   }
+  .bl-body { padding: 4rem 0 6rem; }
 
-  .blog-hero__overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(0,0,0,0.45);
-  }
-
-  .blog-hero__content {
-    position: relative;
-    z-index: 1;
-    text-align: center;
-    color: white;
-  }
-
-  .blog-hero__title {
-    font-size: clamp(28px, 5vw, 48px);
-    font-weight: 700;
-    color: white;
-    margin-bottom: 8px;
-  }
-
-  .blog-hero__subtitle {
-    font-size: 14px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.7);
-  }
-
-  /* ── Body ────────────────────────────────────────────────────────────────── */
-  .blog-body {
-    padding-top: 48px;
-    padding-bottom: 80px;
-  }
-
-  /* ── Search ──────────────────────────────────────────────────────────────── */
-  .blog-search {
-    display: flex;
-    gap: 0;
-    margin-bottom: 40px;
+  /* Search */
+  .bl-search { margin-bottom: 2.5rem; }
+  .bl-search__input {
     width: 100%;
-  }
-
-  .blog-search__input {
-    flex: 1;
-    padding: 12px 16px;
-    border: 1px solid #E5E5E5;
-    border-right: none;
-    font-size: 14px;
-    font-family: inherit;
+    max-width: 480px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.88rem;
+    padding: 0.75rem 1.2rem;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 50px;
+    background: #fff;
+    color: #0d0d0d;
     outline: none;
+    transition: border-color 0.15s;
   }
-  .blog-search__input:focus {
-    border-color: #1E2B2F;
-  }
+  .bl-search__input::placeholder { color: #aaa; }
+  .bl-search__input:focus { border-color: #0d0d0d; }
 
-  .blog-search__btn {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 12px 20px;
-    background: #1E2B2F;
-    color: white;
-    border: none;
-    font-size: 13px;
-    font-family: inherit;
-    font-weight: 600;
-    cursor: pointer;
-    letter-spacing: 0.05em;
-    transition: background 0.15s;
-  }
-  .blog-search__btn:hover { background: #333; }
-
-  /* ── Griglia 3 colonne ───────────────────────────────────────────────────── */
-  .blog-grid {
+  /* Lista */
+  .bl-item {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 40px 32px;
+    grid-template-columns: 44px 140px 1fr 24px;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid #ebebeb;
+    text-decoration: none;
+    transition: background 0.1s;
+  }
+  .bl-item:first-child { border-top: 1px solid #ebebeb; }
+  .bl-item:hover { background: #fafafa; opacity: 1; }
+  .bl-item:hover .bl-item__title { color: #e85d00; }
+  .bl-item:hover .bl-item__arrow { color: #e85d00; }
+
+  .bl-item__num {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 0.7rem;
+    color: #ccc;
+    letter-spacing: 0.05em;
+  }
+  .bl-item__cat {
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #aaa;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .bl-item__title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.88rem;
+    color: #0d0d0d;
+    line-height: 1.4;
+    transition: color 0.15s;
+  }
+  .bl-item__arrow {
+    font-size: 0.9rem;
+    color: #ccc;
+    text-align: right;
+    transition: color 0.15s;
+  }
+  .bl-noresults {
+    font-size: 0.85rem;
+    color: #999;
+    padding: 2rem 0;
   }
 
-  .blog-noresults {
-    text-align: center;
-    color: rgba(10,10,10,0.5);
-    padding: 40px 0;
-    font-size: 15px;
-  }
-
-  /* ── Responsive ──────────────────────────────────────────────────────────── */
-  @media (max-width: 900px) {
-    .blog-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  }
-  @media (max-width: 560px) {
-    .blog-grid { grid-template-columns: minmax(0, 1fr); }
-    .blog-hero  { height: 200px; }
+  @media (max-width: 768px) {
+    .bl-item {
+      grid-template-columns: 36px 1fr 20px;
+      gap: 0.8rem;
+    }
+    .bl-item__cat { display: none; }
   }
 </style>

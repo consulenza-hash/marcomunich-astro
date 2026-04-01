@@ -1,251 +1,227 @@
 ---
 /**
- * Header.astro
- * Header fisso nero con logo + navigazione principale.
- * Replica esatta dell'header di marcomunich.com.
- *
- * Props:
- *   currentPath: string — percorso corrente per evidenziare la voce attiva
+ * Header.astro — Floating pill nav (Vetter style)
+ * Position: fixed, overlay sull'hero. Diventa opaco allo scroll.
  */
 const { currentPath = '/', ctaLink = '', ctaLabel = '' } = Astro.props;
 
 const navItems = [
-  { label: 'Homepage',    href: '/' },
-  { label: 'Servizi',     href: '/servizi/' },
-  { label: 'Blog',        href: '/blog/' },
-  { label: 'Risorse',     href: '/risorse/' },
+  { label: 'Chi sono',  href: '/chi-sono/' },
+  { label: 'Articoli',  href: '/blog/' },
+  { label: 'Servizi',   href: '/servizi/' },
+  { label: 'Risorse',   href: '/risorse/' },
 ];
 
-// Determina se una voce è attiva
-const isActive = (href) => {
+const isActive = (href: string) => {
   if (href === '/') return currentPath === '/';
   return currentPath.startsWith(href);
 };
 ---
 
-<header class="header">
-  <div class="header__inner site-wrapper">
-
-    <!-- Logo -->
-    <a href="/" class="header__logo" aria-label="Marco Munich - Homepage">
-      <span class="header__logo-name">Marco Munich</span>
-      <span class="header__logo-star" aria-hidden="true">✦</span>
-      <span class="header__logo-tagline">Personal Branding Olistico</span>
+<header class="mm-header" id="mm-header">
+  <nav class="mm-nav" aria-label="Navigazione principale">
+    <a href="/" class="mm-nav__logo" aria-label="Marco Munich - Homepage">
+      Marco<span class="mm-dot">.</span>
     </a>
-
-    <!-- Navigazione desktop -->
-    <nav class="header__nav" aria-label="Navigazione principale">
-      <ul class="header__nav-list">
-        {navItems.map((item) => (
-          <li>
-            <a
-              href={item.href}
-              class={`header__nav-link ${isActive(item.href) ? 'header__nav-link--active' : ''}`}
-              aria-current={isActive(item.href) ? 'page' : undefined}
-            >
-              {item.label}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </nav>
-
-    <!-- CTA opzionale (es. "Accedi al pack") -->
-    {ctaLink && (
-      <a href={ctaLink} class="header__cta">{ctaLabel}</a>
-    )}
-
-    <!-- Hamburger mobile -->
-    <button class="header__burger" aria-label="Apri menu" aria-expanded="false" aria-controls="mobile-menu">
-      <span></span>
-      <span></span>
-      <span></span>
+    <ul class="mm-nav__links" role="list">
+      {navItems.map(item => (
+        <li>
+          <a
+            href={item.href}
+            class={`mm-nav__link${isActive(item.href) ? ' mm-nav__link--active' : ''}`}
+            aria-current={isActive(item.href) ? 'page' : undefined}
+          >{item.label}</a>
+        </li>
+      ))}
+    </ul>
+    <a href="/contatti/" class="mm-nav__cta">Parliamo</a>
+    <div class="mm-nav__clock" id="mm-clock" aria-hidden="true">--:--</div>
+    <button class="mm-nav__burger" id="mm-burger" aria-label="Apri menu" aria-expanded="false" aria-controls="mm-mobile-menu">
+      <span></span><span></span>
     </button>
-  </div>
-
-  <!-- Menu mobile (nascosto di default) -->
-  <div class="header__mobile-menu" id="mobile-menu" aria-hidden="true">
-    <nav aria-label="Menu mobile">
-      <ul>
-        {navItems.map((item) => (
-          <li>
-            <a href={item.href} class="header__mobile-link">
-              {item.label}
-            </a>
-          </li>
-        ))}
-        {ctaLink && (
-          <li>
-            <a href={ctaLink} class="header__mobile-link header__mobile-cta">{ctaLabel}</a>
-          </li>
-        )}
-      </ul>
-    </nav>
-  </div>
+  </nav>
 </header>
 
+<div class="mm-mobile-menu" id="mm-mobile-menu" aria-hidden="true">
+  <ul role="list">
+    {navItems.map(item => (
+      <li><a href={item.href} class="mm-mobile-link">{item.label}</a></li>
+    ))}
+    <li><a href="/contatti/" class="mm-mobile-link mm-mobile-cta">Parliamo →</a></li>
+  </ul>
+</div>
+
 <style>
-  /* ── Header container ──────────────────────────────────────────────────── */
-  .header {
+  .mm-header {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
+    top: 0; left: 0; right: 0;
     z-index: 100;
-    background-color: #141C1F;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
+    padding: 1rem 1.5rem;
+    pointer-events: none;
   }
-
-  .header__inner {
+  .mm-nav {
+    max-width: 940px;
+    margin: 0 auto;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    height: 64px;
-    max-width: 1200px;
+    gap: 0.2rem;
+    background: rgba(13,13,13,0.80);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 60px;
+    padding: 0.5rem 0.5rem 0.5rem 1.6rem;
+    pointer-events: all;
+    transition: background 0.3s;
   }
-
-  /* ── Logo ──────────────────────────────────────────────────────────────── */
-  .header__logo {
-    display: flex;
-    align-items: center;
-    gap: 6px;
+  .mm-header.is-scrolled .mm-nav {
+    background: rgba(13,13,13,0.96);
+    border-color: rgba(255,255,255,0.05);
+  }
+  .mm-nav__logo {
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: 0.92rem;
+    letter-spacing: -0.01em;
+    color: #fff;
     text-decoration: none;
-    color: white;
+    margin-right: 1.2rem;
     flex-shrink: 0;
   }
-
-  .header__logo-name {
-    font-size: 15px;
-    font-weight: 700;
-    letter-spacing: 0.02em;
-    color: white;
-  }
-
-  .header__logo-star {
-    font-size: 12px;
-    color: rgba(255,255,255,0.6);
-    margin: 0 2px;
-  }
-
-  .header__logo-tagline {
-    font-size: 11px;
-    font-weight: 400;
-    color: rgba(255,255,255,0.6);
-    letter-spacing: 0.01em;
-  }
-
-  /* ── Nav desktop ───────────────────────────────────────────────────────── */
-  .header__nav-list {
+  .mm-dot { color: #e85d00; }
+  .mm-nav__links {
     display: flex;
-    align-items: center;
-    gap: 32px;
     list-style: none;
-    margin: 0;
-    padding: 0;
+    padding: 0; margin: 0;
+    gap: 0; flex: 1;
   }
-
-  .header__nav-link {
-    font-size: 13px;
+  .mm-nav__link {
+    display: block;
+    color: rgba(255,255,255,0.55);
+    text-decoration: none;
+    font-size: 0.78rem;
     font-weight: 500;
-    color: rgba(255,255,255,0.8);
-    text-decoration: none;
-    letter-spacing: 0.03em;
-    transition: color 0.15s;
-  }
-
-  .header__nav-link:hover,
-  .header__nav-link--active {
-    color: #ffffff;
-  }
-
-  .header__nav-link--active {
-    border-bottom: 2px solid white;
-    padding-bottom: 2px;
-  }
-
-  /* ── CTA opzionale ─────────────────────────────────────────────────────── */
-  .header__cta {
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: #C58A37;
-    text-decoration: none;
-    border: 1px solid #C58A37;
-    border-radius: 6px;
-    padding: 0.35rem 0.85rem;
-    transition: background 0.15s, color 0.15s;
+    padding: 0.42rem 0.85rem;
+    border-radius: 40px;
+    transition: color 0.15s, background 0.15s;
     white-space: nowrap;
   }
-  .header__cta:hover {
-    background: #C58A37;
-    color: #0A0A0A;
+  .mm-nav__link:hover { color: #fff; background: rgba(255,255,255,0.08); opacity: 1; }
+  .mm-nav__link--active { color: #fff; background: rgba(255,255,255,0.1); opacity: 1; }
+  .mm-nav__cta {
+    background: #e85d00;
+    color: #fff;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 0.52rem 1.25rem;
+    border-radius: 40px;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background 0.15s;
+    flex-shrink: 0;
   }
-  .header__mobile-cta {
-    color: #C58A37 !important;
+  .mm-nav__cta:hover { background: #d05200; opacity: 1; }
+  .mm-nav__clock {
+    margin-left: 0.35rem;
+    background: rgba(255,255,255,0.09);
+    border-radius: 40px;
+    padding: 0.42rem 0.9rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    color: #fff;
+    min-width: 68px;
+    text-align: center;
+    flex-shrink: 0;
   }
-
-  /* ── Hamburger mobile ──────────────────────────────────────────────────── */
-  .header__burger {
+  .mm-nav__burger {
     display: none;
     flex-direction: column;
     gap: 5px;
     background: none;
     border: none;
     cursor: pointer;
-    padding: 4px;
+    padding: 0.5rem;
+    margin-left: 0.2rem;
   }
-
-  .header__burger span {
+  .mm-nav__burger span {
     display: block;
-    width: 24px;
+    width: 20px;
     height: 2px;
-    background: white;
-    transition: transform 0.2s;
+    background: #fff;
+    border-radius: 2px;
+    transition: transform 0.2s, opacity 0.2s;
   }
+  .mm-nav__burger[aria-expanded="true"] span:first-child { transform: translateY(7px) rotate(45deg); }
+  .mm-nav__burger[aria-expanded="true"] span:last-child  { transform: translateY(-7px) rotate(-45deg); }
 
-  /* ── Menu mobile ───────────────────────────────────────────────────────── */
-  .header__mobile-menu {
-    display: none;
-    background: #141C1F;
-    border-top: 1px solid rgba(255,255,255,0.1);
-    padding: 16px 24px 24px;
-  }
-
-  .header__mobile-menu ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+  /* Mobile menu */
+  .mm-mobile-menu {
+    position: fixed;
+    inset: 0;
+    z-index: 99;
+    background: #0d0d0d;
     display: flex;
-    flex-direction: column;
-    gap: 4px;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
   }
-
-  .header__mobile-link {
+  .mm-mobile-menu[aria-hidden="false"] {
+    opacity: 1;
+    pointer-events: all;
+  }
+  .mm-mobile-menu ul { list-style: none; padding: 0; margin: 0; text-align: center; display: flex; flex-direction: column; gap: 0.4rem; }
+  .mm-mobile-link {
     display: block;
-    padding: 12px 0;
-    font-size: 15px;
-    font-weight: 500;
-    color: rgba(255,255,255,0.85);
+    color: rgba(255,255,255,0.65);
     text-decoration: none;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
+    font-size: clamp(1.8rem, 6vw, 2.5rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    padding: 0.35rem 0;
+    transition: color 0.15s;
   }
+  .mm-mobile-link:hover { color: #fff; opacity: 1; }
+  .mm-mobile-cta { color: #e85d00; margin-top: 1.2rem; }
 
-  /* ── Responsive ────────────────────────────────────────────────────────── */
-  @media (max-width: 767px) {
-    .header__nav { display: none; }
-    .header__burger { display: flex; }
-    .header__mobile-menu.is-open { display: block; }
-    .header__logo-tagline { display: none; }
+  @media (max-width: 768px) {
+    .mm-nav__links, .mm-nav__clock { display: none; }
+    .mm-nav__burger { display: flex; }
+    .mm-nav { padding: 0.5rem 0.5rem 0.5rem 1.4rem; }
   }
 </style>
 
-<!-- Script minimo per toggle menu mobile (nessuna dipendenza) -->
 <script>
-  const burger = document.querySelector('.header__burger');
-  const mobileMenu = document.querySelector('.header__mobile-menu');
+  // Orologio
+  const clockEl = document.getElementById('mm-clock');
+  function tick() {
+    if (!clockEl) return;
+    const n = new Date();
+    clockEl.textContent = String(n.getHours()).padStart(2,'0') + ':' + String(n.getMinutes()).padStart(2,'0');
+  }
+  tick();
+  setInterval(tick, 1000);
 
+  // Scroll
+  const hdr = document.getElementById('mm-header');
+  window.addEventListener('scroll', () => hdr?.classList.toggle('is-scrolled', window.scrollY > 40), { passive: true });
+
+  // Mobile menu
+  const burger = document.getElementById('mm-burger') as HTMLButtonElement | null;
+  const mobileMenu = document.getElementById('mm-mobile-menu');
   burger?.addEventListener('click', () => {
-    const isOpen = mobileMenu?.classList.toggle('is-open');
-    burger.setAttribute('aria-expanded', String(isOpen));
-    mobileMenu?.setAttribute('aria-hidden', String(!isOpen));
+    const open = burger.getAttribute('aria-expanded') === 'true';
+    burger.setAttribute('aria-expanded', String(!open));
+    mobileMenu?.setAttribute('aria-hidden', String(open));
+    document.body.style.overflow = open ? '' : 'hidden';
+  });
+  mobileMenu?.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      burger?.setAttribute('aria-expanded', 'false');
+      mobileMenu.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    });
   });
 </script>
