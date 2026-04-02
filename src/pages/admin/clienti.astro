@@ -1,9 +1,11 @@
 ---
 export const prerender = true;
+import AdminGuard from '@components/AdminGuard.astro';
 ---
 <html lang="it">
 <head>
   <meta charset="UTF-8" />
+  <AdminGuard />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Gestione Clienti — Admin</title>
   <meta name="robots" content="noindex,nofollow" />

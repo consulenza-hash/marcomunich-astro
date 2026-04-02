@@ -1,41 +1,53 @@
 <script is:inline>
 (function () {
-  var KEY = 'mm_admin_ok';
-  var PWD = 'QXSuH7$UfwYG';
+  var KEY      = 'mm_admin_token';
+  var EXPECTED = 'a817f18b1053ab56d31e4972fb47e725a3f856aacc601db523951c2e7cdba42c';
 
-  try {
-    if (localStorage.getItem(KEY) === '1') return;
-  } catch (e) {}
+  // Già autenticato — continua
+  try { if (localStorage.getItem(KEY) === EXPECTED) return; } catch (e) {}
 
-  // Nascondi il contenuto della pagina
+  // Blocca rendering finché l'overlay non è montato
   document.documentElement.style.visibility = 'hidden';
 
-  function showOverlay() {
+  function hexOf(buf) {
+    return Array.from(new Uint8Array(buf))
+      .map(function (b) { return b.toString(16).padStart(2, '0'); })
+      .join('');
+  }
+
+  function buildOverlay() {
     var overlay = document.createElement('div');
     overlay.id = 'mm-admin-overlay';
-    overlay.style.cssText = 'position:fixed;inset:0;background:#0f172a;display:flex;align-items:center;justify-content:center;z-index:99999;font-family:sans-serif;';
-    overlay.innerHTML = '<div style="background:#1e293b;padding:2rem;border-radius:12px;width:320px;text-align:center;">'
-      + '<div style="color:#94a3b8;font-size:.85rem;margin-bottom:.5rem;">marcomunich.com</div>'
-      + '<h2 style="color:#f1f5f9;margin:0 0 1.5rem;font-size:1.2rem;">Area admin</h2>'
+    overlay.style.cssText = 'position:fixed;inset:0;background:#0a0a0a;display:flex;align-items:center;justify-content:center;z-index:99999;font-family:system-ui,sans-serif;';
+    overlay.innerHTML =
+      '<div style="background:#141414;border:1px solid rgba(255,255,255,.08);padding:2.5rem 2rem;border-radius:14px;width:340px;max-width:90vw;">'
+      + '<div style="color:#555;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.6rem;">marcomunich.com</div>'
+      + '<h2 style="color:#fff;margin:0 0 .4rem;font-size:1.15rem;font-weight:700;">Area admin</h2>'
+      + '<p style="color:#666;font-size:.82rem;margin-bottom:1.8rem;">Inserisci la password per accedere.</p>'
       + '<input id="mm-pwd" type="password" placeholder="Password" autocomplete="current-password" '
-      + 'style="width:100%;box-sizing:border-box;padding:.75rem 1rem;border-radius:8px;border:1px solid #334155;background:#0f172a;color:#f1f5f9;font-size:1rem;margin-bottom:.75rem;">'
-      + '<div id="mm-err" style="color:#f87171;font-size:.85rem;margin-bottom:.75rem;display:none;">Password errata</div>'
-      + '<button id="mm-btn" style="width:100%;padding:.75rem;background:#6366f1;color:#fff;border:none;border-radius:8px;font-size:1rem;cursor:pointer;">Accedi</button>'
+      + 'style="width:100%;box-sizing:border-box;padding:.75rem 1rem;border-radius:8px;border:1px solid rgba(255,255,255,.1);background:#0a0a0a;color:#fff;font-size:.95rem;outline:none;margin-bottom:.6rem;">'
+      + '<div id="mm-err" style="color:#f87171;font-size:.8rem;margin-bottom:.75rem;display:none;">Password errata. Riprova.</div>'
+      + '<button id="mm-btn" style="width:100%;padding:.8rem;background:#e85d00;color:#fff;border:none;border-radius:8px;font-size:.95rem;font-weight:700;cursor:pointer;">Accedi →</button>'
       + '</div>';
     document.body.appendChild(overlay);
     document.documentElement.style.visibility = '';
-    setTimeout(function () { document.getElementById('mm-pwd').focus(); }, 50);
+    setTimeout(function () { document.getElementById('mm-pwd').focus(); }, 40);
 
     function attempt() {
       var val = document.getElementById('mm-pwd').value;
-      if (val === PWD) {
-        try { localStorage.setItem(KEY, '1'); } catch (e) {}
-        document.getElementById('mm-admin-overlay').remove();
-      } else {
-        document.getElementById('mm-err').style.display = 'block';
-        document.getElementById('mm-pwd').value = '';
-        document.getElementById('mm-pwd').focus();
-      }
+      if (!val) return;
+      var enc = new TextEncoder().encode(val);
+      crypto.subtle.digest('SHA-256', enc).then(function (buf) {
+        var hash = hexOf(buf);
+        if (hash === EXPECTED) {
+          try { localStorage.setItem(KEY, EXPECTED); } catch (e) {}
+          overlay.remove();
+        } else {
+          document.getElementById('mm-err').style.display = 'block';
+          document.getElementById('mm-pwd').value = '';
+          document.getElementById('mm-pwd').focus();
+        }
+      });
     }
 
     document.getElementById('mm-btn').addEventListener('click', attempt);
@@ -44,10 +56,7 @@
     });
   }
 
-  if (document.body) {
-    showOverlay();
-  } else {
-    document.addEventListener('DOMContentLoaded', showOverlay);
-  }
+  if (document.body) { buildOverlay(); }
+  else { document.addEventListener('DOMContentLoaded', buildOverlay); }
 })();
 </script>

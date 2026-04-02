@@ -1,5 +1,6 @@
 ---
 export const prerender = true;
+import AdminGuard from '@components/AdminGuard.astro';
 
 // ── Carica articoli a build time ─────────────────────────────────────────────
 interface ArticoloMeta {
@@ -52,6 +53,7 @@ const bozze      = articoli.filter(a => a.bozza).length;
 <html lang="it">
 <head>
   <meta charset="UTF-8" />
+  <AdminGuard />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Articoli — MM Admin</title>
   <meta name="robots" content="noindex,nofollow" />

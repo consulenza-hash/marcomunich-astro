@@ -1,5 +1,6 @@
 ---
 export const prerender = true;
+import AdminGuard from '@components/AdminGuard.astro';
 import jsYaml from 'js-yaml';
 
 // ── getStaticPaths: genera una pagina per ogni articolo ──────────────────────
@@ -22,6 +23,7 @@ const { slug } = Astro.params;
 <html lang="it">
 <head>
   <meta charset="UTF-8" />
+  <AdminGuard />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{slug} — MM Admin</title>
   <meta name="robots" content="noindex,nofollow" />

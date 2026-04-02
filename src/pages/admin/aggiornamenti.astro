@@ -1,5 +1,6 @@
 ---
 export const prerender = true;
+import AdminGuard from '@components/AdminGuard.astro';
 import { aggiornamenti } from '../../data/prompt-updates';
 
 const now = new Date();
@@ -23,6 +24,7 @@ const nextRelease = scheduled.sort((a, b) => new Date(a.releaseDate).getTime() -
 <html lang="it">
 <head>
   <meta charset="UTF-8" />
+  <AdminGuard />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Aggiornamenti Prompt Pack — Admin</title>
   <meta name="robots" content="noindex,nofollow" />
