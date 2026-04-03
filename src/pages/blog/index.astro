@@ -1,7 +1,7 @@
 ---
 /**
  * blog/index.astro
- * Pagina blog — griglia 3 colonne con foto in evidenza + ricerca client-side
+ * Pagina blog — lista articoli con ricerca client-side
  */
 import BaseLayout from '@layouts/BaseLayout.astro';
 import jsYaml from 'js-yaml';
@@ -17,29 +17,20 @@ const posts = Object.entries(rawFiles).map(([filePath, content]) => {
   const fm     = (jsYaml.load(fmStr) as Record<string, any>) ?? {};
   return {
     slug,
-    titolo:      (fm.titolo      as string) ?? slug,
-    descrizione: (fm.descrizione as string) ?? '',
-    data:        fm.data ? String(fm.data) : '',
-    categoria:   (fm.categoria   as string) ?? '',
-    immagine:    fm.immagine ? `/images/articoli/${fm.immagine}` : null,
-    bozza:       fm.bozza === true,
+    titolo:     (fm.titolo     as string) ?? slug,
+    descrizione:(fm.descrizione as string) ?? '',
+    data:       fm.data ? String(fm.data) : '',
+    categoria:  (fm.categoria  as string) ?? '',
+    immagine:   fm.immagine ? `/images/articoli/${fm.immagine}` : null,
+    bozza:      fm.bozza === true,
   };
 }).filter(p => !p.bozza).sort((a, b) => new Date(b.data).getTime() - new Date(a.data).getTime());
-
-// Formatta data in italiano
-function formatData(d: string) {
-  if (!d) return '';
-  const dt = new Date(d);
-  if (isNaN(dt.getTime())) return '';
-  return dt.toLocaleDateString('it-IT', { day: 'numeric', month: 'short', year: 'numeric' });
-}
 ---
 
 <BaseLayout
   title="Articoli — Marco Munich"
   description="Oltre 200 articoli su personal branding olistico, marketing autentico e presenza online per coach, counselor e operatori olistici."
   currentPath="/blog/"
-  schemaType="CollectionPage"
 >
 
 <div class="mm-page">
@@ -50,12 +41,12 @@ function formatData(d: string) {
       <p class="mm-tag" style="margin-bottom:1.2rem">Articoli</p>
       <h1 class="mm-h1" style="margin-bottom:2rem">Blog.</h1>
       <p style="font-size:1rem;line-height:1.75;color:rgba(255,255,255,0.55);max-width:480px;font-weight:300">
-        {posts.length} articoli su personal branding olistico, marketing autentico e presenza online per coach, counselor e operatori olistici.
+        {posts.length} articoli su personal branding olistico, marketing autentico e presenza online per chi lavora nel settore del benessere.
       </p>
     </div>
   </section>
 
-  <!-- RICERCA + GRIGLIA -->
+  <!-- RICERCA + LISTA -->
   <section class="mm-section-light bl-body">
     <div class="mm-container">
 
@@ -70,29 +61,18 @@ function formatData(d: string) {
         />
       </div>
 
-      <!-- Griglia 3 colonne -->
-      <div class="bl-grid" id="bl-grid">
-        {posts.map((post) => (
+      <!-- Lista articoli -->
+      <div id="bl-grid">
+        {posts.map((post, i) => (
           <a
             href={`/${post.slug}/`}
-            class="bl-card"
+            class="bl-item"
             data-search={`${post.titolo} ${post.categoria} ${post.descrizione}`.toLowerCase()}
           >
-            <div class="bl-card__img-wrap">
-              {post.immagine
-                ? <img src={post.immagine} alt={post.titolo} loading="lazy" decoding="async" />
-                : <div class="bl-card__placeholder" aria-hidden="true"></div>
-              }
-            </div>
-            <div class="bl-card__body">
-              {post.categoria && <p class="bl-card__cat">{post.categoria}</p>}
-              <h2 class="bl-card__title">{post.titolo}</h2>
-              {post.descrizione && <p class="bl-card__desc">{post.descrizione}</p>}
-              <div class="bl-card__footer">
-                {post.data && <time class="bl-card__date" datetime={post.data}>{formatData(post.data)}</time>}
-                <span class="bl-card__arrow">→</span>
-              </div>
-            </div>
+            <span class="bl-item__num">{String(i + 1).padStart(2, '0')}</span>
+            <span class="bl-item__cat">{post.categoria || 'Articolo'}</span>
+            <span class="bl-item__title">{post.titolo}</span>
+            <span class="bl-item__arrow">→</span>
           </a>
         ))}
       </div>
@@ -113,14 +93,14 @@ function formatData(d: string) {
     const input = document.getElementById('bl-search-input') as HTMLInputElement;
     const grid  = document.getElementById('bl-grid');
     const noRes = document.getElementById('bl-noresults');
-    const cards = grid?.querySelectorAll('.bl-card');
+    const items = grid?.querySelectorAll('.bl-item');
 
     input?.addEventListener('input', () => {
       const q = input.value.trim().toLowerCase();
       let visible = 0;
-      cards?.forEach((card) => {
-        const match = !q || (card.getAttribute('data-search') ?? '').includes(q);
-        (card as HTMLElement).style.display = match ? '' : 'none';
+      items?.forEach((item) => {
+        const match = !q || (item.getAttribute('data-search') ?? '').includes(q);
+        (item as HTMLElement).style.display = match ? '' : 'none';
         if (match) visible++;
       });
       if (noRes) noRes.hidden = visible > 0;
@@ -141,7 +121,7 @@ function formatData(d: string) {
   .bl-body { padding: 4rem 0 6rem; }
 
   /* Search */
-  .bl-search { margin-bottom: 3rem; }
+  .bl-search { margin-bottom: 2.5rem; }
   .bl-search__input {
     width: 100%;
     max-width: 480px;
@@ -158,117 +138,64 @@ function formatData(d: string) {
   .bl-search__input::placeholder { color: #aaa; }
   .bl-search__input:focus { border-color: #0d0d0d; }
 
-  /* Griglia 3 colonne */
-  .bl-grid {
+  /* Lista */
+  .bl-item {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-  }
-
-  /* Card */
-  .bl-card {
-    display: flex;
-    flex-direction: column;
+    grid-template-columns: 44px 140px 1fr 24px;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid #ebebeb;
     text-decoration: none;
-    border: 1px solid #ebebeb;
-    border-radius: 4px;
-    overflow: hidden;
-    transition: border-color 0.15s, transform 0.15s;
-    background: #fff;
+    transition: background 0.1s;
   }
-  .bl-card:hover {
-    border-color: #0d0d0d;
-    transform: translateY(-2px);
-    opacity: 1;
-  }
-  .bl-card:hover .bl-card__title { color: #e85d00; }
-  .bl-card:hover .bl-card__arrow { color: #e85d00; }
+  .bl-item:first-child { border-top: 1px solid #ebebeb; }
+  .bl-item:hover { background: #fafafa; opacity: 1; }
+  .bl-item:hover .bl-item__title { color: #e85d00; }
+  .bl-item:hover .bl-item__arrow { color: #e85d00; }
 
-  /* Immagine */
-  .bl-card__img-wrap {
-    width: 100%;
-    aspect-ratio: 16/9;
-    overflow: hidden;
-    background: #f0f0f0;
-    flex-shrink: 0;
-  }
-  .bl-card__img-wrap img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.3s;
-  }
-  .bl-card:hover .bl-card__img-wrap img { transform: scale(1.03); }
-  .bl-card__placeholder {
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-  }
-
-  /* Corpo card */
-  .bl-card__body {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    padding: 1.25rem 1.2rem 1rem;
-    flex: 1;
-  }
-  .bl-card__cat {
-    font-size: 0.6rem;
-    font-weight: 700;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: #e85d00;
-  }
-  .bl-card__title {
+  .bl-item__num {
     font-family: 'Inter', sans-serif;
     font-weight: 700;
-    font-size: 0.92rem;
-    color: #0d0d0d;
-    line-height: 1.4;
-    letter-spacing: -0.01em;
-    transition: color 0.15s;
-    flex: 1;
-  }
-  .bl-card__desc {
-    font-size: 0.78rem;
-    line-height: 1.6;
-    color: #888;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-  .bl-card__footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 0.5rem;
-    padding-top: 0.75rem;
-    border-top: 1px solid #f0f0f0;
-  }
-  .bl-card__date {
-    font-size: 0.65rem;
-    color: #bbb;
+    font-size: 0.7rem;
+    color: #ccc;
     letter-spacing: 0.05em;
   }
-  .bl-card__arrow {
-    font-size: 0.85rem;
-    color: #ccc;
+  .bl-item__cat {
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #aaa;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .bl-item__title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.88rem;
+    color: #0d0d0d;
+    line-height: 1.4;
     transition: color 0.15s;
   }
-
+  .bl-item__arrow {
+    font-size: 0.9rem;
+    color: #ccc;
+    text-align: right;
+    transition: color 0.15s;
+  }
   .bl-noresults {
     font-size: 0.85rem;
     color: #999;
     padding: 2rem 0;
   }
 
-  @media (max-width: 900px) {
-    .bl-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
-  }
-  @media (max-width: 600px) {
-    .bl-grid { grid-template-columns: 1fr; gap: 1.2rem; }
+  @media (max-width: 768px) {
+    .bl-item {
+      grid-template-columns: 36px 1fr 20px;
+      gap: 0.8rem;
+    }
+    .bl-item__cat { display: none; }
   }
 </style>

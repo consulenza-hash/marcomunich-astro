@@ -25,6 +25,7 @@ export interface Articolo {
   seo_noindex?:  boolean;
   canonical_url?: string;
   schema_faq?:   Array<{ domanda: string; risposta: string }>;
+  bozza?:        boolean;
   htmlContent:   string;   // contenuto già convertito in HTML
 }
 
@@ -102,6 +103,7 @@ function parseMdocRaw(raw: string, slug: string): Articolo {
     seo_noindex:     fm.seo_noindex     ?? false,
     canonical_url:   fm.canonical_url   ?? undefined,
     schema_faq:      fm.schema_faq      ?? undefined,
+    bozza:           fm.bozza === true,
     htmlContent:     markdownToHtml(body),
   };
 }
