@@ -16,9 +16,10 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
     titolo:      (fm.titolo      as string) ?? slug,
     categoria:   (fm.categoria   as string) ?? 'Articolo',
     data:        fm.data ? String(fm.data) : '',
+    bozza:       fm.bozza === true,
   };
 })
-  .filter(p => p.titolo && p.data)
+  .filter(p => p.titolo && p.data && !p.bozza)
   .sort((a, b) => new Date(b.data).getTime() - new Date(a.data).getTime())
   .slice(0, 5);
 ---

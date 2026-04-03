@@ -23,6 +23,10 @@ if (!art) {
   return Astro.redirect('/404', 302);
 }
 
+if (art.bozza) {
+  return Astro.redirect('/404', 302);
+}
+
 const title    = art.titolo;
 const date     = formatDataIt(art.data);
 const imageUrl = art.immagine ? `/images/articoli/${art.immagine}` : null;
