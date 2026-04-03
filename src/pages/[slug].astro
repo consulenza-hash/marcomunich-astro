@@ -1,41 +1,61 @@
 ---
 /**
- * [slug].astro  — SSR (prerender = false)
+ * [slug].astro  — Static (prerender = true)
  *
- * Legge il file .mdoc direttamente da GitHub raw: l'articolo è online
- * entro pochi secondi dal salvataggio su Keystatic, senza alcun rebuild.
+ * Genera le pagine articolo a build time usando import.meta.glob
+ * per leggere i file .mdoc e Markdoc per convertirli in HTML.
  */
-export const prerender = false;
+export const prerender = true;
 
 import BaseLayout from '@layouts/BaseLayout.astro';
-import { fetchArticolo, formatDataIt } from '@lib/articoli';
-import { GITHUB_TOKEN } from 'astro:env/server';
+import jsYaml from 'js-yaml';
+import Markdoc from '@markdoc/markdoc';
 
-// ── Dati del post ─────────────────────────────────────────────────────────────
+// ── getStaticPaths ──────────────────────────────────────────────────────────
+export async function getStaticPaths() {
+  const rawFiles = import.meta.glob('/src/content/articoli/*/index.mdoc', {
+    eager: true,
+    as: 'raw',
+  }) as Record<string, string>;
+
+  return Object.entries(rawFiles)
+    .filter(([_, content]) => {
+      const fmMatch = content.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+      if (!fmMatch) return false;
+      const fmStr = fmMatch[1];
+      return !/^bozza:\s*true/m.test(fmStr);
+    })
+    .map(([filePath, content]) => {
+      const slug = filePath.match(/\/([^/]+)\/index\.mdoc$/)?.[1] ?? '';
+      return { params: { slug }, props: { rawContent: content } };
+    });
+}
+
 const { slug } = Astro.params;
+const { rawContent } = Astro.props;
 
-if (!slug) return Astro.redirect('/404', 302);
+// ── Parse frontmatter + body ─────────────────────────────────────────────────
+const fmMatch = rawContent.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/);
+const fm      = fmMatch ? ((jsYaml.load(fmMatch[1]) as Record<string, any>) ?? {}) : {};
+const body    = fmMatch ? fmMatch[2].trim() : '';
 
-const token = GITHUB_TOKEN;
-const art   = await fetchArticolo(slug as string, token ?? undefined);
+// ── Render Markdoc → HTML ─────────────────────────────────────────────────────
+const ast         = Markdoc.parse(body);
+const rendered    = Markdoc.transform(ast);
+const htmlContent = Markdoc.renderers.html(rendered);
 
-if (!art) {
-  return Astro.redirect('/404', 302);
-}
+// ── Dati articolo ────────────────────────────────────────────────────────────
+const title    = fm.titolo ?? slug;
+const date     = fm.data ? new Date(fm.data).toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' }) : null;
+const imageUrl = fm.immagine
+  ? (String(fm.immagine).startsWith('/') ? fm.immagine : `/images/articoli/${fm.immagine}`)
+  : null;
 
-if (art.bozza) {
-  return Astro.redirect('/404', 302);
-}
-
-const title    = art.titolo;
-const date     = formatDataIt(art.data);
-const imageUrl = art.immagine ? `/images/articoli/${art.immagine}` : null;
-
-const seoTitle = art.seo_title       || title;
-const seoDesc  = art.seo_description || art.descrizione || '';
+const seoTitle = fm.seo_title       || title;
+const seoDesc  = fm.seo_description || fm.descrizione || '';
 const siteUrl  = 'https://marcomunich.com';
-const seoImage = art.seo_image
-  ? (art.seo_image.startsWith('http') ? art.seo_image : `${siteUrl}${art.seo_image}`)
+const seoImage = fm.seo_image
+  ? (fm.seo_image.startsWith('http') ? fm.seo_image : `${siteUrl}${fm.seo_image}`)
   : imageUrl
     ? `${siteUrl}${imageUrl}`
     : `${siteUrl}/og-image.jpg`;
@@ -50,11 +70,11 @@ const breadcrumbSchema = JSON.stringify({
   ],
 });
 
-const faqSchema = art.schema_faq?.length
+const faqSchema = fm.schema_faq?.length
   ? JSON.stringify({
       '@context': 'https://schema.org',
       '@type': 'FAQPage',
-      mainEntity: art.schema_faq.map((f) => ({
+      mainEntity: fm.schema_faq.map((f: any) => ({
         '@type': 'Question',
         name: f.domanda,
         acceptedAnswer: { '@type': 'Answer', text: f.risposta },
@@ -69,10 +89,10 @@ const faqSchema = art.schema_faq?.length
   image={seoImage}
   currentPath={`/${slug}/`}
   schemaType="Article"
-  datePublished={art.data ?? ''}
-  dateModified={art.data ?? ''}
-  noIndex={art.seo_noindex}
-  canonicalOverride={art.canonical_url}
+  datePublished={fm.data ?? ''}
+  dateModified={fm.data ?? ''}
+  noIndex={fm.seo_noindex}
+  canonicalOverride={fm.canonical_url}
 >
   <script slot="head" type="application/ld+json" set:html={breadcrumbSchema} />
   {faqSchema && <script slot="head" type="application/ld+json" set:html={faqSchema} />}
@@ -88,7 +108,7 @@ const faqSchema = art.schema_faq?.length
         <span>{title}</span>
       </nav>
       <h1 class="art-hero__title">{title}</h1>
-      {date && <time class="art-hero__date" datetime={art.data}>Aggiornato il {date}</time>}
+      {date && <time class="art-hero__date" datetime={fm.data}>Aggiornato il {date}</time>}
     </div>
   </header>
 
@@ -112,14 +132,14 @@ const faqSchema = art.schema_faq?.length
       )}
 
       <div class="prose-marcomunich art-content">
-        <Fragment set:html={art.htmlContent} />
+        <Fragment set:html={htmlContent} />
       </div>
 
       <!-- FAQ -->
-      {art.schema_faq?.length ? (
+      {fm.schema_faq?.length ? (
         <div class="art-faq">
           <h2 class="art-faq__title">Domande frequenti</h2>
-          {art.schema_faq.map((f) => (
+          {fm.schema_faq.map((f: any) => (
             <details class="art-faq__item">
               <summary class="art-faq__q">{f.domanda}</summary>
               <p class="art-faq__a">{f.risposta}</p>
@@ -259,12 +279,7 @@ const faqSchema = art.schema_faq?.length
   /* ── Main ──────────────────────────────────────────────────────────────── */
   .art-main { min-width: 0; }
   .art-cover { margin: 0 0 2.5rem; }
-  .art-cover img {
-    width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 2px;
-  }
+  .art-cover img { width: 100%; height: auto; display: block; border-radius: 2px; }
 
   /* ── FAQ ───────────────────────────────────────────────────────────────── */
   .art-faq {
@@ -280,10 +295,7 @@ const faqSchema = art.schema_faq?.length
     letter-spacing: -0.01em;
     margin-bottom: 1.2rem;
   }
-  .art-faq__item {
-    border-bottom: 1px solid #eee;
-    padding: 0.9rem 0;
-  }
+  .art-faq__item { border-bottom: 1px solid #eee; padding: 0.9rem 0; }
   .art-faq__q {
     font-family: 'Inter', sans-serif;
     font-weight: 600;
@@ -299,12 +311,7 @@ const faqSchema = art.schema_faq?.length
   .art-faq__q::-webkit-details-marker { display: none; }
   .art-faq__q::after { content: '+'; font-size: 1.1rem; flex-shrink: 0; color: #e85d00; }
   details[open] .art-faq__q::after { content: '−'; }
-  .art-faq__a {
-    font-size: 0.85rem;
-    line-height: 1.75;
-    color: #666;
-    margin-top: 0.65rem;
-  }
+  .art-faq__a { font-size: 0.85rem; line-height: 1.75; color: #666; margin-top: 0.65rem; }
 
   /* ── Autore ────────────────────────────────────────────────────────────── */
   .art-author {
@@ -332,28 +339,18 @@ const faqSchema = art.schema_faq?.length
     color: #0d0d0d;
     margin-bottom: 0.4rem;
   }
-  .art-author__bio {
-    font-size: 0.82rem;
-    line-height: 1.65;
-    color: #666;
-    margin-bottom: 0.7rem;
-  }
+  .art-author__bio { font-size: 0.82rem; line-height: 1.65; color: #666; margin-bottom: 0.7rem; }
   .art-author__cta {
     font-family: 'Inter', sans-serif;
     font-size: 0.78rem;
     font-weight: 700;
     color: #e85d00;
     text-decoration: none;
-    transition: opacity 0.15s;
   }
   .art-author__cta:hover { opacity: 0.75; }
 
   /* ── Sidebar ───────────────────────────────────────────────────────────── */
-  .art-sidebar {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-  }
+  .art-sidebar { display: flex; flex-direction: column; gap: 2rem; }
   .art-sidebar__social {
     display: flex;
     gap: 0.85rem;
@@ -361,30 +358,12 @@ const faqSchema = art.schema_faq?.length
     padding-bottom: 1.5rem;
     border-bottom: 1px solid #eee;
   }
-  .art-sidebar__social a {
-    display: flex;
-    align-items: center;
-    opacity: 0.65;
-    transition: opacity 0.15s;
-  }
+  .art-sidebar__social a { display: flex; align-items: center; opacity: 0.65; transition: opacity 0.15s; }
   .art-sidebar__social a:hover { opacity: 1; }
-  .art-sidebar__widget {
-    border: 1px solid #eee;
-    padding: 1.25rem;
-    border-radius: 4px;
-  }
-  .art-sidebar__widget-text {
-    font-size: 0.8rem;
-    line-height: 1.65;
-    color: #666;
-    text-align: center;
-  }
+  .art-sidebar__widget { border: 1px solid #eee; padding: 1.25rem; border-radius: 4px; }
+  .art-sidebar__widget-text { font-size: 0.8rem; line-height: 1.65; color: #666; text-align: center; }
   .art-sidebar__widget-text a { color: #0d0d0d; }
-  .art-sidebar__cta {
-    background: #f5f5f5;
-    padding: 1.5rem;
-    border-radius: 4px;
-  }
+  .art-sidebar__cta { background: #f5f5f5; padding: 1.5rem; border-radius: 4px; }
   .art-sidebar__cta-title {
     font-family: 'Inter', sans-serif;
     font-weight: 800;
@@ -393,12 +372,7 @@ const faqSchema = art.schema_faq?.length
     margin-bottom: 0.5rem;
     letter-spacing: -0.01em;
   }
-  .art-sidebar__cta-text {
-    font-size: 0.82rem;
-    line-height: 1.65;
-    color: #666;
-    margin-bottom: 1rem;
-  }
+  .art-sidebar__cta-text { font-size: 0.82rem; line-height: 1.65; color: #666; margin-bottom: 1rem; }
   .art-sidebar__cta-btn {
     display: block;
     background: #25d366;
@@ -423,10 +397,7 @@ const faqSchema = art.schema_faq?.length
     overflow-x: auto;
     display: block;
   }
-  .art-content :global(table.has-fixed-layout) {
-    display: table;
-    table-layout: fixed;
-  }
+  .art-content :global(table.has-fixed-layout) { display: table; table-layout: fixed; }
   .art-content :global(thead) { background-color: #0d0d0d; color: #fff; }
   .art-content :global(th) {
     padding: 0.65rem 1rem;
@@ -449,13 +420,7 @@ const faqSchema = art.schema_faq?.length
 
   /* Responsive */
   @media (max-width: 900px) {
-    .art-layout {
-      grid-template-columns: 1fr;
-      padding: 2.5rem 1.5rem 4rem;
-    }
-    .art-sidebar {
-      border-top: 1px solid #eee;
-      padding-top: 2rem;
-    }
+    .art-layout { grid-template-columns: 1fr; padding: 2.5rem 1.5rem 4rem; }
+    .art-sidebar { border-top: 1px solid #eee; padding-top: 2rem; }
   }
 </style>
