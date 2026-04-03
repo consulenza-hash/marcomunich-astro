@@ -3,8 +3,21 @@
   var KEY      = 'mm_admin_token';
   var EXPECTED = '376197688b0b75c0c536a0e013f24d4fa163bc59cfc9f0d83e8dec92c003cacb';
 
+  // Legge il cookie
+  function getCookie() {
+    var m = document.cookie.match(/(?:^|;\s*)mm_admin_token=([^;]*)/);
+    return m ? m[1] : null;
+  }
+
+  // Scrive il cookie (30 giorni, path=/)
+  function setCookie(val) {
+    document.cookie = 'mm_admin_token=' + val + '; path=/; max-age=2592000; SameSite=Strict';
+  }
+
   // Già autenticato — continua
-  try { if (localStorage.getItem(KEY) === EXPECTED) return; } catch (e) {}
+  if (getCookie() === EXPECTED) return;
+  // Fallback localStorage (per browser che non hanno problemi)
+  try { if (localStorage.getItem(KEY) === EXPECTED) { setCookie(EXPECTED); return; } } catch (e) {}
 
   // Blocca rendering finché l'overlay non è montato
   document.documentElement.style.visibility = 'hidden';
@@ -40,6 +53,7 @@
       crypto.subtle.digest('SHA-256', enc).then(function (buf) {
         var hash = hexOf(buf);
         if (hash === EXPECTED) {
+          setCookie(EXPECTED);
           try { localStorage.setItem(KEY, EXPECTED); } catch (e) {}
           overlay.remove();
         } else {
