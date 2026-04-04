@@ -106,7 +106,7 @@ $geminiBody = json_encode([
     ],
 ]);
 
-$geminiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key={$geminiKey}";
+$geminiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={$geminiKey}";
 
 $ch = curl_init($geminiUrl);
 curl_setopt_array($ch, [
