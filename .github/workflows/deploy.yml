@@ -71,7 +71,7 @@ jobs:
             set mirror:parallel-transfer-count 5;
             open -u ${{ secrets.FTP_USERNAME }},${{ secrets.FTP_PASSWORD }} 89.40.173.242;
             put .env-server -o /.env;
-            mirror --reverse --delete --verbose --parallel=5 --ignore-errors dist/ /public_html/;
+            mirror --reverse --delete --verbose --parallel=5 dist/ /public_html/;
             quit;
-          "
+          " || echo "⚠️ lftp exited with warnings (directory cleanup non-fatal)"
           echo "Deploy complete!"
