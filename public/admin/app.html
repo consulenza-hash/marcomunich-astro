@@ -1,0 +1,1386 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — marcomunich.com</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked@12.0.0/marked.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0a0f1a;
+      --ink:   #111827;
+      --smoke: #1e293b;
+      --paper: #e2e8f0;
+      --muted: #64748b;
+      --gold:  #f59e0b;
+      --ai:    #7c3aed;
+      --ai-soft: rgba(124,58,237,0.12);
+      --green: #059669;
+      --red:   #dc2626;
+      --r: 6px;
+    }
+
+    body {
+      background: var(--black);
+      color: var(--paper);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 0.875rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── LOGIN ─────────────────────────────────────────────── */
+    #login-screen {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: var(--black);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+    }
+    #login-screen.show { display: flex; }
+    .login-box {
+      background: var(--ink);
+      border: 1px solid var(--smoke);
+      border-radius: 12px;
+      padding: 2.5rem;
+      width: 320px;
+      text-align: center;
+    }
+    .login-box h2 {
+      font-size: 14px;
+      letter-spacing: 0.08em;
+      color: var(--paper);
+      margin-bottom: 1.5rem;
+      font-weight: 500;
+    }
+    .login-box input {
+      width: 100%;
+      background: var(--black);
+      border: 1px solid var(--smoke);
+      color: var(--paper);
+      font-size: 14px;
+      padding: 0.65rem 0.75rem;
+      border-radius: var(--r);
+      outline: none;
+      margin-bottom: 0.75rem;
+      font-family: inherit;
+      transition: border-color 0.15s;
+    }
+    .login-box input:focus { border-color: var(--gold); }
+    .login-box button {
+      width: 100%;
+      background: var(--gold);
+      color: var(--black);
+      border: none;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.65rem;
+      border-radius: var(--r);
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: 700;
+    }
+    .login-err {
+      margin-top: 0.75rem;
+      font-size: 12px;
+      color: #f87171;
+      min-height: 1.2em;
+    }
+
+    /* ── HEADER ────────────────────────────────────────────── */
+    #app-header {
+      border-bottom: 1px solid var(--smoke);
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.5rem;
+      position: sticky;
+      top: 0;
+      background: rgba(10,15,26,0.97);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+      gap: 1rem;
+      flex-shrink: 0;
+    }
+    .logo {
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
+      white-space: nowrap;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .logo span { color: var(--paper); opacity: 0.35; }
+    nav { display: flex; }
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0 1rem;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      border-right: 1px solid var(--smoke);
+      transition: color 0.15s;
+      white-space: nowrap;
+    }
+    nav a:first-child { border-left: 1px solid var(--smoke); }
+    nav a:hover, nav a.active { color: var(--gold); }
+    .btn-new {
+      background: var(--gold);
+      color: var(--black);
+      border: none;
+      padding: 0.4rem 1rem;
+      border-radius: var(--r);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      text-decoration: none;
+      font-weight: 700;
+      white-space: nowrap;
+      transition: opacity 0.15s;
+    }
+    .btn-new:hover { opacity: 0.85; }
+    #header-back {
+      display: none;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      padding: 0.3rem 0.7rem;
+      border: 1px solid var(--smoke);
+      border-radius: var(--r);
+      transition: all 0.15s;
+    }
+    #header-back:hover { color: var(--paper); border-color: var(--paper); }
+    #header-actions { display: flex; gap: 0.5rem; align-items: center; margin-left: auto; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.4rem 0.9rem;
+      border-radius: var(--r);
+      border: 1px solid transparent;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.15s;
+      text-decoration: none;
+      white-space: nowrap;
+      background: transparent;
+    }
+    .btn-ghost { border-color: var(--smoke); color: var(--muted); }
+    .btn-ghost:hover { border-color: var(--paper); color: var(--paper); }
+    .btn-save { background: var(--gold); color: var(--black); border-color: var(--gold); font-weight: 700; }
+    .btn-save:hover { opacity: 0.85; }
+    .btn-save:disabled { opacity: 0.4; cursor: not-allowed; }
+    .btn-ai-open { background: var(--ai-soft); border-color: rgba(124,58,237,0.4); color: #a78bfa; font-weight: 600; }
+    .btn-ai-open:hover { background: rgba(124,58,237,0.22); border-color: var(--ai); color: #c4b5fd; }
+    #breadcrumb {
+      font-size: 11px;
+      color: var(--muted);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 300px;
+    }
+
+    /* ── MAIN VIEW ─────────────────────────────────────────── */
+    #app-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* ── LIST VIEW ─────────────────────────────────────────── */
+    #view-list {
+      display: none;
+      flex: 1;
+      flex-direction: column;
+      padding: 1.75rem 1.5rem;
+      max-width: 1280px;
+      width: 100%;
+      margin: 0 auto;
+    }
+    #view-list.active { display: flex; }
+
+    .page-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--smoke);
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .page-title { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
+    .page-title strong {
+      display: block;
+      font-size: 20px;
+      letter-spacing: -0.02em;
+      color: var(--paper);
+      margin-top: 0.1rem;
+      font-weight: 500;
+    }
+    .stats { display: flex; gap: 1.5rem; }
+    .stat-num { font-size: 18px; color: var(--gold); font-weight: 300; line-height: 1; }
+    .stat-label { font-size: 10px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px; }
+
+    .toolbar {
+      display: flex;
+      gap: 0.6rem;
+      margin-bottom: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .search-wrap { position: relative; flex: 1; min-width: 200px; max-width: 340px; }
+    .search-wrap svg { position: absolute; left: 0.6rem; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
+    .search-input {
+      width: 100%;
+      background: var(--ink);
+      border: 1px solid var(--smoke);
+      color: var(--paper);
+      font-size: 14px;
+      padding: 0.45rem 0.6rem 0.45rem 2rem;
+      border-radius: var(--r);
+      outline: none;
+      font-family: inherit;
+      transition: border-color 0.15s;
+    }
+    .search-input::placeholder { color: var(--muted); }
+    .search-input:focus { border-color: var(--gold); }
+    .filter-btn {
+      background: var(--ink);
+      border: 1px solid var(--smoke);
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      padding: 0.45rem 0.8rem;
+      border-radius: var(--r);
+      cursor: pointer;
+      text-transform: uppercase;
+      font-family: inherit;
+      transition: all 0.15s;
+    }
+    .filter-btn:hover { color: var(--paper); border-color: var(--muted); }
+    .filter-btn.active { color: var(--paper); border-color: var(--paper); background: var(--smoke); }
+    .count-badge { margin-left: auto; font-size: 11px; color: var(--muted); white-space: nowrap; }
+
+    .table-wrap { border: 1px solid var(--smoke); border-radius: var(--r); overflow: hidden; }
+    table { width: 100%; border-collapse: collapse; }
+    thead { background: var(--ink); border-bottom: 1px solid var(--smoke); }
+    th {
+      padding: 0.55rem 0.9rem;
+      text-align: left;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 400;
+    }
+    tbody tr {
+      border-bottom: 1px solid var(--smoke);
+      transition: background 0.15s;
+    }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: rgba(255,255,255,0.025); }
+    td { padding: 0.75rem 0.9rem; vertical-align: middle; }
+    .art-title { font-size: 14px; color: var(--paper); font-weight: 500; max-width: 420px; }
+    .art-slug { font-size: 11px; color: var(--muted); margin-top: 2px; letter-spacing: 0.01em; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 0.25rem;
+      font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 0.18rem 0.5rem; border-radius: 3px; font-weight: 500; white-space: nowrap;
+    }
+    .badge-pub   { background: rgba(5,150,105,0.15); color: #34d399; border: 1px solid rgba(5,150,105,0.3); }
+    .badge-draft { background: rgba(245,158,11,0.12); color: var(--gold); border: 1px solid rgba(245,158,11,0.25); }
+    .date-cell { font-size: 12px; color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
+    .actions { display: flex; gap: 0.35rem; justify-content: flex-end; flex-wrap: nowrap; }
+    .btn-action {
+      display: inline-flex; align-items: center; gap: 0.25rem;
+      font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 0.28rem 0.6rem; border-radius: 4px; border: 1px solid transparent;
+      cursor: pointer; text-decoration: none; font-family: inherit;
+      transition: all 0.15s; white-space: nowrap; background: transparent;
+      color: var(--muted); border-color: var(--smoke);
+    }
+    .btn-action:hover { color: var(--paper); border-color: var(--muted); }
+    .btn-action.btn-ai { background: var(--ai-soft); border-color: rgba(124,58,237,0.4); color: #a78bfa; font-weight: 600; }
+    .btn-action.btn-ai:hover { background: rgba(124,58,237,0.22); border-color: var(--ai); color: #c4b5fd; }
+    .btn-action.btn-publish { border-color: rgba(5,150,105,0.4); color: #10b981; font-weight: 700; }
+    .btn-action.btn-publish:hover { border-color: #10b981; background: rgba(5,150,105,0.15); }
+    .btn-action.btn-delete { border-color: rgba(220,38,38,0.3); color: #ef4444; }
+    .btn-action.btn-delete:hover { border-color: #ef4444; background: rgba(220,38,38,0.1); }
+    .btn-action:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    /* Skeleton loading */
+    .skeleton-row td { padding: 0.9rem; }
+    .skel {
+      background: linear-gradient(90deg, var(--smoke) 25%, var(--ink) 50%, var(--smoke) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.4s infinite;
+      border-radius: 3px;
+      height: 12px;
+      display: inline-block;
+    }
+    @keyframes shimmer { to { background-position: -200% 0; } }
+
+    .empty-msg { text-align: center; padding: 3rem; color: var(--muted); font-size: 13px; }
+
+    /* ── EDIT VIEW ─────────────────────────────────────────── */
+    #view-edit {
+      display: none;
+      flex: 1;
+      overflow: hidden;
+    }
+    #view-edit.active {
+      display: flex;
+      flex-direction: column;
+      height: calc(100vh - 52px);
+    }
+
+    .editor-layout { display: flex; flex: 1; overflow: hidden; }
+
+    .meta-panel {
+      width: 268px;
+      min-width: 268px;
+      border-right: 1px solid var(--smoke);
+      overflow-y: auto;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      background: var(--ink);
+    }
+    .meta-section { border-bottom: 1px solid var(--smoke); padding-bottom: 1rem; }
+    .meta-section:last-child { border-bottom: none; }
+    .meta-label { font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.4rem; display: block; }
+    .meta-input, .meta-textarea {
+      width: 100%;
+      background: var(--black);
+      border: 1px solid var(--smoke);
+      color: var(--paper);
+      font-size: 12px;
+      padding: 0.45rem 0.55rem;
+      border-radius: var(--r);
+      outline: none;
+      font-family: inherit;
+      transition: border-color 0.15s;
+    }
+    .meta-input:focus, .meta-textarea:focus { border-color: var(--gold); }
+    .meta-textarea { resize: vertical; min-height: 70px; line-height: 1.5; }
+    .slug-display {
+      font-family: 'Courier New', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      word-break: break-all;
+      padding: 0.4rem 0.55rem;
+      background: var(--black);
+      border-radius: var(--r);
+      border: 1px solid var(--smoke);
+    }
+    .status-toggle { display: flex; gap: 0.4rem; }
+    .status-btn {
+      flex: 1;
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.4rem;
+      border-radius: var(--r);
+      border: 1px solid var(--smoke);
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.15s;
+    }
+    .status-btn.active-pub { background: rgba(5,150,105,0.15); border-color: rgba(5,150,105,0.4); color: #4ade96; }
+    .status-btn.active-draft { background: rgba(245,158,11,0.12); border-color: rgba(245,158,11,0.3); color: var(--gold); }
+
+    .editor-main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+    .editor-toolbar {
+      border-bottom: 1px solid var(--smoke);
+      padding: 0.5rem 1rem;
+      display: flex;
+      gap: 0.4rem;
+      align-items: center;
+      background: var(--ink);
+      flex-wrap: wrap;
+      flex-shrink: 0;
+    }
+    .ed-btn {
+      background: transparent;
+      border: 1px solid var(--smoke);
+      color: var(--muted);
+      font-size: 11px;
+      padding: 0.25rem 0.55rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: 'Courier New', monospace;
+      transition: all 0.15s;
+    }
+    .ed-btn:hover { color: var(--paper); border-color: var(--muted); }
+    .word-count { margin-left: auto; font-size: 10px; color: var(--muted); white-space: nowrap; }
+    #corpo-editor {
+      flex: 1;
+      background: var(--black);
+      color: var(--paper);
+      border: none;
+      outline: none;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      line-height: 1.75;
+      padding: 1.5rem;
+      resize: none;
+      overflow-y: auto;
+    }
+
+    /* ── PREVIEW VIEW ──────────────────────────────────────── */
+    #view-preview {
+      display: none;
+      flex: 1;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    #view-preview.active { display: flex; }
+    .preview-banner {
+      padding: 0.6rem 1.5rem;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+    .preview-banner.draft { background: rgba(124,58,237,0.15); color: #a78bfa; border-bottom: 1px solid rgba(124,58,237,0.3); }
+    .preview-banner.published { background: rgba(5,150,105,0.12); color: #34d399; border-bottom: 1px solid rgba(5,150,105,0.25); }
+    .preview-content {
+      flex: 1;
+      overflow-y: auto;
+      background: #fff;
+      color: #1a1a1a;
+    }
+    .preview-inner {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 3rem 2rem 6rem;
+    }
+    .preview-inner h1 { font-size: 2rem; font-weight: 800; line-height: 1.2; margin-bottom: 1rem; }
+    .preview-inner h2 { font-size: 1.4rem; font-weight: 700; margin: 2rem 0 0.75rem; }
+    .preview-inner h3 { font-size: 1.15rem; font-weight: 700; margin: 1.5rem 0 0.5rem; }
+    .preview-inner p { line-height: 1.75; margin-bottom: 1rem; }
+    .preview-inner ul, .preview-inner ol { margin-left: 1.5rem; margin-bottom: 1rem; line-height: 1.75; }
+    .preview-inner li { margin-bottom: 0.25rem; }
+    .preview-inner strong { font-weight: 700; }
+    .preview-inner em { font-style: italic; }
+    .preview-inner hr { border: none; border-top: 1px solid #e0e0e0; margin: 2rem 0; }
+    .preview-inner blockquote { border-left: 3px solid #ccc; padding-left: 1rem; color: #666; margin-bottom: 1rem; }
+    .preview-meta {
+      font-size: 0.85rem;
+      color: #888;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #eee;
+    }
+
+    /* ── AI PANEL ──────────────────────────────────────────── */
+    .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 290; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
+    .overlay.show { opacity: 1; pointer-events: all; }
+    .ai-panel {
+      position: fixed; right: 0; top: 0; bottom: 0; width: 380px;
+      background: var(--ink); border-left: 1px solid var(--smoke);
+      z-index: 300; display: flex; flex-direction: column;
+      transform: translateX(100%); transition: transform 0.25s cubic-bezier(0.16,1,0.3,1);
+    }
+    .ai-panel.open { transform: translateX(0); }
+    .ai-header { padding: 1rem 1.25rem; border-bottom: 1px solid var(--smoke); display: flex; align-items: center; justify-content: space-between; }
+    .ai-title { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #9d9bef; display: flex; align-items: center; gap: 0.5rem; }
+    .close-btn {
+      background: transparent; border: 1px solid var(--smoke); color: var(--muted);
+      width: 26px; height: 26px; border-radius: 4px; cursor: pointer; font-size: 13px;
+      display: flex; align-items: center; justify-content: center; transition: all 0.15s;
+    }
+    .close-btn:hover { color: var(--paper); border-color: var(--paper); }
+    .ai-actions { padding: 1rem 1.25rem; border-bottom: 1px solid var(--smoke); display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+    .ai-action-btn {
+      background: rgba(255,255,255,0.03); border: 1px solid var(--smoke); color: var(--paper);
+      font-size: 11px; padding: 0.6rem 0.7rem; border-radius: var(--r); cursor: pointer;
+      text-align: left; font-family: inherit; transition: all 0.15s; line-height: 1.4;
+    }
+    .ai-action-btn:hover { background: rgba(124,58,237,0.1); border-color: rgba(124,58,237,0.4); color: #c4b5fd; }
+    .ai-action-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .ai-action-btn .icon { display: block; font-size: 13px; margin-bottom: 2px; }
+    .ai-custom { padding: 1rem 1.25rem; display: flex; flex-direction: column; gap: 0.6rem; flex: 1; }
+    .ai-custom label { font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
+    .ai-custom textarea {
+      flex: 1; background: var(--black); border: 1px solid var(--smoke); color: var(--paper);
+      font-size: 12px; padding: 0.65rem; border-radius: var(--r); resize: none; outline: none;
+      font-family: inherit; min-height: 80px;
+    }
+    .ai-custom textarea:focus { border-color: var(--ai); }
+    .btn-run {
+      background: var(--ai); color: #fff; border: none; font-family: inherit;
+      font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 0.65rem 1rem; border-radius: var(--r); cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+    }
+    .btn-run:disabled { opacity: 0.4; cursor: not-allowed; }
+    .ai-result { padding: 1rem 1.25rem; border-top: 1px solid var(--smoke); display: none; flex-direction: column; gap: 0.6rem; background: rgba(124,58,237,0.05); }
+    .ai-result.show { display: flex; }
+    .ai-result-label { font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: #9d9bef; }
+    .ai-result-text { font-size: 11px; color: var(--paper); line-height: 1.6; max-height: 120px; overflow-y: auto; white-space: pre-wrap; }
+    .ai-result-actions { display: flex; gap: 0.4rem; }
+    .btn-apply { background: var(--green); color: #fff; border: none; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.4rem 0.8rem; border-radius: var(--r); cursor: pointer; font-family: inherit; }
+    .btn-discard { background: transparent; border: 1px solid var(--smoke); color: var(--muted); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.4rem 0.8rem; border-radius: var(--r); cursor: pointer; font-family: inherit; }
+
+    /* ── TOAST ─────────────────────────────────────────────── */
+    #toast {
+      position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%) translateY(10px);
+      background: var(--ink); border: 1px solid var(--smoke); color: var(--paper);
+      font-size: 12px; padding: 0.65rem 1.25rem; border-radius: 20px;
+      z-index: 500; opacity: 0; transition: all 0.25s; pointer-events: none; white-space: nowrap;
+    }
+    #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    #toast.success { border-color: rgba(5,150,105,0.5); color: #34d399; }
+    #toast.error { border-color: rgba(220,38,38,0.5); color: #f87171; }
+
+    /* ── SPINNER ───────────────────────────────────────────── */
+    .spinner {
+      width: 14px; height: 14px;
+      border: 2px solid rgba(255,255,255,0.15);
+      border-top-color: var(--gold);
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+      display: inline-block;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── FOOTER ────────────────────────────────────────────── */
+    #app-footer {
+      border-top: 1px solid var(--smoke);
+      padding: 0.5rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+    #app-footer span { font-size: 11px; color: var(--muted); }
+  </style>
+</head>
+<body>
+
+<!-- ── LOGIN ──────────────────────────────────────────────── -->
+<div id="login-screen">
+  <div class="login-box">
+    <h2>Admin — Accesso</h2>
+    <form id="login-form">
+      <input type="password" id="login-pwd" placeholder="Password" autocomplete="current-password" />
+      <button type="submit">Accedi</button>
+    </form>
+    <div class="login-err" id="login-err"></div>
+  </div>
+</div>
+
+<!-- ── APP SHELL ───────────────────────────────────────────── -->
+<header id="app-header">
+  <a class="logo" href="/admin/app.html">MM <span>/</span> Admin</a>
+  <nav id="app-nav">
+    <a href="/admin/app.html#list" data-view="list">Articoli</a>
+    <a href="/admin/genera">Genera AI</a>
+    <a href="/admin/statistiche">Stats</a>
+  </nav>
+  <div id="header-actions">
+    <a id="header-back" href="/admin/app.html#list">← Lista</a>
+    <span id="breadcrumb"></span>
+    <a id="btn-preview-link" class="btn btn-ghost" href="#" target="_blank" style="display:none">Anteprima ↗</a>
+    <button id="btn-ai-open" class="btn btn-ai-open" style="display:none">✦ AI</button>
+    <button id="btn-save" class="btn btn-save" style="display:none" disabled>Salva</button>
+    <a href="/admin/app.html#new" class="btn-new" id="btn-new-article">+ Nuovo</a>
+  </div>
+</header>
+
+<main id="app-main">
+
+  <!-- LIST VIEW -->
+  <div id="view-list">
+    <div class="page-header">
+      <div class="page-title">
+        Contenuti
+        <strong>Articoli</strong>
+      </div>
+      <div class="stats" id="list-stats">
+        <div><div class="stat-num" id="stat-totale">—</div><div class="stat-label">Totale</div></div>
+        <div><div class="stat-num" id="stat-pub">—</div><div class="stat-label">Pubblicati</div></div>
+        <div><div class="stat-num" id="stat-bozze">—</div><div class="stat-label">Bozze</div></div>
+      </div>
+    </div>
+
+    <div class="toolbar">
+      <div class="search-wrap">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+        <input class="search-input" id="list-search" type="search" placeholder="Cerca titolo o slug…" autocomplete="off" />
+      </div>
+      <button class="filter-btn active" data-filter="tutti">Tutti</button>
+      <button class="filter-btn" data-filter="pubblicato">Pubblicati</button>
+      <button class="filter-btn" data-filter="bozza">Bozze</button>
+      <span class="count-badge" id="list-count"></span>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:46%">Articolo</th>
+            <th>Data</th>
+            <th>Stato</th>
+            <th style="text-align:right">Azioni</th>
+          </tr>
+        </thead>
+        <tbody id="list-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- EDIT VIEW -->
+  <div id="view-edit">
+    <div class="editor-layout">
+      <aside class="meta-panel">
+        <div class="meta-section">
+          <span class="meta-label">Slug</span>
+          <div class="slug-display" id="edit-slug-display">—</div>
+        </div>
+        <div class="meta-section">
+          <span class="meta-label">Stato</span>
+          <div class="status-toggle">
+            <button class="status-btn" id="btn-pub">Pubblicato</button>
+            <button class="status-btn" id="btn-draft">Bozza</button>
+          </div>
+        </div>
+        <div class="meta-section">
+          <label class="meta-label" for="edit-titolo">Titolo</label>
+          <input class="meta-input" type="text" id="edit-titolo" />
+        </div>
+        <div class="meta-section">
+          <label class="meta-label" for="edit-descr">Descrizione</label>
+          <textarea class="meta-textarea" id="edit-descr"></textarea>
+        </div>
+        <div class="meta-section">
+          <label class="meta-label" for="edit-data">Data (YYYY-MM-DD)</label>
+          <input class="meta-input" type="text" id="edit-data" placeholder="2024-01-15" />
+        </div>
+        <div class="meta-section">
+          <label class="meta-label" for="edit-immagine">Immagine</label>
+          <input class="meta-input" type="text" id="edit-immagine" placeholder="nome-file.jpg" />
+        </div>
+        <div class="meta-section">
+          <span class="meta-label">SEO</span>
+          <label class="meta-label" for="edit-seo-title" style="margin-top:0.4rem;font-size:9px">Title SEO</label>
+          <input class="meta-input" type="text" id="edit-seo-title" placeholder="Max 60 caratteri" style="margin-bottom:0.5rem" />
+          <label class="meta-label" for="edit-seo-desc">Meta Description</label>
+          <textarea class="meta-textarea" id="edit-seo-desc" placeholder="Max 155 caratteri" style="min-height:55px"></textarea>
+        </div>
+        <div class="meta-section">
+          <label style="display:flex;align-items:center;gap:0.5rem;font-size:12px;color:var(--muted);cursor:pointer">
+            <input type="checkbox" id="edit-noindex" style="accent-color:var(--gold)" />
+            noindex
+          </label>
+        </div>
+      </aside>
+
+      <div class="editor-main">
+        <div class="editor-toolbar">
+          <button class="ed-btn" data-wrap="**" title="Grassetto">B</button>
+          <button class="ed-btn" data-wrap="_" title="Corsivo">I</button>
+          <button class="ed-btn" data-insert="## " title="H2">H2</button>
+          <button class="ed-btn" data-insert="### " title="H3">H3</button>
+          <button class="ed-btn" data-insert="- " title="Lista">—</button>
+          <button class="ed-btn" data-insert="\n\n---\n\n" title="Separatore">hr</button>
+          <span class="word-count" id="word-count">0 parole</span>
+        </div>
+        <textarea id="corpo-editor" spellcheck="false"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- PREVIEW VIEW -->
+  <div id="view-preview">
+    <div class="preview-banner" id="preview-banner"></div>
+    <div class="preview-content">
+      <div class="preview-inner" id="preview-inner"></div>
+    </div>
+  </div>
+
+</main>
+
+<footer id="app-footer">
+  <span>marcomunich.com — Admin</span>
+  <span id="footer-info">marcomunich.com/admin/app</span>
+</footer>
+
+<!-- ── AI PANEL ────────────────────────────────────────────── -->
+<div class="overlay" id="overlay"></div>
+<div class="ai-panel" id="ai-panel">
+  <div class="ai-header">
+    <div class="ai-title"><span>✦</span> Modifica con AI</div>
+    <button class="close-btn" id="close-ai">✕</button>
+  </div>
+  <div class="ai-actions">
+    <button class="ai-action-btn" data-azione="migliora"><span class="icon">✏️</span> Migliora testo</button>
+    <button class="ai-action-btn" data-azione="seo"><span class="icon">🎯</span> Ottimizza SEO</button>
+    <button class="ai-action-btn" data-azione="riscrivi-intro"><span class="icon">📝</span> Riscrivi intro</button>
+    <button class="ai-action-btn" data-azione="aggiungi-cta"><span class="icon">🔚</span> Aggiungi CTA</button>
+    <button class="ai-action-btn" data-azione="meta-description"><span class="icon">📋</span> Meta description</button>
+    <button class="ai-action-btn" data-azione="link-interni"><span class="icon">🔗</span> Link interni</button>
+  </div>
+  <div class="ai-result" id="ai-result">
+    <div class="ai-result-label">Risultato AI</div>
+    <div class="ai-result-text" id="ai-result-text"></div>
+    <div class="ai-result-actions">
+      <button class="btn-apply" id="btn-ai-apply">Applica</button>
+      <button class="btn-discard" id="btn-ai-discard">Scarta</button>
+    </div>
+  </div>
+  <div class="ai-custom">
+    <label for="ai-istruzione">Istruzione personalizzata</label>
+    <textarea id="ai-istruzione" placeholder="es. Accorcia l'articolo mantenendo i punti chiave…"></textarea>
+    <button class="btn-run" id="btn-ai-run">✦ Esegui con AI</button>
+  </div>
+</div>
+
+<!-- ── TOAST ───────────────────────────────────────────────── -->
+<div id="toast"></div>
+
+<script>
+(function () {
+'use strict';
+
+// ── CONFIG ─────────────────────────────────────────────────────
+const API = {
+  auth:    '/api/admin-auth.php',
+  lista:   '/api/lista-articoli.php',
+  leggi:   '/api/articolo.php',
+  salva:   '/api/salva-bozza.php',
+  pubblica:'/api/pubblica-articolo.php',
+  elimina: '/api/elimina-articolo.php',
+  ai:      '/api/ai-action.php',
+};
+
+// ── STATE ──────────────────────────────────────────────────────
+const S = {
+  authed:  false,
+  slug:    null,
+  bozza:   false,
+  aiRes:   null,
+  filter:  'tutti',
+  search:  '',
+  rows:    [],   // cached article list rows
+};
+
+// ── UTILS ──────────────────────────────────────────────────────
+function getCookie(name) {
+  return document.cookie.split(';')
+    .map(c => c.trim()).find(c => c.startsWith(name + '='));
+}
+
+function esc(s) {
+  return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+let toastTimer;
+function toast(msg, type) {
+  clearTimeout(toastTimer);
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show ' + (type || '');
+  toastTimer = setTimeout(() => t.className = 'toast', 3000);
+}
+
+// ── FRONTMATTER PARSER (client-side, via js-yaml) ─────────────
+function parseMdoc(raw) {
+  const m = raw.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+  if (!m) return { corpo: raw, titolo:'', descrizione:'', data:'', immagine:'', seo_title:'', seo_description:'', seo_noindex: false, bozza: false };
+
+  let fm;
+  try { fm = jsyaml.load(m[1]) || {}; } catch(e) { fm = {}; }
+
+  const corpo = raw.slice(m[0].length).replace(/^\r?\n/, '');
+  return {
+    titolo:          String(fm.titolo || ''),
+    descrizione:     String(fm.descrizione || ''),
+    data:            fm.data ? String(fm.data).slice(0,10) : '',
+    immagine:        String(fm.immagine || ''),
+    seo_title:       String(fm.seo_title || ''),
+    seo_description: String(fm.seo_description || ''),
+    seo_noindex:     fm.seo_noindex === true,
+    bozza:           fm.bozza === true,
+    corpo,
+  };
+}
+
+// ── AUTH ───────────────────────────────────────────────────────
+function checkAuth() {
+  if (getCookie('stats_auth')) { S.authed = true; init(); }
+  else showLogin();
+}
+
+function showLogin() {
+  document.getElementById('login-screen').classList.add('show');
+  document.getElementById('login-pwd').focus();
+}
+
+document.getElementById('login-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const pwd = document.getElementById('login-pwd').value;
+  const errEl = document.getElementById('login-err');
+  errEl.textContent = '';
+  try {
+    const r = await fetch(API.auth, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: pwd }),
+    });
+    const d = await r.json();
+    if (d.success) {
+      document.cookie = 'stats_auth=' + encodeURIComponent(pwd) + ';path=/;max-age=604800';
+      document.getElementById('login-screen').classList.remove('show');
+      S.authed = true;
+      init();
+    } else {
+      errEl.textContent = 'Password errata';
+    }
+  } catch { errEl.textContent = 'Errore di connessione'; }
+});
+
+// ── ROUTER ─────────────────────────────────────────────────────
+function getHash() { return window.location.hash || '#list'; }
+
+function navigate(hash) {
+  window.location.hash = hash;
+}
+
+window.addEventListener('hashchange', route);
+
+function route() {
+  if (!S.authed) return;
+  const hash = getHash();
+  hideAllViews();
+
+  if (hash.startsWith('#edit/')) {
+    const slug = decodeURIComponent(hash.slice(6));
+    showEdit(slug);
+  } else if (hash.startsWith('#preview/')) {
+    const slug = decodeURIComponent(hash.slice(9));
+    showPreview(slug);
+  } else if (hash === '#new') {
+    showNew();
+  } else {
+    showList();
+  }
+}
+
+function hideAllViews() {
+  document.getElementById('view-list').classList.remove('active');
+  document.getElementById('view-edit').classList.remove('active');
+  document.getElementById('view-preview').classList.remove('active');
+  // header
+  document.getElementById('header-back').style.display = 'none';
+  document.getElementById('breadcrumb').textContent = '';
+  document.getElementById('btn-preview-link').style.display = 'none';
+  document.getElementById('btn-ai-open').style.display = 'none';
+  document.getElementById('btn-save').style.display = 'none';
+  document.getElementById('btn-new-article').style.display = '';
+  document.querySelectorAll('#app-nav a').forEach(a => a.classList.remove('active'));
+}
+
+// ── INIT ───────────────────────────────────────────────────────
+function init() {
+  route();
+}
+
+// ─────────────────────────────────────────────────────────────
+// LIST VIEW
+// ─────────────────────────────────────────────────────────────
+function showList() {
+  document.getElementById('view-list').classList.add('active');
+  document.getElementById('btn-new-article').style.display = '';
+  const navLink = document.querySelector('#app-nav a[data-view="list"]');
+  if (navLink) navLink.classList.add('active');
+  document.getElementById('footer-info').textContent = 'lista articoli';
+  loadList();
+}
+
+async function loadList() {
+  const tbody = document.getElementById('list-tbody');
+
+  // Already cached?
+  if (S.rows.length > 0) { renderList(S.rows); return; }
+
+  // Skeleton
+  tbody.innerHTML = Array(5).fill(0).map(() => `
+    <tr class="skeleton-row">
+      <td><div class="skel" style="width:60%;margin-bottom:4px"></div><div class="skel" style="width:35%"></div></td>
+      <td><div class="skel" style="width:80px"></div></td>
+      <td><div class="skel" style="width:70px"></div></td>
+      <td><div class="skel" style="width:130px;margin-left:auto"></div></td>
+    </tr>`).join('');
+
+  try {
+    const r = await fetch(API.lista);
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const data = await r.json();
+    if (!Array.isArray(data)) throw new Error(data.error || 'Risposta non valida');
+    S.rows = data;
+    renderList(data);
+  } catch(err) {
+    tbody.innerHTML = `<tr><td colspan="4" class="empty-msg">Errore caricamento: ${esc(err.message)}</td></tr>`;
+    toast('Errore: ' + err.message, 'error');
+  }
+}
+
+function renderList(data) {
+  // Stats
+  const pub = data.filter(a => !a.bozza).length;
+  const boz = data.filter(a => a.bozza).length;
+  document.getElementById('stat-totale').textContent = data.length;
+  document.getElementById('stat-pub').textContent = pub;
+  document.getElementById('stat-bozze').textContent = boz;
+
+  const tbody = document.getElementById('list-tbody');
+  if (!data.length) {
+    tbody.innerHTML = '<tr><td colspan="4" class="empty-msg">Nessun articolo trovato.</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = data.map(a => `
+    <tr data-status="${a.bozza ? 'bozza' : 'pubblicato'}" data-search="${esc((a.titolo + ' ' + a.slug).toLowerCase())}">
+      <td>
+        <div class="art-title">${esc(a.titolo)}</div>
+        <div class="art-slug">${esc(a.slug)}</div>
+      </td>
+      <td><span class="date-cell">${esc(a.data || '—')}</span></td>
+      <td><span class="badge ${a.bozza ? 'badge-draft' : 'badge-pub'}">${a.bozza ? '○ Bozza' : '● Pubblicato'}</span></td>
+      <td>
+        <div class="actions">
+          <button class="btn-action" onclick="goEdit('${esc(a.slug)}')">Modifica</button>
+          <button class="btn-action btn-ai" onclick="goEditAI('${esc(a.slug)}')">✦ AI</button>
+          <button class="btn-action" onclick="goPreview('${esc(a.slug)}')">Anteprima</button>
+          ${a.bozza ? `<button class="btn-action btn-publish" data-slug="${esc(a.slug)}" onclick="doPublish(this,'${esc(a.slug)}')">Pubblica</button>` : ''}
+          <button class="btn-action btn-delete" data-slug="${esc(a.slug)}" onclick="doDelete(this,'${esc(a.slug)}')">Elimina</button>
+        </div>
+      </td>
+    </tr>`).join('');
+
+  applyListFilter();
+}
+
+// List search + filter
+const listSearch = document.getElementById('list-search');
+listSearch.addEventListener('input', e => { S.search = e.target.value.toLowerCase().trim(); applyListFilter(); });
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    S.filter = btn.dataset.filter || 'tutti';
+    applyListFilter();
+  });
+});
+
+function applyListFilter() {
+  const rows = Array.from(document.querySelectorAll('#list-tbody tr[data-status]'));
+  let visible = 0;
+  rows.forEach(row => {
+    const statusOk = S.filter === 'tutti' || row.dataset.status === S.filter;
+    const searchOk = !S.search || (row.dataset.search || '').includes(S.search);
+    const show = statusOk && searchOk;
+    row.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+  const countEl = document.getElementById('list-count');
+  if (countEl) countEl.textContent = visible + ' articol' + (visible === 1 ? 'o' : 'i');
+  // empty row
+  let emptyRow = document.querySelector('#list-tbody .empty-msg');
+  if (!emptyRow && visible === 0) {
+    const tr = document.createElement('tr');
+    tr.innerHTML = '<td colspan="4" class="empty-msg">Nessun articolo corrisponde al filtro.</td>';
+    document.getElementById('list-tbody').appendChild(tr);
+  } else if (emptyRow && visible > 0) {
+    emptyRow.parentElement?.remove();
+  }
+}
+
+// List actions
+window.goEdit    = (slug) => navigate('#edit/' + encodeURIComponent(slug));
+window.goEditAI  = (slug) => { navigate('#edit/' + encodeURIComponent(slug)); setTimeout(openAI, 600); };
+window.goPreview = (slug) => navigate('#preview/' + encodeURIComponent(slug));
+
+window.doPublish = async (btn, slug) => {
+  if (!confirm('Pubblicare "' + slug + '"?')) return;
+  btn.disabled = true; btn.textContent = '…';
+  try {
+    const r = await fetch(API.pubblica, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({slug}) });
+    const d = await r.json();
+    if (d.success) {
+      toast('Pubblicato ✓', 'success');
+      S.rows = []; // invalidate cache
+      const row = btn.closest('tr');
+      if (row) {
+        row.dataset.status = 'pubblicato';
+        const badge = row.querySelector('.badge');
+        if (badge) { badge.className = 'badge badge-pub'; badge.textContent = '● Pubblicato'; }
+        btn.remove();
+      }
+    } else throw new Error(d.error || 'Errore');
+  } catch(err) {
+    toast('Errore: ' + err.message, 'error');
+    btn.disabled = false; btn.textContent = 'Pubblica';
+  }
+};
+
+window.doDelete = async (btn, slug) => {
+  if (!confirm('Eliminare definitivamente "' + slug + '"? Azione irreversibile.')) return;
+  btn.disabled = true; btn.textContent = '…';
+  try {
+    const r = await fetch(API.elimina, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({slug}) });
+    const d = await r.json();
+    if (d.success) {
+      toast('Eliminato ✓', 'success');
+      S.rows = S.rows.filter(a => a.slug !== slug);
+      const row = btn.closest('tr');
+      if (row) row.remove();
+    } else throw new Error(d.error || 'Errore');
+  } catch(err) {
+    toast('Errore: ' + err.message, 'error');
+    btn.disabled = false; btn.textContent = 'Elimina';
+  }
+};
+
+// ─────────────────────────────────────────────────────────────
+// EDIT VIEW
+// ─────────────────────────────────────────────────────────────
+function showEdit(slug) {
+  S.slug = slug;
+  document.getElementById('view-edit').classList.add('active');
+  document.getElementById('header-back').style.display = '';
+  document.getElementById('btn-ai-open').style.display = '';
+  const saveBtn = document.getElementById('btn-save');
+  saveBtn.style.display = '';
+  saveBtn.disabled = true;
+  saveBtn.textContent = 'Salva';
+  document.getElementById('btn-new-article').style.display = 'none';
+  document.getElementById('footer-info').textContent = 'modifica: ' + slug;
+
+  // Populate slug display
+  document.getElementById('edit-slug-display').textContent = slug;
+  document.getElementById('breadcrumb').textContent = slug;
+
+  // Reset fields
+  ['edit-titolo','edit-descr','edit-data','edit-immagine','edit-seo-title','edit-seo-desc'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  document.getElementById('corpo-editor').value = 'Caricamento…';
+
+  loadArticle(slug);
+}
+
+function showNew() {
+  S.slug = null;
+  S.bozza = true;
+  document.getElementById('view-edit').classList.add('active');
+  document.getElementById('header-back').style.display = '';
+  document.getElementById('btn-ai-open').style.display = '';
+  const saveBtn = document.getElementById('btn-save');
+  saveBtn.style.display = '';
+  saveBtn.disabled = false;
+  saveBtn.textContent = 'Salva';
+  document.getElementById('btn-new-article').style.display = 'none';
+  document.getElementById('breadcrumb').textContent = 'nuovo articolo';
+  document.getElementById('footer-info').textContent = 'nuovo articolo';
+  document.getElementById('edit-slug-display').textContent = '(generato dal titolo)';
+  document.getElementById('edit-data').value = new Date().toISOString().slice(0,10);
+
+  // Set draft state
+  document.getElementById('btn-draft').classList.add('active-draft');
+  document.getElementById('btn-pub').classList.remove('active-pub');
+
+  document.getElementById('corpo-editor').value = '';
+  document.getElementById('corpo-editor').focus();
+  updateWordCount();
+}
+
+async function loadArticle(slug) {
+  try {
+    const r = await fetch(API.leggi + '?slug=' + encodeURIComponent(slug));
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const d = await r.json();
+    if (d.error) throw new Error(d.error);
+
+    const art = parseMdoc(d.testo);
+    S.bozza = art.bozza;
+
+    document.getElementById('edit-titolo').value    = art.titolo;
+    document.getElementById('edit-descr').value     = art.descrizione;
+    document.getElementById('edit-data').value      = art.data;
+    document.getElementById('edit-immagine').value  = art.immagine;
+    document.getElementById('edit-seo-title').value = art.seo_title;
+    document.getElementById('edit-seo-desc').value  = art.seo_description;
+    document.getElementById('edit-noindex').checked = art.seo_noindex;
+    document.getElementById('corpo-editor').value   = art.corpo;
+    document.getElementById('breadcrumb').textContent = art.titolo || slug;
+
+    // Status toggle
+    if (art.bozza) {
+      document.getElementById('btn-draft').classList.add('active-draft');
+      document.getElementById('btn-pub').classList.remove('active-pub');
+    } else {
+      document.getElementById('btn-pub').classList.add('active-pub');
+      document.getElementById('btn-draft').classList.remove('active-draft');
+    }
+
+    // Preview link
+    const previewLink = document.getElementById('btn-preview-link');
+    previewLink.style.display = '';
+    previewLink.href = '#preview/' + encodeURIComponent(slug);
+    previewLink.textContent = art.bozza ? 'Anteprima ○' : 'Anteprima ●';
+
+    document.getElementById('btn-save').disabled = false;
+    updateWordCount();
+
+  } catch(err) {
+    document.getElementById('corpo-editor').value = '// Errore: ' + err.message;
+    toast('Errore caricamento: ' + err.message, 'error');
+  }
+}
+
+// Status toggle
+document.getElementById('btn-pub').addEventListener('click', () => {
+  S.bozza = false;
+  document.getElementById('btn-pub').classList.add('active-pub');
+  document.getElementById('btn-draft').classList.remove('active-draft');
+});
+document.getElementById('btn-draft').addEventListener('click', () => {
+  S.bozza = true;
+  document.getElementById('btn-draft').classList.add('active-draft');
+  document.getElementById('btn-pub').classList.remove('active-pub');
+});
+
+// Word count
+function updateWordCount() {
+  const corpo = document.getElementById('corpo-editor').value;
+  const words = corpo.trim().split(/\s+/).filter(Boolean).length;
+  document.getElementById('word-count').textContent = words + ' parol' + (words === 1 ? 'a' : 'e');
+}
+document.getElementById('corpo-editor').addEventListener('input', updateWordCount);
+
+// Editor toolbar
+document.querySelectorAll('.ed-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const el = document.getElementById('corpo-editor');
+    const wrap   = btn.dataset.wrap;
+    const insert = btn.dataset.insert;
+    const s = el.selectionStart, e2 = el.selectionEnd, v = el.value;
+    if (wrap) {
+      const sel = v.slice(s, e2);
+      el.value = v.slice(0,s) + wrap + sel + wrap + v.slice(e2);
+      el.setSelectionRange(s + wrap.length, e2 + wrap.length);
+    } else if (insert) {
+      const ins = insert.replace(/\\n/g, '\n');
+      el.value = v.slice(0,s) + ins + v.slice(s);
+      el.setSelectionRange(s + ins.length, s + ins.length);
+    }
+    el.focus();
+    updateWordCount();
+  });
+});
+
+// Save
+document.getElementById('btn-save').addEventListener('click', doSave);
+document.addEventListener('keydown', e => {
+  if ((e.metaKey || e.ctrlKey) && e.key === 's') { e.preventDefault(); doSave(); }
+});
+
+async function doSave() {
+  const saveBtn = document.getElementById('btn-save');
+  saveBtn.disabled = true;
+  saveBtn.innerHTML = '<span class="spinner"></span>';
+
+  const titolo          = document.getElementById('edit-titolo').value.trim();
+  const descrizione     = document.getElementById('edit-descr').value.trim();
+  const data            = document.getElementById('edit-data').value.trim();
+  const immagine        = document.getElementById('edit-immagine').value.trim();
+  const seo_title       = document.getElementById('edit-seo-title').value.trim();
+  const seo_description = document.getElementById('edit-seo-desc').value.trim();
+  const seo_noindex     = document.getElementById('edit-noindex').checked;
+  const corpo           = document.getElementById('corpo-editor').value;
+
+  const payload = {
+    art: { titolo, descrizione, seo_title, seo_description, seo_noindex, bozza: S.bozza, immagine },
+    modo: 'manuale',
+    existing_titolo: titolo,
+    existing_corpo: corpo,
+    data_override: data,
+  };
+  if (S.slug) payload.slug_esistente = S.slug;
+
+  try {
+    const r = await fetch(API.salva, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    const d = await r.json();
+    if (d.success) {
+      toast('Salvato ✓', 'success');
+      S.rows = []; // invalidate cache
+      // If new article, update slug
+      if (!S.slug && d.slug) {
+        S.slug = d.slug;
+        document.getElementById('edit-slug-display').textContent = d.slug;
+        window.history.replaceState(null, '', '#edit/' + encodeURIComponent(d.slug));
+      }
+    } else throw new Error(d.error || 'Errore salvataggio');
+  } catch(err) {
+    toast('Errore: ' + err.message, 'error');
+  } finally {
+    saveBtn.disabled = false;
+    saveBtn.textContent = 'Salva';
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+// PREVIEW VIEW
+// ─────────────────────────────────────────────────────────────
+async function showPreview(slug) {
+  document.getElementById('view-preview').classList.add('active');
+  document.getElementById('header-back').style.display = '';
+  document.getElementById('breadcrumb').textContent = 'Anteprima: ' + slug;
+  document.getElementById('btn-new-article').style.display = 'none';
+  document.getElementById('footer-info').textContent = 'preview: ' + slug;
+
+  document.getElementById('preview-inner').innerHTML = '<p style="color:#999;padding:2rem">Caricamento…</p>';
+
+  try {
+    const r = await fetch(API.leggi + '?slug=' + encodeURIComponent(slug));
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const d = await r.json();
+    if (d.error) throw new Error(d.error);
+
+    const art = parseMdoc(d.testo);
+
+    // Banner
+    const banner = document.getElementById('preview-banner');
+    banner.className = 'preview-banner ' + (art.bozza ? 'draft' : 'published');
+    banner.textContent = art.bozza ? '○ Bozza — non pubblica' : '● Pubblicato — ' + slug;
+
+    // Render
+    const html = marked.parse(art.corpo || '');
+    document.getElementById('preview-inner').innerHTML =
+      `<div class="preview-meta">${art.data || ''} ${art.categoria ? '· ' + art.categoria : ''}</div>` +
+      `<h1>${esc(art.titolo)}</h1>` +
+      html;
+
+  } catch(err) {
+    document.getElementById('preview-inner').innerHTML = '<p style="color:#c00">Errore: ' + esc(err.message) + '</p>';
+    toast('Errore preview: ' + err.message, 'error');
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+// AI PANEL
+// ─────────────────────────────────────────────────────────────
+function openAI() {
+  document.getElementById('ai-panel').classList.add('open');
+  document.getElementById('overlay').classList.add('show');
+}
+function closeAI() {
+  document.getElementById('ai-panel').classList.remove('open');
+  document.getElementById('overlay').classList.remove('show');
+}
+
+document.getElementById('btn-ai-open').addEventListener('click', openAI);
+document.getElementById('close-ai').addEventListener('click', closeAI);
+document.getElementById('overlay').addEventListener('click', closeAI);
+
+document.querySelectorAll('.ai-action-btn').forEach(btn => {
+  btn.addEventListener('click', () => runAI(btn.dataset.azione));
+});
+
+document.getElementById('btn-ai-run').addEventListener('click', () => {
+  const istr = document.getElementById('ai-istruzione').value.trim();
+  if (!istr) { toast('Inserisci un\'istruzione', 'error'); return; }
+  runAI('personalizzata', istr);
+});
+
+async function runAI(azione, istruzione) {
+  const corpo = document.getElementById('corpo-editor').value.trim();
+  if (!corpo) { toast('Editor vuoto', 'error'); return; }
+
+  S.aiRes = null;
+  document.getElementById('ai-result').classList.remove('show');
+  document.querySelectorAll('.ai-action-btn, #btn-ai-run').forEach(b => b.disabled = true);
+  document.getElementById('btn-ai-run').innerHTML = '<span class="spinner"></span>';
+
+  try {
+    const r = await fetch(API.ai, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ azione, corpo, istruzione }),
+    });
+    const d = await r.json();
+    if (!r.ok || d.error) throw new Error(d.error || 'Errore AI');
+    S.aiRes = d;
+    const preview = d.corpo || d.seo_title || d.seo_description || JSON.stringify(d, null, 2);
+    document.getElementById('ai-result-text').textContent = (preview || '').slice(0, 500) + (preview && preview.length > 500 ? '…' : '');
+    document.getElementById('ai-result').classList.add('show');
+    toast('AI completato ✓', 'success');
+  } catch(err) {
+    toast('Errore AI: ' + err.message, 'error');
+  } finally {
+    document.querySelectorAll('.ai-action-btn, #btn-ai-run').forEach(b => b.disabled = false);
+    document.getElementById('btn-ai-run').innerHTML = '✦ Esegui con AI';
+  }
+}
+
+document.getElementById('btn-ai-apply').addEventListener('click', () => {
+  if (!S.aiRes) return;
+  const corpo = document.getElementById('corpo-editor');
+  if (S.aiRes.corpo && corpo) { corpo.value = S.aiRes.corpo; updateWordCount(); toast('Applicato ✓', 'success'); }
+  if (S.aiRes.seo_title) document.getElementById('edit-seo-title').value = S.aiRes.seo_title;
+  if (S.aiRes.seo_description) document.getElementById('edit-seo-desc').value = S.aiRes.seo_description;
+  if (S.aiRes.descrizione) document.getElementById('edit-descr').value = S.aiRes.descrizione;
+  document.getElementById('ai-result').classList.remove('show');
+  S.aiRes = null;
+});
+
+document.getElementById('btn-ai-discard').addEventListener('click', () => {
+  document.getElementById('ai-result').classList.remove('show');
+  S.aiRes = null;
+});
+
+// ── START ──────────────────────────────────────────────────────
+checkAuth();
+
+})();
+</script>
+</body>
+</html>
