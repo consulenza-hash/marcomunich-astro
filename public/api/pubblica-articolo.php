@@ -38,6 +38,9 @@ try {
         jsonResponse(['error' => 'GitHub PUT ' . $res['code']], 500);
     }
 
+    // Invalidate list cache
+    @unlink(sys_get_temp_dir() . '/mm_lista_articoli.json');
+
     jsonResponse(['success' => true, 'slug' => $slug]);
 
 } catch (Exception $e) {
