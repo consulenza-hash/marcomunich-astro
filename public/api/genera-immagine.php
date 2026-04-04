@@ -61,7 +61,7 @@ if (preg_match('/^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/m', $content, $m)) 
 // Testo utile: titolo + descrizione + inizio corpo senza markdown
 $corpoPlain = preg_replace(['/^#+\s*/m', '/\*+/', '/\[([^\]]+)\]\([^)]+\)/'], ['', '', '$1'], $corpo);
 $corpoPlain = preg_replace('/\n{2,}/', ' ', trim($corpoPlain));
-$estratto   = mb_substr($corpoPlain, 0, 600, 'UTF-8');
+$estratto   = mb_substr($corpoPlain, 0, 1500, 'UTF-8');
 
 // ── 2. Genera prompt con Gemini 2.5 Flash ────────────────────────────────────
 $systemPrompt = <<<PROMPT

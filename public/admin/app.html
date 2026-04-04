@@ -710,10 +710,16 @@
           <label class="meta-label" for="edit-immagine">Immagine</label>
           <div class="immagine-row">
             <input class="meta-input" type="text" id="edit-immagine" placeholder="nome-file.jpg" />
-            <button id="btn-genera-img" class="btn-gen-img" title="Genera prompt immagine">✦ Prompt</button>
+            <button id="btn-upload-img" class="btn-gen-img" title="Carica immagine dal computer" style="background:rgba(99,102,241,0.12);border-color:rgba(99,102,241,0.3);color:#818cf8">📁 Carica</button>
+            <button id="btn-genera-img" class="btn-gen-img" title="Genera prompt AI per l'immagine">✦ Prompt</button>
+          </div>
+          <input type="file" id="img-file-input" accept="image/*" style="display:none" />
+          <div id="img-upload-preview" style="display:none;margin-top:0.6rem">
+            <img id="img-upload-thumb" src="" alt="" style="width:100%;border-radius:6px;border:1px solid #2d2d3d;max-height:120px;object-fit:cover" />
+            <div id="img-upload-status" style="font-size:0.7rem;color:#94a3b8;margin-top:0.3rem"></div>
           </div>
           <div id="img-preview-wrap" style="display:none;margin-top:0.8rem">
-            <div style="font-size:0.7rem;color:#94a3b8;margin-bottom:0.4rem;letter-spacing:0.05em;text-transform:uppercase">Prompt — incolla su Midjourney / DALL-E / Ideogram</div>
+            <div style="font-size:0.7rem;color:#94a3b8;margin-bottom:0.4rem;letter-spacing:0.05em;text-transform:uppercase">Prompt AI — incolla su Midjourney / DALL-E / Ideogram</div>
             <textarea id="img-prompt-text" readonly
               style="width:100%;box-sizing:border-box;background:#0a0a14;border:1px solid #2d2d3d;border-radius:8px;color:#e2e8f0;font-size:0.75rem;line-height:1.6;padding:0.75rem;resize:vertical;min-height:100px;font-family:monospace"
             ></textarea>
@@ -1486,6 +1492,51 @@ document.getElementById('btn-genera-img').addEventListener('click', async () => 
   } finally {
     btn.disabled = false;
     btn.innerHTML = '✦ Prompt';
+  }
+});
+
+// ── UPLOAD IMMAGINE ────────────────────────────────────────────
+document.getElementById('btn-upload-img').addEventListener('click', () => {
+  if (!S.slug) { toast('Salva prima l\'articolo', 'error'); return; }
+  document.getElementById('img-file-input').click();
+});
+
+document.getElementById('img-file-input').addEventListener('change', async (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  // Anteprima locale immediata
+  const localUrl = URL.createObjectURL(file);
+  const thumb = document.getElementById('img-upload-thumb');
+  thumb.src = localUrl;
+  document.getElementById('img-upload-preview').style.display = 'block';
+  document.getElementById('img-upload-status').textContent = 'Caricamento in corso…';
+
+  const btn = document.getElementById('btn-upload-img');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>';
+
+  try {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('slug', S.slug);
+
+    const r = await fetch('/api/carica-immagine.php', { method: 'POST', body: formData });
+    const d = await r.json();
+    if (!d.success) throw new Error(d.error || 'Errore upload');
+
+    document.getElementById('edit-immagine').value = d.filename;
+    document.getElementById('img-upload-status').textContent = '✓ Caricata: ' + d.filename;
+    thumb.src = d.url + '?t=' + Date.now();
+    toast('📁 Immagine caricata ✓', 'success');
+
+  } catch(err) {
+    document.getElementById('img-upload-status').textContent = '✗ ' + err.message;
+    toast('Errore upload: ' + err.message, 'error');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '📁 Carica';
+    e.target.value = '';
   }
 });
 
