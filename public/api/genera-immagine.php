@@ -116,8 +116,9 @@ $geminiBody = json_encode([
         'parts' => [['text' => $systemPrompt]],
     ],
     'generationConfig' => [
-        'maxOutputTokens' => 300,
+        'maxOutputTokens' => 1024,
         'temperature'     => 0.8,
+        'thinkingConfig'  => ['thinkingBudget' => 0],
     ],
 ]);
 
