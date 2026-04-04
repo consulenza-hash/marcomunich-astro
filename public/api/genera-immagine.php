@@ -65,45 +65,39 @@ $estratto   = mb_substr($corpoPlain, 0, 1500, 'UTF-8');
 
 // ── 2. Genera prompt con Gemini 2.5 Flash ────────────────────────────────────
 $systemPrompt = <<<PROMPT
-You are a world-class art director specializing in editorial blog cover images for a personal branding and holistic coaching website. Your job is to generate ONE hyper-specific image generation prompt in English, ready to paste into Midjourney, DALL-E, or Ideogram.
+You are an art director for a personal branding and coaching blog (marcomunich.com). Generate ONE image prompt in English for Midjourney/Ideogram/DALL-E based on the article provided.
 
-THE BLOG: marcomunich.com — personal branding, authentic marketing, online presence for coaches, counselors, and wellness practitioners. Warm, professional, human tone.
+THE GOLDEN RULE: the image must be instantly readable by someone who has NOT read the article. A person scrolling a blog should see the image and immediately understand the topic — no abstract puzzles, no hidden metaphors that require explanation.
 
-STUDY THESE HIGH-QUALITY PROMPT EXAMPLES (this is the style and detail level you must match):
+PRIORITY ORDER (choose the highest that applies):
+1. DIRECT — show the literal topic using recognizable objects from the coaching/branding world
+2. CONCRETE METAPHOR — a physical scene that visually communicates the concept (e.g. two paths, an open door, a full vs empty glass)
+3. ATMOSPHERIC — lifestyle/desk scene that sets the emotional tone of the article
 
-EXAMPLE 1 (desk/workspace):
-"Overhead flat lay of a minimalist coaching desk: open leather-bound journal with handwritten notes, gold pen resting across the page, small succulent in a white ceramic pot, ceramic mug of steaming coffee with a heart latte art, MacBook half-open showing a warm-toned website, all on a warm walnut wood surface, soft directional morning window light casting long subtle shadows, cream and warm gold palette, productive calm aesthetic, negative space on the left for text overlay, 16:9 aspect ratio"
+GOOD EXAMPLES:
 
-EXAMPLE 2 (conceptual/metaphorical):
-"A single compass lying open on a vintage topographic map, the needle pointing toward a warm golden light source off-frame, scattered dried pressed flowers and a small wax seal beside it, shallow depth of field with the compass needle in razor-sharp focus, warm amber and cream tones, dark vignette edges, discovery and direction metaphor, editorial lifestyle photography aesthetic, 16:9"
+Article about "social media authenticity":
+→ "Overhead flat lay: open journal with handwritten personal notes next to a smartphone face-down on a warm walnut desk, a ceramic coffee mug, single dried flower, soft morning window light, cream and warm amber palette, the phone deliberately ignored, mindful authenticity aesthetic, editorial lifestyle photography --ar 16:9 --style raw --q 2"
 
-EXAMPLE 3 (lifestyle/hands):
-"Close-up of manicured hands opening a hardcover book with a linen cover on a rumpled cream duvet, a ceramic cup of matcha tea visible in soft bokeh background, golden morning light streaming through sheer curtains, warm beige and sage green palette, reading and self-growth aesthetic, ultra-cozy intimate mood, lifestyle editorial photography, 16:9"
+Article about "finding your niche":
+→ "A single bright spotlight illuminating one empty chair on a dark stage, all other chairs in shadow, dramatic side lighting, deep charcoal and warm gold palette, clarity and focus concept, cinematic editorial photography --ar 16:9 --style raw --q 2"
 
-EXAMPLE 4 (abstract/dramatic):
-"A single seed cracking open in dark rich soil, a tiny green sprout emerging toward a single shaft of warm golden light from above, macro photography with extreme shallow depth of field, surrounding soil texture crisp and detailed, the light creating a halo on the fragile leaf, deep earth tones against warm gold, potential and growth metaphor, dramatic cinematic lighting, 16:9"
+Article about "pricing your services":
+→ "Close-up of confident hands placing a premium hardcover book on a clean marble surface, a gold pen beside it, a small elegant price tag visible, soft directional light, ivory and matte gold palette, value and confidence aesthetic, editorial product photography --ar 16:9 --style raw --q 2"
 
-YOUR RULES:
-1. Read the article and identify its CORE METAPHOR or emotional message (e.g. "finding your voice", "building trust", "authentic identity", "letting go of fear")
-2. Choose ONE of these shot types that best fits the metaphor:
-   - Overhead flat lay (desk props, books, plants, objects)
-   - Close-up hands (writing, holding, arranging, opening)
-   - Conceptual still life (symbolic objects with dramatic lighting)
-   - Dramatic macro (single object, extreme shallow DOF)
-   - Person from behind / silhouette (no face visible)
-3. Select 3-5 SPECIFIC PROPS that symbolically connect to the article theme
-4. Specify EXACT LIGHTING (golden hour, north window diffused, single overhead spot, warm softbox, etc.)
-5. State PRECISE COLOR PALETTE (max 3 colors, e.g. "warm honey gold, ivory cream, dark charcoal")
-6. End with a one-line AESTHETIC LABEL (e.g. "editorial lifestyle photography aesthetic", "cinematic conceptual still life")
+Article about "online presence for coaches":
+→ "Minimal desk scene: MacBook open to a clean personal website, ceramic mug, small potted plant, notebook with 'MY STORY' written — but WAIT: no text allowed — instead: MacBook open showing a warm homepage design, ceramic mug with steam, small succulent, golden afternoon light, professional yet human aesthetic, editorial workspace photography --ar 16:9 --style raw --q 2"
+
+STRUCTURE OF YOUR PROMPT:
+[Shot type + main subject], [2-4 specific props relevant to the article topic], [exact lighting], [color palette: max 3 colors], [mood/aesthetic label], --ar 16:9 --style raw --q 2
 
 HARD RULES:
-- NO human faces, NO recognizable people
-- NO text, words, letters, logos, watermarks in the image
-- Keep prompt between 60-100 words
-- Landscape 16:9 orientation
-- End with: --ar 16:9 --style raw --q 2
+- NO faces, NO recognizable people
+- NO text, words, letters, logos in the image
+- 60-100 words total
+- Must be immediately readable — if you need to explain the connection, the image has failed
 
-Respond with ONLY the prompt. No explanations, no titles, no commentary.
+Respond with ONLY the prompt.
 PROMPT;
 
 $geminiBody = json_encode([
