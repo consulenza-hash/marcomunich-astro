@@ -710,12 +710,17 @@
           <label class="meta-label" for="edit-immagine">Immagine</label>
           <div class="immagine-row">
             <input class="meta-input" type="text" id="edit-immagine" placeholder="nome-file.jpg" />
-            <button id="btn-genera-img" class="btn-gen-img" title="Genera con Imagen 4">🖼 Genera</button>
+            <button id="btn-genera-img" class="btn-gen-img" title="Genera prompt immagine">✦ Prompt</button>
           </div>
-          <div id="img-preview-wrap" style="display:none;margin-top:0.6rem">
-            <img id="img-preview" src="" alt="Anteprima"
-                 style="width:100%;border-radius:8px;border:1px solid #2d2d3d;max-height:160px;object-fit:cover" />
-            <div id="img-prompt-text" style="font-size:0.65rem;color:#64748b;margin-top:0.4rem;line-height:1.4"></div>
+          <div id="img-preview-wrap" style="display:none;margin-top:0.8rem">
+            <div style="font-size:0.7rem;color:#94a3b8;margin-bottom:0.4rem;letter-spacing:0.05em;text-transform:uppercase">Prompt — incolla su Midjourney / DALL-E / Ideogram</div>
+            <textarea id="img-prompt-text" readonly
+              style="width:100%;box-sizing:border-box;background:#0a0a14;border:1px solid #2d2d3d;border-radius:8px;color:#e2e8f0;font-size:0.75rem;line-height:1.6;padding:0.75rem;resize:vertical;min-height:100px;font-family:monospace"
+            ></textarea>
+            <button id="btn-copy-prompt"
+              style="margin-top:0.4rem;background:rgba(100,116,139,0.15);border:1px solid #2d2d3d;border-radius:6px;color:#94a3b8;font-size:0.7rem;padding:0.3rem 0.8rem;cursor:pointer"
+              onclick="navigator.clipboard.writeText(document.getElementById('img-prompt-text').value).then(()=>{ this.textContent='✓ Copiato!'; setTimeout(()=>this.textContent='📋 Copia',1500) })"
+            >📋 Copia</button>
           </div>
         </div>
         <div class="meta-section">
@@ -1011,7 +1016,7 @@ function renderList(data) {
           <button class="btn-action" onclick="goEdit('${esc(a.slug)}')">Modifica</button>
           <button class="btn-action btn-ai" onclick="goEditAI('${esc(a.slug)}')">✦ AI</button>
           <button class="btn-action" onclick="goPreview('${esc(a.slug)}')">Anteprima</button>
-          ${!a.hasImmagine ? `<button class="btn-action btn-img" title="Genera immagine con Imagen 4" onclick="doGeneraImmagine(this,'${esc(a.slug)}')">📷</button>` : ''}
+          <button class="btn-action btn-img" title="Genera prompt immagine" onclick="doGeneraImmagine(this,'${esc(a.slug)}')">✦ Img</button>
           ${a.bozza ? `<button class="btn-action btn-publish" data-slug="${esc(a.slug)}" onclick="doPublish(this,'${esc(a.slug)}')">Pubblica</button>` : ''}
           <button class="btn-action btn-delete" data-slug="${esc(a.slug)}" onclick="doDelete(this,'${esc(a.slug)}')">Elimina</button>
         </div>
@@ -1103,10 +1108,10 @@ window.doDelete = async (btn, slug) => {
   }
 };
 
-// Genera immagine dalla lista
+// Genera prompt immagine dalla lista → mostra modal con copia
 window.doGeneraImmagine = async (btn, slug) => {
   btn.disabled = true;
-  const orig = btn.textContent;
+  const orig = btn.innerHTML;
   btn.innerHTML = '<span class="spinner"></span>';
   try {
     const r = await fetch(API.generaImg, {
@@ -1115,17 +1120,30 @@ window.doGeneraImmagine = async (btn, slug) => {
       body: JSON.stringify({ slug }),
     });
     const d = await r.json();
-    if (d.success) {
-      toast('🖼 Immagine generata ✓', 'success');
-      // Update cached row
-      const cached = S.rows.find(a => a.slug === slug);
-      if (cached) cached.hasImmagine = true;
-      // Remove the 📷 button from DOM (article now has image)
-      btn.remove();
-    } else throw new Error(d.error || 'Errore');
+    if (!d.success) throw new Error(d.error || 'Errore');
+
+    // Modal con prompt copiabile
+    const overlay = document.createElement('div');
+    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:9999;display:flex;align-items:center;justify-content:center;padding:1rem';
+    overlay.innerHTML = `
+      <div style="background:#12121e;border:1px solid #2d2d3d;border-radius:12px;padding:1.5rem;max-width:600px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.6)">
+        <div style="font-size:0.7rem;color:#94a3b8;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.8rem">Prompt immagine — ${slug}</div>
+        <textarea readonly style="width:100%;box-sizing:border-box;background:#0a0a14;border:1px solid #2d2d3d;border-radius:8px;color:#e2e8f0;font-size:0.8rem;line-height:1.6;padding:0.75rem;resize:vertical;min-height:120px;font-family:monospace">${d.prompt}</textarea>
+        <div style="display:flex;gap:0.6rem;margin-top:0.8rem;justify-content:flex-end">
+          <button id="modal-copy-btn" style="background:rgba(245,158,11,0.15);border:1px solid rgba(245,158,11,0.3);border-radius:6px;color:#f5a623;font-size:0.8rem;padding:0.4rem 1rem;cursor:pointer">📋 Copia prompt</button>
+          <button onclick="this.closest('[style*=fixed]').remove()" style="background:rgba(100,116,139,0.15);border:1px solid #2d2d3d;border-radius:6px;color:#64748b;font-size:0.8rem;padding:0.4rem 1rem;cursor:pointer">Chiudi</button>
+        </div>
+      </div>`;
+    document.body.appendChild(overlay);
+    overlay.querySelector('#modal-copy-btn').addEventListener('click', function() {
+      navigator.clipboard.writeText(d.prompt).then(() => { this.textContent = '✓ Copiato!'; setTimeout(() => this.textContent = '📋 Copia prompt', 1500); });
+    });
+    overlay.addEventListener('click', e => { if (e.target === overlay) overlay.remove(); });
+
   } catch(err) {
-    toast('Errore immagine: ' + err.message, 'error');
-    btn.disabled = false; btn.textContent = orig;
+    toast('Errore: ' + err.message, 'error');
+  } finally {
+    btn.disabled = false; btn.innerHTML = orig;
   }
 };
 
@@ -1437,16 +1455,15 @@ document.getElementById('btn-ai-discard').addEventListener('click', () => {
   S.aiRes = null;
 });
 
-// ── GENERA IMMAGINE (editor) ────────────────────────────────────
+// ── GENERA PROMPT IMMAGINE (editor) ────────────────────────────
 document.getElementById('btn-genera-img').addEventListener('click', async () => {
   const slug = S.slug;
-  if (!slug) { toast('Salva prima l\'articolo per generare l\'immagine', 'error'); return; }
+  if (!slug) { toast('Salva prima l\'articolo per generare il prompt', 'error'); return; }
 
   const btn = document.getElementById('btn-genera-img');
   btn.disabled = true;
   btn.innerHTML = '<span class="spinner"></span>';
 
-  // Nascondi anteprima precedente
   document.getElementById('img-preview-wrap').style.display = 'none';
 
   try {
@@ -1456,25 +1473,19 @@ document.getElementById('btn-genera-img').addEventListener('click', async () => 
       body: JSON.stringify({ slug }),
     });
     const d = await r.json();
-    if (!d.success) throw new Error(d.error || d.warning || 'Errore generazione');
+    if (!d.success) throw new Error(d.error || 'Errore generazione prompt');
 
-    // Aggiorna campo immagine
-    document.getElementById('edit-immagine').value = d.immagine;
-
-    // Mostra anteprima con cache-bust
-    const preview = document.getElementById('img-preview');
-    preview.src   = d.url + '?t=' + Date.now();
-    document.getElementById('img-prompt-text').textContent = '💬 ' + d.prompt;
+    document.getElementById('img-prompt-text').value = d.prompt;
     document.getElementById('img-preview-wrap').style.display = 'block';
+    document.getElementById('btn-copy-prompt').textContent = '📋 Copia';
 
-    toast('🖼 Immagine generata ✓', 'success');
-    S.rows = []; // invalida cache lista
+    toast('✦ Prompt generato ✓', 'success');
 
   } catch(err) {
     toast('Errore: ' + err.message, 'error');
   } finally {
     btn.disabled = false;
-    btn.innerHTML = '🖼 Genera';
+    btn.innerHTML = '✦ Prompt';
   }
 });
 
