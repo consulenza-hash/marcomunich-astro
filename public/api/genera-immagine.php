@@ -67,7 +67,7 @@ $estratto   = mb_substr($corpoPlain, 0, 500, 'UTF-8');
 // ── 2. Genera prompt visivo con Gemini Flash ─────────────────────────────────
 $geminiPrompt = "Sei un art director editoriale. Scrivi un prompt fotografico in inglese (max 90 parole) per un'immagine blog professionale basata su questo articolo.\n\nTitolo: {$titolo}\nDescrizione: {$descrizione}\nInizio testo: {$estratto}\n\nIl sito parla di personal branding autentico, marketing olistico e presenza online per coach, counselor e operatori del benessere.\n\nRegole per il prompt:\n- Nessuna persona, nessun viso\n- Stile: fotografia editoriale, lifestyle, oggetti simbolici, atmosfera professionale e calda\n- Luce naturale cinematica, bokeh, toni caldi dorati\n- Niente testo, niente scritte, niente loghi nell'immagine\n- Ambiente: scrivania pulita, piante, luce morbida, notebook, tazze, elementi naturali\n- Formato 16:9, qualità ultra-realistica\n\nRispondi SOLO con il prompt fotografico, niente altro.";
 
-$geminiUrl  = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={$imagenKey}";
+$geminiUrl  = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key={$imagenKey}";
 $geminiBody = json_encode([
     'contents'         => [['parts' => [['text' => $geminiPrompt]]]],
     'generationConfig' => ['maxOutputTokens' => 200, 'temperature' => 0.7],
