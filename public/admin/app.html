@@ -1468,6 +1468,7 @@ document.getElementById('btn-ai-apply').addEventListener('click', () => {
   if (S.aiRes.descrizione) document.getElementById('edit-descr').value = S.aiRes.descrizione;
   document.getElementById('ai-result').classList.remove('show');
   S.aiRes = null;
+  closeAI();
 });
 
 document.getElementById('btn-ai-discard').addEventListener('click', () => {
