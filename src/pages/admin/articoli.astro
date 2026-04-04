@@ -429,7 +429,7 @@ const bozze      = articoli.filter(a => a.bozza).length;
                   <a href={`/admin/edit/${a.slug}?ai=1`} class="btn-action btn-ai">
                     <span class="spark">✦</span> AI
                   </a>
-                  <a href={`/${a.slug}`} target="_blank" class="btn-action btn-preview">Anteprima ↗</a>
+                  <a href={a.bozza ? `/admin/preview/${a.slug}` : `/${a.slug}`} target="_blank" class="btn-action btn-preview">Anteprima ↗</a>
                   {a.bozza && <button onclick={`pubblicaArticolo('${a.slug}', this)`} class="btn-action btn-publish">Pubblica</button>}
                   <button onclick={`eliminaArticolo('${a.slug}', this)`} class="btn-action btn-delete">Elimina</button>
                 </div>

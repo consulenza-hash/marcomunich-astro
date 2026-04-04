@@ -1,0 +1,155 @@
+---
+export const prerender = true;
+
+import AdminGuard from '@components/AdminGuard.astro';
+import jsYaml from 'js-yaml';
+import Markdoc from '@markdoc/markdoc';
+
+// Genera pagine preview per TUTTI gli articoli, bozze incluse
+export async function getStaticPaths() {
+  const rawFiles = import.meta.glob('/src/content/articoli/*/index.mdoc', {
+    eager: true,
+    as: 'raw',
+  }) as Record<string, string>;
+
+  return Object.entries(rawFiles).map(([filePath, content]) => {
+    const slug = filePath.match(/\/([^/]+)\/index\.mdoc$/)?.[1] ?? '';
+    return { params: { slug }, props: { rawContent: content } };
+  });
+}
+
+const { slug } = Astro.params;
+const { rawContent } = Astro.props;
+
+const fmMatch = rawContent.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/);
+const fm      = fmMatch ? ((jsYaml.load(fmMatch[1]) as Record<string, any>) ?? {}) : {};
+const body    = fmMatch ? fmMatch[2].trim() : '';
+
+const ast         = Markdoc.parse(body);
+const rendered    = Markdoc.transform(ast);
+const htmlContent = Markdoc.renderers.html(rendered);
+
+const title    = fm.titolo ?? slug;
+const isBozza  = fm.bozza === true;
+const date     = fm.data ? new Date(fm.data).toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' }) : null;
+const imageUrl = fm.immagine
+  ? (String(fm.immagine).startsWith('/') ? fm.immagine : `/images/articoli/${fm.immagine}`)
+  : null;
+---
+
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{isBozza ? '[BOZZA] ' : ''}{title} — Anteprima Admin</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <link rel="stylesheet" href="/styles/global.css" />
+  <style>
+    .preview-bar {
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      background: #7c3aed;
+      color: #fff;
+      padding: .6rem 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: system-ui, sans-serif;
+      font-size: .85rem;
+      gap: 1rem;
+    }
+    .preview-bar.is-pub {
+      background: #059669;
+    }
+    .preview-bar__label {
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      font-size: .75rem;
+    }
+    .preview-bar__title {
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      opacity: .85;
+    }
+    .preview-bar__back {
+      background: rgba(255,255,255,.15);
+      color: #fff;
+      text-decoration: none;
+      padding: .35rem .85rem;
+      border-radius: 6px;
+      font-weight: 600;
+      white-space: nowrap;
+      font-size: .82rem;
+    }
+    .preview-bar__back:hover { background: rgba(255,255,255,.25); }
+    .preview-bar__live {
+      background: rgba(255,255,255,.15);
+      color: #fff;
+      text-decoration: none;
+      padding: .35rem .85rem;
+      border-radius: 6px;
+      font-weight: 600;
+      white-space: nowrap;
+      font-size: .82rem;
+    }
+  </style>
+</head>
+<body>
+  <AdminGuard />
+
+  <div class={`preview-bar${isBozza ? '' : ' is-pub'}`}>
+    <span class="preview-bar__label">{isBozza ? '○ Bozza' : '● Pubblicato'}</span>
+    <span class="preview-bar__title">{title}</span>
+    {!isBozza && <a href={`/${slug}/`} target="_blank" class="preview-bar__live">Vedi live ↗</a>}
+    <a href="/admin/articoli/" class="preview-bar__back">← Admin</a>
+  </div>
+
+  <header class="art-hero">
+    <div class="art-hero__inner">
+      <nav class="art-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span aria-hidden="true">/</span>
+        <a href="/blog/">Blog</a>
+        <span aria-hidden="true">/</span>
+        <span>{title}</span>
+      </nav>
+      <h1 class="art-hero__title">{title}</h1>
+      {date && <time class="art-hero__date" datetime={fm.data}>Aggiornato il {date}</time>}
+    </div>
+  </header>
+
+  <div class="art-layout">
+    <main class="art-main">
+
+      {imageUrl && (
+        <figure class="art-cover">
+          <img src={imageUrl} alt={title} width="780" height="440" loading="eager" decoding="async" />
+        </figure>
+      )}
+
+      <div class="prose-marcomunich art-content">
+        <Fragment set:html={htmlContent} />
+      </div>
+
+      {fm.schema_faq?.length ? (
+        <div class="art-faq">
+          <h2 class="art-faq__title">Domande frequenti</h2>
+          {fm.schema_faq.map((f: any) => (
+            <details class="art-faq__item">
+              <summary class="art-faq__q">{f.domanda}</summary>
+              <p class="art-faq__a">{f.risposta}</p>
+            </details>
+          ))}
+        </div>
+      ) : null}
+
+    </main>
+  </div>
+
+</body>
+</html>
