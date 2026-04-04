@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<title>Carosello 1 v2 — Palette sito live (nero/arancione)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black:  #0d0d0d;
+    --orange: #e85d00;
+    --white:  #ffffff;
+    --gray:   #f5f5f5;
+    --ink:    rgba(255,255,255,0.55);
+    --border: rgba(255,255,255,0.12);
+    --accent: #e85d00; /* colore di questo carosello — Carosello 1: arancione */
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #2a2a2a; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    padding: 24px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .slide {
+    width: 1080px;
+    height: 1350px;
+    background: var(--black);
+    color: var(--white);
+    padding: 110px 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+  .slide::before {
+    content: '';
+    position: absolute;
+    top: 110px;
+    left: 100px;
+    width: 72px;
+    height: 5px;
+    background: var(--accent);
+  }
+  .meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-top: 32px;
+  }
+  .meta .num { color: var(--accent); font-weight: 800; }
+  .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  /* ── Slide 1 (cover) ─────────────────────────────── */
+  .slide-cover .eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 48px;
+  }
+  .slide-cover h1 {
+    font-family: 'Inter', sans-serif;
+    font-size: 148px;
+    font-weight: 900;
+    line-height: 0.92;
+    letter-spacing: -0.045em;
+    color: var(--white);
+    text-transform: none;
+  }
+  .slide-cover h1 em {
+    font-style: normal;
+    color: var(--accent);
+  }
+  .slide-cover .footer-hint {
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.55);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .slide-cover .footer-hint::before {
+    content: '→ ';
+    color: var(--accent);
+  }
+
+  /* ── Slide body (2–7) ────────────────────────────── */
+  .slide-body .index {
+    font-family: 'Inter', sans-serif;
+    font-size: 340px;
+    font-weight: 900;
+    line-height: 0.8;
+    color: var(--accent);
+    opacity: 0.14;
+    position: absolute;
+    top: 60px;
+    right: 80px;
+    pointer-events: none;
+    letter-spacing: -0.06em;
+  }
+  .slide-body p {
+    font-family: 'Inter', sans-serif;
+    font-size: 62px;
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--white);
+    letter-spacing: -0.025em;
+    position: relative;
+    z-index: 1;
+  }
+  .slide-body p .highlight {
+    color: var(--accent);
+  }
+  .slide-body p em {
+    font-style: normal;
+    color: var(--accent);
+  }
+
+  /* ── Slide finale (signature) ────────────────────── */
+  .slide-signature {
+    background: var(--accent);
+    color: var(--black);
+  }
+  .slide-signature::before {
+    background: var(--black);
+    width: 72px;
+    height: 5px;
+  }
+  .slide-signature .meta {
+    color: rgba(13,13,13,0.55);
+  }
+  .slide-signature .meta .num { color: var(--black); }
+  .slide-signature .tag {
+    font-family: 'Inter', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--black);
+    margin-bottom: 36px;
+  }
+  .slide-signature .handle {
+    font-family: 'Inter', sans-serif;
+    font-size: 186px;
+    font-weight: 900;
+    line-height: 0.88;
+    letter-spacing: -0.045em;
+    color: var(--black);
+    text-transform: none;
+  }
+  .slide-signature .services {
+    margin-top: 44px;
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+    max-width: 860px;
+  }
+  .slide-signature .group-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--black);
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid rgba(13,13,13,0.25);
+  }
+  .slide-signature .group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .slide-signature .service {
+    display: flex;
+    align-items: baseline;
+    gap: 18px;
+    font-family: 'Inter', sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--black);
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+  .slide-signature .service .num {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    color: rgba(13,13,13,0.55);
+    min-width: 38px;
+  }
+  .slide-signature .cta {
+    font-family: 'Inter', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--black);
+    margin-top: 36px;
+    padding-top: 24px;
+    border-top: 3px solid var(--black);
+    max-width: 860px;
+  }
+</style>
+</head>
+<body>
+
+<!-- Slide 1 — Cover -->
+<section class="slide slide-cover" id="slide-1">
+  <div class="meta">
+    <span>Marco Munich · Personal Branding</span>
+    <span><span class="num">01</span> / 08</span>
+  </div>
+  <div class="content">
+    <div class="eyebrow">5 Segnali</div>
+    <h1>Il tuo sito<br>potrebbe<br>essere <em>di&nbsp;chiunque.</em></h1>
+  </div>
+  <div class="footer-hint">Scorri per scoprirli</div>
+</section>
+
+<!-- Slide 2 -->
+<section class="slide slide-body" id="slide-2">
+  <div class="meta">
+    <span>Segnale 01 · Bio generica</span>
+    <span><span class="num">02</span> / 08</span>
+  </div>
+  <div class="index">1</div>
+  <div class="content">
+    <p>Nella bio c'è scritto <span class="highlight">"ti accompagno in un percorso di crescita personale"</span> e la stessa frase è sul sito di altri <em>duemila</em> professionisti del tuo settore.</p>
+  </div>
+  <div></div>
+</section>
+
+<!-- Slide 3 -->
+<section class="slide slide-body" id="slide-3">
+  <div class="meta">
+    <span>Segnale 02 · Foto stock</span>
+    <span><span class="num">03</span> / 08</span>
+  </div>
+  <div class="index">2</div>
+  <div class="content">
+    <p>Le foto sono stock. Mani che si toccano, tramonti, pietre impilate. <span class="highlight">Nessuna immagine tua</span>, del tuo studio, del tuo modo di lavorare.</p>
+  </div>
+  <div></div>
+</section>
+
+<!-- Slide 4 -->
+<section class="slide slide-body" id="slide-4">
+  <div class="meta">
+    <span>Segnale 03 · Chi sono sbagliato</span>
+    <span><span class="num">04</span> / 08</span>
+  </div>
+  <div class="index">3</div>
+  <div class="content">
+    <p>La pagina "chi sono" inizia con la <span class="highlight">lista delle certificazioni</span> invece che con il motivo per cui fai questo lavoro.</p>
+  </div>
+  <div></div>
+</section>
+
+<!-- Slide 5 -->
+<section class="slide slide-body" id="slide-5">
+  <div class="meta">
+    <span>Segnale 04 · Testo intercambiabile</span>
+    <span><span class="num">05</span> / 08</span>
+  </div>
+  <div class="index">4</div>
+  <div class="content">
+    <p>Se prendi il testo del tuo sito e lo metti su quello di un collega, <span class="highlight">nessuno se ne accorge</span>.</p>
+  </div>
+  <div></div>
+</section>
+
+<!-- Slide 6 -->
+<section class="slide slide-body" id="slide-6">
+  <div class="meta">
+    <span>Segnale 05 · Zero differenza</span>
+    <span><span class="num">06</span> / 08</span>
+  </div>
+  <div class="index">5</div>
+  <div class="content">
+    <p>Chi ti cerca online e arriva sul tuo sito non riesce a capire <span class="highlight">cosa ti distingue</span> da tutti gli altri che offrono la stessa cosa.</p>
+  </div>
+  <div></div>
+</section>
+
+<!-- Slide 7 — Conclusione -->
+<section class="slide slide-body" id="slide-7">
+  <div class="meta">
+    <span>La lezione</span>
+    <span><span class="num">07</span> / 08</span>
+  </div>
+  <div class="content">
+    <p>Il tuo sito deve suonare come la <em>tua voce</em> quando sei seduto davanti a un cliente e gli spieghi cosa fai.<br><br>Se quella voce manca, <span class="highlight">le persone giuste passano oltre</span>.</p>
+  </div>
+  <div></div>
+</section>
+
+<!-- Slide 8 — Signature -->
+<section class="slide slide-signature" id="slide-8">
+  <div class="meta">
+    <span>Segui per altri</span>
+    <span><span class="num">08</span> / 08</span>
+  </div>
+  <div class="content">
+    <div class="tag">Per coach, counselor &amp; operatori olistici</div>
+    <div class="handle">Marco<br>Munich</div>
+    <div class="services">
+      <div class="group">
+        <div class="group-label">Consulenza 1-a-1</div>
+        <div class="service"><span class="num">01</span><span>Personal Branding Olistico</span></div>
+        <div class="service"><span class="num">02</span><span>Sviluppo Siti Web</span></div>
+      </div>
+      <div class="group">
+        <div class="group-label">Percorsi Online</div>
+        <div class="service"><span class="num">03</span><span>Metterci la faccia online</span></div>
+        <div class="service"><span class="num">04</span><span>Creazione del Messaggio Autentico</span></div>
+        <div class="service"><span class="num">05</span><span>Creazione Video Autentici</span></div>
+        <div class="service"><span class="num">06</span><span>Lavorare Senza Sito Web</span></div>
+      </div>
+    </div>
+    <div class="cta">→ marcomunich.com · @marcomunich1983</div>
+  </div>
+  <div></div>
+</section>
+
+</body>
+</html>
