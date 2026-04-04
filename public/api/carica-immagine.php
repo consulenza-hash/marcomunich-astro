@@ -36,13 +36,11 @@ if (!extension_loaded('gd')) {
     jsonResponse(['error' => 'GD non disponibile sul server'], 500);
 }
 
-$src = match($mimeType) {
-    'image/jpeg' => imagecreatefromjpeg($tmpPath),
-    'image/png'  => imagecreatefrompng($tmpPath),
-    'image/webp' => imagecreatefromwebp($tmpPath),
-    'image/gif'  => imagecreatefromgif($tmpPath),
-    default      => false,
-};
+if ($mimeType === 'image/jpeg')      $src = imagecreatefromjpeg($tmpPath);
+elseif ($mimeType === 'image/png')   $src = imagecreatefrompng($tmpPath);
+elseif ($mimeType === 'image/webp')  $src = imagecreatefromwebp($tmpPath);
+elseif ($mimeType === 'image/gif')   $src = imagecreatefromgif($tmpPath);
+else $src = false;
 
 if (!$src) jsonResponse(['error' => 'Impossibile leggere l\'immagine'], 500);
 
