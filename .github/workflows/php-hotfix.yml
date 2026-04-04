@@ -6,6 +6,7 @@ on:
     paths:
       - 'public/api/**'
       - 'public/admin/**'
+      - 'public/images/**'
 
 jobs:
   php-deploy:
@@ -29,6 +30,7 @@ jobs:
             open -u ${{ secrets.FTP_USERNAME }},${{ secrets.FTP_PASSWORD }} 89.40.173.242;
             mirror --reverse --verbose --parallel=2 public/api/ /public_html/api/;
             mirror --reverse --verbose --parallel=2 public/admin/ /public_html/admin/;
+            mirror --reverse --verbose --parallel=4 public/images/ /public_html/images/;
             quit;
           " || echo "⚠️ lftp completed with warnings"
 

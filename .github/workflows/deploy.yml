@@ -6,6 +6,7 @@ on:
     paths-ignore:
       - 'public/api/**'
       - 'public/admin/**'
+      - 'public/images/**'
   repository_dispatch:
     types: [wp_content_changed, wp_post_published]
   workflow_dispatch:
