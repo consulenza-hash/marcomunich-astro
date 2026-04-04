@@ -330,6 +330,8 @@
     .btn-action.btn-publish:hover { border-color: #10b981; background: rgba(5,150,105,0.15); }
     .btn-action.btn-delete { border-color: rgba(220,38,38,0.3); color: #ef4444; }
     .btn-action.btn-delete:hover { border-color: #ef4444; background: rgba(220,38,38,0.1); }
+    .btn-action.btn-img { border-color: rgba(245,158,11,0.35); color: #f59e0b; padding: 0.3rem 0.5rem; }
+    .btn-action.btn-img:hover { border-color: #f59e0b; background: rgba(245,158,11,0.12); }
     .btn-action:disabled { opacity: 0.4; cursor: not-allowed; }
 
     /* Skeleton loading */
@@ -388,6 +390,22 @@
     }
     .meta-input:focus, .meta-textarea:focus { border-color: var(--gold); }
     .meta-textarea { resize: vertical; min-height: 70px; line-height: 1.5; }
+    .immagine-row { display: flex; gap: 0.4rem; align-items: center; }
+    .immagine-row .meta-input { flex: 1; min-width: 0; }
+    .btn-gen-img {
+      flex-shrink: 0;
+      background: rgba(245,158,11,0.1);
+      border: 1px solid rgba(245,158,11,0.4);
+      color: #f59e0b;
+      border-radius: 6px;
+      padding: 0.35rem 0.6rem;
+      font-size: 0.72rem;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s;
+    }
+    .btn-gen-img:hover { background: rgba(245,158,11,0.2); border-color: #f59e0b; }
+    .btn-gen-img:disabled { opacity: 0.4; cursor: not-allowed; }
     .slug-display {
       font-family: 'Courier New', monospace;
       font-size: 10px;
@@ -690,7 +708,15 @@
         </div>
         <div class="meta-section">
           <label class="meta-label" for="edit-immagine">Immagine</label>
-          <input class="meta-input" type="text" id="edit-immagine" placeholder="nome-file.jpg" />
+          <div class="immagine-row">
+            <input class="meta-input" type="text" id="edit-immagine" placeholder="nome-file.jpg" />
+            <button id="btn-genera-img" class="btn-gen-img" title="Genera con Imagen 4">🖼 Genera</button>
+          </div>
+          <div id="img-preview-wrap" style="display:none;margin-top:0.6rem">
+            <img id="img-preview" src="" alt="Anteprima"
+                 style="width:100%;border-radius:8px;border:1px solid #2d2d3d;max-height:160px;object-fit:cover" />
+            <div id="img-prompt-text" style="font-size:0.65rem;color:#64748b;margin-top:0.4rem;line-height:1.4"></div>
+          </div>
         </div>
         <div class="meta-section">
           <span class="meta-label">SEO</span>
@@ -776,13 +802,14 @@
 
 // ── CONFIG ─────────────────────────────────────────────────────
 const API = {
-  auth:    '/api/admin-auth.php',
-  lista:   '/api/lista-articoli.php',
-  leggi:   '/api/articolo.php',
-  salva:   '/api/salva-bozza.php',
-  pubblica:'/api/pubblica-articolo.php',
-  elimina: '/api/elimina-articolo.php',
-  ai:      '/api/ai-action.php',
+  auth:      '/api/admin-auth.php',
+  lista:     '/api/lista-articoli.php',
+  leggi:     '/api/articolo.php',
+  salva:     '/api/salva-bozza.php',
+  pubblica:  '/api/pubblica-articolo.php',
+  elimina:   '/api/elimina-articolo.php',
+  ai:        '/api/ai-action.php',
+  generaImg: '/api/genera-immagine.php',
 };
 
 // ── STATE ──────────────────────────────────────────────────────
@@ -984,6 +1011,7 @@ function renderList(data) {
           <button class="btn-action" onclick="goEdit('${esc(a.slug)}')">Modifica</button>
           <button class="btn-action btn-ai" onclick="goEditAI('${esc(a.slug)}')">✦ AI</button>
           <button class="btn-action" onclick="goPreview('${esc(a.slug)}')">Anteprima</button>
+          ${!a.hasImmagine ? `<button class="btn-action btn-img" title="Genera immagine con Imagen 4" onclick="doGeneraImmagine(this,'${esc(a.slug)}')">📷</button>` : ''}
           ${a.bozza ? `<button class="btn-action btn-publish" data-slug="${esc(a.slug)}" onclick="doPublish(this,'${esc(a.slug)}')">Pubblica</button>` : ''}
           <button class="btn-action btn-delete" data-slug="${esc(a.slug)}" onclick="doDelete(this,'${esc(a.slug)}')">Elimina</button>
         </div>
@@ -1072,6 +1100,32 @@ window.doDelete = async (btn, slug) => {
   } catch(err) {
     toast('Errore: ' + err.message, 'error');
     btn.disabled = false; btn.textContent = 'Elimina';
+  }
+};
+
+// Genera immagine dalla lista
+window.doGeneraImmagine = async (btn, slug) => {
+  btn.disabled = true;
+  const orig = btn.textContent;
+  btn.innerHTML = '<span class="spinner"></span>';
+  try {
+    const r = await fetch(API.generaImg, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ slug }),
+    });
+    const d = await r.json();
+    if (d.success) {
+      toast('🖼 Immagine generata ✓', 'success');
+      // Update cached row
+      const cached = S.rows.find(a => a.slug === slug);
+      if (cached) cached.hasImmagine = true;
+      // Remove the 📷 button from DOM (article now has image)
+      btn.remove();
+    } else throw new Error(d.error || 'Errore');
+  } catch(err) {
+    toast('Errore immagine: ' + err.message, 'error');
+    btn.disabled = false; btn.textContent = orig;
   }
 };
 
@@ -1381,6 +1435,47 @@ document.getElementById('btn-ai-apply').addEventListener('click', () => {
 document.getElementById('btn-ai-discard').addEventListener('click', () => {
   document.getElementById('ai-result').classList.remove('show');
   S.aiRes = null;
+});
+
+// ── GENERA IMMAGINE (editor) ────────────────────────────────────
+document.getElementById('btn-genera-img').addEventListener('click', async () => {
+  const slug = S.slug;
+  if (!slug) { toast('Salva prima l\'articolo per generare l\'immagine', 'error'); return; }
+
+  const btn = document.getElementById('btn-genera-img');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>';
+
+  // Nascondi anteprima precedente
+  document.getElementById('img-preview-wrap').style.display = 'none';
+
+  try {
+    const r = await fetch(API.generaImg, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ slug }),
+    });
+    const d = await r.json();
+    if (!d.success) throw new Error(d.error || d.warning || 'Errore generazione');
+
+    // Aggiorna campo immagine
+    document.getElementById('edit-immagine').value = d.immagine;
+
+    // Mostra anteprima con cache-bust
+    const preview = document.getElementById('img-preview');
+    preview.src   = d.url + '?t=' + Date.now();
+    document.getElementById('img-prompt-text').textContent = '💬 ' + d.prompt;
+    document.getElementById('img-preview-wrap').style.display = 'block';
+
+    toast('🖼 Immagine generata ✓', 'success');
+    S.rows = []; // invalida cache lista
+
+  } catch(err) {
+    toast('Errore: ' + err.message, 'error');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '🖼 Genera';
+  }
 });
 
 // ── START ──────────────────────────────────────────────────────
