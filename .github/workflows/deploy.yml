@@ -53,6 +53,7 @@ jobs:
             "FB_PAGE_ACCESS_TOKEN=${{ secrets.FB_PAGE_ACCESS_TOKEN }}" \
             "GA4_PROPERTY_ID=${{ secrets.GA4_PROPERTY_ID }}" \
             "GSC_SITE_URL=${{ secrets.GSC_SITE_URL }}" \
+            "IMAGEN_API_KEY=${{ secrets.IMAGEN_API_KEY }}" \
             > .env-server
           # JSON con doppi apici: passato via env var per evitare shell injection
           printf 'GOOGLE_SERVICE_ACCOUNT_JSON=%s\n' "$GOOGLE_SERVICE_ACCOUNT_JSON" >> .env-server
