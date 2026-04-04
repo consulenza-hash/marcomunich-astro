@@ -3,7 +3,8 @@ export const prerender = true;
 
 // Genera stub per ogni articolo esistente
 export async function getStaticPaths() {
-  const files = import.meta.glob('/src/content/articoli/*/index.mdoc', { eager: false });
+  // query:'?raw' evita che Vite tenti di parsare i .mdoc come JavaScript
+  const files = import.meta.glob('/src/content/articoli/*/index.mdoc', { query: '?raw', import: 'default' });
   return Object.keys(files).map((filePath) => {
     const slug = filePath.match(/\/([^/]+)\/index\.mdoc$/)?.[1] ?? '';
     return { params: { slug } };
