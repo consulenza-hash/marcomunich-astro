@@ -61,17 +61,18 @@ jobs:
       - name: Deploy via lftp mirror
         run: |
           sudo apt-get install -y lftp > /dev/null 2>&1
-          lftp -c "
+          timeout 600 lftp -c "
             set ftp:ssl-allow yes;
             set ftp:ssl-force no;
+            set ftp:passive-mode yes;
             set ssl:verify-certificate no;
             set net:timeout 30;
-            set net:max-retries 5;
+            set net:max-retries 3;
             set net:reconnect-interval-base 5;
-            set mirror:parallel-transfer-count 5;
+            set mirror:parallel-transfer-count 2;
             open -u ${{ secrets.FTP_USERNAME }},${{ secrets.FTP_PASSWORD }} 89.40.173.242;
             put .env-server -o /.env;
-            mirror --reverse --delete --verbose --parallel=5 dist/ /public_html/;
+            mirror --reverse --delete --verbose --parallel=2 dist/ /public_html/;
             quit;
           " || echo "⚠️ lftp exited with warnings (directory cleanup non-fatal)"
           echo "Deploy complete!"
