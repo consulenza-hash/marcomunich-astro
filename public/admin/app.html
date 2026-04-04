@@ -1253,11 +1253,17 @@ async function doSave() {
     if (d.success) {
       toast('Salvato ✓', 'success');
       S.rows = []; // invalidate cache
-      // If new article, update slug
+      // If new article, update slug + activate preview link
       if (!S.slug && d.slug) {
         S.slug = d.slug;
         document.getElementById('edit-slug-display').textContent = d.slug;
         window.history.replaceState(null, '', '#edit/' + encodeURIComponent(d.slug));
+        // replaceState doesn't fire hashchange → manually wire up preview link
+        const previewLink = document.getElementById('btn-preview-link');
+        previewLink.style.display = '';
+        previewLink.href = '#preview/' + encodeURIComponent(d.slug);
+        previewLink.textContent = S.bozza ? 'Anteprima ○' : 'Anteprima ●';
+        document.getElementById('breadcrumb').textContent = titolo || d.slug;
       }
     } else throw new Error(d.error || 'Errore salvataggio');
   } catch(err) {
