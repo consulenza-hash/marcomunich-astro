@@ -1434,7 +1434,14 @@ async function runAI(azione, istruzione) {
     const d = await r.json();
     if (!r.ok || d.error) throw new Error(d.error || 'Errore AI');
     S.aiRes = d;
-    const preview = d.corpo || d.seo_title || d.seo_description || JSON.stringify(d, null, 2);
+    let preview = d.corpo || d.seo_title || d.seo_description || JSON.stringify(d, null, 2);
+    if (azione === 'bold' && d.corpo) {
+      const firstBold = d.corpo.indexOf('**');
+      const boldPairs = (d.corpo.match(/\*\*/g) || []).length / 2;
+      const header = boldPairs > 0 ? `${Math.round(boldPairs)} grassetti aggiunti. Anteprima:\n\n` : '';
+      const start = firstBold > 80 ? Math.max(0, firstBold - 60) : 0;
+      preview = header + (start > 0 ? '…' : '') + d.corpo.substring(start, start + 400);
+    }
     document.getElementById('ai-result-text').textContent = (preview || '').slice(0, 500) + (preview && preview.length > 500 ? '…' : '');
     document.getElementById('ai-result').classList.add('show');
     toast('AI completato ✓', 'success');
@@ -1449,7 +1456,13 @@ async function runAI(azione, istruzione) {
 document.getElementById('btn-ai-apply').addEventListener('click', () => {
   if (!S.aiRes) return;
   const corpo = document.getElementById('corpo-editor');
-  if (S.aiRes.corpo && corpo) { corpo.value = S.aiRes.corpo; updateWordCount(); toast('Applicato ✓', 'success'); }
+  if (S.aiRes.corpo && corpo) {
+    corpo.value = S.aiRes.corpo;
+    updateWordCount();
+    const firstBold = S.aiRes.corpo.indexOf('**');
+    if (firstBold > 0) { corpo.focus(); corpo.setSelectionRange(firstBold, firstBold + 2); }
+    toast('Applicato ✓', 'success');
+  }
   if (S.aiRes.seo_title) document.getElementById('edit-seo-title').value = S.aiRes.seo_title;
   if (S.aiRes.seo_description) document.getElementById('edit-seo-desc').value = S.aiRes.seo_description;
   if (S.aiRes.descrizione) document.getElementById('edit-descr').value = S.aiRes.descrizione;

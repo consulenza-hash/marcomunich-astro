@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths-ignore:
       - 'public/api/**'
+      - 'public/admin/**'
   repository_dispatch:
     types: [wp_content_changed, wp_post_published]
   workflow_dispatch:
