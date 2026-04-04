@@ -493,6 +493,10 @@ const bozze      = articoli.filter(a => a.bozza).length;
         var row = btnEl.closest('tr');
         var badge = row.querySelector('.badge');
         if (badge) { badge.className = 'badge badge-pub'; badge.textContent = '● Pubblicato'; }
+        // Aggiorna link anteprima da /admin/preview/{slug} → /{slug}
+        var previewLink = row.querySelector('.btn-preview');
+        if (previewLink) { previewLink.href = '/' + slug; }
+        row.dataset.status = 'pubblicato';
         btnEl.remove();
       } else {
         throw new Error(data.error || 'Pubblicazione fallita');

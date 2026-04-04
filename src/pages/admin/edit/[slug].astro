@@ -152,7 +152,7 @@ const { slug } = Astro.params;
     <span class="current" id="breadcrumb-title">{slug}</span>
   </div>
   <div class="header-actions">
-    <a href={`/${slug}`} target="_blank" class="btn btn-ghost">Anteprima ↗</a>
+    <a href={`/${slug}`} target="_blank" class="btn btn-ghost" id="preview-link">Anteprima ↗</a>
     <button class="btn btn-ai-open" id="open-ai-btn">✦ AI</button>
     <button class="btn btn-save" id="save-btn">Salva</button>
   </div>
@@ -244,6 +244,13 @@ const { slug } = Astro.params;
     sha = data.sha || '';
     isBozza = data.bozza || false;
     document.getElementById('breadcrumb-title').textContent = data.titolo || slug;
+
+    // Aggiorna link anteprima: bozze → /admin/preview/{slug}, pubblicati → /{slug}
+    var previewLink = document.getElementById('preview-link');
+    if (previewLink) {
+      previewLink.href = isBozza ? '/admin/preview/' + slug : '/' + slug;
+      previewLink.title = isBozza ? 'Anteprima bozza (protetta)' : 'Vedi pagina pubblica';
+    }
 
     document.getElementById('editor-content').className = 'editor-layout';
     document.getElementById('editor-content').innerHTML =

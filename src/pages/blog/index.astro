@@ -1,7 +1,7 @@
 ---
 /**
  * blog/index.astro
- * Pagina blog — lista articoli con ricerca client-side
+ * Archivio articoli — griglia 3 colonne con immagine in evidenza
  */
 import BaseLayout from '@layouts/BaseLayout.astro';
 import jsYaml from 'js-yaml';
@@ -10,6 +10,15 @@ const rawFiles = import.meta.glob('/src/content/articoli/*/index.mdoc', {
   eager: true,
   as: 'raw',
 }) as Record<string, string>;
+
+// Formatta data leggibile
+function formatData(dateStr: string): string {
+  if (!dateStr) return '';
+  try {
+    const d = new Date(dateStr);
+    return d.toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' });
+  } catch { return dateStr; }
+}
 
 const posts = Object.entries(rawFiles).map(([filePath, content]) => {
   const slug   = filePath.match(/\/([^/]+)\/index\.mdoc$/)?.[1] ?? '';
@@ -20,6 +29,7 @@ const posts = Object.entries(rawFiles).map(([filePath, content]) => {
     titolo:     (fm.titolo     as string) ?? slug,
     descrizione:(fm.descrizione as string) ?? '',
     data:       fm.data ? String(fm.data) : '',
+    dataLegg:   fm.data ? formatData(String(fm.data)) : '',
     categoria:  (fm.categoria  as string) ?? '',
     immagine:   fm.immagine ? `/images/articoli/${fm.immagine}` : null,
     bozza:      fm.bozza === true,
@@ -40,18 +50,18 @@ const posts = Object.entries(rawFiles).map(([filePath, content]) => {
     <div class="bl-hero__inner mm-container">
       <p class="mm-tag" style="margin-bottom:1.2rem">Articoli</p>
       <h1 class="mm-h1" style="margin-bottom:2rem">Blog.</h1>
-      <p style="font-size:1rem;line-height:1.75;color:rgba(255,255,255,0.55);max-width:480px;font-weight:300">
+      <p class="bl-hero__sub">
         {posts.length} articoli su personal branding olistico, marketing autentico e presenza online per chi lavora nel settore del benessere.
       </p>
     </div>
   </section>
 
-  <!-- RICERCA + LISTA -->
+  <!-- RICERCA + GRIGLIA -->
   <section class="mm-section-light bl-body">
     <div class="mm-container">
 
-      <!-- Search -->
-      <div class="bl-search">
+      <!-- Search + contatore -->
+      <div class="bl-toolbar">
         <input
           type="search"
           id="bl-search-input"
@@ -59,26 +69,47 @@ const posts = Object.entries(rawFiles).map(([filePath, content]) => {
           aria-label="Cerca articoli"
           class="bl-search__input"
         />
+        <span class="bl-count" id="bl-count">{posts.length} articoli</span>
       </div>
 
-      <!-- Lista articoli -->
-      <div id="bl-grid">
-        {posts.map((post, i) => (
+      <!-- Griglia card -->
+      <div id="bl-grid" class="bl-grid">
+        {posts.map((post) => (
           <a
             href={`/${post.slug}/`}
-            class="bl-item"
+            class="bl-card"
             data-search={`${post.titolo} ${post.categoria} ${post.descrizione}`.toLowerCase()}
           >
-            <span class="bl-item__num">{String(i + 1).padStart(2, '0')}</span>
-            <span class="bl-item__cat">{post.categoria || 'Articolo'}</span>
-            <span class="bl-item__title">{post.titolo}</span>
-            <span class="bl-item__arrow">→</span>
+            <!-- Immagine -->
+            <div class="bl-card__img">
+              {post.immagine
+                ? <img src={post.immagine} alt={post.titolo} loading="lazy" width="600" height="340" />
+                : <div class="bl-card__img-placeholder" aria-hidden="true">
+                    <span class="bl-card__img-letter">{post.titolo.charAt(0).toUpperCase()}</span>
+                  </div>
+              }
+            </div>
+
+            <!-- Corpo card -->
+            <div class="bl-card__body">
+              {post.categoria && (
+                <span class="bl-card__cat">{post.categoria}</span>
+              )}
+              <h2 class="bl-card__title">{post.titolo}</h2>
+              {post.descrizione && (
+                <p class="bl-card__desc">{post.descrizione}</p>
+              )}
+              <div class="bl-card__footer">
+                {post.dataLegg && <time class="bl-card__date" datetime={post.data}>{post.dataLegg}</time>}
+                <span class="bl-card__arrow">→</span>
+              </div>
+            </div>
           </a>
         ))}
       </div>
 
       <p class="bl-noresults" id="bl-noresults" aria-live="polite" hidden>
-        Nessun articolo trovato.
+        Nessun articolo trovato per questa ricerca.
       </p>
 
     </div>
@@ -89,45 +120,67 @@ const posts = Object.entries(rawFiles).map(([filePath, content]) => {
 </BaseLayout>
 
 <script>
-  function setupSearch() {
-    const input = document.getElementById('bl-search-input') as HTMLInputElement;
-    const grid  = document.getElementById('bl-grid');
-    const noRes = document.getElementById('bl-noresults');
-    const items = grid?.querySelectorAll('.bl-item');
+  function setupBlog() {
+    const input  = document.getElementById('bl-search-input') as HTMLInputElement | null;
+    const grid   = document.getElementById('bl-grid');
+    const noRes  = document.getElementById('bl-noresults');
+    const count  = document.getElementById('bl-count');
+    const items  = grid?.querySelectorAll<HTMLElement>('.bl-card');
+    const total  = items?.length ?? 0;
 
     input?.addEventListener('input', () => {
       const q = input.value.trim().toLowerCase();
       let visible = 0;
       items?.forEach((item) => {
         const match = !q || (item.getAttribute('data-search') ?? '').includes(q);
-        (item as HTMLElement).style.display = match ? '' : 'none';
+        item.style.display = match ? '' : 'none';
         if (match) visible++;
       });
       if (noRes) noRes.hidden = visible > 0;
+      if (count) count.textContent = q
+        ? `${visible} risultat${visible === 1 ? 'o' : 'i'}`
+        : `${total} articoli`;
     });
   }
-  setupSearch();
-  document.addEventListener('astro:page-load', setupSearch);
+  setupBlog();
+  document.addEventListener('astro:page-load', setupBlog);
 </script>
 
 <style>
+  /* ── HERO ─────────────────────────────────────────────────────────────── */
   .bl-hero {
     background: #0d0d0d;
     padding: 9rem 0 5rem;
-    min-height: 50vh;
+    min-height: 46vh;
     display: flex;
     align-items: center;
   }
+  .bl-hero__sub {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: rgba(255,255,255,0.52);
+    max-width: 480px;
+    font-weight: 300;
+  }
+
+  /* ── BODY ─────────────────────────────────────────────────────────────── */
   .bl-body { padding: 4rem 0 6rem; }
 
-  /* Search */
-  .bl-search { margin-bottom: 2.5rem; }
+  /* ── TOOLBAR ──────────────────────────────────────────────────────────── */
+  .bl-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+  }
   .bl-search__input {
-    width: 100%;
-    max-width: 480px;
+    flex: 1;
+    min-width: 220px;
+    max-width: 420px;
     font-family: 'Inter', sans-serif;
     font-size: 0.88rem;
-    padding: 0.75rem 1.2rem;
+    padding: 0.7rem 1.2rem;
     border: 1.5px solid #e0e0e0;
     border-radius: 50px;
     background: #fff;
@@ -137,65 +190,150 @@ const posts = Object.entries(rawFiles).map(([filePath, content]) => {
   }
   .bl-search__input::placeholder { color: #aaa; }
   .bl-search__input:focus { border-color: #0d0d0d; }
-
-  /* Lista */
-  .bl-item {
-    display: grid;
-    grid-template-columns: 44px 140px 1fr 24px;
-    align-items: center;
-    gap: 1.5rem;
-    padding: 1rem 0;
-    border-bottom: 1px solid #ebebeb;
-    text-decoration: none;
-    transition: background 0.1s;
-  }
-  .bl-item:first-child { border-top: 1px solid #ebebeb; }
-  .bl-item:hover { background: #fafafa; opacity: 1; }
-  .bl-item:hover .bl-item__title { color: #e85d00; }
-  .bl-item:hover .bl-item__arrow { color: #e85d00; }
-
-  .bl-item__num {
-    font-family: 'Inter', sans-serif;
-    font-weight: 700;
-    font-size: 0.7rem;
-    color: #ccc;
-    letter-spacing: 0.05em;
-  }
-  .bl-item__cat {
-    font-size: 0.62rem;
-    font-weight: 700;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
+  .bl-count {
+    font-size: 0.78rem;
     color: #aaa;
     white-space: nowrap;
+  }
+
+  /* ── GRIGLIA ──────────────────────────────────────────────────────────── */
+  .bl-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  /* ── CARD ─────────────────────────────────────────────────────────────── */
+  .bl-card {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    border-radius: 10px;
     overflow: hidden;
-    text-overflow: ellipsis;
+    border: 1px solid #ebebeb;
+    background: #fff;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
   }
-  .bl-item__title {
+  .bl-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 28px rgba(0,0,0,0.10);
+  }
+
+  /* Immagine */
+  .bl-card__img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: #f3f3f3;
+    flex-shrink: 0;
+  }
+  .bl-card__img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+  }
+  .bl-card:hover .bl-card__img img {
+    transform: scale(1.04);
+  }
+
+  /* Placeholder senza immagine */
+  .bl-card__img-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .bl-card__img-letter {
+    font-size: 3rem;
+    font-weight: 800;
+    color: rgba(255,255,255,0.15);
     font-family: 'Inter', sans-serif;
-    font-weight: 600;
-    font-size: 0.88rem;
+    user-select: none;
+  }
+
+  /* Corpo */
+  .bl-card__body {
+    padding: 1.25rem 1.4rem 1.4rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 0.5rem;
+  }
+  .bl-card__cat {
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #e85d00;
+    line-height: 1;
+  }
+  .bl-card__title {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
     color: #0d0d0d;
-    line-height: 1.4;
+    line-height: 1.38;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
     transition: color 0.15s;
   }
-  .bl-item__arrow {
-    font-size: 0.9rem;
+  .bl-card:hover .bl-card__title { color: #e85d00; }
+  .bl-card__desc {
+    font-size: 0.82rem;
+    color: #666;
+    line-height: 1.6;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    flex: 1;
+  }
+  .bl-card__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+    padding-top: 0.75rem;
+    border-top: 1px solid #f0f0f0;
+  }
+  .bl-card__date {
+    font-size: 0.72rem;
+    color: #aaa;
+    font-variant-numeric: tabular-nums;
+  }
+  .bl-card__arrow {
+    font-size: 0.85rem;
     color: #ccc;
-    text-align: right;
-    transition: color 0.15s;
+    transition: color 0.15s, transform 0.15s;
   }
+  .bl-card:hover .bl-card__arrow {
+    color: #e85d00;
+    transform: translateX(3px);
+  }
+
+  /* No results */
   .bl-noresults {
     font-size: 0.85rem;
     color: #999;
-    padding: 2rem 0;
+    padding: 3rem 0;
+    text-align: center;
   }
 
-  @media (max-width: 768px) {
-    .bl-item {
-      grid-template-columns: 36px 1fr 20px;
-      gap: 0.8rem;
-    }
-    .bl-item__cat { display: none; }
+  /* ── RESPONSIVE ───────────────────────────────────────────────────────── */
+  @media (max-width: 1024px) {
+    .bl-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+  }
+  @media (max-width: 600px) {
+    .bl-grid { grid-template-columns: 1fr; gap: 1.25rem; }
+    .bl-toolbar { gap: 1rem; }
+    .bl-search__input { max-width: 100%; }
   }
 </style>
