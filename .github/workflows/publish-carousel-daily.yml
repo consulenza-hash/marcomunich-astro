@@ -1,0 +1,79 @@
+name: Publish Carousel to Instagram
+
+on:
+  schedule:
+    # Every day at 07:30 UTC = 09:30 CEST (summer) / 08:30 CET (winter)
+    # Carosello 1 fires on 2026-04-06 during CEST, so 07:30 UTC = 09:30 local
+    - cron: '30 7 * * *'
+
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry-run (simulate without publishing)'
+        type: boolean
+        default: false
+      force_id:
+        description: 'Force specific carousel id (optional)'
+        type: string
+        default: ''
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Show schedule status
+        run: python scripts/publish_carousel.py --list
+
+      - name: Publish next carousel (scheduled run)
+        if: github.event_name == 'schedule'
+        env:
+          META_ACCESS_TOKEN: ${{ secrets.META_ACCESS_TOKEN }}
+          INSTAGRAM_BUSINESS_ACCOUNT_ID: ${{ secrets.INSTAGRAM_BUSINESS_ACCOUNT_ID }}
+          CAROUSELS_BASE_URL: https://www.marcomunich.com/contenuti-social/immagini-caroselli
+        run: python scripts/publish_carousel.py
+
+      - name: Publish (manual dispatch)
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          META_ACCESS_TOKEN: ${{ secrets.META_ACCESS_TOKEN }}
+          INSTAGRAM_BUSINESS_ACCOUNT_ID: ${{ secrets.INSTAGRAM_BUSINESS_ACCOUNT_ID }}
+          CAROUSELS_BASE_URL: https://www.marcomunich.com/contenuti-social/immagini-caroselli
+        run: |
+          ARGS=""
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            ARGS="$ARGS --dry-run"
+          fi
+          if [ -n "${{ inputs.force_id }}" ]; then
+            ARGS="$ARGS --force-id ${{ inputs.force_id }}"
+          fi
+          python scripts/publish_carousel.py $ARGS
+
+      - name: Commit updated schedule.json
+        if: success() && github.event_name != 'workflow_dispatch' || (github.event_name == 'workflow_dispatch' && inputs.dry_run == false)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet scripts/schedule.json; then
+            echo "No changes to schedule.json"
+          else
+            git add scripts/schedule.json
+            git commit -m "chore: update carousel schedule after publish [skip ci]"
+            git push
+          fi
