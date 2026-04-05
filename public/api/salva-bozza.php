@@ -33,14 +33,25 @@ try {
         if (!$slug) $slug = 'articolo-' . time();
     }
 
-    // ── Build .mdoc content ──
-    $mdocContent = buildMdoc($art, $existingTitolo, $existingCorpo, true);
-
     $filePath = "src/content/articoli/{$slug}/index.mdoc";
 
-    // Check if file exists (need SHA for update)
+    // Check if file exists (need SHA for update) and preserve existing fields
     $existing = ghGetFile($filePath);
     $sha = $existing ? $existing['sha'] : null;
+
+    // Preserve immagine and bozza from existing frontmatter
+    if ($existing) {
+        if (empty($existingImmagine) && preg_match('/^immagine:\s*(\S+)/m', $existing['content'], $m)) {
+            $existingImmagine = trim($m[1]);
+        }
+        // Preserve bozza status from existing file (pubblica-articolo.php removes it separately)
+        $preserveBozza = (bool) preg_match('/^bozza:\s*true/m', $existing['content']);
+    } else {
+        $preserveBozza = true; // new articles always start as draft
+    }
+
+    // ── Build .mdoc content ──
+    $mdocContent = buildMdoc($art, $existingTitolo, $existingCorpo, $preserveBozza, $existingImmagine);
 
     $commitMessage = 'feat: bozza AI "' . ($art['titolo'] ?? $slug) . '" [' . $modo . ']';
     $res = ghPutFile($filePath, $mdocContent, $commitMessage, $sha);
@@ -74,7 +85,7 @@ function escYaml(string $s): string {
     return str_replace(['"', '\\'], ['\\"', '\\\\'], $s);
 }
 
-function buildMdoc(array $art, string $existingTitolo, string $existingCorpo, bool $bozza = false): string {
+function buildMdoc(array $art, string $existingTitolo, string $existingCorpo, bool $bozza = false, string $existingImmagine = ''): string {
     $titolo = (!empty($art['titolo']) && $art['titolo'] !== 'null') ? $art['titolo'] : $existingTitolo;
     $corpo = (!empty($art['corpo']) && $art['corpo'] !== 'null') ? $art['corpo'] : $existingCorpo;
     $descr = (!empty($art['descrizione']) && $art['descrizione'] !== 'null') ? $art['descrizione'] : '';
@@ -90,6 +101,9 @@ function buildMdoc(array $art, string $existingTitolo, string $existingCorpo, bo
     if ($seoTitle) $yaml .= 'seo_title: "' . escYaml($seoTitle) . "\"\n";
     if ($seoDescr) $yaml .= 'seo_description: "' . escYaml($seoDescr) . "\"\n";
     $yaml .= "seo_noindex: false\n";
+    // Preserve immagine if present (from upload or existing frontmatter)
+    $immagine = (!empty($art['immagine']) && $art['immagine'] !== 'null') ? $art['immagine'] : $existingImmagine;
+    if ($immagine) $yaml .= 'immagine: ' . $immagine . "\n";
     if ($bozza) $yaml .= "bozza: true\n";
 
     if (count($faqs) > 0) {
