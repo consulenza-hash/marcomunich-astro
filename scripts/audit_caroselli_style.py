@@ -71,6 +71,83 @@ NON_X_MA_Y_PATTERNS = [
     (r"\b(?:dà|chiede|include|esclude|aiuta|consuma|costruisce|distrugge|attira|respinge)\s+,?\s*non\s+(?:dà|chiede|include|esclude|aiuta|consuma|costruisce|distrugge|attira|respinge)\b", "verbo non verbo opposizione"),
 ]
 
+
+def detect_semantic_trampoline(text):
+    """Rileva il pattern semantico 'nego prima, affermo dopo' anche quando
+    la forma letterale sfugge alle regex. Cerca frasi del tipo:
+
+      "X non viene da A. Viene da B"
+      "X non riguarda A. Riguarda B"
+      "La difficoltà non arriva da A. Arriva da B"
+      "Non si tratta di A. Si tratta di B"
+      "La fatica non nasce da A. Nasce da B"
+      "Non è colpa di X. È Y"
+
+    Euristica: divido il testo in frasi, per ogni coppia di frasi consecutive
+    verifico se la prima contiene una negazione (non + verbo) e la seconda
+    ripete lo stesso verbo (o un verbo semanticamente affermativo) senza
+    negazione. Se c'è eco del soggetto o del verbo, è trampolino.
+
+    Ritorna lista di tuple (frase_nega, frase_afferma) che violano.
+    """
+    # Split in frasi sulla punteggiatura forte
+    sentences = re.split(r'(?<=[.!?])\s+', text)
+    violations = []
+
+    # Verbi "affermativi" che segnalano ripresa positiva dopo negazione
+    affirm_verbs = [
+        'è', 'sono', 'era', 'erano', 'sarà', 'saranno', 'sarebbe',
+        'viene', 'vengono', 'veniva', 'venivano', 'verrà', 'verranno',
+        'arriva', 'arrivano', 'arrivava', 'arrivavano', 'arriverà',
+        'riguarda', 'riguardano', 'riguardava', 'riguardavano',
+        'nasce', 'nascono', 'nasceva', 'nascevano',
+        'dipende', 'dipendono', 'dipendeva', 'dipendevano',
+        'serve', 'servono', 'serviva', 'servivano',
+        'va', 'vanno', 'andava', 'andavano',
+        'si\\s+tratta',
+        'ha\\s+a\\s+che\\s+fare',
+    ]
+    verb_alt = '|'.join(affirm_verbs)
+
+    # Pattern di "ripresa" all'inizio di una frase affermativa.
+    # Esempi: "Viene dal ...", "Riguarda il ...", "È un segnale di ..."
+    repris_pattern = re.compile(
+        r'^\s*(?:' + verb_alt + r')\b',
+        re.IGNORECASE
+    )
+
+    # Pattern di negazione semantica nella frase precedente.
+    # Cerca: "non" seguito entro 8 parole da uno dei verbi affermativi.
+    nega_pattern = re.compile(
+        r'\bnon\s+(?:\w+\s+){0,8}?(?:' + verb_alt + r')\b',
+        re.IGNORECASE
+    )
+
+    for i in range(len(sentences) - 1):
+        curr = sentences[i].strip()
+        nxt = sentences[i + 1].strip()
+        if len(curr) < 10 or len(nxt) < 10:
+            continue
+        # La frase corrente contiene negazione con verbo affermativo?
+        if nega_pattern.search(curr):
+            # La successiva inizia con ripresa affermativa dello stesso tipo di verbo?
+            if repris_pattern.match(nxt):
+                violations.append((curr[:100], nxt[:100]))
+            # Alternativa: la successiva inizia con "Arriva", "Viene", "È",
+            # "Riguarda" senza soggetto esplicito (ripresa implicita del soggetto
+            # della frase precedente) — anche senza match con repris_pattern, se
+            # la sequenza di apertura è un verbo nudo.
+            else:
+                first_word_match = re.match(r'^\s*([A-Z]?[a-zàèéìòù]+)', nxt)
+                if first_word_match:
+                    first = first_word_match.group(1).lower()
+                    if first in ('arriva', 'viene', 'è', 'riguarda', 'nasce', 'dipende',
+                                 'serve', 'va', 'sta', 'sono', 'diventa', 'resta',
+                                 'rappresenta', 'corrisponde', 'funziona'):
+                        violations.append((curr[:100], nxt[:100]))
+
+    return violations
+
 # 2. Meta-frasi
 META_PHRASES = [
     r"\bè\s+importante\b",
@@ -184,6 +261,13 @@ def audit_text(text):
 
     if count_telegraphic(text):
         violations.append(("6-TELEGRAFICO", text[:80] + "..."))
+
+    # 7. Semantic trampoline: nego in una frase, affermo nella successiva
+    for nega, afferma in detect_semantic_trampoline(text):
+        violations.append((
+            "7-SEMANTIC-TRAMPOLINE",
+            f"{nega[:60]}... | {afferma[:60]}"
+        ))
 
     return violations
 

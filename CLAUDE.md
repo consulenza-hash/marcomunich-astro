@@ -67,15 +67,117 @@ All agents can invoke system commands. Read `.claude/command-index.md` for the f
 
 ## Regole di stile — contenuti italiani (SEMPRE ATTIVE)
 
-Ogni volta che scrivi testo in italiano per questo sito (copy, prompt, guide, descrizioni):
+Ogni volta che scrivi testo in italiano per questo sito (copy, prompt, guide, descrizioni, caroselli, reel, articoli, newsletter, post social), rispetta tutte le regole qui sotto. Nessuna è opzionale.
 
-- **Niente strutture "non X ma Y"** — nessuna variante: "non si tratta di X, si tratta di Y", "non parliamo di X, parliamo di Y", "non sto dicendo X, sto dicendo Y", "non serve X, serve Y", "il punto non è X, il punto è Y". Afferma direttamente senza negare prima l'alternativa.
-- **Niente triplette** — zero sequenze di tre aggettivi, tre verbi, tre stati, tre "senza…".
-- **Niente meta-frasi** — elimina "è importante", "è chiaro", "è la parte più forte", "è giusto partire da…".
-- **Niente astratti senza dettagli** — "consapevolezza", "lucidità", "profondo", "responsabilità", "nel rispetto" vanno supportati da scene concrete o eliminati.
-- **Ritmo disteso, non telegrafico** — ogni pensiero si sviluppa per almeno 3-4 righe prima del punto. Se in due righe ci sono più di due punti, legare i pensieri con costruzioni naturali.
-- **Chiudi con fatti o decisioni pratiche**, non con frasi da comunicato stampa.
-- **Zero emdash** (—) nel copy rivolto agli utenti.
+### 1. Affermazione diretta, mai definizione per negazione
+
+Afferma direttamente quello che vuoi dire, senza mai passare dalla negazione di un'alternativa come trampolino. Questo vincolo copre tutte le varianti, visibili e mascherate:
+
+- "non X ma Y"
+- "non è X, è Y"
+- "non è X. È Y" (stessa cosa con il punto, lo stesso meccanismo concettuale)
+- "X non è A, è B"
+- "il punto non è X, è Y"
+- "non si tratta di X, si tratta di Y"
+- "non parlo di X, parlo di Y"
+- "non sto dicendo X, sto dicendo Y"
+- "non serve X, serve Y"
+- "non è una questione di X, è una questione di Y"
+- "X non viene da A. Viene da B"
+- "X non arriva da A. Arriva da B"
+- "X non riguarda A. Riguarda B"
+- "X non dipende da A. Dipende da B"
+- "X non è un A. È un B"
+
+Non basta cambiare la punteggiatura, non basta allungare il testo tra la negazione e l'affermazione, non basta inserire parole in mezzo. Se la tua tesi è forte deve stare in piedi da sola, in forma affermativa, senza la stampella dell'alternativa negata.
+
+**Unica eccezione ammessa:** quando il contrasto serve davvero al senso del testo, puoi menzionare l'alternativa dentro la stessa frase della tesi, legata da una congiunzione in un unico flusso continuo. Le congiunzioni ammesse sono: *più che*, *anziché*, *invece di*, *piuttosto che*, *al posto di*. Mai due frasi separate che funzionino come "prima nego, poi affermo".
+
+### 2. Varietà obbligatoria delle aperture
+
+Nessuna formula di apertura può ripetersi come stampo da post a post, da slide a slide, da paragrafo a paragrafo. In particolare vanno ruotate e mai sovrautilizzate queste aperture tipiche del registro AI italiano:
+
+- "C'è un X che..."
+- "Esiste un X che..."
+- "Mi capita spesso di..."
+- "Ho notato che..."
+- "Nel settore olistico italiano..."
+- "C'è una cosa che..."
+- "Quando un counselor..."
+- "Ogni volta che..."
+- "Molti professionisti..."
+- "La prima cosa che..."
+
+Ciascuna di queste aperture è lecita usata una volta, diventa pattern AI quando ricompare all'apertura di due paragrafi o slide consecutivi nello stesso documento. Su dieci pezzi consecutivi, ciascun tipo di apertura va usato al massimo una volta.
+
+Per la varietà alterna attivamente aperture di questi tipi:
+
+- **Scena concreta vissuta** con dialogo breve o gesto fisico ("Parlo con Anna, counselor da sette anni, e mi dice che...")
+- **Affermazione diretta senza preamboli** che entra subito nel merito ("Più un counselor è preparato, più fatica a farsi capire online.")
+- **Osservazione personale** con riferimento temporale specifico ("L'altro giorno ho visto un post di una coach che...")
+- **Domanda implicita** che il lettore si sta già facendo ("Perché i counselor più preparati faticano di più a scrivere?")
+- **Dettaglio sensoriale** o frase sentita da un cliente ("Non riesco più a dormire di mercoledì notte, mi ha detto un cliente la settimana scorsa.")
+- **Numero concreto o fatto verificabile** senza "c'è" ("Il settanta per cento dei counselor che seguo ha il blog fermo da mesi.")
+- **Riferimento a ciò che il lettore sa già per esperienza** ("Lo sai bene cosa succede quando provi a scrivere un post e cancelli tutto dopo dieci minuti.")
+- **Apertura con contrasto interno** del professionista ("Quando scrivi un post sul tuo lavoro, dentro di te succedono due cose contemporaneamente.")
+- **Apertura con una scelta** che qualcuno deve fare ("Puoi fare due cose con un cliente che cancella all'ultimo minuto.")
+- **Nome proprio di una situazione ricorrente** che poi spieghi ("La chiamo la trappola dell'esperto, e colpisce più o meno tutti i counselor che conosco.")
+
+Quando non trovi l'apertura, leggi le prime parole dei tre pezzi precedenti: se iniziano tutti nello stesso registro, cambia. La varietà delle aperture è la cosa che rende il testo umano e vivo; la ripetizione è il marcatore AI più riconoscibile dopo "non X ma Y".
+
+### 3. Scene concrete, non concetti astratti
+
+Lavora per scene e conseguenze verificabili, non per concetti astratti. Ogni volta che usi una parola come *consapevolezza*, *lucidità*, *profondo*, *responsabilità*, *autenticità*, *nel rispetto*, *presenza*, *spiritualità*, *resilienza*, *cambiamento*, *trasformazione*, deve esserci subito prima o subito dopo un dettaglio concreto che la rende visibile al lettore: una frase che una persona ha detto, un gesto fisico, un oggetto nella stanza, una settimana tipo con giorni specifici, una conseguenza misurabile. Senza l'ancora concreta, la parola astratta va eliminata e sostituita dall'ancora stessa, che dice la stessa cosa in forma tangibile. Preferisci sempre descrivere cosa fa una persona invece di nominare cosa prova.
+
+### 4. Niente triplette in nessuna forma
+
+Niente sequenze di tre aggettivi, tre verbi, tre stati, tre "senza…", tre sostantivi collegati, tre possibilità elencate. Due elementi vanno bene, uno va benissimo, tre diventano sempre retorica. Il vincolo vale anche nelle enumerazioni interne a una frase lunga: *"con pause, con parole semplici, con ripetizioni"* è una tripletta, non una lista. Se hai davvero bisogno di elencare tre cose perché servono tutte al senso, spezza la frase e usa un altro costrutto, oppure taglia una delle tre e tienine due.
+
+### 5. Niente meta-frasi
+
+Non commentare il testo mentre lo scrivi. Sono bandite tutte queste formule che dicono al lettore come dovrebbe leggere invece di lasciargli lo spazio di capire da solo:
+
+- "è importante", "è chiaro che", "è fondamentale", "è essenziale", "è cruciale", "è basilare"
+- "è la parte più forte", "è giusto partire da...", "è il cuore di tutto"
+- "vale la pena sottolineare che", "merita attenzione il fatto che"
+- "va detto che", "voglio dire che", "sto per dirti una cosa importante"
+
+Se un'osservazione è importante, dilla e basta. Il peso viene dal contenuto, non dall'annuncio del peso.
+
+### 6. Ritmo discorsivo e disteso, mai telegrafico
+
+Ogni pensiero si sviluppa per almeno tre o quattro righe prima del punto. Se in due righe consecutive compaiono più di due punti, il testo è frammentato in micro-pensieri staccati e va riscritto legando i periodi con congiunzioni naturali: *perché*, *quando*, *e*, *mentre*, *dove*, *finché*, *al punto di*, *così che*, *al momento in cui*, *con il tempo*. Il respiro del testo deve somigliare a quello di una persona che ragiona mentre scrive, non a quello di chi prende appunti di fretta.
+
+Periodi lunghi collegati sono sempre meglio di frasi brevi giustapposte. Allo stesso tempo non scrivere periodi labirintici: il punto arriva quando il pensiero si chiude, semplicemente arriva dopo tre o quattro righe invece che dopo una sola.
+
+### 7. Zero difesa preventiva
+
+Niente "so che sembra strano ma...", niente "qualcuno potrebbe obiettare che...", niente "non voglio dire che...", niente "attenzione però...". Se la tesi è forte regge da sola. Se non regge, rivedi la tesi invece di difenderla in anticipo. La difesa preventiva indebolisce sempre il testo e lo fa suonare incerto.
+
+### 8. Chiusure concrete, mai da comunicato stampa
+
+La chiusura di un pezzo deve contenere un gesto osservabile, una scelta che il lettore può fare, una conseguenza nel tempo, un numero, un'immagine che resta. Sono bandite tutte le chiusure formula:
+
+- "Questo è il cuore di tutto"
+- "E alla fine è di questo che si tratta"
+- "Questa è la differenza vera"
+- "Ecco perché conta"
+- "Questa è la sfida di chi lavora nel settore"
+- Qualsiasi chiusura che ripete con parole diverse quello che hai appena detto
+
+Se non trovi una chiusura concreta, è probabile che il contenuto non avesse un punto preciso da fare: rivedi il contenuto, non cercare una chiusura retorica per coprire il vuoto.
+
+### 9. Niente em-dash nel copy rivolto agli utenti
+
+Mai. Usa virgole, punti, parentesi tonde, oppure il middle dot (·) per le firme e i separatori visivi. L'em-dash (—) è un segno tipografico che il registro italiano colloquiale non usa, e la sua presenza è di per sé un marcatore AI.
+
+### 10. Auto-controllo sulla regola stessa
+
+Ogni regola qui sopra può diventare un nuovo tic se applicata meccanicamente. Le regole esistono per liberare la scrittura, non per imporre nuovi stampi. Se ti accorgi di stare usando la stessa strategia di riformulazione per la decima volta di seguito — la stessa congiunzione alternativa, la stessa apertura con scena concreta, lo stesso tipo di chiusura pratica, la stessa struttura di paragrafo — quella strategia sta diventando il nuovo pattern AI. Cambia approccio anche dentro il rispetto delle regole. La varietà delle forme è più importante dell'aderenza perfetta a una singola regola, purché nessuna regola venga violata del tutto.
+
+### Audit automatico
+
+Usa `python scripts/audit_caroselli_style.py` per verificare i contenuti prima del commit. Lo script rileva automaticamente: pattern "non X ma Y" in 13 varianti, trampolini semantici (negazione in una frase + affermazione nella successiva), em-dash, triplette, meta-frasi, ritmo telegrafico, astratti non supportati. Zero violazioni hard prima di pubblicare.
 
 ## Context Health
 
