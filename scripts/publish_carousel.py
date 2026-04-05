@@ -3,14 +3,20 @@
 publish_carousel.py
 
 Publishes the next pending carousel from schedule.json to Instagram via the
-Instagram Graph API (Meta Content Publishing API).
+Instagram Graph API (Instagram Login flow — `graph.instagram.com`).
+
+This flow posts ONLY to Instagram, not Facebook. The account is a Creator
+or Business Instagram account connected through Meta Developer's
+"Instagram API with Instagram Login" product.
 
 Environment variables required:
-    META_ACCESS_TOKEN               Long-lived page access token with
-                                    instagram_content_publish scope
-    INSTAGRAM_BUSINESS_ACCOUNT_ID   The IG Business Account ID (numeric)
-    CAROUSELS_BASE_URL              Public base URL where images are hosted,
-                                    e.g. https://www.marcomunich.com/contenuti-social/immagini-caroselli
+    META_ACCESS_TOKEN     Long-lived Instagram user access token with
+                          instagram_business_content_publish scope
+    INSTAGRAM_USER_ID     The Instagram user ID as returned by
+                          GET https://graph.instagram.com/me
+                          (NOT the Facebook-side IG Business Account ID)
+    CAROUSELS_BASE_URL    Public base URL where images are hosted,
+                          e.g. https://www.marcomunich.com/contenuti-social/immagini-caroselli
 
 Flags:
     --dry-run       Simulate the publish flow without calling the API
@@ -56,15 +62,27 @@ def _require_requests():
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 SCHEDULE_PATH = PROJECT_ROOT / "scripts" / "schedule.json"
 
-GRAPH_API_VERSION = "v21.0"
-GRAPH_API_BASE = f"https://graph.facebook.com/{GRAPH_API_VERSION}"
+# Instagram Login flow uses an unversioned graph.instagram.com base URL.
+# This endpoint posts only to Instagram (no Facebook crosspost).
+GRAPH_API_BASE = "https://graph.instagram.com"
 
 
 def load_config(allow_missing=False):
-    """Read required env vars and fail fast if any missing (unless allow_missing)."""
+    """Read required env vars and fail fast if any missing (unless allow_missing).
+
+    Accepts both INSTAGRAM_USER_ID (preferred, new name) and the legacy
+    INSTAGRAM_BUSINESS_ACCOUNT_ID for backwards compatibility with existing
+    GitHub Secrets. The numeric value to use is the one returned by
+    `GET https://graph.instagram.com/me` when the Instagram Login flow is
+    active.
+    """
+    ig_user = (
+        os.environ.get("INSTAGRAM_USER_ID")
+        or os.environ.get("INSTAGRAM_BUSINESS_ACCOUNT_ID")
+    )
     config = {
         "access_token": os.environ.get("META_ACCESS_TOKEN"),
-        "ig_user_id": os.environ.get("INSTAGRAM_BUSINESS_ACCOUNT_ID"),
+        "ig_user_id": ig_user,
         "base_url": os.environ.get(
             "CAROUSELS_BASE_URL",
             "https://www.marcomunich.com/contenuti-social/immagini-caroselli",
@@ -72,7 +90,7 @@ def load_config(allow_missing=False):
     }
     missing = [k for k in ("access_token", "ig_user_id") if not config[k]]
     if missing and not allow_missing:
-        readable = {"access_token": "META_ACCESS_TOKEN", "ig_user_id": "INSTAGRAM_BUSINESS_ACCOUNT_ID"}
+        readable = {"access_token": "META_ACCESS_TOKEN", "ig_user_id": "INSTAGRAM_USER_ID"}
         print(f"ERROR: missing env vars: {', '.join(readable[k] for k in missing)}",
               file=sys.stderr)
         sys.exit(2)
@@ -107,18 +125,28 @@ def find_next_due(schedule, now=None):
 
 
 def slide_urls_for(entry, base_url):
-    """Build the list of public slide URLs for this carousel."""
+    """Build the list of public slide URLs for this carousel.
+
+    Uses .jpg — Instagram Graph API requires JPEG format (PNG is rejected
+    with error code 9004 "Only photo or video can be accepted as media type").
+    PNG originals are kept on disk side-by-side for future re-rendering.
+    """
     cid = str(entry["id"]).zfill(2)
     return [
-        f"{base_url}/carosello-{cid}/slide-{str(i).zfill(2)}.png"
+        f"{base_url}/carosello-{cid}/slide-{str(i).zfill(2)}.jpg"
         for i in range(1, entry["slide_count"] + 1)
     ]
 
 
-def create_item_container(ig_user_id, access_token, image_url, dry_run=False):
-    """POST /{ig-user-id}/media with is_carousel_item=true, returns creation_id."""
+def create_item_container(ig_user_id, access_token, image_url, alt_text=None, dry_run=False):
+    """POST /{ig-user-id}/media with is_carousel_item=true, returns creation_id.
+
+    alt_text is optional — accessibility alternative text for the image slide.
+    Instagram Graph API v21+ supports alt_text on image carousel items (max 1000 chars).
+    """
     if dry_run:
-        print(f"    [dry-run] would create item for {image_url}")
+        alt_preview = f" alt={alt_text[:40]!r}…" if alt_text else ""
+        print(f"    [dry-run] would create item for {image_url}{alt_preview}")
         return "dryrun-item"
     url = f"{GRAPH_API_BASE}/{ig_user_id}/media"
     payload = {
@@ -126,6 +154,9 @@ def create_item_container(ig_user_id, access_token, image_url, dry_run=False):
         "is_carousel_item": "true",
         "access_token": access_token,
     }
+    if alt_text:
+        # Graph API limit: 1000 characters. Trim defensively.
+        payload["alt_text"] = alt_text[:1000]
     r = requests.post(url, data=payload, timeout=60)
     r.raise_for_status()
     return r.json()["id"]
@@ -190,15 +221,27 @@ def publish_entry(entry, config, dry_run=False):
     print(f"  Slides: {entry['slide_count']}")
 
     urls = slide_urls_for(entry, config["base_url"])
+    alt_texts = entry.get("alt_texts") or []
     print(f"  Base URL: {config['base_url']}")
+    if alt_texts:
+        print(f"  Alt texts: {len(alt_texts)} provided")
+    else:
+        print("  Alt texts: none in schedule — slides will publish without accessibility text")
 
     # Step 1: create carousel item containers for each slide
     print("  Step 1/3: creating item containers…")
     child_ids = []
     for i, url in enumerate(urls, 1):
+        alt = alt_texts[i - 1] if i - 1 < len(alt_texts) else None
         print(f"    [{i}/{len(urls)}] {url}")
+        if alt:
+            print(f"        alt: {alt[:70]}{'…' if len(alt) > 70 else ''}")
         child_id = create_item_container(
-            config["ig_user_id"], config["access_token"], url, dry_run=dry_run
+            config["ig_user_id"],
+            config["access_token"],
+            url,
+            alt_text=alt,
+            dry_run=dry_run,
         )
         child_ids.append(child_id)
 

@@ -37,3 +37,6 @@ scripts/redownload-images.mjs
 "chat 13 mm2.txt"
 tmp-ads/
 images-upload.zip
+.meta-app-info
+.meta-token-temp
+.meta-token-long-lived
