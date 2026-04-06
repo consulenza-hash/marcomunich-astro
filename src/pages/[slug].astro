@@ -60,7 +60,11 @@ const seoImage = fm.seo_image
     ? `${siteUrl}${imageUrl}`
     : `${siteUrl}/og-image.jpg`;
 
-const breadcrumbSchema = JSON.stringify({
+function safeJsonLd(obj: unknown): string {
+  return JSON.stringify(obj).replace(/<\/script>/gi, '<\\/script>');
+}
+
+const breadcrumbSchema = safeJsonLd({
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
@@ -71,7 +75,7 @@ const breadcrumbSchema = JSON.stringify({
 });
 
 const faqSchema = fm.schema_faq?.length
-  ? JSON.stringify({
+  ? safeJsonLd({
       '@context': 'https://schema.org',
       '@type': 'FAQPage',
       mainEntity: fm.schema_faq.map((f: any) => ({

@@ -1,32 +1,9 @@
 <script is:inline>
 (function () {
-  var KEY      = 'mm_admin_token';
-  var EXPECTED = '376197688b0b75c0c536a0e013f24d4fa163bc59cfc9f0d83e8dec92c003cacb';
+  // Controlla solo il cookie UI non-HttpOnly (il vero auth è mm_admin_auth HttpOnly, verificato server-side)
+  if (document.cookie.match(/(?:^|;\s*)mm_admin_ui=1/)) return;
 
-  // Legge il cookie
-  function getCookie() {
-    var m = document.cookie.match(/(?:^|;\s*)mm_admin_token=([^;]*)/);
-    return m ? m[1] : null;
-  }
-
-  // Scrive il cookie (30 giorni, path=/)
-  function setCookie(val) {
-    document.cookie = 'mm_admin_token=' + val + '; path=/; max-age=2592000; SameSite=Strict';
-  }
-
-  // Già autenticato — continua
-  if (getCookie() === EXPECTED) return;
-  // Fallback localStorage (per browser che non hanno problemi)
-  try { if (localStorage.getItem(KEY) === EXPECTED) { setCookie(EXPECTED); return; } } catch (e) {}
-
-  // Blocca rendering finché l'overlay non è montato
   document.documentElement.style.visibility = 'hidden';
-
-  function hexOf(buf) {
-    return Array.from(new Uint8Array(buf))
-      .map(function (b) { return b.toString(16).padStart(2, '0'); })
-      .join('');
-  }
 
   function buildOverlay() {
     var overlay = document.createElement('div');
@@ -46,22 +23,47 @@
     document.documentElement.style.visibility = '';
     setTimeout(function () { document.getElementById('mm-pwd').focus(); }, 40);
 
+    var attempts = 0;
+
     function attempt() {
-      var val = document.getElementById('mm-pwd').value;
-      if (!val) return;
-      var enc = new TextEncoder().encode(val);
-      crypto.subtle.digest('SHA-256', enc).then(function (buf) {
-        var hash = hexOf(buf);
-        if (hash === EXPECTED) {
-          setCookie(EXPECTED);
-          try { localStorage.setItem(KEY, EXPECTED); } catch (e) {}
-          overlay.remove();
-        } else {
+      var pwd = document.getElementById('mm-pwd').value;
+      if (!pwd) return;
+
+      attempts++;
+      if (attempts > 5) {
+        document.getElementById('mm-err').textContent = 'Troppi tentativi. Ricarica la pagina.';
+        document.getElementById('mm-err').style.display = 'block';
+        document.getElementById('mm-btn').disabled = true;
+        return;
+      }
+
+      document.getElementById('mm-btn').disabled = true;
+      document.getElementById('mm-btn').textContent = '...';
+
+      fetch('/admin/verify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: pwd }),
+      })
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          if (data.ok) {
+            overlay.remove();
+            location.reload();
+          } else {
+            document.getElementById('mm-err').style.display = 'block';
+            document.getElementById('mm-pwd').value = '';
+            document.getElementById('mm-pwd').focus();
+            document.getElementById('mm-btn').disabled = false;
+            document.getElementById('mm-btn').textContent = 'Accedi →';
+          }
+        })
+        .catch(function () {
+          document.getElementById('mm-err').textContent = 'Errore di rete. Riprova.';
           document.getElementById('mm-err').style.display = 'block';
-          document.getElementById('mm-pwd').value = '';
-          document.getElementById('mm-pwd').focus();
-        }
-      });
+          document.getElementById('mm-btn').disabled = false;
+          document.getElementById('mm-btn').textContent = 'Accedi →';
+        });
     }
 
     document.getElementById('mm-btn').addEventListener('click', attempt);
