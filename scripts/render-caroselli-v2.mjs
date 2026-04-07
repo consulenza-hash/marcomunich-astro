@@ -292,8 +292,18 @@ ${slidesHTML}
 // ─── MAIN ─────────────────────────────────────────────────────────
 
 async function main() {
+  // --only 2,3,5  →  render solo quei numeri
+  const onlyArg = process.argv.find(a => a.startsWith('--only=')) || process.argv[process.argv.indexOf('--only') + 1];
+  const onlyIds = onlyArg && !onlyArg.startsWith('--')
+    ? new Set(onlyArg.split(',').map(Number))
+    : null;
+
   console.log('> Parsing markdown files…');
-  const carousels = loadAllCarousels();
+  let carousels = loadAllCarousels();
+  if (onlyIds) {
+    carousels = carousels.filter(c => onlyIds.has(c.num));
+    console.log(`> Filtered to carousel(s): ${[...onlyIds].join(', ')}`);
+  }
   const totalSlides = carousels.reduce((s, c) => s + c.slides.length, 0);
   console.log(`> Loaded ${carousels.length} carousels, ${totalSlides} total slides\n`);
 
