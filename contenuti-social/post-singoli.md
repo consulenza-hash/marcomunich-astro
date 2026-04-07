@@ -90,8 +90,8 @@ Il profilo diventa così un contratto implicito con chi arriverà in studio. Chi
 
 La counselor con cui lavoravo ha accettato di ridurre la distanza nel corso di qualche mese. Il flusso di richieste è calato per due mesi. I clienti arrivati dopo sapevano cosa aspettarsi, e la quarta sessione non è più stata un momento di rottura.
 
-### POST 8 — "ChatGPT sta cercando il tuo counselor preferito stasera."
-- **Overlay:** ChatGPT sta cercando il tuo counselor preferito stasera.
+### POST 8 — "I tuoi futuri clienti chiedono consigli a ChatGPT. Sei nella risposta?"
+- **Overlay:** I tuoi futuri clienti chiedono consigli a ChatGPT. Sei nella risposta?
 - **Immagine:** Photographic vertical di uno schermo con finestra di chat AI aperta, domanda di ricerca visibile sfocata, mano che digita, luce bluastra dello schermo, stanza buia sullo sfondo, mood notturno e contemporaneo, 1080×1350.
 - **Caption:**
 Come fa ChatGPT a conoscere il nome del counselor giusto per te stasera? La domanda sembra tecnica e in realtà riguarda il modo in cui il tuo lavoro verrà trovato dalle persone nei prossimi cinque anni. La settimana scorsa una cliente mi ha mandato lo screenshot di una conversazione con il modello. Aveva chiesto di suggerirle un counselor a Bologna che lavorasse sull'ansia da prestazione, e la risposta conteneva tre nomi precisi con citazioni prese da articoli che quei professionisti avevano pubblicato sui loro siti. Mi ha scritto: "Io quei tre li conosco. Come fa ChatGPT a sapere che esistono?"
