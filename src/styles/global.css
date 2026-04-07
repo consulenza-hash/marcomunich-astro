@@ -97,6 +97,14 @@
   color: var(--mm-orange);
 }
 .mm-tag-dark { color: #aaa; }
+.mm-tag-light { color: var(--mm-orange); }
+
+/* ── Dev variant (blu elettrico) ────────────────────────────────────────── */
+.mm-dev { --mm-orange: #3B82F6; }
+.mm-dev .mm-btn-orange { background: #3B82F6; }
+.mm-dev .mm-btn-orange:hover { background: #2563EB; }
+.mm-dev .mm-tag { color: #3B82F6; }
+.mm-dev .mm-tag-light { color: #3B82F6; }
 
 /* Divisore */
 .mm-rule { border: none; border-top: 1px solid #1a1a1a; }

@@ -7,6 +7,13 @@ allowed-tools:
   - Glob
   - Grep
   - Bash(git diff:*, git log:*, git show:*)
+  - WebSearch
+  - WebFetch
+  - mcp__jcodemunch__get_file_outline
+  - mcp__jcodemunch__get_file_tree
+  - mcp__context7__query-docs
+  - mcp__context7__resolve-library-id
+  - mcp__exa__web_search_exa
 ---
 
 Comprehensive code review. Goes beyond style — checks security, performance, architecture, and generates actionable improvement suggestions.
@@ -20,23 +27,44 @@ Identify what to review:
 - If user specified a PR or branch → `git diff main...HEAD` (or appropriate base)
 - If nothing specified → review staged changes (`git diff --cached`) or recent commits
 
-### Step 2: Read the code
+### Step 2: Map then read (token-efficient)
 
-Read all files in scope. For large diffs, focus on:
+**First — outline, don't read blindly:**
+Run `mcp__jcodemunch__get_file_outline` on each file in scope to get structure (functions, classes, imports) without loading full content. If jcodemunch is not indexed, use `Glob` to list files and `Grep` to locate relevant sections.
+
+**Then — read only what matters:**
+Load full file content only for:
 - New files (highest risk — no prior review)
 - Files with the most changes
+- Files containing auth, DB queries, user input, file ops
 - Test files (or lack thereof)
+
+**For library/framework usage — check current docs:**
+If code uses a library, resolve and query current docs:
+```
+mcp__context7__resolve-library-id: [library name]
+mcp__context7__query-docs: [library-id] topic:"[specific API or pattern in use]"
+```
 
 ### Step 3: Multi-dimensional review (parallel agents)
 
 Spawn parallel review agents:
 
-**Agent 1 — Security review:**
-- Input validation (SQL injection, XSS, command injection)
-- Authentication / authorisation gaps
-- Secrets or credentials in code
-- Unsafe dependencies
-- OWASP Top 10 checklist
+**Agent 1 — Security review (delegated to security-guardian):**
+
+Invoke the `security-guardian` agent with the files in scope as input.
+Security-guardian fetches live OWASP + CVE intelligence, runs the full checklist (sections A through N), and returns severity-ranked findings with copy-paste fixes.
+
+```
+Agent(security-guardian): Security review of [files in scope].
+Context: pre-merge code review.
+Stack: [identified stack from Step 2].
+Scope: [list of files].
+Return: severity-ranked findings (CRITICAL/HIGH/MEDIUM/LOW) with attack scenarios and fixes.
+```
+
+Do not duplicate security checks inline — security-guardian owns this domain.
+Fallback (if Agent tool unavailable): manually run OWASP Top 10 checklist covering injections, broken auth, XSS, IDOR, misconfig, and vulnerable dependencies.
 
 **Agent 2 — Performance review:**
 - N+1 queries or unnecessary database calls

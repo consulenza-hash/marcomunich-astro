@@ -1,562 +1,350 @@
 ---
-export const prerender = true;
+import BaseLayout from '@layouts/BaseLayout.astro';
 ---
 
-<html lang="it">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Portfolio · Marco Munich Dev</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
-  <style>
-    [data-theme="dark"] {
-      --bg: #141C1F;
-      --bg-card: #1A2225;
-      --border: #243035;
-      --text: #E2DED6;
-      --text-muted: #8A9699;
-      --primary: #C17F3A;
-      --primary-hover: #D4944D;
-      --accent: #C17F3A;
-      --navbar-bg: rgba(20, 28, 31, 0.8);
-    }
-    [data-theme="light"] {
-      --bg: #F5F0E8;
-      --bg-card: #FFFFFF;
-      --border: #EDE8DF;
-      --text: #1E2B2F;
-      --text-muted: #6B7B7F;
-      --primary: #A0614A;
-      --primary-hover: #8A5240;
-      --accent: #A0614A;
-      --navbar-bg: rgba(245, 240, 232, 0.8);
-    }
+<BaseLayout
+  title="Portfolio · Marco Munich Dev"
+  description="21 demo navigabili. Ogni progetto è diverso, e puoi esplorare le demo per farti un'idea concreta del risultato."
+  currentPath="/dev/portfolio"
+>
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-      transition: background 0.3s, color 0.3s;
-    }
-    a { color: inherit; text-decoration: none; }
+<div class="mm-dev mm-page">
 
-    /* ── Navbar ── */
-    .navbar {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      background: var(--navbar-bg);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-      transition: background 0.3s, border-color 0.3s;
-    }
-    .navbar-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 1.5rem;
-      height: 64px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .nav-logo {
-      font-family: 'JetBrains Mono', monospace;
-      font-weight: 700;
-      font-size: 1.05rem;
-      color: var(--text);
-      letter-spacing: -0.02em;
-      transition: color 0.3s;
-    }
-    .nav-logo span { color: var(--primary); }
-    .nav-right { display: flex; align-items: center; gap: 2rem; }
-    .nav-links { display: flex; gap: 1.75rem; list-style: none; }
-    .nav-links a {
-      font-size: 0.875rem;
-      font-weight: 500;
-      color: var(--text-muted);
-      transition: color 0.2s;
-      position: relative;
-      padding-bottom: 4px;
-    }
-    .nav-links a:hover { color: var(--primary); }
-    .nav-links a.active { color: var(--primary); }
-    .nav-links a.active::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 2px;
-      background: var(--primary);
-      border-radius: 1px;
-    }
-    .theme-toggle {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      width: 36px; height: 36px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 1.1rem;
-      transition: background 0.3s, border-color 0.3s;
-      color: var(--text-muted);
-      flex-shrink: 0;
-    }
-    .theme-toggle:hover { border-color: var(--primary); color: var(--primary); }
-    [data-theme="dark"] .theme-toggle .icon-sun { display: none; }
-    [data-theme="dark"] .theme-toggle .icon-moon { display: inline; }
-    [data-theme="light"] .theme-toggle .icon-sun { display: inline; }
-    [data-theme="light"] .theme-toggle .icon-moon { display: none; }
-    .nav-toggle {
-      display: none;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 0.5rem;
-    }
-    .nav-toggle span {
-      display: block;
-      width: 22px; height: 2px;
-      background: var(--text);
-      margin: 5px 0;
-      transition: all 0.3s;
-    }
+  <!-- ── HERO ── -->
+  <section class="mm-section-dark" style="padding:6rem 2rem 4rem;text-align:center;">
+    <div style="max-width:700px;margin:0 auto;">
+      <h1 class="mm-h1" style="margin-bottom:1rem;">21 demo navigabili.</h1>
+      <p class="mm-body" style="font-size:1.15rem;max-width:550px;margin:0 auto;">Ogni progetto è diverso, e puoi esplorare le demo per farti un'idea concreta del risultato.</p>
+    </div>
+  </section>
 
-    /* ── Hero ── */
-    .hero {
-      text-align: center;
-      padding: 10rem 2rem 4rem;
-      max-width: 700px;
-      margin: 0 auto;
-    }
-    .hero h1 {
-      font-family: 'Lora', Georgia, serif;
-      font-size: 2.8rem;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 1rem;
-      transition: color 0.3s;
-    }
-    .hero p {
-      font-size: 1.15rem;
-      color: var(--text-muted);
-      max-width: 550px;
-      margin: 0 auto;
-      transition: color 0.3s;
-    }
-
-    /* ── Portfolio grid ── */
-    .portfolio-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.2rem;
-      max-width: 1050px;
-      margin: 0 auto;
-      padding: 0 2rem 4rem;
-    }
-    .project-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.8rem 1.5rem;
-      transition: border-color 0.2s, transform 0.2s, background 0.3s;
-      display: flex;
-      flex-direction: column;
-    }
-    .project-card:hover {
-      border-color: var(--primary);
-      transform: translateY(-2px);
-    }
-    .project-icon {
-      font-size: 2rem;
-      margin-bottom: 0.8rem;
-    }
-    .project-card h3 {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 1.05rem;
-      color: var(--text);
-      font-weight: 600;
-      margin-bottom: 0.4rem;
-      transition: color 0.3s;
-    }
-    .project-card p {
-      font-size: 0.88rem;
-      color: var(--text-muted);
-      flex: 1;
-      margin-bottom: 1rem;
-      transition: color 0.3s;
-    }
-    .project-link {
-      font-size: 0.88rem;
-      font-weight: 600;
-      color: var(--primary);
-      transition: color 0.2s;
-    }
-    .project-link:hover { color: var(--primary-hover); }
-
-    /* ── Casi Studio ── */
-    .cs-section {
-      padding: 3rem 2rem 3.5rem;
-      border-bottom: 1px solid var(--border);
-    }
-    .cs-header {
-      display: flex; align-items: baseline; gap: 1.5rem;
-      margin-bottom: 2rem;
-    }
-    .cs-tag {
-      font-size: 0.68rem; font-weight: 700;
-      letter-spacing: 0.18em; text-transform: uppercase;
-      color: #c8b89a;
-    }
-    .cs-header h2 {
-      font-size: 1.1rem; font-weight: 600;
-      color: var(--text);
-    }
-    .cs-header p {
-      font-size: 0.85rem; color: var(--text-muted);
-      margin-left: auto;
-    }
-    .cs-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.2rem;
-    }
-    .cs-card {
-      display: flex; flex-direction: column; gap: 0.6rem;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-top: 3px solid #c8b89a;
-      border-radius: 12px;
-      padding: 1.5rem;
-      text-decoration: none;
-      transition: border-color 0.2s, transform 0.15s, box-shadow 0.2s;
-    }
-    .cs-card:hover {
-      border-color: #c8b89a;
-      transform: translateY(-3px);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-    }
-    .cs-card-brand {
-      font-size: 1rem; font-weight: 700;
-      color: var(--text);
-    }
-    .cs-card-vs {
-      font-size: 0.75rem; color: var(--text-muted);
-      letter-spacing: 0.04em;
-    }
-    .cs-card-vs span { color: #c8b89a; font-weight: 600; }
-    .cs-card-desc {
-      font-size: 0.82rem; line-height: 1.6;
-      color: var(--text-muted); flex: 1;
-    }
-    .cs-card-cta {
-      font-size: 0.8rem; font-weight: 600;
-      color: #c8b89a; margin-top: 0.2rem;
-    }
-
-    /* ── CTA ── */
-    .cta-section {
-      text-align: center;
-      padding: 0 2rem 5rem;
-    }
-    .cta-section p {
-      font-size: 1.15rem;
-      color: var(--text-muted);
-      margin-bottom: 1.5rem;
-      transition: color 0.3s;
-    }
-    .cta-btn {
-      display: inline-block;
-      background: var(--primary);
-      color: #fff;
-      font-weight: 700;
-      font-size: 1.05rem;
-      padding: 0.9rem 2.2rem;
-      border-radius: 8px;
-      transition: background 0.2s, transform 0.2s;
-    }
-    .cta-btn:hover {
-      background: var(--primary-hover);
-      transform: translateY(-1px);
-    }
-
-    /* ── Footer ── */
-    .footer {
-      border-top: 1px solid var(--border);
-      text-align: center;
-      padding: 2.5rem;
-      transition: border-color 0.3s;
-    }
-    .footer a {
-      color: var(--text-muted);
-      font-size: 0.9rem;
-      transition: color 0.2s;
-    }
-    .footer a:hover { color: var(--primary); }
-
-    /* ── Mobile ── */
-    @media (max-width: 768px) {
-      .nav-links {
-        display: none;
-        position: absolute;
-        top: 64px; left: 0; right: 0;
-        background: var(--navbar-bg);
-        backdrop-filter: blur(12px);
-        flex-direction: column;
-        padding: 1.5rem;
-        gap: 1rem;
-        border-bottom: 1px solid var(--border);
-      }
-      .nav-links.open { display: flex; }
-      .nav-toggle { display: block; }
-      .hero { padding: 7rem 1.5rem 2rem; }
-      .hero h1 { font-size: 2rem; }
-      .portfolio-grid {
-        grid-template-columns: 1fr;
-        padding: 0 1.5rem 3rem;
-      }
-      .cs-section { padding: 2rem 1.5rem; }
-      .cs-header { flex-direction: column; gap: 0.3rem; }
-      .cs-header p { margin-left: 0; }
-      .cs-grid { grid-template-columns: 1fr; }
-    }
-  </style>
-</head>
-<body>
-  <!-- Navbar -->
-  <nav class="navbar">
-    <div class="navbar-inner">
-      <a href="/dev/" class="nav-logo">Marco Munich <span>&middot; Dev</span></a>
-      <div class="nav-right">
-        <ul class="nav-links" id="navLinks">
-          <li><a href="/dev/come-lavoro">Come Lavoro</a></li>
-          <li><a href="/dev/vibe-coding">Vibe Coding</a></li>
-          <li><a href="/dev/portfolio" class="active">Portfolio</a></li>
-          <li><a href="/dev/prezzi">Prezzi</a></li>
-          <li><a href="/dev/blog/">Blog</a></li>
-          <li><a href="/dev/contatti">Contatti</a></li>
-        </ul>
-        <button class="theme-toggle" id="theme-toggle" aria-label="Cambia tema">
-          <span class="icon-sun">&#9728;</span>
-          <span class="icon-moon">&#127769;</span>
-        </button>
-        <button class="nav-toggle" aria-label="Menu" id="navToggle">
-          <span></span><span></span><span></span>
-        </button>
+  <!-- ── Casi Studio ── -->
+  <section class="cs-section mm-section-dark">
+    <div style="max-width:1050px;margin:0 auto;">
+      <div class="cs-header">
+        <span class="mm-tag cs-tag">Casi Studio</span>
+        <h2 class="mm-h3" style="font-size:1.1rem;">Hai un sito che ti ispira? Guarda come parte l'ispirazione e dove arriva il risultato.</h2>
+        <p class="cs-header-count">6 esempi completi</p>
+      </div>
+      <div class="cs-grid">
+        <a href="/portfolio/caso-studio" class="cs-card">
+          <div class="cs-card-brand">🌿 Erba Pura</div>
+          <div class="cs-card-vs">ispirata a <span>aesop.com</span></div>
+          <p class="cs-card-desc">Cosmesi naturale bolognese. Dal lusso discreto di Aesop a un'identità italiana autentica, con ingredienti locali e la fondatrice in primo piano.</p>
+          <span class="cs-card-cta">Leggi il caso studio →</span>
+        </a>
+        <a href="/portfolio/caso-studio-agriturismo" class="cs-card">
+          <div class="cs-card-brand">🏡 Vigna dei Colli</div>
+          <div class="cs-card-vs">ispirata a <span>aman.com</span></div>
+          <p class="cs-card-desc">Agriturismo in Chianti. Dal silenzio visivo di Aman a un racconto toscano caldo e personale, con la storia di Sara e le stagioni della terra.</p>
+          <span class="cs-card-cta">Leggi il caso studio →</span>
+        </a>
+        <a href="/portfolio/caso-studio-ristorante" class="cs-card">
+          <div class="cs-card-brand">🍽 Convivio</div>
+          <div class="cs-card-vs">ispirata a <span>elevenmadisonpark.com</span></div>
+          <p class="cs-card-desc">Ristorante gastronomico milanese. Dal rigore assoluto di Eleven Madison Park a un'identità italiana essenziale, con il verde bosco dell'Isola.</p>
+          <span class="cs-card-cta">Leggi il caso studio →</span>
+        </a>
+        <a href="/portfolio/caso-studio-coach" class="cs-card">
+          <div class="cs-card-brand">🎯 Chiara Martini</div>
+          <div class="cs-card-vs">ispirata a <span>marieforleo.com</span></div>
+          <p class="cs-card-desc">Life coach a Milano. Dal personal brand americano di Marie Forleo a un'identità italiana concreta, autorevolezza senza distanza, chiarezza senza freddezza.</p>
+          <span class="cs-card-cta">Leggi il caso studio →</span>
+        </a>
+        <a href="/portfolio/caso-studio-counselor" class="cs-card">
+          <div class="cs-card-brand">🌱 Giulia Ferretti</div>
+          <div class="cs-card-vs">ispirata a <span>headspace.com</span></div>
+          <p class="cs-card-desc">Counselor relazionale a Firenze. Dall'estetica Headspace, verde salvia, spazio, calma, a un'identità umana, presente e radicata.</p>
+          <span class="cs-card-cta">Leggi il caso studio →</span>
+        </a>
+        <a href="/portfolio/caso-studio-olistico" class="cs-card">
+          <div class="cs-card-brand">🌿 Letizia Amato</div>
+          <div class="cs-card-vs">ispirata a <span>estetica wellness retreat</span></div>
+          <p class="cs-card-desc">Reiki e sound healing a Torino. Dal lusso visivo dei grandi retreat a un sito accessibile e concreto, profondità senza esoterismo.</p>
+          <span class="cs-card-cta">Leggi il caso studio →</span>
+        </a>
       </div>
     </div>
-  </nav>
-
-  <section class="hero">
-    <h1>21 demo navigabili.</h1>
-    <p>Ogni progetto è diverso, e puoi esplorare le demo per farti un'idea concreta del risultato.</p>
   </section>
 
-  <!-- Casi Studio — sezione prominente sopra la griglia -->
-  <section class="cs-section">
-    <div class="cs-header">
-      <span class="cs-tag">Casi Studio</span>
-      <h2>Hai un sito che ti ispira? Guarda come parte l'ispirazione e dove arriva il risultato.</h2>
-      <p>6 esempi completi</p>
+  <!-- ── Portfolio Grid ── -->
+  <section class="mm-section-dark" style="padding:0 2rem 4rem;">
+    <div class="portfolio-grid">
+      <a href="/portfolio/ecommerce" class="project-card">
+        <div class="project-icon">&#128722;</div>
+        <h3 class="mm-h3">E-commerce</h3>
+        <p class="mm-body">Negozio online completo con carrello, pagamenti e gestione prodotti.</p>
+        <span class="project-link">Naviga la demo →</span>
+      </a>
+
+      <a href="/portfolio/corso-online" class="project-card">
+        <div class="project-icon">&#127891;</div>
+        <h3 class="mm-h3">Corso Online</h3>
+        <p class="mm-body">Piattaforma per vendere e gestire corsi digitali con area studenti.</p>
+        <span class="project-link">Naviga la demo →</span>
+      </a>
+
+      <a href="/portfolio/sito-vetrina" class="project-card">
+        <div class="project-icon">&#128100;</div>
+        <h3 class="mm-h3">Sito Vetrina</h3>
+        <p class="mm-body">Presenza professionale online per liberi professionisti e piccole imprese.</p>
+        <span class="project-link">Naviga la demo →</span>
+      </a>
+
+      <a href="/portfolio/landing-page" class="project-card">
+        <div class="project-icon">&#128640;</div>
+        <h3 class="mm-h3">Landing Page</h3>
+        <p class="mm-body">Pagina singola ottimizzata per conversioni e campagne marketing.</p>
+        <span class="project-link">Naviga la demo →</span>
+      </a>
+
+      <a href="/portfolio/blog" class="project-card">
+        <div class="project-icon">&#128240;</div>
+        <h3 class="mm-h3">Blog &amp; Magazine</h3>
+        <p class="mm-body">Piattaforma editoriale con categorie, ricerca e layout articoli.</p>
+        <span class="project-link">Naviga la demo →</span>
+      </a>
+
+      <a href="/portfolio/booking" class="project-card">
+        <div class="project-icon">&#128197;</div>
+        <h3 class="mm-h3">Booking</h3>
+        <p class="mm-body">Sistema di prenotazione online con calendario e conferma automatica.</p>
+        <span class="project-link">Naviga la demo →</span>
+      </a>
+
+      <a href="/portfolio/portfolio-creativo" class="project-card">
+        <div class="project-icon">&#127912;</div>
+        <h3 class="mm-h3">Portfolio Creativo</h3>
+        <p class="mm-body">Vetrina visuale per designer, fotografi e creativi.</p>
+        <span class="project-link">Naviga la demo →</span>
+      </a>
+
+      <a href="/portfolio/ristorante" class="project-card">
+        <div class="project-icon">&#127869;</div>
+        <h3 class="mm-h3">Ristorante</h3>
+        <p class="mm-body">Menu digitale, prenotazione tavoli e gallery per locali.</p>
+        <span class="project-link">Naviga la demo →</span>
+      </a>
+
+      <a href="/portfolio/saas" class="project-card">
+        <div class="project-icon">&#9889;</div>
+        <h3 class="mm-h3">SaaS Dashboard</h3>
+        <p class="mm-body">Dashboard moderna per prodotti software con grafici e gestione utenti.</p>
+        <span class="project-link">Naviga la demo →</span>
+      </a>
+
+      <a href="/portfolio/non-profit" class="project-card">
+        <div class="project-icon">&#128155;</div>
+        <h3 class="mm-h3">Non-Profit</h3>
+        <p class="mm-body">Sito per associazioni con donazioni, eventi e raccolta fondi.</p>
+        <span class="project-link">Naviga la demo →</span>
+      </a>
+
+      <a href="/portfolio/immobiliare" class="project-card">
+        <div class="project-icon">&#127968;</div>
+        <h3 class="mm-h3">Immobiliare</h3>
+        <p class="mm-body">Catalogo immobili con filtri, mappa e schede dettagliate.</p>
+        <span class="project-link">Naviga la demo →</span>
+      </a>
+
+      <a href="/portfolio/bed-and-breakfast" class="project-card">
+        <div class="project-icon">&#127969;</div>
+        <h3 class="mm-h3">Bed &amp; Breakfast</h3>
+        <p class="mm-body">Sito per agriturismi e B&amp;B con camere, prenotazioni e gallery.</p>
+        <span class="project-link">Naviga la demo →</span>
+      </a>
+
+      <a href="/portfolio/yoga-studio" class="project-card">
+        <div class="project-icon">&#129339;</div>
+        <h3 class="mm-h3">Yoga &amp; Benessere</h3>
+        <p class="mm-body">Studio yoga con classi, orari, abbonamenti e prenotazione online.</p>
+        <span class="project-link">Naviga la demo →</span>
+      </a>
+
+      <a href="/portfolio/studio-medico" class="project-card">
+        <div class="project-icon">&#129338;</div>
+        <h3 class="mm-h3">Studio Medico</h3>
+        <p class="mm-body">Sito per medici e specialisti con servizi, prenotazione e teleconsulto.</p>
+        <span class="project-link">Naviga la demo →</span>
+      </a>
+
+      <a href="/portfolio/fotografo" class="project-card">
+        <div class="project-icon">📷</div>
+        <h3 class="mm-h3">Fotografo / Videografo</h3>
+        <p class="mm-body">Portfolio fotografico dark con gallery full-screen, servizi e sezione premi.</p>
+        <span class="project-link">Naviga la demo →</span>
+      </a>
+
+      <a href="/portfolio/barberia" class="project-card">
+        <div class="project-icon">✂️</div>
+        <h3 class="mm-h3">Salone di Bellezza</h3>
+        <p class="mm-body">Barberia premium con listino servizi, prenotazione online integrata e recensioni.</p>
+        <span class="project-link">Naviga la demo →</span>
+      </a>
+
+      <a href="/portfolio/studio-legale" class="project-card">
+        <div class="project-icon">⚖️</div>
+        <h3 class="mm-h3">Studio Legale</h3>
+        <p class="mm-body">Studio legale premium con aree di pratica, profilo dei partner e modulo di consulenza.</p>
+        <span class="project-link">Naviga la demo →</span>
+      </a>
+
+      <a href="/portfolio/bakery" class="project-card">
+        <div class="project-icon">🥐</div>
+        <h3 class="mm-h3">Pasticceria / Forno</h3>
+        <p class="mm-body">Forno artigianale con specialità del giorno, storia del fornaio e ordini su prenotazione.</p>
+        <span class="project-link">Naviga la demo →</span>
+      </a>
     </div>
-    <div class="cs-grid">
-      <a href="/portfolio/caso-studio" class="cs-card">
-        <div class="cs-card-brand">🌿 Erba Pura</div>
-        <div class="cs-card-vs">ispirata a <span>aesop.com</span></div>
-        <p class="cs-card-desc">Cosmesi naturale bolognese. Dal lusso discreto di Aesop a un'identità italiana autentica, con ingredienti locali e la fondatrice in primo piano.</p>
-        <span class="cs-card-cta">Leggi il caso studio →</span>
-      </a>
-      <a href="/portfolio/caso-studio-agriturismo" class="cs-card">
-        <div class="cs-card-brand">🏡 Vigna dei Colli</div>
-        <div class="cs-card-vs">ispirata a <span>aman.com</span></div>
-        <p class="cs-card-desc">Agriturismo in Chianti. Dal silenzio visivo di Aman a un racconto toscano caldo e personale, con la storia di Sara e le stagioni della terra.</p>
-        <span class="cs-card-cta">Leggi il caso studio →</span>
-      </a>
-      <a href="/portfolio/caso-studio-ristorante" class="cs-card">
-        <div class="cs-card-brand">🍽 Convivio</div>
-        <div class="cs-card-vs">ispirata a <span>elevenmadisonpark.com</span></div>
-        <p class="cs-card-desc">Ristorante gastronomico milanese. Dal rigore assoluto di Eleven Madison Park a un'identità italiana essenziale, con il verde bosco dell'Isola.</p>
-        <span class="cs-card-cta">Leggi il caso studio →</span>
-      </a>
-      <a href="/portfolio/caso-studio-coach" class="cs-card">
-        <div class="cs-card-brand">🎯 Chiara Martini</div>
-        <div class="cs-card-vs">ispirata a <span>marieforleo.com</span></div>
-        <p class="cs-card-desc">Life coach a Milano. Dal personal brand americano di Marie Forleo a un'identità italiana concreta — autorevolezza senza distanza, chiarezza senza freddezza.</p>
-        <span class="cs-card-cta">Leggi il caso studio →</span>
-      </a>
-      <a href="/portfolio/caso-studio-counselor" class="cs-card">
-        <div class="cs-card-brand">🌱 Giulia Ferretti</div>
-        <div class="cs-card-vs">ispirata a <span>headspace.com</span></div>
-        <p class="cs-card-desc">Counselor relazionale a Firenze. Dall'estetica Headspace — verde salvia, spazio, calma — a un'identità umana, presente e radicata.</p>
-        <span class="cs-card-cta">Leggi il caso studio →</span>
-      </a>
-      <a href="/portfolio/caso-studio-olistico" class="cs-card">
-        <div class="cs-card-brand">🌿 Letizia Amato</div>
-        <div class="cs-card-vs">ispirata a <span>estetica wellness retreat</span></div>
-        <p class="cs-card-desc">Reiki e sound healing a Torino. Dal lusso visivo dei grandi retreat a un sito accessibile e concreto — profondità senza esoterismo.</p>
-        <span class="cs-card-cta">Leggi il caso studio →</span>
-      </a>
-    </div>
   </section>
 
-  <div class="portfolio-grid">
-    <a href="/portfolio/ecommerce" class="project-card">
-      <div class="project-icon">&#128722;</div>
-      <h3>E-commerce</h3>
-      <p>Negozio online completo con carrello, pagamenti e gestione prodotti.</p>
-      <span class="project-link">Naviga la demo &rarr;</span>
-    </a>
-
-    <a href="/portfolio/corso-online" class="project-card">
-      <div class="project-icon">&#127891;</div>
-      <h3>Corso Online</h3>
-      <p>Piattaforma per vendere e gestire corsi digitali con area studenti.</p>
-      <span class="project-link">Naviga la demo &rarr;</span>
-    </a>
-
-    <a href="/portfolio/sito-vetrina" class="project-card">
-      <div class="project-icon">&#128100;</div>
-      <h3>Sito Vetrina</h3>
-      <p>Presenza professionale online per liberi professionisti e piccole imprese.</p>
-      <span class="project-link">Naviga la demo &rarr;</span>
-    </a>
-
-    <a href="/portfolio/landing-page" class="project-card">
-      <div class="project-icon">&#128640;</div>
-      <h3>Landing Page</h3>
-      <p>Pagina singola ottimizzata per conversioni e campagne marketing.</p>
-      <span class="project-link">Naviga la demo &rarr;</span>
-    </a>
-
-    <a href="/portfolio/blog" class="project-card">
-      <div class="project-icon">&#128240;</div>
-      <h3>Blog &amp; Magazine</h3>
-      <p>Piattaforma editoriale con categorie, ricerca e layout articoli.</p>
-      <span class="project-link">Naviga la demo &rarr;</span>
-    </a>
-
-    <a href="/portfolio/booking" class="project-card">
-      <div class="project-icon">&#128197;</div>
-      <h3>Booking</h3>
-      <p>Sistema di prenotazione online con calendario e conferma automatica.</p>
-      <span class="project-link">Naviga la demo &rarr;</span>
-    </a>
-
-    <a href="/portfolio/portfolio-creativo" class="project-card">
-      <div class="project-icon">&#127912;</div>
-      <h3>Portfolio Creativo</h3>
-      <p>Vetrina visuale per designer, fotografi e creativi.</p>
-      <span class="project-link">Naviga la demo &rarr;</span>
-    </a>
-
-    <a href="/portfolio/ristorante" class="project-card">
-      <div class="project-icon">&#127869;</div>
-      <h3>Ristorante</h3>
-      <p>Menu digitale, prenotazione tavoli e gallery per locali.</p>
-      <span class="project-link">Naviga la demo &rarr;</span>
-    </a>
-
-    <a href="/portfolio/saas" class="project-card">
-      <div class="project-icon">&#9889;</div>
-      <h3>SaaS Dashboard</h3>
-      <p>Dashboard moderna per prodotti software con grafici e gestione utenti.</p>
-      <span class="project-link">Naviga la demo &rarr;</span>
-    </a>
-
-    <a href="/portfolio/non-profit" class="project-card">
-      <div class="project-icon">&#128155;</div>
-      <h3>Non-Profit</h3>
-      <p>Sito per associazioni con donazioni, eventi e raccolta fondi.</p>
-      <span class="project-link">Naviga la demo &rarr;</span>
-    </a>
-
-    <a href="/portfolio/immobiliare" class="project-card">
-      <div class="project-icon">&#127968;</div>
-      <h3>Immobiliare</h3>
-      <p>Catalogo immobili con filtri, mappa e schede dettagliate.</p>
-      <span class="project-link">Naviga la demo &rarr;</span>
-    </a>
-
-    <a href="/portfolio/bed-and-breakfast" class="project-card">
-      <div class="project-icon">&#127969;</div>
-      <h3>Bed &amp; Breakfast</h3>
-      <p>Sito per agriturismi e B&amp;B con camere, prenotazioni e gallery.</p>
-      <span class="project-link">Naviga la demo &rarr;</span>
-    </a>
-
-    <a href="/portfolio/yoga-studio" class="project-card">
-      <div class="project-icon">&#129339;</div>
-      <h3>Yoga &amp; Benessere</h3>
-      <p>Studio yoga con classi, orari, abbonamenti e prenotazione online.</p>
-      <span class="project-link">Naviga la demo &rarr;</span>
-    </a>
-
-    <a href="/portfolio/studio-medico" class="project-card">
-      <div class="project-icon">&#129338;</div>
-      <h3>Studio Medico</h3>
-      <p>Sito per medici e specialisti con servizi, prenotazione e teleconsulto.</p>
-      <span class="project-link">Naviga la demo &rarr;</span>
-    </a>
-
-    <a href="/portfolio/fotografo" class="project-card">
-      <div class="project-icon">📷</div>
-      <h3>Fotografo / Videografo</h3>
-      <p>Portfolio fotografico dark con gallery full-screen, servizi e sezione premi.</p>
-      <span class="project-link">Naviga la demo &rarr;</span>
-    </a>
-
-    <a href="/portfolio/barberia" class="project-card">
-      <div class="project-icon">✂️</div>
-      <h3>Salone di Bellezza</h3>
-      <p>Barberia premium con listino servizi, prenotazione online integrata e recensioni.</p>
-      <span class="project-link">Naviga la demo &rarr;</span>
-    </a>
-
-    <a href="/portfolio/studio-legale" class="project-card">
-      <div class="project-icon">⚖️</div>
-      <h3>Studio Legale</h3>
-      <p>Studio legale premium con aree di pratica, profilo dei partner e modulo di consulenza.</p>
-      <span class="project-link">Naviga la demo &rarr;</span>
-    </a>
-
-    <a href="/portfolio/bakery" class="project-card">
-      <div class="project-icon">🥐</div>
-      <h3>Pasticceria / Forno</h3>
-      <p>Forno artigianale con specialità del giorno, storia del fornaio e ordini su prenotazione.</p>
-      <span class="project-link">Naviga la demo &rarr;</span>
-    </a>
-  </div>
-
-  <section class="cta-section">
-    <p>Hai visto qualcosa che ti piace? Parliamone.</p>
-    <a href="/dev/contatti" class="cta-btn">Contattami &rarr;</a>
+  <!-- ── CTA ── -->
+  <section class="mm-section-dark" style="text-align:center;padding:0 2rem 5rem;">
+    <p class="mm-body" style="font-size:1.15rem;margin-bottom:1.5rem;">Hai visto qualcosa che ti piace? Parliamone.</p>
+    <a href="/dev/contatti" class="mm-btn mm-btn-orange">Contattami →</a>
   </section>
 
-  <footer class="footer">
-    <a href="/">&larr; Torna a marcomunich.com</a>
-  </footer>
+</div>
 
-  <script is:inline>
-    const toggle = document.getElementById('theme-toggle');
-    const html = document.documentElement;
-    const saved = localStorage.getItem('dev-theme') || 'dark';
-    html.setAttribute('data-theme', saved);
-    toggle.addEventListener('click', () => {
-      const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-      html.setAttribute('data-theme', next);
-      localStorage.setItem('dev-theme', next);
-    });
+</BaseLayout>
 
-    document.getElementById('navToggle')?.addEventListener('click', () => {
-      document.getElementById('navLinks')?.classList.toggle('open');
-    });
-  </script>
-</body>
-</html>
+<style>
+  /* ── Casi Studio ── */
+  .cs-section {
+    padding: 3rem 2rem 3.5rem;
+    border-bottom: 1px solid rgba(255,255,255,.07);
+  }
+  .cs-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  .cs-tag {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #c8b89a;
+    background: transparent;
+    padding: 0;
+  }
+  .cs-header-count {
+    font-size: 0.85rem;
+    color: #8A9699;
+    margin-left: auto;
+  }
+  .cs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.2rem;
+  }
+  .cs-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    background: #1A2225;
+    border: 1px solid rgba(255,255,255,.07);
+    border-top: 3px solid #c8b89a;
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-decoration: none;
+    transition: border-color 0.2s, transform 0.15s, box-shadow 0.2s;
+  }
+  .cs-card:hover {
+    border-color: #c8b89a;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  }
+  .cs-card-brand {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #E2DED6;
+  }
+  .cs-card-vs {
+    font-size: 0.75rem;
+    color: #8A9699;
+    letter-spacing: 0.04em;
+  }
+  .cs-card-vs span {
+    color: #c8b89a;
+    font-weight: 600;
+  }
+  .cs-card-desc {
+    font-size: 0.82rem;
+    line-height: 1.6;
+    color: #8A9699;
+    flex: 1;
+  }
+  .cs-card-cta {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #c8b89a;
+    margin-top: 0.2rem;
+  }
+
+  /* ── Portfolio Grid ── */
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.2rem;
+    max-width: 1050px;
+    margin: 0 auto;
+  }
+  .project-card {
+    background: #1A2225;
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: 12px;
+    padding: 1.8rem 1.5rem;
+    transition: border-color 0.2s, transform 0.2s;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+  }
+  .project-card:hover {
+    border-color: #3B82F6;
+    transform: translateY(-2px);
+  }
+  .project-icon {
+    font-size: 2rem;
+    margin-bottom: 0.8rem;
+  }
+  .project-card .mm-h3 {
+    font-size: 1.05rem;
+    margin-bottom: 0.4rem;
+  }
+  .project-card .mm-body {
+    font-size: 0.88rem;
+    flex: 1;
+    margin-bottom: 1rem;
+  }
+  .project-link {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #3B82F6;
+    transition: color 0.2s;
+  }
+  .project-link:hover {
+    color: #60A5FA;
+  }
+
+  /* ── Mobile ── */
+  @media (max-width: 768px) {
+    .portfolio-grid {
+      grid-template-columns: 1fr;
+    }
+    .cs-section {
+      padding: 2rem 1.5rem;
+    }
+    .cs-header {
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+    .cs-header-count {
+      margin-left: 0;
+    }
+    .cs-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

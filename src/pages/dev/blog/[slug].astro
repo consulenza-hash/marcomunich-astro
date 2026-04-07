@@ -1,6 +1,8 @@
 ---
 export const prerender = true;
 
+import BaseLayout from '@layouts/BaseLayout.astro';
+
 interface PostData {
   slug: string;
   title: string;
@@ -72,179 +74,18 @@ const articleSchema = JSON.stringify({
 });
 ---
 
-<html lang="it">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{post.title} · Marco Munich Dev</title>
-  <meta name="description" content={post.description} />
+<BaseLayout
+  title={`${post.title} · Marco Munich Dev`}
+  description={post.description}
+  currentPath={`/dev/blog/${post.slug}`}
+>
+
+<Fragment slot="head">
   <link rel="canonical" href={canonicalUrl} />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
   <script type="application/ld+json" set:html={articleSchema} />
-  <style is:global>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: 'Inter', system-ui, sans-serif;
-      background: #141C1F;
-      color: #E2DED6;
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-    }
-    a { color: inherit; text-decoration: none; }
+</Fragment>
 
-    /* Navbar */
-    .navbar {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      background: rgba(20,28,31,0.85); backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(193,127,58,0.1);
-    }
-    .navbar-inner {
-      max-width: 1200px; margin: 0 auto; padding: 0 1.5rem;
-      height: 64px; display: flex; align-items: center; justify-content: space-between;
-    }
-    .nav-logo { font-weight: 700; font-size: 1.1rem; color: #fff; letter-spacing: -0.02em; }
-    .nav-logo span { color: #C17F3A; }
-    .nav-links { display: flex; gap: 2rem; list-style: none; }
-    .nav-links a { font-size: 0.875rem; font-weight: 500; color: #8A9699; transition: color 0.2s; }
-    .nav-links a:hover, .nav-links a.active { color: #C17F3A; }
-    .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 0.5rem; }
-    .nav-toggle span { display: block; width: 22px; height: 2px; background: #E2DED6; margin: 5px 0; }
-
-    /* Article header */
-    .art-header {
-      max-width: 760px; margin: 0 auto;
-      padding: 120px 1.5rem 40px;
-    }
-    .art-breadcrumb {
-      display: flex; align-items: center; gap: 0.5rem;
-      font-size: 0.8rem; color: #6B7B7F; margin-bottom: 1.5rem;
-    }
-    .art-breadcrumb a { color: #8A9699; transition: color 0.2s; }
-    .art-breadcrumb a:hover { color: #C17F3A; }
-    .art-breadcrumb span { color: #333; }
-    .art-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
-    .art-tag {
-      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;
-      color: #C17F3A; background: rgba(193,127,58,0.1); padding: 3px 10px; border-radius: 100px;
-    }
-    .art-title {
-      font-family: 'Lora', Georgia, serif;
-      font-size: clamp(1.75rem, 4vw, 2.75rem);
-      font-weight: 800; color: #fff; letter-spacing: -0.03em;
-      line-height: 1.2; margin-bottom: 1rem;
-    }
-    .art-meta {
-      display: flex; align-items: center; gap: 0.75rem;
-      font-size: 0.825rem; color: #6B7B7F;
-    }
-    .art-meta-sep { width: 3px; height: 3px; border-radius: 50%; background: #333; }
-
-    /* Divider */
-    .art-divider {
-      max-width: 760px; margin: 0 auto; padding: 0 1.5rem;
-      border: none; border-top: 1px solid rgba(255,255,255,0.07);
-    }
-
-    /* Article content */
-    .art-body {
-      max-width: 760px; margin: 0 auto;
-      padding: 2.5rem 1.5rem 5rem;
-    }
-    .prose h2 {
-      font-size: 1.5rem; font-weight: 700; color: #fff;
-      letter-spacing: -0.02em; margin: 2.5rem 0 1rem;
-      line-height: 1.3;
-    }
-    .prose h3 {
-      font-size: 1.15rem; font-weight: 600; color: #E2DED6;
-      margin: 2rem 0 0.75rem; line-height: 1.4;
-    }
-    .prose p { color: #c5c5c5; font-size: 1.05rem; line-height: 1.8; margin-bottom: 1.25rem; }
-    .prose strong { color: #E2DED6; font-weight: 600; }
-    .prose a { color: #C17F3A; border-bottom: 1px solid rgba(193,127,58,0.3); transition: border-color 0.2s; }
-    .prose a:hover { border-color: #C17F3A; }
-    .prose ul, .prose ol { padding-left: 1.5rem; margin-bottom: 1.25rem; }
-    .prose li { color: #c5c5c5; font-size: 1.05rem; line-height: 1.8; margin-bottom: 0.4rem; }
-    .prose blockquote {
-      border-left: 3px solid #C17F3A; padding: 0.75rem 1.25rem;
-      background: rgba(193,127,58,0.05); border-radius: 0 8px 8px 0;
-      margin: 1.5rem 0; font-style: italic; color: #8A9699;
-    }
-    .prose code {
-      background: rgba(255,255,255,0.07); color: #C17F3A;
-      font-family: 'Fira Code', monospace; font-size: 0.875em;
-      padding: 2px 6px; border-radius: 4px;
-    }
-    .prose pre { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.07); border-radius: 8px; padding: 1.25rem; overflow-x: auto; margin-bottom: 1.25rem; }
-    .prose pre code { background: none; padding: 0; color: #E2DED6; }
-    .prose img { width: 100%; border-radius: 10px; margin: 1.5rem 0; display: block; }
-
-    /* CTA box */
-    .art-cta {
-      max-width: 760px; margin: 0 auto; padding: 0 1.5rem 5rem;
-    }
-    .art-cta-box {
-      background: rgba(193,127,58,0.05);
-      border: 1px solid rgba(193,127,58,0.2);
-      border-radius: 12px; padding: 2rem;
-    }
-    .art-cta-box h3 { font-size: 1.1rem; font-weight: 700; color: #fff; margin-bottom: 0.5rem; }
-    .art-cta-box p { font-size: 0.9rem; color: #8A9699; margin-bottom: 1.25rem; }
-    .btn-amber {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      padding: 0.75rem 1.5rem; background: #C17F3A; color: #141C1F;
-      font-weight: 600; font-size: 0.875rem; border-radius: 8px;
-      transition: background 0.2s;
-    }
-    .btn-amber:hover { background: #A86B2E; }
-
-    /* Footer */
-    .footer {
-      border-top: 1px solid rgba(255,255,255,0.06);
-      padding: 2rem 1.5rem; text-align: center;
-      font-size: 0.875rem; color: #6B7B7F;
-    }
-    .footer a { color: #8A9699; transition: color 0.2s; }
-    .footer a:hover { color: #C17F3A; }
-
-    @media (max-width: 768px) {
-      .nav-links {
-        display: none; position: absolute; top: 64px; left: 0; right: 0;
-        background: rgba(20,28,31,0.97); backdrop-filter: blur(12px);
-        padding: 1rem 1.5rem 1.5rem; flex-direction: column; gap: 0;
-        border-bottom: 1px solid rgba(255,255,255,0.06);
-      }
-      .nav-links.open { display: flex; }
-      .nav-links li { border-bottom: 1px solid rgba(255,255,255,0.04); }
-      .nav-links a { display: block; padding: 0.875rem 0; font-size: 1rem; }
-      .nav-toggle { display: block; }
-      .art-header { padding: 100px 1.25rem 32px; }
-      .art-body { padding: 2rem 1.25rem 4rem; }
-      .art-cta { padding: 0 1.25rem 4rem; }
-    }
-  </style>
-</head>
-<body>
-
-  <nav class="navbar">
-    <div class="navbar-inner">
-      <a href="/dev/" class="nav-logo">Marco Munich <span>· Dev</span></a>
-      <button class="nav-toggle" aria-label="Menu" id="navToggle">
-        <span></span><span></span><span></span>
-      </button>
-      <ul class="nav-links" id="navLinks">
-        <li><a href="/dev/come-lavoro">Come Lavoro</a></li>
-        <li><a href="/dev/vibe-coding">Vibe Coding</a></li>
-        <li><a href="/dev/portfolio">Portfolio</a></li>
-        <li><a href="/dev/prezzi">Prezzi</a></li>
-        <li><a href="/dev/blog/" class="active">Blog</a></li>
-        <li><a href="/dev/contatti">Contatti</a></li>
-      </ul>
-    </div>
-  </nav>
+<div class="mm-dev mm-page">
 
   <header class="art-header">
     <nav class="art-breadcrumb" aria-label="Breadcrumb">
@@ -279,19 +120,112 @@ const articleSchema = JSON.stringify({
     <div class="art-cta-box">
       <h3>Costruisco siti che si fanno trovare anche dai motori AI</h3>
       <p>Se vuoi un sito veloce, strutturato per Google e per i modelli AI, scrivimi. Ti dico subito cosa ti serve e cosa no.</p>
-      <a href="/dev/contatti" class="btn-amber">Parliamo del tuo progetto &rarr;</a>
+      <a href="/dev/contatti" class="mm-btn mm-btn-orange">Parliamo del tuo progetto &rarr;</a>
     </div>
   </div>
 
-  <footer class="footer">
+  <footer class="art-footer">
     <a href="/dev/blog/">&larr; Tutti gli articoli</a>
   </footer>
 
-  <script is:inline>
-    document.getElementById('navToggle')?.addEventListener('click', () => {
-      document.getElementById('navLinks')?.classList.toggle('open');
-    });
-  </script>
+</div>
 
-</body>
-</html>
+</BaseLayout>
+
+<style>
+  /* Article header */
+  .art-header {
+    max-width: 760px; margin: 0 auto;
+    padding: 120px 1.5rem 40px;
+  }
+  .art-breadcrumb {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-size: 0.8rem; color: #6B7B7F; margin-bottom: 1.5rem;
+  }
+  .art-breadcrumb a { color: #8A9699; transition: color 0.2s; }
+  .art-breadcrumb a:hover { color: #3B82F6; }
+  .art-breadcrumb span { color: #333; }
+  .art-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
+  .art-tag {
+    font-size: 0.72rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;
+    color: #3B82F6; background: rgba(59,130,246,0.1); padding: 3px 10px; border-radius: 100px;
+  }
+  .art-title {
+    font-family: 'Lora', Georgia, serif;
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    font-weight: 800; color: #fff; letter-spacing: -0.03em;
+    line-height: 1.2; margin-bottom: 1rem;
+  }
+  .art-meta {
+    display: flex; align-items: center; gap: 0.75rem;
+    font-size: 0.825rem; color: #6B7B7F;
+  }
+  .art-meta-sep { width: 3px; height: 3px; border-radius: 50%; background: #333; }
+
+  /* Divider */
+  .art-divider {
+    max-width: 760px; margin: 0 auto; padding: 0 1.5rem;
+    border: none; border-top: 1px solid rgba(255,255,255,0.07);
+  }
+
+  /* Article content */
+  .art-body {
+    max-width: 760px; margin: 0 auto;
+    padding: 2.5rem 1.5rem 5rem;
+  }
+  .prose :global(h2) {
+    font-size: 1.5rem; font-weight: 700; color: #fff;
+    letter-spacing: -0.02em; margin: 2.5rem 0 1rem;
+    line-height: 1.3;
+  }
+  .prose :global(h3) {
+    font-size: 1.15rem; font-weight: 600; color: #E2DED6;
+    margin: 2rem 0 0.75rem; line-height: 1.4;
+  }
+  .prose :global(p) { color: #c5c5c5; font-size: 1.05rem; line-height: 1.8; margin-bottom: 1.25rem; }
+  .prose :global(strong) { color: #E2DED6; font-weight: 600; }
+  .prose :global(a) { color: #3B82F6; border-bottom: 1px solid rgba(59,130,246,0.3); transition: border-color 0.2s; }
+  .prose :global(a:hover) { border-color: #3B82F6; }
+  .prose :global(ul), .prose :global(ol) { padding-left: 1.5rem; margin-bottom: 1.25rem; }
+  .prose :global(li) { color: #c5c5c5; font-size: 1.05rem; line-height: 1.8; margin-bottom: 0.4rem; }
+  .prose :global(blockquote) {
+    border-left: 3px solid #3B82F6; padding: 0.75rem 1.25rem;
+    background: rgba(59,130,246,0.05); border-radius: 0 8px 8px 0;
+    margin: 1.5rem 0; font-style: italic; color: #8A9699;
+  }
+  .prose :global(code) {
+    background: rgba(255,255,255,0.07); color: #3B82F6;
+    font-family: 'Fira Code', monospace; font-size: 0.875em;
+    padding: 2px 6px; border-radius: 4px;
+  }
+  .prose :global(pre) { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.07); border-radius: 8px; padding: 1.25rem; overflow-x: auto; margin-bottom: 1.25rem; }
+  .prose :global(pre code) { background: none; padding: 0; color: #E2DED6; }
+  .prose :global(img) { width: 100%; border-radius: 10px; margin: 1.5rem 0; display: block; }
+
+  /* CTA box */
+  .art-cta {
+    max-width: 760px; margin: 0 auto; padding: 0 1.5rem 5rem;
+  }
+  .art-cta-box {
+    background: rgba(59,130,246,0.05);
+    border: 1px solid rgba(59,130,246,0.2);
+    border-radius: 12px; padding: 2rem;
+  }
+  .art-cta-box h3 { font-size: 1.1rem; font-weight: 700; color: #fff; margin-bottom: 0.5rem; }
+  .art-cta-box p { font-size: 0.9rem; color: #8A9699; margin-bottom: 1.25rem; }
+
+  /* Footer link */
+  .art-footer {
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 2rem 1.5rem; text-align: center;
+    font-size: 0.875rem; color: #6B7B7F;
+  }
+  .art-footer a { color: #8A9699; transition: color 0.2s; }
+  .art-footer a:hover { color: #3B82F6; }
+
+  @media (max-width: 768px) {
+    .art-header { padding: 100px 1.25rem 32px; }
+    .art-body { padding: 2rem 1.25rem 4rem; }
+    .art-cta { padding: 0 1.25rem 4rem; }
+  }
+</style>

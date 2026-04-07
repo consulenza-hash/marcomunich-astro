@@ -11,6 +11,9 @@ tools:
   - Edit
   - Write
   - Bash(date:*)
+  - mcp__memory__search_nodes
+  - mcp__memory__create_entities
+  - mcp__memory__add_observations
 model: sonnet
 memory: project
 maxTurns: 10
@@ -198,6 +201,24 @@ A learning gets promoted when ALL of these are true:
 | Confirmed rule that prevents recurring error | **knowledge-base.md** | "Always check rate limits before batch operations" |
 | One-off mistake, already fixed | Your MEMORY.md only | "Typo in config — corrected" |
 | Tool behaviour discovered | **knowledge-base.md** | "npm ci is faster than npm install in CI" |
+
+### Cross-project promotion via MCP memory graph
+
+After promoting a rule to `knowledge-base.md`, evaluate: is it cross-project applicable?
+
+**Cross-project applicable** = would this rule benefit ANY project using this stack/pattern, not just this one?
+Examples: "always parameterize SQL queries", "Argon2 for passwords", "CSP must allow consent scripts"
+
+If yes:
+1. Search first to avoid duplicates:
+   `mcp__memory__search_nodes: "[key terms from rule]"`
+2. No match → create entity:
+   `mcp__memory__create_entities: [{"name": "[rule name]", "entityType": "CrossProjectRule", "observations": ["[rule text]", "Stack: [framework/language]", "Source: [project] | [date]"]}]`
+3. Match found → add observation to existing entity:
+   `mcp__memory__add_observations: [{"entityName": "[name]", "contents": ["Confirmed also in: [project] | [date]"]}]`
+
+**Promote to MCP graph:** security patterns for common stacks, performance rules, framework-agnostic tool behaviour.
+**Keep local only:** business logic rules, client preferences, environment-specific config.
 
 ### Promotion format
 ```

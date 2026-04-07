@@ -1,781 +1,113 @@
 ---
+import BaseLayout from '@layouts/BaseLayout.astro';
 export const prerender = true;
 ---
 
-<html lang="it">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Marco Munich · Sviluppo Web</title>
-  <meta name="description" content="Costruisco siti web veloci, sicuri e ottimizzati. Progettati su misura per la tua attività." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
-      background:
-        radial-gradient(ellipse 80% 60% at 20% 30%, rgba(193,127,58,0.07) 0%, transparent 60%),
-        radial-gradient(ellipse 60% 80% at 80% 70%, rgba(40,80,70,0.08) 0%, transparent 60%),
-        #141C1F;
-      background-attachment: fixed;
-      color: #E2DED6;
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-      animation: mesh-shift 20s ease-in-out infinite alternate;
-    }
-
-    @keyframes mesh-shift {
-      0%   { background-position: 0% 0%, 100% 100%, 0 0; }
-      50%  { background-position: 30% 20%, 70% 60%, 0 0; }
-      100% { background-position: 10% 80%, 90% 10%, 0 0; }
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    /* ── Navbar ── */
-    .navbar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      background: rgba(20, 28, 31, 0.85);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(193, 127, 58, 0.1);
-    }
-
-    .navbar-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 1.5rem;
-      height: 64px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .nav-logo {
-      font-weight: 700;
-      font-size: 1.1rem;
-      color: #fff;
-      letter-spacing: -0.02em;
-    }
-
-    .nav-logo span {
-      color: #C17F3A;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      list-style: none;
-    }
-
-    .nav-links a {
-      font-size: 0.875rem;
-      font-weight: 500;
-      color: #8A9699;
-      transition: color 0.2s;
-    }
-
-    .nav-links a:hover {
-      color: #C17F3A;
-    }
-
-    .nav-toggle {
-      display: none;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 0.5rem;
-    }
-
-    .nav-toggle span {
-      display: block;
-      width: 22px;
-      height: 2px;
-      background: #E2DED6;
-      margin: 5px 0;
-      transition: all 0.3s;
-    }
-
-    /* ── Section base ── */
-    .section {
-      padding: 6rem 1.5rem;
-    }
-
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .section-label {
-      font-size: 0.8rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: #C17F3A;
-      margin-bottom: 1rem;
-    }
-
-    .section-title {
-      font-size: 2.25rem;
-      font-weight: 800;
-      color: #fff;
-      letter-spacing: -0.03em;
-      line-height: 1.2;
-      margin-bottom: 1.5rem;
-    }
-
-    .section-subtitle {
-      font-size: 1.1rem;
-      color: #8A9699;
-      max-width: 600px;
-    }
-
-    /* ── Hero ── */
-    .hero {
-      position: relative;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 8rem 1.5rem 6rem;
-      overflow: hidden;
-    }
-
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      background-image:
-        radial-gradient(circle at 1px 1px, rgba(193, 127, 58, 0.08) 1px, transparent 0);
-      background-size: 40px 40px;
-      pointer-events: none;
-    }
-
-    .hero-glow {
-      position: absolute;
-      top: 20%;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 600px;
-      height: 400px;
-      background: radial-gradient(ellipse, rgba(193, 127, 58, 0.06) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 1;
-      max-width: 800px;
-    }
-
-    .hero h1 {
-      font-family: 'Lora', Georgia, serif;
-      font-size: clamp(2.5rem, 6vw, 4.5rem);
-      font-weight: 800;
-      color: #fff;
-      letter-spacing: -0.04em;
-      line-height: 1.1;
-      margin-bottom: 1.5rem;
-    }
-
-    .hero h1 .accent {
-      color: #C17F3A;
-    }
-
-    /* Glitch effect on H1 hover */
-    .hero h1 {
-      position: relative;
-    }
-    .hero h1::before,
-    .hero h1::after {
-      content: attr(data-text);
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%;
-      font-family: inherit;
-      font-size: inherit;
-      font-weight: inherit;
-      line-height: inherit;
-      opacity: 0;
-      pointer-events: none;
-    }
-    .hero h1::before {
-      color: #C17F3A;
-      clip-path: inset(30% 0 40% 0);
-      transform: translateX(-3px);
-    }
-    .hero h1::after {
-      color: #5B8FA8;
-      clip-path: inset(60% 0 10% 0);
-      transform: translateX(3px);
-    }
-    .hero h1:hover::before {
-      opacity: 0.7;
-      animation: glitch-top 0.4s steps(2) infinite;
-    }
-    .hero h1:hover::after {
-      opacity: 0.7;
-      animation: glitch-bot 0.4s steps(2) infinite;
-    }
-    @keyframes glitch-top {
-      0%   { clip-path: inset(10% 0 60% 0); transform: translateX(-3px); }
-      25%  { clip-path: inset(40% 0 20% 0); transform: translateX(3px); }
-      50%  { clip-path: inset(20% 0 50% 0); transform: translateX(-2px); }
-      75%  { clip-path: inset(50% 0 10% 0); transform: translateX(2px); }
-      100% { clip-path: inset(10% 0 60% 0); transform: translateX(-3px); }
-    }
-    @keyframes glitch-bot {
-      0%   { clip-path: inset(60% 0 10% 0); transform: translateX(3px); }
-      25%  { clip-path: inset(20% 0 50% 0); transform: translateX(-3px); }
-      50%  { clip-path: inset(70% 0 5% 0);  transform: translateX(2px); }
-      75%  { clip-path: inset(45% 0 30% 0); transform: translateX(-2px); }
-      100% { clip-path: inset(60% 0 10% 0); transform: translateX(3px); }
-    }
-
-    /* Typed code snippet */
-    .hero-code {
-      display: inline-block;
-      background: rgba(20,28,31,0.85);
-      border: 1px solid rgba(193,127,58,0.25);
-      border-radius: 8px;
-      padding: 0.75rem 1.25rem;
-      margin-bottom: 2rem;
-      font-family: 'JetBrains Mono', 'Courier New', monospace;
-      font-size: 0.85rem;
-      color: #C17F3A;
-      text-align: left;
-      min-width: 320px;
-      max-width: 480px;
-    }
-    .hero-code .code-line {
-      display: block;
-      white-space: pre;
-    }
-    .cursor {
-      display: inline-block;
-      width: 2px;
-      height: 1em;
-      background: #C17F3A;
-      vertical-align: text-bottom;
-      margin-left: 1px;
-      animation: blink 0.8s step-end infinite;
-    }
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50%       { opacity: 0; }
-    }
-
-    .hero p {
-      font-size: 1.25rem;
-      color: #8A9699;
-      max-width: 550px;
-      margin: 0 auto 2.5rem;
-      line-height: 1.7;
-    }
-
-    .hero-ctas {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.875rem 2rem;
-      background: #C17F3A;
-      color: #141C1F;
-      font-weight: 600;
-      font-size: 0.95rem;
-      border-radius: 8px;
-      transition: background 0.2s, transform 0.2s;
-    }
-
-    .btn-primary:hover {
-      background: #A86B2E;
-      transform: translateY(-1px);
-    }
-
-    .btn-secondary {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.875rem 2rem;
-      background: transparent;
-      color: #E2DED6;
-      font-weight: 600;
-      font-size: 0.95rem;
-      border-radius: 8px;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      transition: border-color 0.2s, transform 0.2s;
-    }
-
-    .btn-secondary:hover {
-      border-color: #C17F3A;
-      transform: translateY(-1px);
-    }
-
-    /* ── What I Build ── */
-    .build-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1.5rem;
-      margin-top: 3rem;
-    }
-
-    .build-card {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 12px;
-      padding: 2rem 1.5rem;
-      transition: border-color 0.3s, transform 0.2s;
-    }
-
-    .build-card:hover {
-      border-color: rgba(193, 127, 58, 0.3);
-      transform: translateY(-2px);
-    }
-
-    .build-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 10px;
-      background: rgba(193, 127, 58, 0.1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 1.25rem;
-      font-size: 1.5rem;
-    }
-
-    .build-card h3 {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: 0.5rem;
-    }
-
-    .build-card p {
-      font-size: 0.9rem;
-      color: #8A9699;
-      line-height: 1.5;
-    }
-
-    /* ── Why Different ── */
-    .diff-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
-      margin-top: 3rem;
-    }
-
-    .diff-card {
-      padding: 2rem;
-      border-radius: 12px;
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-    }
-
-    .diff-num {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 36px;
-      height: 36px;
-      border-radius: 8px;
-      background: rgba(193, 127, 58, 0.12);
-      color: #C17F3A;
-      font-weight: 700;
-      font-size: 0.85rem;
-      margin-bottom: 1.25rem;
-    }
-
-    .diff-card h3 {
-      font-size: 1.15rem;
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: 0.75rem;
-    }
-
-    .diff-card p {
-      font-size: 0.95rem;
-      color: #8A9699;
-      line-height: 1.6;
-    }
-
-    /* ── Vibe Coding ── */
-    .vibe-card {
-      background: rgba(193, 127, 58, 0.04);
-      border: 1px solid rgba(193, 127, 58, 0.25);
-      border-radius: 16px;
-      padding: 3rem;
-      max-width: 800px;
-      margin: 3rem auto 0;
-    }
-
-    .vibe-card h3 {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: 1rem;
-    }
-
-    .vibe-card p {
-      font-size: 1rem;
-      color: #b5b5b5;
-      line-height: 1.7;
-      margin-bottom: 1.5rem;
-    }
-
-    .vibe-card .link-arrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      color: #C17F3A;
-      font-weight: 600;
-      font-size: 0.95rem;
-      transition: gap 0.2s;
-    }
-
-    .vibe-card .link-arrow:hover {
-      gap: 0.75rem;
-    }
-
-    /* ── Portfolio Preview ── */
-    .portfolio-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.25rem;
-      margin-top: 3rem;
-    }
-
-    .portfolio-card {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 12px;
-      padding: 1.75rem 1.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      transition: border-color 0.3s, transform 0.2s;
-    }
-
-    .portfolio-card:hover {
-      border-color: rgba(193, 127, 58, 0.3);
-      transform: translateY(-2px);
-    }
-
-    .portfolio-card-name {
-      font-weight: 600;
-      font-size: 1rem;
-      color: #fff;
-    }
-
-    .portfolio-card-link {
-      font-size: 0.85rem;
-      color: #C17F3A;
-      font-weight: 500;
-      white-space: nowrap;
-    }
-
-    .portfolio-all {
-      text-align: center;
-      margin-top: 2.5rem;
-    }
-
-    .portfolio-all a {
-      color: #C17F3A;
-      font-weight: 600;
-      font-size: 1rem;
-      transition: opacity 0.2s;
-    }
-
-    .portfolio-all a:hover {
-      opacity: 0.8;
-    }
-
-    /* ── CTA Section ── */
-    .cta-section {
-      text-align: center;
-      padding: 6rem 1.5rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
-    }
-
-    .cta-section h2 {
-      font-size: 2.5rem;
-      font-weight: 800;
-      color: #fff;
-      letter-spacing: -0.03em;
-      margin-bottom: 1rem;
-    }
-
-    .cta-section p {
-      color: #8A9699;
-      font-size: 1.1rem;
-      margin-bottom: 2rem;
-    }
-
-    /* ── Footer ── */
-    .footer {
-      padding: 2.5rem 1.5rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
-      text-align: center;
-    }
-
-    .footer a {
-      font-size: 0.9rem;
-      color: #8A9699;
-      transition: color 0.2s;
-    }
-
-    .footer a:hover {
-      color: #C17F3A;
-    }
-
-    /* ── Responsive ── */
-    @media (max-width: 1024px) {
-      .build-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 768px) {
-      .nav-links {
-        display: none;
-        position: absolute;
-        top: 64px;
-        left: 0;
-        right: 0;
-        flex-direction: column;
-        background: rgba(20, 28, 31, 0.95);
-        backdrop-filter: blur(12px);
-        padding: 1.5rem;
-        gap: 1rem;
-        border-bottom: 1px solid rgba(193, 127, 58, 0.1);
-      }
-
-      .nav-links.open {
-        display: flex;
-      }
-
-      .nav-toggle {
-        display: block;
-      }
-
-      .hero {
-        min-height: auto;
-        padding: 7rem 1.5rem 4rem;
-      }
-
-      .hero h1 {
-        font-size: 2.25rem;
-      }
-
-      .hero p {
-        font-size: 1.05rem;
-      }
-
-      .section {
-        padding: 4rem 1.5rem;
-      }
-
-      .section-title {
-        font-size: 1.75rem;
-      }
-
-      .build-grid {
-        grid-template-columns: 1fr;
-        display: block !important;
-      }
-
-      .build-card {
-        width: 100% !important;
-        margin-bottom: 1rem;
-      }
-
-      .diff-grid {
-        grid-template-columns: 1fr;
-        display: block !important;
-      }
-
-      .diff-card {
-        width: 100% !important;
-        margin-bottom: 1rem;
-      }
-
-      .vibe-card {
-        padding: 2rem 1.5rem;
-      }
-
-      .portfolio-grid {
-        grid-template-columns: 1fr;
-        display: block !important;
-      }
-
-      .portfolio-card {
-        width: 100% !important;
-        margin-bottom: 1rem;
-      }
-
-      .cta-section h2 {
-        font-size: 1.75rem;
-      }
-
-      .hero-ctas {
-        flex-direction: column;
-        align-items: center;
-      }
-    }
-
-    /* ── Divider ── */
-    .divider {
-      width: 60px;
-      height: 3px;
-      background: rgba(193, 127, 58, 0.4);
-      border-radius: 2px;
-      margin: 0 auto 3rem;
-    }
-  </style>
-</head>
-<body>
-
-  <!-- Navbar -->
-  <nav class="navbar">
-    <div class="navbar-inner">
-      <a href="/dev/" class="nav-logo">Marco Munich <span>· Dev</span></a>
-      <button class="nav-toggle" aria-label="Menu" id="navToggle">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-      <ul class="nav-links" id="navLinks">
-        <li><a href="/dev/come-lavoro">Come Lavoro</a></li>
-        <li><a href="/dev/vibe-coding">Vibe Coding</a></li>
-        <li><a href="/dev/portfolio">Portfolio</a></li>
-        <li><a href="/dev/prezzi">Prezzi</a></li>
-        <li><a href="/dev/blog/">Blog</a></li>
-        <li><a href="/dev/contatti">Contatti</a></li>
-      </ul>
-    </div>
-  </nav>
-
-  <!-- Hero -->
-  <section class="hero">
+<BaseLayout
+  title="Marco Munich · Sviluppo Web"
+  description="Costruisco siti web veloci, sicuri e ottimizzati. Progettati su misura per la tua attività."
+  currentPath="/dev"
+>
+
+<div class="mm-dev mm-page">
+
+  <!-- ── HERO ── -->
+  <section class="hero mm-section-dark">
     <div class="hero-bg"></div>
     <div class="hero-glow"></div>
     <div class="hero-content">
-      <h1 data-text="Costruisco siti web che funzionano.">Costruisco siti web<br/>che <span class="accent">funzionano.</span></h1>
-      <p>Veloci, sicuri, ottimizzati. Progettati su misura per la tua attivit&agrave;.</p>
+      <h1 class="mm-h1" data-text="Costruisco siti web che funzionano." style="font-family:'Lora',Georgia,serif;font-size:clamp(2.5rem,6vw,4.5rem);letter-spacing:-0.04em;line-height:1.1;">Costruisco siti web<br/>che <span class="accent">funzionano.</span></h1>
+      <p class="mm-body" style="font-size:1.25rem;max-width:550px;margin:0 auto 2.5rem;line-height:1.7;">Veloci, sicuri, ottimizzati. Progettati su misura per la tua attivit&agrave;.</p>
       <div class="hero-code"><span class="code-line" id="typed-line"></span><span class="cursor"></span></div>
       <div class="hero-ctas">
-        <a href="/dev/portfolio" class="btn-primary">Vedi i progetti &rarr;</a>
-        <a href="/dev/come-lavoro" class="btn-secondary">Come lavoro</a>
+        <a href="/dev/portfolio" class="mm-btn mm-btn-orange">Vedi i progetti &rarr;</a>
+        <a href="/dev/come-lavoro" class="mm-btn mm-btn-outline">Come lavoro</a>
       </div>
     </div>
   </section>
 
-  <!-- What I Build -->
-  <section class="section">
+  <!-- ── COSA COSTRUISCO ── -->
+  <section class="mm-section-dark section">
     <div class="container">
-      <p class="section-label">Cosa costruisco</p>
-      <h2 class="section-title">Soluzioni web per ogni esigenza</h2>
+      <p class="mm-tag">Cosa costruisco</p>
+      <h2 class="mm-h2">Soluzioni web per ogni esigenza</h2>
       <div class="build-grid">
         <div class="build-card">
           <div class="build-icon">
-            <svg width="24" height="24" fill="none" stroke="#C17F3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+            <svg width="24" height="24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
           </div>
-          <h3>Siti Vetrina</h3>
-          <p>Presenza online professionale che comunica chi sei e cosa fai.</p>
+          <h3 class="mm-h3">Siti Vetrina</h3>
+          <p class="mm-body">Presenza online professionale che comunica chi sei e cosa fai.</p>
         </div>
         <div class="build-card">
           <div class="build-icon">
-            <svg width="24" height="24" fill="none" stroke="#C17F3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+            <svg width="24" height="24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
           </div>
-          <h3>E-commerce</h3>
-          <p>Negozi online veloci con pagamenti sicuri e gestione prodotti.</p>
+          <h3 class="mm-h3">E-commerce</h3>
+          <p class="mm-body">Negozi online veloci con pagamenti sicuri e gestione prodotti.</p>
         </div>
         <div class="build-card">
           <div class="build-icon">
-            <svg width="24" height="24" fill="none" stroke="#C17F3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M15 3h6v6"/><path d="M10 14L21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+            <svg width="24" height="24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M15 3h6v6"/><path d="M10 14L21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
           </div>
-          <h3>Landing Page</h3>
-          <p>Pagine singole ad alta conversione per campagne e lanci.</p>
+          <h3 class="mm-h3">Landing Page</h3>
+          <p class="mm-body">Pagine singole ad alta conversione per campagne e lanci.</p>
         </div>
         <div class="build-card">
           <div class="build-icon">
-            <svg width="24" height="24" fill="none" stroke="#C17F3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/><line x1="14" y1="4" x2="10" y2="20"/></svg>
+            <svg width="24" height="24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/><line x1="14" y1="4" x2="10" y2="20"/></svg>
           </div>
-          <h3>Web App</h3>
-          <p>Applicazioni web su misura con funzionalit&agrave; avanzate.</p>
+          <h3 class="mm-h3">Web App</h3>
+          <p class="mm-body">Applicazioni web su misura con funzionalit&agrave; avanzate.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Why Different -->
-  <section class="section" style="background: rgba(255,255,255,0.01);">
+  <!-- ── PERCHE' SCEGLIERMI ── -->
+  <section class="mm-section-dark section" style="background:rgba(255,255,255,0.01);">
     <div class="container">
-      <p class="section-label">Perch&eacute; scegliermi</p>
-      <h2 class="section-title">Non il solito freelancer</h2>
+      <p class="mm-tag">Perch&eacute; scegliermi</p>
+      <h2 class="mm-h2">Non il solito freelancer</h2>
       <div class="diff-grid">
         <div class="diff-card">
           <div class="diff-num">01</div>
-          <h3>Velocit&agrave;</h3>
-          <p>Un sito completo in giorni, non mesi. Grazie a un processo guidato dall'intelligenza artificiale.</p>
+          <h3 class="mm-h3">Velocit&agrave;</h3>
+          <p class="mm-body">Un sito completo in giorni, non mesi. Grazie a un processo guidato dall'intelligenza artificiale.</p>
         </div>
         <div class="diff-card">
           <div class="diff-num">02</div>
-          <h3>Trasparenza</h3>
-          <p>Sai sempre a che punto siamo. Nessun gergo tecnico, nessuna sorpresa.</p>
+          <h3 class="mm-h3">Trasparenza</h3>
+          <p class="mm-body">Sai sempre a che punto siamo. Nessun gergo tecnico, nessuna sorpresa.</p>
         </div>
         <div class="diff-card">
           <div class="diff-num">03</div>
-          <h3>Risultato</h3>
-          <p>Il sito &egrave; tuo, il codice &egrave; pulito, le performance sono misurabili.</p>
+          <h3 class="mm-h3">Risultato</h3>
+          <p class="mm-body">Il sito &egrave; tuo, il codice &egrave; pulito, le performance sono misurabili.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Vibe Coding Preview -->
-  <section class="section">
-    <div class="container" style="text-align: center;">
-      <p class="section-label">Il metodo</p>
-      <h2 class="section-title">Come costruisco i tuoi progetti</h2>
+  <!-- ── VIBE CODING ── -->
+  <section class="mm-section-dark section">
+    <div class="container" style="text-align:center;">
+      <p class="mm-tag">Il metodo</p>
+      <h2 class="mm-h2">Come costruisco i tuoi progetti</h2>
       <div class="vibe-card">
-        <h3>Vibe Coding: il mio metodo</h3>
-        <p>Non scrivo codice riga per riga. Guido l'intelligenza artificiale per costruire siti che funzionano. Il risultato &egrave; lo stesso — anzi, pi&ugrave; veloce e pi&ugrave; pulito.</p>
+        <h3 class="mm-h3" style="font-size:1.5rem;margin-bottom:1rem;">Vibe Coding: il mio metodo</h3>
+        <p class="mm-body" style="font-size:1rem;line-height:1.7;margin-bottom:1.5rem;">Non scrivo codice riga per riga. Guido l'intelligenza artificiale per costruire siti che funzionano. Il risultato &egrave; lo stesso — anzi, pi&ugrave; veloce e pi&ugrave; pulito.</p>
         <a href="/dev/vibe-coding" class="link-arrow">Scopri come funziona &rarr;</a>
       </div>
     </div>
   </section>
 
-  <!-- Portfolio Preview -->
-  <section class="section" style="background: rgba(255,255,255,0.01);">
+  <!-- ── PORTFOLIO ── -->
+  <section class="mm-section-dark section" style="background:rgba(255,255,255,0.01);">
     <div class="container">
-      <p class="section-label">Portfolio</p>
-      <h2 class="section-title">12 demo navigabili</h2>
-      <p class="section-subtitle">Progetti reali che puoi esplorare. Clicca per navigare ogni demo.</p>
+      <p class="mm-tag">Portfolio</p>
+      <h2 class="mm-h2">12 demo navigabili</h2>
+      <p class="mm-body" style="max-width:600px;">Progetti reali che puoi esplorare. Clicca per navigare ogni demo.</p>
       <div class="portfolio-grid">
         <a href="/portfolio/ecommerce" class="portfolio-card">
           <span class="portfolio-card-name">E-commerce</span>
@@ -808,60 +140,399 @@ export const prerender = true;
     </div>
   </section>
 
-  <!-- CTA -->
-  <section class="cta-section">
+  <!-- ── CTA ── -->
+  <section class="cta-section mm-section-dark">
     <div class="container">
-      <h2>Parliamo del tuo progetto</h2>
-      <p>Raccontami cosa ti serve. Ti dico subito se posso aiutarti.</p>
-      <a href="/dev/contatti" class="btn-primary">Contattami &rarr;</a>
+      <h2 class="mm-h2" style="font-size:2.5rem;">Parliamo del tuo progetto</h2>
+      <p class="mm-body" style="font-size:1.1rem;margin-bottom:2rem;">Raccontami cosa ti serve. Ti dico subito se posso aiutarti.</p>
+      <a href="/dev/contatti" class="mm-btn mm-btn-orange">Contattami &rarr;</a>
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <a href="/">&larr; Torna a marcomunich.com</a>
-  </footer>
+</div>
 
-  <script>
-    document.getElementById('navToggle')?.addEventListener('click', () => {
-      document.getElementById('navLinks')?.classList.toggle('open');
-    });
+</BaseLayout>
 
-    // Typed code snippet
-    const snippets = [
-      'const perf = await lighthouse(url);\nreturn perf.score >= 95;',
-      'await db.transaction(async (trx) => {\n  await trx.insert(orders).values(data);\n});',
-      'export const prerender = true;\n// 0ms TTFB. Static. Fast.',
-      'const res = await fetch(api, {\n  next: { revalidate: 3600 }\n});',
-      'git push origin main\n# Deploy: ✓ Build passed (8.3s)',
-    ];
-    const colors = ['#C17F3A', '#7EAA92', '#A0614A', '#8BA5B5', '#C17F3A'];
-    let si = 0, ci = 0, deleting = false;
-    const el = document.getElementById('typed-line');
+<style>
+  /* ── Hero ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 8rem 1.5rem 6rem;
+    overflow: hidden;
+  }
 
-    function type() {
-      if (!el) return;
-      const full = snippets[si];
-      el.style.color = colors[si];
-      if (!deleting) {
-        el.textContent = full.slice(0, ci + 1);
-        ci++;
-        if (ci === full.length) { deleting = true; setTimeout(type, 2200); return; }
-        setTimeout(type, 38 + Math.random() * 30);
-      } else {
-        el.textContent = full.slice(0, ci - 1);
-        ci--;
-        if (ci === 0) {
-          deleting = false;
-          si = (si + 1) % snippets.length;
-          setTimeout(type, 400);
-          return;
-        }
-        setTimeout(type, 18);
-      }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(59,130,246,0.08) 1px, transparent 0);
+    background-size: 40px 40px;
+    pointer-events: none;
+  }
+
+  .hero-glow {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 400px;
+    background: radial-gradient(ellipse, rgba(59,130,246,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+  }
+
+  .hero h1 .accent {
+    color: #3B82F6;
+  }
+
+  /* Glitch effect on H1 hover */
+  .hero h1 {
+    position: relative;
+  }
+  .hero h1::before,
+  .hero h1::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .hero h1::before {
+    color: #3B82F6;
+    clip-path: inset(30% 0 40% 0);
+    transform: translateX(-3px);
+  }
+  .hero h1::after {
+    color: #5B8FA8;
+    clip-path: inset(60% 0 10% 0);
+    transform: translateX(3px);
+  }
+  .hero h1:hover::before {
+    opacity: 0.7;
+    animation: glitch-top 0.4s steps(2) infinite;
+  }
+  .hero h1:hover::after {
+    opacity: 0.7;
+    animation: glitch-bot 0.4s steps(2) infinite;
+  }
+  @keyframes glitch-top {
+    0%   { clip-path: inset(10% 0 60% 0); transform: translateX(-3px); }
+    25%  { clip-path: inset(40% 0 20% 0); transform: translateX(3px); }
+    50%  { clip-path: inset(20% 0 50% 0); transform: translateX(-2px); }
+    75%  { clip-path: inset(50% 0 10% 0); transform: translateX(2px); }
+    100% { clip-path: inset(10% 0 60% 0); transform: translateX(-3px); }
+  }
+  @keyframes glitch-bot {
+    0%   { clip-path: inset(60% 0 10% 0); transform: translateX(3px); }
+    25%  { clip-path: inset(20% 0 50% 0); transform: translateX(-3px); }
+    50%  { clip-path: inset(70% 0 5% 0);  transform: translateX(2px); }
+    75%  { clip-path: inset(45% 0 30% 0); transform: translateX(-2px); }
+    100% { clip-path: inset(60% 0 10% 0); transform: translateX(3px); }
+  }
+
+  /* Typed code snippet */
+  .hero-code {
+    display: inline-block;
+    background: rgba(13,13,13,0.85);
+    border: 1px solid rgba(59,130,246,0.25);
+    border-radius: 8px;
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 2rem;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 0.85rem;
+    color: #3B82F6;
+    text-align: left;
+    min-width: 320px;
+    max-width: 480px;
+  }
+  .hero-code .code-line {
+    display: block;
+    white-space: pre;
+  }
+  .cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1em;
+    background: #3B82F6;
+    vertical-align: text-bottom;
+    margin-left: 1px;
+    animation: blink 0.8s step-end infinite;
+  }
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* ── Section base ── */
+  .section {
+    padding: 6rem 1.5rem;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* ── What I Build ── */
+  .build-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .build-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    padding: 2rem 1.5rem;
+    transition: border-color 0.3s, transform 0.2s;
+  }
+
+  .build-card:hover {
+    border-color: rgba(59, 130, 246, 0.3);
+    transform: translateY(-2px);
+  }
+
+  .build-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    background: rgba(59, 130, 246, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+    font-size: 1.5rem;
+  }
+
+  /* ── Why Different ── */
+  .diff-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .diff-card {
+    padding: 2rem;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .diff-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: rgba(59, 130, 246, 0.12);
+    color: #3B82F6;
+    font-weight: 700;
+    font-size: 0.85rem;
+    margin-bottom: 1.25rem;
+  }
+
+  /* ── Vibe Coding ── */
+  .vibe-card {
+    background: rgba(59, 130, 246, 0.04);
+    border: 1px solid rgba(59, 130, 246, 0.25);
+    border-radius: 16px;
+    padding: 3rem;
+    max-width: 800px;
+    margin: 3rem auto 0;
+  }
+
+  .vibe-card .link-arrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #3B82F6;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: gap 0.2s;
+  }
+
+  .vibe-card .link-arrow:hover {
+    gap: 0.75rem;
+  }
+
+  /* ── Portfolio Preview ── */
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    margin-top: 3rem;
+  }
+
+  .portfolio-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    padding: 1.75rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: border-color 0.3s, transform 0.2s;
+  }
+
+  .portfolio-card:hover {
+    border-color: rgba(59, 130, 246, 0.3);
+    transform: translateY(-2px);
+  }
+
+  .portfolio-card-name {
+    font-weight: 600;
+    font-size: 1rem;
+    color: #fff;
+  }
+
+  .portfolio-card-link {
+    font-size: 0.85rem;
+    color: #3B82F6;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .portfolio-all {
+    text-align: center;
+    margin-top: 2.5rem;
+  }
+
+  .portfolio-all a {
+    color: #3B82F6;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: opacity 0.2s;
+  }
+
+  .portfolio-all a:hover {
+    opacity: 0.8;
+  }
+
+  /* ── CTA Section ── */
+  .cta-section {
+    text-align: center;
+    padding: 6rem 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 1024px) {
+    .build-grid {
+      grid-template-columns: repeat(2, 1fr);
     }
-    setTimeout(type, 900);
-  </script>
+  }
 
-</body>
-</html>
+  @media (max-width: 768px) {
+    .hero {
+      min-height: auto;
+      padding: 7rem 1.5rem 4rem;
+    }
+
+    .section {
+      padding: 4rem 1.5rem;
+    }
+
+    .build-grid {
+      grid-template-columns: 1fr;
+      display: block !important;
+    }
+
+    .build-card {
+      width: 100% !important;
+      margin-bottom: 1rem;
+    }
+
+    .diff-grid {
+      grid-template-columns: 1fr;
+      display: block !important;
+    }
+
+    .diff-card {
+      width: 100% !important;
+      margin-bottom: 1rem;
+    }
+
+    .vibe-card {
+      padding: 2rem 1.5rem;
+    }
+
+    .portfolio-grid {
+      grid-template-columns: 1fr;
+      display: block !important;
+    }
+
+    .portfolio-card {
+      width: 100% !important;
+      margin-bottom: 1rem;
+    }
+
+    .hero-ctas {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+</style>
+
+<script>
+  // Typed code snippet
+  const snippets = [
+    'const perf = await lighthouse(url);\nreturn perf.score >= 95;',
+    'await db.transaction(async (trx) => {\n  await trx.insert(orders).values(data);\n});',
+    'export const prerender = true;\n// 0ms TTFB. Static. Fast.',
+    'const res = await fetch(api, {\n  next: { revalidate: 3600 }\n});',
+    'git push origin main\n# Deploy: ✓ Build passed (8.3s)',
+  ];
+  const colors = ['#3B82F6', '#7EAA92', '#2563EB', '#8BA5B5', '#3B82F6'];
+  let si = 0, ci = 0, deleting = false;
+  const el = document.getElementById('typed-line');
+
+  function type() {
+    if (!el) return;
+    const full = snippets[si];
+    el.style.color = colors[si];
+    if (!deleting) {
+      el.textContent = full.slice(0, ci + 1);
+      ci++;
+      if (ci === full.length) { deleting = true; setTimeout(type, 2200); return; }
+      setTimeout(type, 38 + Math.random() * 30);
+    } else {
+      el.textContent = full.slice(0, ci - 1);
+      ci--;
+      if (ci === 0) {
+        deleting = false;
+        si = (si + 1) % snippets.length;
+        setTimeout(type, 400);
+        return;
+      }
+      setTimeout(type, 18);
+    }
+  }
+  setTimeout(type, 900);
+</script>

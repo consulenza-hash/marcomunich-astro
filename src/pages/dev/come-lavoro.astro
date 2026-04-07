@@ -1,409 +1,163 @@
 ---
-export const prerender = true;
+import BaseLayout from '@layouts/BaseLayout.astro';
 ---
 
-<html lang="it">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Come Lavoro · Marco Munich Dev</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
-  <style>
-    [data-theme="dark"] {
-      --bg: #141C1F;
-      --bg-card: #1A2225;
-      --border: #243035;
-      --text: #E2DED6;
-      --text-muted: #8A9699;
-      --primary: #C17F3A;
-      --primary-hover: #D4944D;
-      --accent: #C17F3A;
-      --navbar-bg: rgba(20, 28, 31, 0.8);
-    }
-    [data-theme="light"] {
-      --bg: #F5F0E8;
-      --bg-card: #FFFFFF;
-      --border: #EDE8DF;
-      --text: #1E2B2F;
-      --text-muted: #6B7B7F;
-      --primary: #A0614A;
-      --primary-hover: #8A5240;
-      --accent: #A0614A;
-      --navbar-bg: rgba(245, 240, 232, 0.8);
-    }
+<BaseLayout
+  title="Come Lavoro · Marco Munich Dev"
+  description="Un processo semplice, trasparente, pensato per darti il controllo su ogni fase. Dal tuo bisogno al sito online."
+  currentPath="/dev/come-lavoro"
+>
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-      transition: background 0.3s, color 0.3s;
-    }
-    a { color: inherit; text-decoration: none; }
+<div class="mm-dev mm-page">
 
-    /* ── Navbar ── */
-    .navbar {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      background: var(--navbar-bg);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-      transition: background 0.3s, border-color 0.3s;
-    }
-    .navbar-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 1.5rem;
-      height: 64px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .nav-logo {
-      font-family: 'JetBrains Mono', monospace;
-      font-weight: 700;
-      font-size: 1.05rem;
-      color: var(--text);
-      letter-spacing: -0.02em;
-      transition: color 0.3s;
-    }
-    .nav-logo span { color: var(--primary); }
-    .nav-right { display: flex; align-items: center; gap: 2rem; }
-    .nav-links { display: flex; gap: 1.75rem; list-style: none; }
-    .nav-links a {
-      font-size: 0.875rem;
-      font-weight: 500;
-      color: var(--text-muted);
-      transition: color 0.2s;
-      position: relative;
-      padding-bottom: 4px;
-    }
-    .nav-links a:hover { color: var(--primary); }
-    .nav-links a.active { color: var(--primary); }
-    .nav-links a.active::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 2px;
-      background: var(--primary);
-      border-radius: 1px;
-    }
-    .theme-toggle {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      width: 36px; height: 36px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 1.1rem;
-      transition: background 0.3s, border-color 0.3s;
-      color: var(--text-muted);
-      flex-shrink: 0;
-    }
-    .theme-toggle:hover { border-color: var(--primary); color: var(--primary); }
-    [data-theme="dark"] .theme-toggle .icon-sun { display: none; }
-    [data-theme="dark"] .theme-toggle .icon-moon { display: inline; }
-    [data-theme="light"] .theme-toggle .icon-sun { display: inline; }
-    [data-theme="light"] .theme-toggle .icon-moon { display: none; }
-    .nav-toggle {
-      display: none;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 0.5rem;
-    }
-    .nav-toggle span {
-      display: block;
-      width: 22px; height: 2px;
-      background: var(--text);
-      margin: 5px 0;
-      transition: all 0.3s;
-    }
+  <!-- ── HERO ── -->
+  <section class="mm-section-dark" style="padding:6rem 2rem 4rem;text-align:center;">
+    <div style="max-width:700px;margin:0 auto;">
+      <h1 class="mm-h1" style="margin-bottom:1rem;">Dal tuo bisogno al sito online.</h1>
+      <p class="mm-body" style="max-width:550px;margin:0 auto;font-size:1.15rem;">Un processo semplice, trasparente, pensato per darti il controllo su ogni fase.</p>
+    </div>
+  </section>
 
-    /* ── Hero ── */
-    .hero {
-      text-align: center;
-      padding: 10rem 2rem 4rem;
-      max-width: 700px;
-      margin: 0 auto;
-    }
-    .hero h1 {
-      font-family: 'Lora', Georgia, serif;
-      font-size: 2.8rem;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 1rem;
-      line-height: 1.15;
-      transition: color 0.3s;
-    }
-    .hero p {
-      font-size: 1.15rem;
-      color: var(--text-muted);
-      max-width: 550px;
-      margin: 0 auto;
-      transition: color 0.3s;
-    }
+  <!-- ── VIBE CODING DISCLAIMER ── -->
+  <section class="mm-section-dark" style="padding:0 2rem 3rem;">
+    <div style="max-width:750px;margin:0 auto;">
+      <div class="vd-inner">
+        <span class="mm-tag" style="display:block;margin-bottom:1rem;">Il mio metodo</span>
+        <div class="vd-title">Costruisco siti con l'intelligenza artificiale.</div>
+        <p class="mm-body vd-body">Non è un segreto e non è una scorciatoia. Gli strumenti AI mi permettono di costruire siti di qualità professionale in tempi rapidi e a costi accessibili, senza sacrificare la cura sul risultato finale. Lavoro più veloce, ma dedico quella velocità a capire meglio cosa serve alla tua attività e a perfezionare ogni dettaglio. Le demo nel portfolio sono tutte costruite così.</p>
+        <p class="mm-body vd-body">Se hai visto qualcosa che ti ha convinto, possiamo parlare.</p>
+      </div>
+    </div>
+  </section>
 
-    /* ── Timeline ── */
-    .timeline-section {
-      max-width: 750px;
-      margin: 0 auto;
-      padding: 2rem 2rem 4rem;
-    }
-    .timeline {
-      position: relative;
-      padding-left: 3.5rem;
-    }
-    .timeline::before {
-      content: '';
-      position: absolute;
-      left: 1.1rem;
-      top: 0.5rem;
-      bottom: 0.5rem;
-      width: 2px;
-      background: linear-gradient(to bottom, var(--primary), var(--primary) 80%, transparent);
-    }
-    .step {
-      position: relative;
-      margin-bottom: 2.5rem;
-    }
-    .step:last-child { margin-bottom: 0; }
-    .step-number {
-      position: absolute;
-      left: -3.5rem;
-      top: 0;
-      width: 2.25rem;
-      height: 2.25rem;
-      border-radius: 50%;
-      background: var(--primary);
-      color: #fff;
-      font-family: 'JetBrains Mono', monospace;
-      font-weight: 700;
-      font-size: 0.85rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .step h3 {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 0.4rem;
-      transition: color 0.3s;
-    }
-    .step p {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      line-height: 1.65;
-      transition: color 0.3s;
-    }
+  <!-- ── TIMELINE ── -->
+  <section class="mm-section-dark" style="padding:2rem 2rem 4rem;">
+    <div style="max-width:750px;margin:0 auto;">
+      <div class="timeline">
+        <div class="step">
+          <span class="step-number">1</span>
+          <h3 class="mm-h3">Ascolto</h3>
+          <p class="mm-body">Parliamo di cosa ti serve, chi è il tuo pubblico e quali obiettivi hai, in una conversazione diretta che di solito dura meno di un'ora.</p>
+        </div>
+        <div class="step">
+          <span class="step-number">2</span>
+          <h3 class="mm-h3">Progettazione</h3>
+          <p class="mm-body">Definisco struttura, navigazione e contenuti. Ti mostro un'anteprima prima di scrivere una riga di codice.</p>
+        </div>
+        <div class="step">
+          <span class="step-number">3</span>
+          <h3 class="mm-h3">Sviluppo</h3>
+          <p class="mm-body">Costruisco il sito con il mio metodo di vibe coding, con aggiornamenti regolari a ogni fase perché tu sappia sempre a che punto siamo.</p>
+        </div>
+        <div class="step">
+          <span class="step-number">4</span>
+          <h3 class="mm-h3">Revisione</h3>
+          <p class="mm-body">Lo guardi, lo provi, mi dici cosa cambiare, e le revisioni in questa fase sono incluse nel prezzo senza limiti.</p>
+        </div>
+        <div class="step">
+          <span class="step-number">5</span>
+          <h3 class="mm-h3">Online</h3>
+          <p class="mm-body">Pubblichiamo il sito e ti spiego come gestirlo, con il codice sorgente e tutti i file che restano di tua proprietà.</p>
+        </div>
+        <div class="step">
+          <span class="step-number">6</span>
+          <h3 class="mm-h3">Supporto</h3>
+          <p class="mm-body">Resto disponibile dopo la consegna per qualsiasi domanda o intervento, con un canale diretto sempre aperto.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    /* ── Vibe Coding Disclaimer ── */
-    .vibe-disclaimer {
-      max-width: 750px; margin: 0 auto;
-      padding: 0 2rem 3rem;
-    }
+  <!-- ── CTA ── -->
+  <section class="mm-section-dark" style="padding:3rem 2rem 5rem;text-align:center;">
+    <a href="/dev/contatti" class="mm-btn mm-btn-orange">Iniziamo &rarr;</a>
+  </section>
+
+</div>
+
+</BaseLayout>
+
+<style>
+  /* ── Vibe Disclaimer ── */
+  .vd-inner {
+    background: #1A2225;
+    border: 1px solid #243035;
+    border-left: 4px solid #3B82F6;
+    border-radius: 12px;
+    padding: 2rem 2.5rem;
+  }
+  .vd-title {
+    font-family: 'Lora', Georgia, serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #E2DED6;
+    line-height: 1.3;
+    margin-bottom: 1rem;
+  }
+  .vd-body {
+    font-size: 0.9rem;
+    color: #8A9699;
+    line-height: 1.75;
+    margin-bottom: 1.5rem;
+  }
+  .vd-body:last-child {
+    margin-bottom: 0;
+  }
+
+  /* ── Timeline ── */
+  .timeline {
+    position: relative;
+    padding-left: 3.5rem;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 1.1rem;
+    top: 0.5rem;
+    bottom: 0.5rem;
+    width: 2px;
+    background: linear-gradient(to bottom, #3B82F6, #3B82F6 80%, transparent);
+  }
+  .step {
+    position: relative;
+    margin-bottom: 2.5rem;
+  }
+  .step:last-child {
+    margin-bottom: 0;
+  }
+  .step-number {
+    position: absolute;
+    left: -3.5rem;
+    top: 0;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    background: #3B82F6;
+    color: #fff;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .step .mm-h3 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #E2DED6;
+    margin-bottom: 0.4rem;
+  }
+  .step .mm-body {
+    color: #8A9699;
+    font-size: 0.95rem;
+    line-height: 1.65;
+  }
+
+  /* ── Mobile ── */
+  @media (max-width: 768px) {
     .vd-inner {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-left: 4px solid var(--primary);
-      border-radius: 12px;
-      padding: 2rem 2.5rem;
-      transition: background 0.3s, border-color 0.3s;
+      padding: 1.5rem;
     }
-    .vd-tag {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.7rem; font-weight: 600;
-      letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--primary); display: block; margin-bottom: 1rem;
-    }
-    .vd-title {
-      font-family: 'Lora', Georgia, serif;
-      font-size: 1.4rem; font-weight: 700;
-      color: var(--text); line-height: 1.3; margin-bottom: 1rem;
-      transition: color 0.3s;
-    }
-    .vd-body {
-      font-size: 0.9rem; color: var(--text-muted); line-height: 1.75;
-      margin-bottom: 1.5rem; transition: color 0.3s;
-    }
-    .vd-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-    .vd-col { border-radius: 8px; padding: 1.2rem 1.4rem; font-size: 0.85rem; line-height: 1.7; }
-    .vd-col.no { background: rgba(180,60,60,0.06); border: 1px solid rgba(180,60,60,0.15); }
-    .vd-col.yes { background: rgba(60,160,90,0.06); border: 1px solid rgba(60,160,90,0.15); }
-    .vd-col-label {
-      font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; font-weight: 700;
-      letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.7rem; display: block;
-    }
-    .vd-col.no .vd-col-label { color: #c05050; }
-    .vd-col.yes .vd-col-label { color: #3a9060; }
-    .vd-col ul { list-style: none; color: var(--text-muted); }
-    .vd-col ul li { padding: 0.3rem 0; }
-    .vd-col.no ul li::before { content: '✕  '; color: #c05050; font-size: 0.78rem; }
-    .vd-col.yes ul li::before { content: '✓  '; color: #3a9060; font-size: 0.78rem; }
-    @media (max-width: 600px) { .vd-cols { grid-template-columns: 1fr; } }
-
-    /* ── CTA ── */
-    .cta-section {
-      text-align: center;
-      padding: 3rem 2rem 5rem;
-    }
-    .cta-btn {
-      display: inline-block;
-      background: var(--primary);
-      color: #fff;
-      font-weight: 700;
-      font-size: 1.05rem;
-      padding: 0.9rem 2.2rem;
-      border-radius: 8px;
-      transition: background 0.2s, transform 0.2s;
-    }
-    .cta-btn:hover {
-      background: var(--primary-hover);
-      transform: translateY(-1px);
-    }
-
-    /* ── Footer ── */
-    .footer {
-      border-top: 1px solid var(--border);
-      text-align: center;
-      padding: 2.5rem;
-      transition: border-color 0.3s;
-    }
-    .footer a {
-      color: var(--text-muted);
-      font-size: 0.9rem;
-      transition: color 0.2s;
-    }
-    .footer a:hover { color: var(--primary); }
-
-    /* ── Mobile ── */
-    @media (max-width: 768px) {
-      .nav-links {
-        display: none;
-        position: absolute;
-        top: 64px; left: 0; right: 0;
-        background: var(--navbar-bg);
-        backdrop-filter: blur(12px);
-        flex-direction: column;
-        padding: 1.5rem;
-        gap: 1rem;
-        border-bottom: 1px solid var(--border);
-      }
-      .nav-links.open { display: flex; }
-      .nav-toggle { display: block; }
-      .hero { padding: 7rem 1.5rem 2rem; }
-      .hero h1 { font-size: 2rem; }
-      .timeline-section { padding: 1.5rem 1.5rem 3rem; }
-    }
-  </style>
-</head>
-<body>
-  <!-- Navbar -->
-  <nav class="navbar">
-    <div class="navbar-inner">
-      <a href="/dev/" class="nav-logo">Marco Munich <span>&middot; Dev</span></a>
-      <div class="nav-right">
-        <ul class="nav-links" id="navLinks">
-          <li><a href="/dev/come-lavoro" class="active">Come Lavoro</a></li>
-          <li><a href="/dev/vibe-coding">Vibe Coding</a></li>
-          <li><a href="/dev/portfolio">Portfolio</a></li>
-          <li><a href="/dev/prezzi">Prezzi</a></li>
-          <li><a href="/dev/blog/">Blog</a></li>
-          <li><a href="/dev/contatti">Contatti</a></li>
-        </ul>
-        <button class="theme-toggle" id="theme-toggle" aria-label="Cambia tema">
-          <span class="icon-sun">&#9728;</span>
-          <span class="icon-moon">&#127769;</span>
-        </button>
-        <button class="nav-toggle" aria-label="Menu" id="navToggle">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
-    </div>
-  </nav>
-
-  <section class="hero">
-    <h1>Dal tuo bisogno al sito online.</h1>
-    <p>Un processo semplice, trasparente, pensato per darti il controllo su ogni fase.</p>
-  </section>
-
-  <section class="vibe-disclaimer">
-    <div class="vd-inner">
-      <span class="vd-tag">Il mio metodo</span>
-      <div class="vd-title">Costruisco siti con l'intelligenza artificiale.</div>
-      <p class="vd-body">Non è un segreto e non è una scorciatoia. Gli strumenti AI mi permettono di costruire siti di qualità professionale in tempi rapidi e a costi accessibili, senza sacrificare la cura sul risultato finale. Lavoro più veloce, ma dedico quella velocità a capire meglio cosa serve alla tua attività e a perfezionare ogni dettaglio. Le demo nel portfolio sono tutte costruite così.</p>
-      <p class="vd-body">Se hai visto qualcosa che ti ha convinto, possiamo parlare.</p>
-    </div>
-  </section>
-
-  <section class="timeline-section">
-    <div class="timeline">
-      <div class="step">
-        <span class="step-number">1</span>
-        <h3>Ascolto</h3>
-        <p>Parliamo di cosa ti serve, chi è il tuo pubblico e quali obiettivi hai, in una conversazione diretta che di solito dura meno di un'ora.</p>
-      </div>
-      <div class="step">
-        <span class="step-number">2</span>
-        <h3>Progettazione</h3>
-        <p>Definisco struttura, navigazione e contenuti. Ti mostro un'anteprima prima di scrivere una riga di codice.</p>
-      </div>
-      <div class="step">
-        <span class="step-number">3</span>
-        <h3>Sviluppo</h3>
-        <p>Costruisco il sito con il mio metodo di vibe coding, con aggiornamenti regolari a ogni fase perché tu sappia sempre a che punto siamo.</p>
-      </div>
-      <div class="step">
-        <span class="step-number">4</span>
-        <h3>Revisione</h3>
-        <p>Lo guardi, lo provi, mi dici cosa cambiare, e le revisioni in questa fase sono incluse nel prezzo senza limiti.</p>
-      </div>
-      <div class="step">
-        <span class="step-number">5</span>
-        <h3>Online</h3>
-        <p>Pubblichiamo il sito e ti spiego come gestirlo, con il codice sorgente e tutti i file che restano di tua proprietà.</p>
-      </div>
-      <div class="step">
-        <span class="step-number">6</span>
-        <h3>Supporto</h3>
-        <p>Resto disponibile dopo la consegna per qualsiasi domanda o intervento, con un canale diretto sempre aperto.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="cta-section">
-    <a href="/dev/contatti" class="cta-btn">Iniziamo &rarr;</a>
-  </section>
-
-  <footer class="footer">
-    <a href="/">&larr; Torna a marcomunich.com</a>
-  </footer>
-
-  <script is:inline>
-    const toggle = document.getElementById('theme-toggle');
-    const html = document.documentElement;
-    const saved = localStorage.getItem('dev-theme') || 'dark';
-    html.setAttribute('data-theme', saved);
-    toggle.addEventListener('click', () => {
-      const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-      html.setAttribute('data-theme', next);
-      localStorage.setItem('dev-theme', next);
-    });
-
-    document.getElementById('navToggle')?.addEventListener('click', () => {
-      document.getElementById('navLinks')?.classList.toggle('open');
-    });
-  </script>
-</body>
-</html>
+  }
+</style>

@@ -27,7 +27,7 @@ const CONTENT_DIR = path.join(PROJECT_ROOT, 'contenuti-social');
 const OUTPUT_DIR = path.join(PROJECT_ROOT, 'public', 'contenuti-social', 'immagini-caroselli');
 
 const PALETTE = [
-  '#e85d00', '#3b82f6', '#22c55e', '#fbbf24', '#06b6d4', '#a855f7',
+  '#e85d00', // tutti i caroselli usano lo stesso arancione — come C01
 ];
 
 const MD_FILES = [
@@ -74,6 +74,25 @@ function escapeHtml(str) {
   return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
+// Rimuove i marker **bold** e restituisce testo pulito per slide foto/cover
+function stripBold(str) {
+  return escapeHtml(str.replace(/\*\*/g, ''));
+}
+
+// Render text with **bold** markers → italic serif + bold upright highlight (like C01)
+function highlightText(text) {
+  if (!text.includes('**')) {
+    return `<span style="font-family:'Instrument Serif',serif;font-style:italic">${escapeHtml(text)}</span>`;
+  }
+  const parts = text.split(/\*\*([^*]+)\*\*/g);
+  return parts.map((part, i) => {
+    if (i % 2 === 1) {
+      return `<span style="font-family:'Instrument Serif',serif;font-weight:700;font-style:normal;color:#1a1410;background:linear-gradient(180deg,transparent 60%,rgba(232,93,0,0.15) 60%,rgba(232,93,0,0.15) 90%,transparent 90%);padding:0 4px">${escapeHtml(part)}</span>`;
+    }
+    return `<span style="font-family:'Instrument Serif',serif;font-style:italic">${escapeHtml(part)}</span>`;
+  }).join('');
+}
+
 // ─── IMAGE HELPERS ────────────────────────────────────────────────
 function imgToBase64(cNum, name) {
   const p = path.join(OUTPUT_DIR, `carosello-${String(cNum).padStart(2, '0')}`, name);
@@ -92,22 +111,23 @@ function coverFontSize(text) {
 }
 
 function bodyFontSize(text) {
-  const len = text.length;
-  if (len < 80) return 54;
-  if (len < 140) return 48;
-  if (len < 200) return 42;
-  if (len < 280) return 38;
-  if (len < 380) return 34;
+  // Testi brevi (~100-150 chars) → font grande come C01
+  const len = text.replace(/\*\*/g, '').length; // ignora i marker bold
+  if (len < 80) return 62;
+  if (len < 140) return 54;
+  if (len < 200) return 48;
+  if (len < 280) return 42;
+  if (len < 380) return 36;
   return 30;
 }
 
 function imgBodyFontSize(text) {
-  const len = text.length;
-  if (len < 80) return 44;
-  if (len < 140) return 38;
-  if (len < 200) return 34;
-  if (len < 280) return 30;
-  return 26;
+  const len = text.replace(/\*\*/g, '').length;
+  if (len < 80) return 50;
+  if (len < 140) return 44;
+  if (len < 200) return 38;
+  if (len < 280) return 34;
+  return 28;
 }
 
 // ─── SLIDE GENERATORS ─────────────────────────────────────────────
@@ -150,7 +170,7 @@ function genTextSlide(c, slide, idx, total, accent) {
   </div>
   <div style="position:absolute;top:30px;right:60px;font-family:'Instrument Serif',serif;font-size:280px;font-weight:400;color:rgba(0,0,0,0.04);line-height:0.7;font-style:italic">${bodyIdx}</div>
   <div style="position:absolute;top:160px;left:80px;right:80px;bottom:80px;display:flex;align-items:center">
-    <div style="font-family:'Instrument Serif',serif;font-size:${size}px;font-weight:400;line-height:1.45;color:#2a2218;font-style:italic;max-width:820px">${escapeHtml(slide.text)}</div>
+    <div style="font-family:'Instrument Serif',serif;font-size:${size}px;font-weight:400;line-height:1.45;color:#2a2218;font-style:italic;max-width:820px">${highlightText(slide.text)}</div>
   </div>
 </section>`;
 }
@@ -172,7 +192,7 @@ function genImgSlide(c, slide, idx, total, accent, imgName) {
     <span class="chip">${String(slide.num).padStart(2,'0')} / ${String(total).padStart(2,'0')}</span>
   </div>
   <div style="position:relative;z-index:2;padding:80px;height:100%;display:flex;flex-direction:column;justify-content:flex-end">
-    <div style="font-family:'Inter',sans-serif;font-size:${size}px;font-weight:500;line-height:1.45;color:rgba(255,255,255,0.9);text-shadow:0 2px 30px rgba(0,0,0,0.5);max-width:820px">${escapeHtml(slide.text)}</div>
+    <div style="font-family:'Inter',sans-serif;font-size:${size}px;font-weight:500;line-height:1.45;color:rgba(255,255,255,0.9);text-shadow:0 2px 30px rgba(0,0,0,0.5);max-width:820px">${stripBold(slide.text)}</div>
   </div>
   <div style="position:absolute;bottom:0;left:0;right:0;height:6px;background:${accent};z-index:3"></div>
 </section>`;
@@ -293,10 +313,10 @@ ${slidesHTML}
 
 async function main() {
   // --only 2,3,5  →  render solo quei numeri
-  const onlyArg = process.argv.find(a => a.startsWith('--only=')) || process.argv[process.argv.indexOf('--only') + 1];
-  const onlyIds = onlyArg && !onlyArg.startsWith('--')
-    ? new Set(onlyArg.split(',').map(Number))
-    : null;
+  const onlyEq = process.argv.find(a => a.startsWith('--only='));
+  const onlyIdx = process.argv.indexOf('--only');
+  const onlyArg = onlyEq ? onlyEq.slice(7) : (onlyIdx !== -1 ? process.argv[onlyIdx + 1] : null);
+  const onlyIds = onlyArg ? new Set(onlyArg.split(',').map(Number)) : null;
 
   console.log('> Parsing markdown files…');
   let carousels = loadAllCarousels();

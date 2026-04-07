@@ -25,141 +25,492 @@ Formato ispirato a Randolph Matthews: Reel parlato a camera 30-60s, hook visivo 
 
 **REEL 4**
 - **Hook:** Quanti clienti ti servono al mese?
-- **Script:** Facciamo un conto veloce: quanti clienti ti servono al mese per vivere bene del tuo lavoro come counselor o come coach? Tre, cinque, otto? E allora perché ti preoccupi di avere diecimila follower? Quelle cinquanta persone che quando leggono un tuo contenuto pensano "sta parlando proprio a me" valgono più di qualsiasi numero sul profilo, e quelle cinquanta persone le trovi solo quando smetti di scrivere cose vaghe per piacere a tutti e inizi a scrivere cose precise per qualcuno che riconosci.
+- **Shot list:**
+  - Clip 1 (12s): Mani che scrivono numeri su un notebook
+  - Clip 2 (14s): Schermo con dashboard analytics sfocata
+  - Clip 3 (12s): Tazza di caffè su scrivania con agenda aperta
+  - Clip 4 (14s): Mani che digitano su laptop
+  - Clip 5 (14s): Finestra con luce naturale, pianta sul davanzale
+  - Clip 6 (10s): Notebook e penna, scrittura lenta
+- **Overlay:**
+  - [C1] *Facciamo un conto veloce. Quanti clienti ti servono al mese per vivere bene del tuo lavoro? Tre, cinque, otto? Prenditi un secondo e scrivi quel numero.*
+  - [C2] *Adesso guardalo. Quel numero è piccolo. E allora perché stai ottimizzando tutto per avere diecimila follower, come se la tua sopravvivenza dipendesse da quel contatore?*
+  - [C3] *Cinquanta persone che quando leggono un tuo contenuto pensano "sta parlando esattamente a me" valgono più di qualsiasi numero sul profilo. Cinquanta, non diecimila.*
+  - [C4] *Quelle cinquanta persone le trovi solo quando smetti di scrivere cose vaghe che vadano bene per tutti e inizi a scrivere cose precise per qualcuno che riesci a riconoscere.*
+  - [C5] *Scrivere per tutti è scrivere per nessuno. Quel contenuto vago che non disturba nessuno ottiene esattamente questo: non disturba nessuno, e nessuno lo ricorda.*
+  - [C6] *Scrivi per la persona giusta. Con le parole giuste. Quel numero sul profilo si occupa di sé stesso.*
 - **Caption:** Cinquanta persone.
 
 **REEL 5**
 - **Hook:** L'intelligenza artificiale ti rivela.
-- **Script:** Da quando l'AI è diventata accessibile, tutti riescono a scrivere bene, impaginare bene, creare grafiche decenti. Nel settore olistico questo ha avuto un effetto che pochi hanno capito: ha reso visibile chi aveva qualcosa da dire da sempre e chi stava solo confezionando bene il vuoto. Se hai lavorato sette anni con i clienti, se hai accumulato esperienze reali e riflessioni tue, l'AI prende quel materiale e lo amplifica. Se quel materiale manca, l'AI ti restituisce esattamente quello che gli hai dato: niente, scritto bene.
+- **Shot list:**
+  - Clip 1 (12s): Schermo con testo generato, sfocato
+  - Clip 2 (14s): Mani che digitano su laptop, ritmo veloce
+  - Clip 3 (12s): Tazza di caffè e notebook aperto
+  - Clip 4 (14s): Finestra con luce naturale, scrivania ordinata
+  - Clip 5 (14s): Libri impilati, uno aperto
+  - Clip 6 (10s): Mani che scrivono a mano su un foglio
+- **Overlay:**
+  - [C1] *Da quando l'AI è diventata accessibile, tutti riescono a scrivere bene, impaginare bene, creare grafiche decenti. Il livello tecnico si è alzato ovunque, nel giro di due anni.*
+  - [C2] *Nel settore olistico questo ha avuto un effetto che pochi hanno ancora capito. Ha reso visibile chi aveva qualcosa da dire da sempre, e chi stava solo confezionando bene il vuoto.*
+  - [C3] *Se hai lavorato sette anni con i clienti, se hai accumulato esperienze reali e riflessioni tue, l'AI prende quel materiale e lo amplifica. Lo rende più leggibile, più diretto, più efficace.*
+  - [C4] *Se quel materiale manca, l'AI ti restituisce esattamente quello che gli hai dato. Niente, scritto bene. E il niente scritto bene suona uguale a tutti gli altri niente scritti bene.*
+  - [C5] *L'AI non crea la voce. La distribuisce. La voce la costruisci tu lavorando con i clienti, osservando, sbagliando, correggendo nel tempo.*
+  - [C6] *Quello che hai accumulato in anni di lavoro è il materiale grezzo. L'AI è lo strumento. Senza il materiale, lo strumento non produce nulla che valga.*
 - **Caption:** Scritto bene.
 
 **REEL 6**
 - **Hook:** Parla dalle cicatrici.
-- **Script:** Ho visto tanti professionisti del settore olistico condividere storie personali nei contenuti, e la differenza tra un contenuto che funziona e uno che mette a disagio chi lo legge sta quasi sempre in un punto preciso: stai parlando da una ferita ancora aperta o da qualcosa che hai già attraversato e che adesso ha un senso? Quando parli da una cicatrice, il tuo pubblico riceve qualcosa, una direzione, un modo di vedere la situazione che gli è utile. Quando parli da una ferita aperta, il tuo pubblico sente che gli stai chiedendo qualcosa, e quella dinamica in un contenuto pubblico non funziona mai.
+- **Shot list:**
+  - Clip 1 (12s): Finestra aperta, luce mattutina, scrivania silenziosa
+  - Clip 2 (14s): Mani che tengono una tazza di caffè, postura ferma
+  - Clip 3 (12s): Notebook aperto, penna appoggiata
+  - Clip 4 (14s): Libri impilati, uno con segnalibro
+  - Clip 5 (14s): Mani che digitano lentamente su laptop
+  - Clip 6 (10s): Finestra, pianta, luce calda di pomeriggio
+- **Overlay:**
+  - [C1] *Ho visto tanti professionisti del settore olistico condividere storie personali nei contenuti. Alcune funzionano. Altre mettono a disagio chi legge. La differenza sta in un punto preciso.*
+  - [C2] *Stai parlando da una ferita ancora aperta, o da qualcosa che hai già attraversato e che adesso ha un senso per te? Questo è il discrimine.*
+  - [C3] *Quando parli da una cicatrice, il tuo pubblico riceve qualcosa di concreto. Una direzione. Un modo diverso di guardare la propria situazione, che gli serve.*
+  - [C4] *Quando parli da una ferita aperta, il tuo pubblico sente che gli stai chiedendo qualcosa. Sostegno, validazione, una risposta. Quella dinamica in un contenuto pubblico non funziona mai.*
+  - [C5] *La differenza nel testo è sottile ma il lettore la percepisce fisicamente. Un contenuto da cicatrice si chiude. Un contenuto da ferita aperta rimane in sospeso e il lettore resta a disagio.*
+  - [C6] *Prima di pubblicare una storia personale, chiediti: ho già fatto i conti con questa cosa? Se la risposta è sì, pubblica. Se è no, aspetta.*
 - **Caption:** Cicatrici e ferite.
 
 **REEL 7**
 - **Hook:** Il contenuto che hai cancellato era quello giusto.
-- **Script:** C'è sempre quel post nel telefono, quello scritto di getto che poi hai riletto tre volte e alla fine hai cancellato pensando che fosse troppo, troppo diretto, troppo personale, troppo diverso da quello che pubblicano gli altri nel tuo settore. Ecco, nella mia esperienza quel contenuto lì, quello che ti fa venire un po' di ansia prima di premere pubblica, è quasi sempre il contenuto che genera le reazioni più forti, perché se ti ha fatto qualcosa mentre lo scrivevi, farà qualcosa anche a chi lo legge. I contenuti sicuri, quelli che non danno fastidio a nessuno, hanno lo stesso effetto: non fanno niente a nessuno.
+- **Shot list:**
+  - Clip 1 (12s): Telefono sul tavolo, schermo illuminato
+  - Clip 2 (14s): Mani che digitano sul telefono, esitazione visibile
+  - Clip 3 (12s): Schermo con bozza aperta, cursore fermo
+  - Clip 4 (14s): Mani che digitano su laptop, pausa a metà
+  - Clip 5 (14s): Tasto "pubblica" sullo schermo, dito avvicinato
+  - Clip 6 (10s): Finestra con luce calda, scrivania tranquilla
+- **Overlay:**
+  - [C1] *Ogni professionista che conosco ha quel post salvato come bozza. Quello scritto di getto una sera, riletto tre volte, e mai pubblicato perché sembrava troppo.*
+  - [C2] *Troppo diretto. Troppo personale. Troppo diverso da quello che pubblicano gli altri nel tuo settore. E allora l'hai cancellato, o l'hai lasciato lì a fermentare.*
+  - [C3] *Nella mia esperienza quel contenuto lì, quello che ti fa venire un po' di ansia prima di premere pubblica, è quasi sempre quello che genera le reazioni più forti.*
+  - [C4] *Perché se ti ha fatto qualcosa mentre lo scrivevi, farà qualcosa anche a chi lo legge. L'emozione che senti tu mentre scrivi passa nel testo e arriva a chi legge.*
+  - [C5] *I contenuti sicuri, quelli che non danno fastidio a nessuno, hanno lo stesso effetto. Non fanno niente a nessuno. Nessuna reazione, nessun messaggio privato, nessun contatto.*
+  - [C6] *Quel post nella bozza che ti spaventa un po'. Aprilo. Rileggi. Poi premi pubblica.*
 - **Caption:** Premi pubblica.
 
 **REEL 8**
 - **Hook:** Promuoverti ti sembra sporco.
-- **Script:** Conosco decine di operatori olistici, counselor e coach che si sentono a disagio quando devono promuoversi online, come se dire "io faccio questo e lo faccio bene" fosse un atto di arroganza, qualcosa che tradisce lo spirito del loro lavoro. Nel frattempo le persone che avrebbero bisogno di loro stanno cercando su Google, stanno scrollando Instagram, e trovano qualcun altro, magari meno preparato ma visibile. Renderti trovabile online è un atto di servizio verso le persone che stai cercando di aiutare, e ogni giorno in cui ti nascondi è un giorno in cui qualcuno che potevi aiutare ha trovato qualcun altro.
+- **Shot list:**
+  - Clip 1 (12s): Ufficio vuoto, sedia davanti a scrivania, luce soffusa
+  - Clip 2 (14s): Mani che digitano su laptop, esitazione
+  - Clip 3 (12s): Telefono con feed Instagram sfocato
+  - Clip 4 (14s): Tazza di caffè, notebook con appunti
+  - Clip 5 (14s): Finestra con luce naturale, pianta sul davanzale
+  - Clip 6 (10s): Mani che premono invio su tastiera
+- **Overlay:**
+  - [C1] *Conosco decine di counselor e coach che si sentono a disagio quando devono promuoversi online. Come se dire "faccio questo e lo faccio bene" fosse un atto di arroganza.*
+  - [C2] *Come se mettersi in mostra tradisse lo spirito del loro lavoro. Quella sensazione è reale e la capisco, ma ha un costo che vale la pena guardare in faccia.*
+  - [C3] *Nel frattempo le persone che avrebbero bisogno di loro stanno cercando su Google. Stanno scrollando Instagram. E trovano qualcun altro, magari meno preparato, ma visibile.*
+  - [C4] *Renderti trovabile online è un atto di servizio verso le persone che stai cercando di aiutare. Ogni giorno in cui ti nascondi è un giorno in cui qualcuno ha trovato qualcun altro.*
+  - [C5] *La promozione che sembra sporca è quella che finge di dare per vendere. Quella che descrivi il tuo lavoro con precisione, così le persone giuste ti trovano, è un servizio.*
+  - [C6] *Inizia da lì. Descrivi cosa fai. Descrivi per chi. Smetti di aspettare che ti trovino per caso.*
 - **Caption:** Renditi trovabile.
 
 **REEL 9**
 - **Hook:** "La mia verità" ha rovinato i tuoi contenuti.
-- **Script:** Il settore olistico ha interiorizzato questa idea che ognuno ha la sua verità, e a prima vista sembra un pensiero rispettoso e aperto, ma quando provi a creare contenuti partendo da questa premessa il risultato è che nessuna posizione sembra abbastanza solida da essere difesa, e allora scrivi cose vaghe, tiepide, che girano intorno al nulla perché prendere una posizione chiara ti sembra sbagliato. Il tuo pubblico però non cerca qualcuno che tenga il piede in due staffe, cerca qualcuno che dica qualcosa di preciso in cui riconoscersi, anche a costo di perdere chi non è d'accordo.
+- **Shot list:**
+  - Clip 1 (12s): Libri impilati, titoli sfocati
+  - Clip 2 (14s): Mani che digitano su laptop, testo visibile ma illeggibile
+  - Clip 3 (12s): Notebook aperto con frase a metà
+  - Clip 4 (14s): Schermo con bozza, cursore lampeggiante
+  - Clip 5 (14s): Tazza di caffè, sguardo fuori dalla finestra
+  - Clip 6 (10s): Mani che scrivono a mano, tratto deciso
+- **Overlay:**
+  - [C1] *Il settore olistico ha interiorizzato questa idea che ognuno ha la sua verità. A prima vista sembra un pensiero aperto e rispettoso delle differenze.*
+  - [C2] *Ma quando provi a creare contenuti partendo da quella premessa, nessuna posizione sembra abbastanza solida da essere difesa. E allora scrivi cose tiepide che girano intorno al nulla.*
+  - [C3] *Prendere una posizione chiara ti sembra sbagliato, quasi prepotente. Meglio tenere tutto aperto, così nessuno si offende. Il risultato è un contenuto che non dice niente a nessuno.*
+  - [C4] *Il tuo pubblico non cerca qualcuno che tenga il piede in due staffe. Cerca qualcuno che dica qualcosa di preciso in cui riconoscersi, anche se questo significa perdere chi non è d'accordo.*
+  - [C5] *Quelli che non sono d'accordo non sarebbero mai diventati tuoi clienti. Quelli che si riconoscono in quello che dici, invece, ti scrivono.*
+  - [C6] *Prendi posizione. Dì qualcosa di preciso. Chi è d'accordo si avvicina, e quelli sono le persone che stai cercando.*
 - **Caption:** Dì qualcosa di preciso.
 
 **REEL 10**
 - **Hook:** La nicchia si rivela da sola.
-- **Script:** Il consiglio che blocca più coach e counselor di qualsiasi altro è "devi trovare la tua nicchia prima di iniziare". Ho seguito più di cinquanta professionisti in sette anni, e quelli che hanno trovato il loro posizionamento migliore lo hanno trovato dopo aver iniziato a pubblicare e a lavorare con i clienti, mai prima. Perché la nicchia emerge da quello che succede quando inizi a comunicare: vedi chi risponde, chi ti scrive, chi prenota, e da quei segnali capisci dove sei utile davvero. Sceglierla a tavolino prima di avere quei dati è come scegliere la destinazione di un viaggio guardando una mappa al buio.
+- **Shot list:**
+  - Clip 1 (12s): Mani che sfogliano notebook con appunti
+  - Clip 2 (14s): Calendario sul muro, date cerchiate
+  - Clip 3 (12s): Schermo con analytics sfocate, numeri visibili
+  - Clip 4 (14s): Tazza di caffè, finestra con luce del mattino
+  - Clip 5 (14s): Mani che digitano su laptop, ritmo costante
+  - Clip 6 (10s): Piante sul davanzale, luce naturale
+- **Overlay:**
+  - [C1] *Il consiglio che blocca più coach e counselor di qualsiasi altro è questo: "Devi trovare la tua nicchia prima di iniziare." Sembra ragionevole. È una trappola.*
+  - [C2] *Ho seguito più di cinquanta professionisti in sette anni. Quelli che hanno trovato il loro posizionamento migliore lo hanno trovato dopo aver iniziato a pubblicare e a lavorare.*
+  - [C3] *La nicchia emerge da quello che succede quando inizi a comunicare. Vedi chi risponde. Vedi chi ti scrive. Vedi chi prenota. Da quei segnali capisci dove sei utile davvero.*
+  - [C4] *Sceglierla a tavolino prima di avere quei dati è come scegliere la destinazione di un viaggio guardando una mappa al buio. Puoi farlo, ma probabilmente arriverai nel posto sbagliato.*
+  - [C5] *La nicchia non si decide. Si osserva. Si lascia emergere dal lavoro reale con le persone reali che vengono da te nel tempo.*
+  - [C6] *Inizia a pubblicare. Inizia a lavorare. Poi guarda chi arriva. Quella persona lì è la tua nicchia.*
 - **Caption:** Inizia e osserva.
 
 ### SESSIONE 2 — "La trappola del settore olistico"
 
 **REEL 11**
 - **Hook:** Il tuo branding sembra quello di un venditore di corsi.
-- **Script:** Vedo counselor che comunicano con countdown, webinar gratuiti e urgenza artificiale, come se stessero vendendo un corso di dropshipping. Il problema è che stanno parlando alle persone sbagliate con un linguaggio che appartiene a un altro settore, e le persone giuste, quelle che cercano un counselor perché stanno attraversando qualcosa di difficile, davanti a quel tipo di comunicazione scappano. Chi lavora con la fragilità delle persone ha bisogno di un marketing che somigli a un invito, e un invito ha un tono completamente diverso da una promozione con il timer che scade.
+- **Shot list:**
+  - Clip 1 (12s): Schermo con pagina di vendita sfocata, timer visibile
+  - Clip 2 (14s): Telefono con feed Instagram sfocato
+  - Clip 3 (12s): Ufficio vuoto, sedia e scrivania in silenzio
+  - Clip 4 (14s): Mani che scrivono a mano, tratto lento
+  - Clip 5 (14s): Tazza di caffè, finestra con luce soffusa
+  - Clip 6 (10s): Notebook aperto, nessuna penna, pagina bianca
+- **Overlay:**
+  - [C1] *Vedo counselor che comunicano con countdown, webinar gratuiti, urgenza artificiale. Come se stessero vendendo un corso di dropshipping, non un percorso di supporto emotivo.*
+  - [C2] *Il problema è che stanno usando un linguaggio che appartiene a un altro settore. E le persone giuste, quelle che cercano aiuto perché stanno attraversando qualcosa di difficile, davanti a quel tono scappano.*
+  - [C3] *Il countdown funziona per vendere infoprodotti a chi vuole guadagnare velocemente. Chi cerca un counselor è in uno stato emotivo diverso. Il tempo stringe gli mette ansia invece di motivarlo.*
+  - [C4] *Chi lavora con la fragilità delle persone ha bisogno di un marketing che somigli a un invito. Un invito ha un tono completamente diverso da una promozione con il timer che scade.*
+  - [C5] *Un invito dice: "Sei la persona giusta per questo, quando sei pronto ci sono." Una promozione dice: "Hai 48 ore o perdi tutto." La seconda allontana il cliente che vuoi.*
+  - [C6] *Scrivi come se stessi invitando qualcuno a sedersi. Con calma. Con spazio. Quello è il tono che porta le persone giuste.*
 - **Caption:** Un invito.
 
 **REEL 12**
 - **Hook:** Olistico vuol dire intero. Internet compreso.
-- **Script:** Olistico viene dal greco holos, che significa intero, totale. Un approccio olistico dovrebbe considerare un sistema nella sua totalità senza escludere nessuna parte, eppure molti professionisti del settore hanno sviluppato un'allergia selettiva verso i social media e la tecnologia, come se internet fosse l'unica cosa che puoi legittimamente ignorare in un approccio che per definizione non dovrebbe ignorare niente. Il costo di questa scelta selettiva è che i tuoi potenziali clienti ti cercano online e trovano qualcun altro, e intanto tu sei al terzo corso di aggiornamento sulla presenza consapevole.
+- **Shot list:**
+  - Clip 1 (12s): Libri impilati, un dizionario aperto
+  - Clip 2 (14s): Mani che digitano su laptop, movimento fluido
+  - Clip 3 (12s): Telefono con feed sfocato, mano che scrolla
+  - Clip 4 (14s): Finestra aperta, luce naturale intensa
+  - Clip 5 (14s): Schermo con pagina web sfocata
+  - Clip 6 (10s): Tazza di caffè, notebook con appunti
+- **Overlay:**
+  - [C1] *Olistico viene dal greco holos: intero, totale. Un approccio olistico considera un sistema nella sua totalità, senza escludere nessuna parte.*
+  - [C2] *Eppure molti professionisti del settore hanno sviluppato un'allergia selettiva verso i social media e la tecnologia, come se internet fosse l'unica cosa che si può ignorare legittimamente.*
+  - [C3] *In un approccio che per definizione non esclude niente. Bene. Il costo di questa scelta selettiva è preciso: i tuoi potenziali clienti ti cercano online e trovano qualcun altro.*
+  - [C4] *Nel frattempo sei al terzo corso di aggiornamento sulla presenza consapevole, mentre qualcuno con meno esperienza di te si fa trovare ogni giorno da chi cercava te.*
+  - [C5] *Internet è parte del sistema. I social media sono parte del sistema. Le persone che hanno bisogno di aiuto le cercano lì. Escludere quella parte non è coerenza, è un buco.*
+  - [C6] *Trattare la comunicazione online come se fosse separata dal tuo approccio professionale è la scelta meno olistica che puoi fare.*
 - **Caption:** Selettivamente olistico.
 
 **REEL 13**
 - **Hook:** Fidati, tu non vuoi più clienti.
-- **Script:** Quando un coach o un counselor mi dice che vuole più clienti, gli chiedo sempre di fare un conto: più clienti vuol dire più sessioni, più energia spesa, meno spazio nella settimana, e dopo un po' il lavoro che ami diventa il lavoro che ti pesa. Quello che la maggior parte dei professionisti olistici vuole davvero è un ritmo stabile, con le persone giuste, quelle con cui il lavoro funziona bene, senza arrivare a fine settimana svuotato. E quello lo ottieni quasi sempre migliorando il messaggio con cui comunichi, perché un messaggio più preciso attira meno persone ma quelle giuste.
+- **Shot list:**
+  - Clip 1 (12s): Agenda aperta, giornata fitta di impegni
+  - Clip 2 (14s): Tazza di caffè a metà, scrivania affollata
+  - Clip 3 (12s): Mani che tengono la testa, postura stanca
+  - Clip 4 (14s): Finestra con luce calma, scrivania ordinata
+  - Clip 5 (14s): Mani che scrivono a mano con cura
+  - Clip 6 (10s): Calendario con meno appunti, respiro visivo
+- **Overlay:**
+  - [C1] *Quando un coach o un counselor mi dice che vuole più clienti, gli chiedo sempre di fare un conto. Più clienti vuol dire più sessioni, più energia spesa, meno spazio nella settimana.*
+  - [C2] *E dopo un po' il lavoro che ami diventa il lavoro che ti pesa. Quello esatto. Che è il motivo per cui hai smesso di trovarlo soddisfacente tre anni fa, l'ultima volta che eri pieno di impegni.*
+  - [C3] *Quello che la maggior parte dei professionisti olistici vuole davvero è un ritmo stabile. Con le persone giuste. Quelle con cui il lavoro funziona bene, senza arrivare a venerdì sera svuotato.*
+  - [C4] *E quello lo ottieni migliorando il messaggio con cui comunichi, perché un messaggio preciso attira meno persone ma attira quelle giuste. Il volume scende, la qualità sale.*
+  - [C5] *Cinque clienti giusti che restano per un anno valgono più di venti clienti casuali che si perdono dopo tre sessioni. Il numero sulla carta non racconta questa storia.*
+  - [C6] *Fai quel conto. Poi scrivi per quella persona specifica che rende il tuo lavoro bello. Quella è la comunicazione che ti serve.*
 - **Caption:** Le persone giuste.
 
 **REEL 14**
 - **Hook:** Se provi a sembrare autentico, hai già smesso di esserlo.
-- **Script:** Nel settore olistico la parola autenticità è diventata una specie di brand, un'estetica da replicare con le giuste frasi e il giusto tono di voce, e il paradosso è che più cerchi di sembrare autentico più ti allontani dall'esserlo. Ho visto profili Instagram di counselor tutti uguali, con le stesse frasi sulla vulnerabilità, gli stessi colori pastello, la stessa struttura di caption, e mi sono chiesto: se sono tutti autentici allo stesso modo, chi è davvero autentico? L'autenticità nella comunicazione emerge quando scrivi qualcosa che solo tu potresti scrivere, perché nasce dalla tua esperienza specifica con i tuoi clienti specifici.
+- **Shot list:**
+  - Clip 1 (12s): Telefono con feed Instagram sfocato, scroll lento
+  - Clip 2 (14s): Schermo con più profili simili, affiancati
+  - Clip 3 (12s): Tazza di caffè, luce pastello, composizione ricercata
+  - Clip 4 (14s): Mani che digitano su laptop, pausa riflessiva
+  - Clip 5 (14s): Notebook con scrittura personale, disordinata
+  - Clip 6 (10s): Finestra aperta, luce naturale cruda
+- **Overlay:**
+  - [C1] *Nel settore olistico la parola autenticità è diventata un'estetica da replicare, con le giuste frasi, il giusto tono di voce, i giusti colori. Un formato studiato.*
+  - [C2] *Il paradosso è che più cerchi di sembrare autentico più ti allontani dall'esserlo. Perché l'autenticità che si studia per sembrare autentica è il contrario di quello che cerca di essere.*
+  - [C3] *Ho visto profili Instagram di counselor tutti uguali. Stesse frasi sulla vulnerabilità, stessi colori pastello, stessa struttura di caption. Se sono tutti autentici allo stesso modo, chi lo è davvero?*
+  - [C4] *L'autenticità nella comunicazione emerge quando scrivi qualcosa che solo tu potresti scrivere. Qualcosa che nasce dalla tua esperienza specifica con i tuoi clienti specifici.*
+  - [C5] *La storia della sessione di martedì scorso. L'osservazione strana che hai fatto leggendo un commento. La cosa che hai detto in modo diverso e ha cambiato qualcosa. Quella roba non la può replicare nessuno.*
+  - [C6] *Smetti di cercare l'estetica dell'autentico. Scrivi la cosa specifica che è successa. Quella è la comunicazione che nessuno può copiare.*
 - **Caption:** Solo tu.
 
 **REEL 15**
 - **Hook:** Il tuo contenuto gratuito è mini. Il tuo valore percepito anche.
-- **Script:** Il marketing online ha convinto tutti che basta una mini guida gratuita per attirare clienti, un PDF di dieci pagine con cinque consigli generici che potrebbe aver scritto chiunque. Nel settore olistico, dove la fiducia si costruisce attraverso l'esperienza diretta di quanto sai, un contenuto gratuito superficiale comunica esattamente questo: che anche il tuo lavoro è superficiale. I professionisti che ho visto attirare i clienti migliori sono quelli che nei contenuti gratuiti danno tutto quello che sanno, senza trattenersi, perché chi legge un contenuto che lo aiuta davvero pensa "se il gratuito è così, figuriamoci il percorso a pagamento."
+- **Shot list:**
+  - Clip 1 (12s): Schermo con PDF scaricabile sfocato
+  - Clip 2 (14s): Mani che sfogliano un documento sottile
+  - Clip 3 (12s): Libri impilati, uno spesso e uno sottile a confronto
+  - Clip 4 (14s): Mani che digitano su laptop, ritmo sostenuto
+  - Clip 5 (14s): Tazza di caffè, notebook con pagine fitte di appunti
+  - Clip 6 (10s): Finestra con luce mattutina, scrivania con materiale
+- **Overlay:**
+  - [C1] *Il marketing online ha convinto tutti che basta una mini guida gratuita per attirare clienti. Un PDF di dieci pagine con cinque consigli generici che potrebbe aver scritto chiunque.*
+  - [C2] *Nel settore olistico, dove la fiducia si costruisce attraverso l'esperienza diretta di quanto sai, un contenuto gratuito superficiale comunica esattamente una cosa: che anche il tuo lavoro è superficiale.*
+  - [C3] *Le persone non lo dicono esplicitamente, ma lo elaborano in pochi secondi. "Se il gratuito è generico, il percorso a pagamento sarà generico anche quello."*
+  - [C4] *I professionisti che ho visto attirare i clienti migliori sono quelli che nei contenuti gratuiti danno tutto quello che sanno, senza trattenersi per tenere qualcosa da vendere.*
+  - [C5] *Chi legge un contenuto che lo aiuta davvero pensa: "Se il gratuito è così, figuriamoci il percorso a pagamento." Quella è la conversione che funziona nel lungo periodo.*
+  - [C6] *Dai tutto. Poi dai ancora. Il tuo sapere non si esaurisce, e ogni volta che qualcuno riceve qualcosa di valore da te, quella fiducia si accumula.*
 - **Caption:** Dai tutto.
 
 **REEL 16**
 - **Hook:** Le frasi fatte ti rendono invisibile.
-- **Script:** Ogni volta che scrivi "ti accompagno nel tuo percorso di trasformazione" stai usando una frase che hanno usato altre migliaia di professionisti prima di te, e il tuo contenuto diventa indistinguibile dal rumore di fondo. Le persone che scrollano Instagram non si fermano sulle frasi che hanno già letto cento volte, si fermano su qualcosa che le sorprende, che le fa pensare "questo non l'avevo mai sentito dire così". Quel qualcosa viene fuori solo quando smetti di usare il linguaggio del settore e inizi a raccontare quello che succede davvero nelle tue sessioni con i tuoi clienti, con le tue parole.
+- **Shot list:**
+  - Clip 1 (12s): Telefono con feed Instagram sfocato, scroll veloce
+  - Clip 2 (14s): Schermo con testo ripetitivo sfocato
+  - Clip 3 (12s): Mani che digitano e poi cancellano su laptop
+  - Clip 4 (14s): Notebook con parole cancellate e riscritte
+  - Clip 5 (14s): Finestra con luce naturale, pausa riflessiva
+  - Clip 6 (10s): Mani che scrivono a mano, tratto personale
+- **Overlay:**
+  - [C1] *Ogni volta che scrivi "ti accompagno nel tuo percorso di trasformazione" stai usando una frase che hanno usato altre migliaia di professionisti prima di te. Il tuo contenuto si fonde con il rumore di fondo.*
+  - [C2] *Le persone che scrollano non si fermano sulle frasi che hanno già letto cento volte. Si fermano su qualcosa che le sorprende, che le fa pensare "questo non l'avevo mai sentito dire così."*
+  - [C3] *Quel qualcosa viene fuori solo quando smetti di usare il linguaggio del settore e inizi a raccontare quello che succede davvero nelle tue sessioni, con le tue parole specifiche.*
+  - [C4] *La cliente che mercoledì scorso ha detto quella frase che ti è rimasta in testa. La situazione strana che hai visto ripetersi tre volte nell'ultimo mese. Quella roba concreta.*
+  - [C5] *Le frasi fatte del settore sono rassicuranti perché non rischiano niente. Ma il rischio zero produce esattamente questo: zero reazioni, zero messaggi, zero contatti.*
+  - [C6] *Scrivi come parli. Con le parole che usi quando spieghi il tuo lavoro a un amico a cena. Quella è la voce che le persone riconoscono come vera.*
 - **Caption:** Le tue parole.
 
 **REEL 17**
 - **Hook:** Nessuno legge i tuoi contenuti. Ecco perché.
-- **Script:** Se pubblichi e nessuno reagisce, nella maggior parte dei casi il motivo è semplice: stai parlando del tuo servizio invece di parlare del problema delle persone. Un counselor che scrive "offro sessioni di counseling per la gestione dell'ansia" sta descrivendo quello che fa, ma la persona che sta cercando aiuto su Instagram non cerca un servizio, cerca qualcuno che descriva quello che sta vivendo in un modo che la fa sentire capita. Il giorno in cui inizi a scrivere il contenuto dal punto di vista di chi legge, descrivendo la situazione in cui si trova con le parole che userebbe quella persona, tutto cambia.
+- **Shot list:**
+  - Clip 1 (12s): Schermo con analytics sfocate, numeri bassi visibili
+  - Clip 2 (14s): Telefono con post aperto, zero commenti
+  - Clip 3 (12s): Mani che digitano su laptop, testo descrittivo
+  - Clip 4 (14s): Notebook con appunti dal punto di vista del cliente
+  - Clip 5 (14s): Finestra con luce naturale, pausa e riflessione
+  - Clip 6 (10s): Mani che riscrivono su notebook, tratto più sciolto
+- **Overlay:**
+  - [C1] *Se pubblichi e nessuno reagisce, nella maggior parte dei casi il motivo è semplice: stai parlando del tuo servizio anziché parlare del problema delle persone.*
+  - [C2] *Un counselor che scrive "offro sessioni di counseling per la gestione dell'ansia" sta descrivendo quello che fa. Ma la persona che cerca aiuto su Instagram non cerca un servizio.*
+  - [C3] *Cerca qualcuno che descriva quello che sta vivendo in un modo che la fa sentire capita. Qualcuno che parli del momento del mercoledì sera quando non riesce a dormire.*
+  - [C4] *La tecnica più semplice che conosco: prima di scrivere, siediti e chiediti cosa sta pensando la persona che vuoi raggiungere in questo preciso momento. Poi parti da lì.*
+  - [C5] *Il giorno in cui inizi a scrivere dal punto di vista di chi legge, descrivendo la sua situazione con le parole che userebbe lei, tutto cambia. I messaggi arrivano. Le prenotazioni arrivano.*
+  - [C6] *Non devi cambiare quello che fai. Devi cambiare da dove parti quando scrivi. Parti da loro.*
 - **Caption:** Dal loro punto di vista.
 
 **REEL 18**
 - **Hook:** Scrivi per una sola persona.
-- **Script:** Quando ti siedi a scrivere un contenuto e pensi "questo deve funzionare per il mio pubblico" ti blocchi, perché il tuo pubblico è un concetto astratto e scrivere per un concetto astratto è quasi impossibile. Il trucco che ha sbloccato più persone tra quelle che ho seguito è questo: pensa a una persona specifica, un cliente che hai avuto, qualcuno che conosci, e scrivi come se stessi parlando a quella persona lì, con il linguaggio che useresti in una conversazione privata. Il contenuto che esce fuori da questo esercizio è sempre più vivo, più specifico e più efficace di qualsiasi cosa scritta pensando a un target generico.
+- **Shot list:**
+  - Clip 1 (12s): Schermo con cursore lampeggiante su documento vuoto
+  - Clip 2 (14s): Mani che tengono la testa, blocco davanti a laptop
+  - Clip 3 (12s): Notebook con nome scritto in cima alla pagina
+  - Clip 4 (14s): Mani che digitano con ritmo fluido, testo che scorre
+  - Clip 5 (14s): Tazza di caffè, finestra, postura rilassata
+  - Clip 6 (10s): Tasto "pubblica" sullo schermo, clic deciso
+- **Overlay:**
+  - [C1] *Quando ti siedi a scrivere pensando "questo deve funzionare per il mio pubblico" ti blocchi. Perché il tuo pubblico è un concetto astratto. E scrivere per un concetto astratto è quasi impossibile.*
+  - [C2] *Il trucco che ha sbloccato più persone tra quelle che ho seguito è semplice. Pensa a una persona specifica. Un cliente che hai avuto. Qualcuno che conosci bene.*
+  - [C3] *Scrivi come se stessi parlando a quella persona lì, con il linguaggio che useresti in una conversazione privata. Non in una presentazione. In una conversazione.*
+  - [C4] *Il contenuto che esce fuori da questo esercizio è sempre più vivo, più specifico e più efficace di qualsiasi cosa scritta pensando a un target generico senza volto.*
+  - [C5] *Il paradosso è che un contenuto scritto per una persona specifica funziona meglio con tutti gli altri. Perché la specificità crea riconoscimento, e il riconoscimento crea attenzione.*
+  - [C6] *Prima di scrivere scrivi un nome in cima al foglio. Poi scrivi come se quella persona stesse leggendo adesso.*
 - **Caption:** Una persona specifica.
 
 **REEL 19**
 - **Hook:** Hai davvero bisogno di quella certificazione?
-- **Script:** Ho conosciuto coach che hanno passato quattro o cinque anni a collezionare certificazioni prima di iniziare a lavorare con i clienti, e la certificazione successiva era sempre quella che avrebbe finalmente dato loro la sicurezza di farsi vedere online. La verità è che quella sicurezza dalla certificazione non arriva mai, perché la sicurezza nel comunicare il tuo lavoro si costruisce comunicando il tuo lavoro, sbagliando, ricevendo feedback, correggendo il tiro, e ricominciando. Ogni anno speso a studiare invece che a farsi trovare è un anno in cui le persone che potevi aiutare hanno cercato qualcun altro.
+- **Shot list:**
+  - Clip 1 (12s): Libri impilati, certificati su parete sfocati
+  - Clip 2 (14s): Mani che sfogliano materiale di corso
+  - Clip 3 (12s): Calendario con anni che passano, date cerchiate
+  - Clip 4 (14s): Schermo con primo post pubblicato sfocato
+  - Clip 5 (14s): Mani che digitano su laptop, ritmo sicuro
+  - Clip 6 (10s): Tazza di caffè, finestra, postura distesa
+- **Overlay:**
+  - [C1] *Ho conosciuto coach che hanno passato quattro o cinque anni a collezionare certificazioni prima di iniziare a lavorare con i clienti. La prossima era sempre quella decisiva.*
+  - [C2] *Quella che avrebbe dato loro la sicurezza di farsi vedere online. Quella che avrebbe reso il momento giusto per iniziare. La sicurezza dalla certificazione successiva.*
+  - [C3] *Quella sicurezza non arriva mai. Perché la sicurezza nel comunicare il tuo lavoro si costruisce comunicando il tuo lavoro, sbagliando, ricevendo feedback, correggendo il tiro.*
+  - [C4] *Ogni anno speso a studiare invece che a farsi trovare è un anno in cui le persone che potevi aiutare hanno cercato qualcun altro. Con meno certificazioni di te, ma presenti.*
+  - [C5] *Il problema reale raramente è la preparazione tecnica. È la paura del giudizio. E quella non sparisce con un altro diploma. Sparisce quando pubblichi e niente di catastrofico succede.*
+  - [C6] *Studia, certo. E pubblica mentre studi. Le due cose insieme, non in sequenza.*
 - **Caption:** La sicurezza arriva facendo.
 
 **REEL 20**
 - **Hook:** Pubblicare senza pubblico è la mossa più intelligente.
-- **Script:** Se stai aspettando di avere un pubblico prima di iniziare a pubblicare, stai ragionando al contrario, perché il pubblico si costruisce pubblicando, e le persone hanno bisogno di mesi per conoscerti, vedere come ragioni, capire se si fidano di te. Se inizi a farti vedere solo quando hai qualcosa da vendere, ti trovi nella posizione di dover costruire fiducia e vendere nello stesso momento, e quella è una posizione scomoda per te e per chi ti legge. Chi inizia a pubblicare prima di avere un servizio pronto, anche solo condividendo riflessioni dal proprio lavoro, si ritrova con un gruppo di persone che lo conosce già quando arriva il momento di proporre qualcosa.
+- **Shot list:**
+  - Clip 1 (12s): Schermo con analytics da zero, curva che sale lentamente
+  - Clip 2 (14s): Mani che digitano, bozza da pubblicare
+  - Clip 3 (12s): Tazza di caffè, notebook con date di pubblicazione
+  - Clip 4 (14s): Finestra con luce mattutina, scrivania tranquilla
+  - Clip 5 (14s): Schermo con primo commento ricevuto
+  - Clip 6 (10s): Mani che premono pubblica, gesto naturale
+- **Overlay:**
+  - [C1] *Se stai aspettando di avere un pubblico prima di iniziare a pubblicare, stai ragionando al contrario. Il pubblico si costruisce pubblicando, e quella logica circolare ha un punto di ingresso preciso.*
+  - [C2] *Le persone hanno bisogno di mesi per conoscerti. Per vedere come ragioni. Per capire se si fidano di te. Quella fiducia si accumula nel tempo, post dopo post.*
+  - [C3] *Se inizi a farti vedere solo quando hai qualcosa da vendere, ti trovi a dover costruire fiducia e vendere nello stesso momento. Quella è una posizione scomoda per te e per chi ti legge.*
+  - [C4] *Chi inizia a pubblicare prima di avere un servizio pronto, anche solo condividendo riflessioni dal proprio lavoro, si ritrova in una posizione diversa quando arriva il momento.*
+  - [C5] *Ha già un gruppo di persone che lo conosce. Che ha letto i suoi ragionamenti. Che ha già deciso se si fida. Quella base non si improvvisa in tre settimane.*
+  - [C6] *Inizia adesso. Anche se hai dieci follower. Anche se non hai ancora il servizio. Il pubblico arriva dopo la pubblicazione, sempre.*
 - **Caption:** Inizia prima.
 
 ### SESSIONE 3
 
 **REEL 21**
 - **Hook:** L'originalità ti sta bloccando.
-- **Script:** Molti coach e counselor credono che ogni contenuto debba essere originale e che ripetere un concetto sia un segno di debolezza, come se il pubblico stesse lì a controllare che tu non dica due volte la stessa cosa. La realtà è che nel settore dell'aiuto ripetere un concetto trenta o quaranta volte è parte del lavoro, perché le persone hanno bisogno di tempo per interiorizzare e agire, e ogni volta che lo dici con parole leggermente diverse raggiungi qualcuno che la volta prima non era pronto ad ascoltare. L'ossessione per dire sempre qualcosa di nuovo porta a saltare da un argomento all'altro senza mai andare in profondità, e la profondità è esattamente quello che il tuo pubblico cerca.
+- **Shot list:**
+  - Clip 1 (12s): Schermo con documento vuoto, cursore fermo
+  - Clip 2 (14s): Mani che sfogliano vecchi notebook cercando idee
+  - Clip 3 (12s): Tazza di caffè, postura pensierosa
+  - Clip 4 (14s): Mani che riscrivono lo stesso concetto in modi diversi
+  - Clip 5 (14s): Finestra con luce naturale, scrivania ordinata
+  - Clip 6 (10s): Mani che premono pubblica con sicurezza
+- **Overlay:**
+  - [C1] *Molti coach e counselor credono che ogni contenuto debba essere originale. Che ripetere un concetto sia un segno di debolezza. Come se il pubblico controllasse che tu non dica due volte la stessa cosa.*
+  - [C2] *Nel settore dell'aiuto ripetere un concetto trenta o quaranta volte fa parte del lavoro. Le persone hanno bisogno di tempo per interiorizzare e agire. Non basta sentirlo una volta.*
+  - [C3] *Ogni volta che dici la stessa cosa con parole leggermente diverse raggiungi qualcuno che la volta precedente non era pronto ad ascoltarla. Il messaggio era lo stesso. Il momento era diverso.*
+  - [C4] *L'ossessione per dire sempre qualcosa di nuovo porta a saltare da un argomento all'altro senza mai andare in profondità. E la profondità è esattamente quello che il tuo pubblico cerca.*
+  - [C5] *I tuoi migliori contenuti meritano di essere detti dieci volte in dieci modi diversi. Quello è andare in profondità su un argomento che conosci davvero.*
+  - [C6] *Smetti di cercare la novità a tutti i costi. Prendi il concetto più importante che hai e trovaci dentro angolature sempre più specifiche.*
 - **Caption:** Ripeti.
 
 **REEL 22**
 - **Hook:** Le cose che ti infastidiscono sono i tuoi contenuti migliori.
-- **Script:** Quando scrolli Instagram e vedi un post di un collega che ti fa storcere il naso, quando leggi un consiglio che secondo te è sbagliato e ti viene voglia di commentare, lì dentro c'è il tuo prossimo contenuto. Quel fastidio è un segnale che hai un'opinione precisa su quell'argomento, e un'opinione precisa è la materia prima migliore per un contenuto che funziona. Invece di commentare sotto il post di qualcun altro, prendi quel fastidio e scrivici sopra un tuo contenuto nel tuo spazio, dove puoi sviluppare il ragionamento con calma e mostrare il tuo punto di vista a chi ti segue.
+- **Shot list:**
+  - Clip 1 (12s): Telefono con feed Instagram sfocato, scroll che si interrompe
+  - Clip 2 (14s): Espressione di chi legge qualcosa che non convince, schermo sfocato
+  - Clip 3 (12s): Mani che aprono un notebook invece di rispondere al telefono
+  - Clip 4 (14s): Mani che scrivono veloce, ritmo animato
+  - Clip 5 (14s): Schermo con contenuto in bozza, struttura visibile
+  - Clip 6 (10s): Tasto pubblica, clic, schermo che si aggiorna
+- **Overlay:**
+  - [C1] *Quando scrolli Instagram e vedi un post di un collega che ti fa storcere il naso, quando leggi un consiglio che secondo te è sbagliato e ti viene voglia di rispondere, lì dentro c'è il tuo prossimo contenuto.*
+  - [C2] *Quel fastidio è un segnale preciso. Hai un'opinione chiara su quell'argomento. E un'opinione chiara è la materia prima migliore per un contenuto che funziona davvero.*
+  - [C3] *I contenuti nati dal fastidio hanno qualcosa che i contenuti pianificati spesso non hanno: urgenza reale. Si sente che la persona dietro ha qualcosa da dire.*
+  - [C4] *Invece di commentare sotto il post di qualcun altro, prendi quel fastidio e scrivici sopra un tuo contenuto nel tuo spazio. Dove puoi sviluppare il ragionamento con calma.*
+  - [C5] *Lì puoi mostrare il tuo punto di vista a chi ti segue, con tutti i dettagli che un commento non permette. E quella diventa la tua posizione, ben articolata, documentata.*
+  - [C6] *La prossima volta che qualcosa ti fa storcere il naso mentre scorri, aprilo. Non rispondete sotto. Apri una bozza e scrivi.*
 - **Caption:** Quel fastidio è un segnale.
 
 **REEL 23**
 - **Hook:** I contenuti vengono prima del sito.
-- **Script:** Molti professionisti del settore olistico mi contattano dicendo che vogliono un sito web, e quando chiedo cosa hanno pubblicato fino ad ora la risposta è niente, o quasi niente. Il problema è che un sito senza contenuti è una vetrina vuota, e costruire un sito prima di aver capito come comunichi, qual è il tuo tono, quali argomenti generano risposta nel tuo pubblico, significa costruire su ipotesi che probabilmente sono sbagliate. Chi inizia a pubblicare contenuti per qualche mese prima di fare il sito arriva al momento della costruzione con le idee molto più chiare su chi è e a chi parla, e il sito che ne esce funziona.
+- **Shot list:**
+  - Clip 1 (12s): Schermo con mockup sito vuoto, pagina bianca
+  - Clip 2 (14s): Mani che digitano su laptop, costruzione in corso
+  - Clip 3 (12s): Notebook con appunti su tono e stile comunicativo
+  - Clip 4 (14s): Telefono con feed Instagram con contenuti pubblicati
+  - Clip 5 (14s): Schermo con sito costruito su basi solide, struttura chiara
+  - Clip 6 (10s): Finestra con luce mattutina, scrivania con materiale
+- **Overlay:**
+  - [C1] *Molti professionisti del settore olistico mi contattano dicendo che vogliono un sito web. Quando chiedo cosa hanno pubblicato fino ad ora, la risposta è quasi sempre niente, o quasi niente.*
+  - [C2] *Un sito senza contenuti è una vetrina vuota. Costruire un sito prima di aver capito come comunichi significa costruire su ipotesi. E le ipotesi, di solito, sono sbagliate.*
+  - [C3] *Come parli? Che tono hai? Quali argomenti generano risposta nel tuo pubblico? Queste cose le scopri pubblicando, non pianificando a tavolino.*
+  - [C4] *Chi pubblica contenuti per qualche mese prima di fare il sito arriva al momento della costruzione con le idee molto più chiare su chi è e a chi parla.*
+  - [C5] *Il sito che ne esce rispecchia una voce reale, un posizionamento testato, argomenti che già funzionano. Queste cose non si inventano prima di avere i dati.*
+  - [C6] *Prima pubblica. Poi costruisci il sito. L'ordine cambia tutto quello che trovi dentro.*
 - **Caption:** Prima pubblica.
 
 **REEL 24**
 - **Hook:** Pensiero dal lavoro con un cliente questa settimana.
-- **Script:** Questa settimana stavo lavorando con un counselor che ha dieci anni di esperienza e mi ha detto una cosa che mi è rimasta in testa: "So esattamente cosa fare quando sono in sessione con un cliente, ma quando mi siedo a scrivere un post divento un'altra persona, una persona rigida che cerca di sembrare professionale." È una cosa che sento spesso, e il punto è che quel modo di essere in sessione, diretto, presente, attento alle parole, è esattamente il modo in cui dovresti comunicare online, perché le persone che leggono i tuoi contenuti cercano la stessa cosa che cercano i tuoi clienti quando si siedono davanti a te.
+- **Shot list:**
+  - Clip 1 (12s): Ufficio vuoto, due sedie di fronte, luce soffusa
+  - Clip 2 (14s): Mani che prendono appunti su notebook durante una sessione
+  - Clip 3 (12s): Schermo con cursore lampeggiante, bozza vuota
+  - Clip 4 (14s): Mani che digitano con fluidità diversa, più sciolta
+  - Clip 5 (14s): Finestra con luce naturale, scrivania con notebook
+  - Clip 6 (10s): Mani che premono pubblica, gesto disinvolto
+- **Overlay:**
+  - [C1] *Questa settimana stavo lavorando con un counselor che ha dieci anni di esperienza. Mi ha detto una cosa che mi è rimasta in testa per giorni.*
+  - [C2] *"So esattamente cosa fare quando sono in sessione con un cliente. Ma quando mi siedo a scrivere un post divento un'altra persona. Rigida. Che cerca di sembrare professionale."*
+  - [C3] *È la cosa che sento più spesso da chi lavora in questo settore. C'è la persona in sessione, diretta, presente, attenta alle parole. E c'è la persona che scrive online.*
+  - [C4] *Come se fossero due figure separate. Come se il tono da post non potesse essere lo stesso tono da seduta. Come se il professionale richiedesse una maschera.*
+  - [C5] *Le persone che leggono i tuoi contenuti cercano esattamente quello che cercano i tuoi clienti quando si siedono davanti a te. Quella presenza. Quella chiarezza. Quel modo di stare.*
+  - [C6] *Scrivi come sei in sessione. Con quella stessa qualità di attenzione. Quella è la voce che le persone riconoscono come reale.*
 - **Caption:** Sii online come sei in sessione.
 
 **REEL 25**
 - **Hook:** Fatti querelare.
-- **Script:** Ogni settore ha delle verità scomode che nessuno vuole dire ad alta voce, e nel mondo olistico ce ne sono parecchie. Quando prendi una di queste verità e la scrivi in un contenuto, succedono due cose: una parte del tuo pubblico se ne va perché si sente attaccata, e un'altra parte si avvicina perché finalmente qualcuno ha detto quello che pensavano da tempo. Quel contenuto divisivo crea un legame fortissimo con le persone che restano, perché sentono che possono fidarsi di qualcuno che ha il coraggio di dire cose impopolari nel proprio settore. I contenuti che mettono tutti d'accordo non creano nessun legame.
+- **Shot list:**
+  - Clip 1 (12s): Mani che digitano un testo deciso su laptop
+  - Clip 2 (14s): Schermo con notifiche miste, alcune positive e alcune critiche, sfocate
+  - Clip 3 (12s): Telefono con commenti sfocati, reazioni visibili
+  - Clip 4 (14s): Finestra con luce intensa, postura ferma
+  - Clip 5 (14s): Notebook con frase scritta a caratteri grandi
+  - Clip 6 (10s): Mani che premono pubblica, gesto senza esitazione
+- **Overlay:**
+  - [C1] *Ogni settore ha delle verità scomode che nessuno vuole dire ad alta voce. Nel mondo olistico ce ne sono parecchie. Stai pensando a qualcuna adesso.*
+  - [C2] *Quando prendi una di quelle verità e la scrivi in un contenuto, succedono due cose in parallelo. Una parte del tuo pubblico se ne va, perché si sente attaccata.*
+  - [C3] *E un'altra parte si avvicina, perché finalmente qualcuno ha detto quello che pensavano da tempo. Ad alta voce. Con il proprio nome sopra.*
+  - [C4] *Quel contenuto divisivo crea un legame fortissimo con chi resta. Perché sentono che possono fidarsi di qualcuno che ha il coraggio di dire cose impopolari nel proprio settore.*
+  - [C5] *I contenuti che mettono tutti d'accordo non creano nessun legame. Sono confortevoli da scrivere e completamente dimenticabili da leggere.*
+  - [C6] *Quella verità scomoda che sai e non hai mai scritto. Quella lì. Scrivila.*
 - **Caption:** Le verità scomode.
 
 **REEL 26**
 - **Hook:** Come creo contenuti con l'AI senza perdere la mia voce.
-- **Script:** Uso l'intelligenza artificiale ogni giorno per scrivere, e il modo in cui funziona è questo: parto sempre da un'idea mia, qualcosa che ho osservato lavorando con un cliente o una riflessione che mi è venuta leggendo un commento, e poi chiedo all'AI di aiutarmi a strutturarla, a trovare un'apertura migliore, a togliere il superfluo. Quello che non faccio mai è partire da zero chiedendo all'AI di generare un'idea, perché in quel caso il contenuto che esce fuori suona come tutti gli altri contenuti generati dall'AI, e il tuo pubblico lo sente. L'AI amplifica quello che già hai dentro, se dentro non c'è niente amplifica il niente.
+- **Shot list:**
+  - Clip 1 (12s): Notebook con appunto scritto a mano, idea grezza
+  - Clip 2 (14s): Schermo con interfaccia AI sfocata, testo in elaborazione
+  - Clip 3 (12s): Mani che modificano il testo generato sul laptop
+  - Clip 4 (14s): Mani che scrivono integrazioni a mano sul notebook
+  - Clip 5 (14s): Schermo con versione finale, testo riconoscibile come proprio
+  - Clip 6 (10s): Tazza di caffè, finestra, pausa soddisfatta
+- **Overlay:**
+  - [C1] *Uso l'intelligenza artificiale ogni giorno per scrivere. Il mio flusso di lavoro ha un ordine preciso, e quell'ordine fa tutta la differenza tra contenuto mio e contenuto generico.*
+  - [C2] *Parto sempre da un'idea mia. Qualcosa che ho osservato lavorando con un cliente. Una riflessione che mi è venuta leggendo un commento. Un fastidio. Una domanda che mi sono fatto.*
+  - [C3] *Poi chiedo all'AI di aiutarmi a strutturarla, trovare un'apertura migliore, togliere il superfluo. L'AI lavora sul materiale che le porto. Non genera il materiale.*
+  - [C4] *Quello che non faccio mai è partire da zero chiedendo all'AI di generare un'idea. Il contenuto che esce fuori in quel caso suona come tutti gli altri contenuti generati dall'AI. E il tuo pubblico lo sente.*
+  - [C5] *L'AI amplifica quello che già hai dentro. Se dentro c'è un'osservazione reale, nata dall'esperienza, l'AI la rende più leggibile. Se dentro non c'è niente, amplifica il niente.*
+  - [C6] *Prima scrivi l'idea grezza, anche in tre righe, anche storta. Poi chiedi aiuto. Mai al contrario.*
 - **Caption:** Parti sempre da te.
 
 **REEL 27**
 - **Hook:** Smetti di fare leva sul dolore per vendere.
-- **Script:** Nel marketing c'è questa idea che per vendere devi far sentire alla persona quanto sta male, premere sul dolore finché non compra per farlo smettere. Nel settore olistico questa tecnica è doppiamente tossica, perché stai lavorando con persone che stanno già attraversando qualcosa di difficile e usare quel dolore come leva di vendita crea un'aspettativa distorta: la persona compra per disperazione, arriva al primo incontro con l'idea che tu risolverai tutto, e quando il percorso richiede tempo e fatica si sente tradita. I clienti migliori arrivano da contenuti che descrivono la loro situazione con precisione e offrono un punto di vista, senza manipolazione.
+- **Shot list:**
+  - Clip 1 (12s): Schermo con pagina di vendita aggressiva sfocata
+  - Clip 2 (14s): Mani che scrivono copy su laptop, pausa riflessiva
+  - Clip 3 (12s): Notebook con appunti su problemi reali del cliente
+  - Clip 4 (14s): Finestra con luce calma, scrivania tranquilla
+  - Clip 5 (14s): Mani che scrivono a mano, tratto misurato
+  - Clip 6 (10s): Tazza di caffè, postura ferma e distesa
+- **Overlay:**
+  - [C1] *Nel marketing c'è questa idea che per vendere devi far sentire alla persona quanto sta male, premere sul dolore finché non compra per farlo smettere. Una tecnica vecchia quanto il marketing stesso.*
+  - [C2] *Nel settore olistico questa tecnica è doppiamente tossica. Stai lavorando con persone che stanno già attraversando qualcosa di difficile. Usare quel dolore come leva crea un'aspettativa distorta dall'inizio.*
+  - [C3] *La persona compra per disperazione. Arriva al primo incontro con l'idea che tu risolverai tutto. E quando il percorso richiede tempo e fatica, si sente tradita. Spesso non torna.*
+  - [C4] *I clienti migliori arrivano da contenuti che descrivono la loro situazione con precisione e offrono un punto di vista. Senza amplificare il dolore. Senza promesse impossibili.*
+  - [C5] *Descrivere la situazione con precisione fa sentire la persona capita. Offrire un punto di vista le mostra che hai qualcosa di concreto da portare. Quello è abbastanza per chi è pronto.*
+  - [C6] *Racconta cosa sai fare. Con chi funziona meglio. E per quali situazioni specifiche. Chi si riconosce in quel quadro arriva da te già orientato.*
 - **Caption:** Senza manipolazione.
 
 **REEL 28**
 - **Hook:** Non hai bisogno di migliorarti per iniziare.
-- **Script:** Chi si affaccia al marketing online nel settore olistico cade quasi sempre nella stessa trappola: pensare di dover sviluppare qualcosa di nuovo, acquisire competenze che non ha, diventare una versione potenziata di sé prima di potersi presentare al mercato. Dopo sette anni di lavoro con questi professionisti posso dirti che nella maggior parte dei casi il materiale c'è già tutto: anni di sessioni con i clienti, intuizioni che hai avuto e di cui non hai mai parlato, un modo di vedere le cose che è solo tuo. Il lavoro di branding parte da lì, da quello che già c'è, e lo rende visibile.
+- **Shot list:**
+  - Clip 1 (12s): Libri impilati, materiale di formazione
+  - Clip 2 (14s): Mani che sfogliano notebook con anni di appunti
+  - Clip 3 (12s): Calendario con anni passati, molto scritto sopra
+  - Clip 4 (14s): Mani che rileggono vecchi appunti di sessione
+  - Clip 5 (14s): Schermo con bozza che prende forma da materiale esistente
+  - Clip 6 (10s): Finestra con luce calda, postura soddisfatta
+- **Overlay:**
+  - [C1] *Chi si affaccia al marketing online nel settore olistico cade quasi sempre nella stessa trappola. Pensare di dover sviluppare qualcosa di nuovo, acquisire competenze che non ha ancora.*
+  - [C2] *Diventare una versione più completa di sé prima di potersi presentare al mercato. Come se quello che c'è adesso non fosse sufficiente per iniziare.*
+  - [C3] *Dopo sette anni di lavoro con questi professionisti posso dirti una cosa con certezza: nella maggior parte dei casi il materiale c'è già tutto.*
+  - [C4] *Anni di sessioni con i clienti. Intuizioni che hai avuto e di cui non hai mai parlato a nessuno. Un modo di vedere le cose che è solo tuo e che non appartiene a nessun altro.*
+  - [C5] *Il lavoro di branding parte da lì. Da quello che già c'è. Lo prende, lo mette in forma, lo rende visibile a chi non ti conosce ancora.*
+  - [C6] *Apri il cassetto degli appunti dell'ultimo anno. Scegli la cosa più interessante che hai scritto. Quella è il tuo prossimo contenuto.*
 - **Caption:** Il materiale c'è già.
 
 **REEL 29**
 - **Hook:** I tuoi video autentici non hanno bisogno di uno script.
-- **Script:** Ho un corso su come fare video autentici e la cosa che ripeto sempre è questa: se prepari uno script parola per parola e poi lo leggi davanti alla telecamera, il risultato sarà un video rigido dove la persona che guarda sente che stai recitando. Il modo migliore per fare un video che funziona è avere chiaro un solo concetto che vuoi comunicare, premere rec e parlare come parleresti a un amico che ti ha fatto una domanda su quell'argomento. Le pause, le esitazioni, le correzioni a metà frase sono esattamente le cose che rendono il video vero, e il tuo pubblico riconosce la differenza tra qualcuno che parla e qualcuno che legge.
+- **Shot list:**
+  - Clip 1 (12s): Schermo con script scritto parola per parola
+  - Clip 2 (14s): Telecamera accesa, luce rossa visibile
+  - Clip 3 (12s): Notebook con un solo concetto scritto in cima
+  - Clip 4 (14s): Mani che premono rec, gesto disinvolto
+  - Clip 5 (14s): Finestra con luce naturale, set minimale
+  - Clip 6 (10s): Schermo con video pubblicato, miniatura naturale
+- **Overlay:**
+  - [C1] *Se prepari uno script parola per parola e poi lo leggi davanti alla telecamera, il risultato sarà un video rigido dove chi guarda sente che stai recitando. Lo sente sempre.*
+  - [C2] *Il modo migliore per fare un video che funziona è avere chiaro un solo concetto che vuoi comunicare. Un solo concetto, scritto in una riga sul foglio.*
+  - [C3] *Poi premi rec e parla come parleresti a un amico che ti ha fatto una domanda su quell'argomento. Con lo stesso tono. Con la stessa velocità. Senza cercare le parole perfette.*
+  - [C4] *Le pause, le esitazioni, le correzioni a metà frase sono esattamente le cose che rendono il video vero. Quelle imperfezioni segnalano al cervello di chi guarda che sta sentendo qualcosa di reale.*
+  - [C5] *Il tuo pubblico riconosce la differenza tra qualcuno che parla e qualcuno che legge. Quella differenza si percepisce negli occhi, nel ritmo, nella qualità della presenza.*
+  - [C6] *Un concetto. Rec. Parla. Poi pubblica il secondo tentativo. Raramente serve di più.*
 - **Caption:** Un concetto, rec, parla.
 
 **REEL 30**
 - **Hook:** La tua comunicazione rivela i tuoi veri problemi.
-- **Script:** Quando un coach mi dice "non riesco a trovare clienti" e poi guardo i suoi contenuti, nella maggior parte dei casi il problema non è dove pensa lui. A volte il problema è che sta parlando a tutti senza parlare a nessuno, a volte è che i contenuti descrivono il servizio ma non descrivono mai il problema del cliente, a volte è che il tono dei contenuti è così diverso dalla persona reale che chi lo incontra dal vivo resta sorpreso. I contenuti sono uno specchio: ti mostrano con precisione cosa funziona nella tua comunicazione e cosa va aggiustato, e spesso la diagnosi che ti fai da solo è sbagliata.
+- **Shot list:**
+  - Clip 1 (12s): Schermo con profilo Instagram sfocato, scroll lento
+  - Clip 2 (14s): Mani che rileggono vecchi contenuti pubblicati
+  - Clip 3 (12s): Notebook con diagnosi scritta, frecce e annotazioni
+  - Clip 4 (14s): Mani che digitano su laptop, correzione in corso
+  - Clip 5 (14s): Finestra con luce naturale, pausa riflessiva
+  - Clip 6 (10s): Schermo con contenuto revisionato, struttura diversa
+- **Overlay:**
+  - [C1] *Quando un coach mi dice "non riesco a trovare clienti" e poi guardo i suoi contenuti, nella maggior parte dei casi il problema non è dove pensa lui.*
+  - [C2] *A volte sta parlando a tutti senza parlare a nessuno. A volte i contenuti descrivono il servizio ma non descrivono mai la situazione del cliente. A volte il tono online è irriconoscibile rispetto alla persona reale.*
+  - [C3] *E chi lo incontra dal vivo resta sorpreso, perché trova qualcuno di completamente diverso da quello che si aspettava. Quella disconnessione costa clienti.*
+  - [C4] *I contenuti sono uno specchio. Ti mostrano con precisione cosa funziona nella tua comunicazione e cosa va aggiustato. Il problema è che la diagnosi che ti fai da solo è spesso sbagliata.*
+  - [C5] *Perché sei troppo dentro per vedere con chiarezza. Hai scritto quei contenuti, conosci l'intenzione dietro ogni parola, e quella conoscenza ti impedisce di leggere quello che legge chi non ti conosce.*
+  - [C6] *Dai i tuoi ultimi dieci contenuti a qualcuno che non ti conosce. Chiedile cosa capisce di te. Poi ascolta senza difenderti.*
 - **Caption:** I contenuti sono uno specchio.
 
 ---

@@ -1,6 +1,7 @@
 ---
 export const prerender = true;
 
+import BaseLayout from '@layouts/BaseLayout.astro';
 import jsYaml from 'js-yaml';
 
 const rawFiles = import.meta.glob('/src/content/dev-blog/*.md', {
@@ -37,153 +38,18 @@ function formatDate(d: string): string {
 }
 ---
 
-<html lang="it">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Blog · Marco Munich Dev</title>
-  <meta name="description" content="Articoli su SEO, intelligenza artificiale, performance web e visibilità digitale per aziende italiane." />
-  <link rel="canonical" href="https://marcomunich.com/dev/blog/" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: 'Inter', system-ui, sans-serif;
-      background: #141C1F;
-      color: #E2DED6;
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-    }
-    a { color: inherit; text-decoration: none; }
+<BaseLayout
+  title="Blog · Marco Munich Dev"
+  description="Articoli su SEO, intelligenza artificiale, performance web e visibilità digitale per aziende italiane."
+  currentPath="/dev/blog"
+>
 
-    /* Navbar */
-    .navbar {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      background: rgba(20,28,31,0.85); backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(193,127,58,0.1);
-    }
-    .navbar-inner {
-      max-width: 1200px; margin: 0 auto; padding: 0 1.5rem;
-      height: 64px; display: flex; align-items: center; justify-content: space-between;
-    }
-    .nav-logo { font-weight: 700; font-size: 1.1rem; color: #fff; letter-spacing: -0.02em; }
-    .nav-logo span { color: #C17F3A; }
-    .nav-links { display: flex; gap: 2rem; list-style: none; }
-    .nav-links a { font-size: 0.875rem; font-weight: 500; color: #8A9699; transition: color 0.2s; }
-    .nav-links a:hover, .nav-links a.active { color: #C17F3A; }
-    .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 0.5rem; }
-    .nav-toggle span { display: block; width: 22px; height: 2px; background: #E2DED6; margin: 5px 0; transition: all 0.3s; }
+<div class="mm-dev mm-page">
 
-    /* Hero */
-    .hero {
-      padding: 120px 1.5rem 60px;
-      max-width: 1200px; margin: 0 auto;
-    }
-    .hero-label {
-      font-size: 0.8rem; font-weight: 600; text-transform: uppercase;
-      letter-spacing: 0.1em; color: #C17F3A; margin-bottom: 1rem;
-    }
-    .hero h1 {
-      font-family: 'Lora', Georgia, serif;
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      font-weight: 800; color: #fff; letter-spacing: -0.04em;
-      line-height: 1.15; margin-bottom: 1rem;
-    }
-    .hero p {
-      font-size: 1.1rem; color: #8A9699; max-width: 560px; line-height: 1.7;
-    }
-
-    /* Posts grid */
-    .posts-section { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem 6rem; }
-    .posts-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-      gap: 1.5rem;
-    }
-    .post-card {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 12px; padding: 1.75rem;
-      transition: border-color 0.2s, background 0.2s;
-      display: flex; flex-direction: column;
-    }
-    .post-card:hover {
-      border-color: rgba(193,127,58,0.3);
-      background: rgba(193,127,58,0.03);
-    }
-    .post-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
-    .post-tag {
-      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.05em;
-      text-transform: uppercase; color: #C17F3A;
-      background: rgba(193,127,58,0.1); padding: 3px 10px; border-radius: 100px;
-    }
-    .post-title {
-      font-size: 1.2rem; font-weight: 700; color: #fff;
-      letter-spacing: -0.02em; line-height: 1.35; margin-bottom: 0.75rem;
-    }
-    .post-desc { font-size: 0.9rem; color: #8A9699; line-height: 1.65; flex: 1; margin-bottom: 1.25rem; }
-    .post-meta {
-      display: flex; align-items: center; gap: 0.75rem;
-      font-size: 0.78rem; color: #6B7B7F;
-    }
-    .post-meta-sep { width: 3px; height: 3px; border-radius: 50%; background: #404040; }
-    .post-link {
-      margin-top: 1.25rem; font-size: 0.875rem; font-weight: 600;
-      color: #C17F3A; display: inline-flex; align-items: center; gap: 0.375rem;
-      transition: gap 0.2s;
-    }
-    .post-card:hover .post-link { gap: 0.625rem; }
-
-    /* Footer */
-    .footer {
-      border-top: 1px solid rgba(255,255,255,0.06);
-      padding: 2rem 1.5rem; text-align: center;
-      font-size: 0.875rem; color: #6B7B7F;
-    }
-    .footer a { color: #8A9699; transition: color 0.2s; }
-    .footer a:hover { color: #C17F3A; }
-
-    @media (max-width: 768px) {
-      .nav-links {
-        display: none; position: absolute; top: 64px; left: 0; right: 0;
-        background: rgba(20,28,31,0.97); backdrop-filter: blur(12px);
-        padding: 1rem 1.5rem 1.5rem; flex-direction: column; gap: 0;
-        border-bottom: 1px solid rgba(255,255,255,0.06);
-      }
-      .nav-links.open { display: flex; }
-      .nav-links li { border-bottom: 1px solid rgba(255,255,255,0.04); }
-      .nav-links a { display: block; padding: 0.875rem 0; font-size: 1rem; }
-      .nav-toggle { display: block; }
-      .posts-grid { grid-template-columns: 1fr; }
-      .hero { padding: 100px 1.25rem 48px; }
-    }
-  </style>
-</head>
-<body>
-
-  <nav class="navbar">
-    <div class="navbar-inner">
-      <a href="/dev/" class="nav-logo">Marco Munich <span>· Dev</span></a>
-      <button class="nav-toggle" aria-label="Menu" id="navToggle">
-        <span></span><span></span><span></span>
-      </button>
-      <ul class="nav-links" id="navLinks">
-        <li><a href="/dev/come-lavoro">Come Lavoro</a></li>
-        <li><a href="/dev/vibe-coding">Vibe Coding</a></li>
-        <li><a href="/dev/portfolio">Portfolio</a></li>
-        <li><a href="/dev/prezzi">Prezzi</a></li>
-        <li><a href="/dev/blog/" class="active">Blog</a></li>
-        <li><a href="/dev/contatti">Contatti</a></li>
-      </ul>
-    </div>
-  </nav>
-
-  <header class="hero">
-    <p class="hero-label">Risorse</p>
-    <h1>SEO, AI e performance web</h1>
-    <p>Articoli pratici su come farsi trovare online nel 2025, quando Google non è più l'unico motore che conta.</p>
+  <header class="blog-hero">
+    <p class="mm-tag" style="display:inline-block;margin-bottom:1rem;background:rgba(59,130,246,.1);padding:4px 14px;border-radius:100px;font-size:0.8rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;">Risorse</p>
+    <h1 class="mm-h1">SEO, AI e performance web</h1>
+    <p class="mm-body" style="max-width:560px;line-height:1.7;">Articoli pratici su come farsi trovare online nel 2025, quando Google non è più l'unico motore che conta.</p>
   </header>
 
   <section class="posts-section">
@@ -208,15 +74,126 @@ function formatDate(d: string): string {
     </div>
   </section>
 
-  <footer class="footer">
+  <footer class="blog-footer">
     <a href="/dev/">&larr; Torna alla sezione Dev</a>
   </footer>
 
-  <script is:inline>
-    document.getElementById('navToggle')?.addEventListener('click', () => {
-      document.getElementById('navLinks')?.classList.toggle('open');
-    });
-  </script>
+</div>
 
-</body>
-</html>
+</BaseLayout>
+
+<style>
+  /* ── Blog Hero ── */
+  .blog-hero {
+    padding: 120px 1.5rem 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* ── Posts grid ── */
+  .posts-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem 6rem;
+  }
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 1.5rem;
+  }
+  .post-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 12px;
+    padding: 1.75rem;
+    transition: border-color 0.2s, background 0.2s;
+    display: flex;
+    flex-direction: column;
+  }
+  .post-card:hover {
+    border-color: rgba(59,130,246,0.3);
+    background: rgba(59,130,246,0.03);
+  }
+  .post-tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+  }
+  .post-tag {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #3B82F6;
+    background: rgba(59,130,246,0.1);
+    padding: 3px 10px;
+    border-radius: 100px;
+  }
+  .post-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.02em;
+    line-height: 1.35;
+    margin-bottom: 0.75rem;
+  }
+  .post-desc {
+    font-size: 0.9rem;
+    color: #8A9699;
+    line-height: 1.65;
+    flex: 1;
+    margin-bottom: 1.25rem;
+  }
+  .post-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.78rem;
+    color: #6B7B7F;
+  }
+  .post-meta-sep {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: #404040;
+  }
+  .post-link {
+    margin-top: 1.25rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #3B82F6;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    transition: gap 0.2s;
+  }
+  .post-card:hover .post-link {
+    gap: 0.625rem;
+  }
+
+  /* ── Blog Footer ── */
+  .blog-footer {
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 2rem 1.5rem;
+    text-align: center;
+    font-size: 0.875rem;
+    color: #6B7B7F;
+  }
+  .blog-footer a {
+    color: #8A9699;
+    transition: color 0.2s;
+  }
+  .blog-footer a:hover {
+    color: #3B82F6;
+  }
+
+  @media (max-width: 768px) {
+    .posts-grid {
+      grid-template-columns: 1fr;
+    }
+    .blog-hero {
+      padding: 100px 1.25rem 48px;
+    }
+  }
+</style>

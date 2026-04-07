@@ -20,6 +20,8 @@ const libri = [
     data: 'Febbraio 2023',
     kindle: '5,98 €',
     print: '13,90 €',
+    pdfSlug: 'content-marketing-olistico',
+    pdfPrice: '9,90 €',
   },
   {
     n: '02',
@@ -37,6 +39,8 @@ const libri = [
     data: 'Aprile 2025',
     kindle: '5,98 €',
     print: '14,90 €',
+    pdfSlug: 'scrivere-per-restare',
+    pdfPrice: '9,90 €',
   },
   {
     n: '03',
@@ -54,6 +58,8 @@ const libri = [
     data: 'Settembre 2025',
     kindle: '5,97 €',
     print: '17,58 €',
+    pdfSlug: 'restare-autentici-scrivendo-con-ai',
+    pdfPrice: '9,90 €',
   },
   {
     n: '04',
@@ -71,6 +77,8 @@ const libri = [
     data: 'Agosto 2025',
     kindle: '6,99 €',
     print: '17,58 €',
+    pdfSlug: 'un-anno-di-scrittura',
+    pdfPrice: '9,90 €',
   },
 ];
 ---
@@ -91,7 +99,7 @@ const libri = [
     </h1>
     <p class="lb-hero__sub">
       Quattro libri per chi vuole promuoversi online restando se stesso.
-      Tutti disponibili su Amazon in formato Kindle e cartaceo.
+      Disponibili su Amazon (Kindle e cartaceo) e in PDF direttamente da questo sito.
     </p>
   </div>
 </section>
@@ -137,11 +145,17 @@ const libri = [
           <div class="lb-libro__prices">
             <span class="lb-price lb-price--kindle">Kindle <strong>{libro.kindle}</strong></span>
             <span class="lb-price lb-price--print">Cartaceo <strong>{libro.print}</strong></span>
+            <span class="lb-price lb-price--pdf">PDF <strong>{libro.pdfPrice}</strong></span>
           </div>
-          <a href={libro.href} target="_blank" rel="nofollow noopener" class="lb-btn">
-            <Fragment set:html={AMAZON_ICON} />
-            Acquista su Amazon
-          </a>
+          <div class="lb-libro__btns">
+            <a href={libro.href} target="_blank" rel="nofollow noopener" class="lb-btn">
+              <Fragment set:html={AMAZON_ICON} />
+              Amazon
+            </a>
+            <a href={`/api/libri/checkout.php?book=${libro.pdfSlug}`} class="lb-btn lb-btn--pdf">
+              ↓ Acquista PDF
+            </a>
+          </div>
         </div>
       </article>
     ))}
@@ -336,6 +350,10 @@ const libri = [
 }
 .lb-btn:hover { background: var(--gold-d); transform: translateY(-1px); opacity: 1; }
 .lb-btn--lg { padding: 1.05rem 2rem; font-size: 0.82rem; }
+.lb-btn--pdf { background: var(--mm-orange, #e85d00); }
+.lb-btn--pdf:hover { background: #d05200; }
+.lb-libro__btns { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+.lb-price--pdf { background: rgba(232,93,0,.1); color: var(--mm-orange, #e85d00); }
 
 /* ══ CTA ════════════════════════════════════════════════════════════════════ */
 .lb-cta {

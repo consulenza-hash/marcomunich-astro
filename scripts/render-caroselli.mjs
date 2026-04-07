@@ -103,6 +103,28 @@ function coverFontSize(text) {
   return 64;
 }
 
+/**
+ * Splitta il titolo cover in due parti: testo bianco + ultime parole in arancione.
+ * Euristica: prende gli ultimi 2-4 token come accento, cercando un break naturale.
+ */
+function splitCoverAccent(text) {
+  const words = text.split(/\s+/);
+  if (words.length <= 3) return { main: '', accent: text };
+  // Cerca un break naturale negli ultimi 5 token (preposizione, congiunzione, articolo)
+  const breaks = ['di', 'del', 'della', 'delle', 'dei', 'degli', 'per', 'con', 'in', 'al', 'alla',
+    'come', 'che', 'e', 'o', 'da', 'nel', 'nella', 'a', 'senza', 'tra', 'è', 'sono'];
+  // Cerca dall'ultima parola a ritroso, massimo 5 posizioni dal fondo
+  const minMain = Math.max(1, words.length - 5);
+  for (let i = words.length - 2; i >= minMain; i--) {
+    if (breaks.includes(words[i].toLowerCase().replace(/[.,!?'"]/g, ''))) {
+      return { main: words.slice(0, i).join(' '), accent: words.slice(i).join(' ') };
+    }
+  }
+  // Fallback: ultime 3 parole
+  const split = Math.max(1, words.length - 3);
+  return { main: words.slice(0, split).join(' '), accent: words.slice(split).join(' ') };
+}
+
 function bodyFontSize(text) {
   const len = text.length;
   if (len < 80) return 64;
@@ -123,6 +145,10 @@ function generateSlideHTML(carouselNum, slide, idx, total, carouselTitle) {
 
   if (isFirst) {
     const size = coverFontSize(slide.text);
+    const { main, accent: accentText } = splitCoverAccent(slide.text);
+    const titleHTML = main
+      ? `${escapeHtml(main)}<br><em>${escapeHtml(accentText)}</em>`
+      : `<em>${escapeHtml(accentText)}</em>`;
     return `
 <section class="slide slide-cover" id="${slideId}" style="--accent: ${accent}">
   <div class="meta">
@@ -130,9 +156,9 @@ function generateSlideHTML(carouselNum, slide, idx, total, carouselTitle) {
     <span>${counter}</span>
   </div>
   <div class="content">
-    <h1 style="font-size: ${size}px">${escapeHtml(slide.text)}</h1>
+    <h1 style="font-size: ${size}px">${titleHTML}</h1>
   </div>
-  <div class="footer-hint">Scorri per scoprire</div>
+  <div class="footer-hint">Scorri per scoprirli</div>
 </section>`;
   }
 
@@ -261,9 +287,13 @@ function generateHTML(carousels) {
   /* Cover */
   .slide-cover h1 {
     font-weight: 900;
-    line-height: 0.96;
-    letter-spacing: -0.04em;
+    line-height: 0.92;
+    letter-spacing: -0.045em;
     color: #ffffff;
+  }
+  .slide-cover h1 em {
+    font-style: normal;
+    color: var(--accent);
   }
   .slide-cover .footer-hint {
     font-size: 20px;
