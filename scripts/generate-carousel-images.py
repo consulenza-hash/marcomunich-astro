@@ -4,11 +4,23 @@ Genera immagini evocative con Imagen 4 per ogni carosello.
 Per ogni carosello: 3 immagini (cover, slide 3, slide 6)
 Output: public/contenuti-social/immagini-caroselli/carosello-XX/img-cover.png, img-s3.png, img-s6.png
 """
-import requests, base64, json, re, time, sys
+import requests, base64, json, re, time, sys, os
 from pathlib import Path
 
-KEY = 'AIzaSyCIGp_oxFcpTFMaI45ywFK7dGZJytQkimY'
-URL = f'https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key={KEY}'
+KEY = os.environ.get('IMAGEN_API_KEY', '')
+if not KEY:
+    # Try loading from .env.imagen
+    env_file = Path(__file__).resolve().parent.parent / '.env.imagen'
+    if env_file.exists():
+        for line in env_file.read_text().splitlines():
+            if line.startswith('IMAGEN_API_KEY='):
+                KEY = line.split('=', 1)[1].strip()
+if not KEY:
+    print('ERROR: IMAGEN_API_KEY not set. Set env var or create .env.imagen')
+    sys.exit(1)
+MODEL = os.environ.get('IMAGEN_MODEL', 'gemini-3.1-flash-image-preview')
+URL = f'https://generativelanguage.googleapis.com/v1beta/models/{MODEL}:generateContent?key={KEY}'
+USE_NANO_BANANA = 'gemini' in MODEL
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 OUTPUT_BASE = PROJECT_ROOT / 'public' / 'contenuti-social' / 'immagini-caroselli'
 
@@ -26,7 +38,7 @@ CAROUSEL_PROMPTS = {
         's6': 'Hand writing slowly with pencil on blank paper, warm morning light, peaceful atmosphere, editorial close-up, vertical 9:16',
     },
     3: {
-        'cover': 'Social media feed on phone screen showing multiple similar-looking motivational posts, photographed from above, moody lighting, editorial, vertical 9:16',
+        'cover': 'Smartphone photographed from above on a desk, screen showing a blurred social media grid with indistinguishable posts, no readable text on screen, moody overhead lighting, editorial photography, vertical 9:16',
         's3': 'Authentic messy desk with handwritten notes and coffee stains, real work in progress, warm natural light, editorial overhead shot, vertical 9:16',
         's6': 'Person looking at phone with skeptical expression, only hands and phone visible, soft side lighting, editorial mood, vertical 9:16',
     },
@@ -55,6 +67,26 @@ CAROUSEL_PROMPTS = {
         's3': 'Close-up of hands typing on keyboard with search results reflected in glasses, blue tint, editorial, vertical 9:16',
         's6': 'Stack of printed blog articles next to a laptop showing analytics, warm desk light, concept of content accumulation over time, editorial, vertical 9:16',
     },
+    9: {
+        'cover': 'Person looking at their phone late at night in a dark room, screen glow illuminating worried face from below, only silhouette visible, anxiety atmosphere, editorial, vertical 9:16',
+        's3': 'Person lying awake at 3am in a dark bedroom, clock on bedside table, soft blue ambient light, restless insomnia mood, no face visible, editorial photography, vertical 9:16',
+        's6': 'Open notebook with raw emotional handwriting on a desk, warm lamp light, personal and intimate, editorial close-up, vertical 9:16',
+    },
+    12: {
+        'cover': 'Professional counselor sitting across from empty client chair, minimal therapy room, warm window light, contemplative mood, editorial interior, vertical 9:16',
+        's3': 'Two people in a professional conversation across a desk, only hands and forearms visible on table, tense thoughtful atmosphere, warm side light, no text, editorial, vertical 9:16',
+        's6': 'Empty therapy room with two chairs facing each other, one in warm light one in shadow, concept of selection and choice, editorial interior, vertical 9:16',
+    },
+    13: {
+        'cover': 'Laptop open on a minimalist website homepage in a dark room at night, soft screen glow, empty desk, concept of website working while you sleep, no readable text on screen, editorial, vertical 9:16',
+        's3': 'Dark quiet home at night, single desk lamp glowing in an empty room, open laptop with soft screen glow, nobody home, peaceful solitude, editorial photography, vertical 9:16',
+        's6': 'Warm home office at night with laptop screen glowing, a cup of tea, concept of passive digital presence, calm atmosphere, editorial still life, vertical 9:16',
+    },
+    18: {
+        'cover': 'Stack of euro banknotes next to an empty appointment book, contrast between financial and human value, warm desk light, editorial still life, vertical 9:16',
+        's3': 'Person hesitating at a door handle, about to enter a room, concept of commitment and threshold, soft dramatic side lighting, no face visible, editorial, vertical 9:16',
+        's6': 'Empty armchair in a minimal therapy room, warm afternoon window light, sense of expectation and value, calm intimate atmosphere, no text, editorial interior, vertical 9:16',
+    },
 }
 
 # Generic fallback prompts for carousels without specific prompts
@@ -65,30 +97,60 @@ GENERIC_PROMPTS = {
 }
 
 def generate_image(prompt, output_path, retries=2):
-    """Generate one image via Imagen 4 API."""
+    """Generate one image via Imagen 4 or Nano Banana 2 API."""
     if output_path.exists() and output_path.stat().st_size > 10000:
         return True  # Already exists, skip
 
     for attempt in range(retries + 1):
         try:
-            payload = {
-                'instances': [{'prompt': prompt}],
-                'parameters': {'sampleCount': 1, 'aspectRatio': '9:16'}
-            }
-            r = requests.post(URL, json=payload, timeout=90)
-            if r.status_code == 200:
-                data = r.json()
-                img_b64 = data['predictions'][0]['bytesBase64Encoded']
-                output_path.parent.mkdir(parents=True, exist_ok=True)
-                output_path.write_bytes(base64.b64decode(img_b64))
-                return True
-            elif r.status_code == 429:
-                print(f'    Rate limited, waiting 10s...')
-                time.sleep(10)
+            if USE_NANO_BANANA:
+                # Gemini / Nano Banana 2 format
+                payload = {
+                    'contents': [{'parts': [{'text': prompt}]}],
+                    'generationConfig': {'responseModalities': ['image', 'text']}
+                }
+                r = requests.post(URL, json=payload, timeout=120)
+                if r.status_code == 200:
+                    data = r.json()
+                    # Find image part in candidates
+                    img_b64 = None
+                    for part in data.get('candidates', [{}])[0].get('content', {}).get('parts', []):
+                        if 'inlineData' in part:
+                            img_b64 = part['inlineData']['data']
+                            break
+                    if img_b64:
+                        output_path.parent.mkdir(parents=True, exist_ok=True)
+                        output_path.write_bytes(base64.b64decode(img_b64))
+                        return True
+                    else:
+                        print(f'    No image in response: {str(data)[:200]}')
+                elif r.status_code == 429:
+                    print(f'    Rate limited, waiting 15s...')
+                    time.sleep(15)
+                else:
+                    print(f'    Error {r.status_code}: {r.text[:200]}')
+                    if attempt < retries:
+                        time.sleep(3)
             else:
-                print(f'    Error {r.status_code}: {r.text[:200]}')
-                if attempt < retries:
-                    time.sleep(3)
+                # Imagen 4 predict format
+                payload = {
+                    'instances': [{'prompt': prompt}],
+                    'parameters': {'sampleCount': 1, 'aspectRatio': '9:16'}
+                }
+                r = requests.post(URL, json=payload, timeout=90)
+                if r.status_code == 200:
+                    data = r.json()
+                    img_b64 = data['predictions'][0]['bytesBase64Encoded']
+                    output_path.parent.mkdir(parents=True, exist_ok=True)
+                    output_path.write_bytes(base64.b64decode(img_b64))
+                    return True
+                elif r.status_code == 429:
+                    print(f'    Rate limited, waiting 10s...')
+                    time.sleep(10)
+                else:
+                    print(f'    Error {r.status_code}: {r.text[:200]}')
+                    if attempt < retries:
+                        time.sleep(3)
         except Exception as e:
             print(f'    Exception: {e}')
             if attempt < retries:

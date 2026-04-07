@@ -158,6 +158,8 @@ def create_item_container(ig_user_id, access_token, image_url, alt_text=None, dr
         # Graph API limit: 1000 characters. Trim defensively.
         payload["alt_text"] = alt_text[:1000]
     r = requests.post(url, data=payload, timeout=60)
+    if not r.ok:
+        print(f"    Instagram API error {r.status_code}: {r.text}", file=sys.stderr)
     r.raise_for_status()
     return r.json()["id"]
 
@@ -227,6 +229,28 @@ def publish_entry(entry, config, dry_run=False):
         print(f"  Alt texts: {len(alt_texts)} provided")
     else:
         print("  Alt texts: none in schedule — slides will publish without accessibility text")
+
+    # Pre-check: verify all slide URLs are accessible before touching Instagram API
+    print("  Pre-check: verifying slide URLs are accessible…")
+    for attempt in range(1, 6):
+        failed = []
+        for url in urls:
+            try:
+                r = requests.head(url, timeout=10, allow_redirects=True)
+                if r.status_code != 200 or int(r.headers.get("content-length", 1)) < 10000:
+                    failed.append(url)
+            except Exception:
+                failed.append(url)
+        if not failed:
+            print(f"  ✓ All {len(urls)} URLs accessible")
+            break
+        print(f"  Attempt {attempt}/5: {len(failed)} URL(s) not ready, waiting 60s…")
+        if attempt == 5:
+            raise RuntimeError(
+                f"Images not accessible after 5 attempts. CF Pages may still be deploying.\n"
+                f"Failed URLs: {failed}"
+            )
+        time.sleep(60)
 
     # Step 1: create carousel item containers for each slide
     print("  Step 1/3: creating item containers…")
