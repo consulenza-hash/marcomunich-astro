@@ -45,7 +45,7 @@ jobs:
         env:
           META_ACCESS_TOKEN: ${{ secrets.META_ACCESS_TOKEN }}
           INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
-          CAROUSELS_BASE_URL: https://www.marcomunich.com/contenuti-social/immagini-caroselli
+          CAROUSELS_BASE_URL: https://marcomunich-com.pages.dev/contenuti-social/immagini-caroselli
         run: python scripts/publish_carousel.py
 
       - name: Publish (manual dispatch)
@@ -53,7 +53,7 @@ jobs:
         env:
           META_ACCESS_TOKEN: ${{ secrets.META_ACCESS_TOKEN }}
           INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
-          CAROUSELS_BASE_URL: https://www.marcomunich.com/contenuti-social/immagini-caroselli
+          CAROUSELS_BASE_URL: https://marcomunich-com.pages.dev/contenuti-social/immagini-caroselli
         run: |
           ARGS=""
           if [ "${{ inputs.dry_run }}" = "true" ]; then
