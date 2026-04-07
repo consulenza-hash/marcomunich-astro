@@ -1,4 +1,4 @@
-name: Deploy to Netsons
+name: Deploy to Cloudflare Pages
 
 on:
   push:
@@ -6,7 +6,6 @@ on:
     paths-ignore:
       - 'public/api/**'
       - 'public/admin/**'
-      - 'public/images/**'
   repository_dispatch:
     types: [wp_content_changed, wp_post_published]
   workflow_dispatch:
@@ -14,7 +13,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 15
 
     steps:
       - name: Checkout
@@ -38,11 +37,18 @@ jobs:
       - name: Count files
         run: echo "Files to deploy:" && find dist -type f | wc -l
 
-      - name: Create .env for server
-        env:
-          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy dist --project-name marcomunich-com --branch main --commit-dirty=true
+
+      - name: Deploy to Netsons (FTP — HTML + CSS + API)
         run: |
-          # Variabili semplici: printf inline sicuro
+          sudo apt-get install -y lftp > /dev/null 2>&1
+
+          # Create .env for PHP APIs
           printf '%s\n' \
             "STATS_PASSWORD=${{ secrets.STATS_PASSWORD }}" \
             "GITHUB_TOKEN=${{ secrets.GH_TOKEN }}" \
@@ -59,26 +65,27 @@ jobs:
             "GSC_SITE_URL=${{ secrets.GSC_SITE_URL }}" \
             "IMAGEN_API_KEY=${{ secrets.IMAGEN_API_KEY }}" \
             > .env-server
-          # JSON con doppi apici: passato via env var per evitare shell injection
-          printf 'GOOGLE_SERVICE_ACCOUNT_JSON=%s\n' "$GOOGLE_SERVICE_ACCOUNT_JSON" >> .env-server
-          echo "Vars count: $(wc -l < .env-server)"
 
-      - name: Deploy via lftp mirror
-        run: |
-          sudo apt-get install -y lftp > /dev/null 2>&1
-          timeout 600 lftp -c "
+          # JSON with double quotes — passed via env var to avoid shell injection
+          printf 'GOOGLE_SERVICE_ACCOUNT_JSON=%s\n' "$GOOGLE_SERVICE_ACCOUNT_JSON" >> .env-server
+
+          # Sync HTML + CSS/JS bundles + API to Netsons
+          # Exclude large media dirs (handled by php-hotfix.yml) to keep FTP fast
+          timeout 300 lftp -c "
             set ftp:ssl-allow yes;
             set ftp:ssl-force no;
             set ftp:passive-mode yes;
             set ssl:verify-certificate no;
             set net:timeout 30;
             set net:max-retries 3;
-            set net:reconnect-interval-base 5;
-            set mirror:parallel-transfer-count 2;
             open -u ${{ secrets.FTP_USERNAME }},${{ secrets.FTP_PASSWORD }} 89.40.173.242;
             put .env-server -o /.env;
-            mirror --reverse --delete --verbose --parallel=2 --ignore-time --use-cache=no dist/ /public_html/;
-            put dist/risorse/index.html -o /public_html/risorse/index.html;
+            mirror --reverse --verbose --parallel=8 --only-newer \
+              --exclude contenuti-social/immagini-caroselli/ \
+              --exclude contenuti-social/immagini-post/ \
+              --exclude videos/ \
+              dist/ /public_html/;
             quit;
-          " || echo "⚠️ lftp exited with warnings (directory cleanup non-fatal)"
-          echo "Deploy complete!"
+          " || echo "⚠️ lftp Netsons sync done (warnings non-fatal)"
+        env:
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
