@@ -236,8 +236,14 @@ def publish_entry(entry, config, dry_run=False):
         failed = []
         for url in urls:
             try:
-                r = requests.head(url, timeout=10, allow_redirects=True)
-                if r.status_code != 200 or int(r.headers.get("content-length", 1)) < 10000:
+                r = requests.get(url, timeout=15, stream=True)
+                chunk = b""
+                for data in r.iter_content(chunk_size=1024):
+                    chunk += data
+                    if len(chunk) >= 10000:
+                        break
+                r.close()
+                if r.status_code != 200 or len(chunk) < 10000:
                     failed.append(url)
             except Exception:
                 failed.append(url)

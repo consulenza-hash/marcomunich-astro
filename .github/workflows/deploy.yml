@@ -13,7 +13,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
 
     steps:
       - name: Checkout
@@ -34,11 +34,14 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Count files
-        run: echo "Files to deploy:" && find dist -type f | wc -l
+      - name: Strip PNG slides before CF Pages deploy
+        run: |
+          # Remove PNG originals — CF Pages only needs JPEGs for Instagram
+          # This cuts upload size from ~800MB to ~150MB
+          find dist/contenuti-social/immagini-caroselli -name "*.png" -delete 2>/dev/null || true
+          echo "Files to deploy:" && find dist -type f | wc -l
 
       - name: Deploy to Cloudflare Pages
-        continue-on-error: true
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
