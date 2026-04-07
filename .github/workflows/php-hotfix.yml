@@ -8,11 +8,12 @@ on:
       - 'public/admin/**'
       - 'public/images/**'
       - 'public/contenuti-social/**'
+  workflow_dispatch:
 
 jobs:
   php-deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 15
 
     steps:
       - name: Checkout
@@ -21,18 +22,18 @@ jobs:
       - name: Upload PHP files via lftp
         run: |
           sudo apt-get install -y lftp -qq
-          timeout 120 lftp -c "
+          timeout 800 lftp -c "
             set ftp:ssl-allow yes;
             set ftp:ssl-force no;
             set ftp:passive-mode yes;
             set ssl:verify-certificate no;
-            set net:timeout 20;
-            set net:max-retries 2;
+            set net:timeout 30;
+            set net:max-retries 3;
             open -u ${{ secrets.FTP_USERNAME }},${{ secrets.FTP_PASSWORD }} 89.40.173.242;
-            mirror --reverse --verbose --parallel=2 public/api/ /public_html/api/;
-            mirror --reverse --verbose --parallel=2 public/admin/ /public_html/admin/;
-            mirror --reverse --verbose --parallel=4 public/images/ /public_html/images/;
-            mirror --reverse --verbose --parallel=6 public/contenuti-social/ /public_html/contenuti-social/;
+            mirror --reverse --parallel=2 public/api/ /public_html/api/;
+            mirror --reverse --parallel=2 public/admin/ /public_html/admin/;
+            mirror --reverse --parallel=4 public/images/ /public_html/images/;
+            mirror --reverse --parallel=8 public/contenuti-social/ /public_html/contenuti-social/;
             quit;
           " || echo "⚠️ lftp completed with warnings"
 
