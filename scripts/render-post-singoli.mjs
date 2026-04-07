@@ -92,6 +92,7 @@ function generatePostHTML(posts) {
   <div class="bar"></div>
   <div class="content">
     <p style="font-size: ${size}px">${displayText}</p>
+    <span class="cta">continua in descrizione</span>
   </div>
   <div class="footer">• @marcomunich · Personal Branding Olistico</div>
 </section>`;
@@ -152,7 +153,9 @@ function generatePostHTML(posts) {
   .content {
     flex: 1;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    gap: 36px;
     padding-left: 32px; /* indent from bar */
   }
   .content p {
@@ -161,6 +164,17 @@ function generatePostHTML(posts) {
     letter-spacing: -0.03em;
     color: #ffffff;
     max-width: 820px;
+  }
+  .cta {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.5);
+  }
+  .cta::before {
+    content: '→ ';
+    color: var(--accent);
   }
 
   /* Footer */
