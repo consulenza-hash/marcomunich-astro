@@ -1,10 +1,9 @@
 name: Publish Carousel to Instagram
 
 on:
-  schedule:
-    # Every day at 07:30 UTC = 09:30 CEST (summer) / 08:30 CET (winter)
-    # Carosello 1 fires on 2026-04-06 during CEST, so 07:30 UTC = 09:30 local
-    - cron: '30 7 * * *'
+  # schedule PAUSED — nuove immagini in lavorazione, riattivare quando C02+ sono pronti
+  # schedule:
+  #   - cron: '30 7 * * *'
 
   workflow_dispatch:
     inputs:
