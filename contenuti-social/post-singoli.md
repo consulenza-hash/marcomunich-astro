@@ -104,4 +104,152 @@ Il vantaggio di chi inizia oggi è enorme rispetto a chi inizierà tra un anno. 
 
 ---
 
-*Post 9-52: da scrivere nella fase batch completa, dopo calibrazione tono del pilot P01-P08.*
+## MESE 2 — Post 9-16
+
+### POST 9 — "Scrivi del cliente. Il servizio lo trovano da soli."
+- **Overlay:** Scrivi del cliente. Il servizio lo trovano da soli.
+
+### POST 10 — "La tua voce è originale. La stai copiando su qualcuno che ammiri."
+- **Overlay:** La tua voce è originale. La stai copiando su qualcuno che ammiri.
+
+### POST 11 — "Tutti i profili dei coach si assomigliano. Il tuo è uno di quelli."
+- **Overlay:** Tutti i profili dei coach si assomigliano. Il tuo è uno di quelli.
+
+### POST 12 — "Un cliente sbagliato vale quanto due sessioni di supervisione."
+- **Overlay:** Un cliente sbagliato vale quanto due sessioni di supervisione.
+
+### POST 13 — "Il profilo ti fa vedere. La newsletter ti fa conoscere."
+- **Overlay:** Il profilo ti fa vedere. La newsletter ti fa conoscere.
+
+### POST 14 — "Il post che hai scritto e cancellato tre volte è quello che dovevi pubblicare."
+- **Overlay:** Il post che hai scritto e cancellato tre volte è quello che dovevi pubblicare.
+
+### POST 15 — "La tua pagina Chi Sono parla di te. Il cliente legge per capire se parla di lui."
+- **Overlay:** La tua pagina Chi Sono parla di te. Il cliente legge per capire se parla di lui.
+
+### POST 16 — "Scrivere in venti minuti o in quattro ore dà lo stesso risultato. Dipende da altro."
+- **Overlay:** Scrivere in venti minuti o in quattro ore dà lo stesso risultato. Dipende da altro.
+
+---
+
+## MESE 3 — Post 17-24
+
+### POST 17 — "Il prezzo l'hai fissato prima ancora di capire a chi ti stai rivolgendo."
+- **Overlay:** Il prezzo l'hai fissato prima ancora di capire a chi ti stai rivolgendo.
+
+### POST 18 — "Il prezzo basso attira il cliente sbagliato. E poi lo tieni."
+- **Overlay:** Il prezzo basso attira il cliente sbagliato. E poi lo tieni.
+
+### POST 19 — "La prima chiamata è bidirezionale. Stai valutando anche tu."
+- **Overlay:** La prima chiamata è bidirezionale. Stai valutando anche tu.
+
+### POST 20 — "Il contratto protegge il cliente. La prima persona che protegge sei tu."
+- **Overlay:** Il contratto protegge il cliente. La prima persona che protegge sei tu.
+
+### POST 21 — "Una cancellazione all'ultimo minuto è un dato clinico, se sai leggerla."
+- **Overlay:** Una cancellazione all'ultimo minuto è un dato clinico, se sai leggerla.
+
+### POST 22 — "Il cliente sbagliato viene da qualcosa che hai scritto sei mesi fa."
+- **Overlay:** Il cliente sbagliato viene da qualcosa che hai scritto sei mesi fa.
+
+### POST 23 — "Sei sempre disponibile. Quella disponibilità costa più di quanto guadagni."
+- **Overlay:** Sei sempre disponibile. Quella disponibilità costa più di quanto guadagni.
+
+### POST 24 — "Il percorso finisce. La relazione professionale ha una durata più lunga."
+- **Overlay:** Il percorso finisce. La relazione professionale ha una durata più lunga.
+
+---
+
+## MESE 4 — Post 25-32
+
+### POST 25 — "Il caso più significativo che hai vissuto è quello che non puoi raccontare."
+- **Overlay:** Il caso più significativo che hai vissuto è quello che non puoi raccontare.
+
+### POST 26 — "La scena prima del principio. Chi legge impara qualcosa senza volerlo."
+- **Overlay:** La scena prima del principio. Chi legge impara qualcosa senza volerlo.
+
+### POST 27 — "L'errore che hai fatto in sessione è il post che i tuoi lettori aspettavano."
+- **Overlay:** L'errore che hai fatto in sessione è il post che i tuoi lettori aspettavano.
+
+### POST 28 — "Pubblicare subito sembra urgente. Due settimane dopo vedi cose diverse."
+- **Overlay:** Pubblicare subito sembra urgente. Due settimane dopo vedi cose diverse.
+
+### POST 29 — "Due vulnerabilità. Una costruisce fiducia. L'altra la chiede in prestito."
+- **Overlay:** Due vulnerabilità. Una costruisce fiducia. L'altra la chiede in prestito.
+
+### POST 30 — "Un post scritto per tutti non raggiunge nessuno nel profondo."
+- **Overlay:** Un post scritto per tutti non raggiunge nessuno nel profondo.
+
+### POST 31 — "Ogni professionista ha una frase che nessun altro avrebbe potuto scrivere. La tua qual è?"
+- **Overlay:** Ogni professionista ha una frase che nessun altro avrebbe potuto scrivere. La tua qual è?
+
+### POST 32 — "La critica giusta arriva sempre al momento sbagliato. E serve esattamente lì."
+- **Overlay:** La critica giusta arriva sempre al momento sbagliato. E serve esattamente lì.
+
+---
+
+## MESE 5 — Post 33-44
+
+### POST 33 — "Ogni sessione contiene già tre contenuti. Li stai ignorando."
+- **Overlay:** Ogni sessione contiene già tre contenuti. Li stai ignorando.
+
+### POST 34 — "La prima frase o cattura o perde. Tutto il resto è irrilevante."
+- **Overlay:** La prima frase o cattura o perde. Tutto il resto è irrilevante.
+
+### POST 35 — "Il titolo poetico piace a te. Il cliente non sa di cosa stai parlando."
+- **Overlay:** Il titolo poetico piace a te. Il cliente non sa di cosa stai parlando.
+
+### POST 36 — "Il primo articolo sarà mediocre. Pubblicarlo è la condizione per i successivi."
+- **Overlay:** Il primo articolo sarà mediocre. Pubblicarlo è la condizione per i successivi.
+
+### POST 37 — "La paura di scrivere male è più precisa di così. È paura di essere visti."
+- **Overlay:** La paura di scrivere male è più precisa di così. È paura di essere visti.
+
+### POST 38 — "Un anno sullo stesso tema. I lettori iniziano a identificarti con quel tema."
+- **Overlay:** Un anno sullo stesso tema. I lettori iniziano a identificarti con quel tema.
+
+### POST 39 — "Le parole dei tuoi clienti in sessione sono il materiale migliore per scrivere online."
+- **Overlay:** Le parole dei tuoi clienti in sessione sono il materiale migliore per scrivere online.
+
+### POST 40 — "La newsletter è l'unico spazio online dove parli davvero, fuori dall'algoritmo."
+- **Overlay:** La newsletter è l'unico spazio online dove parli davvero, fuori dall'algoritmo.
+
+### POST 41 — "Un solo canale funziona finché funziona. Poi smette e riparti da zero."
+- **Overlay:** Un solo canale funziona finché funziona. Poi smette e riparti da zero.
+
+### POST 42 — "Decidere cosa pubblicare ogni mattina svuota l'energia che serve per lavorare."
+- **Overlay:** Decidere cosa pubblicare ogni mattina svuota l'energia che serve per lavorare.
+
+### POST 43 — "Tutti i contenuti del mese in due ore. Il resto del mese non ci pensi."
+- **Overlay:** Tutti i contenuti del mese in due ore. Il resto del mese non ci pensi.
+
+### POST 44 — "Hai già detto questa cosa. Devi dirla ancora. Chi ne ha bisogno non l'ha ancora letta."
+- **Overlay:** Hai già detto questa cosa. Devi dirla ancora. Chi ne ha bisogno non l'ha ancora letta.
+
+---
+
+## MESE 6 — Post 45-52
+
+### POST 45 — "I like non pagano l'affitto. Esistono metriche che predicono i clienti."
+- **Overlay:** I like non pagano l'affitto. Esistono metriche che predicono i clienti.
+
+### POST 46 — "La community che costruisci in una settimana si dissolve nella successiva."
+- **Overlay:** La community che costruisci in una settimana si dissolve nella successiva.
+
+### POST 47 — "Ogni email promozionale in più riduce le aperture di quella dopo."
+- **Overlay:** Ogni email promozionale in più riduce le aperture di quella dopo.
+
+### POST 48 — "Quando non hai più voglia di scrivere online, c'è una ragione precisa da cercare."
+- **Overlay:** Quando non hai più voglia di scrivere online, c'è una ragione precisa da cercare.
+
+### POST 49 — "Il giorno che non riesci a pubblicare, il sistema deve farlo da solo."
+- **Overlay:** Il giorno che non riesci a pubblicare, il sistema deve farlo da solo.
+
+### POST 50 — "Saper rifiutare un incarico è una competenza professionale, non una scortesia."
+- **Overlay:** Saper rifiutare un incarico è una competenza professionale, non una scortesia.
+
+### POST 51 — "Un anno di contenuti costanti vale più di tre mesi intensissimi."
+- **Overlay:** Un anno di contenuti costanti vale più di tre mesi intensissimi.
+
+### POST 52 — "Quello che stai costruendo adesso lo capirai tra due anni."
+- **Overlay:** Quello che stai costruendo adesso lo capirai tra due anni.
