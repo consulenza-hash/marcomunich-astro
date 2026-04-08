@@ -39,7 +39,7 @@ Il problema non è la preparazione. Il problema è che hai invertito l'ordine: c
 
 Ogni post che non hai scritto è un pezzo di reputazione che non esiste ancora. Ogni video che hai rimandato è una prova di fiducia che qualcuno non ha potuto darti. Il tuo pubblico si costruisce nel tempo solo se esiste del materiale che lo costruisce, e quel materiale deve essere lì quando qualcuno ti cerca.
 
-C'è un'altra cosa che vale la pena nominare: la perfezione che stai aspettando di raggiungere non arriva. Arriva una versione migliore di quello che fai oggi, e arriva solo perché hai iniziato a fare.
+La perfezione che stai aspettando di raggiungere non arriva. Arriva una versione migliore di quello che fai oggi, e arriva solo perché hai iniziato a fare.
 
 Prendi la formazione che hai completato più di recente e scrivi tre righe su quello che hai imparato che ha cambiato il tuo modo di lavorare con i clienti. Pubblica quelle tre righe. È sufficiente per iniziare.
 
@@ -115,7 +115,7 @@ L'AI amplifica quello che porti. Se porti poco, amplifica il poco.
 
 Parla dalle cicatrici, non dalle ferite aperte.
 
-È una distinzione che sento ripetere spesso nel mondo della comunicazione autentica, e vale la pena fermarsi a capire cosa significa davvero per chi lavora nel settore del benessere.
+Fermati un momento su questa distinzione, perché per chi lavora nel settore del benessere significa qualcosa di molto preciso.
 
 Una cicatrice è qualcosa che hai già attraversato, elaborato, integrato abbastanza da poterci guardare dentro senza rivivere il dolore. Puoi raccontarla con una certa distanza, puoi estrarne qualcosa di utile per chi ti ascolta, puoi costruire un ponte tra la tua esperienza e quella della persona che sta cercando aiuto. Una ferita aperta ti appartiene ancora completamente, stai ancora dentro, e quando la racconti lo si sente: la voce si incrina, perdi il filo, finisci per elaborare in pubblico invece di comunicare.
 
@@ -151,7 +151,7 @@ Il filtro sbagliato è quello del giudizio altrui. Il filtro giusto è l'utilit�
 ## REEL 8 — Promuoverti ti sembra sporco.
 
 > **Hook A:** "Promuoverti ti sembra sporco. Quella sensazione ha un costo preciso: resti invisibile a chi ha bisogno di te."
-> **Hook B:** "La differenza tra promozione e manipolazione è più netta di quanto pensi, e vale la pena nominarla."
+> **Hook B:** "La differenza tra promozione e manipolazione è più netta di quanto pensi. Eccola."
 > **Hook C:** "Ho sentito dire 'non me la sento di fare marketing' almeno duecento volte. Ogni volta mi chiedo chi ne paga il prezzo."
 
 
@@ -161,7 +161,7 @@ Parlare di sé, mostrare i propri risultati, chiedere a qualcuno di lavorare con
 
 Il problema è che quella sensazione, lasciata senza esame, produce un effetto preciso: rimani invisibile alle persone che potrebbero beneficiare del tuo lavoro. Questa non è una posizione etica, è una posizione che fa stare bene te a scapito di chi non ti trova.
 
-C'è una differenza reale tra promozione e manipolazione, e vale la pena nominarla con precisione. La manipolazione promette qualcosa che sai di non poter garantire, crea urgenza artificiale, fa leva sulla paura. La promozione onesta dice: lavoro su questi problemi specifici, con queste persone, in questo modo, e costa così. Chi si riconosce in quello che descrivi può contattarti. Chi non si riconosce, no.
+Tra promozione e manipolazione c'è una linea precisa. La manipolazione promette qualcosa che sai di non poter garantire, crea urgenza artificiale, fa leva sulla paura. La promozione onesta dice: lavoro su questi problemi specifici, con queste persone, in questo modo, e costa così. Chi si riconosce in quello che descrivi può contattarti. Chi non si riconosce, no.
 
 Quando scrivi di quello che fai in modo preciso e onesto, stai facendo un servizio a chi sta cercando esattamente quello che offri tu. Stai accorciando il percorso tra il loro bisogno e la soluzione. Questo è il contrario dello sporco.
 
@@ -306,7 +306,7 @@ Il tuo contenuto gratuito è mini. Il tuo valore percepito anche.
 
 Il mini-contenuto è quella cosa che vedo proliferare sui profili di coach e counselor: caroselli con frasi brevi tipo "ricorda il tuo valore", post con tre parole e una foto ispirazionale, storie con poll su "come ti senti oggi?" e due risposte predefinite. Ogni singolo elemento sembra ragionevole, ma l'effetto cumulativo è che il tuo profilo trasmette superficialità.
 
-Chi arriva sul tuo profilo e vede quel tipo di contenuto fa una valutazione inconscia abbastanza rapida: questa persona lavora in superficie. E poi si domanda se vale la pena investire una cifra significativa per lavorarci.
+Chi arriva sul tuo profilo e vede quel tipo di contenuto fa una valutazione inconscia abbastanza rapida: questa persona lavora in superficie. Difficile che quella persona poi investa una cifra significativa per lavorarci.
 
 Il contenuto gratuito è la tua vetrina. Se mostra profondità, le persone si aspettano profondità nel lavoro a pagamento. Se mostra leggerezza, si aspettano leggerezza, e poi si sorprendono quando chiedi tariffe professionali.
 
@@ -556,7 +556,7 @@ Prova questa settimana. Registra due minuti di voce su qualcosa che hai visto ri
 
 Hai presente quel tipo di contenuto? "Sei esausto. Ti senti invisibile. Stai dando tutto e non ottieni niente." Seguito dalla soluzione che vende. È una formula precisa, usata dappertutto nel marketing del benessere, e capisco perché funziona nel senso che produce clic e reazioni.
 
-Ma c'è un costo che vale la pena guardare.
+Quel costo però esiste, ed è specifico.
 
 Quando costruisci la tua comunicazione attivando sistematicamente il dolore del lettore per poi proporti come soluzione, stai creando una dipendenza. Il lettore impara a venire da te per essere rassicurato sul fatto di stare male. E quella relazione non porta da nessuna parte di utile, né per lui né per te.
 
@@ -793,7 +793,7 @@ Quando un cliente arriva da te, non arriva dicendo "ho un
 
 Ho letto tre articoli questo mese che dicevano tutti la stessa cosa: la Gen Z abbandona Instagram, i giovani vanno su TikTok e BeReal e Lemon8, Instagram e per i millennial. E ogni volta vedevo nei commenti dei counselor la stessa reazione: devo cambiare piattaforma? Devo imparare TikTok?
 
-Prima di rispondere a questa domanda vale la pena chiedersi un'altra cosa: i tuoi clienti ideali sono davvero Gen Z?
+Prima di rispondere, chiediti una cosa concreta: i tuoi clienti ideali sono davvero Gen Z?
 
 Un counselor che lavora con adulti in transizione professionale, o con coppie in crisi, o con professionisti che cercano equilibrio tra lavoro e vita privata, ha clienti ideali dai trentacinque ai cinquantacinque anni. Questa fascia e ancora su Instagram, ci passa ancora parecchio tempo, e risponde ancora ai contenuti che risolvono problemi reali.
 
