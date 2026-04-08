@@ -34,12 +34,15 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Strip PNG slides before CF Pages deploy
+      - name: Strip heavy assets before CF Pages deploy
         run: |
           # Remove PNG originals — CF Pages only needs JPEGs for Instagram
-          # This cuts upload size from ~800MB to ~150MB
           find dist/contenuti-social/immagini-caroselli -name "*.png" -delete 2>/dev/null || true
+          # Remove video reels — 60 MP4 (~399MB) not needed on CF Pages
+          # Reels are published directly to Instagram, not served from the site
+          rm -rf dist/contenuti-social/video-reels/ 2>/dev/null || true
           echo "Files to deploy:" && find dist -type f | wc -l
+          echo "Total size:" && du -sh dist/
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
