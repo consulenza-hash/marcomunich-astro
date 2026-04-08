@@ -199,7 +199,8 @@ const checkoutUrl = `/api/libri/checkout.php?book=${slug}`;
   <div class="bl-hero__inner">
     <div class="bl-hero__text">
       <span class="bl-label">{book.tag}</span>
-      <h1 class="bl-hero__title">{book.hero}</h1>
+      <h1 class="bl-hero__title">{book.title}</h1>
+      <p class="bl-hero__hook">{book.hero}</p>
       <p class="bl-hero__sub">{book.subtitle}</p>
       <div class="bl-hero__price-block">
         <span class="bl-price-tag">PDF <strong>{book.pdfPrice}</strong></span>
@@ -339,7 +340,14 @@ const checkoutUrl = `/api/libri/checkout.php?book=${slug}`;
   font: 800 clamp(2.2rem, 4.5vw, 3.8rem)/1.05 var(--display);
   color: var(--white);
   letter-spacing: -0.03em;
-  margin-bottom: 1.2rem;
+  margin-bottom: 0.6rem;
+}
+.bl-hero__hook {
+  font: 400 clamp(1.1rem, 2vw, 1.35rem)/1.4 var(--sans);
+  color: rgba(255,255,255,0.75);
+  max-width: 520px;
+  margin-bottom: 1rem;
+  font-style: italic;
 }
 .bl-hero__sub {
   font: 300 1rem/1.65 var(--sans);
