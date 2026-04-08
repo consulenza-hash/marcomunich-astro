@@ -34,13 +34,15 @@ const libri = [
     rating: '5,0',
     stars: 5,
     recensioni: 4,
-    desc: 'Questo non è un libro per "venderti meglio". È un libro per smettere di venderti del tutto. Il racconto di una strada diversa, tracciata da dentro. Per counselor, coach, operatori olistici che sentono il bisogno di essere visibili, ma non vogliono snaturarsi per farlo.',
+    desc: 'Il racconto di una strada diversa verso la visibilità online. Per counselor, coach, operatori olistici che sentono il bisogno di essere visibili, ma non vogliono snaturarsi per farlo. Diciassette spaccati di vita, ognuno con una riflessione pratica e una domanda di lavoro.',
     pagine: '156 pagine',
     data: 'Aprile 2025',
     kindle: '5,98 €',
     print: '14,90 €',
     pdfSlug: 'scrivere-per-restare',
-    pdfPrice: '9,90 €',
+    pdfPrice: '7,90 €',
+    landingHref: '/libri/scrivere-per-restare',
+    hasPdf: true,
   },
   {
     n: '03',
@@ -49,17 +51,19 @@ const libri = [
     alt: "Copertina Restare Autentici Scrivendo con l'AI",
     tag: 'Intelligenza Artificiale · Settembre 2025',
     titolo: "Restare Autentici Scrivendo con l'AI",
-    sub: 'Guida pratica per counselor, coach e operatori olistici che guardano l\'AI con diffidenza',
+    sub: "Guida pratica per counselor, coach e operatori olistici",
     rating: '5,0',
     stars: 5,
     recensioni: 1,
-    desc: "Questo non è un manuale tecnico. È una guida pratica per chi lavora con le persone e sente il bisogno di comunicare senza perdere autenticità. L'AI non sostituisce la tua voce: la amplifica. Se porti dentro la tua esperienza, l'AI diventa un segretario invisibile che restituisce una voce più nitida e fedele a ciò che sei.",
+    desc: "Una guida pratica per usare l'AI senza perdere la tua voce. Impari a costruire prompt che portano dentro la tua esperienza, la tua posizione, il tuo tono. Il risultato è un testo che suona come te, prodotto in meno tempo.",
     pagine: '140 pagine',
     data: 'Settembre 2025',
     kindle: '5,97 €',
     print: '17,58 €',
-    pdfSlug: 'restare-autentici-scrivendo-con-ai',
+    pdfSlug: 'restare-autentici-con-ai',
     pdfPrice: '9,90 €',
+    landingHref: '/libri/restare-autentici-con-ai',
+    hasPdf: true,
   },
   {
     n: '04',
@@ -68,17 +72,19 @@ const libri = [
     alt: 'Copertina Un Anno di Scrittura per Scoprire Chi Sei Davvero',
     tag: 'Scrittura · Agosto 2025',
     titolo: 'Un Anno di Scrittura per Scoprire Chi Sei Davvero',
-    sub: 'Un esercizio di costanza per smettere di fingere',
+    sub: '52 settimane, 10 minuti al giorno, per scoprire chi sei davvero',
     rating: null,
     stars: 0,
     recensioni: 0,
-    desc: 'Un percorso concreto, settimana dopo settimana, che ti accompagna a guardarti dentro con sincerità e a portare fuori la tua voce senza maschere. 52 capitoli, uno per settimana, ognuno con domande pratiche e tre finestre di esercizio. Non servono doti letterarie. Ti bastano dieci minuti al giorno e la volontà di restare.',
+    desc: 'Un capitolo a settimana per tutto l\'anno. Ogni settimana ha un tema, tre finestre di scrittura e una domanda finale. Alla fine dell\'anno hai 52 capitoli della tua storia professionale e personale. Materia grezza per contenuti, ma soprattutto una chiarezza su chi sei.',
     pagine: '154 pagine',
     data: 'Agosto 2025',
     kindle: '6,99 €',
     print: '17,58 €',
     pdfSlug: 'un-anno-di-scrittura',
-    pdfPrice: '9,90 €',
+    pdfPrice: '12,90 €',
+    landingHref: '/libri/un-anno-di-scrittura',
+    hasPdf: true,
   },
 ];
 ---
@@ -145,20 +151,56 @@ const libri = [
           <div class="lb-libro__prices">
             <span class="lb-price lb-price--kindle">Kindle <strong>{libro.kindle}</strong></span>
             <span class="lb-price lb-price--print">Cartaceo <strong>{libro.print}</strong></span>
-            <span class="lb-price lb-price--pdf">PDF <strong>{libro.pdfPrice}</strong></span>
+            {libro.hasPdf && <span class="lb-price lb-price--pdf">PDF <strong>{libro.pdfPrice}</strong></span>}
           </div>
           <div class="lb-libro__btns">
             <a href={libro.href} target="_blank" rel="nofollow noopener" class="lb-btn">
               <Fragment set:html={AMAZON_ICON} />
               Amazon
             </a>
-            <a href={`/api/libri/checkout.php?book=${libro.pdfSlug}`} class="lb-btn lb-btn--pdf">
-              ↓ Acquista PDF
-            </a>
+            {libro.hasPdf && (
+              <a href={libro.landingHref ?? `/api/libri/checkout.php?book=${libro.pdfSlug}`} class="lb-btn lb-btn--pdf">
+                ↓ PDF {libro.pdfPrice}
+              </a>
+            )}
           </div>
         </div>
       </article>
     ))}
+  </div>
+</section>
+
+<!-- ══ BUNDLE ══════════════════════════════════════════════════════════════ -->
+<section class="lb-bundle">
+  <div class="lb-bundle__inner">
+    <div class="lb-bundle__badge">Offerta</div>
+    <h2 class="lb-bundle__title">Tutti e tre i PDF <em>insieme.</em></h2>
+    <p class="lb-bundle__sub">
+      Scrivere per Restare, Restare Autentici con l'AI e Un Anno di Scrittura
+      in un unico acquisto. Scarichi tutto subito, paghi meno di due libri singoli.
+    </p>
+
+    <div class="lb-bundle__covers">
+      <img src="/libri/copertine/cover-scrivere-per-restare.png"     alt="Scrivere per Restare"          width="110" height="157" loading="lazy" />
+      <img src="/libri/copertine/cover-restare-autentici-con-ai.png" alt="Restare Autentici con l'AI"    width="110" height="157" loading="lazy" />
+      <img src="/libri/copertine/cover-un-anno-di-scrittura.png"     alt="Un Anno di Scrittura"          width="110" height="157" loading="lazy" />
+    </div>
+
+    <div class="lb-bundle__price-row">
+      <span class="lb-bundle__price-old">
+        <span class="lb-bundle__price-label">Singoli</span>
+        <span class="lb-bundle__strikethrough">30,70 €</span>
+      </span>
+      <span class="lb-bundle__price-new">
+        <span class="lb-bundle__price-label">Bundle</span>
+        <strong>24,90 €</strong>
+      </span>
+    </div>
+
+    <a href="/api/libri/checkout.php?book=bundle-tutti" class="lb-btn lb-btn--orange lb-btn--xl">
+      ↓ Acquista il pacchetto — 24,90 €
+    </a>
+    <p class="lb-bundle__note">Pagamento sicuro · PDF consegnati via email entro 1 minuto</p>
   </div>
 </section>
 
@@ -354,6 +396,101 @@ const libri = [
 .lb-btn--pdf:hover { background: #d05200; }
 .lb-libro__btns { display: flex; gap: 0.75rem; flex-wrap: wrap; }
 .lb-price--pdf { background: rgba(232,93,0,.1); color: var(--mm-orange, #e85d00); }
+
+/* ══ BUNDLE ══════════════════════════════════════════════════════════════════ */
+.lb-bundle {
+  background: #0a0a0a;
+  padding: 6rem var(--pad);
+  border-top: 2px solid var(--gold);
+}
+.lb-bundle__inner {
+  max-width: 700px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.5rem;
+}
+.lb-bundle__badge {
+  font: 700 0.62rem/1 var(--sans);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  background: rgba(197,138,55,0.1);
+  border: 1px solid rgba(197,138,55,0.25);
+  padding: 0.35rem 0.9rem;
+  border-radius: 100px;
+  display: inline-block;
+}
+.lb-bundle__title {
+  font: 800 clamp(2rem, 4vw, 3.2rem)/1.05 var(--display);
+  color: var(--white);
+  letter-spacing: -0.03em;
+}
+.lb-bundle__title em {
+  font-style: italic;
+  color: var(--gold);
+  font-weight: 300;
+  font-family: var(--serif);
+}
+.lb-bundle__sub {
+  font: 300 1rem/1.7 var(--sans);
+  color: rgba(255,255,255,0.45);
+  max-width: 520px;
+}
+.lb-bundle__covers {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0.5rem 0;
+}
+.lb-bundle__covers img {
+  border-radius: 3px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+  transition: transform 0.2s;
+}
+.lb-bundle__covers img:hover { transform: translateY(-4px); }
+.lb-bundle__price-row {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.lb-bundle__price-label {
+  display: block;
+  font: 400 0.7rem/1 var(--sans);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+  margin-bottom: 0.3rem;
+}
+.lb-bundle__price-old {
+  text-align: center;
+}
+.lb-bundle__strikethrough {
+  font: 400 1.4rem/1 var(--sans);
+  color: rgba(255,255,255,0.25);
+  text-decoration: line-through;
+}
+.lb-bundle__price-new {
+  text-align: center;
+}
+.lb-bundle__price-new strong {
+  font: 800 2.2rem/1 var(--display);
+  color: var(--white);
+  letter-spacing: -0.03em;
+}
+.lb-btn--xl {
+  padding: 1.1rem 2.4rem;
+  font-size: 1.05rem;
+}
+.lb-bundle__note {
+  font: 400 0.78rem/1.4 var(--sans);
+  color: rgba(255,255,255,0.25);
+}
 
 /* ══ CTA ════════════════════════════════════════════════════════════════════ */
 .lb-cta {

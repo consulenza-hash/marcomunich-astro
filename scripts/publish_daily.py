@@ -2,16 +2,17 @@
 """
 publish_daily.py
 
-Pubblica ogni giorno: 1 carosello + 1 post singolo su Instagram.
+Pubblica ogni giorno: 1 carosello + 1 post singolo + 1 reel su Instagram.
 Eseguito automaticamente dal workflow GitHub Actions.
 
 Ordine:
-  1. publish_carousel.py   — carosello del giorno da schedule.json
+  1. publish_carousel.py     — carosello del giorno da schedule.json
   2. publish_post_singolo.py — prossimo post singolo pending
+  3. publish_reel.py         — prossimo reel pending
 
 Flags:
-  --dry-run    Passa --dry-run a entrambi gli script
-  --list       Mostra stato di entrambe le code
+  --dry-run    Passa --dry-run a tutti gli script
+  --list       Mostra stato di tutte e tre le code
 """
 
 import argparse
@@ -51,11 +52,17 @@ def main():
     print("=" * 60)
     rc2 = run("publish_post_singolo.py", extra)
 
-    if rc1 != 0 or rc2 != 0:
-        print(f"\nERRORI: carousel={rc1}, post_singolo={rc2}")
+    print()
+    print("=" * 60)
+    print("REEL")
+    print("=" * 60)
+    rc3 = run("publish_reel.py", extra)
+
+    if rc1 != 0 or rc2 != 0 or rc3 != 0:
+        print(f"\nERRORI: carousel={rc1}, post_singolo={rc2}, reel={rc3}")
         sys.exit(1)
 
-    print("\nPubblicazione giornaliera completata.")
+    print("\nPubblicazione giornaliera completata (carosello + post + reel).")
 
 
 if __name__ == "__main__":

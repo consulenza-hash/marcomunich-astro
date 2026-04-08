@@ -1,0 +1,597 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  return [
+    { params: { slug: 'scrivere-per-restare' } },
+    { params: { slug: 'restare-autentici-con-ai' } },
+    { params: { slug: 'un-anno-di-scrittura' } },
+  ];
+}
+
+const { slug } = Astro.params;
+
+const BOOKS: Record<string, {
+  title: string;
+  subtitle: string;
+  tag: string;
+  pagine: string;
+  pdfPrice: string;
+  pdfPriceNum: number;
+  amazonUrl: string;
+  amazonKindle: string;
+  amazonPrint: string;
+  coverImg: string;
+  coverAlt: string;
+  hero: string;
+  pitch: string[];
+  perChi: string[];
+  cosa: string[];
+  faq: { q: string; a: string }[];
+}> = {
+  'scrivere-per-restare': {
+    title: 'Scrivere per Restare',
+    subtitle: 'Il personal branding olistico spiegato attraverso piccoli spaccati di vita',
+    tag: 'Personal Branding · Aprile 2025',
+    pagine: '156 pagine',
+    pdfPrice: '7,90 €',
+    pdfPriceNum: 7.90,
+    amazonUrl: 'https://www.amazon.it/dp/B0F4MPN3GS',
+    amazonKindle: '5,98 €',
+    amazonPrint: '14,90 €',
+    coverImg: '/libri/copertine/cover-scrivere-per-restare.png',
+    coverAlt: 'Copertina Scrivere per Restare',
+    hero: 'Smetti di spiegare cosa fai. Racconta chi sei.',
+    pitch: [
+      'Questo libro parte da un\'osservazione concreta: molti counselor e coach hanno tutto ciò che serve per essere visibili online, ma quando aprono un documento e devono scrivere di sé, si bloccano. Qualcosa dentro resiste.',
+      'Scrivere per Restare affronta quella resistenza da dentro, non dall\'esterno. Attraverso diciassette spaccati di vita — storie brevi, situazioni reali, momenti di dubbio — il libro costruisce una strada diversa verso la visibilità online.',
+      'Una strada in cui pubblichi perché hai qualcosa da dire, con la tua voce, senza adattarti a formule che non ti appartengono. Ogni capitolo lascia una domanda aperta: e tu, cosa pubblicheresti di te oggi?',
+    ],
+    perChi: [
+      'Hai già provato a "fare personal branding" ma ti sei sentito fuori posto',
+      'Vuoi essere visibile online senza recitare una parte',
+      'Hai anni di esperienza e non sai come trasformarla in contenuti che ti rappresentino',
+      'Senti che la tua presenza online dovrebbe essere più autentica, ma non sai da dove iniziare',
+    ],
+    cosa: [
+      '17 spaccati di vita con riflessioni pratiche e domande di lavoro',
+      'Un metodo per costruire visibilità online partendo dalla tua storia reale',
+      'Una prospettiva sul personal branding che non richiede di "vendersi"',
+      'Esercizi concreti per iniziare a scrivere di sé con più facilità',
+    ],
+    faq: [
+      {
+        q: 'È un libro pratico o più teorico?',
+        a: 'Entrambe le cose. Ogni spaccato di vita è seguito da una riflessione operativa e una domanda di lavoro. Puoi leggerlo tutto d\'un fiato o lavorarci un capitolo alla settimana.',
+      },
+      {
+        q: 'Lo posso usare anche se ho poco tempo da dedicare ai contenuti online?',
+        a: 'Sì. Il libro non ti chiede di pubblicare ogni giorno. Ti aiuta a capire cosa pubblicare quando decidi di farlo, partendo da quello che sai già.',
+      },
+      {
+        q: 'Cosa ricevo dopo il pagamento?',
+        a: 'Un\'email con il link per scaricare il PDF. Il link funziona per 30 giorni. Se hai problemi scrivimi su WhatsApp.',
+      },
+      {
+        q: 'Preferisco averlo su carta. È disponibile?',
+        a: 'Sì, la versione cartacea e Kindle sono su Amazon al link qui sotto.',
+      },
+    ],
+  },
+
+  'restare-autentici-con-ai': {
+    title: "Restare Autentici Scrivendo con l'AI",
+    subtitle: 'Guida pratica per counselor, coach e operatori olistici',
+    tag: 'Intelligenza Artificiale · Settembre 2025',
+    pagine: '140 pagine',
+    pdfPrice: '9,90 €',
+    pdfPriceNum: 9.90,
+    amazonUrl: 'https://www.amazon.it/dp/B0FQ57R899',
+    amazonKindle: '5,97 €',
+    amazonPrint: '17,58 €',
+    coverImg: '/libri/copertine/cover-restare-autentici-con-ai.png',
+    coverAlt: "Copertina Restare Autentici Scrivendo con l'AI",
+    hero: "L'AI non sostituisce la tua voce. La rende più nitida.",
+    pitch: [
+      'Una cliente mi ha scritto: "Ho provato ChatGPT ma i testi sembrano scritti da qualcun altro." Lo sento spesso. Il problema non è lo strumento — è il modo in cui viene usato: come oracolo invece che come assistente.',
+      'Questo libro insegna a usare l\'AI per amplificare la tua voce, non per sostituirla. Impari a costruire prompt che portano dentro la tua esperienza, la tua posizione, il tuo tono. Il risultato è un testo che suona come te, prodotto in meno tempo.',
+      'Ogni capitolo ha esercizi con prompt pronti da copiare e adattare. Funziona con ChatGPT, Claude, Gemini — o qualsiasi strumento userai in futuro.',
+    ],
+    perChi: [
+      'Guardi l\'AI con curiosità ma hai paura di perdere la tua voce',
+      'Hai già provato i chatbot ma i risultati ti sembrano anonimi e piatti',
+      'Vuoi produrre contenuti con più costanza senza passare ore a fissare lo schermo',
+      'Sei un professionista del benessere e vuoi comunicare in modo autentico anche con il supporto della tecnologia',
+    ],
+    cosa: [
+      'Un metodo per costruire prompt che portano dentro la tua esperienza reale',
+      'Esercizi pratici con prompt pronti da usare subito',
+      'Una guida alla revisione AI-to-human: come riportare il testo alla tua voce',
+      'Sezioni dedicate a post social, email, articoli e presentazioni professionali',
+    ],
+    faq: [
+      {
+        q: 'Devo avere esperienza con l\'AI per leggere questo libro?',
+        a: 'No. Il libro parte da zero — spiega come accedere agli strumenti, come costruire un prompt base e come migliorarlo. Se sai già usare ChatGPT, salti la prima parte e arrivi subito agli esercizi avanzati.',
+      },
+      {
+        q: 'Funziona solo con ChatGPT?',
+        a: 'No. I principi e i prompt funzionano con qualsiasi modello di linguaggio: Claude, Gemini, Copilot. L\'approccio è indipendente dallo strumento.',
+      },
+      {
+        q: 'Cosa ricevo dopo il pagamento?',
+        a: 'Un\'email con il link per scaricare il PDF. Il link è attivo per 30 giorni. Per qualsiasi problema scrivi su WhatsApp.',
+      },
+      {
+        q: 'I testi prodotti con AI sono riconoscibili come "fatti dall\'AI"?',
+        a: 'Dipende da come usi lo strumento. Il libro insegna precisamente a evitare questo problema: porti dentro la tua voce già nel prompt, non dopo.',
+      },
+    ],
+  },
+
+  'un-anno-di-scrittura': {
+    title: 'Un Anno di Scrittura per Scoprire Chi Sei Davvero',
+    subtitle: 'Un viaggio di 52 settimane per raccontarti online',
+    tag: 'Scrittura · Agosto 2025',
+    pagine: '154 pagine',
+    pdfPrice: '12,90 €',
+    pdfPriceNum: 12.90,
+    amazonUrl: 'https://www.amazon.it/dp/B0FPB8NBQW',
+    amazonKindle: '6,99 €',
+    amazonPrint: '17,58 €',
+    coverImg: '/libri/copertine/cover-un-anno-di-scrittura.png',
+    coverAlt: 'Copertina Un Anno di Scrittura per Scoprire Chi Sei Davvero',
+    hero: 'Cinquantadue settimane. Dieci minuti al giorno. Una voce più tua.',
+    pitch: [
+      'Il problema con la maggior parte dei percorsi di scrittura è che finiscono. Hai un blocco di esercizi, li fai in una settimana, poi ti ritrovi al punto di partenza. Questo libro funziona diversamente: un capitolo a settimana, tutto l\'anno.',
+      'Ogni settimana ha un tema, una riflessione di apertura, tre finestre di scrittura e una domanda finale. Dieci minuti al giorno sono abbastanza — il punto non è scrivere molto, è scrivere con continuità sulle cose che ti riguardano davvero.',
+      'Alla fine dell\'anno hai 52 capitoli della tua storia professionale e personale. Materia grezza per articoli, post, newsletter, presentazioni. Ma soprattutto una chiarezza su chi sei e cosa vuoi comunicare che non avresti trovato in altro modo.',
+    ],
+    perChi: [
+      'Vuoi costruire l\'abitudine alla scrittura senza sentirti in colpa quando salti un giorno',
+      'Senti che la tua presenza online manca di profondità o continuità',
+      'Vuoi capire cosa dire online prima di preoccuparti di come dirlo',
+      'Lavori con le persone e la scrittura è uno strumento professionale, non solo una vetrina',
+    ],
+    cosa: [
+      '52 capitoli settimanali su temi di vita professionale e personale',
+      '3 finestre di scrittura per ogni settimana (10 minuti ciascuna)',
+      'Una domanda di chiusura che diventa spesso il seme di un contenuto',
+      'Un indice tematico per ritrovare i capitoli quando ti servono',
+    ],
+    faq: [
+      {
+        q: 'È un diario o un esercizio professionale?',
+        a: 'Tutte e due le cose insieme. Alcuni capitoli ti portano dentro la tua storia personale, altri dentro la tua pratica professionale. La distinzione si scioglie abbastanza in fretta.',
+      },
+      {
+        q: 'Posso iniziare in qualsiasi momento dell\'anno?',
+        a: 'Sì. Le settimane non corrispondono al calendario — ogni settimana 1 è il tuo inizio, indipendentemente da quando lo apri.',
+      },
+      {
+        q: 'Cosa ricevo dopo il pagamento?',
+        a: 'Un\'email con il link per scaricare il PDF. Il link funziona per 30 giorni. Per problemi scrivi su WhatsApp.',
+      },
+      {
+        q: 'Cosa succede se un tema non mi riguarda?',
+        a: 'Saltalo. Il libro non è un contratto. Puoi seguire l\'ordine o pescare i capitoli che ti attraggono. La continuità conta più della sequenza.',
+      },
+    ],
+  },
+};
+
+const book = BOOKS[slug];
+if (!book) {
+  return Astro.redirect('/libri');
+}
+
+const checkoutUrl = `/api/libri/checkout.php?book=${slug}`;
+---
+
+<BaseLayout
+  title={`${book.title} — PDF — Marco Munich`}
+  description={book.subtitle}
+  currentPath={`/libri/${slug}`}
+>
+
+<!-- ══ HERO ════════════════════════════════════════════════════════════════ -->
+<section class="bl-hero">
+  <div class="bl-hero__inner">
+    <div class="bl-hero__text">
+      <span class="bl-label">{book.tag}</span>
+      <h1 class="bl-hero__title">{book.hero}</h1>
+      <p class="bl-hero__sub">{book.subtitle}</p>
+      <div class="bl-hero__price-block">
+        <span class="bl-price-tag">PDF <strong>{book.pdfPrice}</strong></span>
+        <a href={checkoutUrl} class="bl-btn bl-btn--orange">
+          ↓ Acquista il PDF
+        </a>
+      </div>
+      <p class="bl-hero__meta">{book.pagine} · consegna immediata via email</p>
+    </div>
+    <div class="bl-hero__cover">
+      <img
+        src={book.coverImg}
+        alt={book.coverAlt}
+        width="280"
+        height="400"
+        loading="eager"
+      />
+    </div>
+  </div>
+</section>
+
+<!-- ══ PITCH ═══════════════════════════════════════════════════════════════ -->
+<section class="bl-section bl-section--white">
+  <div class="bl-inner">
+    <div class="bl-pitch">
+      {book.pitch.map((para) => <p>{para}</p>)}
+    </div>
+  </div>
+</section>
+
+<!-- ══ PER CHI ══════════════════════════════════════════════════════════════ -->
+<section class="bl-section bl-section--dark">
+  <div class="bl-inner bl-inner--narrow">
+    <h2 class="bl-h2">Questo libro è per te se</h2>
+    <ul class="bl-checklist">
+      {book.perChi.map((item) => (
+        <li>
+          <span class="bl-check" aria-hidden="true">✓</span>
+          <span>{item}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<!-- ══ COSA TROVI ═══════════════════════════════════════════════════════════ -->
+<section class="bl-section bl-section--white">
+  <div class="bl-inner bl-inner--narrow">
+    <h2 class="bl-h2 bl-h2--dark">Cosa trovi dentro</h2>
+    <ul class="bl-list">
+      {book.cosa.map((item) => (
+        <li>
+          <span class="bl-dot" aria-hidden="true">→</span>
+          <span>{item}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<!-- ══ CTA centrale ══════════════════════════════════════════════════════════ -->
+<section class="bl-cta-mid">
+  <div class="bl-inner bl-inner--narrow bl-cta-mid__inner">
+    <div class="bl-cta-mid__price">
+      <span class="bl-cta-mid__label">PDF · consegna immediata</span>
+      <span class="bl-cta-mid__amount">{book.pdfPrice}</span>
+    </div>
+    <a href={checkoutUrl} class="bl-btn bl-btn--orange bl-btn--lg">
+      ↓ Acquista il PDF — {book.pdfPrice}
+    </a>
+    <p class="bl-cta-mid__note">
+      Oppure su Amazon: Kindle {book.amazonKindle} · Cartaceo {book.amazonPrint} →&nbsp;
+      <a href={book.amazonUrl} target="_blank" rel="nofollow noopener">Amazon.it</a>
+    </p>
+  </div>
+</section>
+
+<!-- ══ FAQ ══════════════════════════════════════════════════════════════════ -->
+<section class="bl-section bl-section--white">
+  <div class="bl-inner bl-inner--narrow">
+    <h2 class="bl-h2 bl-h2--dark">Domande frequenti</h2>
+    <dl class="bl-faq">
+      {book.faq.map(({ q, a }) => (
+        <div class="bl-faq__item">
+          <dt>{q}</dt>
+          <dd>{a}</dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+</section>
+
+<!-- ══ CTA finale ════════════════════════════════════════════════════════════ -->
+<section class="bl-cta-final">
+  <div class="bl-inner bl-inner--narrow">
+    <p class="bl-cta-final__sub">Marco Munich</p>
+    <h2 class="bl-cta-final__title">{book.title}</h2>
+    <a href={checkoutUrl} class="bl-btn bl-btn--orange bl-btn--lg">
+      ↓ Acquista il PDF — {book.pdfPrice}
+    </a>
+    <p class="bl-cta-final__note">
+      Pagamento sicuro via Stripe · PDF consegnato via email entro 1 minuto
+    </p>
+    <a href="/libri" class="bl-link-back">← Tutti i libri</a>
+  </div>
+</section>
+
+</BaseLayout>
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── Label ─────────────────────────────────────────────────────────────── */
+.bl-label {
+  font: 700 0.62rem/1 var(--sans);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 1.2rem;
+}
+
+/* ── Hero ──────────────────────────────────────────────────────────────── */
+.bl-hero {
+  background: var(--black);
+  padding: 6rem var(--pad) 5rem;
+}
+.bl-hero__inner {
+  max-width: 900px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 4rem;
+  align-items: start;
+}
+.bl-hero__title {
+  font: 800 clamp(2.2rem, 4.5vw, 3.8rem)/1.05 var(--display);
+  color: var(--white);
+  letter-spacing: -0.03em;
+  margin-bottom: 1.2rem;
+}
+.bl-hero__sub {
+  font: 300 1rem/1.65 var(--sans);
+  color: rgba(255,255,255,0.45);
+  max-width: 480px;
+  margin-bottom: 2rem;
+}
+.bl-hero__price-block {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.8rem;
+}
+.bl-price-tag {
+  font: 400 1rem/1 var(--sans);
+  color: rgba(255,255,255,0.5);
+}
+.bl-price-tag strong {
+  color: var(--white);
+  font-weight: 800;
+}
+.bl-hero__meta {
+  font: 400 0.8rem/1 var(--sans);
+  color: rgba(255,255,255,0.28);
+  margin-top: 0.4rem;
+}
+.bl-hero__cover img {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+
+/* ── Buttons ───────────────────────────────────────────────────────────── */
+.bl-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font: 700 0.9rem/1 var(--sans);
+  text-decoration: none;
+  transition: opacity 0.15s;
+  cursor: pointer;
+}
+.bl-btn:hover { opacity: 0.88; }
+.bl-btn--orange {
+  background: var(--gold);
+  color: #fff;
+}
+.bl-btn--lg {
+  padding: 1rem 2rem;
+  font-size: 1rem;
+}
+
+/* ── Sections ──────────────────────────────────────────────────────────── */
+.bl-section { padding: 5rem var(--pad); }
+.bl-section--white { background: var(--white); }
+.bl-section--dark  { background: var(--black); }
+
+.bl-inner {
+  max-width: 860px;
+  margin: 0 auto;
+}
+.bl-inner--narrow { max-width: 680px; }
+
+/* ── Pitch ─────────────────────────────────────────────────────────────── */
+.bl-pitch {
+  max-width: 640px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+.bl-pitch p {
+  font: 400 1.05rem/1.8 var(--sans);
+  color: var(--ink);
+}
+
+/* ── H2 ────────────────────────────────────────────────────────────────── */
+.bl-h2 {
+  font: 800 1.6rem/1.1 var(--display);
+  color: var(--white);
+  letter-spacing: -0.02em;
+  margin-bottom: 2rem;
+}
+.bl-h2--dark { color: var(--ink); }
+
+/* ── Checklist ─────────────────────────────────────────────────────────── */
+.bl-checklist {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.bl-checklist li {
+  display: flex;
+  gap: 0.9rem;
+  align-items: baseline;
+  font: 400 0.98rem/1.65 var(--sans);
+  color: rgba(255,255,255,0.72);
+}
+.bl-check {
+  color: var(--gold);
+  font-weight: 700;
+  flex-shrink: 0;
+  font-size: 0.9rem;
+}
+
+/* ── List ──────────────────────────────────────────────────────────────── */
+.bl-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+.bl-list li {
+  display: flex;
+  gap: 0.9rem;
+  align-items: baseline;
+  font: 400 0.98rem/1.65 var(--sans);
+  color: var(--ink);
+}
+.bl-dot {
+  color: var(--gold);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* ── CTA mid ────────────────────────────────────────────────────────────── */
+.bl-cta-mid {
+  background: var(--black);
+  padding: 5rem var(--pad);
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.bl-cta-mid__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.2rem;
+}
+.bl-cta-mid__label {
+  display: block;
+  font: 400 0.78rem/1 var(--sans);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+  margin-bottom: 0.3rem;
+}
+.bl-cta-mid__amount {
+  font: 800 2.4rem/1 var(--display);
+  color: var(--white);
+  letter-spacing: -0.03em;
+}
+.bl-cta-mid__note {
+  font: 400 0.82rem/1.5 var(--sans);
+  color: rgba(255,255,255,0.35);
+}
+.bl-cta-mid__note a {
+  color: rgba(255,255,255,0.5);
+}
+
+/* ── FAQ ────────────────────────────────────────────────────────────────── */
+.bl-faq {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.bl-faq__item {
+  padding: 1.8rem 0;
+  border-bottom: 1px solid rgba(10,10,10,0.08);
+}
+.bl-faq__item:first-child { border-top: 1px solid rgba(10,10,10,0.08); }
+.bl-faq dt {
+  font: 700 1rem/1.4 var(--sans);
+  color: var(--ink);
+  margin-bottom: 0.65rem;
+}
+.bl-faq dd {
+  font: 400 0.95rem/1.7 var(--sans);
+  color: rgba(10,10,10,0.65);
+  margin: 0;
+}
+
+/* ── CTA finale ─────────────────────────────────────────────────────────── */
+.bl-cta-final {
+  background: #0a0a0a;
+  padding: 6rem var(--pad);
+  text-align: center;
+}
+.bl-cta-final .bl-inner { display: flex; flex-direction: column; align-items: center; gap: 1.2rem; }
+.bl-cta-final__sub {
+  font: 700 0.62rem/1 var(--sans);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.bl-cta-final__title {
+  font: 800 clamp(1.8rem, 3vw, 2.6rem)/1.1 var(--display);
+  color: var(--white);
+  letter-spacing: -0.02em;
+}
+.bl-cta-final__note {
+  font: 400 0.8rem/1.5 var(--sans);
+  color: rgba(255,255,255,0.28);
+}
+.bl-link-back {
+  font: 400 0.82rem/1 var(--sans);
+  color: rgba(255,255,255,0.3);
+  text-decoration: none;
+  margin-top: 0.4rem;
+}
+.bl-link-back:hover { color: rgba(255,255,255,0.6); }
+
+/* ── Mobile ─────────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .bl-hero__inner {
+    grid-template-columns: 1fr !important;
+    gap: 2.5rem;
+  }
+  .bl-hero__cover {
+    max-width: 200px;
+  }
+  .bl-hero__price-block {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.8rem;
+  }
+  .bl-cta-mid__inner { align-items: center; text-align: center; }
+  .bl-cta-final .bl-inner { text-align: center; }
+}
+</style>
+
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": book.title,
+  "description": book.subtitle,
+  "brand": { "@type": "Brand", "name": "Marco Munich" },
+  "offers": {
+    "@type": "Offer",
+    "price": book.pdfPriceNum.toFixed(2),
+    "priceCurrency": "EUR",
+    "availability": "https://schema.org/InStock",
+    "url": `https://marcomunich.com/libri/${slug}`,
+  },
+  "faqPage": {
+    "@type": "FAQPage",
+    "mainEntity": book.faq.map(({ q, a }) => ({
+      "@type": "Question",
+      "name": q,
+      "acceptedAnswer": { "@type": "Answer", "text": a },
+    })),
+  },
+})} />
