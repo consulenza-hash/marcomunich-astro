@@ -344,17 +344,17 @@ const checkoutUrl = `/api/libri/checkout.php?book=${slug}`;
 
 /* ── Label ─────────────────────────────────────────────────────────────── */
 .bl-label {
-  font: 700 0.62rem/1 var(--sans);
+  font: 700 0.62rem/1 'Inter', system-ui, sans-serif;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--book-accent, var(--gold));
+  color: var(--book-accent, #e85d00);
   display: block;
   margin-bottom: 1.2rem;
 }
 
 /* ── Hero ──────────────────────────────────────────────────────────────── */
 .bl-hero {
-  background: var(--book-hero-bg, var(--black));
+  background: var(--book-hero-bg, #0d0d0d);
   padding: 6rem var(--pad) 5rem;
 }
 .bl-hero__inner {
@@ -366,20 +366,20 @@ const checkoutUrl = `/api/libri/checkout.php?book=${slug}`;
   align-items: start;
 }
 .bl-hero__title {
-  font: 800 clamp(2.2rem, 4.5vw, 3.8rem)/1.05 var(--display);
-  color: var(--white);
+  font: 800 clamp(2.2rem, 4.5vw, 3.8rem)/1.05 'Inter', system-ui, sans-serif;
+  color: #fff;
   letter-spacing: -0.03em;
   margin-bottom: 0.6rem;
 }
 .bl-hero__hook {
-  font: 400 clamp(1.1rem, 2vw, 1.35rem)/1.4 var(--sans);
+  font: 400 clamp(1.1rem, 2vw, 1.35rem)/1.4 'Inter', system-ui, sans-serif;
   color: rgba(255,255,255,0.75);
   max-width: 520px;
   margin-bottom: 1rem;
   font-style: italic;
 }
 .bl-hero__sub {
-  font: 300 1rem/1.65 var(--sans);
+  font: 300 1rem/1.65 'Inter', system-ui, sans-serif;
   color: rgba(255,255,255,0.45);
   max-width: 480px;
   margin-bottom: 2rem;
@@ -392,15 +392,15 @@ const checkoutUrl = `/api/libri/checkout.php?book=${slug}`;
   margin-bottom: 0.8rem;
 }
 .bl-price-tag {
-  font: 400 1rem/1 var(--sans);
+  font: 400 1rem/1 'Inter', system-ui, sans-serif;
   color: rgba(255,255,255,0.5);
 }
 .bl-price-tag strong {
-  color: var(--white);
+  color: #fff;
   font-weight: 800;
 }
 .bl-hero__meta {
-  font: 400 0.8rem/1 var(--sans);
+  font: 400 0.8rem/1 'Inter', system-ui, sans-serif;
   color: rgba(255,255,255,0.28);
   margin-top: 0.4rem;
 }
@@ -418,14 +418,14 @@ const checkoutUrl = `/api/libri/checkout.php?book=${slug}`;
   gap: 0.5rem;
   padding: 0.75rem 1.5rem;
   border-radius: 4px;
-  font: 700 0.9rem/1 var(--sans);
+  font: 700 0.9rem/1 'Inter', system-ui, sans-serif;
   text-decoration: none;
   transition: opacity 0.15s;
   cursor: pointer;
 }
 .bl-btn:hover { opacity: 0.88; }
 .bl-btn--orange {
-  background: var(--book-accent, var(--gold));
+  background: #e85d00;
   color: #fff;
 }
 .bl-btn--lg {
@@ -435,8 +435,8 @@ const checkoutUrl = `/api/libri/checkout.php?book=${slug}`;
 
 /* ── Sections ──────────────────────────────────────────────────────────── */
 .bl-section { padding: 5rem var(--pad); }
-.bl-section--white { background: var(--white); }
-.bl-section--dark  { background: var(--book-hero-bg, var(--black)); }
+.bl-section--white { background: #fff; }
+.bl-section--dark  { background: var(--book-hero-bg, #0d0d0d); }
 
 .bl-inner {
   max-width: 860px;
@@ -452,18 +452,18 @@ const checkoutUrl = `/api/libri/checkout.php?book=${slug}`;
   gap: 1.4rem;
 }
 .bl-pitch p {
-  font: 400 1.05rem/1.8 var(--sans);
-  color: var(--ink);
+  font: 400 1.05rem/1.8 'Inter', system-ui, sans-serif;
+  color: #1c1c1c;
 }
 
 /* ── H2 ────────────────────────────────────────────────────────────────── */
 .bl-h2 {
-  font: 800 1.6rem/1.1 var(--display);
-  color: var(--white);
+  font: 800 1.6rem/1.1 'Inter', system-ui, sans-serif;
+  color: #fff;
   letter-spacing: -0.02em;
   margin-bottom: 2rem;
 }
-.bl-h2--dark { color: var(--ink); }
+.bl-h2--dark { color: #1c1c1c; }
 
 /* ── Checklist ─────────────────────────────────────────────────────────── */
 .bl-checklist {
@@ -476,11 +476,11 @@ const checkoutUrl = `/api/libri/checkout.php?book=${slug}`;
   display: flex;
   gap: 0.9rem;
   align-items: baseline;
-  font: 400 0.98rem/1.65 var(--sans);
+  font: 400 0.98rem/1.65 'Inter', system-ui, sans-serif;
   color: rgba(255,255,255,0.72);
 }
 .bl-check {
-  color: var(--book-accent, var(--gold));
+  color: var(--book-accent, #e85d00);
   font-weight: 700;
   flex-shrink: 0;
   font-size: 0.9rem;
@@ -497,18 +497,18 @@ const checkoutUrl = `/api/libri/checkout.php?book=${slug}`;
   display: flex;
   gap: 0.9rem;
   align-items: baseline;
-  font: 400 0.98rem/1.65 var(--sans);
-  color: var(--ink);
+  font: 400 0.98rem/1.65 'Inter', system-ui, sans-serif;
+  color: #1c1c1c;
 }
 .bl-dot {
-  color: var(--book-accent, var(--gold));
+  color: var(--book-accent, #e85d00);
   font-weight: 700;
   flex-shrink: 0;
 }
 
 /* ── Buy grid — 3 formati ──────────────────────────────────────────────── */
 .bl-buy {
-  background: var(--book-hero-bg, var(--black));
+  background: var(--book-hero-bg, #0d0d0d);
   padding: 5rem var(--pad);
 }
 .bl-buy__grid {
@@ -530,32 +530,32 @@ const checkoutUrl = `/api/libri/checkout.php?book=${slug}`;
 }
 .bl-buy__card:hover { border-color: rgba(255,255,255,0.2); }
 .bl-buy__card--featured {
-  border-color: var(--book-accent, var(--gold));
+  border-color: var(--book-accent, #e85d00);
   background: rgba(255,255,255,0.03);
 }
 .bl-buy__badge {
-  font: 700 0.6rem/1 var(--sans);
+  font: 700 0.6rem/1 'Inter', system-ui, sans-serif;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--book-accent, var(--gold));
+  color: var(--book-accent, #e85d00);
 }
 .bl-buy__format {
-  font: 800 1.1rem/1 var(--display);
-  color: var(--white);
+  font: 800 1.1rem/1 'Inter', system-ui, sans-serif;
+  color: #fff;
   letter-spacing: -0.02em;
 }
 .bl-buy__price {
-  font: 800 2rem/1 var(--display);
-  color: var(--white);
+  font: 800 2rem/1 'Inter', system-ui, sans-serif;
+  color: #fff;
   letter-spacing: -0.03em;
 }
 .bl-buy__btn { width: 100%; justify-content: center; }
 .bl-buy__btn-ghost {
-  font: 700 0.85rem/1 var(--sans);
-  color: var(--book-accent, var(--gold));
+  font: 700 0.85rem/1 'Inter', system-ui, sans-serif;
+  color: var(--book-accent, #e85d00);
 }
 .bl-buy__detail {
-  font: 400 0.72rem/1 var(--sans);
+  font: 400 0.72rem/1 'Inter', system-ui, sans-serif;
   color: rgba(255,255,255,0.3);
 }
 
@@ -571,40 +571,40 @@ const checkoutUrl = `/api/libri/checkout.php?book=${slug}`;
 }
 .bl-faq__item:first-child { border-top: 1px solid rgba(10,10,10,0.08); }
 .bl-faq dt {
-  font: 700 1rem/1.4 var(--sans);
-  color: var(--ink);
+  font: 700 1rem/1.4 'Inter', system-ui, sans-serif;
+  color: #1c1c1c;
   margin-bottom: 0.65rem;
 }
 .bl-faq dd {
-  font: 400 0.95rem/1.7 var(--sans);
+  font: 400 0.95rem/1.7 'Inter', system-ui, sans-serif;
   color: rgba(10,10,10,0.65);
   margin: 0;
 }
 
 /* ── CTA finale ─────────────────────────────────────────────────────────── */
 .bl-cta-final {
-  background: var(--book-hero-bg, #0a0a0a);
+  background: var(--book-hero-bg, #0d0d0d);
   padding: 6rem var(--pad);
   text-align: center;
 }
 .bl-cta-final .bl-inner { display: flex; flex-direction: column; align-items: center; gap: 1.2rem; }
 .bl-cta-final__sub {
-  font: 700 0.62rem/1 var(--sans);
+  font: 700 0.62rem/1 'Inter', system-ui, sans-serif;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--book-accent, var(--gold));
+  color: var(--book-accent, #e85d00);
 }
 .bl-cta-final__title {
-  font: 800 clamp(1.8rem, 3vw, 2.6rem)/1.1 var(--display);
-  color: var(--white);
+  font: 800 clamp(1.8rem, 3vw, 2.6rem)/1.1 'Inter', system-ui, sans-serif;
+  color: #fff;
   letter-spacing: -0.02em;
 }
 .bl-cta-final__note {
-  font: 400 0.8rem/1.5 var(--sans);
+  font: 400 0.8rem/1.5 'Inter', system-ui, sans-serif;
   color: rgba(255,255,255,0.28);
 }
 .bl-link-back {
-  font: 400 0.82rem/1 var(--sans);
+  font: 400 0.82rem/1 'Inter', system-ui, sans-serif;
   color: rgba(255,255,255,0.3);
   text-decoration: none;
   margin-top: 0.4rem;
