@@ -158,7 +158,7 @@ Tema del mese: contenuti scritti lunghi, articoli, blog, SEO/AEO/GEO per profess
 
 ### CAROSELLO 35 — "Il titolo metaforico non funziona"
 - **Slide 1:** Il titolo metaforico non funziona
-- **Slide 2:** "Le catene invisibili dell'anima", "Il silenzio che parla", "Dove finisce l'ombra e comincia il giorno". Sono titoli presi da blog reali di counselor italiani, curati, frutto di riflessione letteraria. Sono anche titoli che **condannano l'articolo all'invisibilità** su Google e sui feed social.
+- **Slide 2:** "Le catene invisibili dell'anima", "Il silenzio che parla", "Dove finisce l'ombra e comincia il giorno". Sono titoli presi da blog reali di counselor italiani, frutto di riflessione letteraria. Sono anche titoli che **condannano l'articolo all'invisibilità** su Google e sui feed social.
 - **Slide 3:** Questi titoli sono scritti con cura e spesso dicono qualcosa di vero sul contenuto dell'articolo. Il problema è una ragione meccanica che ha **poco a che fare con l'estetica**: funzionano come poesia, non come titoli online.
 - **Slide 4:** Un titolo online ha una funzione precisa: dire alla persona che sta scorrendo se quel contenuto risponde alla sua domanda. La persona ha una domanda concreta: "Come gestisco l'ansia da prestazione?", **"Perché mi sveglio alle tre di notte?"**
 - **Slide 5:** Quando il titolo è una metafora, la persona non riesce a fare quel confronto. Non sa se l'articolo parla del suo problema specifico. **Scrolla oltre**, e la metafora, per quanto bella, ha appena costato un lettore che sarebbe potuto essere un cliente.

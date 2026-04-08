@@ -17,7 +17,7 @@ Dopo qualche giorno le ho scritto per sapere come stava, e a un certo punto nell
 
 Questo è il problema. Le tecniche funzionano, in un senso molto stretto del termine: generano clic, qualche follower in più, una certa impressione di attività. Ma creano una distanza tra il professionista che sei e il modo in cui ti presenti online, e quella distanza si sente. Chi ti conosce già non ti riconosce più. Chi non ti conosce ancora riceve un segnale che potrebbe appartenere a chiunque venda qualcosa di vago con molta energia.
 
-Il counseling, la coaching olistica, la facilitazione, il lavoro sul sé: questi lavori funzionano perché le persone si fidano di te. La fiducia si costruisce con coerenza nel tempo, con una voce riconoscibile, con contenuti che suonano come qualcosa che solo tu potresti dire. Quando adotti un linguaggio che non è tuo, stai bruciando quella fiducia ancora prima che qualcuno ti abbia incontrato.
+Il counseling olistico, il lavoro sul sé in tutte le sue forme: questi lavori funzionano perché le persone si fidano di te. La fiducia si costruisce con coerenza nel tempo, con una voce riconoscibile, con contenuti che suonano come qualcosa che solo tu potresti dire. Quando adotti un linguaggio che non è tuo, stai bruciando quella fiducia ancora prima che qualcuno ti abbia incontrato.
 
 La cosa concreta che puoi fare adesso è rileggere l'ultimo post che hai pubblicato e chiederti: se qualcuno lo leggesse senza il tuo nome e la tua foto, capirebbe qualcosa di preciso su come lavori? Se la risposta è no, quella è la newsletter da scrivere la prossima volta, quella è la storia da raccontare, quel posto specifico è dove c'è qualcosa di tuo che aspetta di essere detto.
 
