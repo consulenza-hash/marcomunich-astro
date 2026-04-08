@@ -1,3 +1,5 @@
+# BLOCCATO — Google AI Studio API disabilitata (08/04/2026). Rimuovi queste 2 righe per riabilitare.
+import sys; print("BLOCCATO: Google AI Studio API disabilitata."); sys.exit(1)
 """
 generate-article-images.py
 Genera immagini hero 16:9 con Gemini per ogni articolo.

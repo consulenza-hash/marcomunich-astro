@@ -21,6 +21,9 @@ const BOOKS: Record<string, {
   amazonUrl: string;
   amazonKindle: string;
   amazonPrint: string;
+  accent: string;
+  accentDark: string;
+  heroBg: string;
   coverImg: string;
   coverAlt: string;
   hero: string;
@@ -33,6 +36,9 @@ const BOOKS: Record<string, {
     title: 'Scrivere per Restare',
     subtitle: 'Il personal branding olistico spiegato attraverso piccoli spaccati di vita',
     tag: 'Personal Branding · Aprile 2025',
+    accent: '#A0614A',
+    accentDark: '#8A5240',
+    heroBg: '#1c1410',
     pagine: '156 pagine',
     pdfPrice: '7,90 €',
     pdfPriceNum: 7.90,
@@ -83,6 +89,9 @@ const BOOKS: Record<string, {
     title: "Restare Autentici Scrivendo con l'AI",
     subtitle: 'Guida pratica per counselor, coach e operatori olistici',
     tag: 'Intelligenza Artificiale · Settembre 2025',
+    accent: '#2B7A8A',
+    accentDark: '#1F606D',
+    heroBg: '#0f1a1e',
     pagine: '140 pagine',
     pdfPrice: '9,90 €',
     pdfPriceNum: 9.90,
@@ -133,6 +142,9 @@ const BOOKS: Record<string, {
     title: 'Un Anno di Scrittura per Scoprire Chi Sei Davvero',
     subtitle: 'Un viaggio di 52 settimane per raccontarti online',
     tag: 'Scrittura · Agosto 2025',
+    accent: '#5A7A2E',
+    accentDark: '#496624',
+    heroBg: '#141a0f',
     pagine: '154 pagine',
     pdfPrice: '12,90 €',
     pdfPriceNum: 12.90,
@@ -193,6 +205,8 @@ const checkoutUrl = `/api/libri/checkout.php?book=${slug}`;
   description={book.subtitle}
   currentPath={`/libri/${slug}`}
 >
+
+<div style={`--book-accent:${book.accent};--book-accent-dark:${book.accentDark};--book-hero-bg:${book.heroBg}`}>
 
 <!-- ══ HERO ════════════════════════════════════════════════════════════════ -->
 <section class="bl-hero">
@@ -308,6 +322,8 @@ const checkoutUrl = `/api/libri/checkout.php?book=${slug}`;
   </div>
 </section>
 
+</div><!-- /book-accent wrapper -->
+
 </BaseLayout>
 
 <style>
@@ -318,14 +334,14 @@ const checkoutUrl = `/api/libri/checkout.php?book=${slug}`;
   font: 700 0.62rem/1 var(--sans);
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--book-accent, var(--gold));
   display: block;
   margin-bottom: 1.2rem;
 }
 
 /* ── Hero ──────────────────────────────────────────────────────────────── */
 .bl-hero {
-  background: var(--black);
+  background: var(--book-hero-bg, var(--black));
   padding: 6rem var(--pad) 5rem;
 }
 .bl-hero__inner {
@@ -396,7 +412,7 @@ const checkoutUrl = `/api/libri/checkout.php?book=${slug}`;
 }
 .bl-btn:hover { opacity: 0.88; }
 .bl-btn--orange {
-  background: var(--gold);
+  background: var(--book-accent, var(--gold));
   color: #fff;
 }
 .bl-btn--lg {
@@ -407,7 +423,7 @@ const checkoutUrl = `/api/libri/checkout.php?book=${slug}`;
 /* ── Sections ──────────────────────────────────────────────────────────── */
 .bl-section { padding: 5rem var(--pad); }
 .bl-section--white { background: var(--white); }
-.bl-section--dark  { background: var(--black); }
+.bl-section--dark  { background: var(--book-hero-bg, var(--black)); }
 
 .bl-inner {
   max-width: 860px;
@@ -451,7 +467,7 @@ const checkoutUrl = `/api/libri/checkout.php?book=${slug}`;
   color: rgba(255,255,255,0.72);
 }
 .bl-check {
-  color: var(--gold);
+  color: var(--book-accent, var(--gold));
   font-weight: 700;
   flex-shrink: 0;
   font-size: 0.9rem;
@@ -472,14 +488,14 @@ const checkoutUrl = `/api/libri/checkout.php?book=${slug}`;
   color: var(--ink);
 }
 .bl-dot {
-  color: var(--gold);
+  color: var(--book-accent, var(--gold));
   font-weight: 700;
   flex-shrink: 0;
 }
 
 /* ── CTA mid ────────────────────────────────────────────────────────────── */
 .bl-cta-mid {
-  background: var(--black);
+  background: var(--book-hero-bg, var(--black));
   padding: 5rem var(--pad);
   border-top: 1px solid rgba(255,255,255,0.06);
 }
@@ -534,7 +550,7 @@ const checkoutUrl = `/api/libri/checkout.php?book=${slug}`;
 
 /* ── CTA finale ─────────────────────────────────────────────────────────── */
 .bl-cta-final {
-  background: #0a0a0a;
+  background: var(--book-hero-bg, #0a0a0a);
   padding: 6rem var(--pad);
   text-align: center;
 }
@@ -543,7 +559,7 @@ const checkoutUrl = `/api/libri/checkout.php?book=${slug}`;
   font: 700 0.62rem/1 var(--sans);
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--book-accent, var(--gold));
 }
 .bl-cta-final__title {
   font: 800 clamp(1.8rem, 3vw, 2.6rem)/1.1 var(--display);
