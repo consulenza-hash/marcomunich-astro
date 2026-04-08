@@ -15,7 +15,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const PROJECT_ROOT = path.resolve(__dirname, '..');
-const INPUT_FILE = path.join(PROJECT_ROOT, 'contenuti-social', 'post-singoli.md');
+const INPUT_FILE = path.join(PROJECT_ROOT, 'public', 'contenuti-social', 'post-singoli', 'post-singoli.md');
 const OUTPUT_DIR = path.join(PROJECT_ROOT, 'public', 'contenuti-social', 'immagini-post-singoli');
 
 if (!fs.existsSync(OUTPUT_DIR)) fs.mkdirSync(OUTPUT_DIR, { recursive: true });

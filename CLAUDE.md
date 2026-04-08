@@ -196,11 +196,22 @@ Sessions have finite context. Heavy operations consume it fast.
 - **Ungated** (iterative by nature): Daily Notes, Scratchpad, Templates, Logs, Commands, Skills
 
 **Self-monitoring (soft signals — Claude's responsibility):**
-- After ~30+ tool calls or 3+ large file reads: run `/clear` proactively
+- After ~15 messages or 3+ large file reads: run `/clear` proactively (token cost grows as S×N(N+1)/2 — message 30 costs 31× more than message 1)
 - If you see a "compacting conversation" warning: run `/clear` immediately
 - If output quality degrades (repetition, missed details): run `/clear`
 - When a discrete multi-step task completes: consider `/clear` before starting the next unrelated task
 - When switching between different task domains: acknowledge the boundary, prefer `/clear` for heavy switches
+
+**Peak hours (Anthropic rolling 5-hour window):**
+- Tokens are consumed faster during: **5:00–11:00 AM Pacific / 14:00–20:00 CET on weekdays**
+- Same task costs more tokens during peak — prefer heavy sessions in evenings or weekends
+- The 5-hour window rolls continuously — tokens from 5 hours ago are freed automatically
+
+**Model selection:**
+- Use Haiku for: simple tasks, drafts, quick answers, formatting, git summaries
+- Use Sonnet for: real implementation, code review, research, complex reasoning
+- Use Opus for: deep architecture, hardest problems only
+- Default to Sonnet. Agents: rubber-duck, pr-ghostwriter, archaeologist → Haiku
 
 **How /clear works:** Distills session state into memory.md + daily note handoff, preserving retrieval paths. Then automatically resumes work by reloading compressed context and executing the next action. Seamless to the user.
 

@@ -23,7 +23,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const PROJECT_ROOT = path.resolve(__dirname, '..');
-const CONTENT_DIR = path.join(PROJECT_ROOT, 'contenuti-social');
+const CONTENT_DIR = path.join(PROJECT_ROOT, 'public', 'contenuti-social', 'caroselli');
 const OUTPUT_DIR = path.join(PROJECT_ROOT, 'public', 'contenuti-social', 'immagini-caroselli');
 
 const PALETTE = [

@@ -1,17 +1,15 @@
 # Task Board
 
 ## Today
-- [ ] **PRIMA COSA: chiarire "agenzia" — A, B, o C?** (Marco ha perso il filo, serve 1 frase di risposta per sbloccare tutto)
+- [ ] **Audit anti-AI pattern** su 52 articoli + 52 newsletter (richiesto da Marco)
 - [ ] Aggiungere CF Pages env vars per admin auth (⚠️ manuale, 2 minuti nel dashboard)
-- [x] C02 pubblicato su Instagram ✅ (040726)
+- [ ] Verificare build/deploy con 52 nuovi articoli
 
 ## This Week
-- [ ] Content Machine: aggiungere rendering grafico carousel + invio foto su Telegram (Art Director manda solo testo ora)
-- [ ] Post singoli P09-P52 — completare testi con regole stile, max 2100 char
-- [ ] Generazione batch foto Imagen 4 + render finale post singoli
-- [ ] Integrare post singoli in schedule.json publish pipeline
-- [ ] Aggiornare GitHub Secret STATS_PASSWORD → verificare login admin live
+- [ ] Attivare cron workflow `publish-stories-daily.yml` (rimuovere commento schedule)
 - [ ] Verificare se @astrojs/react serve ancora (Keystatic già rimosso)
+- [ ] Google Cloud Project ID per Veo API (video generation)
+- [ ] Aggiornare GitHub Secret STATS_PASSWORD → verificare login admin live
 
 ## Backlog
 - [ ] Riscrittura 182 Reel (lazy, prima di registrazione) — 36 violazioni stile attuali
@@ -22,6 +20,9 @@
 - [ ] Test 2 foto pilot con Imagen 4 per calibrare stile fotografico
 
 ## Done
+- [x] Piano contenuti 6 mesi: 52 articoli + 52 newsletter + 60 reels + storie IG + immagini ✅ (040826)
+- [x] Script storie: render-storie-articoli.mjs + render-storie-prodotti.mjs + publish_story.py + workflow ✅ (040826)
+- [x] 52 immagini hero articoli generate con Gemini ✅ (040826)
 - [x] /sec-review completo — SEC-001/002/003/004/013 risolti, Astro 5.4→6.1.4 ✅ (040726)
 - [x] Riscrittura 52 caroselli a 0 violazioni + varietà aperture ✅ (040626)
 - [x] Audit script con detector trampolino semantico ✅ (040626)

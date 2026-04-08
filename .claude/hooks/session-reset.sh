@@ -89,6 +89,12 @@ if [ ! -f "$SETTINGS_FILE" ] && [ -d "$HOOKS_DIR" ]; then
         "hooks": [
           {
             "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR/.claude/hooks/session-pressure-guard.sh\"",
+            "async": false,
+            "statusMessage": "Checking session pressure..."
+          },
+          {
+            "type": "command",
             "command": "\"$CLAUDE_PROJECT_DIR/.claude/hooks/backup-before-write.sh\"",
             "async": true,
             "statusMessage": "Backing up before write..."
@@ -103,6 +109,17 @@ if [ ! -f "$SETTINGS_FILE" ] && [ -d "$HOOKS_DIR" ]; then
       }
     ],
     "PostToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR/.claude/hooks/post-tool-telemetry.sh\"",
+            "async": true,
+            "statusMessage": "Tracking session telemetry..."
+          }
+        ]
+      },
       {
         "matcher": "Write|Edit|NotebookEdit",
         "hooks": [

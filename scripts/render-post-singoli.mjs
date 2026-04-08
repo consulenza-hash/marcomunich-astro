@@ -23,7 +23,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const PROJECT_ROOT = path.resolve(__dirname, '..');
-const POST_SINGOLI_MD = path.join(PROJECT_ROOT, 'contenuti-social', 'post-singoli.md');
+const POST_SINGOLI_MD = path.join(PROJECT_ROOT, 'public', 'contenuti-social', 'post-singoli', 'post-singoli.md');
 const OUTPUT_DIR = path.join(PROJECT_ROOT, 'public', 'contenuti-social', 'immagini-post-singoli');
 
 // Same rotating palette as caroselli

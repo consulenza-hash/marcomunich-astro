@@ -24,7 +24,7 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-CONTENT_DIR = PROJECT_ROOT / "contenuti-social"
+CONTENT_DIR = PROJECT_ROOT / "public" / "contenuti-social" / "caroselli"
 SCHEDULE_PATH = PROJECT_ROOT / "scripts" / "schedule.json"
 
 MD_FILES = [

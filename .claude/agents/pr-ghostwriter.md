@@ -9,7 +9,7 @@ tools:
   - Grep
   - Glob
   - Bash(git:*)
-model: sonnet
+model: haiku
 memory: none
 maxTurns: 8
 ---

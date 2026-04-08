@@ -27,12 +27,12 @@ if hasattr(sys.stdout, "reconfigure"):
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 FILES = [
-    PROJECT_ROOT / "contenuti-social" / "archivio-caroselli.md",
-    PROJECT_ROOT / "contenuti-social" / "mese-2-caroselli.md",
-    PROJECT_ROOT / "contenuti-social" / "mese-3.md",
-    PROJECT_ROOT / "contenuti-social" / "mese-4.md",
-    PROJECT_ROOT / "contenuti-social" / "mese-5.md",
-    PROJECT_ROOT / "contenuti-social" / "mese-6.md",
+    PROJECT_ROOT / "public" / "contenuti-social" / "caroselli" / "archivio-caroselli.md",
+    PROJECT_ROOT / "public" / "contenuti-social" / "caroselli" / "mese-2-caroselli.md",
+    PROJECT_ROOT / "public" / "contenuti-social" / "caroselli" / "mese-3.md",
+    PROJECT_ROOT / "public" / "contenuti-social" / "caroselli" / "mese-4.md",
+    PROJECT_ROOT / "public" / "contenuti-social" / "caroselli" / "mese-5.md",
+    PROJECT_ROOT / "public" / "contenuti-social" / "caroselli" / "mese-6.md",
 ]
 
 # ──────────────────────────────────────────────────────────────────────────

@@ -1,14 +1,12 @@
 # Memory
 
 ## Now
-- **Security review completato** (040726) — AdminGuard ora server-side via CF Pages Functions. ⚠️ Marco deve aggiungere 2 env vars in CF Pages dashboard (vedi Daily Note 040726).
-- **Astro aggiornato** 5.4 → 6.1.4 — 3 CVE chiuse.
-- **Content Machine ATTIVA** (040626) — Art Director agent + Telegram bot + task schedulata mattina 9. Primo contenuto generato (drafts/post-001.md). Manca: rendering grafico carousel + invio foto su Telegram.
-- **Business DNA completo** (040626) — 7 knowledge files + system prompt in `.claude/business-dna/`. Portabili su qualsiasi LLM.
-- **Pipeline IG Graph API OPERATIVA** (040526) — flow Instagram Login, token 60gg, C01 pubblicato, C02+ in cron giornaliero
+- **PIANO CONTENUTI 6 MESI COMPLETATO** (040826) — 52 articoli, 52 newsletter, 60 reels espansi, 52+6 storie IG, tutte immagini generate. Tutto committato e pushato.
+- **Prossimo step**: audit qualità testi anti-AI pattern (richiesto da Marco), poi verifica build/deploy
+- **Security review completato** (040726) — AdminGuard server-side via CF Pages. ⚠️ Marco deve aggiungere 2 env vars CF Pages.
+- **Pipeline IG Graph API OPERATIVA** — C01 pubblicato, stories workflow pronto (`.github/workflows/publish-stories-daily.yml`)
 - **Nuovo pricing**: siti web €2.500 + Crescita Continua €120/mese + AI Growth Partner €300/mese
 - **WIP libro**: "Content Marketing Olistico" — bozza in `content-marketing-olistico-bozza.md`
-- **"Agenzia con agenti"** — Marco vuole costruire qualcosa ma ha perso il filo. Domanda aperta da chiarire: A (sistema per sé), B (servizio per clienti), o C (entrambi).
 
 ## Project
 - **Nome**: marcomunich-astro — sito di Marco Munich, consulente Personal Branding Olistico
@@ -24,7 +22,7 @@
 ## Key Files
 - Config: `astro.config.mjs`, `tailwind.config.mjs`
 - Stili: `src/styles/global.css` · Middleware: `src/middleware.ts`
-- Contenuto: `src/content/articoli/` (201 articoli .mdoc)
+- Contenuto: `src/content/articoli/` (253 articoli .mdoc — 52 nuovi dal piano 6 mesi)
 - Admin auth: `src/components/AdminGuard.astro` + `functions/admin/verify.js` + `functions/_middleware.js`
 - Admin: `genera.astro`, `articoli.astro`, `clienti.astro`, `social-piano.astro`
 - Portfolio: `src/pages/portfolio/` (13 demo) · `public/images/portfolio/` (61 img)

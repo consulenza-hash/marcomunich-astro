@@ -12,6 +12,14 @@ All system commands, their triggers, required tools, and invocation mode.
 | `/standup` | Start of day (quick mode) | Read, Edit, Glob, Bash(git,date) | Self-execute | Auto-generate yesterday/today/blockers from git + tasks |
 | `/clear` | Context pressure or task completion | Read, Write, Edit, Bash(date) | Self-execute | Distill state, flush context, auto-resume |
 
+## Context & Limits
+
+| Command | Trigger | Tools | Mode | Description |
+|---------|---------|-------|------|-------------|
+| `/slice-task [objective]` | New large request or fuzzy scope | Read, Write, Edit, Bash(date) | Self-execute | Break work into verified micro-slices to reduce context burn |
+| `/compact-context` | Mid-session pressure before hard reset | Read, Write, Edit, Bash(date) | Self-execute | Compress active state and keep momentum with a minimal context packet |
+| `/session-reset` | High/critical pressure, degraded quality, near usage limit | Read, Write, Edit, Bash(date) | Self-execute | Hard reset with handoff packet for immediate fresh-chat continuation |
+
 ## Design & Creative
 
 | Command | Trigger | Tools | Mode | Description |
@@ -97,7 +105,9 @@ Commands should be proactively invoked (not waiting for user) when:
 | Session starts fresh | `/start` (if morning) or `/standup` (if quick) |
 | **Building any UI, website, app, or visual interface** | **`/design` — AUTO, always** |
 | **Any code is written or modified** | **`/sec-review` — AUTO, always** |
-| 30+ tool calls in session | `/clear` |
+| 24+ tool calls in session | Consider `/compact-context` |
+| 36+ tool calls in session | `/session-reset` recommended |
+| 48+ tool calls in session | `/session-reset` required before non-system writes |
 | Compaction warning | `/clear` (emergency mode) |
 | Discrete multi-step task completes | Consider `/clear` |
 | Quality feels degraded | `/clear` |

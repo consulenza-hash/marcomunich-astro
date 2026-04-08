@@ -7,7 +7,7 @@ description: >
 tools:
   - Read
   - Glob
-model: sonnet
+model: haiku
 memory: none
 maxTurns: 6
 ---
