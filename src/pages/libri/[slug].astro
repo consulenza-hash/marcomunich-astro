@@ -275,20 +275,33 @@ const checkoutUrl = `/api/libri/checkout.php?book=${slug}`;
   </div>
 </section>
 
-<!-- ══ CTA centrale ══════════════════════════════════════════════════════════ -->
-<section class="bl-cta-mid">
-  <div class="bl-inner bl-inner--narrow bl-cta-mid__inner">
-    <div class="bl-cta-mid__price">
-      <span class="bl-cta-mid__label">PDF · consegna immediata</span>
-      <span class="bl-cta-mid__amount">{book.pdfPrice}</span>
+<!-- ══ Scegli il formato — 3 card ═══════════════════════════════════════════ -->
+<section class="bl-buy">
+  <div class="bl-inner">
+    <h2 class="bl-h2">Scegli il formato</h2>
+    <div class="bl-buy__grid">
+      <div class="bl-buy__card bl-buy__card--featured">
+        <span class="bl-buy__badge">Consegna immediata</span>
+        <span class="bl-buy__format">PDF</span>
+        <span class="bl-buy__price">{book.pdfPrice}</span>
+        <a href={checkoutUrl} class="bl-btn bl-btn--orange bl-btn--lg bl-buy__btn">
+          Acquista il PDF
+        </a>
+        <span class="bl-buy__detail">Via email entro 1 minuto</span>
+      </div>
+      <a href={book.amazonUrl} target="_blank" rel="nofollow noopener" class="bl-buy__card">
+        <span class="bl-buy__format">Kindle</span>
+        <span class="bl-buy__price">{book.amazonKindle}</span>
+        <span class="bl-buy__btn-ghost">Vai su Amazon →</span>
+        <span class="bl-buy__detail">Formato digitale</span>
+      </a>
+      <a href={book.amazonUrl} target="_blank" rel="nofollow noopener" class="bl-buy__card">
+        <span class="bl-buy__format">Cartaceo</span>
+        <span class="bl-buy__price">{book.amazonPrint}</span>
+        <span class="bl-buy__btn-ghost">Vai su Amazon →</span>
+        <span class="bl-buy__detail">Spedizione Amazon</span>
+      </a>
     </div>
-    <a href={checkoutUrl} class="bl-btn bl-btn--orange bl-btn--lg">
-      ↓ Acquista il PDF — {book.pdfPrice}
-    </a>
-    <p class="bl-cta-mid__note">
-      Oppure su Amazon: Kindle {book.amazonKindle} · Cartaceo {book.amazonPrint} →&nbsp;
-      <a href={book.amazonUrl} target="_blank" rel="nofollow noopener">Amazon.it</a>
-    </p>
   </div>
 </section>
 
@@ -493,37 +506,57 @@ const checkoutUrl = `/api/libri/checkout.php?book=${slug}`;
   flex-shrink: 0;
 }
 
-/* ── CTA mid ────────────────────────────────────────────────────────────── */
-.bl-cta-mid {
+/* ── Buy grid — 3 formati ──────────────────────────────────────────────── */
+.bl-buy {
   background: var(--book-hero-bg, var(--black));
   padding: 5rem var(--pad);
-  border-top: 1px solid rgba(255,255,255,0.06);
 }
-.bl-cta-mid__inner {
+.bl-buy__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1.2rem;
+  max-width: 720px;
+}
+.bl-buy__card {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 1.2rem;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 2rem 1.5rem;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px;
+  text-decoration: none;
+  transition: border-color 0.15s;
 }
-.bl-cta-mid__label {
-  display: block;
-  font: 400 0.78rem/1 var(--sans);
-  letter-spacing: 0.1em;
+.bl-buy__card:hover { border-color: rgba(255,255,255,0.2); }
+.bl-buy__card--featured {
+  border-color: var(--book-accent, var(--gold));
+  background: rgba(255,255,255,0.03);
+}
+.bl-buy__badge {
+  font: 700 0.6rem/1 var(--sans);
+  letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.3);
-  margin-bottom: 0.3rem;
+  color: var(--book-accent, var(--gold));
 }
-.bl-cta-mid__amount {
-  font: 800 2.4rem/1 var(--display);
+.bl-buy__format {
+  font: 800 1.1rem/1 var(--display);
+  color: var(--white);
+  letter-spacing: -0.02em;
+}
+.bl-buy__price {
+  font: 800 2rem/1 var(--display);
   color: var(--white);
   letter-spacing: -0.03em;
 }
-.bl-cta-mid__note {
-  font: 400 0.82rem/1.5 var(--sans);
-  color: rgba(255,255,255,0.35);
+.bl-buy__btn { width: 100%; justify-content: center; }
+.bl-buy__btn-ghost {
+  font: 700 0.85rem/1 var(--sans);
+  color: var(--book-accent, var(--gold));
 }
-.bl-cta-mid__note a {
-  color: rgba(255,255,255,0.5);
+.bl-buy__detail {
+  font: 400 0.72rem/1 var(--sans);
+  color: rgba(255,255,255,0.3);
 }
 
 /* ── FAQ ────────────────────────────────────────────────────────────────── */
@@ -592,7 +625,7 @@ const checkoutUrl = `/api/libri/checkout.php?book=${slug}`;
     align-items: flex-start;
     gap: 0.8rem;
   }
-  .bl-cta-mid__inner { align-items: center; text-align: center; }
+  .bl-buy__grid { grid-template-columns: 1fr !important; max-width: 320px; margin: 0 auto; }
   .bl-cta-final .bl-inner { text-align: center; }
 }
 </style>
