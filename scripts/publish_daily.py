@@ -1,0 +1,62 @@
+#!/usr/bin/env python3
+"""
+publish_daily.py
+
+Pubblica ogni giorno: 1 carosello + 1 post singolo su Instagram.
+Eseguito automaticamente dal workflow GitHub Actions.
+
+Ordine:
+  1. publish_carousel.py   — carosello del giorno da schedule.json
+  2. publish_post_singolo.py — prossimo post singolo pending
+
+Flags:
+  --dry-run    Passa --dry-run a entrambi gli script
+  --list       Mostra stato di entrambe le code
+"""
+
+import argparse
+import subprocess
+import sys
+from pathlib import Path
+
+SCRIPTS = Path(__file__).resolve().parent
+
+
+def run(script: str, extra_args: list) -> int:
+    cmd = [sys.executable, str(SCRIPTS / script)] + extra_args
+    result = subprocess.run(cmd)
+    return result.returncode
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--list", action="store_true")
+    args = parser.parse_args()
+
+    extra = []
+    if args.dry_run:
+        extra.append("--dry-run")
+    if args.list:
+        extra.append("--list")
+
+    print("=" * 60)
+    print("CAROSELLO")
+    print("=" * 60)
+    rc1 = run("publish_carousel.py", extra)
+
+    print()
+    print("=" * 60)
+    print("POST SINGOLO")
+    print("=" * 60)
+    rc2 = run("publish_post_singolo.py", extra)
+
+    if rc1 != 0 or rc2 != 0:
+        print(f"\nERRORI: carousel={rc1}, post_singolo={rc2}")
+        sys.exit(1)
+
+    print("\nPubblicazione giornaliera completata.")
+
+
+if __name__ == "__main__":
+    main()

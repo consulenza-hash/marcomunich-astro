@@ -1,0 +1,38 @@
+name: Publish Daily — Carosello + Post Singolo
+
+on:
+  schedule:
+    - cron: '00 8 * * *'   # 08:00 UTC = 10:00 CET / 09:00 invernale
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run (no actual publish)'
+        required: false
+        default: 'false'
+        type: boolean
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Publish daily (carosello + post singolo)
+        env:
+          META_ACCESS_TOKEN: ${{ secrets.META_ACCESS_TOKEN }}
+          INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
+          CAROUSELS_BASE_URL: ${{ secrets.CAROUSELS_BASE_URL }}
+        run: |
+          if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then
+            python scripts/publish_daily.py --dry-run
+          else
+            python scripts/publish_daily.py
+          fi
