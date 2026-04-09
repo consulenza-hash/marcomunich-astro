@@ -18,12 +18,18 @@ export async function getStaticPaths() {
     as: 'raw',
   }) as Record<string, string>;
 
+  const today = new Date();
+  today.setHours(23, 59, 59, 999);
+
   return Object.entries(rawFiles)
     .filter(([_, content]) => {
       const fmMatch = content.match(/^---\r?\n([\s\S]*?)\r?\n---/);
       if (!fmMatch) return false;
       const fmStr = fmMatch[1];
-      return !/^bozza:\s*true/m.test(fmStr);
+      if (/^bozza:\s*true/m.test(fmStr)) return false;
+      const dateMatch = fmStr.match(/^data:\s*(\d{4}-\d{2}-\d{2})/m);
+      if (dateMatch && new Date(dateMatch[1] + 'T12:00:00') > today) return false;
+      return true;
     })
     .map(([filePath, content]) => {
       const slug = filePath.match(/\/([^/]+)\/index\.mdoc$/)?.[1] ?? '';
