@@ -1,0 +1,589 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+
+const portfolio = [
+  { slug: 'e-commerce',       label: 'E-commerce',        icon: '🛒', desc: 'Shop online con pagamenti Stripe, gestione prodotti e ordini.' },
+  { slug: 'corso-online',     label: 'Corso Online',       icon: '🎓', desc: 'Vendita corsi con accesso riservato, video e moduli progressivi.' },
+  { slug: 'sito-vetrina',     label: 'Sito Vetrina',       icon: '💼', desc: 'Presentazione professionale per liberi professionisti e studi.' },
+  { slug: 'landing-page',     label: 'Landing Page',       icon: '🎯', desc: 'Pagina di conversione per un singolo prodotto o servizio.' },
+  { slug: 'blog',             label: 'Blog',               icon: '✍️', desc: 'Contenuti a lungo raggio: SEO, articoli, newsletter integrata.' },
+  { slug: 'booking',          label: 'Booking',            icon: '📅', desc: 'Prenotazione sessioni con calendario e pagamento anticipato.' },
+  { slug: 'portfolio-creativo', label: 'Portfolio Creativo', icon: '🎨', desc: 'Visual-first per fotografi, designer e creativi.' },
+  { slug: 'ristorante',       label: 'Ristorante',         icon: '🍽️', desc: 'Menu digitale, prenotazioni tavoli, eventi stagionali.' },
+  { slug: 'saas',             label: 'SaaS',               icon: '⚙️', desc: 'Dashboard, onboarding utenti, pricing page e area clienti.' },
+  { slug: 'non-profit',       label: 'Non-Profit',         icon: '🤝', desc: 'Missione, donazioni, volontariato — narrazione al centro.' },
+  { slug: 'immobiliare',      label: 'Immobiliare',        icon: '🏠', desc: 'Annunci immobiliari, filtri avanzati, CRM integrato.' },
+  { slug: 'wedding',          label: 'Wedding',            icon: '💍', desc: 'Sito per sposi: RSVP, fotografie, registry e informazioni.' },
+];
+
+const caseStudy = [
+  {
+    nome: 'Chiara Martini',
+    ruolo: 'Life Coach',
+    slug: 'caso-studio-coach',
+    risultato: 'Da 0 a 8 clienti fissi in 4 mesi. Il sito ha sostituito il passaparola.',
+  },
+  {
+    nome: 'Giulia Ferretti',
+    ruolo: 'Counselor Transpersonale',
+    slug: 'caso-studio-counselor',
+    risultato: 'Lista d\'attesa di 3 settimane. Prima non aveva nessun canale di acquisizione digitale.',
+  },
+  {
+    nome: 'Letizia Amato',
+    ruolo: 'Operatrice Olistica',
+    slug: 'caso-studio-olistico',
+    risultato: 'Tre nuovi percorsi venduti la prima settimana dal lancio.',
+  },
+];
+
+const passi = [
+  { n: '01', titolo: 'Ascolto',       desc: 'Una chiamata di 60 minuti. Capisco il tuo metodo, il tuo cliente ideale, cosa ti differenzia.' },
+  { n: '02', titolo: 'Progettazione', desc: 'Struttura delle pagine, architettura dei contenuti, wireframe. Niente template — solo tua misura.' },
+  { n: '03', titolo: 'Sviluppo',      desc: 'Astro 5 + Tailwind. Veloce per design, sicuro per costruzione, leggero da mantenere.' },
+  { n: '04', titolo: 'Revisione',     desc: 'Due cicli di feedback prima del lancio. Ogni dettaglio sistemato prima che vada live.' },
+  { n: '05', titolo: 'Online',        desc: 'Deploy su hosting veloce, dominio configurato, tutto testato su mobile e desktop.' },
+  { n: '06', titolo: 'Supporto',      desc: '30 giorni di assistenza post-lancio. Per aggiornamenti, dubbi o piccole modifiche.' },
+];
+
+const piani = [
+  {
+    nome: 'Vetrina',
+    prezzo: '€1.500',
+    desc: 'Per chi vuole una presenza professionale solida. Messaggio chiaro, design curato, zero manutenzione.',
+    incluso: ['Fino a 5 pagine', 'Design personalizzato', 'Mobile-first', 'SEO base', 'Deploy incluso'],
+    featured: false,
+  },
+  {
+    nome: 'Professionale',
+    prezzo: '€2.500',
+    desc: 'Per chi vuole acquisire clienti con il sito. Blog, lead capture, integrazioni e ottimizzazione conversioni.',
+    incluso: ['Tutto di Vetrina', 'Blog + CMS', 'Lead capture form', 'Analytics setup', '30gg supporto'],
+    featured: true,
+  },
+  {
+    nome: 'E-commerce',
+    prezzo: 'Da €4.000',
+    desc: 'Per vendere online. Prodotti fisici o digitali, Stripe integrato, area clienti.',
+    incluso: ['Tutto di Professionale', 'Shop Stripe', 'Area clienti', 'Corsi o download digitali', 'Setup pagamenti'],
+    featured: false,
+  },
+];
+---
+
+<BaseLayout
+  title="Siti Web su Misura per Coach e Professionisti Olistici — Marco Munich"
+  description="Portfolio, case study e prezzi. Siti Astro 5 costruiti sul tuo messaggio — veloci, senza manutenzione, progettati per acquisire clienti."
+  currentPath="/siti-web-showcase/"
+  noIndex={false}
+>
+
+  <!-- HERO -->
+  <section class="sw-hero mm-section-dark">
+    <div class="hero-bg"></div>
+    <div class="hero-glow"></div>
+    <div class="sw-hero__content">
+      <p class="mm-tag" style="margin-bottom:1.2rem;color:#3B82F6">Sviluppo Web</p>
+      <h1 class="mm-h1 sw-h1">
+        Siti web costruiti<br>sul tuo <span class="accent">messaggio.</span>
+      </h1>
+      <p class="sw-hero__sub">
+        Ogni sito parte dalla tua identità, non da un template. Astro 5, veloce su ogni device, zero manutenzione tecnica da parte tua.
+      </p>
+      <div class="sw-hero__ctas">
+        <a href="/dev/contatti/" class="mm-btn mm-btn-orange">Parliamo del tuo progetto →</a>
+        <a href="https://wa.me/393473416738" target="_blank" rel="noopener" class="mm-btn sw-btn-wa">WhatsApp →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO GRID -->
+  <section class="sw-section mm-section-dark">
+    <div class="sw-container">
+      <p class="mm-tag" style="color:#3B82F6;margin-bottom:0.75rem">Portfolio</p>
+      <h2 class="mm-h2" style="margin-bottom:0.75rem">Cosa ho costruito.</h2>
+      <p class="sw-sub">Dodici tipologie di sito — ogni demo è funzionante e navigabile.</p>
+
+      <div class="sw-grid">
+        {portfolio.map(item => (
+          <a href={`/portfolio/${item.slug}/`} class="sw-card">
+            <div class="sw-card__icon">{item.icon}</div>
+            <h3 class="sw-card__title">{item.label}</h3>
+            <p class="sw-card__desc">{item.desc}</p>
+            <span class="sw-card__link">Vedi demo →</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CASE STUDY -->
+  <section class="sw-section mm-section-dark" style="background:#0a0a0a">
+    <div class="sw-container">
+      <p class="mm-tag" style="color:#3B82F6;margin-bottom:0.75rem">Risultati reali</p>
+      <h2 class="mm-h2" style="margin-bottom:0.75rem">Chi ha già lanciato.</h2>
+      <p class="sw-sub">Professionisti olistici che hanno sostituito il passaparola con un sito che lavora per loro.</p>
+
+      <div class="sw-cases__grid">
+        {caseStudy.map(cs => (
+          <a href={`/portfolio/${cs.slug}/`} class="sw-case">
+            <div class="sw-case__role">{cs.ruolo}</div>
+            <div class="sw-case__name">{cs.nome}</div>
+            <p class="sw-case__risultato">"{cs.risultato}"</p>
+            <span class="sw-case__link">Leggi il case study →</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- COME LAVORO -->
+  <section class="sw-section mm-section-dark">
+    <div class="sw-container">
+      <p class="mm-tag" style="color:#3B82F6;margin-bottom:0.75rem">Il metodo</p>
+      <h2 class="mm-h2" style="margin-bottom:0.75rem">Come lavoro.</h2>
+      <p class="sw-sub">Dalla prima chiamata al lancio — ogni passo è prevedibile.</p>
+
+      <div class="sw-process__grid">
+        {passi.map(p => (
+          <div class="sw-step">
+            <div class="sw-step__n">{p.n}</div>
+            <div class="sw-step__body">
+              <h3 class="sw-step__title">{p.titolo}</h3>
+              <p class="sw-step__desc">{p.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- PREZZI -->
+  <section class="sw-section mm-section-dark" style="background:#0a0a0a">
+    <div class="sw-container">
+      <p class="mm-tag" style="color:#3B82F6;margin-bottom:0.75rem">Investimento</p>
+      <h2 class="mm-h2" style="margin-bottom:0.75rem">Quanto costa.</h2>
+      <p class="sw-sub">Tre livelli chiari. Nessun costo nascosto, nessun abbonamento obbligatorio.</p>
+
+      <div class="sw-piani">
+        {piani.map(piano => (
+          <div class={`sw-piano${piano.featured ? ' sw-piano--featured' : ''}`}>
+            {piano.featured && <div class="sw-piano__badge">Più scelto</div>}
+            <div class="sw-piano__nome">{piano.nome}</div>
+            <div class="sw-piano__prezzo">{piano.prezzo}</div>
+            <p class="sw-piano__desc">{piano.desc}</p>
+            <ul class="sw-piano__lista">
+              {piano.incluso.map(v => (
+                <li class="sw-piano__item">
+                  <span class="sw-piano__check" aria-hidden="true">✓</span>
+                  {v}
+                </li>
+              ))}
+            </ul>
+            <a
+              href="/dev/contatti/"
+              class={`mm-btn ${piano.featured ? 'mm-btn-orange' : 'sw-btn-outline'}`}
+              style="margin-top:auto;width:100%;text-align:center;display:block"
+            >
+              Inizia da qui →
+            </a>
+          </div>
+        ))}
+      </div>
+
+      <div class="sw-crescita">
+        <div class="sw-crescita__left">
+          <div class="sw-crescita__titolo">Crescita Continua</div>
+          <div class="sw-crescita__prezzo">€120<span>/mese</span></div>
+        </div>
+        <p class="sw-crescita__desc">
+          Aggiornamenti mensili, nuovi articoli, ottimizzazioni SEO, supporto prioritario. Per chi vuole un sito che migliora nel tempo senza occuparsene.
+        </p>
+        <a href="/dev/contatti/" class="mm-btn mm-btn-orange" style="white-space:nowrap">Scopri di più →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINALE -->
+  <section class="sw-cta mm-section-dark">
+    <div class="hero-glow" style="top:30%;opacity:0.5"></div>
+    <div class="sw-cta__inner">
+      <h2 class="mm-h2" style="margin-bottom:1rem">Hai il messaggio.<br>Costruiamo il sito.</h2>
+      <p class="sw-cta__sub">Una chiamata gratuita di 30 minuti per capire cosa ti serve davvero.</p>
+      <div class="sw-cta__btns">
+        <a href="/dev/contatti/" class="mm-btn mm-btn-orange" style="font-size:1.1rem;padding:1rem 2.2rem">Scrivimi →</a>
+        <a href="https://wa.me/393473416738" target="_blank" rel="noopener" class="mm-btn sw-btn-wa" style="font-size:1.1rem;padding:1rem 2.2rem">WhatsApp →</a>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+/* ── Dot-grid + glow (stile /dev) ── */
+.sw-hero {
+  position: relative;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 7rem 1.5rem 6rem;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle at 1px 1px, rgba(59,130,246,0.08) 1px, transparent 0);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+
+.hero-glow {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 400px;
+  background: radial-gradient(ellipse, rgba(59,130,246,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.sw-hero__content {
+  position: relative;
+  z-index: 1;
+  max-width: 760px;
+}
+
+.sw-h1 {
+  font-family: 'Lora', Georgia, serif;
+  font-size: clamp(2.4rem, 6vw, 4.2rem);
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+.accent { color: #3B82F6; }
+
+.sw-hero__sub {
+  font-size: 1.2rem;
+  color: rgba(255,255,255,0.65);
+  max-width: 520px;
+  margin: 1.5rem auto 2.5rem;
+  line-height: 1.7;
+}
+
+.sw-hero__ctas {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ── WhatsApp ── */
+.sw-btn-wa {
+  background: #25D366;
+  color: #fff;
+  border: none;
+}
+.sw-btn-wa:hover { background: #1da851; }
+
+/* ── Sections ── */
+.sw-section { padding: 6rem 1.5rem; }
+
+.sw-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.sw-sub {
+  font-size: 1.05rem;
+  color: rgba(255,255,255,0.5);
+  max-width: 540px;
+  margin-bottom: 3.5rem;
+  line-height: 1.7;
+}
+
+/* ── Portfolio grid ── */
+.sw-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.25rem;
+}
+
+.sw-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+  padding: 1.75rem 1.5rem;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.25s, transform 0.2s;
+}
+.sw-card:hover {
+  border-color: rgba(59,130,246,0.35);
+  transform: translateY(-3px);
+}
+
+.sw-card__icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: rgba(59,130,246,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+}
+
+.sw-card__title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.4rem;
+}
+.sw-card__desc {
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.55;
+  flex: 1;
+  margin-bottom: 1rem;
+}
+.sw-card__link {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #3B82F6;
+}
+
+/* ── Case study ── */
+.sw-cases__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.sw-case {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+  padding: 2rem;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.25s;
+}
+.sw-case:hover { border-color: rgba(59,130,246,0.35); }
+
+.sw-case__role {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #3B82F6;
+  margin-bottom: 0.4rem;
+}
+.sw-case__name {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+.sw-case__risultato {
+  font-size: 0.92rem;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.65;
+  flex: 1;
+  margin-bottom: 1.25rem;
+  font-style: italic;
+}
+.sw-case__link {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #3B82F6;
+}
+
+/* ── Process ── */
+.sw-process__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.sw-step { display: flex; gap: 1.25rem; }
+
+.sw-step__n {
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: #3B82F6;
+  line-height: 1;
+  min-width: 2.5rem;
+  opacity: 0.7;
+}
+.sw-step__title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.4rem;
+}
+.sw-step__desc {
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.6;
+}
+
+/* ── Prezzi ── */
+.sw-piani {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.sw-piano {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.sw-piano--featured {
+  border-color: rgba(59,130,246,0.45);
+  background: rgba(59,130,246,0.05);
+}
+
+.sw-piano__badge {
+  position: absolute;
+  top: -0.75rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #3B82F6;
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.2rem 0.85rem;
+  border-radius: 999px;
+}
+
+.sw-piano__nome {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 0.5rem;
+}
+.sw-piano__prezzo {
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+.sw-piano__desc {
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+.sw-piano__lista {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  flex: 1;
+}
+.sw-piano__item {
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.7);
+  display: flex;
+  gap: 0.6rem;
+}
+.sw-piano__check { color: #3B82F6; font-weight: 700; }
+
+.sw-btn-outline {
+  background: transparent;
+  color: rgba(255,255,255,0.7);
+  border: 1px solid rgba(255,255,255,0.15);
+}
+.sw-btn-outline:hover {
+  border-color: rgba(255,255,255,0.4);
+  color: #fff;
+}
+
+/* Crescita Continua */
+.sw-crescita {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+  padding: 2rem 2.5rem;
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.sw-crescita__left { min-width: 140px; }
+.sw-crescita__titolo { font-size: 1.1rem; font-weight: 700; color: #fff; }
+.sw-crescita__prezzo {
+  font-size: 2rem;
+  font-weight: 900;
+  color: #3B82F6;
+}
+.sw-crescita__prezzo span {
+  font-size: 1rem;
+  font-weight: 400;
+  color: rgba(255,255,255,0.4);
+}
+.sw-crescita__desc {
+  font-size: 0.92rem;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.65;
+  flex: 1;
+  min-width: 220px;
+}
+
+/* ── CTA finale ── */
+.sw-cta {
+  position: relative;
+  padding: 7rem 1.5rem;
+  text-align: center;
+}
+.sw-cta__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.sw-cta__sub {
+  font-size: 1.1rem;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 2.5rem;
+  line-height: 1.7;
+}
+.sw-cta__btns {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* ── Mobile ── */
+@media (max-width: 768px) {
+  .sw-hero { min-height: auto; padding: 5rem 1.25rem 4rem; }
+  .sw-hero__sub { font-size: 1rem; }
+  .sw-hero__ctas,
+  .sw-cta__btns { flex-direction: column; align-items: center; }
+  .sw-grid,
+  .sw-cases__grid,
+  .sw-process__grid,
+  .sw-piani { grid-template-columns: 1fr !important; }
+  .sw-crescita { flex-direction: column; }
+  .mm-btn { width: 100% !important; text-align: center; }
+}
+</style>
