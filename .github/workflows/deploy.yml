@@ -78,17 +78,22 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: pages deploy dist --project-name marcomunich-com --branch main --commit-dirty=true
 
-  # ── Job 3: Netsons FTP (solo PHP API — solo se cambiata) ─────────────────
-  deploy-api:
+  # ── Job 3: Netsons FTP — static HTML + PHP API ───────────────────────────
+  deploy-netsons:
     needs: build
-    if: needs.build.outputs.api-changed == 'true' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Deploy PHP API to Netsons
+      - name: Download dist
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+      - name: Deploy to Netsons
         run: |
           sudo apt-get install -y lftp > /dev/null 2>&1
 
@@ -111,8 +116,8 @@ jobs:
             > .env-server
           printf 'GOOGLE_SERVICE_ACCOUNT_JSON=%s\n' "$GOOGLE_SERVICE_ACCOUNT_JSON" >> .env-server
 
-          # Sync ONLY /api/ and /admin/ — never touch the rest of the site
-          timeout 120 lftp -c "
+          # Exclude heavy binary assets already on server (immagini, video)
+          timeout 300 lftp -c "
             set ftp:ssl-allow yes;
             set ftp:ssl-force no;
             set ftp:passive-mode yes;
@@ -121,6 +126,11 @@ jobs:
             set net:max-retries 3;
             open -u ${{ secrets.FTP_USERNAME }},${{ secrets.FTP_PASSWORD }} 89.40.173.242;
             put .env-server -o /.env;
+            mirror --reverse --verbose --parallel=4 --delete \
+              --exclude contenuti-social/immagini-caroselli/ \
+              --exclude contenuti-social/video-reels/ \
+              --exclude images/ \
+              dist/ /public_html/;
             mirror --reverse --verbose --parallel=4 --delete public/api/ /public_html/api/;
             mirror --reverse --verbose --parallel=4 --delete public/admin/ /public_html/admin/;
             quit;
