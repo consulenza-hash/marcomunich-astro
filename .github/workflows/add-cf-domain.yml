@@ -1,32 +1,104 @@
-name: Add CF Custom Domain (fix sito down)
+name: Fix DNS - Restore Netsons + Full Deploy
 
 on:
   workflow_dispatch:
 
 jobs:
-  check-domain:
+  fix-dns-and-deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
-      - name: Check domain status and verification
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install and Build
+        run: npm ci && npm run build
+
+      - name: Strip heavy assets
         run: |
-          CF_TOKEN="${{ secrets.CLOUDFLARE_API_TOKEN }}"
-          PROJECT="marcomunich-com"
-          ACCOUNT_ID=$(curl -s "https://api.cloudflare.com/client/v4/accounts" \
-            -H "Authorization: Bearer $CF_TOKEN" | \
-            python3 -c "import sys,json; d=json.load(sys.stdin); print(d['result'][0]['id'])")
+          find dist/contenuti-social/immagini-caroselli -name "*.png" -delete 2>/dev/null || true
+          find dist/contenuti-social/video-reels -type f -delete 2>/dev/null || true
+          echo "Files to deploy: $(find dist -type f | wc -l)"
 
-          echo "=== GET marcomunich.com domain detail ==="
-          curl -s "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/pages/projects/$PROJECT/domains/marcomunich.com" \
-            -H "Authorization: Bearer $CF_TOKEN"
+      - name: Deploy FULL SITE to Netsons
+        run: |
+          sudo apt-get install -y lftp > /dev/null 2>&1
+          printf '%s\n' \
+            "STATS_PASSWORD=${{ secrets.STATS_PASSWORD }}" \
+            "SITE_URL=https://marcomunich.com" \
+            "RESEND_API_KEY=${{ secrets.RESEND_API_KEY }}" \
+            "ANTHROPIC_API_KEY=${{ secrets.ANTHROPIC_API_KEY }}" \
+            "STRIPE_SECRET_KEY=${{ secrets.STRIPE_SECRET_KEY }}" \
+            "STRIPE_WEBHOOK_SECRET=${{ secrets.STRIPE_WEBHOOK_SECRET }}" \
+            "STRIPE_PRICE_ID=${{ secrets.STRIPE_PRICE_ID }}" \
+            > .env-server
+          timeout 300 lftp -c "
+            set ftp:ssl-allow yes;
+            set ftp:ssl-force no;
+            set ftp:passive-mode yes;
+            set ssl:verify-certificate no;
+            set net:timeout 30;
+            set net:max-retries 3;
+            open -u ${{ secrets.FTP_USERNAME }},${{ secrets.FTP_PASSWORD }} 89.40.173.242;
+            put .env-server -o /.env;
+            mirror --reverse --verbose --parallel=4 --delete --only-newer dist/ /public_html/;
+            mirror --reverse --verbose --parallel=4 --delete public/api/ /public_html/api/;
+            mirror --reverse --verbose --parallel=4 --delete public/admin/ /public_html/admin/;
+            quit;
+          " || echo "lftp done"
 
-          echo ""
-          echo "=== Pages project info ==="
-          curl -s "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/pages/projects/$PROJECT" \
-            -H "Authorization: Bearer $CF_TOKEN" | python3 -c "
+      - name: Revert DNS A record to Netsons via cPanel API
+        run: |
+          HOST="hostingweb21.netsons.net"
+          PORT="2083"
+          USER="${{ secrets.FTP_USERNAME }}"
+          PASS="${{ secrets.FTP_PASSWORD }}"
+          NETSONS_IP="89.40.173.242"
+          ZONE="marcomunich.com"
+
+          echo "=== Reading DNS zone ==="
+          ZONE_JSON=$(curl -sk -u "$USER:$PASS" \
+            "https://$HOST:$PORT/execute/DNS/parse_zone?zone=$ZONE")
+          echo "$ZONE_JSON" | python3 -c "
           import sys,json
           d=json.load(sys.stdin)
-          r=d.get('result',{})
-          print('name:', r.get('name'))
-          print('subdomain:', r.get('subdomain'))
-          print('domains:', r.get('domains'))
-          "
+          for r in d.get('data',{}).get('record',[]):
+              if r.get('type') in ('A','CNAME') and 'marcomunich' in r.get('name',''):
+                  print(f\"  {r['name']} {r['type']} {r.get('address') or r.get('cname')} line={r.get('line_index')}\")
+          " 2>/dev/null || echo "(could not parse zone)"
+
+          echo "=== Removing old A records for apex ==="
+          INDEXES=$(echo "$ZONE_JSON" | python3 -c "
+          import sys,json
+          d=json.load(sys.stdin)
+          out=[]
+          for r in d.get('data',{}).get('record',[]):
+              name=r.get('name','').rstrip('.')
+              if r.get('type')=='A' and name in ('marcomunich.com','@'):
+                  out.append(str(r.get('line_index','')))
+          print(' '.join(out))
+          " 2>/dev/null)
+          echo "Indexes: $INDEXES"
+          for IDX in $INDEXES; do
+            RESP=$(curl -sk -u "$USER:$PASS" -X POST \
+              "https://$HOST:$PORT/execute/DNS/remove_zone_record" \
+              -d "zone=$ZONE&line_index=$IDX")
+            echo "  Removed $IDX: $(echo $RESP | python3 -c 'import sys,json; d=json.load(sys.stdin); print(d.get("status"))' 2>/dev/null)"
+          done
+
+          echo "=== Adding A @ -> $NETSONS_IP ==="
+          RESP=$(curl -sk -u "$USER:$PASS" -X POST \
+            "https://$HOST:$PORT/execute/DNS/add_zone_record" \
+            -d "zone=$ZONE&name=$ZONE.&type=A&address=$NETSONS_IP&ttl=300")
+          echo "$RESP" | python3 -c "
+          import sys,json
+          d=json.load(sys.stdin)
+          print('Result:', d.get('status'), d.get('errors') or 'OK')
+          " 2>/dev/null
+
+          echo "=== DNS update submitted — propagation ~5 min ==="
