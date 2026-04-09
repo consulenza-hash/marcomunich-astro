@@ -86,6 +86,10 @@ Redirect 301 /video/ /blog/
 RewriteEngine On
 RewriteBase /
 
+# Apex → www (Cloudflare Pages — traffico su marcomunich.com va su CF)
+RewriteCond %{HTTP_HOST} ^marcomunich\.com$ [NC]
+RewriteRule ^(.*)$ https://www.marcomunich.com/$1 [R=301,L]
+
 # Homepage → servi il file statico Astro
 RewriteRule ^$ index.html [L]
 
