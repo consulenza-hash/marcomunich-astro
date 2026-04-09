@@ -88,7 +88,7 @@ jobs:
             open -u ${{ secrets.FTP_USERNAME }},${{ secrets.FTP_PASSWORD }} 89.40.173.242;
             put .env-server -o /.env;
             mirror --reverse --verbose --parallel=4 dist/admin/ /public_html/admin/;
-            mirror --reverse --verbose --parallel=8 --only-newer \
+            mirror --reverse --verbose --parallel=8 --only-newer --delete \
               --exclude contenuti-social/immagini-caroselli/ \
               --exclude contenuti-social/immagini-post/ \
               --exclude videos/ \
