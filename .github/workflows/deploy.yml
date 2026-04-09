@@ -1,26 +1,35 @@
-name: Deploy to Cloudflare Pages
+name: Deploy
 
 on:
   push:
     branches: [main]
-    paths-ignore:
-      - 'public/api/**'
-      - 'public/admin/**'
   repository_dispatch:
     types: [wp_content_changed, wp_post_published]
   workflow_dispatch:
 
 jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    timeout-minutes: 25
 
+  # ── Job 1: Astro build (shared artifact) ─────────────────────────────────
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    outputs:
+      api-changed: ${{ steps.check-api.outputs.changed }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           ref: main
-          fetch-depth: 0
+          fetch-depth: 2
+
+      - name: Check if public/api/** changed
+        id: check-api
+        run: |
+          if git diff --name-only HEAD~1 HEAD | grep -q '^public/api/'; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+          fi
 
       - name: Setup Node.js 22
         uses: actions/setup-node@v4
@@ -34,15 +43,33 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Strip heavy assets before CF Pages deploy
+      - name: Strip heavy assets
         run: |
-          # Remove PNG originals — CF Pages only needs JPEGs for Instagram
           find dist/contenuti-social/immagini-caroselli -name "*.png" -delete 2>/dev/null || true
-          # Remove video reels — 60 MP4 (~399MB) not needed on CF Pages
-          # Reels are published directly to Instagram, not served from the site
           rm -rf dist/contenuti-social/video-reels/ 2>/dev/null || true
-          echo "Files to deploy:" && find dist -type f | wc -l
-          echo "Total size:" && du -sh dist/
+          echo "Files to deploy: $(find dist -type f | wc -l) — Size: $(du -sh dist/ | cut -f1)"
+
+      - name: Upload dist artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+          retention-days: 1
+
+  # ── Job 2: Cloudflare Pages (statico — sempre, ~30s) ─────────────────────
+  deploy-cf:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download dist
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
@@ -51,11 +78,21 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: pages deploy dist --project-name marcomunich-com --branch main --commit-dirty=true
 
-      - name: Deploy to Netsons (FTP — HTML + CSS + API)
+  # ── Job 3: Netsons FTP (solo PHP API — solo se cambiata) ─────────────────
+  deploy-api:
+    needs: build
+    if: needs.build.outputs.api-changed == 'true' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Deploy PHP API to Netsons
         run: |
           sudo apt-get install -y lftp > /dev/null 2>&1
 
-          # Create .env for PHP APIs
+          # Write .env for PHP APIs
           printf '%s\n' \
             "STATS_PASSWORD=${{ secrets.STATS_PASSWORD }}" \
             "GITHUB_TOKEN=${{ secrets.GH_TOKEN }}" \
@@ -72,13 +109,10 @@ jobs:
             "GSC_SITE_URL=${{ secrets.GSC_SITE_URL }}" \
             "IMAGEN_API_KEY=${{ secrets.IMAGEN_API_KEY }}" \
             > .env-server
-
-          # JSON with double quotes — passed via env var to avoid shell injection
           printf 'GOOGLE_SERVICE_ACCOUNT_JSON=%s\n' "$GOOGLE_SERVICE_ACCOUNT_JSON" >> .env-server
 
-          # Sync HTML + CSS/JS bundles + API to Netsons
-          # Exclude large media dirs (handled by php-hotfix.yml) to keep FTP fast
-          timeout 300 lftp -c "
+          # Sync ONLY /api/ and /admin/ — never touch the rest of the site
+          timeout 120 lftp -c "
             set ftp:ssl-allow yes;
             set ftp:ssl-force no;
             set ftp:passive-mode yes;
@@ -87,13 +121,9 @@ jobs:
             set net:max-retries 3;
             open -u ${{ secrets.FTP_USERNAME }},${{ secrets.FTP_PASSWORD }} 89.40.173.242;
             put .env-server -o /.env;
-            mirror --reverse --verbose --parallel=4 dist/admin/ /public_html/admin/;
-            mirror --reverse --verbose --parallel=8 --only-newer --delete \
-              --exclude contenuti-social/immagini-caroselli/ \
-              --exclude contenuti-social/immagini-post/ \
-              --exclude videos/ \
-              dist/ /public_html/;
+            mirror --reverse --verbose --parallel=4 --delete public/api/ /public_html/api/;
+            mirror --reverse --verbose --parallel=4 --delete public/admin/ /public_html/admin/;
             quit;
-          " || echo "⚠️ lftp Netsons sync done (warnings non-fatal)"
+          " || echo "⚠️ lftp done (warnings non-fatal)"
         env:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}

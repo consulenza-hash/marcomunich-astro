@@ -20,8 +20,14 @@ function loadEnv() {
 
 loadEnv();
 
-// CORS headers for all responses
-header('Access-Control-Allow-Origin: *');
+// CORS headers — allow only marcomunich.com (and localhost for dev)
+$allowedOrigins = ['https://marcomunich.com', 'https://www.marcomunich.com', 'http://localhost:4321'];
+$origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+if (in_array($origin, $allowedOrigins, true)) {
+    header('Access-Control-Allow-Origin: ' . $origin);
+} else {
+    header('Access-Control-Allow-Origin: https://marcomunich.com');
+}
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Authorization');
 header('Access-Control-Allow-Credentials: true');
