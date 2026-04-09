@@ -30,48 +30,58 @@ jobs:
           ZONE_JSON=$(fetch_zone) || { echo "Cannot reach cPanel"; exit 1; }
           echo "Fetched ${#ZONE_JSON} bytes"
 
-          echo "=== First 5 non-comment records (raw) ==="
-          echo "$ZONE_JSON" | python3 -c "
-          import sys,json
+          echo "=== Finding CF Pages A records (data_b64 encoded) ==="
+          INDEXES=$(echo "$ZONE_JSON" | python3 -c "
+          import sys,json,base64
           d=json.load(sys.stdin)
-          count=0
-          for r in d.get('data',[]):
-              if isinstance(r,dict) and r.get('type')!='comment':
-                  print(json.dumps(r))
-                  count+=1
-                  if count>=5: break
-          "
-
-          echo ""
-          echo "=== All records with CF IPs or 89.40 ==="
-          echo "$ZONE_JSON" | python3 -c "
-          import sys,json
-          d=json.load(sys.stdin)
-          for r in d.get('data',[]):
-              if not isinstance(r,dict): continue
-              vals=str(r)
-              if '188.114' in vals or '89.40' in vals or '188.114.96' in vals:
-                  print(json.dumps(r))
-          "
-
-          echo ""
-          echo "=== Searching by both type/record_type for A records ==="
-          echo "$ZONE_JSON" | python3 -c "
-          import sys,json
-          d=json.load(sys.stdin)
-          CFIPS={'188.114.96.7','188.114.97.7'}
+          CF_IPS={'188.114.96.7','188.114.97.7'}
           out=[]
           for r in d.get('data',[]):
               if not isinstance(r,dict): continue
-              rtype=r.get('type') or r.get('record_type','')
-              addr=r.get('address','')
-              if rtype=='A':
-                  name=r.get('name') or r.get('dname','')
-                  idx=r.get('line_index') or r.get('line','')
-                  print(f'A record: name={repr(name)} addr={addr} idx={idx}')
-                  if addr in CFIPS:
-                      out.append(str(idx))
-          print('CF indexes:', ' '.join(out) if out else 'NONE FOUND')
-          "
+              if r.get('type')=='record' and r.get('record_type')=='A':
+                  data_b64=r.get('data_b64',[])
+                  if data_b64:
+                      try:
+                          ip=base64.b64decode(data_b64[0]).decode('utf-8','ignore').strip()
+                      except:
+                          ip=''
+                      dname=r.get('dname_raw','')
+                      idx=r.get('line_index','')
+                      print(f'A record: dname={dname} ip={ip} idx={idx}', file=sys.stderr)
+                      if ip in CF_IPS:
+                          out.append(str(idx))
+                          print(f'  -> REMOVING CF record: {ip} line={idx}', file=sys.stderr)
+          print(' '.join(out))
+          ")
+          echo "CF indexes to remove: $INDEXES"
 
-          echo "=== Done diagnostics ==="
+          echo "=== Removing CF A records ==="
+          REMOVED=0
+          for IDX in $INDEXES; do
+            RESP=$(curl -sk --connect-timeout 20 --max-time 30 -u "$USER:$PASS" \
+              -X POST "$BASE/remove_zone_record" \
+              -d "zone=$ZONE&line_index=$IDX")
+            STATUS=$(echo $RESP | python3 -c 'import sys,json;d=json.load(sys.stdin);print(d.get("status"))' 2>/dev/null)
+            echo "  Remove line $IDX: status=$STATUS"
+            REMOVED=$((REMOVED+1))
+          done
+          echo "Removed $REMOVED records"
+
+          echo "=== Adding Netsons A record ==="
+          RESP=$(curl -sk --connect-timeout 20 --max-time 30 -u "$USER:$PASS" \
+            -X POST "$BASE/add_zone_record" \
+            -d "zone=$ZONE&name=$ZONE.&type=A&address=$NETSONS_IP&ttl=300")
+          ADD_STATUS=$(echo $RESP | python3 -c 'import sys,json;d=json.load(sys.stdin);print(d.get("status"),d.get("messages"))' 2>/dev/null)
+          echo "Add result: $ADD_STATUS"
+
+          echo "=== Verifying final A records ==="
+          fetch_zone | python3 -c "
+          import sys,json,base64
+          d=json.load(sys.stdin)
+          for r in d.get('data',[]):
+              if isinstance(r,dict) and r.get('type')=='record' and r.get('record_type')=='A':
+                  data_b64=r.get('data_b64',[])
+                  ip=base64.b64decode(data_b64[0]).decode('utf-8','ignore').strip() if data_b64 else '?'
+                  print(f\"  {r.get('dname_raw','')} A {ip} (line {r.get('line_index','?')})\")
+          " 2>/dev/null
+          echo "=== DNS updated — propagation ~5-10 min ==="
