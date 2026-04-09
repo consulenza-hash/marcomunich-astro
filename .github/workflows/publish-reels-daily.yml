@@ -1,0 +1,57 @@
+name: Publish Reels Daily
+
+on:
+  schedule:
+    - cron: '0 8 * * *'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run (no actual publish)'
+        required: false
+        default: 'false'
+        type: boolean
+      force_id:
+        description: 'Force publish specific reel number (optional)'
+        required: false
+        default: ''
+        type: string
+
+jobs:
+  publish-reel:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Publish reel
+        env:
+          META_ACCESS_TOKEN: ${{ secrets.META_ACCESS_TOKEN }}
+          INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
+          REELS_BASE_URL: https://marcomunich-com.pages.dev/contenuti-social/video-reels
+        run: |
+          ARGS=""
+          if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then
+            ARGS="--dry-run"
+          fi
+          if [ -n "${{ github.event.inputs.force_id }}" ]; then
+            ARGS="$ARGS --force-id ${{ github.event.inputs.force_id }}"
+          fi
+          python scripts/publish_reel.py $ARGS
+
+      - name: Commit updated reels-status.json
+        if: success() && github.event.inputs.dry_run != 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet .claude/reels-status.json; then
+            echo "No changes to reels-status.json"
+          else
+            git add .claude/reels-status.json
+            git commit -m "chore: update reels-status after publish [skip ci]"
+            git push
+          fi
