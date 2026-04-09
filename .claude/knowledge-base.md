@@ -21,6 +21,9 @@ Every entry MUST cite its source using one of:
 - [032426] SECURITY: Critical and High severity findings block delivery. Code cannot be presented as complete while unresolved Critical/High issues exist. [Source: user override 032426]
 - [032426] SECURITY: Every security finding must include: exact file:line, attack scenario, impact, copy-paste fix, and OWASP/CVE reference. Vague warnings are not findings. [Source: user override 032426]
 
+## Hard Infrastructure Rules
+- [040926] DEPLOY: **NIENTE VERCEL — mai, per nessun motivo.** Piano cancellato, servizio dismesso. Se trovi `vercel.json`, link Vercel, config Vercel, o qualsiasi riferimento a Vercel nel codice: ELIMINALO IMMEDIATAMENTE senza aspettare istruzioni. Non menzionare Vercel come opzione. Deploy = Netsons via GitHub Actions + lftp FTP. [Source: user override 040926 — ripetuto decine di volte]
+
 ## Platform & Tool Rules
 - [032526] TOOLS: `mcp__exa__web_search_exa` is significantly more token-efficient than WebSearch + WebFetch for dynamic content (blogs, news, CVE feeds) — returns targeted snippets instead of full pages. Reserve WebFetch for stable authoritative reference pages only. (Source: agent inference 032526 — architectural decision during guardian upgrade session)
 - [032526] TOOLS: `mcp__jcodemunch__get_file_outline` should be the first move before reading any code file — provides function/class structure without loading full content. (Source: agent inference 032526 — token efficiency upgrade design session)
@@ -34,3 +37,9 @@ Every entry MUST cite its source using one of:
 - [040426] ASTRO: `output:'static'` + `export const prerender = false` on any page causes `NoAdapterInstalled` build failure. Static sites on shared hosting (Netsons) must use `getStaticPaths` only — SSR requires a Node adapter. (Source: empirical 040426 — deploy #700 failure, fixed commit 6df48f2)
 - [040426] AUTH: Brave browser partitions/blocks localStorage even with shields off. Use `document.cookie` as primary auth token storage on sites targeting wellness/holistic professionals. localStorage as fallback only. (Source: empirical 040426 — AdminGuard fix)
 - [040426] WORKTREES: Before merging a worktree that rewrote a shared file, always diff key pages against main. Merging silently replaces the working version and can introduce SSR patterns that break static builds. (Source: empirical 040426 — [slug].astro SSR merge broke deploy #699)
+- [040926] TOOLS: GitHub Secrets cannot be updated via `gh` CLI if gh is not in Windows PATH. Use Python + PyNaCl + GitHub REST API with `git credential fill` to extract the PAT and encrypt secrets via libsodium. (Source: empirical 040926)
+- [040926] TOOLS: Playwright MCP reports "browser already in use" after abnormal session termination. Deleting the lockfile in ms-playwright/mcp-chrome-*/lockfile is insufficient — the MCP server holds the handle in memory. Full Claude Code restart required to recover. (Source: empirical 040926)
+
+## Italiano Style Rules
+- [040926] STYLE: "vale la pena [azione]" in all variants (fermarsi, nominarla, investire, chiedersi) is a banned meta-phrase per CLAUDE.md rule 5. Replace with direct phrasing. (Source: empirical 040926 — 6 corrections in reel audit)
+- [040926] STYLE: Secrets must never be written to Daily Notes or any tracked file. Redact immediately with "[REDACTED]" if found. (Source: auditor finding 040926)
