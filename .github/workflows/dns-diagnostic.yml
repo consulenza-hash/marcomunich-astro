@@ -1,0 +1,46 @@
+name: DNS Diagnostic - Dump Full Zone
+
+on:
+  workflow_dispatch:
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Dump full zone and find CF IPs
+        run: |
+          HOST="hostingweb21.netsons.net"
+          PORT="2083"
+          USER="${{ secrets.FTP_USERNAME }}"
+          PASS="${{ secrets.FTP_PASSWORD }}"
+          ZONE="marcomunich.com"
+          BASE="https://$HOST:$PORT/execute/DNS"
+
+          ZONE_JSON=$(curl -sk --connect-timeout 20 --max-time 50 -u "$USER:$PASS" \
+            "$BASE/parse_zone?zone=$ZONE")
+          echo "Fetched ${#ZONE_JSON} bytes"
+
+          echo "=== ALL RECORDS WITH DATA_B64 ==="
+          echo "$ZONE_JSON" | python3 -c "
+          import sys,json,base64
+          d=json.load(sys.stdin)
+          for i,r in enumerate(d.get('data',[])):
+              if not isinstance(r,dict): continue
+              rtype = r.get('record_type','')
+              dtype = r.get('type','')
+              dname = r.get('dname_raw','')
+              idx = r.get('line_index','')
+              db64 = r.get('data_b64',[])
+              decoded = []
+              for b in (db64 or []):
+                  try: decoded.append(base64.b64decode(b).decode('utf-8','ignore').strip())
+                  except: decoded.append('?')
+              # Show ALL records
+              print(f'[{idx}] type={dtype} record_type={rtype} dname_raw={dname!r} decoded={decoded}')
+          " 2>&1
+
+          echo ""
+          echo "=== nslookup from runner ==="
+          nslookup marcomunich.com 8.8.8.8 || true
+          nslookup marcomunich.com dns1.netsons.net || true
