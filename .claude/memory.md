@@ -1,11 +1,10 @@
 # Memory
 
 ## Now
-- **PIANO CONTENUTI 6 MESI COMPLETATO** (040826) — 52 articoli, 52 newsletter, 60 reels espansi, 52+6 storie IG, tutte immagini generate. Tutto committato e pushato.
-- **Prossimo step**: audit qualità testi anti-AI pattern (richiesto da Marco), poi verifica build/deploy
-- **Security review completato** (040726) — AdminGuard server-side via CF Pages. ⚠️ Marco deve aggiungere 2 env vars CF Pages.
-- **Pipeline IG Graph API OPERATIVA** — C01 pubblicato, stories workflow pronto (`.github/workflows/publish-stories-daily.yml`)
-- **Nuovo pricing**: siti web €2.500 + Crescita Continua €120/mese + AI Growth Partner €300/mese
+- **PRESTAZIONI SITO** (040926) — redirect apex→www aggiunto (.htaccess), ora marcomunich.com passa per CF Pages CDN. Immagini compresse -162MB. /siti-web-showcase/ live.
+- **Email contatti aggiornata**: consulenza@marcomunich.com (era ciao@)
+- **CF Pages env vars** — ⚠️ Marco deve ancora aggiungere ADMIN_PASSWORD_HASH + ADMIN_SESSION_TOKEN su CF Pages Settings
+- **Pipeline IG Graph API OPERATIVA** — C01 pubblicato, stories + reels workflow attivi
 - **WIP libro**: "Content Marketing Olistico" — bozza in `content-marketing-olistico-bozza.md`
 
 ## Project
@@ -67,7 +66,6 @@ lavorare-senzasito, [slug].astro, blog/, categoria/, tag/, admin/, 404
 - LinkedIn API 403 — person URN non autorizzato
 - Batch rewrite: 1 solo commit per tutti gli articoli (API Trees/Commits)
 - 100+ click ads, 0 acquisti Prompt Pack — funnel da verificare
-- Verificare se @astrojs/react serve ancora (Keystatic rimosso)
 - SEO: 27 articoli senza schema_faq (GEO-008)
 - `/llms-full.txt` mancante (GEO-004)
 - `admin-panel.astro` (root level) non ha AdminGuard — da valutare

@@ -42,4 +42,13 @@ Every entry MUST cite its source using one of:
 
 ## Italiano Style Rules
 - [040926] STYLE: "vale la pena [azione]" in all variants (fermarsi, nominarla, investire, chiedersi) is a banned meta-phrase per CLAUDE.md rule 5. Replace with direct phrasing. (Source: empirical 040926 — 6 corrections in reel audit)
+- [040926] STYLE: Quoting a cliché phrase as a critical EXAMPLE within the text is not a meta-phrase violation — context (critical/ironic use) overrides the literal rule. (Source: empirical 040926 — reel script line 59)
 - [040926] STYLE: Secrets must never be written to Daily Notes or any tracked file. Redact immediately with "[REDACTED]" if found. (Source: auditor finding 040926)
+
+## Astro / Windows Dev Patterns
+- [040926] ASTRO: `Write` tool on Windows does not trigger Astro's file watcher — the dev server will not HMR. Always follow a `Write` with a no-op `Edit` (e.g. rename a comment) to force the watcher. (Source: empirical 040926 — siti-web-showcase.astro development)
+- [040926] ASTRO: `style="background:rgba(255,255,255,0.01)"` as inline style on a `mm-section-dark` element overrides the class background, making the section transparent (shows body cream). Always use solid colours or omit the inline style. (Source: empirical 040926 — case study + prezzi sections bug)
+- [040926] ASTRO: `preview_screenshot` times out systematically when the Astro toolbar is active in dev mode. Use `preview_eval` + `getComputedStyle` to verify colours instead. (Source: empirical 040926 — multiple timeouts)
+
+## Netsons / DNS Patterns
+- [040926] DNS: On Netsons, apex (`marcomunich.com`) and www can resolve to different servers. The fix without touching registrar DNS is a `.htaccess` 301 redirect apex→www, unifying all traffic on CF Pages. (Source: empirical 040926 — nslookup confirmed split resolution)
