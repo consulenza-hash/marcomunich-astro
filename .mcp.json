@@ -1,5 +1,15 @@
 {
   "mcpServers": {
+    "playwright": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@playwright/mcp@latest",
+        "--user-data-dir",
+        "C:\\Users\\marco\\AppData\\Local\\ms-playwright\\mcp-persistent-profile"
+      ],
+      "description": "Browser con profilo persistente — sessioni login salvate tra restart"
+    },
     "context7": {
       "command": "npx",
       "args": ["-y", "@upstash/context7-mcp@latest"],
