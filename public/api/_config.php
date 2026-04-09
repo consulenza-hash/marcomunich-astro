@@ -38,8 +38,18 @@ header('Content-Type: application/json');
  * Check stats_auth cookie against STATS_PASSWORD env var.
  * Call this at the top of protected endpoints.
  */
+function getAdminPassword(): string {
+    // Check .admin-pwd first — survives deploys (deploy never touches this file)
+    $pwdFile = __DIR__ . '/../../.admin-pwd';
+    if (file_exists($pwdFile)) {
+        $pwd = trim(file_get_contents($pwdFile));
+        if ($pwd !== '') return $pwd;
+    }
+    return getenv('STATS_PASSWORD') ?: 'stats2024';
+}
+
 function checkAuth(): void {
-    $password = getenv('STATS_PASSWORD') ?: 'stats2024';
+    $password = getAdminPassword();
     $cookie = $_COOKIE['stats_auth'] ?? '';
     if (urldecode($cookie) !== $password) {
         http_response_code(401);

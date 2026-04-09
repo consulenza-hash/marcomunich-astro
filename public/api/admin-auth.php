@@ -13,7 +13,7 @@ try {
     $body = readJsonBody();
     $password = $body['password'] ?? '';
 
-    $expected = getenv('STATS_PASSWORD') ?: 'stats2024';
+    $expected = getAdminPassword();
 
     if ($password === $expected) {
         jsonResponse(['success' => true]);

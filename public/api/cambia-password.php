@@ -22,24 +22,10 @@ if (strlen($nuova) < 6) {
     jsonResponse(['error' => 'Password troppo corta (min 6 caratteri)'], 400);
 }
 
-$envPath = __DIR__ . '/../../.env';
-$lines = file_exists($envPath) ? file($envPath, FILE_IGNORE_NEW_LINES) : [];
-
-$updated = false;
-foreach ($lines as &$line) {
-    if (strpos(trim($line), 'STATS_PASSWORD=') === 0) {
-        $line = 'STATS_PASSWORD=' . $nuova;
-        $updated = true;
-    }
-}
-unset($line);
-
-if (!$updated) {
-    $lines[] = 'STATS_PASSWORD=' . $nuova;
-}
-
-if (file_put_contents($envPath, implode("\n", $lines) . "\n") === false) {
-    jsonResponse(['error' => 'Impossibile aggiornare .env — controlla i permessi'], 500);
+// Write to .admin-pwd — this file is NOT touched by deploys (lftp mirror without --delete)
+$pwdFile = __DIR__ . '/../../.admin-pwd';
+if (file_put_contents($pwdFile, $nuova) === false) {
+    jsonResponse(['error' => 'Impossibile scrivere .admin-pwd — controlla i permessi'], 500);
 }
 
 jsonResponse(['success' => true, 'password' => $nuova]);
