@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: Change marcomunich.com A record to Netsons via cPanel UAPI
+      - name: Debug zone + fix A records
         run: |
           HOST="hostingweb21.netsons.net"
           PORT="2083"
@@ -16,69 +16,61 @@ jobs:
           PASS="${{ secrets.FTP_PASSWORD }}"
           NETSONS_IP="89.40.173.242"
           ZONE="marcomunich.com"
+          BASE="https://$HOST:$PORT/execute/DNS"
           CURL="curl -sk --connect-timeout 15 --max-time 30 -u $USER:$PASS"
 
-          echo "=== Fetching DNS zone via UAPI ==="
-          ZONE_JSON=$($CURL "https://$HOST:$PORT/execute/DNS/parse_zone?zone=$ZONE")
-          STATUS=$?
-          echo "curl exit: $STATUS | length: ${#ZONE_JSON}"
-          if [ $STATUS -ne 0 ] || [ -z "$ZONE_JSON" ]; then
-            echo "ERROR: could not reach cPanel" && exit 1
-          fi
+          echo "=== Fetching zone ==="
+          ZONE_JSON=$($CURL "$BASE/parse_zone?zone=$ZONE")
+          echo "length: ${#ZONE_JSON}"
 
-          echo "=== Current A/CNAME records for marcomunich.com ==="
+          echo "=== ALL records (first 20) ==="
           echo "$ZONE_JSON" | python3 -c "
           import sys,json
           d=json.load(sys.stdin)
-          for r in d.get('data',[]):
-              if isinstance(r, dict) and r.get('type') in ('A','CNAME') and 'marcomunich' in r.get('name',''):
-                  print(f\"  line_index={r.get('line_index')} {r.get('name')} {r.get('type')} {r.get('address') or r.get('cname')}\")
+          records=[r for r in d.get('data',[]) if isinstance(r,dict) and r.get('type') not in ('comment',None)]
+          for r in records[:20]:
+              print(f\"  type={r.get('type')} name='{r.get('name','')}' addr={r.get('address','')} line={r.get('line_index','')}\")
+          print(f'Total records: {len(records)}')
           "
 
-          echo "=== Finding A record line indexes for apex ==="
+          echo "=== Finding A records for apex (all names matching apex) ==="
           INDEXES=$(echo "$ZONE_JSON" | python3 -c "
           import sys,json
           d=json.load(sys.stdin)
           out=[]
           for r in d.get('data',[]):
-              if not isinstance(r, dict): continue
+              if not isinstance(r,dict): continue
+              t=r.get('type','')
               name=r.get('name','').rstrip('.')
-              if r.get('type')=='A' and name in ('marcomunich.com','@'):
-                  out.append(str(r['line_index']))
-                  print(f'Found: line_index={r[\"line_index\"]} addr={r.get(\"address\")}', file=sys.stderr)
+              addr=r.get('address','')
+              # Match apex: empty name, @, or domain name
+              is_apex = name in ('marcomunich.com','@','') or name==''
+              if t=='A' and is_apex:
+                  idx=r.get('line_index','')
+                  out.append(str(idx))
+                  print(f'Found apex A: line={idx} name={repr(r.get(\"name\"))} addr={addr}',file=sys.stderr)
           print(' '.join(out))
           ")
-          echo "Indexes to remove: $INDEXES"
+          echo "Indexes: $INDEXES"
 
           echo "=== Removing old A records ==="
           for IDX in $INDEXES; do
-            RESP=$($CURL -X POST \
-              "https://$HOST:$PORT/execute/DNS/remove_zone_record" \
+            RESP=$($CURL -X POST "$BASE/remove_zone_record" \
               -d "zone=$ZONE&line_index=$IDX")
-            echo "$RESP" | python3 -c "
-          import sys,json
-          d=json.load(sys.stdin)
-          print(f'  Removed $IDX: status={d.get(\"status\")} msgs={d.get(\"messages\")}')
-            " 2>/dev/null || echo "  Removed $IDX (no parse)"
+            echo "  Remove $IDX: $(echo $RESP | python3 -c 'import sys,json; d=json.load(sys.stdin); print(d.get(\"status\"),d.get(\"messages\"))' 2>/dev/null)"
           done
 
-          echo "=== Adding new A record -> $NETSONS_IP ==="
-          RESP=$($CURL -X POST \
-            "https://$HOST:$PORT/execute/DNS/add_zone_record" \
+          echo "=== Adding A @ -> $NETSONS_IP ==="
+          RESP=$($CURL -X POST "$BASE/add_zone_record" \
             -d "zone=$ZONE&name=$ZONE.&type=A&address=$NETSONS_IP&ttl=300")
-          echo "$RESP" | python3 -c "
-          import sys,json
-          d=json.load(sys.stdin)
-          print(f'Add result: status={d.get(\"status\")} msgs={d.get(\"messages\")}')
-          " 2>/dev/null || echo "Add submitted: $RESP"
+          echo "Add: $(echo $RESP | python3 -c 'import sys,json; d=json.load(sys.stdin); print(d.get(\"status\"),d.get(\"messages\"))' 2>/dev/null)"
 
-          echo ""
-          echo "=== Final zone check ==="
-          $CURL "https://$HOST:$PORT/execute/DNS/parse_zone?zone=$ZONE" | python3 -c "
+          echo "=== Verify ==="
+          $CURL "$BASE/parse_zone?zone=$ZONE" | python3 -c "
           import sys,json
           d=json.load(sys.stdin)
           for r in d.get('data',[]):
-              if isinstance(r, dict) and r.get('type') in ('A','CNAME') and 'marcomunich' in r.get('name',''):
-                  print(f\"  {r.get('name')} {r.get('type')} {r.get('address') or r.get('cname')}\")
+              if isinstance(r,dict) and r.get('type')=='A' and 'marcomunich' in r.get('name',''):
+                  print(f\"  {r.get('name')} A {r.get('address')} line={r.get('line_index')}\")
           " 2>/dev/null
-          echo "=== DNS updated. Propagation ~5 min ==="
+          echo "=== Done ==="
