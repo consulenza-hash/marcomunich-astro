@@ -1325,6 +1325,9 @@ document.getElementById('btn-pub').addEventListener('click', () => {
   S.bozza = false;
   document.getElementById('btn-pub').classList.add('active-pub');
   document.getElementById('btn-draft').classList.remove('active-draft');
+  if (!document.getElementById('edit-immagine').value.trim()) {
+    toast('⚠️ Nessuna immagine — il post su Instagram non funzionerà senza immagine.', 'error');
+  }
 });
 document.getElementById('btn-draft').addEventListener('click', () => {
   S.bozza = true;
