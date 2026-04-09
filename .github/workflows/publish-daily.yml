@@ -1,8 +1,9 @@
 name: Publish Daily — Carosello + Post Singolo + Reel
 
 on:
-  schedule:
-    - cron: '00 8 * * *'   # 08:00 UTC = 10:00 CET / 09:00 invernale
+  # schedule DISATTIVATO — pubblicazione spostata su Missinglettr
+  # schedule:
+  #   - cron: '00 8 * * *'
   workflow_dispatch:
     inputs:
       dry_run:
