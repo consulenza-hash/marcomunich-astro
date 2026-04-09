@@ -142,12 +142,13 @@ def verify_image_url(url, retries=5, wait=60):
     return False
 
 
-def create_story_container(ig_user_id, access_token, image_url, link_url=None, dry_run=False):
-    """POST /{ig-user-id}/media with media_type=STORIES."""
+def create_story_container(ig_user_id, access_token, image_url, dry_run=False):
+    """POST /{ig-user-id}/media with media_type=STORIES.
+    NOTE: link stickers are NOT supported via Content Publishing API for standard accounts.
+    Links must be added manually after publishing.
+    """
     if dry_run:
         print(f"    [dry-run] would create story container: {image_url}")
-        if link_url:
-            print(f"    [dry-run] link sticker: {link_url}")
         return "dryrun-container"
 
     url = f"{GRAPH_API_BASE}/{ig_user_id}/media"
@@ -156,8 +157,6 @@ def create_story_container(ig_user_id, access_token, image_url, link_url=None, d
         "image_url": image_url,
         "access_token": access_token,
     }
-    if link_url:
-        payload["link"] = link_url
 
     r = requests.post(url, data=payload, timeout=60)
     if not r.ok:
@@ -198,12 +197,10 @@ def publish_container(ig_user_id, access_token, container_id, dry_run=False):
     return r.json()["id"]
 
 
-def publish_story(image_url, link_url, label, config, dry_run=False):
+def publish_story(image_url, label, config, dry_run=False):
     """Full publish flow: verify → create → wait → publish."""
     print(f"> Publishing story: {label}")
     print(f"  Image: {image_url}")
-    if link_url:
-        print(f"  Link:  {link_url}")
 
     if not dry_run:
         print("  Verifying image URL...")
@@ -213,7 +210,7 @@ def publish_story(image_url, link_url, label, config, dry_run=False):
 
     container_id = create_story_container(
         config["ig_user_id"], config["access_token"],
-        image_url, link_url, dry_run=dry_run
+        image_url, dry_run=dry_run
     )
     print(f"  container_id: {container_id}")
 
@@ -252,9 +249,8 @@ def main():
     if args.article:
         slug = args.article.strip("/")
         image_url = f"{config['base_url']}/storia-{slug}.png"
-        link_url = f"{SITE_URL}/blog/{slug}/"
         label = f"Articolo: {slug}"
-        publish_story(image_url, link_url, label, config, dry_run=args.dry_run)
+        publish_story(image_url, label, config, dry_run=args.dry_run)
 
     elif args.product or args.product_id is not None:
         if args.product_id is not None:
@@ -265,9 +261,8 @@ def main():
 
         product = PRODUCTS[idx]
         image_url = f"{config['base_url']}/{product['image']}"
-        link_url = product["url"]
         label = f"Prodotto [{idx}]: {product['name']}"
-        publish_story(image_url, link_url, label, config, dry_run=args.dry_run)
+        publish_story(image_url, label, config, dry_run=args.dry_run)
 
     return 0
 
