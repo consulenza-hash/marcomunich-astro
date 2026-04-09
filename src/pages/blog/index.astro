@@ -28,7 +28,7 @@ const posts = Object.entries(rawFiles).map(([filePath, content]) => {
     slug,
     titolo:     (fm.titolo     as string) ?? slug,
     descrizione:(fm.descrizione as string) ?? '',
-    data:       fm.data ? String(fm.data) : '',
+    data:       fm.data instanceof Date ? fm.data.toISOString().slice(0, 10) : (fm.data ? String(fm.data) : ''),
     dataLegg:   fm.data ? formatData(String(fm.data)) : '',
     categoria:  (fm.categoria  as string) ?? '',
     immagine:   fm.immagine ? `/images/articoli/${fm.immagine}` : null,

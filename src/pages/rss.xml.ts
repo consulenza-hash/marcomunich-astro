@@ -28,7 +28,8 @@ export async function GET() {
       try { fm = (jsYaml.load(fmMatch[1]) as any) || {}; } catch { return null; }
 
       if (fm.bozza === true) return null;
-      if (fm.data && new Date(String(fm.data) + 'T12:00:00') > new Date()) return null;
+      const dataStr = fm.data instanceof Date ? fm.data.toISOString().slice(0, 10) : (fm.data ? String(fm.data) : '');
+      if (dataStr && new Date(dataStr + 'T12:00:00') > new Date()) return null;
 
       return {
         slug,
