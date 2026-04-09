@@ -624,6 +624,7 @@
     <a href="/admin/app.html#list" data-view="list">Articoli</a>
     <a href="/admin/genera">Genera AI</a>
     <a href="/admin/statistiche">Stats</a>
+    <button id="btn-pwd-open" title="Cambia password" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:14px;padding:0.2rem 0.4rem;border-radius:4px;line-height:1" onmouseover="this.style.color='var(--paper)'" onmouseout="this.style.color='var(--muted)'">🔑</button>
   </nav>
   <div id="header-actions">
     <a id="header-back" href="/admin/app.html#list">← Lista</a>
@@ -805,6 +806,28 @@
   </div>
 </div>
 
+<!-- ── CAMBIA PASSWORD MODAL ───────────────────────────────── -->
+<div id="pwd-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:200;align-items:center;justify-content:center">
+  <div style="background:#111827;border:1px solid #1e293b;border-radius:12px;padding:2rem;width:320px;position:relative">
+    <button onclick="document.getElementById('pwd-modal').style.display='none'" style="position:absolute;top:0.75rem;right:0.75rem;background:none;border:none;color:var(--muted);cursor:pointer;font-size:16px;line-height:1">✕</button>
+    <div style="font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:1.5rem">Cambia Password</div>
+    <label style="display:block;font-size:10px;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.35rem">Nuova password</label>
+    <input type="password" id="pwd-new" placeholder="Minimo 6 caratteri" autocomplete="new-password"
+      style="width:100%;background:#0a0f1a;border:1px solid #1e293b;color:#e2e8f0;font-size:14px;padding:0.65rem 0.75rem;border-radius:6px;outline:none;font-family:inherit;margin-bottom:0.75rem" />
+    <label style="display:block;font-size:10px;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.35rem">Conferma</label>
+    <input type="password" id="pwd-confirm" placeholder="Ripeti la password" autocomplete="new-password"
+      style="width:100%;background:#0a0f1a;border:1px solid #1e293b;color:#e2e8f0;font-size:14px;padding:0.65rem 0.75rem;border-radius:6px;outline:none;font-family:inherit" />
+    <button id="btn-pwd-save"
+      style="width:100%;margin-top:1.25rem;background:var(--gold);color:#0a0f1a;border:none;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;padding:0.65rem;border-radius:6px;cursor:pointer;font-family:inherit;font-weight:700">
+      Salva password
+    </button>
+    <div id="pwd-msg" style="margin-top:0.75rem;font-size:12px;min-height:1.2em"></div>
+    <div style="margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid #1e293b;font-size:11px;color:#475569;line-height:1.5">
+      Bloccato fuori? Usa <a href="/admin/reset.html" style="color:#64748b">reset.html</a> con il codice di recupero.
+    </div>
+  </div>
+</div>
+
 <!-- ── TOAST ───────────────────────────────────────────────── -->
 <div id="toast"></div>
 
@@ -817,11 +840,12 @@ const API = {
   auth:      '/api/admin-auth.php',
   lista:     '/api/lista-articoli.php',
   leggi:     '/api/articolo.php',
-  salva:     '/api/salva-bozza.php',
-  pubblica:  '/api/pubblica-articolo.php',
-  elimina:   '/api/elimina-articolo.php',
-  ai:        '/api/ai-action.php',
-  generaImg: '/api/genera-immagine.php',
+  salva:      '/api/salva-bozza.php',
+  pubblica:   '/api/pubblica-articolo.php',
+  elimina:    '/api/elimina-articolo.php',
+  ai:         '/api/ai-action.php',
+  generaImg:  '/api/genera-immagine.php',
+  cambiaPwd:  '/api/cambia-password.php',
 };
 
 // ── STATE ──────────────────────────────────────────────────────
@@ -908,6 +932,50 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
       errEl.textContent = 'Password errata';
     }
   } catch { errEl.textContent = 'Errore di connessione'; }
+});
+
+// ── CAMBIA PASSWORD ────────────────────────────────────────────
+document.getElementById('btn-pwd-open').addEventListener('click', () => {
+  const m = document.getElementById('pwd-modal');
+  m.style.display = 'flex';
+  document.getElementById('pwd-new').focus();
+  document.getElementById('pwd-msg').textContent = '';
+});
+
+document.getElementById('pwd-modal').addEventListener('click', (e) => {
+  if (e.target === e.currentTarget) e.currentTarget.style.display = 'none';
+});
+
+document.getElementById('btn-pwd-save').addEventListener('click', async () => {
+  const msg      = document.getElementById('pwd-msg');
+  const btn      = document.getElementById('btn-pwd-save');
+  const pwdNew   = document.getElementById('pwd-new').value;
+  const pwdConf  = document.getElementById('pwd-confirm').value;
+
+  msg.style.color = '#f87171';
+  if (pwdNew !== pwdConf)       { msg.textContent = 'Le password non coincidono.'; return; }
+  if (pwdNew.length < 6)        { msg.textContent = 'Minimo 6 caratteri.'; return; }
+
+  btn.disabled = true;
+  btn.textContent = 'Salvataggio…';
+  try {
+    const r = await fetch(API.cambiaPwd, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password_nuova: pwdNew }),
+    });
+    const d = await r.json();
+    if (d.success) {
+      document.cookie = 'stats_auth=' + encodeURIComponent(pwdNew) + ';path=/;max-age=604800';
+      msg.style.color = '#34d399';
+      msg.textContent = 'Password aggiornata.';
+      setTimeout(() => { document.getElementById('pwd-modal').style.display = 'none'; }, 1500);
+    } else {
+      msg.textContent = d.error || 'Errore sconosciuto.';
+    }
+  } catch { msg.textContent = 'Errore di connessione.'; }
+  btn.disabled = false;
+  btn.textContent = 'Salva password';
 });
 
 // ── ROUTER ─────────────────────────────────────────────────────
