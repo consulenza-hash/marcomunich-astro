@@ -47,13 +47,9 @@ export async function onRequestPost(context) {
   const token = env.ADMIN_SESSION_TOKEN;
   const cookieBase = `; Path=/admin; Max-Age=2592000; SameSite=Strict; Secure`;
 
-  return new Response(JSON.stringify({ ok: true }), {
-    headers: {
-      'Content-Type': 'application/json',
-      'Set-Cookie': [
-        `mm_admin_auth=${token}${cookieBase}; HttpOnly`,
-        `mm_admin_ui=1${cookieBase}`,
-      ].join(', '),
-    },
-  });
+  const headers = new Headers({ 'Content-Type': 'application/json' });
+  headers.append('Set-Cookie', `mm_admin_auth=${token}${cookieBase}; HttpOnly`);
+  headers.append('Set-Cookie', `mm_admin_ui=1${cookieBase}`);
+
+  return new Response(JSON.stringify({ ok: true }), { headers });
 }
