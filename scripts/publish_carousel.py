@@ -319,12 +319,31 @@ def main():
     parser.add_argument("--dry-run", action="store_true", help="Simulate without calling API")
     parser.add_argument("--force-id", type=int, help="Publish specific carousel id ignoring date")
     parser.add_argument("--list", action="store_true", help="Show schedule status")
+    parser.add_argument("--confirm", action="store_true", help="Required to actually publish (safety gate)")
     args = parser.parse_args()
 
     schedule = load_schedule()
 
     if args.list:
         cmd_list(schedule)
+        return 0
+
+    # Safety gate: --confirm required for any real publish operation
+    if not args.dry_run and not args.confirm:
+        _require_requests()
+        config = load_config(allow_missing=True)
+        entry = next((e for e in schedule if e["id"] == args.force_id), None) if args.force_id \
+            else find_next_due(schedule)
+        if not entry:
+            print("No pending carousel due right now. Nothing to do.")
+            return 0
+        urls = slide_urls_for(entry, config["base_url"])
+        print(f"\n⚠️  SAFETY GATE — pubblicazione bloccata")
+        print(f"   Carosello: [{entry['id']}] {entry['title']}")
+        print(f"   Data:      {entry['date']}")
+        print(f"   Slides:    {entry['slide_count']}")
+        print(f"   URL base:  {config['base_url']}")
+        print(f"\n   Aggiungi --confirm per pubblicare davvero.")
         return 0
 
     if not args.dry_run:

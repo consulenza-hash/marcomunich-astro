@@ -144,6 +144,7 @@ def main():
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--force-id", type=int, metavar="N")
     parser.add_argument("--list", action="store_true")
+    parser.add_argument("--confirm", action="store_true", help="Required to actually publish (safety gate)")
     args = parser.parse_args()
 
     token = os.environ.get("META_ACCESS_TOKEN", "")
@@ -169,6 +170,14 @@ def main():
 
     if not target:
         print("Nessun post da pubblicare." if not args.force_id else f"Post {args.force_id} non trovato.")
+        sys.exit(0)
+
+    # Safety gate: --confirm required for any real publish operation
+    if not args.dry_run and not args.confirm:
+        print(f"\n⚠️  SAFETY GATE — pubblicazione bloccata")
+        print(f"   Post:    [{target['num']:02d}] {target['overlay']}")
+        print(f"   Caption: {target['caption'][:80]}...")
+        print(f"\n   Aggiungi --confirm per pubblicare davvero.")
         sys.exit(0)
 
     print(f"\nPubblicazione POST {target['num']:02d} — {target['overlay']}")

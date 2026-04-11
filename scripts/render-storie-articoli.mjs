@@ -216,7 +216,7 @@ function generateStoriesHTML(articles) {
     flex: 1;
     display: flex;
     flex-direction: column;
-    padding: 120px 100px 80px 120px;
+    padding: 120px 100px 400px 120px;
   }
 
   /* Left accent bar */
