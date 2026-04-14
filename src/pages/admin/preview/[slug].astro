@@ -2,38 +2,32 @@
 export const prerender = true;
 
 import AdminGuard from '@components/AdminGuard.astro';
-import jsYaml from 'js-yaml';
-import Markdoc from '@markdoc/markdoc';
+import { getAllPosts, getPostBySlug, ghostPostToArticolo } from '@lib/ghost';
 
-// Genera pagine preview per TUTTI gli articoli, bozze incluse
+/**
+ * Preview page for admin — rendered from Ghost HTML.
+ * Shows published articles with a preview bar.
+ * For drafts: use the Ghost Admin editor's built-in preview (cms.marcomunich.com/ghost).
+ */
 export async function getStaticPaths() {
-  const rawFiles = import.meta.glob('/src/content/articoli/*/index.mdoc', {
-    eager: true,
-    as: 'raw',
-  }) as Record<string, string>;
-
-  return Object.entries(rawFiles).map(([filePath, content]) => {
-    const slug = filePath.match(/\/([^/]+)\/index\.mdoc$/)?.[1] ?? '';
-    return { params: { slug }, props: { rawContent: content } };
-  });
+  const posts = await getAllPosts();
+  return posts.map((p) => ({
+    params: { slug: p.slug },
+    props:  { slug: p.slug },
+  }));
 }
 
-const { slug } = Astro.params;
-const { rawContent } = Astro.props;
+const { slug } = Astro.props;
 
-const fmMatch = rawContent.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/);
-const fm      = fmMatch ? ((jsYaml.load(fmMatch[1]) as Record<string, any>) ?? {}) : {};
-const body    = fmMatch ? fmMatch[2].trim() : '';
+const ghostPost = await getPostBySlug(slug!);
+const art       = ghostPostToArticolo(ghostPost);
 
-const ast         = Markdoc.parse(body);
-const rendered    = Markdoc.transform(ast);
-const htmlContent = Markdoc.renderers.html(rendered);
-
-const title    = fm.titolo ?? slug;
-const isBozza  = fm.bozza === true;
-const date     = fm.data ? new Date(fm.data).toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' }) : null;
-const imageUrl = fm.immagine
-  ? (String(fm.immagine).startsWith('/') ? fm.immagine : `/images/articoli/${fm.immagine}`)
+const title    = art.titolo ?? slug;
+const htmlContent = art.htmlContent ?? '';
+const imageUrl = art.immagine ?? null;
+const rawDate  = ghostPost.published_at?.slice(0, 10) ?? null;
+const dateLabel = rawDate
+  ? new Date(rawDate + 'T12:00:00').toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' })
   : null;
 ---
 
@@ -42,7 +36,7 @@ const imageUrl = fm.immagine
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>{isBozza ? '[BOZZA] ' : ''}{title} — Anteprima Admin</title>
+  <title>{title} — Anteprima Admin</title>
   <meta name="robots" content="noindex,nofollow" />
   <link rel="stylesheet" href="/styles/global.css" />
   <style>
@@ -50,7 +44,7 @@ const imageUrl = fm.immagine
       position: sticky;
       top: 0;
       z-index: 999;
-      background: #7c3aed;
+      background: #059669;
       color: #fff;
       padding: .6rem 1.2rem;
       display: flex;
@@ -59,9 +53,6 @@ const imageUrl = fm.immagine
       font-family: system-ui, sans-serif;
       font-size: .85rem;
       gap: 1rem;
-    }
-    .preview-bar.is-pub {
-      background: #059669;
     }
     .preview-bar__label {
       font-weight: 700;
@@ -76,17 +67,7 @@ const imageUrl = fm.immagine
       text-overflow: ellipsis;
       opacity: .85;
     }
-    .preview-bar__back {
-      background: rgba(255,255,255,.15);
-      color: #fff;
-      text-decoration: none;
-      padding: .35rem .85rem;
-      border-radius: 6px;
-      font-weight: 600;
-      white-space: nowrap;
-      font-size: .82rem;
-    }
-    .preview-bar__back:hover { background: rgba(255,255,255,.25); }
+    .preview-bar__back,
     .preview-bar__live {
       background: rgba(255,255,255,.15);
       color: #fff;
@@ -97,15 +78,17 @@ const imageUrl = fm.immagine
       white-space: nowrap;
       font-size: .82rem;
     }
+    .preview-bar__back:hover,
+    .preview-bar__live:hover { background: rgba(255,255,255,.25); }
   </style>
 </head>
 <body>
   <AdminGuard />
 
-  <div class={`preview-bar${isBozza ? '' : ' is-pub'}`}>
-    <span class="preview-bar__label">{isBozza ? '○ Bozza' : '● Pubblicato'}</span>
+  <div class="preview-bar">
+    <span class="preview-bar__label">● Pubblicato</span>
     <span class="preview-bar__title">{title}</span>
-    {!isBozza && <a href={`/${slug}/`} target="_blank" class="preview-bar__live">Vedi live ↗</a>}
+    <a href={`/${slug}/`} target="_blank" class="preview-bar__live">Vedi live ↗</a>
     <a href="/admin/articoli/" class="preview-bar__back">← Admin</a>
   </div>
 
@@ -119,7 +102,7 @@ const imageUrl = fm.immagine
         <span>{title}</span>
       </nav>
       <h1 class="art-hero__title">{title}</h1>
-      {date && <time class="art-hero__date" datetime={fm.data}>Aggiornato il {date}</time>}
+      {dateLabel && <time class="art-hero__date" datetime={rawDate ?? ''}>{dateLabel}</time>}
     </div>
   </header>
 
@@ -135,18 +118,6 @@ const imageUrl = fm.immagine
       <div class="prose-marcomunich art-content">
         <Fragment set:html={htmlContent} />
       </div>
-
-      {fm.schema_faq?.length ? (
-        <div class="art-faq">
-          <h2 class="art-faq__title">Domande frequenti</h2>
-          {fm.schema_faq.map((f: any) => (
-            <details class="art-faq__item">
-              <summary class="art-faq__q">{f.domanda}</summary>
-              <p class="art-faq__a">{f.risposta}</p>
-            </details>
-          ))}
-        </div>
-      ) : null}
 
     </main>
   </div>

@@ -1,10 +1,11 @@
 <?php
 /**
  * POST /api/pubblica-articolo.php
- * Reads article from GitHub, removes bozza: true from frontmatter, commits back.
+ * Publishes a Ghost post (changes status to 'published').
+ * Input: { slug }
  */
 require_once __DIR__ . '/_config.php';
-require_once __DIR__ . '/_github.php';
+require_once __DIR__ . '/_ghost.php';
 
 checkAuth();
 
@@ -20,27 +21,24 @@ try {
         jsonResponse(['error' => 'Slug mancante'], 400);
     }
 
-    $filePath = "src/content/articoli/{$slug}/index.mdoc";
-    $file = ghGetFile($filePath);
-
-    if (!$file) {
+    $post = ghostGetPost($slug);
+    if (!$post) {
         jsonResponse(['error' => 'Articolo non trovato'], 404);
     }
 
-    $content = $file['content'];
+    $res = ghostRequest('posts/' . $post['id'] . '/', 'PUT', [
+        'posts' => [[
+            'status'     => 'published',
+            'updated_at' => $post['updated_at'], // optimistic lock
+        ]],
+    ]);
 
-    // Remove bozza: true line from frontmatter
-    $content = preg_replace('/^bozza:\s*true\n?/m', '', $content);
-
-    $res = ghPutFile($filePath, $content, "feat: pubblica articolo \"{$slug}\"", $file['sha']);
-
-    if ($res['code'] !== 200 && $res['code'] !== 201) {
-        jsonResponse(['error' => 'GitHub PUT ' . $res['code']], 500);
+    if ($res['code'] !== 200) {
+        $msg = $res['body']['errors'][0]['message'] ?? json_encode($res['body']);
+        jsonResponse(['error' => 'Ghost ' . $res['code'] . ': ' . $msg], 500);
     }
 
-    // Invalidate list cache
-    @unlink(sys_get_temp_dir() . '/mm_lista_articoli.json');
-
+    ghostInvalidateListCache();
     jsonResponse(['success' => true, 'slug' => $slug]);
 
 } catch (Exception $e) {

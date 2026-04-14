@@ -116,6 +116,8 @@ jobs:
             "GA4_PROPERTY_ID=${{ secrets.GA4_PROPERTY_ID }}" \
             "GSC_SITE_URL=${{ secrets.GSC_SITE_URL }}" \
             "IMAGEN_API_KEY=${{ secrets.IMAGEN_API_KEY }}" \
+            "GHOST_URL=${{ secrets.GHOST_URL }}" \
+            "GHOST_ADMIN_API_KEY=${{ secrets.GHOST_ADMIN_API_KEY }}" \
             > .env-server
           printf 'GOOGLE_SERVICE_ACCOUNT_JSON=%s\n' "$GOOGLE_SERVICE_ACCOUNT_JSON" >> .env-server
 

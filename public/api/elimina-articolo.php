@@ -1,10 +1,11 @@
 <?php
 /**
  * POST /api/elimina-articolo.php
- * Deletes an article folder from GitHub (all files in the folder).
+ * Permanently deletes a Ghost post.
+ * Input: { slug }
  */
 require_once __DIR__ . '/_config.php';
-require_once __DIR__ . '/_github.php';
+require_once __DIR__ . '/_ghost.php';
 
 checkAuth();
 
@@ -20,25 +21,20 @@ try {
         jsonResponse(['error' => 'Slug mancante'], 400);
     }
 
-    $dirPath = "src/content/articoli/{$slug}";
-    $files = ghListDir($dirPath);
-
-    if (empty($files)) {
+    $post = ghostGetPost($slug);
+    if (!$post) {
         jsonResponse(['error' => 'Articolo non trovato'], 404);
     }
 
-    // Delete all files in the folder
-    foreach ($files as $file) {
-        $sha = $file['sha'] ?? '';
-        $path = $file['path'] ?? '';
-        if ($sha && $path) {
-            ghDeleteFile($path, $sha, "chore: elimina {$path}");
-        }
+    $res = ghostRequest('posts/' . $post['id'] . '/', 'DELETE');
+
+    // Ghost DELETE returns 204 No Content on success
+    if ($res['code'] !== 204) {
+        $msg = $res['body']['errors'][0]['message'] ?? ('HTTP ' . $res['code']);
+        jsonResponse(['error' => 'Ghost ' . $res['code'] . ': ' . $msg], 500);
     }
 
-    // Invalidate list cache
-    @unlink(sys_get_temp_dir() . '/mm_lista_articoli.json');
-
+    ghostInvalidateListCache();
     jsonResponse(['success' => true, 'slug' => $slug]);
 
 } catch (Exception $e) {

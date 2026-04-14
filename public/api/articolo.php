@@ -1,10 +1,13 @@
 <?php
 /**
  * GET /api/articolo.php?slug=xxx
- * Reads a single article from GitHub and returns its full .mdoc content.
+ * Reads a single article from Ghost Admin API.
+ * Returns { testo, id, status, updated_at }
+ * where `testo` is a pseudo-.mdoc string (YAML frontmatter + HTML body)
+ * for backwards compatibility with admin pages.
  */
 require_once __DIR__ . '/_config.php';
-require_once __DIR__ . '/_github.php';
+require_once __DIR__ . '/_ghost.php';
 
 checkAuth();
 
@@ -13,19 +16,22 @@ if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
 }
 
 try {
-    $slug = $_GET['slug'] ?? '';
+    $slug = trim($_GET['slug'] ?? '');
     if (!$slug) {
         jsonResponse(['error' => 'Missing slug'], 400);
     }
 
-    $filePath = "src/content/articoli/{$slug}/index.mdoc";
-    $file = ghGetFile($filePath);
-
-    if (!$file) {
+    $post = ghostGetPost($slug);
+    if (!$post) {
         jsonResponse(['error' => 'Articolo non trovato'], 404);
     }
 
-    jsonResponse(['testo' => $file['content']]);
+    jsonResponse([
+        'testo'      => ghostPostToTesto($post),
+        'id'         => $post['id'],
+        'status'     => $post['status'],
+        'updated_at' => $post['updated_at'],
+    ]);
 
 } catch (Exception $e) {
     jsonResponse(['error' => $e->getMessage()], 500);
