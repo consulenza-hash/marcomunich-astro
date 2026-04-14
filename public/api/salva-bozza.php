@@ -1,7 +1,8 @@
 <?php
 /**
  * POST /api/salva-bozza.php
- * Creates or updates a Ghost post (always as draft).
+ * Creates or updates a Ghost post.
+ * Status: draft (default) or published (when art.bozza === false from editor).
  * Input: { art, modo, slug_esistente, existing_titolo, existing_corpo, existing_immagine, existing_data }
  */
 require_once __DIR__ . '/_config.php';
@@ -43,6 +44,10 @@ try {
     $faqHtml   = buildFaqHtml($faqs);
     $mobiledoc = buildMobiledoc($corpo ?: '<p></p>', $faqHtml);
 
+    // ── Status: art.bozza===false means "Pubblicato" in the editor toggle ──
+    $wantPublish = array_key_exists('bozza', $art) && $art['bozza'] === false;
+    $ghostStatus = $wantPublish ? 'published' : 'draft';
+
     // ── Build Ghost post payload ──
     $postData = [
         'title'            => $titolo,
@@ -51,7 +56,7 @@ try {
         'meta_title'       => $seoTitle ?: null,
         'meta_description' => $seoDescr ?: null,
         'mobiledoc'        => $mobiledoc,
-        'status'           => 'draft',
+        'status'           => $ghostStatus,
     ];
     if ($immagine) $postData['feature_image'] = $immagine;
 

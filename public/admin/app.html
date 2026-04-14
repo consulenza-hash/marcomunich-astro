@@ -313,6 +313,7 @@
     }
     .badge-pub   { background: rgba(5,150,105,0.15); color: #34d399; border: 1px solid rgba(5,150,105,0.3); }
     .badge-draft { background: rgba(245,158,11,0.12); color: var(--gold); border: 1px solid rgba(245,158,11,0.25); }
+    .badge-sched { background: rgba(99,102,241,0.12); color: #818cf8; border: 1px solid rgba(99,102,241,0.25); }
     .date-cell { font-size: 12px; color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
     .actions { display: flex; gap: 0.35rem; justify-content: flex-end; flex-wrap: nowrap; }
     .btn-action {
@@ -649,6 +650,7 @@
       <div class="stats" id="list-stats">
         <div><div class="stat-num" id="stat-totale">—</div><div class="stat-label">Totale</div></div>
         <div><div class="stat-num" id="stat-pub">—</div><div class="stat-label">Pubblicati</div></div>
+        <div><div class="stat-num" id="stat-sched">—</div><div class="stat-label">Programmati</div></div>
         <div><div class="stat-num" id="stat-bozze">—</div><div class="stat-label">Bozze</div></div>
       </div>
     </div>
@@ -662,6 +664,7 @@
       </div>
       <button class="filter-btn active" data-filter="tutti">Tutti</button>
       <button class="filter-btn" data-filter="pubblicato">Pubblicati</button>
+      <button class="filter-btn" data-filter="programmato">Programmati</button>
       <button class="filter-btn" data-filter="bozza">Bozze</button>
       <span class="count-badge" id="list-count"></span>
     </div>
@@ -1067,11 +1070,13 @@ async function loadList() {
 
 function renderList(data) {
   // Stats
-  const pub = data.filter(a => !a.bozza).length;
-  const boz = data.filter(a => a.bozza).length;
+  const pub   = data.filter(a => a.status === 'published').length;
+  const sched = data.filter(a => a.status === 'scheduled').length;
+  const boz   = data.filter(a => a.bozza).length;
   document.getElementById('stat-totale').textContent = data.length;
-  document.getElementById('stat-pub').textContent = pub;
-  document.getElementById('stat-bozze').textContent = boz;
+  document.getElementById('stat-pub').textContent    = pub;
+  document.getElementById('stat-sched').textContent  = sched;
+  document.getElementById('stat-bozze').textContent  = boz;
 
   const tbody = document.getElementById('list-tbody');
   if (!data.length) {
@@ -1079,14 +1084,18 @@ function renderList(data) {
     return;
   }
 
-  tbody.innerHTML = data.map(a => `
-    <tr data-status="${a.bozza ? 'bozza' : 'pubblicato'}" data-search="${esc((a.titolo + ' ' + a.slug).toLowerCase())}">
+  tbody.innerHTML = data.map(a => {
+    const statusKey  = a.status === 'scheduled' ? 'programmato' : (a.bozza ? 'bozza' : 'pubblicato');
+    const badgeClass = a.status === 'scheduled' ? 'badge-sched' : (a.bozza ? 'badge-draft' : 'badge-pub');
+    const badgeText  = a.status === 'scheduled' ? '◷ Programmato' : (a.bozza ? '○ Bozza' : '● Pubblicato');
+    return `
+    <tr data-status="${statusKey}" data-search="${esc((a.titolo + ' ' + a.slug).toLowerCase())}">
       <td>
         <div class="art-title">${esc(a.titolo)}</div>
         <div class="art-slug">${esc(a.slug)}</div>
       </td>
       <td><span class="date-cell">${esc(a.data || '—')}</span></td>
-      <td><span class="badge ${a.bozza ? 'badge-draft' : 'badge-pub'}">${a.bozza ? '○ Bozza' : '● Pubblicato'}</span></td>
+      <td><span class="badge ${badgeClass}">${badgeText}</span></td>
       <td>
         <div class="actions">
           <button class="btn-action" onclick="goEdit('${esc(a.slug)}')">Modifica</button>
@@ -1097,7 +1106,8 @@ function renderList(data) {
           <button class="btn-action btn-delete" data-slug="${esc(a.slug)}" onclick="doDelete(this,'${esc(a.slug)}')">Elimina</button>
         </div>
       </td>
-    </tr>`).join('');
+    </tr>`;
+  }).join('');
 
   applyListFilter();
 }
