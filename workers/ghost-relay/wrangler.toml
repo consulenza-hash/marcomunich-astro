@@ -1,0 +1,6 @@
+name = "ghost-relay"
+main = "worker.js"
+compatibility_date = "2024-01-01"
+
+# Env vars sensibili: impostare via `wrangler secret put GITHUB_TOKEN`
+# Non mettere mai token qui in chiaro

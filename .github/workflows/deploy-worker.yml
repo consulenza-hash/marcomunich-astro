@@ -1,0 +1,35 @@
+name: Deploy Ghost Relay Worker
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'workers/ghost-relay/**'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy CF Worker
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: workers/ghost-relay
+          command: deploy
+
+      - name: Set GITHUB_TOKEN secret on Worker
+        env:
+          CF_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CF_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          GHOST_RELAY_GITHUB_TOKEN: ${{ secrets.GHOST_RELAY_GITHUB_TOKEN }}
+        run: |
+          curl -s -X PUT \
+            "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/workers/scripts/ghost-relay/secrets" \
+            -H "Authorization: Bearer ${CF_API_TOKEN}" \
+            -H "Content-Type: application/json" \
+            -d "{\"name\":\"GITHUB_TOKEN\",\"text\":\"${GHOST_RELAY_GITHUB_TOKEN}\",\"type\":\"secret_text\"}"
