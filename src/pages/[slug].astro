@@ -2,68 +2,41 @@
 /**
  * [slug].astro  — Static (prerender = true)
  *
- * Genera le pagine articolo a build time usando import.meta.glob
- * per leggere i file .mdoc e Markdoc per convertirli in HTML.
+ * Genera le pagine articolo a build time via Ghost Content API.
  */
 export const prerender = true;
 
 import BaseLayout from '@layouts/BaseLayout.astro';
-import jsYaml from 'js-yaml';
-import Markdoc from '@markdoc/markdoc';
+import { getAllPosts, getPostBySlug, ghostPostToArticolo } from '@lib/ghost';
 
 // ── getStaticPaths ──────────────────────────────────────────────────────────
 export async function getStaticPaths() {
-  const rawFiles = import.meta.glob('/src/content/articoli/*/index.mdoc', {
-    eager: true,
-    as: 'raw',
-  }) as Record<string, string>;
-
-  const today = new Date();
-  today.setHours(23, 59, 59, 999);
-
-  return Object.entries(rawFiles)
-    .filter(([_, content]) => {
-      const fmMatch = content.match(/^---\r?\n([\s\S]*?)\r?\n---/);
-      if (!fmMatch) return false;
-      const fmStr = fmMatch[1];
-      if (/^bozza:\s*true/m.test(fmStr)) return false;
-      const dateMatch = fmStr.match(/^data:\s*(\d{4}-\d{2}-\d{2})/m);
-      if (dateMatch && new Date(dateMatch[1] + 'T12:00:00') > today) return false;
-      return true;
-    })
-    .map(([filePath, content]) => {
-      const slug = filePath.match(/\/([^/]+)\/index\.mdoc$/)?.[1] ?? '';
-      return { params: { slug }, props: { rawContent: content } };
-    });
+  const posts = await getAllPosts();
+  return posts.map(p => ({ params: { slug: p.slug } }));
 }
 
 const { slug } = Astro.params;
-const { rawContent } = Astro.props;
+const ghostPost = await getPostBySlug(slug!);
+if (!ghostPost) return Astro.redirect('/404');
 
-// ── Parse frontmatter + body ─────────────────────────────────────────────────
-const fmMatch = rawContent.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/);
-const fm      = fmMatch ? ((jsYaml.load(fmMatch[1]) as Record<string, any>) ?? {}) : {};
-const body    = fmMatch ? fmMatch[2].trim() : '';
-
-// ── Render Markdoc → HTML ─────────────────────────────────────────────────────
-const ast         = Markdoc.parse(body);
-const rendered    = Markdoc.transform(ast);
-const htmlContent = Markdoc.renderers.html(rendered);
+const art = ghostPostToArticolo(ghostPost);
 
 // ── Dati articolo ────────────────────────────────────────────────────────────
-const title    = fm.titolo ?? slug;
-const date     = fm.data ? new Date(fm.data).toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' }) : null;
-const imageUrl = fm.immagine
-  ? (String(fm.immagine).startsWith('/') ? fm.immagine : `/images/articoli/${fm.immagine}`)
+const title       = art.titolo;
+const htmlContent = art.htmlContent;
+const imageUrl    = art.immagine ?? null;
+const rawDate     = ghostPost.published_at?.slice(0, 10) ?? '';
+const date        = rawDate
+  ? new Date(rawDate).toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' })
   : null;
 
-const seoTitle = fm.seo_title       || title;
-const seoDesc  = fm.seo_description || fm.descrizione || '';
+const seoTitle = art.seo_title   || title;
+const seoDesc  = art.seo_description || art.descrizione || '';
 const siteUrl  = 'https://marcomunich.com';
-const seoImage = fm.seo_image
-  ? (fm.seo_image.startsWith('http') ? fm.seo_image : `${siteUrl}${fm.seo_image}`)
+const seoImage = art.seo_image
+  ? (art.seo_image.startsWith('http') ? art.seo_image : `${siteUrl}${art.seo_image}`)
   : imageUrl
-    ? `${siteUrl}${imageUrl}`
+    ? (imageUrl.startsWith('http') ? imageUrl : `${siteUrl}${imageUrl}`)
     : `${siteUrl}/og-image.jpg`;
 
 function safeJsonLd(obj: unknown): string {
@@ -79,18 +52,6 @@ const breadcrumbSchema = safeJsonLd({
     { '@type': 'ListItem', position: 3, name: title,  item: `${siteUrl}/${slug}/` },
   ],
 });
-
-const faqSchema = fm.schema_faq?.length
-  ? safeJsonLd({
-      '@context': 'https://schema.org',
-      '@type': 'FAQPage',
-      mainEntity: fm.schema_faq.map((f: any) => ({
-        '@type': 'Question',
-        name: f.domanda,
-        acceptedAnswer: { '@type': 'Answer', text: f.risposta },
-      })),
-    })
-  : null;
 ---
 
 <BaseLayout
@@ -99,13 +60,12 @@ const faqSchema = fm.schema_faq?.length
   image={seoImage}
   currentPath={`/${slug}/`}
   schemaType="Article"
-  datePublished={fm.data ?? ''}
-  dateModified={fm.data ?? ''}
-  noIndex={fm.seo_noindex}
-  canonicalOverride={fm.canonical_url}
+  datePublished={rawDate}
+  dateModified={rawDate}
+  canonicalOverride={art.canonical_url}
 >
   <script slot="head" type="application/ld+json" set:html={breadcrumbSchema} />
-  {faqSchema && <script slot="head" type="application/ld+json" set:html={faqSchema} />}
+
 
   <!-- HERO ARTICOLO -->
   <header class="art-hero">
@@ -118,7 +78,7 @@ const faqSchema = fm.schema_faq?.length
         <span>{title}</span>
       </nav>
       <h1 class="art-hero__title">{title}</h1>
-      {date && <time class="art-hero__date" datetime={fm.data}>Aggiornato il {date}</time>}
+      {date && <time class="art-hero__date" datetime={rawDate}>Aggiornato il {date}</time>}
     </div>
   </header>
 
@@ -145,18 +105,7 @@ const faqSchema = fm.schema_faq?.length
         <Fragment set:html={htmlContent} />
       </div>
 
-      <!-- FAQ -->
-      {fm.schema_faq?.length ? (
-        <div class="art-faq">
-          <h2 class="art-faq__title">Domande frequenti</h2>
-          {fm.schema_faq.map((f: any) => (
-            <details class="art-faq__item">
-              <summary class="art-faq__q">{f.domanda}</summary>
-              <p class="art-faq__a">{f.risposta}</p>
-            </details>
-          ))}
-        </div>
-      ) : null}
+      <!-- FAQ (rese via HTML da Ghost) -->
 
       <!-- Firma autore -->
       <div class="art-author">

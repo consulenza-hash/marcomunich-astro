@@ -2,14 +2,10 @@
 /**
  * blog/index.astro
  * Archivio articoli — griglia 3 colonne con immagine in evidenza
+ * Fonte dati: Ghost CMS via Content API
  */
 import BaseLayout from '@layouts/BaseLayout.astro';
-import jsYaml from 'js-yaml';
-
-const rawFiles = import.meta.glob('/src/content/articoli/*/index.mdoc', {
-  eager: true,
-  as: 'raw',
-}) as Record<string, string>;
+import { getAllPosts, ghostPostToArticolo } from '@lib/ghost';
 
 // Formatta data leggibile
 function formatData(dateStr: string): string {
@@ -20,21 +16,19 @@ function formatData(dateStr: string): string {
   } catch { return dateStr; }
 }
 
-const posts = Object.entries(rawFiles).map(([filePath, content]) => {
-  const slug   = filePath.match(/\/([^/]+)\/index\.mdoc$/)?.[1] ?? '';
-  const fmStr  = content.match(/^---\r?\n([\s\S]*?)\r?\n---/)?.[1] ?? '';
-  const fm     = (jsYaml.load(fmStr) as Record<string, any>) ?? {};
+const ghostPosts = await getAllPosts();
+const posts = ghostPosts.map(p => {
+  const a = ghostPostToArticolo(p);
   return {
-    slug,
-    titolo:     (fm.titolo     as string) ?? slug,
-    descrizione:(fm.descrizione as string) ?? '',
-    data:       fm.data instanceof Date ? fm.data.toISOString().slice(0, 10) : (fm.data ? String(fm.data) : ''),
-    dataLegg:   fm.data ? formatData(String(fm.data)) : '',
-    categoria:  (fm.categoria  as string) ?? '',
-    immagine:   fm.immagine ? `/images/articoli/${fm.immagine}` : null,
-    bozza:      fm.bozza === true,
+    slug:       a.slug,
+    titolo:     a.titolo,
+    descrizione:a.descrizione ?? '',
+    data:       a.data ?? '',
+    dataLegg:   a.data ? formatData(a.data) : '',
+    categoria:  a.categoria ?? '',
+    immagine:   a.immagine ?? null,
   };
-}).filter(p => !p.bozza && (!p.data || new Date(p.data + 'T12:00:00') <= new Date())).sort((a, b) => new Date(b.data).getTime() - new Date(a.data).getTime());
+});
 ---
 
 <BaseLayout
