@@ -1,7 +1,6 @@
 <script is:inline>
 (function () {
-  // Un solo cookie per tutto l'admin: stats_auth (1 anno)
-  // Stesso cookie usato da app.html e da tutte le API PHP
+  // Unico check: stats_auth (usato anche da app.html e PHP APIs)
   function hasCookie() {
     return document.cookie.split(';').some(function(c) {
       return c.trim().startsWith('stats_auth=');
@@ -47,7 +46,8 @@
       document.getElementById('mm-btn').disabled = true;
       document.getElementById('mm-btn').textContent = '...';
 
-      fetch('/api/admin-auth.php', {
+      // Usa /admin/verify (CF Function) — funziona su Cloudflare Pages
+      fetch('/admin/verify', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ password: pwd }),
@@ -55,8 +55,8 @@
       })
         .then(function (r) { return r.json(); })
         .then(function (data) {
-          if (data.success) {
-            // Stesso cookie usato da app.html — 1 anno
+          if (data.ok) {
+            // Imposta anche stats_auth (1 anno) — usato da app.html e PHP APIs su Netsons
             document.cookie = 'stats_auth=' + encodeURIComponent(pwd) + ';path=/;max-age=31536000;SameSite=Lax';
             overlay.remove();
             location.reload();
