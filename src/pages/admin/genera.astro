@@ -188,7 +188,7 @@ import AdminGuard from '@components/AdminGuard.astro';
         <h1>🤖 Generatore <span>AI</span></h1>
         <nav class="nav-links">
           <a href="/admin/">← Admin</a>
-          <a href="/keystatic">CMS</a>
+          <a href="https://cms.marcomunich.com/ghost">Ghost</a>
           <a href="/admin/riscrivi">Riscrivi</a>
           <a href="/admin/statistiche">Statistiche</a>
         </nav>
@@ -237,7 +237,7 @@ import AdminGuard from '@components/AdminGuard.astro';
       </div>
 
       <!-- STEP 3: Genera -->
-      <button id="btn-genera" onclick="genera()">✨ Genera con Claude — Salva in Keystatic</button>
+      <button id="btn-genera" onclick="genera()">✨ Genera con Claude — Salva in Ghost</button>
 
       <!-- Progress -->
       <div id="progress-wrap">
@@ -302,7 +302,7 @@ import AdminGuard from '@components/AdminGuard.astro';
     var modoCorrente = _paramModo;
     var timerInterval = null;
     var startTime = 0;
-    var _keystatic_url = '';
+    var _ghost_redir = '';
 
     // Set initial modo
     if (_paramModo !== 'solo-articolo') {
@@ -339,7 +339,7 @@ import AdminGuard from '@components/AdminGuard.astro';
     }
 
     window.applicaArticolo = function() {
-      if (_keystatic_url) window.location.href = _keystatic_url;
+      if (_ghost_redir) window.location.href = _ghost_redir;
     };
 
     window.switchSource = function(tipo, btn) {
@@ -372,7 +372,7 @@ import AdminGuard from '@components/AdminGuard.astro';
       document.getElementById('error-box').classList.remove('visible');
       var btn = document.getElementById('btn-genera');
       btn.disabled = false;
-      btn.textContent = '✨ Genera con Claude — Salva in Keystatic';
+      btn.textContent = '✨ Genera con Claude — Salva in Ghost';
     };
 
     function showError(msg) {
@@ -382,7 +382,7 @@ import AdminGuard from '@components/AdminGuard.astro';
       document.getElementById('error-msg').textContent = msg;
       var btn = document.getElementById('btn-genera');
       btn.disabled = false;
-      btn.textContent = '✨ Genera con Claude — Salva in Keystatic';
+      btn.textContent = '✨ Genera con Claude — Salva in Ghost';
     }
 
     window.genera = async function() {
@@ -489,7 +489,7 @@ import AdminGuard from '@components/AdminGuard.astro';
         }
 
         stopTimer();
-        _keystatic_url = saveData.keystatic_url;
+        _ghost_redir = saveData.keystatic_url;
         var secs = ((Date.now() - startTime) / 1000).toFixed(1);
         document.getElementById('progress-idle').style.display = 'none';
         document.getElementById('progress-done').style.display = '';
