@@ -1,7 +1,14 @@
 <script is:inline>
 (function () {
-  // Controlla solo il cookie UI non-HttpOnly (il vero auth è mm_admin_auth HttpOnly, verificato server-side)
-  if (document.cookie.match(/(?:^|;\s*)mm_admin_ui=1/)) return;
+  // Un solo cookie per tutto l'admin: stats_auth (1 anno)
+  // Stesso cookie usato da app.html e da tutte le API PHP
+  function hasCookie() {
+    return document.cookie.split(';').some(function(c) {
+      return c.trim().startsWith('stats_auth=');
+    });
+  }
+
+  if (hasCookie()) return;
 
   document.documentElement.style.visibility = 'hidden';
 
@@ -40,14 +47,17 @@
       document.getElementById('mm-btn').disabled = true;
       document.getElementById('mm-btn').textContent = '...';
 
-      fetch('/admin/verify', {
+      fetch('/api/admin-auth.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ password: pwd }),
+        credentials: 'include',
       })
         .then(function (r) { return r.json(); })
         .then(function (data) {
-          if (data.ok) {
+          if (data.success) {
+            // Stesso cookie usato da app.html — 1 anno
+            document.cookie = 'stats_auth=' + encodeURIComponent(pwd) + ';path=/;max-age=31536000;SameSite=Lax';
             overlay.remove();
             location.reload();
           } else {

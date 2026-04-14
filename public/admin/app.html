@@ -928,7 +928,9 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
     });
     const d = await r.json();
     if (d.success) {
-      document.cookie = 'stats_auth=' + encodeURIComponent(pwd) + ';path=/;max-age=604800';
+      // 1 anno — stesso cookie usato da AdminGuard.astro
+      document.cookie = 'stats_auth=' + encodeURIComponent(pwd) + ';path=/;max-age=31536000;SameSite=Lax';
+      document.cookie = 'mm_admin_ui=1;path=/admin;max-age=31536000;SameSite=Lax';
       document.getElementById('login-screen').classList.remove('show');
       S.authed = true;
       init();
