@@ -5,25 +5,18 @@
  */
 import BaseLayout from '@layouts/BaseLayout.astro';
 import PostCard from '@components/PostCard.astro';
-import {
-  getAllTags,
-  getAllPosts,
-} from '@lib/wordpress';
+import { getAllTags, getPostsByTag, ghostPostToArticolo } from '@lib/ghost';
 
 export async function getStaticPaths() {
-  const tags     = await getAllTags();
-  const allPosts = await getAllPosts();
+  const tags = await getAllTags();
 
-  return tags.map((tag) => {
-    const posts = allPosts
-      .filter((p) => p.tags?.includes(tag.id))
-      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  const paths = await Promise.all(tags.map(async (tag) => {
+    const ghostPosts = await getPostsByTag(tag.slug);
+    const posts = ghostPosts.map(p => ghostPostToArticolo(p));
+    return { params: { slug: tag.slug }, props: { tag, posts } };
+  }));
 
-    return {
-      params: { slug: tag.slug },
-      props:  { tag, posts },
-    };
-  });
+  return paths;
 }
 
 const { tag, posts } = Astro.props;
