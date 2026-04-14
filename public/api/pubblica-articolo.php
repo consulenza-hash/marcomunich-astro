@@ -39,6 +39,7 @@ try {
     }
 
     ghostInvalidateListCache();
+    triggerRebuild('ghost_post_published');
     jsonResponse(['success' => true, 'slug' => $slug]);
 
 } catch (Exception $e) {

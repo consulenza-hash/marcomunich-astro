@@ -35,6 +35,7 @@ try {
     }
 
     ghostInvalidateListCache();
+    triggerRebuild('post.deleted');
     jsonResponse(['success' => true, 'slug' => $slug]);
 
 } catch (Exception $e) {

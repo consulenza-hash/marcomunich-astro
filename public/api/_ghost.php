@@ -238,3 +238,30 @@ define('LISTA_GHOST_CACHE', sys_get_temp_dir() . '/mm_lista_articoli_ghost.json'
 function ghostInvalidateListCache(): void {
     @unlink(LISTA_GHOST_CACHE);
 }
+
+/**
+ * Trigger a GitHub Actions repository_dispatch to rebuild the site.
+ * Fires and forgets — does not block the response.
+ * $eventType: e.g. 'ghost_post_published', 'post.deleted'
+ */
+function triggerRebuild(string $eventType = 'ghost_post_published'): void {
+    $token = getenv('GITHUB_TOKEN');
+    if (!$token) return; // silent — rebuild is best-effort
+
+    $ch = curl_init('https://api.github.com/repos/consulenza-hash/marcomunich-astro/dispatches');
+    curl_setopt_array($ch, [
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT        => 8,
+        CURLOPT_POST           => true,
+        CURLOPT_POSTFIELDS     => json_encode(['event_type' => $eventType]),
+        CURLOPT_HTTPHEADER     => [
+            'Authorization: Bearer ' . $token,
+            'Accept: application/vnd.github+json',
+            'Content-Type: application/json',
+            'User-Agent: marcomunich-api',
+            'X-GitHub-Api-Version: 2022-11-28',
+        ],
+    ]);
+    curl_exec($ch); // fire and forget — ignore result
+    curl_close($ch);
+}
