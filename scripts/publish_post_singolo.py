@@ -172,6 +172,13 @@ def main():
         print("Nessun post da pubblicare." if not args.force_id else f"Post {args.force_id} non trovato.")
         sys.exit(0)
 
+    # Safety gate: blocca se caption vuota
+    if not target["caption"]:
+        print(f"\n❌ CAPTION MANCANTE — post {target['num']:02d} non pubblicato.")
+        print(f"   Overlay: {target['overlay']}")
+        print(f"   Aggiungi la caption in post-singoli.md prima di pubblicare.")
+        sys.exit(1)
+
     # Safety gate: --confirm required for any real publish operation
     if not args.dry_run and not args.confirm:
         print(f"\n⚠️  SAFETY GATE — pubblicazione bloccata")
