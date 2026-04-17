@@ -79,6 +79,8 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          # CVE-2026-0933 FIX: pin wrangler >= 4.59.1 (command injection via --commit-hash)
+          wranglerVersion: '4.59.1'
           command: pages deploy dist --project-name marcomunich-com --branch main --commit-dirty=true
 
   # ── Job 3: Netsons FTP — static HTML + PHP API ───────────────────────────

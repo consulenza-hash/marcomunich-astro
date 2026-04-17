@@ -11,6 +11,13 @@
  */
 require_once __DIR__ . '/../_config.php';
 
+// SEC-028 FIX: Origin check
+$_allowed_origins = ['https://marcomunich.com', 'https://www.marcomunich.com'];
+$_origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+if ($_origin !== '' && !in_array($_origin, $_allowed_origins, true)) {
+    jsonResponse(['error' => 'Origin non consentita'], 403);
+}
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST' && $_SERVER['REQUEST_METHOD'] !== 'GET') {
     jsonResponse(['error' => 'Metodo non consentito'], 405);
 }

@@ -18,6 +18,10 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 $slug = trim($_POST['slug'] ?? '');
 if (!$slug) jsonResponse(['error' => 'Slug mancante'], 400);
+// SEC-023 FIX: valida slug — previene path traversal nei path GitHub
+if (!preg_match('/^[a-z0-9][a-z0-9\-]{0,99}$/', $slug)) {
+    jsonResponse(['error' => 'Slug non valido'], 400);
+}
 
 if (empty($_FILES['file']) || $_FILES['file']['error'] !== UPLOAD_ERR_OK) {
     jsonResponse(['error' => 'File mancante o errore upload'], 400);

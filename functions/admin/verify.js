@@ -45,7 +45,8 @@ export async function onRequestPost(context) {
   // 1. mm_admin_auth: HttpOnly, Secure — real auth token (CF middleware checks this)
   // 2. mm_admin_ui: non-HttpOnly — overlay hide signal for AdminGuard JS
   const token = env.ADMIN_SESSION_TOKEN;
-  const cookieBase = `; Path=/admin; Max-Age=31536000; SameSite=Lax; Secure`;
+  // Path=/ — il cookie deve essere inviato anche per le richieste a /api/* (proxy CF)
+  const cookieBase = `; Path=/; Max-Age=31536000; SameSite=Lax; Secure`;
 
   const headers = new Headers({ 'Content-Type': 'application/json' });
   headers.append('Set-Cookie', `mm_admin_auth=${token}${cookieBase}; HttpOnly`);

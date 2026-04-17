@@ -20,6 +20,10 @@ try {
     if (!$slug) {
         jsonResponse(['error' => 'Slug mancante'], 400);
     }
+    // SEC-023 FIX: valida slug
+    if (!preg_match('/^[a-z0-9][a-z0-9\-]{0,99}$/', $slug)) {
+        jsonResponse(['error' => 'Slug non valido'], 400);
+    }
 
     $post = ghostGetPost($slug);
     if (!$post) {

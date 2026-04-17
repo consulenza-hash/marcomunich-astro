@@ -51,7 +51,13 @@ function getAdminPassword(): string {
         $pwd = trim(file_get_contents($pwdFile));
         if ($pwd !== '') return $pwd;
     }
-    return getenv('STATS_PASSWORD') ?: 'stats2024';
+    $env = getenv('STATS_PASSWORD');
+    if ($env !== false && $env !== '') return $env;
+
+    // SEC-016 FIX: fail closed — never return a hardcoded default
+    http_response_code(503);
+    echo json_encode(['error' => 'Admin password non configurata sul server']);
+    exit;
 }
 
 function checkAuth(): void {

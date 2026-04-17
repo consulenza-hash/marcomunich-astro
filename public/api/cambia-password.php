@@ -28,4 +28,5 @@ if (file_put_contents($pwdFile, $nuova) === false) {
     jsonResponse(['error' => 'Impossibile scrivere .admin-pwd — controlla i permessi'], 500);
 }
 
-jsonResponse(['success' => true, 'password' => $nuova]);
+// SEC-021 FIX: mai restituire la password nel body della risposta
+jsonResponse(['success' => true]);
