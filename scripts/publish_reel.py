@@ -35,7 +35,7 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 REELS_DIR    = PROJECT_ROOT / "public" / "contenuti-social" / "video-reels"
 STATUS_FILE  = PROJECT_ROOT / ".claude" / "reels-status.json"
 IG_API       = "https://graph.instagram.com/v22.0"
-DEFAULT_BASE = "https://marcomunich-com.pages.dev/contenuti-social/video-reels"
+DEFAULT_BASE = "https://marcomunich.com/contenuti-social/video-reels"
 TOTAL_REELS  = 60
 
 

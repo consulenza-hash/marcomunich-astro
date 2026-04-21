@@ -141,6 +141,25 @@ jobs:
             mirror --reverse --verbose --parallel=4 --delete public/api/ /public_html/api/;
             mirror --reverse --verbose --parallel=4 --delete public/admin/ /public_html/admin/;
             quit;
-          " || echo "⚠️ lftp done (warnings non-fatal)"
+          " || echo "lftp done (warnings non-fatal)"
+
+          # Upload video-reels a Netsons (solo mp4, senza --delete)
+          # lftp salta automaticamente i file già presenti (stessa size/mtime)
+          # Prima esecuzione ~475MB; successive: STAT check rapido, 0 upload
+          echo "Syncing video-reels to Netsons..."
+          timeout 600 lftp -c "
+            set ftp:ssl-allow yes;
+            set ftp:ssl-force no;
+            set ftp:passive-mode yes;
+            set ssl:verify-certificate no;
+            set net:timeout 60;
+            set net:max-retries 3;
+            open -u ${{ secrets.FTP_USERNAME }},${{ secrets.FTP_PASSWORD }} 89.40.173.242;
+            mirror --reverse --parallel=2 --no-perms \
+              --include-glob 'reel-*.mp4' \
+              --exclude-glob '*' \
+              public/contenuti-social/video-reels/ /public_html/contenuti-social/video-reels/;
+            quit;
+          " || echo "video sync done (warnings non-fatal)"
         env:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
