@@ -153,11 +153,9 @@ const breadcrumbSchema = safeJsonLd({
       <div class="art-sidebar__widget">
         <p class="art-sidebar__widget-text">Se quello che pubblico ti ha aiutato, puoi fare una <a href="https://paypal.me/marcomunich83/" target="_blank" rel="noopener noreferrer">donazione qui</a>.</p>
         <a href="https://paypal.me/marcomunich83/" target="_blank" rel="noopener noreferrer" class="pp-donate-btn">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 16" width="14" height="16" aria-hidden="true" focusable="false">
-            <path fill="#009cde" d="M13.1 1.9C12.3.8 10.8.2 8.7.2H3.1c-.4 0-.7.3-.8.7L.1 12.4c0 .3.2.6.5.6h3.2l.8-5.1v.2c.1-.4.4-.7.8-.7h1.7c3.2 0 5.8-1.3 6.5-5.1v-.3c-.2 0-.2-.1 0 0 .2-1.1 0-1.9-.5-2.1z"/>
-            <path fill="#012169" d="M5.8 4.4c.1-.4.3-.6.6-.7h4.1c.5 0 .9 0 1.3.1l.3.1.3.1c.1 0 .2.1.3.1.2 1.1 0 2-.4 2.7C11.6 8.6 9.9 9.4 7.5 9.4H6.2c-.4 0-.7.3-.8.6L4.8 14h-2l1.4-9h1.6z"/>
-          </svg>
-          <span>Donazione</span>
+          <span class="pp-wordmark" aria-hidden="true"><em class="pp-pay">Pay</em><em class="pp-pal">Pal</em></span>
+          <span class="pp-divider" aria-hidden="true"></span>
+          <span class="pp-donate-label">Donazione</span>
         </a>
       </div>
 
@@ -320,27 +318,55 @@ const breadcrumbSchema = safeJsonLd({
   .art-sidebar__widget-text { font-size: 0.8rem; line-height: 1.65; color: #666; text-align: center; }
   .art-sidebar__widget-text a { color: #0d0d0d; }
   .pp-donate-btn {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    justify-content: center;
-    gap: 7px;
+    gap: 10px;
     margin: 0.85rem auto 0;
     width: fit-content;
-    padding: 10px 24px;
-    background: linear-gradient(180deg, #f7c844 0%, #f0a500 100%);
-    border: 1px solid #c78500;
-    border-radius: 5px;
-    box-shadow: 0 2px 3px rgba(0,0,0,.2), inset 0 1px 0 rgba(255,255,255,.4);
-    font-family: Verdana, Arial, sans-serif;
-    font-size: 15px;
-    font-style: italic;
-    font-weight: bold;
-    color: #333;
+    padding: 11px 22px;
+    background: linear-gradient(180deg, #ffc439 0%, #f5a623 100%);
+    border: 1px solid #e09000;
+    border-bottom-color: #c07800;
+    border-radius: 24px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.45);
     text-decoration: none;
     cursor: pointer;
-    transition: filter 0.15s;
+    transition: box-shadow 0.15s, filter 0.15s;
   }
-  .pp-donate-btn:hover { filter: brightness(1.07); }
+  .pp-donate-btn:hover {
+    filter: brightness(1.05);
+    box-shadow: 0 3px 8px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.45);
+  }
+  .pp-wordmark {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0;
+    line-height: 1;
+  }
+  .pp-pay, .pp-pal {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 17px;
+    font-weight: 900;
+    font-style: italic;
+    letter-spacing: -0.3px;
+  }
+  .pp-pay { color: #003087; }
+  .pp-pal { color: #009cde; }
+  .pp-divider {
+    display: inline-block;
+    width: 1px;
+    height: 18px;
+    background: rgba(0,0,0,.2);
+    border-radius: 1px;
+  }
+  .pp-donate-label {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    font-style: italic;
+    color: #003087;
+    letter-spacing: 0.1px;
+  }
   .art-sidebar__cta { background: #f5f5f5; padding: 1.5rem; border-radius: 4px; }
   .art-sidebar__cta-title {
     font-family: 'Inter', sans-serif;
