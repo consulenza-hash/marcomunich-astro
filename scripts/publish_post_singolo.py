@@ -74,13 +74,19 @@ def save_status(status: dict):
 
 
 def check_url(url: str, retries: int = 5, delay: int = 10) -> bool:
+    """Verifica che l'URL esista E che l'immagine sia almeno 1KB (non vuota/corrotta)."""
     import urllib.request
+    MIN_IMAGE_BYTES = 1024  # < 1KB = immagine vuota o placeholder
     for attempt in range(1, retries + 1):
         try:
-            req = urllib.request.Request(url, method="HEAD")
+            req = urllib.request.Request(url, method="GET")
             with urllib.request.urlopen(req, timeout=15) as r:
-                if r.status == 200:
-                    return True
+                if r.status != 200:
+                    raise RuntimeError(f"HTTP {r.status}")
+                data = r.read(MIN_IMAGE_BYTES + 1)
+                if len(data) < MIN_IMAGE_BYTES:
+                    raise RuntimeError(f"Immagine troppo piccola ({len(data)} byte) — file vuoto o corrotto")
+                return True
         except Exception as e:
             print(f"  URL check {attempt}/{retries}: {e}")
         if attempt < retries:

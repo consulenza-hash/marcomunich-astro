@@ -40,6 +40,8 @@ def main():
         extra.append("--dry-run")
     if args.list:
         extra.append("--list")
+    if not args.dry_run and not args.list:
+        extra.append("--confirm")  # safety gate richiede --confirm; publish_daily è la conferma
 
     print("=" * 60)
     print("CAROSELLO")
