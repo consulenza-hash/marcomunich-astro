@@ -91,7 +91,7 @@ Rispondi SOLO con JSON. Se hai modificato il testo: {\"corpo\": \"testo modifica
         break;
 
     default:
-        jsonResponse(['error' => 'Azione non valida: ' . $azione], 400);
+        jsonResponse(['error' => 'Azione non valida'], 400); // SEC-034 FIX: non riflettere $azione
 }
 
 // ── Chiama Claude ─────────────────────────────────────────────────────────────

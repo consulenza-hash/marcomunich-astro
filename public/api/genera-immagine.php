@@ -19,6 +19,10 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 $body = readJsonBody();
 $slug = trim($body['slug'] ?? '');
 if (!$slug) jsonResponse(['error' => 'Slug mancante'], 400);
+// SEC-031 FIX: valida slug — previene path traversal nel path GitHub
+if (!preg_match('/^[a-z0-9][a-z0-9\-]{0,99}$/', $slug)) {
+    jsonResponse(['error' => 'Slug non valido'], 400);
+}
 
 // ── API key ──────────────────────────────────────────────────────────────────
 $anthropicKey = getenv('ANTHROPIC_API_KEY');

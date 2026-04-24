@@ -26,7 +26,6 @@ export async function onRequest(context) {
     return next();
   }
 
-  // Token mancante o errato — serve la pagina statica (AdminGuard mostrerà l'overlay)
-  // Per blocco hard: return new Response('Unauthorized', { status: 401 });
-  return next();
+  // SEC-033 FIX: blocco hard — non servire HTML admin a utenti non autenticati
+  return new Response('Unauthorized', { status: 401 });
 }
