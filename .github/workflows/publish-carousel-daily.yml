@@ -1,9 +1,8 @@
 name: Publish Carousel to Instagram
 
 on:
-  # schedule PAUSED — nuove immagini in lavorazione, riattivare quando C02+ sono pronti
-  # schedule:
-  #   - cron: '30 7 * * *'
+  schedule:
+    - cron: '30 7 * * *'
 
   workflow_dispatch:
     inputs:
