@@ -151,6 +151,7 @@ def main():
     parser.add_argument("--dry-run",  action="store_true")
     parser.add_argument("--force-id", type=int, metavar="N")
     parser.add_argument("--list",     action="store_true")
+    parser.add_argument("--confirm",  action="store_true", help="Required to actually publish (safety gate)")
     args = parser.parse_args()
 
     token    = os.environ.get("META_ACCESS_TOKEN", "")

@@ -1,59 +1,18 @@
 {
   "published": [
-    {
-      "num": 1,
-      "overlay": "Hai un sito. Non hai un sito tuo.",
-      "media_id": "18086849737992407",
-      "published_at": "2026-04-08T11:31:29.363657+00:00"
-    },
-    {
-      "num": 2,
-      "overlay": "Il tono che usi online sceglie il cliente al posto tuo.",
-      "media_id": "17876838939436506",
-      "published_at": "2026-04-10T19:35:28.892703+00:00"
-    },
-    {
-      "num": 3,
-      "overlay": "La vulnerabilit� calendarizzata ha un odore preciso.",
-      "media_id": "18075666437187606",
-      "published_at": "2026-04-10T19:36:43.116663+00:00"
-    },
-    {
-      "num": 4,
-      "overlay": "Sette anni di formazione. Pagina bianca ogni luned�.",
-      "media_id": "18081958625452738",
-      "published_at": "2026-04-11T09:30:18.264323+00:00"
-    },
-    {
-      "num": 5,
-      "overlay": "Ventimila follower. Tre clienti paganti in un trimestre.",
-      "media_id": "17966219822906312",
-      "published_at": "2026-04-12T09:30:19.569094+00:00"
-    },
-    {
-      "num": 6,
-      "overlay": "Alle tre di notte nessuno cerca soluzioni.",
-      "media_id": "17899732164423116",
-      "published_at": "2026-04-13T09:30:20.026147+00:00"
-    },
-    {
-      "num": 7,
-      "overlay": "La maschera online firma un contratto che tradirai in studio.",
-      "media_id": "18081605189107016",
-      "published_at": "2026-04-14T09:30:20.804848+00:00"
-    },
-    {
-      "num": 8,
-      "overlay": "I tuoi futuri clienti chiedono consigli a ChatGPT. Sei nella risposta?",
-      "media_id": "18112976176787241",
-      "published_at": "2026-04-16T09:30:13.992379+00:00"
-    },
-    {
-      "num": 9,
-      "overlay": "Scrivi del cliente. Il servizio lo trovano da soli.",
-      "media_id": "17934009948057628",
-      "published_at": "2026-04-17T12:32:34.599898+00:00"
-    }
+    {"num": 1, "overlay": "Hai un sito. Non hai un sito tuo.", "media_id": "18086849737992407", "published_at": "2026-04-08T11:31:29.363657+00:00"},
+    {"num": 2, "overlay": "Il tono che usi online sceglie il cliente al posto tuo.", "media_id": "17876838939436506", "published_at": "2026-04-10T19:35:28.892703+00:00"},
+    {"num": 3, "overlay": "La vulnerabilità calendarizzata ha un odore preciso.", "media_id": "18075666437187606", "published_at": "2026-04-10T19:36:43.116663+00:00"},
+    {"num": 4, "overlay": "Sette anni di formazione. Pagina bianca ogni lunedì.", "media_id": "18081958625452738", "published_at": "2026-04-11T09:30:18.264323+00:00"},
+    {"num": 5, "overlay": "Ventimila follower. Tre clienti paganti in un trimestre.", "media_id": "17966219822906312", "published_at": "2026-04-12T09:30:19.569094+00:00"},
+    {"num": 6, "overlay": "Alle tre di notte nessuno cerca soluzioni.", "media_id": "17899732164423116", "published_at": "2026-04-13T09:30:20.026147+00:00"},
+    {"num": 7, "overlay": "La maschera online firma un contratto che tradirai in studio.", "media_id": "18081605189107016", "published_at": "2026-04-14T09:30:20.804848+00:00"},
+    {"num": 8, "overlay": "I tuoi futuri clienti chiedono consigli a ChatGPT. Sei nella risposta?", "media_id": "18112976176787241", "published_at": "2026-04-16T09:30:13.992379+00:00"},
+    {"num": 9, "overlay": "Scrivi del cliente. Il servizio lo trovano da soli.", "media_id": "17934009948057628", "published_at": "2026-04-17T12:32:34.599898+00:00"},
+    {"num": 10, "overlay": "La tua voce è originale. La stai copiando su qualcuno che ammiri.", "media_id": "17885337426494430", "published_at": "2026-04-18T09:30:24.485402+00:00"},
+    {"num": 11, "overlay": "Tutti i profili dei coach si assomigliano. Il tuo è uno di quelli.", "media_id": "17962114008103910", "published_at": "2026-04-19T09:30:14.608799+00:00"},
+    {"num": 12, "overlay": "Un cliente sbagliato vale quanto due sessioni di supervisione.", "media_id": "18075615119637261", "published_at": "2026-04-20T09:30:12.463368+00:00"},
+    {"num": 13, "overlay": "Il profilo ti fa vedere. La newsletter ti fa conoscere.", "media_id": "18239995423307482", "published_at": "2026-04-21T09:30:25.528924+00:00"}
   ],
   "failed": []
 }
