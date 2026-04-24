@@ -56,11 +56,32 @@ async function ghostFetch<T>(
   url.searchParams.set('key', GHOST_CONTENT_API_KEY);
   for (const [k, v] of Object.entries(params)) url.searchParams.set(k, v);
 
-  const res = await fetch(url.toString(), {
-    headers: { 'Accept-Version': 'v5.0' },
-  });
-  if (!res.ok) throw new Error(`[ghost.ts] ${endpoint} → ${res.status}`);
-  return res.json() as Promise<T>;
+  // Retry con backoff esponenziale — Ghost su Netsons può restituire 503 transienti
+  const MAX_RETRIES = 4;
+  const RETRY_DELAYS_MS = [2000, 5000, 10000, 20000]; // 2s, 5s, 10s, 20s
+
+  let lastError: Error = new Error('unreachable');
+  for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
+    try {
+      const res = await fetch(url.toString(), {
+        headers: { 'Accept-Version': 'v5.0' },
+      });
+      if (res.ok) return res.json() as Promise<T>;
+
+      lastError = new Error(`[ghost.ts] ${endpoint} → ${res.status}`);
+      // Non ritentare su errori client (4xx), solo su server errors (5xx)
+      if (res.status < 500) throw lastError;
+    } catch (err) {
+      lastError = err instanceof Error ? err : new Error(String(err));
+    }
+
+    if (attempt < MAX_RETRIES - 1) {
+      const delay = RETRY_DELAYS_MS[attempt];
+      console.warn(`[ghost.ts] ${endpoint} tentativo ${attempt + 1}/${MAX_RETRIES} fallito, retry tra ${delay / 1000}s...`);
+      await new Promise(r => setTimeout(r, delay));
+    }
+  }
+  throw lastError;
 }
 
 // ─── API pubblica ─────────────────────────────────────────────────────────────
