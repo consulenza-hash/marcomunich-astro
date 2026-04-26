@@ -9,27 +9,6 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 >
 
 <div class="ps4-page">
-  <!-- mesh gradient bg -->
-  <div class="ps4-bg" aria-hidden="true">
-    <span class="ps4-bg__blob ps4-bg__blob--magenta"></span>
-    <span class="ps4-bg__blob ps4-bg__blob--cyan"></span>
-    <span class="ps4-bg__blob ps4-bg__blob--violet"></span>
-  </div>
-
-  <header class="ps4-nav">
-    <div class="ps4-container ps4-nav__inner">
-      <a href="#" class="ps4-logo"><span class="ps4-logo__sym">▸</span>marco.dev</a>
-      <nav class="ps4-menu">
-        <a href="#cosa">// cosa costruisco</a>
-        <a href="#lavori">// lavori</a>
-        <a href="#metodo">// metodo</a>
-        <a href="#chi">// chi sono</a>
-        <a href="/blog/">// articoli</a>
-        <a href="/contatti/" class="ps4-menu__cta">[ contattami ]</a>
-      </nav>
-    </div>
-  </header>
-
   <section class="ps4-hero">
     <div class="ps4-container">
       <div class="ps4-status-bar">
@@ -212,38 +191,67 @@ import BaseLayout from '@layouts/BaseLayout.astro';
     </div>
   </section>
 
-  <section class="ps4-cta">
+  <section class="ps4-section" id="contatti">
     <div class="ps4-container">
-      <div class="ps4-cta__box">
-        <p class="ps4-cta__kicker">// LAVORIAMO INSIEME</p>
-        <h2 class="ps4-cta__title"><span class="ps4-h1__chrome">PARLIAMONE.</span></h2>
-        <p class="ps4-cta__sub">
-          Una chiamata gratuita di trenta minuti. Capisco la tua situazione, ti dico se posso aiutarti davvero. Se non posso, te lo dico subito. ✦
-        </p>
-        <a href="/contatti/" class="ps4-btn ps4-btn--big">[ FISSA UNA CHIAMATA → ]</a>
+      <h2 class="ps4-section__title"><span class="ps4-arrow">▸</span> CONTATTAMI · PARLIAMONE</h2>
+      <div class="ps4-contact">
+        <div class="ps4-contact__intro">
+          <p class="ps4-contact__lead">
+            Una chiamata gratuita di trenta minuti. Capisco la tua situazione, ti dico se posso aiutarti davvero. Se non posso, te lo dico subito e ti indirizzo verso qualcun altro. ✦
+          </p>
+          <div class="ps4-contact__direct">
+            <p class="ps4-contact__direct-lbl">// preferisci scrivere direttamente?</p>
+            <a href="mailto:consulenza@marcomunich.com" class="ps4-contact__email">consulenza@marcomunich.com</a>
+          </div>
+        </div>
+        <form class="ps4-form" id="ps4-form" onsubmit="return ps4SubmitContact(event)">
+          <div class="ps4-form__row">
+            <label for="ps4-nome">// nome</label>
+            <input type="text" id="ps4-nome" name="nome" required autocomplete="name" />
+          </div>
+          <div class="ps4-form__row">
+            <label for="ps4-email">// email</label>
+            <input type="email" id="ps4-email" name="email" required autocomplete="email" />
+          </div>
+          <div class="ps4-form__row">
+            <label for="ps4-tipo">// tipo progetto</label>
+            <select id="ps4-tipo" name="tipo" required>
+              <option value="">— scegli —</option>
+              <option>Sito vetrina</option>
+              <option>Landing page</option>
+              <option>E-commerce</option>
+              <option>Web app custom</option>
+              <option>Posizionamento online</option>
+              <option>Altro / non sono sicuro</option>
+            </select>
+          </div>
+          <div class="ps4-form__row">
+            <label for="ps4-messaggio">// raccontami il progetto</label>
+            <textarea id="ps4-messaggio" name="messaggio" rows="5" required placeholder="Cosa stai costruendo, a chi parla, cosa ti serve..."></textarea>
+          </div>
+          <button type="submit" class="ps4-btn ps4-btn--big">[ INVIA RICHIESTA → ]</button>
+          <p class="ps4-form__note" id="ps4-form-note"></p>
+        </form>
       </div>
     </div>
   </section>
-
-  <footer class="ps4-foot">
-    <div class="ps4-container ps4-foot__inner">
-      <div>
-        <p class="ps4-logo"><span class="ps4-logo__sym">▸</span>marco.dev</p>
-        <p class="ps4-foot__tag">// sviluppo web · Vicenza, IT · 2019—2026</p>
-      </div>
-      <div class="ps4-foot__cols">
-        <a href="/portfolio/">// lavori</a>
-        <a href="/servizi/posizionamento-online/">// posizionamento</a>
-        <a href="/vibe-coding/">// vibe coding</a>
-        <a href="/blog/">// articoli</a>
-        <a href="/contatti/">// contatti</a>
-      </div>
-    </div>
-    <div class="ps4-container">
-      <p class="ps4-foot__credit">// session terminated · marcomunich ✦</p>
-    </div>
-  </footer>
 </div>
+
+<script is:inline>
+  function ps4SubmitContact(e) {
+    e.preventDefault();
+    var nome = document.getElementById('ps4-nome').value;
+    var email = document.getElementById('ps4-email').value;
+    var tipo = document.getElementById('ps4-tipo').value;
+    var msg = document.getElementById('ps4-messaggio').value;
+    var subject = 'Nuovo contatto da ' + nome + ' — ' + tipo;
+    var body = 'Da: ' + nome + ' (' + email + ')\nTipo progetto: ' + tipo + '\n\n' + msg;
+    var mailto = 'mailto:consulenza@marcomunich.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+    window.location.href = mailto;
+    document.getElementById('ps4-form-note').textContent = '// apertura del client email...';
+    return false;
+  }
+</script>
 
 </BaseLayout>
 
@@ -358,6 +366,30 @@ import BaseLayout from '@layouts/BaseLayout.astro';
   .ps4-stack__row:last-child { border-bottom: 0; }
   .ps4-stack__lbl { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: #ff2d92; }
   .ps4-stack__val { font-family: 'JetBrains Mono', monospace; font-size: 0.88rem; line-height: 1.7; color: #f0e9ff; }
+
+  /* CONTACT FORM */
+  .ps4-contact { display: grid; grid-template-columns: 1fr 1.2fr; gap: 4rem; align-items: start; }
+  .ps4-contact__lead { font-size: 1.05rem; line-height: 1.75; color: rgba(240,233,255,0.85); margin: 0 0 2rem; }
+  .ps4-contact__direct { background: rgba(255,255,255,0.03); border: 1px solid rgba(240,233,255,0.15); border-radius: 12px; padding: 1.5rem; backdrop-filter: blur(10px); }
+  .ps4-contact__direct-lbl { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: rgba(240,233,255,0.5); margin: 0 0 0.6rem; }
+  .ps4-contact__email { font-family: 'JetBrains Mono', monospace; color: #00e5ff; text-decoration: none; font-size: 0.95rem; border-bottom: 1px solid rgba(0,229,255,0.5); padding-bottom: 0.2rem; word-break: break-all; }
+  .ps4-contact__email:hover { color: #fff; border-bottom-color: #fff; }
+
+  .ps4-form { background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(0,229,255,0.04) 100%); border: 1px solid rgba(240,233,255,0.18); border-radius: 16px; padding: 2.2rem; backdrop-filter: blur(15px); box-shadow: 0 0 50px rgba(0,229,255,0.08); display: flex; flex-direction: column; gap: 1.4rem; }
+  .ps4-form__row { display: flex; flex-direction: column; gap: 0.5rem; }
+  .ps4-form__row label { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: #ff2d92; letter-spacing: 0.05em; }
+  .ps4-form__row input, .ps4-form__row select, .ps4-form__row textarea { background: rgba(10,5,18,0.6); border: 1px solid rgba(240,233,255,0.2); border-radius: 6px; padding: 0.85rem 1rem; color: #f0e9ff; font-family: 'JetBrains Mono', monospace; font-size: 0.92rem; transition: border-color 0.2s ease, box-shadow 0.2s ease; outline: none; }
+  .ps4-form__row input:focus, .ps4-form__row select:focus, .ps4-form__row textarea:focus { border-color: #00e5ff; box-shadow: 0 0 20px rgba(0,229,255,0.2); }
+  .ps4-form__row textarea { font-family: 'Inter', sans-serif; resize: vertical; min-height: 120px; line-height: 1.6; }
+  .ps4-form__row select { cursor: pointer; }
+  .ps4-form__row input::placeholder, .ps4-form__row textarea::placeholder { color: rgba(240,233,255,0.35); }
+  .ps4-form .ps4-btn { align-self: flex-start; margin-top: 0.5rem; cursor: pointer; border: none; }
+  .ps4-form__note { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: #6ee870; margin: 0; min-height: 1em; }
+
+  @media (max-width: 768px) {
+    .ps4-contact { grid-template-columns: 1fr; gap: 2.5rem; }
+    .ps4-form { padding: 1.6rem; }
+  }
 
   .ps4-cta { padding: 7rem 0; }
   .ps4-cta__box { text-align: center; background: linear-gradient(135deg, rgba(138,58,255,0.1) 0%, rgba(0,229,255,0.08) 100%); border: 1px solid rgba(240,233,255,0.2); border-radius: 24px; padding: 5rem 3rem; backdrop-filter: blur(20px); box-shadow: 0 0 80px rgba(255,45,146,0.15); }

@@ -1,226 +1,79 @@
 ---
 /**
- * Header.astro — Floating pill nav (Vetter style)
- * Position: fixed, overlay sull'hero. Diventa opaco allo scroll.
+ * Header.astro — Y2K Chrome sticky nav (globale)
  */
-const { currentPath = '/', ctaLink = '', ctaLabel = '' } = Astro.props;
+const { currentPath = '/' } = Astro.props;
 
 const navItems = [
-  { label: 'Chi sono',  href: '/chi-sono/' },
-  { label: 'Articoli',  href: '/blog/' },
-  { label: 'Servizi',   href: '/servizi/' },
-  { label: 'Risorse',   href: '/risorse/' },
+  { label: '// cosa costruisco', href: '/#cosa' },
+  { label: '// lavori',           href: '/#lavori' },
+  { label: '// metodo',           href: '/#metodo' },
+  { label: '// chi sono',         href: '/#chi' },
+  { label: '// articoli',         href: '/blog/' },
 ];
-
-const isActive = (href: string) => {
-  if (href === '/') return currentPath === '/';
-  return currentPath.startsWith(href);
-};
 ---
 
-<header class="mm-header" id="mm-header">
-  <nav class="mm-nav" aria-label="Navigazione principale">
-    <a href="/" class="mm-nav__logo" aria-label="Marco Munich - Homepage">
-      Marco<span class="mm-dot">.</span>
+<header class="ps4-nav-global" id="ps4-header">
+  <div class="ps4-nav-container">
+    <a href="/" class="ps4-logo" aria-label="Marco Munich">
+      <span class="ps4-logo__sym">▸</span>marco.dev
     </a>
-    <ul class="mm-nav__links" role="list">
+    <nav class="ps4-menu" aria-label="Navigazione principale">
       {navItems.map(item => (
-        <li>
-          <a
-            href={item.href}
-            class={`mm-nav__link${isActive(item.href) ? ' mm-nav__link--active' : ''}`}
-            aria-current={isActive(item.href) ? 'page' : undefined}
-          >{item.label}</a>
-        </li>
+        <a href={item.href}>{item.label}</a>
       ))}
-    </ul>
-    <a href="/contatti/" class="mm-nav__cta">Parliamo</a>
-    <div class="mm-nav__clock" id="mm-clock" aria-hidden="true">--:--</div>
-    <button class="mm-nav__burger" id="mm-burger" aria-label="Apri menu" aria-expanded="false" aria-controls="mm-mobile-menu">
+      <a href="/#contatti" class="ps4-menu__cta">[ contattami ]</a>
+    </nav>
+    <button class="ps4-burger" id="ps4-burger" aria-label="Menu" aria-expanded="false">
       <span></span><span></span>
     </button>
-  </nav>
+  </div>
 </header>
 
-<div class="mm-mobile-menu" id="mm-mobile-menu" aria-hidden="true">
+<div class="ps4-mobile" id="ps4-mobile" aria-hidden="true">
   <ul role="list">
     {navItems.map(item => (
-      <li><a href={item.href} class="mm-mobile-link">{item.label}</a></li>
+      <li><a href={item.href}>{item.label}</a></li>
     ))}
-    <li><a href="/contatti/" class="mm-mobile-link mm-mobile-cta">Parliamo →</a></li>
+    <li><a href="/#contatti" class="ps4-mobile__cta">[ contattami ]</a></li>
   </ul>
 </div>
 
 <style>
-  .mm-header {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    padding: 1rem 1.5rem;
-    pointer-events: none;
-  }
-  .mm-nav {
-    max-width: 940px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    gap: 0.2rem;
-    background: rgba(13,13,13,0.80);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-    border: 1px solid rgba(255,255,255,0.07);
-    border-radius: 60px;
-    padding: 0.5rem 0.5rem 0.5rem 1.6rem;
-    pointer-events: all;
-    transition: background 0.3s;
-  }
-  .mm-header.is-scrolled .mm-nav {
-    background: rgba(13,13,13,0.96);
-    border-color: rgba(255,255,255,0.05);
-  }
-  .mm-nav__logo {
-    font-family: 'Inter', sans-serif;
-    font-weight: 800;
-    font-size: 0.92rem;
-    letter-spacing: -0.01em;
-    color: #fff;
-    text-decoration: none;
-    margin-right: 1.2rem;
-    flex-shrink: 0;
-  }
-  .mm-dot { color: #e85d00; }
-  .mm-nav__links {
-    display: flex;
-    list-style: none;
-    padding: 0; margin: 0;
-    gap: 0; flex: 1;
-  }
-  .mm-nav__link {
-    display: block;
-    color: rgba(255,255,255,0.55);
-    text-decoration: none;
-    font-size: 0.78rem;
-    font-weight: 500;
-    padding: 0.42rem 0.85rem;
-    border-radius: 40px;
-    transition: color 0.15s, background 0.15s;
-    white-space: nowrap;
-  }
-  .mm-nav__link:hover { color: #fff; background: rgba(255,255,255,0.08); opacity: 1; }
-  .mm-nav__link--active { color: #fff; background: rgba(255,255,255,0.1); opacity: 1; }
-  .mm-nav__cta {
-    background: #e85d00;
-    color: #fff;
-    font-size: 0.78rem;
-    font-weight: 700;
-    padding: 0.52rem 1.25rem;
-    border-radius: 40px;
-    text-decoration: none;
-    white-space: nowrap;
-    transition: background 0.15s;
-    flex-shrink: 0;
-  }
-  .mm-nav__cta:hover { background: #d05200; opacity: 1; }
-  .mm-nav__clock {
-    margin-left: 0.35rem;
-    background: rgba(255,255,255,0.09);
-    border-radius: 40px;
-    padding: 0.42rem 0.9rem;
-    font-size: 0.82rem;
-    font-weight: 700;
-    letter-spacing: 0.03em;
-    color: #fff;
-    min-width: 68px;
-    text-align: center;
-    flex-shrink: 0;
-  }
-  .mm-nav__burger {
-    display: none;
-    flex-direction: column;
-    gap: 5px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0.5rem;
-    margin-left: 0.2rem;
-  }
-  .mm-nav__burger span {
-    display: block;
-    width: 20px;
-    height: 2px;
-    background: #fff;
-    border-radius: 2px;
-    transition: transform 0.2s, opacity 0.2s;
-  }
-  .mm-nav__burger[aria-expanded="true"] span:first-child { transform: translateY(7px) rotate(45deg); }
-  .mm-nav__burger[aria-expanded="true"] span:last-child  { transform: translateY(-7px) rotate(-45deg); }
-
-  /* Mobile menu */
-  .mm-mobile-menu {
-    position: fixed;
-    inset: 0;
-    z-index: 99;
-    background: #0d0d0d;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.2s;
-  }
-  .mm-mobile-menu[aria-hidden="false"] {
-    opacity: 1;
-    pointer-events: all;
-  }
-  .mm-mobile-menu ul { list-style: none; padding: 0; margin: 0; text-align: center; display: flex; flex-direction: column; gap: 0.4rem; }
-  .mm-mobile-link {
-    display: block;
-    color: rgba(255,255,255,0.65);
-    text-decoration: none;
-    font-size: clamp(1.8rem, 6vw, 2.5rem);
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    padding: 0.35rem 0;
-    transition: color 0.15s;
-  }
-  .mm-mobile-link:hover { color: #fff; opacity: 1; }
-  .mm-mobile-cta { color: #e85d00; margin-top: 1.2rem; }
-
-  @media (max-width: 768px) {
-    .mm-nav__links, .mm-nav__clock { display: none; }
-    .mm-nav__burger { display: flex; }
-    .mm-nav { padding: 0.5rem 0.5rem 0.5rem 1.4rem; }
-  }
+  .ps4-nav-global { background: rgba(10,5,18,0.7); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(240,233,255,0.1); position: sticky; top: 0; z-index: 50; }
+  .ps4-nav-container { max-width: 1200px; margin: 0 auto; padding: 1.1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+  .ps4-logo { font-family: 'JetBrains Mono', 'Courier New', monospace; color: #f0e9ff; text-decoration: none; font-weight: 600; font-size: 1rem; display: flex; align-items: center; gap: 0.4rem; flex-shrink: 0; }
+  .ps4-logo__sym { color: #00e5ff; }
+  .ps4-menu { display: flex; gap: 1.4rem; align-items: center; }
+  .ps4-menu a { color: rgba(240,233,255,0.7); text-decoration: none; font-family: 'JetBrains Mono', 'Courier New', monospace; font-size: 0.85rem; transition: color 0.2s ease; white-space: nowrap; }
+  .ps4-menu a:hover { color: #00e5ff; }
+  .ps4-menu__cta { background: linear-gradient(180deg,#fff 0%,#b5b5b5 100%); color: #0a0512 !important; padding: 0.5rem 1rem; border-radius: 4px; font-weight: 700 !important; box-shadow: 0 0 20px rgba(255,255,255,0.3); }
+  .ps4-burger { display: none; flex-direction: column; gap: 5px; background: transparent; border: 1px solid rgba(240,233,255,0.3); border-radius: 4px; cursor: pointer; padding: 0.5rem 0.6rem; }
+  .ps4-burger span { display: block; width: 18px; height: 1.5px; background: #f0e9ff; transition: transform 0.2s, opacity 0.2s; }
+  .ps4-burger[aria-expanded="true"] span:first-child { transform: translateY(6.5px) rotate(45deg); }
+  .ps4-burger[aria-expanded="true"] span:last-child { transform: translateY(-6.5px) rotate(-45deg); }
+  .ps4-mobile { position: fixed; inset: 0; z-index: 49; background: rgba(10,5,18,0.97); backdrop-filter: blur(20px); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
+  .ps4-mobile[aria-hidden="false"] { opacity: 1; pointer-events: all; }
+  .ps4-mobile ul { list-style: none; padding: 0; margin: 0; text-align: center; display: flex; flex-direction: column; gap: 0.4rem; }
+  .ps4-mobile a { display: block; color: rgba(240,233,255,0.85); text-decoration: none; font-family: 'JetBrains Mono', monospace; font-size: clamp(1.4rem, 4.5vw, 2rem); padding: 0.4rem 0; }
+  .ps4-mobile a:hover { color: #00e5ff; }
+  .ps4-mobile__cta { color: #00e5ff !important; margin-top: 1.2rem; }
+  @media (max-width: 768px) { .ps4-menu { display: none; } .ps4-burger { display: flex; } }
 </style>
 
 <script>
-  // Orologio
-  const clockEl = document.getElementById('mm-clock');
-  function tick() {
-    if (!clockEl) return;
-    const n = new Date();
-    clockEl.textContent = String(n.getHours()).padStart(2,'0') + ':' + String(n.getMinutes()).padStart(2,'0');
-  }
-  tick();
-  setInterval(tick, 1000);
-
-  // Scroll
-  const hdr = document.getElementById('mm-header');
-  window.addEventListener('scroll', () => hdr?.classList.toggle('is-scrolled', window.scrollY > 40), { passive: true });
-
-  // Mobile menu
-  const burger = document.getElementById('mm-burger') as HTMLButtonElement | null;
-  const mobileMenu = document.getElementById('mm-mobile-menu');
+  const burger = document.getElementById('ps4-burger') as HTMLButtonElement | null;
+  const mobile = document.getElementById('ps4-mobile');
   burger?.addEventListener('click', () => {
     const open = burger.getAttribute('aria-expanded') === 'true';
     burger.setAttribute('aria-expanded', String(!open));
-    mobileMenu?.setAttribute('aria-hidden', String(open));
+    mobile?.setAttribute('aria-hidden', String(open));
     document.body.style.overflow = open ? '' : 'hidden';
   });
-  mobileMenu?.querySelectorAll('a').forEach(a => {
+  mobile?.querySelectorAll('a').forEach(a => {
     a.addEventListener('click', () => {
       burger?.setAttribute('aria-expanded', 'false');
-      mobileMenu.setAttribute('aria-hidden', 'true');
+      mobile.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
     });
   });

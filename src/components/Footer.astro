@@ -1,116 +1,68 @@
 ---
 /**
- * Footer.astro — Minimal dark footer con navigazione completa
+ * Footer.astro — Y2K Chrome footer (globale)
  */
 ---
 
-<footer class="mm-footer">
-  <div class="mm-footer__inner">
-
-    <div class="mm-footer__brand">
-      <a href="/" class="mm-footer__logo">Marco<span class="mm-dot">.</span>Munich</a>
-      <p class="mm-footer__tagline">Personal Branding Olistico<br>per coach, counselor e operatori olistici</p>
+<footer class="ps4-foot-global">
+  <div class="ps4-foot-container">
+    <div class="ps4-foot__inner">
+      <div>
+        <a href="/" class="ps4-foot__logo"><span class="ps4-foot__sym">▸</span>marco.dev</a>
+        <p class="ps4-foot__tag">// sviluppo web · Vicenza, IT · 2019—{new Date().getFullYear()}</p>
+      </div>
+      <div class="ps4-foot__cols">
+        <div class="ps4-foot__col">
+          <h3>// pagine</h3>
+          <a href="/#cosa">cosa costruisco</a>
+          <a href="/#lavori">lavori</a>
+          <a href="/#metodo">metodo</a>
+          <a href="/#chi">chi sono</a>
+          <a href="/#contatti">contattami</a>
+        </div>
+        <div class="ps4-foot__col">
+          <h3>// approfondimenti</h3>
+          <a href="/blog/">articoli</a>
+          <a href="/vibe-coding/">vibe coding</a>
+          <a href="/servizi/posizionamento-online/">posizionamento</a>
+          <a href="/portfolio/">portfolio</a>
+        </div>
+        <div class="ps4-foot__col">
+          <h3>// rete</h3>
+          <a href="https://www.instagram.com/marcomunich1983/" target="_blank" rel="noopener">instagram</a>
+          <a href="mailto:consulenza@marcomunich.com">email</a>
+          <a href="https://open.spotify.com/show/2WwJsiCJYSZnawH2TQ6N2n" target="_blank" rel="noopener">podcast</a>
+        </div>
+        <div class="ps4-foot__col">
+          <h3>// legale</h3>
+          <a href="/privacy-policy/">privacy</a>
+          <a href="/cookie-policy/">cookie</a>
+          <a href="/termini/">termini</a>
+        </div>
+      </div>
     </div>
-
-    <nav class="mm-footer__nav" aria-label="Navigazione footer">
-      <div class="mm-footer__col">
-        <h3>Pagine</h3>
-        <a href="/chi-sono/">Chi sono</a>
-        <a href="/blog/">Articoli</a>
-        <a href="/servizi/">Servizi</a>
-        <a href="/sviluppo-siti-web/">Siti web</a>
-        <a href="/risorse/">Risorse</a>
-        <a href="/contatti/">Contatti</a>
-      </div>
-      <div class="mm-footer__col">
-        <h3>Seguimi</h3>
-        <a href="https://www.instagram.com/marcomunich1983/" target="_blank" rel="noopener">Instagram</a>
-        <a href="mailto:consulenza@marcomunich.com">Email</a>
-        <a href="https://amzn.eu/d/hD0k4Yv" target="_blank" rel="noopener">Libro Amazon</a>
-      </div>
-      <div class="mm-footer__col">
-        <h3>Legale</h3>
-        <a href="/privacy-policy/">Privacy Policy</a>
-        <a href="/cookie-policy/">Cookie Policy</a>
-        <a href="/termini/">Termini</a>
-      </div>
-    </nav>
-
-  </div>
-
-  <div class="mm-footer__bottom">
-    <span>© {new Date().getFullYear()} Marco Munich. Tutti i diritti riservati.</span>
-    <span>Vicenza, Italia</span>
+    <div class="ps4-foot__bottom">
+      <span>// © {new Date().getFullYear()} Marco Munich · marco.dev</span>
+      <span>// session terminated ✦</span>
+    </div>
   </div>
 </footer>
 
 <style>
-  .mm-footer {
-    background: #0a0a0a;
-    border-top: 1px solid #1a1a1a;
-    font-family: 'Inter', sans-serif;
-    color: #fff;
-  }
-  .mm-footer__inner {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 4rem 2rem 3rem;
-    display: grid;
-    grid-template-columns: 1.6fr 1fr;
-    gap: 4rem;
-  }
-  .mm-footer__logo {
-    display: inline-block;
-    font-size: 1.6rem;
-    font-weight: 900;
-    letter-spacing: -0.02em;
-    color: #fff;
-    text-decoration: none;
-    margin-bottom: 0.8rem;
-  }
-  .mm-dot { color: #e85d00; }
-  .mm-footer__tagline {
-    font-size: 0.78rem;
-    color: rgba(255,255,255,0.35);
-    line-height: 1.6;
-  }
-  .mm-footer__nav {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-  }
-  .mm-footer__col h3 {
-    font-size: 0.58rem;
-    font-weight: 700;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.3);
-    margin-bottom: 1rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid #1a1a1a;
-  }
-  .mm-footer__col a {
-    display: block;
-    font-size: 0.8rem;
-    color: rgba(255,255,255,0.55);
-    text-decoration: none;
-    margin-bottom: 0.45rem;
-    transition: color 0.15s;
-  }
-  .mm-footer__col a:hover { color: #fff; opacity: 1; }
-  .mm-footer__bottom {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 1.2rem 2rem;
-    border-top: 1px solid #1a1a1a;
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.68rem;
-    color: rgba(255,255,255,0.2);
-  }
+  .ps4-foot-global { border-top: 1px solid rgba(240,233,255,0.1); background: rgba(10,5,18,0.6); backdrop-filter: blur(20px); padding: 4rem 0 1.5rem; }
+  .ps4-foot-container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+  .ps4-foot__inner { display: grid; grid-template-columns: 1.2fr 3fr; gap: 4rem; padding-bottom: 3rem; border-bottom: 1px dashed rgba(240,233,255,0.1); margin-bottom: 1.5rem; }
+  .ps4-foot__logo { font-family: 'JetBrains Mono', monospace; color: #f0e9ff; text-decoration: none; font-weight: 600; font-size: 1.1rem; display: inline-flex; align-items: center; gap: 0.4rem; }
+  .ps4-foot__sym { color: #00e5ff; }
+  .ps4-foot__tag { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: rgba(240,233,255,0.5); margin: 0.6rem 0 0; }
+  .ps4-foot__cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
+  .ps4-foot__col h3 { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; font-weight: 700; color: #ff2d92; margin: 0 0 1rem; letter-spacing: 0.05em; }
+  .ps4-foot__col a { display: block; color: rgba(240,233,255,0.65); text-decoration: none; font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; padding: 0.3rem 0; transition: color 0.15s ease; }
+  .ps4-foot__col a:hover { color: #00e5ff; }
+  .ps4-foot__bottom { display: flex; justify-content: space-between; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: rgba(240,233,255,0.4); flex-wrap: wrap; gap: 1rem; }
   @media (max-width: 768px) {
-    .mm-footer__inner { grid-template-columns: 1fr; gap: 2.5rem; }
-    .mm-footer__nav { grid-template-columns: repeat(2, 1fr); }
-    .mm-footer__bottom { flex-direction: column; gap: 0.4rem; }
+    .ps4-foot__inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    .ps4-foot__cols { grid-template-columns: 1fr 1fr; }
+    .ps4-foot__bottom { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
   }
 </style>

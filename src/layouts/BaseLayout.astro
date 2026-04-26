@@ -208,8 +208,14 @@ const schemaGraph = [
 </head>
 
 <body>
-  <!-- Padding top per compensare header fisso (64px) -->
-  <div class="pt-16">
+  <!-- Y2K Chrome global mesh gradient background -->
+  <div class="mm-bg" aria-hidden="true">
+    <span class="mm-bg__blob mm-bg__blob--magenta"></span>
+    <span class="mm-bg__blob mm-bg__blob--cyan"></span>
+    <span class="mm-bg__blob mm-bg__blob--violet"></span>
+  </div>
+
+  <div class="mm-site">
     <Header currentPath={currentPath} ctaLink={ctaLink} ctaLabel={ctaLabel} />
 
     <main id="main-content">
@@ -221,5 +227,18 @@ const schemaGraph = [
 
   <!-- GDPR Cookie Consent Banner (in italiano) -->
   <CookieBanner />
+
+  <style is:global>
+    body { background: #0a0512; color: #f0e9ff; font-family: 'Inter', system-ui, sans-serif; margin: 0; padding: 0; min-height: 100vh; overflow-x: hidden; }
+    .mm-site { position: relative; z-index: 1; }
+    .mm-bg { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
+    .mm-bg__blob { position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.45; }
+    .mm-bg__blob--magenta { background: #ff2d92; width: 600px; height: 600px; top: 10%; left: -10%; animation: mmfloat 18s ease-in-out infinite; }
+    .mm-bg__blob--cyan { background: #00e5ff; width: 500px; height: 500px; top: 50%; right: -8%; animation: mmfloat 22s ease-in-out infinite reverse; }
+    .mm-bg__blob--violet { background: #8a3aff; width: 700px; height: 700px; bottom: -20%; left: 30%; animation: mmfloat 25s ease-in-out infinite; }
+    @keyframes mmfloat { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(40px,-60px) scale(1.1); } }
+    /* Reset legacy pt-16 padding (Tailwind) — Y2K nav è sticky, non fixed */
+    .pt-16 { padding-top: 0 !important; }
+  </style>
 </body>
 </html>
