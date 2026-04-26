@@ -1,0 +1,600 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Preview Home — Marco Munich"
+  description="Mockup nuovo design homepage."
+  currentPath="/preview-home/"
+>
+
+<div class="ph-page">
+
+  <!-- ── HERO ────────────────────────────────────────────────────────────── -->
+  <section class="ph-hero">
+    <div class="ph-container">
+      <div class="ph-hero__meta">
+        <span class="ph-hero__label">— Marco Munich</span>
+        <span class="ph-hero__year">/ 2026</span>
+      </div>
+      <h1 class="ph-hero__title">
+        Costruisco<br>
+        <span class="ph-hero__title--accent">siti</span>,<br>
+        <span class="ph-hero__title--accent">app</span>,<br>
+        e <span class="ph-hero__title--soft">presenze online</span><br>
+        che funzionano davvero.
+      </h1>
+      <div class="ph-hero__bottom">
+        <p class="ph-hero__tagline">
+          Per chi vende se stesso. Per chi non vuole un template.
+        </p>
+        <div class="ph-hero__indicator">
+          <span>Scroll</span>
+          <span class="ph-hero__arrow">↓</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── INDICE EDITORIALE ──────────────────────────────────────────────── -->
+  <section class="ph-index">
+    <div class="ph-container">
+      <div class="ph-index__row">
+        <span class="ph-index__num">01</span>
+        <a href="#cosa-faccio" class="ph-index__link">Cosa faccio</a>
+        <span class="ph-index__hint">Sviluppo + posizionamento. Le due cose insieme o separate.</span>
+      </div>
+      <div class="ph-index__row">
+        <span class="ph-index__num">02</span>
+        <a href="#progetti" class="ph-index__link">Progetti</a>
+        <span class="ph-index__hint">Quello che ho costruito di recente.</span>
+      </div>
+      <div class="ph-index__row">
+        <span class="ph-index__num">03</span>
+        <a href="#numeri" class="ph-index__link">Numeri</a>
+        <span class="ph-index__hint">Sette anni, oltre duecento articoli, zero template.</span>
+      </div>
+      <div class="ph-index__row">
+        <span class="ph-index__num">04</span>
+        <a href="#metodo" class="ph-index__link">Metodo</a>
+        <span class="ph-index__hint">Come lavoro, con quali strumenti, perché funziona.</span>
+      </div>
+      <div class="ph-index__row">
+        <span class="ph-index__num">05</span>
+        <a href="#chi-sono" class="ph-index__link">Chi sono</a>
+        <span class="ph-index__hint">Da consulente di personal branding a chi costruisce.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 01 COSA FACCIO ──────────────────────────────────────────────────── -->
+  <section class="ph-section ph-block" id="cosa-faccio">
+    <div class="ph-container">
+      <div class="ph-block__head">
+        <span class="ph-block__num">01</span>
+        <h2 class="ph-block__title">Cosa faccio.</h2>
+      </div>
+      <div class="ph-block__body">
+        <div class="ph-service">
+          <p class="ph-service__kind">Sviluppo →</p>
+          <h3 class="ph-service__name">Siti, landing, e-commerce, web app.</h3>
+          <p class="ph-service__desc">
+            Costruisco da zero, codice pulito, performance verificabili, piena proprietà dei file. Astro per i siti, FastAPI per le applicazioni, niente plugin obbligatori, niente abbonamenti mensili a piattaforme che cambiano regole ogni anno.
+          </p>
+        </div>
+        <div class="ph-service">
+          <p class="ph-service__kind">Consulenza →</p>
+          <h3 class="ph-service__name">Posizionamento online.</h3>
+          <p class="ph-service__desc">
+            Per chi vende se stesso e vuole una presenza che corrisponda a chi è, non a un personaggio costruito per imitazione. Sette anni di lavoro nel settore olistico, oltre duecento articoli, un metodo che non si compra in un corso.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 02 PROGETTI ─────────────────────────────────────────────────────── -->
+  <section class="ph-section ph-projects" id="progetti">
+    <div class="ph-container">
+      <div class="ph-block__head">
+        <span class="ph-block__num">02</span>
+        <h2 class="ph-block__title">Progetti.</h2>
+      </div>
+      <ul class="ph-project-list">
+        <li class="ph-project">
+          <a href="/portfolio/" class="ph-project__link">
+            <span class="ph-project__year">2026</span>
+            <span class="ph-project__name">marcomunich.com</span>
+            <span class="ph-project__type">Sito + CMS custom</span>
+            <span class="ph-project__arrow">→</span>
+          </a>
+        </li>
+        <li class="ph-project">
+          <a href="/portfolio/" class="ph-project__link">
+            <span class="ph-project__year">2026</span>
+            <span class="ph-project__name">Vela</span>
+            <span class="ph-project__type">Web app · FastAPI + instagrapi</span>
+            <span class="ph-project__arrow">→</span>
+          </a>
+        </li>
+        <li class="ph-project">
+          <a href="/portfolio/" class="ph-project__link">
+            <span class="ph-project__year">2026</span>
+            <span class="ph-project__name">cms.marcomunich.com</span>
+            <span class="ph-project__type">Migrazione Ghost + 277 articoli</span>
+            <span class="ph-project__arrow">→</span>
+          </a>
+        </li>
+        <li class="ph-project">
+          <a href="/portfolio/" class="ph-project__link">
+            <span class="ph-project__year">2026</span>
+            <span class="ph-project__name">Inspiration Bot</span>
+            <span class="ph-project__type">Pipeline contenuti · Telegram + PM2</span>
+            <span class="ph-project__arrow">→</span>
+          </a>
+        </li>
+      </ul>
+      <a href="/portfolio/" class="ph-project-all">Tutti i progetti →</a>
+    </div>
+  </section>
+
+  <!-- ── 03 NUMERI ───────────────────────────────────────────────────────── -->
+  <section class="ph-section ph-numbers" id="numeri">
+    <div class="ph-container">
+      <div class="ph-block__head">
+        <span class="ph-block__num">03</span>
+        <h2 class="ph-block__title">Numeri.</h2>
+      </div>
+      <div class="ph-numbers__grid">
+        <div class="ph-num">
+          <span class="ph-num__big">218</span>
+          <span class="ph-num__label">Articoli pubblicati<br>sul blog</span>
+        </div>
+        <div class="ph-num">
+          <span class="ph-num__big">7</span>
+          <span class="ph-num__label">Anni in cui ho seguito<br>professionisti su personal branding</span>
+        </div>
+        <div class="ph-num">
+          <span class="ph-num__big">100<span class="ph-num__suffix">/100</span></span>
+          <span class="ph-num__label">Punteggio Google PageSpeed<br>su tutti i siti che costruisco</span>
+        </div>
+        <div class="ph-num">
+          <span class="ph-num__big">0</span>
+          <span class="ph-num__label">Template usati. Ogni progetto<br>è costruito da zero, su misura.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 04 METODO ───────────────────────────────────────────────────────── -->
+  <section class="ph-section ph-method" id="metodo">
+    <div class="ph-container">
+      <div class="ph-block__head">
+        <span class="ph-block__num">04</span>
+        <h2 class="ph-block__title">Metodo.</h2>
+      </div>
+      <div class="ph-method__body">
+        <p class="ph-method__lead">
+          Non scrivo codice riga per riga. <span class="ph-highlight">Guido l'intelligenza artificiale</span> per costruire siti e applicazioni che funzionano. Il risultato è lo stesso di uno sviluppo tradizionale, anzi è più veloce e più pulito, perché posso passare più tempo sulle decisioni che contano e meno sulla ripetizione meccanica.
+        </p>
+        <a href="/vibe-coding/" class="ph-method__more">Come funziona, in pratica →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 05 CHI SONO ─────────────────────────────────────────────────────── -->
+  <section class="ph-section ph-about" id="chi-sono">
+    <div class="ph-container">
+      <div class="ph-block__head">
+        <span class="ph-block__num">05</span>
+        <h2 class="ph-block__title">Chi sono.</h2>
+      </div>
+      <div class="ph-about__body">
+        <p>
+          Da sette anni mi occupo di presenza online per professionisti che vendono se stessi. Ho scritto oltre duecento articoli, seguito coach, counselor e operatori di ogni tipo, e a un certo punto ho iniziato a costruire io stesso i loro siti perché vedere coach con siti tutti uguali aveva stancato anche me.
+        </p>
+        <p>
+          Oggi lavoro su due fronti che si parlano: costruisco siti e applicazioni custom, e aiuto chi vende se stesso a trovare un modo di presentarsi online che non sia il copia-incolla di tutti gli altri. <a href="/chi-sono/" class="ph-link">Storia completa →</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA FINALE ──────────────────────────────────────────────────────── -->
+  <section class="ph-cta">
+    <div class="ph-container">
+      <p class="ph-cta__kicker">— Parliamone</p>
+      <h2 class="ph-cta__title">
+        Hai un progetto in mente?<br>
+        <span class="ph-cta__title--soft">Una chiamata gratuita di trenta minuti.</span>
+      </h2>
+      <p class="ph-cta__sub">
+        Capisco la tua situazione, ti dico cosa farei al tuo posto, e se posso aiutarti davvero. Se non posso, te lo dico e ti indirizzo verso qualcun altro.
+      </p>
+      <a href="/contatti/" class="ph-cta__btn">Fissa la chiamata →</a>
+    </div>
+  </section>
+
+</div>
+
+</BaseLayout>
+
+<style>
+  /* ─── Reset + tokens ──────────────────────────────────────────────────── */
+  .ph-page {
+    background: #0d0d0d;
+    color: #f5f3ee;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  .ph-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    width: 100%;
+  }
+
+  /* ─── HERO ────────────────────────────────────────────────────────────── */
+  .ph-hero {
+    min-height: 100vh;
+    padding: 8rem 0 4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(245,243,238,0.08);
+  }
+  .ph-hero__meta {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(245,243,238,0.5);
+    margin-bottom: 4rem;
+  }
+  .ph-hero__title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: clamp(2.8rem, 9vw, 8.5rem);
+    line-height: 0.95;
+    letter-spacing: -0.045em;
+    margin: 0 0 4rem;
+    color: #f5f3ee;
+  }
+  .ph-hero__title--accent {
+    color: #e85d00;
+    font-style: italic;
+  }
+  .ph-hero__title--soft {
+    color: rgba(245,243,238,0.45);
+    font-weight: 300;
+  }
+  .ph-hero__bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+  .ph-hero__tagline {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: rgba(245,243,238,0.7);
+    max-width: 500px;
+    margin: 0;
+  }
+  .ph-hero__indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(245,243,238,0.4);
+  }
+  .ph-hero__arrow { font-size: 1rem; color: #e85d00; }
+
+  /* ─── INDICE ──────────────────────────────────────────────────────────── */
+  .ph-index {
+    padding: 4rem 0;
+    border-bottom: 1px solid rgba(245,243,238,0.08);
+  }
+  .ph-index__row {
+    display: grid;
+    grid-template-columns: 80px 280px 1fr;
+    gap: 2rem;
+    align-items: baseline;
+    padding: 1.4rem 0;
+    border-top: 1px solid rgba(245,243,238,0.08);
+  }
+  .ph-index__num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: rgba(245,243,238,0.4);
+    letter-spacing: 0.1em;
+  }
+  .ph-index__link {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: #f5f3ee;
+    text-decoration: none;
+    letter-spacing: -0.02em;
+    transition: color 0.2s ease;
+  }
+  .ph-index__link:hover { color: #e85d00; }
+  .ph-index__hint {
+    font-size: 0.85rem;
+    color: rgba(245,243,238,0.55);
+    line-height: 1.5;
+  }
+
+  /* ─── BLOCKS ──────────────────────────────────────────────────────────── */
+  .ph-section {
+    padding: 7rem 0;
+    border-bottom: 1px solid rgba(245,243,238,0.08);
+  }
+  .ph-block__head {
+    display: flex;
+    align-items: baseline;
+    gap: 2rem;
+    margin-bottom: 4rem;
+  }
+  .ph-block__num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: #e85d00;
+    letter-spacing: 0.15em;
+  }
+  .ph-block__title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    color: #f5f3ee;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    margin: 0;
+  }
+
+  /* ─── 01 SERVICES ─────────────────────────────────────────────────────── */
+  .ph-block__body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
+  .ph-service {
+    padding-top: 2rem;
+    border-top: 2px solid #e85d00;
+  }
+  .ph-service:nth-child(2) { border-top-color: rgba(245,243,238,0.5); }
+  .ph-service__kind {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: #e85d00;
+    margin: 0 0 1rem;
+  }
+  .ph-service:nth-child(2) .ph-service__kind { color: rgba(245,243,238,0.65); }
+  .ph-service__name {
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: 1.6rem;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: #f5f3ee;
+    margin: 0 0 1.2rem;
+  }
+  .ph-service__desc {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: rgba(245,243,238,0.7);
+    margin: 0;
+  }
+
+  /* ─── 02 PROJECTS ─────────────────────────────────────────────────────── */
+  .ph-project-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2.5rem;
+  }
+  .ph-project {
+    border-top: 1px solid rgba(245,243,238,0.12);
+  }
+  .ph-project:last-child { border-bottom: 1px solid rgba(245,243,238,0.12); }
+  .ph-project__link {
+    display: grid;
+    grid-template-columns: 80px 1fr 280px 40px;
+    gap: 2rem;
+    align-items: center;
+    padding: 1.6rem 0;
+    color: #f5f3ee;
+    text-decoration: none;
+    transition: padding 0.25s ease, color 0.2s ease;
+  }
+  .ph-project__link:hover {
+    padding-left: 1rem;
+    color: #e85d00;
+  }
+  .ph-project__year {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: rgba(245,243,238,0.4);
+  }
+  .ph-project__name {
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: 1.4rem;
+    letter-spacing: -0.02em;
+  }
+  .ph-project__type {
+    font-size: 0.85rem;
+    color: rgba(245,243,238,0.55);
+  }
+  .ph-project__arrow {
+    text-align: right;
+    font-size: 1.4rem;
+    color: rgba(245,243,238,0.4);
+  }
+  .ph-project__link:hover .ph-project__arrow { color: #e85d00; }
+  .ph-project-all {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    color: #e85d00;
+    text-decoration: none;
+    letter-spacing: 0.05em;
+  }
+  .ph-project-all:hover { text-decoration: underline; }
+
+  /* ─── 03 NUMBERS ──────────────────────────────────────────────────────── */
+  .ph-numbers__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 3rem;
+  }
+  .ph-num { display: flex; flex-direction: column; }
+  .ph-num__big {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: clamp(3.5rem, 7vw, 6.5rem);
+    line-height: 0.9;
+    color: #e85d00;
+    letter-spacing: -0.04em;
+    margin-bottom: 1rem;
+  }
+  .ph-num__suffix {
+    font-size: 0.4em;
+    color: rgba(245,243,238,0.45);
+    font-weight: 400;
+    margin-left: 0.1em;
+  }
+  .ph-num__label {
+    font-size: 0.85rem;
+    line-height: 1.55;
+    color: rgba(245,243,238,0.6);
+  }
+
+  /* ─── 04 METHOD ───────────────────────────────────────────────────────── */
+  .ph-method__body { max-width: 820px; }
+  .ph-method__lead {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: clamp(1.2rem, 2.2vw, 1.7rem);
+    line-height: 1.55;
+    color: #f5f3ee;
+    margin: 0 0 2rem;
+  }
+  .ph-highlight {
+    color: #e85d00;
+    font-weight: 700;
+  }
+  .ph-method__more {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    color: #e85d00;
+    text-decoration: none;
+    letter-spacing: 0.05em;
+  }
+  .ph-method__more:hover { text-decoration: underline; }
+
+  /* ─── 05 ABOUT ────────────────────────────────────────────────────────── */
+  .ph-about__body { max-width: 720px; }
+  .ph-about__body p {
+    font-size: 1rem;
+    line-height: 1.85;
+    color: rgba(245,243,238,0.75);
+    margin: 0 0 1.5rem;
+  }
+  .ph-about__body p:last-child { margin-bottom: 0; }
+  .ph-link {
+    color: #e85d00;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(232,93,0,0.4);
+    transition: border-color 0.2s ease;
+  }
+  .ph-link:hover { border-bottom-color: #e85d00; }
+
+  /* ─── CTA ─────────────────────────────────────────────────────────────── */
+  .ph-cta {
+    padding: 9rem 0;
+    text-align: center;
+  }
+  .ph-cta__kicker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #e85d00;
+    margin: 0 0 2rem;
+  }
+  .ph-cta__title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: clamp(2.2rem, 5.5vw, 4.2rem);
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+    color: #f5f3ee;
+    margin: 0 0 1.5rem;
+  }
+  .ph-cta__title--soft {
+    color: rgba(245,243,238,0.45);
+    font-weight: 300;
+  }
+  .ph-cta__sub {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: rgba(245,243,238,0.65);
+    max-width: 580px;
+    margin: 0 auto 3rem;
+  }
+  .ph-cta__btn {
+    display: inline-block;
+    background: #e85d00;
+    color: #fff;
+    padding: 1.2rem 2.4rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    border-radius: 999px;
+    transition: transform 0.15s ease, background 0.2s ease;
+  }
+  .ph-cta__btn:hover {
+    background: #ff6f10;
+    transform: translateY(-2px);
+  }
+
+  /* ─── RESPONSIVE ──────────────────────────────────────────────────────── */
+  @media (max-width: 900px) {
+    .ph-block__body,
+    .ph-numbers__grid {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+    .ph-numbers__grid { gap: 2rem; }
+    .ph-index__row {
+      grid-template-columns: 50px 1fr;
+      gap: 1rem;
+    }
+    .ph-index__hint {
+      grid-column: 2 / -1;
+      margin-top: 0.4rem;
+    }
+    .ph-project__link {
+      grid-template-columns: 60px 1fr 30px;
+      gap: 1rem;
+    }
+    .ph-project__type {
+      grid-column: 2 / 3;
+      grid-row: 2;
+    }
+    .ph-section { padding: 5rem 0; }
+    .ph-block__head { gap: 1.2rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+  }
+</style>
