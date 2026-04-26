@@ -1,7 +1,6 @@
 ---
 /**
- * categoria/[slug].astro
- * Pagina archivio per categoria — griglia articoli filtrati.
+ * categoria/[slug].astro — Y2K Chrome
  */
 import BaseLayout from '@layouts/BaseLayout.astro';
 import PostCard from '@components/PostCard.astro';
@@ -9,7 +8,6 @@ import { getAllTags, getPostsByTag, ghostPostToArticolo } from '@lib/ghost';
 
 export async function getStaticPaths() {
   const tags = await getAllTags();
-
   const paths = await Promise.all(tags.map(async (tag) => {
     const ghostPosts = await getPostsByTag(tag.slug);
     const posts = ghostPosts.map(p => ghostPostToArticolo(p));
@@ -18,7 +16,6 @@ export async function getStaticPaths() {
       props:  { category: { slug: tag.slug, name: tag.name, description: tag.description }, posts },
     };
   }));
-
   return paths;
 }
 
@@ -28,117 +25,66 @@ const catDesc = category.description ?? '';
 ---
 
 <BaseLayout
-  title={`${catName} - Marco Munich`}
+  title={`${catName} — Marco Munich`}
   description={catDesc || `Articoli sulla categoria ${catName} di Marco Munich.`}
   currentPath={`/categoria/${category.slug}/`}
 >
 
-  <!-- Hero -->
+<div class="cat-page">
+
   <section class="cat-hero">
-    <div class="cat-hero__overlay"></div>
-    <div class="cat-hero__content">
-      <p class="cat-hero__eyebrow">Categoria</p>
-      <h1 class="cat-hero__title" set:html={catName} />
+    <div class="cat-container">
+      <div class="cat-status-bar">
+        <span class="cat-pill">SYS · categoria</span>
+        <span class="cat-pill">{posts.length} articoli</span>
+      </div>
+      <h1 class="cat-h1"><span class="cat-h1__chrome" set:html={catName} /></h1>
       {catDesc && <p class="cat-hero__desc">{catDesc}</p>}
     </div>
   </section>
 
-  <!-- Griglia articoli -->
-  <div class="cat-body site-wrapper">
+  <section class="cat-section">
+    <div class="cat-container">
+      <h2 class="cat-section__title"><span class="cat-arrow">▸</span> ARTICOLI · {catName.toUpperCase()}</h2>
 
-    {posts.length > 0 ? (
-      <div class="blog-grid">
-        {posts.map((post) => <PostCard post={post} />)}
+      {posts.length > 0 ? (
+        <div class="cat-grid">
+          {posts.map(post => <PostCard post={post} />)}
+        </div>
+      ) : (
+        <p class="cat-empty">// nessun articolo in questa categoria.</p>
+      )}
+
+      <div class="cat-back">
+        <a href="/blog/" class="cat-back__link">← tutti gli articoli</a>
       </div>
-    ) : (
-      <p class="cat-empty">Nessun articolo in questa categoria.</p>
-    )}
-
-    <div class="cat-back">
-      <a href="/blog/">← Tutti gli articoli</a>
     </div>
+  </section>
 
-  </div>
+</div>
 
 </BaseLayout>
 
 <style>
-  .cat-hero {
-    position: relative;
-    height: 240px;
-    background-color: #1E2B2F;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .cat-hero__overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(0,0,0,0.6);
-  }
-  .cat-hero__content {
-    position: relative;
-    z-index: 1;
-    text-align: center;
-    color: white;
-    padding: 0 24px;
-  }
-  .cat-hero__eyebrow {
-    font-size: 12px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.5);
-    margin-bottom: 10px;
-  }
-  .cat-hero__title {
-    font-size: clamp(24px, 4vw, 42px);
-    font-weight: 800;
-    color: white;
-    margin-bottom: 10px;
-  }
-  .cat-hero__desc {
-    font-size: 15px;
-    color: rgba(255,255,255,0.65);
-    max-width: 500px;
-    margin: 0 auto;
-  }
+  .cat-page { color: #f0e9ff; font-family: 'Inter', system-ui, sans-serif; min-height: 100vh; }
+  .cat-container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 2; }
 
-  .cat-body {
-    padding-top: 48px;
-    padding-bottom: 80px;
-  }
+  .cat-hero { padding: 5rem 0 3.5rem; }
+  .cat-status-bar { display: flex; gap: 0.5rem; margin-bottom: 2rem; flex-wrap: wrap; }
+  .cat-pill { display: inline-flex; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 600; color: #00e5ff; background: rgba(0,229,255,0.08); border: 1px solid rgba(0,229,255,0.4); padding: 0.35rem 0.8rem; border-radius: 999px; }
+  .cat-h1 { font-family: 'Inter', sans-serif; font-weight: 900; font-size: clamp(2.5rem, 9vw, 7rem); line-height: 0.92; letter-spacing: -0.04em; margin: 0 0 1.5rem; }
+  .cat-h1__chrome { display: block; background: linear-gradient(180deg, #ffffff 0%, #d8d8d8 25%, #909090 45%, #ffffff 55%, #f5f5f5 75%, #b5b5b5 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; }
+  .cat-hero__desc { font-size: 1.05rem; line-height: 1.7; color: rgba(240,233,255,0.7); max-width: 600px; margin: 0; }
 
-  .blog-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 40px 32px;
-  }
+  .cat-section { padding: 3rem 0 6rem; }
+  .cat-section__title { font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; font-weight: 700; letter-spacing: 0.2em; color: #ff2d92; margin: 0 0 3rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,45,146,0.3); }
+  .cat-arrow { color: #00e5ff; }
+  .cat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; }
+  .cat-empty { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: rgba(240,233,255,0.4); padding: 3rem 0; text-align: center; }
+  .cat-back { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px dashed rgba(240,233,255,0.1); }
+  .cat-back__link { font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; color: rgba(240,233,255,0.5); text-decoration: none; transition: color 0.15s; }
+  .cat-back__link:hover { color: #00e5ff; }
 
-  .cat-empty {
-    text-align: center;
-    color: rgba(10,10,10,0.5);
-    padding: 60px 0;
-    font-size: 15px;
-  }
-
-  .cat-back {
-    margin-top: 48px;
-    padding-top: 24px;
-    border-top: 1px solid #E5E5E5;
-  }
-  .cat-back a {
-    font-size: 14px;
-    color: #1E2B2F;
-    text-decoration: none;
-    font-weight: 600;
-  }
-  .cat-back a:hover { opacity: 0.6; }
-
-  @media (max-width: 900px) {
-    .blog-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  }
-  @media (max-width: 560px) {
-    .blog-grid { grid-template-columns: minmax(0, 1fr); }
-    .cat-hero  { height: 180px; }
-  }
+  @media (max-width: 1024px) { .cat-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { .cat-grid { grid-template-columns: 1fr; } }
 </style>

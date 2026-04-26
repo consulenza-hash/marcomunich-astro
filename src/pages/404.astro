@@ -9,39 +9,65 @@ export const prerender = true;
   noIndex={true}
 >
 
-<div class="mm-page">
-  <section class="err-section">
-    <div class="mm-container err-inner">
-      <div class="err-num">404</div>
-      <p class="mm-tag" style="margin-bottom:1rem;margin-top:1.5rem">Pagina non trovata</p>
-      <h1 class="mm-h2" style="margin-bottom:1.2rem">Questa pagina non esiste.</h1>
-      <p style="font-size:0.9rem;line-height:1.75;color:rgba(255,255,255,0.5);max-width:380px;margin-bottom:2.5rem">
-        È stata rimossa, spostata o l'indirizzo era sbagliato. Torna alla home per trovare quello che cerchi.
-      </p>
-      <div style="display:flex;gap:1rem;flex-wrap:wrap">
-        <a href="/" class="mm-btn mm-btn-orange">Torna alla home →</a>
-        <a href="/blog/" class="mm-btn mm-btn-outline">Leggi gli articoli</a>
+<div class="e-page">
+  <div class="e-container">
+    <div class="e-status-bar">
+      <span class="e-pill">ERR · 404</span>
+      <span class="e-pill">SYS · not-found</span>
+    </div>
+    <div class="e-num">
+      <span class="e-num__chrome">404</span>
+    </div>
+    <p class="e-section-title"><span class="e-arrow">▸</span> PAGINA NON TROVATA</p>
+    <p class="e-desc">
+      La pagina che stai cercando è stata rimossa, spostata o l'indirizzo era sbagliato.
+    </p>
+    <div class="e-actions">
+      <a href="/" class="e-btn e-btn--chrome">[ HOME → ]</a>
+      <a href="/blog/" class="e-btn e-btn--ghost">[ articoli ]</a>
+    </div>
+    <div class="e-window">
+      <div class="e-window__bar">
+        <span></span><span></span><span></span>
+        <span class="e-window__title">error.log</span>
+      </div>
+      <div class="e-window__body">
+        <div class="e-cmd">$ GET /{window?.location?.pathname ?? '...'}</div>
+        <div class="e-output e-output--err">→ 404 Not Found</div>
+        <div class="e-output">→ route non registrata nel sistema</div>
+        <div class="e-output e-output--dim">→ usa il menu per navigare</div>
       </div>
     </div>
-  </section>
+  </div>
 </div>
 
 </BaseLayout>
 
 <style>
-  .err-section {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    padding: 6rem 0;
-  }
-  .err-num {
-    font-family: 'Inter', sans-serif;
-    font-weight: 900;
-    font-size: clamp(6rem, 20vw, 14rem);
-    line-height: 0.9;
-    letter-spacing: -0.04em;
-    color: #1a1a1a;
-    user-select: none;
-  }
+  .e-page { display: flex; align-items: center; min-height: 70vh; padding: 5rem 2rem; color: #f0e9ff; font-family: 'Inter', system-ui, sans-serif; }
+  .e-container { max-width: 700px; margin: 0 auto; width: 100%; position: relative; z-index: 2; }
+  .e-status-bar { display: flex; gap: 0.5rem; margin-bottom: 2rem; }
+  .e-pill { display: inline-flex; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 600; color: #ff2d92; background: rgba(255,45,146,0.08); border: 1px solid rgba(255,45,146,0.4); padding: 0.35rem 0.8rem; border-radius: 999px; }
+  .e-num { margin: 0 0 1rem; }
+  .e-num__chrome { font-family: 'Inter', sans-serif; font-weight: 900; font-size: clamp(5rem, 20vw, 12rem); line-height: 0.9; letter-spacing: -0.05em; background: linear-gradient(180deg, #ffffff 0%, #d8d8d8 25%, #909090 45%, #ffffff 55%, #f5f5f5 75%, #b5b5b5 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; user-select: none; }
+  .e-section-title { font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; font-weight: 700; letter-spacing: 0.2em; color: #ff2d92; margin: 0 0 1.2rem; }
+  .e-arrow { color: #00e5ff; }
+  .e-desc { font-size: 1rem; line-height: 1.7; color: rgba(240,233,255,0.65); margin: 0 0 2.5rem; max-width: 480px; }
+  .e-actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 3rem; }
+  .e-btn { font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; font-weight: 700; letter-spacing: 0.05em; padding: 0.9rem 1.5rem; text-decoration: none; border-radius: 4px; display: inline-block; transition: all 0.2s ease; }
+  .e-btn--chrome { background: linear-gradient(180deg, #ffffff 0%, #b5b5b5 100%); color: #0a0512; box-shadow: 0 0 25px rgba(255,255,255,0.3); border: 1px solid #fff; }
+  .e-btn--chrome:hover { box-shadow: 0 0 45px rgba(255,255,255,0.6); transform: translateY(-2px); }
+  .e-btn--ghost { background: transparent; color: #f0e9ff; border: 1px solid rgba(240,233,255,0.4); }
+  .e-btn--ghost:hover { border-color: #00e5ff; color: #00e5ff; }
+  .e-window { background: rgba(10,5,18,0.6); border: 1px solid rgba(240,233,255,0.15); border-radius: 8px; overflow: hidden; backdrop-filter: blur(20px); box-shadow: 0 0 40px rgba(138,58,255,0.2); }
+  .e-window__bar { background: rgba(255,255,255,0.05); padding: 0.55rem 1rem; display: flex; align-items: center; gap: 0.4rem; border-bottom: 1px solid rgba(240,233,255,0.1); }
+  .e-window__bar > span:nth-child(1) { width: 11px; height: 11px; border-radius: 50%; background: #ff5f57; }
+  .e-window__bar > span:nth-child(2) { width: 11px; height: 11px; border-radius: 50%; background: #febc2e; }
+  .e-window__bar > span:nth-child(3) { width: 11px; height: 11px; border-radius: 50%; background: #28c840; }
+  .e-window__title { margin-left: 1rem; font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: rgba(240,233,255,0.55); }
+  .e-window__body { padding: 1.2rem 1.5rem; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; line-height: 1.9; }
+  .e-cmd { color: #00e5ff; }
+  .e-output { margin-left: 1rem; color: rgba(240,233,255,0.7); }
+  .e-output--err { color: #ff2d92; }
+  .e-output--dim { color: rgba(240,233,255,0.35); }
 </style>

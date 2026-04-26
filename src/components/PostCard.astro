@@ -1,199 +1,62 @@
 ---
 /**
- * PostCard.astro
- * Card articolo usata nel blog e nella sezione "Ultimi Articoli" della homepage.
- * Supporta sia il formato WordPress (legacy) che il formato mdoc (Keystatic).
- *
- * Props:
- *   post: WP post object  OPPURE  { slug, titolo, descrizione, immagine, data }
+ * PostCard.astro — Y2K Chrome
+ * Card articolo usata da categoria/[slug] e tag/[slug].
  */
 import { getFeaturedImageUrl, getPrimaryCategory } from '@lib/wordpress';
 
 const { post } = Astro.props;
 
-// Formato mdoc: ha il campo "titolo"
-const isMdoc = !!post.titolo;
-
-const title    = isMdoc
-  ? String(post.titolo ?? '')
-  : (post.title?.rendered ?? '');
-
+const isMdoc   = !!post.titolo;
+const title    = isMdoc ? String(post.titolo ?? '') : (post.title?.rendered ?? '');
 const slug     = post.slug ?? '';
-
-const imageUrl = isMdoc
-  ? (post.immagine ?? null)                       // già percorso assoluto /images/articoli/...
-  : getFeaturedImageUrl(post, 'medium_large');
-
-const excerpt  = isMdoc
-  ? String(post.descrizione ?? '')
-  : (post.excerpt?.rendered ?? '');
-
-const category  = isMdoc ? null : getPrimaryCategory(post);
-const tags      = isMdoc ? [] : (post._embedded?.['wp:term']?.[1] ?? []);
-
-// Stringhe per la ricerca lato client
-const catNames  = category ? category.name.toLowerCase() : '';
-const tagNames  = tags.map((t: any) => t.name.toLowerCase()).join(' ');
+const imageUrl = isMdoc ? (post.immagine ?? null) : getFeaturedImageUrl(post, 'medium_large');
+const excerpt  = isMdoc ? String(post.descrizione ?? '') : (post.excerpt?.rendered ?? '');
+const category = isMdoc ? null : getPrimaryCategory(post);
+const tags     = isMdoc ? [] : (post._embedded?.['wp:term']?.[1] ?? []);
+const catName  = isMdoc ? (post.categoria ?? '') : (category?.name ?? '');
 ---
 
-<article 
-  class="post-card" 
-  data-search={`${title.toLowerCase()} ${catNames} ${tagNames}`}
->
-  <a href={`/${slug}/`} class="post-card__overlay-link" aria-label={`Leggi ${title}`}></a>
-
-  <!-- Immagine in evidenza -->
-  {imageUrl && (
-    <div class="post-card__image-wrap">
-      <img
-        src={imageUrl}
-        alt={title}
-        class="post-card__image"
-        loading="lazy"
-        decoding="async"
-        width="600"
-        height="340"
-      />
-    </div>
-  )}
-
-  <div class="post-card__content">
-    <div class="post-card__meta">
-      <!-- Categoria -->
-      {category && (
-        <span class="post-card__category">
-          {category.name}
-        </span>
-      )}
-      
-      <!-- Tag (Semplificati per la card) -->
-      {tags.length > 0 && (
-        <div class="post-card__tags">
-          {tags.slice(0, 2).map(tag => (
-            <span class="post-card__tag">#{tag.name}</span>
-          ))}
+<a href={`/${slug}/`} class="pc-card">
+  <div class="pc-card__img">
+    {imageUrl
+      ? <img src={imageUrl} alt={title} loading="lazy" decoding="async" width="600" height="340" />
+      : <div class="pc-card__placeholder" aria-hidden="true">
+          <span class="pc-card__letter">{title.charAt(0).toUpperCase()}</span>
         </div>
-      )}
-    </div>
-
-    <!-- Titolo -->
-    <h3 class="post-card__title">
-      <Fragment set:html={title} />
-    </h3>
-
-    <!-- Bottone finto (per feedback visivo, il link vero è l'overlay) -->
-    <span class="post-card__fake-btn">Leggi l'articolo</span>
+    }
   </div>
-
-</article>
+  <div class="pc-card__body">
+    <div class="pc-card__meta">
+      {catName && <span class="pc-card__cat">{catName}</span>}
+      {!isMdoc && tags.slice(0, 2).map((t: any) => (
+        <span class="pc-card__tag">#{t.name}</span>
+      ))}
+    </div>
+    <h3 class="pc-card__title"><Fragment set:html={title} /></h3>
+    <span class="pc-card__cta">// leggi →</span>
+  </div>
+</a>
 
 <style>
-  .post-card {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    background: #fff;
-    border: 1px solid #F0F0F0;
-    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    height: 100%;
-  }
-  
-  .post-card__overlay-link {
-    position: absolute;
-    inset: 0;
-    z-index: 10;
-  }
+  .pc-card { display: flex; flex-direction: column; text-decoration: none; background: rgba(255,255,255,0.03); border: 1px solid rgba(240,233,255,0.15); border-radius: 12px; overflow: hidden; backdrop-filter: blur(10px); transition: all 0.2s ease; color: #f0e9ff; }
+  .pc-card:hover { border-color: #00e5ff; box-shadow: 0 0 40px rgba(0,229,255,0.12); transform: translateY(-3px); }
+  .pc-card:nth-child(even) { border-color: rgba(255,45,146,0.15); }
+  .pc-card:nth-child(even):hover { border-color: #ff2d92; box-shadow: 0 0 40px rgba(255,45,146,0.12); }
 
-  .post-card:hover {
-    border-color: #0A0A0A;
-    transform: translateY(-4px);
-    box-shadow: 0 12px 24px rgba(0,0,0,0.06);
-  }
+  .pc-card__img { width: 100%; aspect-ratio: 16/9; overflow: hidden; flex-shrink: 0; background: rgba(10,5,18,0.6); }
+  .pc-card__img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.3s ease; }
+  .pc-card:hover .pc-card__img img { transform: scale(1.04); }
+  .pc-card__placeholder { width: 100%; height: 100%; background: linear-gradient(135deg, rgba(138,58,255,0.2) 0%, rgba(0,229,255,0.1) 100%); display: flex; align-items: center; justify-content: center; }
+  .pc-card__letter { font-size: 3rem; font-weight: 900; color: rgba(240,233,255,0.12); font-family: 'Inter', sans-serif; }
 
-  .post-card__image-wrap {
-    display: block;
-    overflow: hidden;
-    aspect-ratio: 16/9;
-  }
-
-  .post-card__image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.5s ease;
-  }
-
-  .post-card:hover .post-card__image {
-    transform: scale(1.04);
-  }
-
-  .post-card__content {
-    padding: 24px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .post-card__meta {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 12px;
-    gap: 12px;
-  }
-
-  .post-card__category {
-    font-size: 10px;
-    font-weight: 800;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: #0A0A0A;
-    background: #F5F5F5;
-    padding: 2px 8px;
-  }
-
-  .post-card__tags {
-    display: flex;
-    gap: 6px;
-    overflow: hidden;
-  }
-  
-  .post-card__tag {
-    font-size: 10px;
-    font-weight: 600;
-    color: rgba(10,10,10,0.4);
-    white-space: nowrap;
-  }
-
-  .post-card__title {
-    font-size: 18px;
-    font-weight: 700;
-    line-height: 1.3;
-    margin: 0 0 20px;
-    color: #0A0A0A;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  .post-card__fake-btn {
-    display: inline-block;
-    margin-top: auto;
-    font-size: 12px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: #0A0A0A;
-    border-bottom: 2px solid #0A0A0A;
-    padding-bottom: 2px;
-    align-self: flex-start;
-    transition: all 0.2s;
-  }
-
-  .post-card:hover .post-card__fake-btn {
-    border-bottom-width: 4px;
-    padding-bottom: 0;
-  }
+  .pc-card__body { padding: 1.3rem; display: flex; flex-direction: column; flex: 1; gap: 0.55rem; }
+  .pc-card__meta { display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: center; }
+  .pc-card__cat { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #ff2d92; }
+  .pc-card:nth-child(even) .pc-card__cat { color: #00e5ff; }
+  .pc-card__tag { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: rgba(240,233,255,0.35); }
+  .pc-card__title { font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 700; color: #f0e9ff; line-height: 1.38; margin: 0; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; flex: 1; }
+  .pc-card__cta { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: rgba(240,233,255,0.4); margin-top: auto; padding-top: 0.6rem; border-top: 1px dashed rgba(240,233,255,0.1); transition: color 0.15s; }
+  .pc-card:hover .pc-card__cta { color: #00e5ff; }
+  .pc-card:nth-child(even):hover .pc-card__cta { color: #ff2d92; }
 </style>

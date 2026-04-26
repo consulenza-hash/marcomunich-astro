@@ -1,7 +1,6 @@
 ---
 /**
- * tag/[slug].astro
- * Pagina archivio per tag — griglia articoli filtrati.
+ * tag/[slug].astro — Y2K Chrome
  */
 import BaseLayout from '@layouts/BaseLayout.astro';
 import PostCard from '@components/PostCard.astro';
@@ -9,13 +8,11 @@ import { getAllTags, getPostsByTag, ghostPostToArticolo } from '@lib/ghost';
 
 export async function getStaticPaths() {
   const tags = await getAllTags();
-
   const paths = await Promise.all(tags.map(async (tag) => {
     const ghostPosts = await getPostsByTag(tag.slug);
     const posts = ghostPosts.map(p => ghostPostToArticolo(p));
     return { params: { slug: tag.slug }, props: { tag, posts } };
   }));
-
   return paths;
 }
 
@@ -25,117 +22,70 @@ const tagDesc = tag.description ?? '';
 ---
 
 <BaseLayout
-  title={`Tag: ${tagName} - Marco Munich`}
+  title={`#${tagName} — Marco Munich`}
   description={tagDesc || `Articoli con tag ${tagName} di Marco Munich.`}
   currentPath={`/tag/${tag.slug}/`}
 >
 
-  <!-- Hero -->
+<div class="tag-page">
+
   <section class="tag-hero">
-    <div class="tag-hero__overlay"></div>
-    <div class="tag-hero__content">
-      <p class="tag-hero__eyebrow">Tag</p>
-      <h1 class="tag-hero__title">#{tagName}</h1>
+    <div class="tag-container">
+      <div class="tag-status-bar">
+        <span class="tag-pill">SYS · tag</span>
+        <span class="tag-pill">{posts.length} articoli</span>
+      </div>
+      <h1 class="tag-h1">
+        <span class="tag-h1__prefix">▸</span>
+        <span class="tag-h1__chrome">#{tagName}</span>
+      </h1>
       {tagDesc && <p class="tag-hero__desc">{tagDesc}</p>}
     </div>
   </section>
 
-  <!-- Griglia articoli -->
-  <div class="tag-body site-wrapper">
+  <section class="tag-section">
+    <div class="tag-container">
+      <h2 class="tag-section__title"><span class="tag-arrow">▸</span> ARTICOLI · #{tagName.toUpperCase()}</h2>
 
-    {posts.length > 0 ? (
-      <div class="blog-grid">
-        {posts.map((post) => <PostCard post={post} />)}
+      {posts.length > 0 ? (
+        <div class="tag-grid">
+          {posts.map(post => <PostCard post={post} />)}
+        </div>
+      ) : (
+        <p class="tag-empty">// nessun articolo con questo tag.</p>
+      )}
+
+      <div class="tag-back">
+        <a href="/blog/" class="tag-back__link">← tutti gli articoli</a>
       </div>
-    ) : (
-      <p class="tag-empty">Nessun articolo con questo tag.</p>
-    )}
-
-    <div class="tag-back">
-      <a href="/blog/">← Tutti gli articoli</a>
     </div>
+  </section>
 
-  </div>
+</div>
 
 </BaseLayout>
 
 <style>
-  .tag-hero {
-    position: relative;
-    height: 200px;
-    background-color: #2a2a2a;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .tag-hero__overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(0,0,0,0.5);
-  }
-  .tag-hero__content {
-    position: relative;
-    z-index: 1;
-    text-align: center;
-    color: white;
-    padding: 0 24px;
-  }
-  .tag-hero__eyebrow {
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.4);
-    margin-bottom: 8px;
-  }
-  .tag-hero__title {
-    font-size: clamp(22px, 4vw, 36px);
-    font-weight: 800;
-    color: white;
-    margin: 0;
-  }
-  .tag-hero__desc {
-    font-size: 14px;
-    color: rgba(255,255,255,0.65);
-    max-width: 500px;
-    margin: 10px auto 0;
-  }
+  .tag-page { color: #f0e9ff; font-family: 'Inter', system-ui, sans-serif; min-height: 100vh; }
+  .tag-container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 2; }
 
-  .tag-body {
-    padding-top: 48px;
-    padding-bottom: 80px;
-  }
+  .tag-hero { padding: 5rem 0 3.5rem; }
+  .tag-status-bar { display: flex; gap: 0.5rem; margin-bottom: 2rem; flex-wrap: wrap; }
+  .tag-pill { display: inline-flex; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 600; color: #ff2d92; background: rgba(255,45,146,0.08); border: 1px solid rgba(255,45,146,0.4); padding: 0.35rem 0.8rem; border-radius: 999px; }
+  .tag-h1 { font-family: 'Inter', sans-serif; font-weight: 900; font-size: clamp(2.5rem, 9vw, 7rem); line-height: 0.92; letter-spacing: -0.04em; margin: 0 0 1.5rem; display: flex; align-items: baseline; gap: 0.4rem; }
+  .tag-h1__prefix { color: #00e5ff; font-family: 'JetBrains Mono', monospace; font-size: 0.5em; }
+  .tag-h1__chrome { background: linear-gradient(180deg, #ff2d92 0%, #ffe2f0 30%, #8a3aff 70%, #4a0066 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; }
+  .tag-hero__desc { font-size: 1.05rem; line-height: 1.7; color: rgba(240,233,255,0.7); max-width: 600px; margin: 0; }
 
-  .blog-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 40px 32px;
-  }
+  .tag-section { padding: 3rem 0 6rem; }
+  .tag-section__title { font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; font-weight: 700; letter-spacing: 0.2em; color: #ff2d92; margin: 0 0 3rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,45,146,0.3); }
+  .tag-arrow { color: #00e5ff; }
+  .tag-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; }
+  .tag-empty { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: rgba(240,233,255,0.4); padding: 3rem 0; text-align: center; }
+  .tag-back { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px dashed rgba(240,233,255,0.1); }
+  .tag-back__link { font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; color: rgba(240,233,255,0.5); text-decoration: none; transition: color 0.15s; }
+  .tag-back__link:hover { color: #00e5ff; }
 
-  .tag-empty {
-    text-align: center;
-    color: rgba(10,10,10,0.5);
-    padding: 60px 0;
-    font-size: 15px;
-  }
-
-  .tag-back {
-    margin-top: 48px;
-    padding-top: 24px;
-    border-top: 1px solid #E5E5E5;
-  }
-  .tag-back a {
-    font-size: 14px;
-    color: #1E2B2F;
-    text-decoration: none;
-    font-weight: 600;
-  }
-  .tag-back a:hover { opacity: 0.6; }
-
-  @media (max-width: 900px) {
-    .blog-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  }
-  @media (max-width: 560px) {
-    .blog-grid { grid-template-columns: minmax(0, 1fr); }
-    .tag-hero  { height: 160px; }
-  }
+  @media (max-width: 1024px) { .tag-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { .tag-grid { grid-template-columns: 1fr; } }
 </style>
