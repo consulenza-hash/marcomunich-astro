@@ -6,6 +6,7 @@
  */
 import BaseLayout from '@layouts/BaseLayout.astro';
 import { getAllPosts, ghostPostToArticolo } from '@lib/ghost';
+import jsYaml from 'js-yaml';
 
 // Formatta data leggibile
 function formatData(dateStr: string): string {
@@ -16,8 +17,9 @@ function formatData(dateStr: string): string {
   } catch { return dateStr; }
 }
 
+// 1) Articoli da Ghost CMS
 const ghostPosts = await getAllPosts();
-const posts = ghostPosts.map(p => {
+const ghostMapped = ghostPosts.map(p => {
   const a = ghostPostToArticolo(p);
   return {
     slug:       a.slug,
@@ -29,6 +31,27 @@ const posts = ghostPosts.map(p => {
     immagine:   a.immagine ?? null,
   };
 });
+
+// 2) Articoli da /src/content/dev-blog/*.md (legacy, mantenuti come file)
+const devRaw = import.meta.glob('/src/content/dev-blog/*.md', { eager: true, as: 'raw' }) as Record<string, string>;
+const devMapped = Object.entries(devRaw).map(([filePath, content]) => {
+  const slug   = filePath.match(/\/([^/]+)\.md$/)?.[1] ?? '';
+  const fmStr  = content.match(/^---\r?\n([\s\S]*?)\r?\n---/)?.[1] ?? '';
+  const fm     = (jsYaml.load(fmStr) as Record<string, any>) ?? {};
+  const data   = (fm.date ?? '').slice(0, 10);
+  return {
+    slug,
+    titolo:      fm.title       ?? slug,
+    descrizione: fm.description  ?? '',
+    data,
+    dataLegg:    data ? formatData(data) : '',
+    categoria:   Array.isArray(fm.tags) && fm.tags.length ? fm.tags[0] : 'Web',
+    immagine:    `/images/dev-blog/${slug}.png`,
+  };
+});
+
+// Merge + ordina per data desc
+const posts = [...ghostMapped, ...devMapped].sort((a, b) => (b.data || '').localeCompare(a.data || ''));
 ---
 
 <BaseLayout
