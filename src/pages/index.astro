@@ -153,9 +153,60 @@ import BaseLayout from '@layouts/BaseLayout.astro';
           <div class="ps4-sidecard__row"><span class="ps4-sidecard__lbl">Studio</span><span class="ps4-sidecard__val">Marco Munich</span></div>
           <div class="ps4-sidecard__row"><span class="ps4-sidecard__lbl">Sede</span><span class="ps4-sidecard__val">Vicenza, IT</span></div>
           <div class="ps4-sidecard__row"><span class="ps4-sidecard__lbl">Esperienza</span><span class="ps4-sidecard__val">Dal 2019</span></div>
-          <div class="ps4-sidecard__row"><span class="ps4-sidecard__lbl">Stack</span><span class="ps4-sidecard__val">Astro · FastAPI · Node</span></div>
           <div class="ps4-sidecard__row"><span class="ps4-sidecard__lbl">Lingue</span><span class="ps4-sidecard__val">IT · EN</span></div>
+          <div class="ps4-sidecard__row"><span class="ps4-sidecard__lbl">Stack</span><span class="ps4-sidecard__val"><a href="#stack" style="color:#00e5ff;text-decoration:none">// vedi sotto ↓</a></span></div>
           <div class="ps4-sidecard__row"><span class="ps4-sidecard__lbl">Disponibile</span><span class="ps4-sidecard__val ps4-avail">● Maggio 2026</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ps4-section" id="stack">
+    <div class="ps4-container">
+      <h2 class="ps4-section__title"><span class="ps4-arrow">▸</span> STACK · STRUMENTI</h2>
+      <p class="ps4-section__lead">
+        Il set di tecnologie con cui costruisco. Lo strumento giusto dipende dal progetto, ma queste sono le radici a cui torno.
+      </p>
+      <div class="ps4-stack">
+        <div class="ps4-stack__row">
+          <span class="ps4-stack__lbl">Frontend</span>
+          <span class="ps4-stack__val">Astro · React · Tailwind CSS · TypeScript · Markdoc · Playwright</span>
+        </div>
+        <div class="ps4-stack__row">
+          <span class="ps4-stack__lbl">Backend</span>
+          <span class="ps4-stack__val">FastAPI · Uvicorn · Node.js · Python · PHP</span>
+        </div>
+        <div class="ps4-stack__row">
+          <span class="ps4-stack__lbl">Database & ORM</span>
+          <span class="ps4-stack__val">SQLite · SQLAlchemy 2 · MySQL</span>
+        </div>
+        <div class="ps4-stack__row">
+          <span class="ps4-stack__lbl">CMS</span>
+          <span class="ps4-stack__val">Ghost CMS · Keystatic · WordPress (legacy)</span>
+        </div>
+        <div class="ps4-stack__row">
+          <span class="ps4-stack__lbl">Pagamenti</span>
+          <span class="ps4-stack__val">Stripe · PayPal</span>
+        </div>
+        <div class="ps4-stack__row">
+          <span class="ps4-stack__lbl">Email & Auth</span>
+          <span class="ps4-stack__val">Resend · JWT · itsdangerous (signed cookies)</span>
+        </div>
+        <div class="ps4-stack__row">
+          <span class="ps4-stack__lbl">AI / LLM</span>
+          <span class="ps4-stack__val">Claude (Anthropic SDK) · Gemini · Imagen 4 · Veo 2</span>
+        </div>
+        <div class="ps4-stack__row">
+          <span class="ps4-stack__lbl">Integrazioni API</span>
+          <span class="ps4-stack__val">Instagram (Graph API + instagrapi) · Telegram Bot · Open-Meteo · Spotify</span>
+        </div>
+        <div class="ps4-stack__row">
+          <span class="ps4-stack__lbl">Deploy & DevOps</span>
+          <span class="ps4-stack__val">Cloudflare Pages · Railway · GitHub Actions · PM2 · lftp</span>
+        </div>
+        <div class="ps4-stack__row">
+          <span class="ps4-stack__lbl">Tooling</span>
+          <span class="ps4-stack__val">Git · VS Code · Pillow · APScheduler · Jinja2</span>
         </div>
       </div>
     </div>
@@ -301,6 +352,13 @@ import BaseLayout from '@layouts/BaseLayout.astro';
   .ps4-sidecard__val { color: #f0e9ff; font-weight: 600; }
   .ps4-avail { color: #6ee870 !important; }
 
+  /* STACK section */
+  .ps4-stack { background: rgba(255,255,255,0.03); border: 1px solid rgba(240,233,255,0.15); border-radius: 12px; padding: 0.5rem 1.8rem; backdrop-filter: blur(10px); }
+  .ps4-stack__row { display: grid; grid-template-columns: 200px 1fr; gap: 1.5rem; padding: 1.1rem 0; border-bottom: 1px dashed rgba(240,233,255,0.1); align-items: baseline; }
+  .ps4-stack__row:last-child { border-bottom: 0; }
+  .ps4-stack__lbl { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: #ff2d92; }
+  .ps4-stack__val { font-family: 'JetBrains Mono', monospace; font-size: 0.88rem; line-height: 1.7; color: #f0e9ff; }
+
   .ps4-cta { padding: 7rem 0; }
   .ps4-cta__box { text-align: center; background: linear-gradient(135deg, rgba(138,58,255,0.1) 0%, rgba(0,229,255,0.08) 100%); border: 1px solid rgba(240,233,255,0.2); border-radius: 24px; padding: 5rem 3rem; backdrop-filter: blur(20px); box-shadow: 0 0 80px rgba(255,45,146,0.15); }
   .ps4-cta__kicker { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #00e5ff; margin: 0 0 2rem; letter-spacing: 0.2em; }
@@ -322,5 +380,6 @@ import BaseLayout from '@layouts/BaseLayout.astro';
     .ps4-tags { grid-template-columns: 1fr; }
     .ps4-method, .ps4-bio { grid-template-columns: 1fr; gap: 2rem; }
     .ps4-cta__box { padding: 3.5rem 2rem; }
+    .ps4-stack__row { grid-template-columns: 1fr; gap: 0.4rem; padding: 1rem 0; }
   }
 </style>
