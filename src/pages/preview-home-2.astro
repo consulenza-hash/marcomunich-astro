@@ -1,0 +1,406 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Preview Home 2 — Brutalist"
+  description="Mockup direzione brutalist/swiss."
+  currentPath="/preview-home-2/"
+>
+
+<div class="b2-page">
+
+  <!-- ── BANNER MARQUEE ──────────────────────────────────────────────────── -->
+  <div class="b2-banner">
+    <div class="b2-marquee">
+      <span>SVILUPPO WEB</span><span>·</span><span>POSIZIONAMENTO ONLINE</span><span>·</span><span>VICENZA / IT</span><span>·</span><span>DAL 2019</span><span>·</span><span>SVILUPPO WEB</span><span>·</span><span>POSIZIONAMENTO ONLINE</span><span>·</span><span>VICENZA / IT</span><span>·</span><span>DAL 2019</span><span>·</span>
+    </div>
+  </div>
+
+  <!-- ── HERO ────────────────────────────────────────────────────────────── -->
+  <section class="b2-hero">
+    <div class="b2-hero__title-row b2-hero__title-row--top">
+      <span class="b2-hero__big">SITI.</span>
+    </div>
+    <div class="b2-hero__title-row b2-hero__title-row--mid">
+      <span class="b2-hero__big b2-hero__big--orange">APP.</span>
+      <span class="b2-hero__big b2-hero__big--outline">BRAND.</span>
+    </div>
+    <div class="b2-hero__title-row b2-hero__title-row--bot">
+      <span class="b2-hero__big">★</span>
+      <span class="b2-hero__sub">Per chi vende se stesso. Costruiti come si deve.</span>
+    </div>
+  </section>
+
+  <!-- ── BLOCK SERVIZI (split half) ──────────────────────────────────────── -->
+  <section class="b2-split">
+    <div class="b2-split__half b2-split__half--orange">
+      <div class="b2-split__num">01</div>
+      <h2 class="b2-split__title">SVILUPPO</h2>
+      <p class="b2-split__desc">
+        Siti, landing, e-commerce, web app. Astro, FastAPI, codice pulito, performance verificabili. Niente template, niente plugin obbligatori, piena proprietà dei file alla consegna.
+      </p>
+      <a href="/portfolio/" class="b2-split__cta">VEDI PROGETTI ↗</a>
+    </div>
+    <div class="b2-split__half b2-split__half--black">
+      <div class="b2-split__num">02</div>
+      <h2 class="b2-split__title">POSIZIONAMENTO</h2>
+      <p class="b2-split__desc">
+        Per chi vende se stesso e vuole una presenza online che corrisponda a chi è davvero. Sette anni nel personal branding, oltre duecento articoli, un metodo che non si compra in un corso.
+      </p>
+      <a href="/servizi/posizionamento-online/" class="b2-split__cta">SCOPRI ↗</a>
+    </div>
+  </section>
+
+  <!-- ── NUMERI ENORMI ───────────────────────────────────────────────────── -->
+  <section class="b2-stats">
+    <div class="b2-stats__row">
+      <div class="b2-stat">
+        <span class="b2-stat__big">218</span>
+        <span class="b2-stat__label">ARTICOLI<br>BLOG</span>
+      </div>
+      <div class="b2-stat">
+        <span class="b2-stat__big">7</span>
+        <span class="b2-stat__label">ANNI DI<br>LAVORO</span>
+      </div>
+      <div class="b2-stat">
+        <span class="b2-stat__big">0</span>
+        <span class="b2-stat__label">TEMPLATE<br>USATI</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PROGETTI GRIGLIA ASIMMETRICA ────────────────────────────────────── -->
+  <section class="b2-projects">
+    <div class="b2-projects__head">
+      <h2 class="b2-projects__title">/ PROGETTI</h2>
+      <a href="/portfolio/" class="b2-projects__all">TUTTI →</a>
+    </div>
+    <div class="b2-projects__grid">
+      <a href="/portfolio/" class="b2-pcard b2-pcard--lg">
+        <span class="b2-pcard__year">2026</span>
+        <span class="b2-pcard__name">marcomunich.com</span>
+        <span class="b2-pcard__type">Sito + CMS custom</span>
+      </a>
+      <a href="/portfolio/" class="b2-pcard">
+        <span class="b2-pcard__year">2026</span>
+        <span class="b2-pcard__name">Vela</span>
+        <span class="b2-pcard__type">Web app</span>
+      </a>
+      <a href="/portfolio/" class="b2-pcard b2-pcard--orange">
+        <span class="b2-pcard__year">2026</span>
+        <span class="b2-pcard__name">cms.marcomunich</span>
+        <span class="b2-pcard__type">Migrazione Ghost</span>
+      </a>
+      <a href="/portfolio/" class="b2-pcard">
+        <span class="b2-pcard__year">2026</span>
+        <span class="b2-pcard__name">Inspiration Bot</span>
+        <span class="b2-pcard__type">Pipeline contenuti</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ── CTA BLOCCO ────────────────────────────────────────────────────── -->
+  <section class="b2-cta">
+    <div class="b2-cta__inner">
+      <h2 class="b2-cta__title">PARLIAMO<br>DEL TUO<br>PROGETTO.</h2>
+      <a href="/contatti/" class="b2-cta__btn">FISSA UNA CHIAMATA →</a>
+    </div>
+  </section>
+
+</div>
+
+</BaseLayout>
+
+<style>
+  .b2-page {
+    background: #f5f3ee;
+    color: #0d0d0d;
+    font-family: 'Inter', system-ui, sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* MARQUEE */
+  .b2-banner {
+    background: #0d0d0d;
+    color: #f5f3ee;
+    overflow: hidden;
+    border-bottom: 4px solid #e85d00;
+  }
+  .b2-marquee {
+    display: flex;
+    gap: 2rem;
+    padding: 0.7rem 0;
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: 0.85rem;
+    letter-spacing: 0.18em;
+    white-space: nowrap;
+    animation: b2scroll 30s linear infinite;
+  }
+  @keyframes b2scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* HERO */
+  .b2-hero {
+    padding: 4rem 2rem 5rem;
+    border-bottom: 4px solid #0d0d0d;
+  }
+  .b2-hero__title-row {
+    display: flex;
+    align-items: baseline;
+    line-height: 0.85;
+  }
+  .b2-hero__title-row--top { margin-bottom: -0.05em; }
+  .b2-hero__title-row--mid {
+    justify-content: space-between;
+    margin-bottom: -0.05em;
+  }
+  .b2-hero__title-row--bot {
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 2rem;
+  }
+  .b2-hero__big {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: clamp(4rem, 19vw, 18rem);
+    letter-spacing: -0.06em;
+    color: #0d0d0d;
+  }
+  .b2-hero__big--orange { color: #e85d00; font-style: italic; }
+  .b2-hero__big--outline {
+    color: transparent;
+    -webkit-text-stroke: 2px #0d0d0d;
+  }
+  .b2-hero__sub {
+    font-size: clamp(1rem, 1.6vw, 1.4rem);
+    font-weight: 400;
+    max-width: 480px;
+    line-height: 1.5;
+    color: #444;
+    padding-bottom: 1rem;
+  }
+
+  /* SPLIT SERVIZI */
+  .b2-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 4px solid #0d0d0d;
+  }
+  .b2-split__half {
+    padding: 5rem 3rem 4rem;
+    min-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .b2-split__half--orange {
+    background: #e85d00;
+    color: #fff;
+    border-right: 4px solid #0d0d0d;
+  }
+  .b2-split__half--black {
+    background: #0d0d0d;
+    color: #fff;
+  }
+  .b2-split__num {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: 1.1rem;
+    letter-spacing: 0.15em;
+    margin-bottom: 2rem;
+  }
+  .b2-split__title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: clamp(2.5rem, 5.5vw, 4.8rem);
+    letter-spacing: -0.04em;
+    line-height: 0.95;
+    margin: 0 0 2rem;
+  }
+  .b2-split__desc {
+    font-size: 1rem;
+    line-height: 1.7;
+    max-width: 460px;
+    margin: 0 0 3rem;
+  }
+  .b2-split__cta {
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: 0.95rem;
+    letter-spacing: 0.1em;
+    color: #fff;
+    text-decoration: none;
+    border-bottom: 3px solid #fff;
+    padding-bottom: 0.4rem;
+    align-self: flex-start;
+    transition: padding 0.2s ease;
+  }
+  .b2-split__cta:hover { padding-right: 1rem; }
+
+  /* STATS */
+  .b2-stats {
+    background: #f5f3ee;
+    padding: 6rem 2rem;
+    border-bottom: 4px solid #0d0d0d;
+  }
+  .b2-stats__row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4rem;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  .b2-stat {
+    border-top: 4px solid #0d0d0d;
+    padding-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+  }
+  .b2-stat__big {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: clamp(5rem, 13vw, 11rem);
+    letter-spacing: -0.05em;
+    line-height: 0.85;
+    color: #0d0d0d;
+    margin-bottom: 1.5rem;
+  }
+  .b2-stat:nth-child(2) .b2-stat__big { color: #e85d00; }
+  .b2-stat__label {
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: 0.9rem;
+    letter-spacing: 0.15em;
+    line-height: 1.4;
+    color: #0d0d0d;
+  }
+
+  /* PROJECTS */
+  .b2-projects {
+    background: #0d0d0d;
+    color: #f5f3ee;
+    padding: 5rem 2rem;
+    border-bottom: 4px solid #0d0d0d;
+  }
+  .b2-projects__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1280px;
+    margin: 0 auto 3rem;
+  }
+  .b2-projects__title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    letter-spacing: -0.03em;
+    margin: 0;
+  }
+  .b2-projects__all {
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: 0.95rem;
+    letter-spacing: 0.1em;
+    color: #e85d00;
+    text-decoration: none;
+    border-bottom: 2px solid #e85d00;
+    padding-bottom: 0.3rem;
+  }
+  .b2-projects__grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 2px;
+    background: #f5f3ee;
+    border: 4px solid #f5f3ee;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  .b2-pcard {
+    background: #0d0d0d;
+    padding: 2.5rem 2rem;
+    color: #f5f3ee;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    min-height: 280px;
+    transition: background 0.2s ease;
+  }
+  .b2-pcard--lg { min-height: 280px; padding: 3rem 2.5rem; }
+  .b2-pcard--orange {
+    background: #e85d00;
+    color: #fff;
+  }
+  .b2-pcard:hover { background: #1a1a1a; }
+  .b2-pcard--orange:hover { background: #ff6f10; }
+  .b2-pcard__year {
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    opacity: 0.6;
+  }
+  .b2-pcard__name {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: clamp(1.3rem, 2.2vw, 2rem);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-top: auto;
+  }
+  .b2-pcard__type {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 0.85rem;
+    opacity: 0.7;
+  }
+
+  /* CTA */
+  .b2-cta {
+    background: #e85d00;
+    color: #fff;
+    padding: 6rem 2rem;
+  }
+  .b2-cta__inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 3rem;
+    flex-wrap: wrap;
+  }
+  .b2-cta__title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: clamp(2.5rem, 7vw, 6rem);
+    letter-spacing: -0.05em;
+    line-height: 0.9;
+    margin: 0;
+  }
+  .b2-cta__btn {
+    background: #0d0d0d;
+    color: #fff;
+    padding: 1.4rem 2.6rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    transition: transform 0.2s ease;
+  }
+  .b2-cta__btn:hover { transform: translateY(-3px); }
+
+  @media (max-width: 768px) {
+    .b2-split { grid-template-columns: 1fr; }
+    .b2-split__half--orange { border-right: none; border-bottom: 4px solid #0d0d0d; }
+    .b2-stats__row { grid-template-columns: 1fr; gap: 2rem; }
+    .b2-projects__grid { grid-template-columns: 1fr 1fr; }
+    .b2-hero__title-row--mid { flex-direction: column; align-items: flex-start; }
+    .b2-cta__inner { flex-direction: column; align-items: flex-start; }
+  }
+</style>

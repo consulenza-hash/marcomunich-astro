@@ -1,0 +1,525 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Preview Home 3 — Soft Studio"
+  description="Mockup direzione soft studio."
+  currentPath="/preview-home-3/"
+>
+
+<div class="s3-page">
+
+  <!-- ── HERO MINIMALE ───────────────────────────────────────────────────── -->
+  <section class="s3-hero">
+    <div class="s3-container s3-container--narrow">
+      <p class="s3-eyebrow">Marco Munich · Studio indipendente · Vicenza</p>
+      <h1 class="s3-hero__title">
+        Sviluppo siti e applicazioni per professionisti che vendono se stessi.
+      </h1>
+      <p class="s3-hero__sub">
+        Vengo da sette anni di consulenza sul personal branding, e lo sguardo è rimasto quello: prima capisco cosa stai vendendo, poi costruisco lo strumento giusto per venderlo.
+      </p>
+      <div class="s3-hero__meta">
+        <div>
+          <span class="s3-meta__label">Disponibile da</span>
+          <span class="s3-meta__value">Maggio 2026</span>
+        </div>
+        <div>
+          <span class="s3-meta__label">Tipologia progetti</span>
+          <span class="s3-meta__value">Siti, web app, posizionamento</span>
+        </div>
+        <div>
+          <span class="s3-meta__label">Lingue</span>
+          <span class="s3-meta__value">Italiano · Inglese</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── DIVIDER PIANTA ──────────────────────────────────────────────────── -->
+  <div class="s3-divider">
+    <span class="s3-divider__dot"></span>
+    <span class="s3-divider__line"></span>
+    <span class="s3-divider__dot"></span>
+  </div>
+
+  <!-- ── SERVIZI - DUE CASE EDITORIALI ─────────────────────────────────── -->
+  <section class="s3-services">
+    <div class="s3-container">
+      <p class="s3-section__kicker">Servizi</p>
+
+      <article class="s3-svc">
+        <div class="s3-svc__num">I.</div>
+        <div class="s3-svc__body">
+          <h2 class="s3-svc__title">Sviluppo siti e applicazioni.</h2>
+          <p class="s3-svc__lead">
+            Costruisco da zero con codice pulito e performance verificabili. Astro per i siti, FastAPI per le applicazioni custom. Niente template, niente plugin obbligatori, niente abbonamenti mensili a piattaforme che cambiano regole ogni anno.
+          </p>
+          <a href="/portfolio/" class="s3-svc__more">→ Vedi i progetti recenti</a>
+        </div>
+      </article>
+
+      <article class="s3-svc">
+        <div class="s3-svc__num">II.</div>
+        <div class="s3-svc__body">
+          <h2 class="s3-svc__title">Posizionamento online.</h2>
+          <p class="s3-svc__lead">
+            Per chi vende se stesso e vuole una presenza che corrisponda davvero a chi è. Sette anni di lavoro nel settore olistico, oltre duecento articoli pubblicati, un metodo che non si compra in un corso.
+          </p>
+          <a href="/servizi/posizionamento-online/" class="s3-svc__more">→ Scopri come lavoro</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ── PROGETTI - LISTA ELEGANTE ───────────────────────────────────────── -->
+  <section class="s3-projects">
+    <div class="s3-container">
+      <div class="s3-projects__head">
+        <p class="s3-section__kicker">Lavori recenti</p>
+        <a href="/portfolio/" class="s3-projects__all">Archivio completo →</a>
+      </div>
+      <ul class="s3-projects__list">
+        <li class="s3-proj">
+          <a href="/portfolio/" class="s3-proj__row">
+            <span class="s3-proj__num">No. 01</span>
+            <div class="s3-proj__main">
+              <h3 class="s3-proj__name">marcomunich.com</h3>
+              <p class="s3-proj__desc">Sito vetrina con CMS custom, 277 articoli, integrazione Ghost.</p>
+            </div>
+            <span class="s3-proj__year">2026</span>
+          </a>
+        </li>
+        <li class="s3-proj">
+          <a href="/portfolio/" class="s3-proj__row">
+            <span class="s3-proj__num">No. 02</span>
+            <div class="s3-proj__main">
+              <h3 class="s3-proj__name">Vela</h3>
+              <p class="s3-proj__desc">Web application per gestione social media, FastAPI + instagrapi.</p>
+            </div>
+            <span class="s3-proj__year">2026</span>
+          </a>
+        </li>
+        <li class="s3-proj">
+          <a href="/portfolio/" class="s3-proj__row">
+            <span class="s3-proj__num">No. 03</span>
+            <div class="s3-proj__main">
+              <h3 class="s3-proj__name">cms.marcomunich.com</h3>
+              <p class="s3-proj__desc">Migrazione Ghost CMS con 256 articoli da WordPress.</p>
+            </div>
+            <span class="s3-proj__year">2026</span>
+          </a>
+        </li>
+        <li class="s3-proj">
+          <a href="/portfolio/" class="s3-proj__row">
+            <span class="s3-proj__num">No. 04</span>
+            <div class="s3-proj__main">
+              <h3 class="s3-proj__name">Inspiration Bot</h3>
+              <p class="s3-proj__desc">Pipeline contenuti automatica via Telegram + PM2.</p>
+            </div>
+            <span class="s3-proj__year">2026</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ── METODO - PARAGRAFO RESPIRATO ────────────────────────────────────── -->
+  <section class="s3-method">
+    <div class="s3-container s3-container--narrow">
+      <p class="s3-section__kicker">Metodo</p>
+      <p class="s3-method__lead">
+        Non scrivo codice riga per riga. <em>Guido l'intelligenza artificiale</em> per costruire siti e applicazioni che funzionano. Il risultato è lo stesso di uno sviluppo tradizionale, è solo più veloce e più pulito, perché posso passare più tempo sulle decisioni che contano e meno sulla ripetizione meccanica.
+      </p>
+      <a href="/vibe-coding/" class="s3-method__more">→ Come funziona, in pratica</a>
+    </div>
+  </section>
+
+  <!-- ── PRINCIPI - TRE COLONNE LEGGERE ──────────────────────────────────── -->
+  <section class="s3-principles">
+    <div class="s3-container">
+      <p class="s3-section__kicker">Principi</p>
+      <div class="s3-principles__grid">
+        <div class="s3-prin">
+          <span class="s3-prin__num">i</span>
+          <h3 class="s3-prin__title">Codice tuo.</h3>
+          <p>Alla consegna ricevi tutti i file, accesso ai repository, documentazione completa. Niente lock-in.</p>
+        </div>
+        <div class="s3-prin">
+          <span class="s3-prin__num">ii</span>
+          <h3 class="s3-prin__title">Performance verificabili.</h3>
+          <p>Ogni progetto viene misurato. PageSpeed, Core Web Vitals, tempi di caricamento. Numeri, non promesse.</p>
+        </div>
+        <div class="s3-prin">
+          <span class="s3-prin__num">iii</span>
+          <h3 class="s3-prin__title">Costruito sulla tua identità.</h3>
+          <p>Niente template. Ogni progetto parte da come parli, da chi vuoi attirare, da cosa vendi davvero.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA - INVITO LIEVE ──────────────────────────────────────────────── -->
+  <section class="s3-cta">
+    <div class="s3-container s3-container--narrow">
+      <p class="s3-cta__kicker">— Lavoriamo insieme</p>
+      <h2 class="s3-cta__title">
+        Hai un progetto in mente?
+      </h2>
+      <p class="s3-cta__sub">
+        Una prima chiamata gratuita di trenta minuti. Capisco la tua situazione, ti dico cosa farei al tuo posto. Se non posso esserti utile, te lo dico subito.
+      </p>
+      <a href="/contatti/" class="s3-cta__btn">Fissa una chiamata</a>
+    </div>
+  </section>
+
+</div>
+
+</BaseLayout>
+
+<style>
+  .s3-page {
+    background: #f7f4ee;
+    color: #1a1814;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    overflow-x: hidden;
+  }
+  .s3-container {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 2.5rem;
+  }
+  .s3-container--narrow { max-width: 760px; }
+
+  /* HERO */
+  .s3-hero {
+    padding: 9rem 0 7rem;
+  }
+  .s3-eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #6b6358;
+    margin: 0 0 3rem;
+  }
+  .s3-hero__title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(2.6rem, 5vw, 4.6rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: #1a1814;
+    margin: 0 0 2.5rem;
+    font-style: italic;
+  }
+  .s3-hero__sub {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 1.05rem;
+    line-height: 1.85;
+    color: #4a4438;
+    max-width: 640px;
+    margin: 0 0 4rem;
+  }
+  .s3-hero__meta {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+    border-top: 1px solid rgba(26,24,20,0.15);
+    padding-top: 2.5rem;
+  }
+  .s3-meta__label {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #8b8170;
+    margin-bottom: 0.5rem;
+  }
+  .s3-meta__value {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: 1.1rem;
+    color: #1a1814;
+  }
+
+  /* DIVIDER */
+  .s3-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    padding: 2rem 0;
+  }
+  .s3-divider__dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #c47340;
+  }
+  .s3-divider__line {
+    width: 160px;
+    height: 1px;
+    background: rgba(26,24,20,0.2);
+  }
+
+  /* SECTION KICKER */
+  .s3-section__kicker {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #c47340;
+    margin: 0 0 3.5rem;
+  }
+
+  /* SERVIZI */
+  .s3-services { padding: 5rem 0; }
+  .s3-svc {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 2.5rem;
+    padding: 4rem 0;
+    border-top: 1px solid rgba(26,24,20,0.12);
+    align-items: start;
+  }
+  .s3-svc:last-child { border-bottom: 1px solid rgba(26,24,20,0.12); }
+  .s3-svc__num {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 2rem;
+    color: #c47340;
+  }
+  .s3-svc__title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-style: italic;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    color: #1a1814;
+    margin: 0 0 1.5rem;
+  }
+  .s3-svc__lead {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 1.02rem;
+    line-height: 1.85;
+    color: #4a4438;
+    max-width: 640px;
+    margin: 0 0 2rem;
+  }
+  .s3-svc__more {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 0.92rem;
+    color: #c47340;
+    text-decoration: none;
+    border-bottom: 1px solid #c47340;
+    padding-bottom: 0.2rem;
+    transition: color 0.2s ease;
+  }
+  .s3-svc__more:hover { color: #1a1814; border-bottom-color: #1a1814; }
+
+  /* PROGETTI */
+  .s3-projects {
+    padding: 6rem 0;
+    background: #ede8de;
+  }
+  .s3-projects__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+  .s3-projects__head .s3-section__kicker { margin: 0; }
+  .s3-projects__all {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 0.85rem;
+    color: #1a1814;
+    text-decoration: none;
+    border-bottom: 1px solid #1a1814;
+    padding-bottom: 0.2rem;
+  }
+  .s3-projects__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .s3-proj { border-top: 1px solid rgba(26,24,20,0.15); }
+  .s3-proj:last-child { border-bottom: 1px solid rgba(26,24,20,0.15); }
+  .s3-proj__row {
+    display: grid;
+    grid-template-columns: 90px 1fr 90px;
+    gap: 2.5rem;
+    align-items: center;
+    padding: 2.2rem 0;
+    color: #1a1814;
+    text-decoration: none;
+    transition: padding 0.25s ease;
+  }
+  .s3-proj__row:hover { padding-left: 1rem; }
+  .s3-proj__num {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.95rem;
+    color: #8b8170;
+  }
+  .s3-proj__name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-style: italic;
+    font-size: clamp(1.4rem, 2.4vw, 2rem);
+    margin: 0 0 0.4rem;
+    color: #1a1814;
+    letter-spacing: -0.01em;
+  }
+  .s3-proj__desc {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 0.92rem;
+    color: #6b6358;
+    margin: 0;
+  }
+  .s3-proj__year {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    color: #8b8170;
+    text-align: right;
+  }
+
+  /* METODO */
+  .s3-method {
+    padding: 7rem 0;
+    text-align: center;
+  }
+  .s3-method .s3-section__kicker { text-align: center; }
+  .s3-method__lead {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    line-height: 1.5;
+    color: #1a1814;
+    margin: 0 0 2.5rem;
+  }
+  .s3-method__lead em {
+    font-style: italic;
+    color: #c47340;
+  }
+  .s3-method__more {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 0.92rem;
+    color: #c47340;
+    text-decoration: none;
+    border-bottom: 1px solid #c47340;
+    padding-bottom: 0.2rem;
+  }
+
+  /* PRINCIPI */
+  .s3-principles {
+    padding: 6rem 0;
+    background: #ede8de;
+  }
+  .s3-principles__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4rem;
+    margin-top: 1rem;
+  }
+  .s3-prin__num {
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.6rem;
+    color: #c47340;
+    margin-bottom: 1.2rem;
+  }
+  .s3-prin__title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-style: italic;
+    font-size: 1.6rem;
+    color: #1a1814;
+    margin: 0 0 1rem;
+    line-height: 1.2;
+  }
+  .s3-prin p {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 0.92rem;
+    line-height: 1.75;
+    color: #4a4438;
+    margin: 0;
+  }
+
+  /* CTA */
+  .s3-cta {
+    padding: 9rem 0;
+    text-align: center;
+  }
+  .s3-cta__kicker {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #c47340;
+    margin: 0 0 2rem;
+  }
+  .s3-cta__title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-style: italic;
+    font-size: clamp(2.5rem, 5vw, 4.2rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: #1a1814;
+    margin: 0 0 1.5rem;
+  }
+  .s3-cta__sub {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.75;
+    color: #4a4438;
+    max-width: 540px;
+    margin: 0 auto 3rem;
+  }
+  .s3-cta__btn {
+    display: inline-block;
+    background: #1a1814;
+    color: #f7f4ee;
+    padding: 1.1rem 2.6rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: background 0.2s ease;
+  }
+  .s3-cta__btn:hover { background: #c47340; }
+
+  @media (max-width: 768px) {
+    .s3-hero__meta { grid-template-columns: 1fr; gap: 1.5rem; }
+    .s3-svc { grid-template-columns: 1fr; gap: 1rem; }
+    .s3-proj__row { grid-template-columns: 60px 1fr 60px; gap: 1rem; }
+    .s3-principles__grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  }
+</style>
+
+<script>
+// Lazy load Cormorant from Google Fonts if not already
+if (!document.querySelector('link[href*="Cormorant+Garamond"]')) {
+  const link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.href = 'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap';
+  document.head.appendChild(link);
+}
+</script>
