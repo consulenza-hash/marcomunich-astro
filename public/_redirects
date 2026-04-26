@@ -88,3 +88,11 @@
 /dev/blog/quanto-costa-un-sito-web-professionale/    /quanto-costa-un-sito-web-professionale/    301
 /dev/blog/seo-nel-2025-cosa-cambia-con-lia/          /seo-nel-2025-cosa-cambia-con-lia/          301
 /dev/blog/sito-web-lento-quanto-ti-costa/            /sito-web-lento-quanto-ti-costa/            301
+
+# Pagine assorbite in homepage 042626 (Y2K Chrome unification)
+/servizi/                            /                          301
+/servizi                             /                          301
+/chi-sono/                           /                          301
+/chi-sono                            /                          301
+/risorse/                            /                          301
+/risorse                             /                          301

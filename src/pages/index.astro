@@ -1,593 +1,324 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
-import jsYaml from 'js-yaml';
-
-const rawFiles = import.meta.glob('/src/content/articoli/*/index.mdoc', {
-  eager: true,
-  as: 'raw',
-}) as Record<string, string>;
-
-const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
-  const slug   = filePath.match(/\/([^/]+)\/index\.mdoc$/)?.[1] ?? '';
-  const fmStr  = content.match(/^---\r?\n([\s\S]*?)\r?\n---/)?.[1] ?? '';
-  const fm     = (jsYaml.load(fmStr) as Record<string, any>) ?? {};
-  return {
-    slug,
-    titolo:      (fm.titolo      as string) ?? slug,
-    categoria:   (fm.categoria   as string) ?? 'Articolo',
-    data:        fm.data ? String(fm.data) : '',
-    bozza:       fm.bozza === true,
-  };
-})
-  .filter(p => p.titolo && p.data && !p.bozza)
-  .sort((a, b) => new Date(b.data).getTime() - new Date(a.data).getTime())
-  .slice(0, 5);
 ---
 
 <BaseLayout
-  title="Personal Branding Olistico — Marco Munich"
-  description="Aiuto coach, counselor e operatori olistici a costruire una presenza online che li fa trovare dalle persone giuste. Articoli, siti web e percorsi di personal branding."
+  title="Marco Munich — Sviluppo siti e applicazioni web"
+  description="Studio indipendente di Vicenza. Sviluppo siti e applicazioni web custom per chi vende se stesso. Niente template, niente abbonamenti mensili, codice pulito e file tutti tuoi alla consegna."
   currentPath="/"
 >
 
-<div class="mm-page">
+<div class="ps4-page">
+  <!-- mesh gradient bg -->
+  <div class="ps4-bg" aria-hidden="true">
+    <span class="ps4-bg__blob ps4-bg__blob--magenta"></span>
+    <span class="ps4-bg__blob ps4-bg__blob--cyan"></span>
+    <span class="ps4-bg__blob ps4-bg__blob--violet"></span>
+  </div>
 
-  <!-- ── HERO ─────────────────────────────────────────────────────────────── -->
-  <section class="home-hero">
-    <video
-      class="home-hero__video"
-      id="hero-vid"
-      autoplay muted loop playsinline
-      poster="/og/marco-munich.png"
-    ></video>
-    <div class="home-hero__overlay" aria-hidden="true"></div>
+  <header class="ps4-nav">
+    <div class="ps4-container ps4-nav__inner">
+      <a href="#" class="ps4-logo"><span class="ps4-logo__sym">▸</span>marco.dev</a>
+      <nav class="ps4-menu">
+        <a href="#cosa">// cosa costruisco</a>
+        <a href="#lavori">// lavori</a>
+        <a href="#metodo">// metodo</a>
+        <a href="#chi">// chi sono</a>
+        <a href="/blog/">// articoli</a>
+        <a href="/contatti/" class="ps4-menu__cta">[ contattami ]</a>
+      </nav>
+    </div>
+  </header>
 
-    <div class="home-hero__content mm-container">
-      <p class="home-hero__byline">Marco Munich —</p>
-      <h1 class="mm-h1">Siti, app,<br>e il tuo brand online.</h1>
-      <p class="home-hero__sub">
-        Costruisco <strong>siti e applicazioni</strong> per chi vende se stesso. Lo faccio sapendo cosa stai vendendo, perché vengo da sette anni di personal branding nel settore olistico.
+  <section class="ps4-hero">
+    <div class="ps4-container">
+      <div class="ps4-status-bar">
+        <span class="ps4-pill"><span class="ps4-pulse"></span> ONLINE</span>
+        <span class="ps4-pill">SYS · marco.dev</span>
+        <span class="ps4-pill">v.2026.4</span>
+      </div>
+      <h1 class="ps4-h1">
+        <span class="ps4-h1__chrome">SITI.</span>
+        <span class="ps4-h1__chrome ps4-h1__chrome--violet">APP.</span>
+        <span class="ps4-h1__chrome ps4-h1__chrome--cyan">BRAND.</span>
+      </h1>
+      <p class="ps4-hero__tag">
+        Sviluppo siti e applicazioni per chi vende se stesso. Vengo da sette anni di personal branding olistico, oggi traduco quell'esperienza in codice. ✦
       </p>
-      <div class="home-hero__ctas">
-        <a href="#cosa-costruisco" class="mm-btn mm-btn-orange">Vedi cosa costruisco →</a>
-        <a href="/contatti/" class="mm-btn mm-btn-outline">Lavoriamo insieme</a>
+      <div class="ps4-hero__ctas">
+        <a href="/contatti/" class="ps4-btn ps4-btn--chrome">[ INIZIA UN PROGETTO ]</a>
+        <a href="#cosa" class="ps4-btn ps4-btn--ghost">↓ Cosa costruisco</a>
       </div>
-    </div>
-
-    <span class="home-hero__caption" aria-hidden="true">Sviluppo · Personal Branding · Contenuti</span>
-  </section>
-
-  <!-- ── NUMERI ─────────────────────────────────────────────────────────────── -->
-  <section class="mm-section-light home-stats">
-    <div class="home-stats__grid mm-container">
-      <div class="home-stat">
-        <div class="home-stat__num">200<span>+</span></div>
-        <div class="home-stat__label">Articoli pubblicati<br>sul blog</div>
-      </div>
-      <div class="home-stat">
-        <div class="home-stat__num">50<span>+</span></div>
-        <div class="home-stat__label">Professionisti seguiti<br>in sette anni</div>
-      </div>
-      <div class="home-stat">
-        <div class="home-stat__num">0</div>
-        <div class="home-stat__label">Template usati. Ogni progetto<br>è costruito da zero.</div>
+      <div class="ps4-window">
+        <div class="ps4-window__bar">
+          <span></span><span></span><span></span>
+          <span class="ps4-window__title">marcomunich.com / index</span>
+        </div>
+        <div class="ps4-window__body">
+          <div class="ps4-cmd">$ cat hero.txt</div>
+          <div class="ps4-output">Sviluppo siti veloci, sicuri, costruiti da zero.</div>
+          <div class="ps4-cmd">$ ls projects/</div>
+          <div class="ps4-output">yoga-studio  ristorante  ecommerce  booking  non-profit  ...</div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ── DUE STRADE ────────────────────────────────────────────────────────── -->
-  <section class="mm-section-dark home-strade">
-    <div class="mm-container">
-      <div class="home-strade__header">
-        <h2 class="mm-h2">Due strade.<br>Lo stesso modo di lavorare.</h2>
-        <p class="home-strade__intro">
-          Da una parte costruisco. Dall'altra ti aiuto a posizionarti. Spesso le due cose vanno insieme — ma non è obbligatorio.
+  <section class="ps4-section" id="cosa">
+    <div class="ps4-container">
+      <h2 class="ps4-section__title"><span class="ps4-arrow">▸</span> COSA COSTRUISCO</h2>
+      <div class="ps4-services">
+        <div class="ps4-card">
+          <div class="ps4-card__head"><span class="ps4-card__num">[ 01 ]</span><span class="ps4-card__type">VETRINA</span></div>
+          <h3 class="ps4-card__title">Siti vetrina.</h3>
+          <p>Per professionisti, studi, attività locali. Costruiti sul tuo modo di lavorare e sul cliente che vuoi attirare.</p>
+          <ul class="ps4-tags"><li>● Astro 5</li><li>● SEO ottimizzato</li><li>● Mobile-first</li><li>● Performance 100/100</li></ul>
+        </div>
+        <div class="ps4-card ps4-card--alt">
+          <div class="ps4-card__head"><span class="ps4-card__num">[ 02 ]</span><span class="ps4-card__type">LANDING</span></div>
+          <h3 class="ps4-card__title">Landing page.</h3>
+          <p>Una pagina sola, costruita per convertire. Per lanci di prodotto, campagne pubblicitarie, raccolta contatti.</p>
+          <ul class="ps4-tags"><li>● A/B test</li><li>● Analytics integrate</li><li>● Copywriting incluso</li><li>● Form custom</li></ul>
+        </div>
+        <div class="ps4-card ps4-card--alt">
+          <div class="ps4-card__head"><span class="ps4-card__num">[ 03 ]</span><span class="ps4-card__type">SHOP</span></div>
+          <h3 class="ps4-card__title">E-commerce.</h3>
+          <p>Negozi online con pagamenti sicuri, gestione prodotti, integrazione Stripe o PayPal. Senza plugin che si rompono.</p>
+          <ul class="ps4-tags"><li>● Stripe / PayPal</li><li>● Checkout custom</li><li>● Gestione ordini</li><li>● Email automatiche</li></ul>
+        </div>
+        <div class="ps4-card">
+          <div class="ps4-card__head"><span class="ps4-card__num">[ 04 ]</span><span class="ps4-card__type">APP</span></div>
+          <h3 class="ps4-card__title">Web app custom.</h3>
+          <p>Quando il sito normale non basta più. Dashboard, area riservata, automazioni, integrazione con API esterne.</p>
+          <ul class="ps4-tags"><li>● FastAPI / Node</li><li>● Database SQL</li><li>● Auth & permissions</li><li>● Hosting incluso</li></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ps4-section ps4-section--alt" id="lavori">
+    <div class="ps4-container">
+      <div class="ps4-section__head-row">
+        <h2 class="ps4-section__title"><span class="ps4-arrow">▸</span> LAVORI · DEMO NAVIGABILI</h2>
+        <a href="/portfolio/" class="ps4-link">// archivio completo</a>
+      </div>
+      <p class="ps4-section__lead">
+        Una selezione di siti progettati come dimostrazioni del tipo di lavoro che faccio. Sono <span class="ps4-mark">demo</span>, non clienti reali. Ognuna è completamente navigabile.
+      </p>
+      <div class="ps4-projects">
+        <a href="/portfolio/yoga-studio" class="ps4-pgrid"><span class="ps4-pgrid__year">[2026 · DEMO]</span><h3>yoga-studio</h3><p>Sito vetrina · prenotazioni · listino corsi</p><span class="ps4-pgrid__arrow">→</span></a>
+        <a href="/portfolio/ristorante" class="ps4-pgrid"><span class="ps4-pgrid__year">[2026 · DEMO]</span><h3>ristorante</h3><p>Vetrina · menu · storia · galleria foto</p><span class="ps4-pgrid__arrow">→</span></a>
+        <a href="/portfolio/ecommerce" class="ps4-pgrid"><span class="ps4-pgrid__year">[2026 · DEMO]</span><h3>ecommerce</h3><p>Catalogo · scheda prodotto · carrello · checkout</p><span class="ps4-pgrid__arrow">→</span></a>
+        <a href="/portfolio/booking" class="ps4-pgrid"><span class="ps4-pgrid__year">[2026 · DEMO]</span><h3>booking</h3><p>Studio professionale · area cliente · pagamenti</p><span class="ps4-pgrid__arrow">→</span></a>
+        <a href="/portfolio/non-profit" class="ps4-pgrid"><span class="ps4-pgrid__year">[2026 · DEMO]</span><h3>non-profit</h3><p>Storia · progetti · raccolta donazioni</p><span class="ps4-pgrid__arrow">→</span></a>
+        <a href="/portfolio/corso-online" class="ps4-pgrid"><span class="ps4-pgrid__year">[2026 · DEMO]</span><h3>corso-online</h3><p>Vendita corso · area studente · video lezioni</p><span class="ps4-pgrid__arrow">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="ps4-section" id="metodo">
+    <div class="ps4-container">
+      <h2 class="ps4-section__title"><span class="ps4-arrow">▸</span> METODO · COME LAVORO</h2>
+      <div class="ps4-method">
+        <div class="ps4-method__lead">
+          <p>
+            Non scrivo codice riga per riga. Guido <span class="ps4-mark">l'intelligenza artificiale</span> per costruire siti e applicazioni che funzionano. Risultato: stesso output di sviluppo tradizionale, più veloce e con meno errori.
+          </p>
+          <a href="/vibe-coding/" class="ps4-link">// come funziona, in pratica →</a>
+        </div>
+        <ol class="ps4-method__steps">
+          <li><span class="ps4-step__id">[ 01 ]</span><h4>Capisco il progetto</h4><p>Una chiamata di 30 min per inquadrare cosa serve.</p></li>
+          <li><span class="ps4-step__id">[ 02 ]</span><h4>Disegno la struttura</h4><p>Pagine, contenuti, logica. Tu approvi prima del codice.</p></li>
+          <li><span class="ps4-step__id">[ 03 ]</span><h4>Costruisco</h4><p>Sviluppo iterativo con anteprime live. Niente sorprese.</p></li>
+          <li><span class="ps4-step__id">[ 04 ]</span><h4>Consegno</h4><p>Codice nel tuo repository, file tutti tuoi, documentazione.</p></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="ps4-section ps4-section--alt" id="chi">
+    <div class="ps4-container">
+      <h2 class="ps4-section__title"><span class="ps4-arrow">▸</span> CHI SONO</h2>
+      <div class="ps4-bio">
+        <div class="ps4-bio__main">
+          <p>
+            Da sette anni lavoro su come ci si presenta online. Ho seguito coach, counselor, operatori olistici e professionisti di vario tipo nel costruire la loro presenza online.
+          </p>
+          <p>
+            A un certo punto ho cominciato a costruire io stesso i siti, perché vedere coach con siti tutti uguali aveva stancato anche me. Oggi è quello che faccio principalmente: <span class="ps4-mark">siti e applicazioni costruiti su misura</span>, con uno sguardo che viene da anni di lavoro sul brand di chi li commissiona.
+          </p>
+          <a href="/servizi/posizionamento-online/" class="ps4-link">// vuoi solo la consulenza? →</a>
+        </div>
+        <div class="ps4-bio__sidecard">
+          <div class="ps4-sidecard__row"><span class="ps4-sidecard__lbl">Studio</span><span class="ps4-sidecard__val">Marco Munich</span></div>
+          <div class="ps4-sidecard__row"><span class="ps4-sidecard__lbl">Sede</span><span class="ps4-sidecard__val">Vicenza, IT</span></div>
+          <div class="ps4-sidecard__row"><span class="ps4-sidecard__lbl">Esperienza</span><span class="ps4-sidecard__val">Dal 2019</span></div>
+          <div class="ps4-sidecard__row"><span class="ps4-sidecard__lbl">Stack</span><span class="ps4-sidecard__val">Astro · FastAPI · Node</span></div>
+          <div class="ps4-sidecard__row"><span class="ps4-sidecard__lbl">Lingue</span><span class="ps4-sidecard__val">IT · EN</span></div>
+          <div class="ps4-sidecard__row"><span class="ps4-sidecard__lbl">Disponibile</span><span class="ps4-sidecard__val ps4-avail">● Maggio 2026</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ps4-cta">
+    <div class="ps4-container">
+      <div class="ps4-cta__box">
+        <p class="ps4-cta__kicker">// LAVORIAMO INSIEME</p>
+        <h2 class="ps4-cta__title"><span class="ps4-h1__chrome">PARLIAMONE.</span></h2>
+        <p class="ps4-cta__sub">
+          Una chiamata gratuita di trenta minuti. Capisco la tua situazione, ti dico se posso aiutarti davvero. Se non posso, te lo dico subito. ✦
         </p>
-      </div>
-      <div class="home-strade__grid">
-        <a href="#cosa-costruisco" class="home-strada home-strada--primary">
-          <div class="mm-tag">Servizio principale</div>
-          <h3 class="mm-h3">Costruisco siti e applicazioni.</h3>
-          <p class="mm-body">Per chi vuole un sito vero, non un template — o un'applicazione web che fa qualcosa di specifico. Astro, FastAPI, codice pulito, performance verificabili, piena proprietà dei file. Niente plugin, niente manutenzione mensile.</p>
-          <span class="home-strada__cta">Vedi cosa costruisco ↓</span>
-        </a>
-        <a href="/servizi/" class="home-strada home-strada--secondary">
-          <div class="mm-tag">Consulenza</div>
-          <h3 class="mm-h3">Ti aiuto a posizionarti online.</h3>
-          <p class="mm-body">Per coach, counselor, operatori olistici e professionisti che vendono se stessi. Sette anni di personal branding nel settore olistico, oltre duecento articoli, e un metodo per trovare un punto di vista che non sia il copia-incolla di tutti gli altri.</p>
-          <span class="home-strada__cta">Scopri come →</span>
-        </a>
+        <a href="/contatti/" class="ps4-btn ps4-btn--big">[ FISSA UNA CHIAMATA → ]</a>
       </div>
     </div>
   </section>
 
-  <!-- ── COSA COSTRUISCO ───────────────────────────────────────────────────── -->
-  <section class="mm-section-dark home-build" id="cosa-costruisco">
-    <div class="mm-container">
-      <div class="home-build__header">
-        <p class="mm-tag" style="margin-bottom:1rem">Cosa costruisco</p>
-        <h2 class="mm-h2">Quattro tipi di lavoro.</h2>
-        <p class="home-build__intro">
-          Quasi sempre il progetto cade in una di queste categorie. Ogni progetto è costruito da zero, su misura, con codice pulito e piena proprietà dei file alla consegna.
-        </p>
-      </div>
-      <div class="home-build__grid">
-        <div class="home-build-card">
-          <div class="home-build-card__num">01</div>
-          <h3 class="mm-h3">Siti vetrina</h3>
-          <p class="mm-body">Una presenza online che comunica chi sei e cosa fai, costruita sulla tua identità invece che su un template. Veloce, indicizzato bene, scritto in modo che chi cerca un professionista come te capisca subito che sei tu.</p>
-        </div>
-        <div class="home-build-card">
-          <div class="home-build-card__num">02</div>
-          <h3 class="mm-h3">Landing page</h3>
-          <p class="mm-body">Pagine singole pensate per convertire — campagne, lanci, prodotti specifici. Una struttura che porta il lettore dalla curiosità all'azione senza fargli perdere tempo, e analytics integrate per misurare cosa funziona.</p>
-        </div>
-        <div class="home-build-card">
-          <div class="home-build-card__num">03</div>
-          <h3 class="mm-h3">E-commerce</h3>
-          <p class="mm-body">Negozi online con pagamenti sicuri e gestione prodotti, scelti tra Stripe, PayPal e altre integrazioni a seconda del tuo caso. Niente plugin che si rompono, niente abbonamenti mensili a piattaforme che cambiano regole ogni anno.</p>
-        </div>
-        <div class="home-build-card">
-          <div class="home-build-card__num">04</div>
-          <h3 class="mm-h3">Web app su misura</h3>
-          <p class="mm-body">Applicazioni web custom: dashboard, area riservata, automazioni, integrazione con API esterne. Quando il sito normale non basta più e ti serve uno strumento che fa una cosa specifica per la tua attività, lo costruisco da zero.</p>
-        </div>
-      </div>
-      <div class="home-build__cta-row">
-        <a href="/portfolio/" class="mm-btn mm-btn-orange">Vedi i progetti →</a>
-        <a href="/contatti/" class="mm-btn mm-btn-outline">Parliamo del tuo</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── METODO MINI ───────────────────────────────────────────────────────── -->
-  <section class="mm-section-light home-method">
-    <div class="mm-container home-method__inner">
+  <footer class="ps4-foot">
+    <div class="ps4-container ps4-foot__inner">
       <div>
-        <p class="mm-tag mm-tag-dark" style="margin-bottom:1rem">Il metodo</p>
-        <h2 class="mm-h2" style="color:#0d0d0d;margin-bottom:1.2rem">Più veloce, stesso risultato.</h2>
-        <p style="font-size:0.95rem;line-height:1.85;color:#444;max-width:520px;margin-bottom:1.5rem">
-          Non scrivo codice riga per riga. Guido l'intelligenza artificiale per costruire siti e applicazioni che funzionano. Il risultato è lo stesso di uno sviluppo tradizionale, anzi è più veloce e più pulito, perché posso passare più tempo sulle decisioni che contano e meno sulla ripetizione meccanica.
-        </p>
-        <a href="/vibe-coding/" class="mm-btn" style="background:transparent;color:#0d0d0d;border:1.5px solid #0d0d0d">Come funziona →</a>
+        <p class="ps4-logo"><span class="ps4-logo__sym">▸</span>marco.dev</p>
+        <p class="ps4-foot__tag">// sviluppo web · Vicenza, IT · 2019—2026</p>
       </div>
-      <div class="home-method__stats">
-        <div class="home-method-stat">
-          <div class="home-method-stat__num">100<span>/100</span></div>
-          <div class="home-method-stat__label">Google PageSpeed<br>Core Web Vitals</div>
-        </div>
-        <div class="home-method-stat">
-          <div class="home-method-stat__num">0</div>
-          <div class="home-method-stat__label">Plugin obbligatori<br>o abbonamenti mensili</div>
-        </div>
-        <div class="home-method-stat">
-          <div class="home-method-stat__num">100<span>%</span></div>
-          <div class="home-method-stat__label">Codice tuo, file tuoi.<br>Zero dipendenze esterne.</div>
-        </div>
+      <div class="ps4-foot__cols">
+        <a href="/portfolio/">// lavori</a>
+        <a href="/servizi/posizionamento-online/">// posizionamento</a>
+        <a href="/vibe-coding/">// vibe coding</a>
+        <a href="/blog/">// articoli</a>
+        <a href="/contatti/">// contatti</a>
       </div>
     </div>
-  </section>
-
-  <!-- ── ARTICOLI ──────────────────────────────────────────────────────────── -->
-  <section class="mm-section-light home-articles">
-    <div class="mm-container">
-      <div class="home-articles__header">
-        <h2 class="mm-h2" style="color:#0d0d0d">Ultimi articoli.</h2>
-        <a href="/blog/" class="home-articles__all">Archivio completo →</a>
-      </div>
-      {latestPosts.map((post, i) => (
-        <a href={`/${post.slug}/`} class="home-article-row">
-          <span class="home-article-row__n">0{i+1}</span>
-          <span class="home-article-row__cat">{post.categoria}</span>
-          <span class="home-article-row__title">{post.titolo}</span>
-          <span class="home-article-row__arrow" aria-hidden="true">→</span>
-        </a>
-      ))}
+    <div class="ps4-container">
+      <p class="ps4-foot__credit">// session terminated · marcomunich ✦</p>
     </div>
-  </section>
-
-  <!-- ── CHI SONO ──────────────────────────────────────────────────────────── -->
-  <section class="mm-section-dark home-about">
-    <div class="mm-container home-about__grid">
-      <div class="home-about__photo">
-        <img src="/og/marco-munich.png" alt="Marco Munich — Personal Branding Olistico" loading="lazy" />
-      </div>
-      <div class="home-about__text">
-        <div class="mm-tag" style="margin-bottom:1.2rem">Chi sono</div>
-        <h2 class="mm-h2" style="margin-bottom:1.5rem">Marco Munich.</h2>
-        <p class="mm-body" style="margin-bottom:1rem">
-          Da sette anni mi occupo di presenza online per professionisti che vendono se stessi. Ho scritto oltre duecento articoli, seguito coach, counselor e operatori di ogni tipo, e a un certo punto ho iniziato a costruire io stesso i loro siti — perché vedere coach con siti tutti uguali aveva stancato anche me.
-        </p>
-        <p class="mm-body" style="margin-bottom:2rem">
-          Oggi lavoro su due fronti che si parlano: costruisco siti e applicazioni web custom, e aiuto chi vende se stesso a trovare un modo di presentarsi online che non sia il copia-incolla di tutti gli altri.
-        </p>
-        <a href="/chi-sono/" class="mm-btn mm-btn-orange">Scopri di più →</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── CTA FINALE ────────────────────────────────────────────────────────── -->
-  <section class="home-cta">
-    <div class="mm-container home-cta__inner">
-      <div>
-        <h2 class="mm-h2">Hai un progetto<br>in mente?</h2>
-        <p style="color:rgba(255,255,255,0.75);font-size:0.9rem;margin-top:0.5rem">Fissa una chiamata gratuita. Ti dico subito se posso aiutarti e come lo farei.</p>
-      </div>
-      <a href="/contatti/" class="mm-btn mm-btn-white">Parliamo →</a>
-    </div>
-  </section>
-
+  </footer>
 </div>
 
 </BaseLayout>
 
 <style>
-  /* ── HERO ── */
-  .home-hero {
-    position: relative;
-    width: 100%;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    overflow: hidden;
-    background: #0d0d0d;
-  }
-  .home-hero__video {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: 0;
-  }
-  .home-hero__overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to bottom,
-      rgba(0,0,0,0.35) 0%,
-      rgba(0,0,0,0.1)  30%,
-      rgba(0,0,0,0.65) 70%,
-      rgba(0,0,0,0.92) 100%);
-    z-index: 1;
-  }
-  .home-hero__content {
-    position: relative;
-    z-index: 2;
-    padding-bottom: 5rem;
-    padding-top: 8rem;
-  }
-  .home-hero__byline {
-    font-size: 0.7rem;
-    font-weight: 500;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.45);
-    margin-bottom: 0.8rem;
-  }
-  .home-hero__content h1 { margin-bottom: 1.5rem; }
-  .home-hero__sub {
-    font-size: clamp(0.88rem, 1.4vw, 1rem);
-    line-height: 1.7;
-    color: rgba(255,255,255,0.7);
-    max-width: 480px;
-    margin-bottom: 2rem;
-    font-weight: 400;
-  }
-  .home-hero__sub strong { color: #fff; font-weight: 700; }
-  .home-hero__ctas {
-    display: flex;
-    gap: 0.8rem;
-    flex-wrap: wrap;
-  }
-  .home-hero__caption {
-    position: absolute;
-    bottom: 1.8rem;
-    right: 2rem;
-    z-index: 2;
-    font-size: 0.58rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.3);
-  }
+  /* Nascondi header e footer del BaseLayout: questa pagina ha il suo nav e footer integrati */
+  :global(.mm-header), :global(.mm-footer) { display: none !important; }
+  :global(body) { padding-top: 0 !important; }
 
-  /* ── STATS ── */
-  .home-stats { padding: 0; }
-  .home-stats__grid {
-    display: grid;
-    grid-template-columns: repeat(3,1fr);
-    border-top: 1px solid var(--mm-border-light);
-  }
-  .home-stat {
-    padding: 3.5rem 2.5rem;
-    border-right: 1px solid var(--mm-border-light);
-    text-align: center;
-  }
-  .home-stat:last-child { border-right: none; }
-  .home-stat__num {
-    font-family: 'Inter', sans-serif;
-    font-weight: 900;
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    letter-spacing: -0.03em;
-    line-height: 1;
-    color: #0d0d0d;
-    margin-bottom: 0.5rem;
-  }
-  .home-stat__num span { color: #e85d00; }
-  .home-stat__label {
-    font-size: 0.78rem;
-    color: #888;
-    line-height: 1.55;
-  }
+  .ps4-page { background: #0a0512; color: #f0e9ff; font-family: 'Inter', system-ui, sans-serif; overflow-x: hidden; position: relative; min-height: 100vh; }
+  .ps4-container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; width: 100%; position: relative; z-index: 2; }
 
-  /* ── DUE STRADE ── */
-  .home-strade { padding: 5rem 0; }
-  .home-strade__header {
-    margin-bottom: 3rem;
-    max-width: 720px;
-  }
-  .home-strade__intro {
-    font-size: 0.95rem;
-    line-height: 1.75;
-    color: rgba(255,255,255,0.65);
-    margin-top: 1.2rem;
-  }
-  .home-strade__grid {
-    display: grid;
-    grid-template-columns: 1.15fr 1fr;
-    gap: 1px;
-    background: #1a1a1a;
-    border: 1px solid #1a1a1a;
-    border-radius: 4px;
-    overflow: hidden;
-  }
-  .home-strada {
-    background: #0d0d0d;
-    padding: 3rem 2.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    text-decoration: none;
-    color: inherit;
-    transition: background 0.2s ease;
-  }
-  .home-strada:hover { background: #141414; }
-  .home-strada .mm-h3 { color: #fff; line-height: 1.25; }
-  .home-strada--primary {
-    background: #111111;
-    border-right: 2px solid #e85d00;
-  }
-  .home-strada--primary:hover { background: #181818; }
-  .home-strada--primary .mm-tag { color: #e85d00; }
-  .home-strada__cta {
-    margin-top: auto;
-    padding-top: 1.5rem;
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: #e85d00;
-  }
-  .home-strada--secondary .home-strada__cta { color: rgba(255,255,255,0.85); }
+  .ps4-bg { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
+  .ps4-bg__blob { position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.45; }
+  .ps4-bg__blob--magenta { background: #ff2d92; width: 600px; height: 600px; top: 10%; left: -10%; animation: ps4float 18s ease-in-out infinite; }
+  .ps4-bg__blob--cyan { background: #00e5ff; width: 500px; height: 500px; top: 50%; right: -8%; animation: ps4float 22s ease-in-out infinite reverse; }
+  .ps4-bg__blob--violet { background: #8a3aff; width: 700px; height: 700px; bottom: -20%; left: 30%; animation: ps4float 25s ease-in-out infinite; }
+  @keyframes ps4float { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(40px,-60px) scale(1.1); } }
 
-  /* ── COSA COSTRUISCO ── */
-  .home-build { padding: 5rem 0; }
-  .home-build__header { margin-bottom: 3.5rem; max-width: 720px; }
-  .home-build__intro {
-    font-size: 0.95rem;
-    line-height: 1.75;
-    color: rgba(255,255,255,0.65);
-    margin-top: 1.2rem;
-  }
-  .home-build__grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1px;
-    background: #1a1a1a;
-    border: 1px solid #1a1a1a;
-    border-radius: 4px;
-    overflow: hidden;
-    margin-bottom: 3rem;
-  }
-  .home-build-card {
-    background: #0d0d0d;
-    padding: 2.5rem 2.2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
-  }
-  .home-build-card:hover { background: #111; }
-  .home-build-card__num {
-    font-family: 'Inter', sans-serif;
-    font-weight: 900;
-    font-size: 1.8rem;
-    color: #e85d00;
-    line-height: 1;
-    margin-bottom: 0.4rem;
-  }
-  .home-build-card .mm-h3 { color: #fff; font-size: 1.2rem; }
-  .home-build__cta-row {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
+  .ps4-nav { background: rgba(10,5,18,0.7); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(240,233,255,0.1); position: sticky; top: 0; z-index: 50; }
+  .ps4-nav__inner { display: flex; justify-content: space-between; align-items: center; padding: 1.1rem 0; }
+  .ps4-logo { font-family: 'JetBrains Mono', monospace; color: #f0e9ff; text-decoration: none; font-weight: 600; font-size: 1rem; display: flex; align-items: center; gap: 0.4rem; }
+  .ps4-logo__sym { color: #00e5ff; }
+  .ps4-menu { display: flex; gap: 1.4rem; align-items: center; }
+  .ps4-menu a { color: rgba(240,233,255,0.7); text-decoration: none; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; transition: color 0.2s ease; }
+  .ps4-menu a:hover { color: #00e5ff; }
+  .ps4-menu__cta { background: linear-gradient(180deg, #ffffff 0%, #b5b5b5 100%); color: #0a0512 !important; padding: 0.5rem 1rem; border-radius: 4px; font-weight: 700 !important; box-shadow: 0 0 20px rgba(255,255,255,0.3); }
 
-  /* ── METODO MINI ── */
-  .home-method { padding: 5rem 0; }
-  .home-method__inner {
-    display: grid;
-    grid-template-columns: 1.1fr 1fr;
-    gap: 4rem;
-    align-items: start;
-  }
-  .home-method__stats {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-  .home-method-stat {
-    display: grid;
-    grid-template-columns: 140px 1fr;
-    gap: 1.5rem;
-    align-items: center;
-    padding: 1.5rem 0;
-    border-top: 1px solid #e5e2dc;
-  }
-  .home-method-stat:last-child { border-bottom: 1px solid #e5e2dc; }
-  .home-method-stat__num {
-    font-family: 'Inter', sans-serif;
-    font-weight: 900;
-    font-size: 2.2rem;
-    color: #0d0d0d;
-    line-height: 1;
-  }
-  .home-method-stat__num span {
-    font-size: 1.1rem;
-    color: #e85d00;
-    font-weight: 700;
-  }
-  .home-method-stat__label {
-    font-size: 0.85rem;
-    line-height: 1.55;
-    color: #555;
-  }
+  .ps4-hero { padding: 5rem 0 6rem; }
+  .ps4-status-bar { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 3rem; }
+  .ps4-pill { display: inline-flex; align-items: center; gap: 0.4rem; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 600; color: #00e5ff; background: rgba(0,229,255,0.08); border: 1px solid rgba(0,229,255,0.4); padding: 0.35rem 0.8rem; border-radius: 999px; }
+  .ps4-pulse { width: 7px; height: 7px; background: #6ee870; border-radius: 50%; animation: ps4pulse 2s infinite; }
+  @keyframes ps4pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(110,232,112,0.5); } 50% { box-shadow: 0 0 0 6px transparent; } }
+  .ps4-h1 { font-family: 'Inter', sans-serif; font-weight: 900; font-size: clamp(3rem, 11vw, 10rem); line-height: 0.9; letter-spacing: -0.05em; margin: 0 0 2.5rem; }
+  .ps4-h1__chrome { display: block; background: linear-gradient(180deg, #ffffff 0%, #d8d8d8 25%, #909090 45%, #ffffff 55%, #f5f5f5 75%, #b5b5b5 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; text-shadow: 0 4px 30px rgba(255,255,255,0.15); }
+  .ps4-h1__chrome--violet { background: linear-gradient(180deg, #ff2d92 0%, #ffe2f0 30%, #8a3aff 70%, #4a0066 100%); -webkit-background-clip: text; background-clip: text; }
+  .ps4-h1__chrome--cyan { background: linear-gradient(180deg, #00e5ff 0%, #b8faff 35%, #007a99 70%, #002a33 100%); -webkit-background-clip: text; background-clip: text; }
+  .ps4-hero__tag { font-size: 1.1rem; line-height: 1.65; color: rgba(240,233,255,0.78); max-width: 600px; margin: 0 0 2.5rem; }
+  .ps4-hero__ctas { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 4rem; }
 
-  /* ── ARTICOLI ── */
-  .home-articles { padding: 5rem 0; }
-  .home-articles__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
-  }
-  .home-articles__all {
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: #0d0d0d;
-    text-decoration: none;
-    opacity: 0.5;
-  }
-  .home-articles__all:hover { opacity: 1; }
-  .home-article-row {
-    display: grid;
-    grid-template-columns: 2.5rem 7rem 1fr 2rem;
-    align-items: center;
-    gap: 1.2rem;
-    padding: 1.2rem 0;
-    border-bottom: 1px solid var(--mm-border-light);
-    text-decoration: none;
-    color: inherit;
-  }
-  .home-article-row:first-of-type { border-top: 1px solid var(--mm-border-light); }
-  .home-article-row:hover .home-article-row__title { color: #e85d00; }
-  .home-article-row__n {
-    font-size: 0.68rem;
-    font-weight: 700;
-    color: #ccc;
-    font-family: 'Inter', sans-serif;
-  }
-  .home-article-row__cat {
-    font-size: 0.62rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: #aaa;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .home-article-row__title {
-    font-size: 0.92rem;
-    font-weight: 600;
-    color: #0d0d0d;
-    transition: color 0.15s;
-    line-height: 1.4;
-  }
-  .home-article-row__arrow {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background: #0d0d0d;
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.75rem;
-    flex-shrink: 0;
-    justify-self: end;
-  }
+  .ps4-btn { font-family: 'JetBrains Mono', monospace; font-size: 0.92rem; font-weight: 700; letter-spacing: 0.05em; padding: 1rem 1.6rem; text-decoration: none; border-radius: 4px; transition: all 0.2s ease; display: inline-block; }
+  .ps4-btn--chrome { background: linear-gradient(180deg, #ffffff 0%, #b5b5b5 100%); color: #0a0512; box-shadow: 0 0 30px rgba(255,255,255,0.4), inset 0 -3px 0 rgba(0,0,0,0.2); border: 1px solid #fff; }
+  .ps4-btn--chrome:hover { box-shadow: 0 0 50px rgba(255,255,255,0.7); transform: translateY(-2px); }
+  .ps4-btn--ghost { background: transparent; color: #f0e9ff; border: 1px solid rgba(240,233,255,0.4); }
+  .ps4-btn--ghost:hover { border-color: #00e5ff; color: #00e5ff; }
+  .ps4-btn--big { padding: 1.3rem 2.4rem; font-size: 1.05rem; background: linear-gradient(180deg, #ffffff 0%, #cccccc 100%); color: #0a0512; box-shadow: 0 0 40px rgba(255,45,146,0.4); }
+  .ps4-btn--big:hover { box-shadow: 0 0 60px rgba(255,45,146,0.7); }
 
-  /* ── CHI SONO ── */
-  .home-about { padding: 5rem 0; }
-  .home-about__grid {
-    display: grid;
-    grid-template-columns: 1fr 1.5fr;
-    gap: 5rem;
-    align-items: center;
-  }
-  .home-about__photo {
-    border-radius: 4px;
-    overflow: hidden;
-    aspect-ratio: 3/4;
-  }
-  .home-about__photo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: grayscale(20%);
-    display: block;
-  }
+  .ps4-window { background: rgba(10,5,18,0.6); border: 1px solid rgba(240,233,255,0.15); border-radius: 8px; overflow: hidden; backdrop-filter: blur(20px); max-width: 600px; box-shadow: 0 0 40px rgba(138,58,255,0.25); }
+  .ps4-window__bar { background: rgba(255,255,255,0.05); padding: 0.55rem 1rem; display: flex; align-items: center; gap: 0.4rem; border-bottom: 1px solid rgba(240,233,255,0.1); }
+  .ps4-window__bar > span:nth-child(1), .ps4-window__bar > span:nth-child(2), .ps4-window__bar > span:nth-child(3) { width: 11px; height: 11px; border-radius: 50%; }
+  .ps4-window__bar > span:nth-child(1) { background: #ff5f57; }
+  .ps4-window__bar > span:nth-child(2) { background: #febc2e; }
+  .ps4-window__bar > span:nth-child(3) { background: #28c840; }
+  .ps4-window__title { margin-left: 1rem; font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: rgba(240,233,255,0.55); }
+  .ps4-window__body { padding: 1.5rem; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; line-height: 1.8; }
+  .ps4-cmd { color: #00e5ff; }
+  .ps4-output { color: rgba(240,233,255,0.75); margin-left: 1rem; margin-bottom: 0.6rem; }
 
-  /* ── CTA ── */
-  .home-cta {
-    background: #e85d00;
-    padding: 4.5rem 0;
-  }
-  .home-cta__inner {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 2rem;
-  }
+  .ps4-section { padding: 6rem 0; position: relative; }
+  .ps4-section--alt { background: rgba(10,5,18,0.4); }
+  .ps4-section__title { font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; font-weight: 700; letter-spacing: 0.2em; color: #ff2d92; margin: 0 0 3rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,45,146,0.3); }
+  .ps4-arrow { color: #00e5ff; }
+  .ps4-section__head-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem; }
+  .ps4-section__head-row .ps4-section__title { margin-bottom: 0; padding-bottom: 0; border: 0; }
+  .ps4-section__lead { font-size: 1rem; line-height: 1.7; color: rgba(240,233,255,0.75); max-width: 580px; margin: 0 0 3rem; }
+  .ps4-mark { background: rgba(0,229,255,0.15); color: #00e5ff; padding: 0.05em 0.3em; border-radius: 4px; font-weight: 500; }
+  .ps4-link { font-family: 'JetBrains Mono', monospace; font-weight: 700; color: #00e5ff; text-decoration: none; border-bottom: 1px solid rgba(0,229,255,0.5); padding-bottom: 0.2rem; font-size: 0.85rem; }
 
-  /* ── MOBILE ── */
+  .ps4-services { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .ps4-card { background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,45,146,0.04) 100%); border: 1px solid rgba(240,233,255,0.18); border-radius: 16px; padding: 2.2rem; backdrop-filter: blur(15px); box-shadow: 0 0 50px rgba(0,229,255,0.08); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+  .ps4-card:hover { transform: translateY(-4px); box-shadow: 0 0 70px rgba(255,45,146,0.2); }
+  .ps4-card--alt { background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(0,229,255,0.04) 100%); }
+  .ps4-card__head { display: flex; justify-content: space-between; margin-bottom: 1.2rem; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; letter-spacing: 0.15em; color: rgba(240,233,255,0.55); }
+  .ps4-card__num { color: #ff2d92; }
+  .ps4-card__title { font-family: 'Inter', sans-serif; font-weight: 900; font-size: 1.7rem; line-height: 1.05; letter-spacing: -0.02em; margin: 0 0 1rem; color: #fff; }
+  .ps4-card p { font-size: 0.95rem; line-height: 1.65; color: rgba(240,233,255,0.7); margin: 0 0 1.4rem; }
+  .ps4-tags { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem 1rem; }
+  .ps4-tags li { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: rgba(240,233,255,0.65); }
+  .ps4-card .ps4-tags li::first-letter { color: #ff2d92; }
+  .ps4-card--alt .ps4-tags li::first-letter { color: #00e5ff; }
+
+  .ps4-projects { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+  .ps4-pgrid { background: rgba(255,255,255,0.03); border: 1px solid rgba(240,233,255,0.15); border-radius: 12px; padding: 1.8rem; text-decoration: none; color: #f0e9ff; display: grid; grid-template-columns: 1fr 30px; grid-template-rows: auto auto auto; gap: 0.4rem 1rem; backdrop-filter: blur(10px); transition: all 0.2s ease; }
+  .ps4-pgrid:hover { border-color: #00e5ff; box-shadow: 0 0 40px rgba(0,229,255,0.18); }
+  .ps4-pgrid__year { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: #ff2d92; grid-column: 1; }
+  .ps4-pgrid h3 { font-family: 'Inter', sans-serif; font-weight: 900; font-size: 1.4rem; letter-spacing: -0.02em; margin: 0; grid-column: 1; color: #fff; }
+  .ps4-pgrid p { font-size: 0.88rem; color: rgba(240,233,255,0.65); margin: 0; grid-column: 1; line-height: 1.5; }
+  .ps4-pgrid__arrow { grid-row: 1 / 4; grid-column: 2; align-self: center; color: #00e5ff; font-size: 1.4rem; }
+
+  .ps4-method { display: grid; grid-template-columns: 1.1fr 1fr; gap: 4rem; align-items: start; }
+  .ps4-method__lead p { font-size: clamp(1.05rem, 2vw, 1.4rem); line-height: 1.6; color: #f0e9ff; margin: 0 0 1.5rem; }
+  .ps4-method__steps { list-style: none; margin: 0; padding: 0; }
+  .ps4-method__steps li { background: rgba(255,255,255,0.03); border: 1px solid rgba(240,233,255,0.12); border-radius: 10px; padding: 1.2rem 1.5rem; margin-bottom: 0.8rem; backdrop-filter: blur(10px); }
+  .ps4-step__id { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: #ff2d92; letter-spacing: 0.1em; }
+  .ps4-method__steps h4 { font-family: 'Inter', sans-serif; font-weight: 700; font-size: 1.1rem; color: #fff; margin: 0.3rem 0 0.4rem; letter-spacing: -0.01em; }
+  .ps4-method__steps p { font-size: 0.9rem; line-height: 1.5; color: rgba(240,233,255,0.65); margin: 0; }
+
+  .ps4-bio { display: grid; grid-template-columns: 1.4fr 1fr; gap: 4rem; align-items: start; }
+  .ps4-bio__main p { font-size: 1.05rem; line-height: 1.85; color: rgba(240,233,255,0.85); margin: 0 0 1.5rem; }
+  .ps4-bio__sidecard { background: rgba(255,255,255,0.03); border: 1px solid rgba(240,233,255,0.15); border-radius: 12px; padding: 1.5rem; backdrop-filter: blur(10px); }
+  .ps4-sidecard__row { display: flex; justify-content: space-between; padding: 0.7rem 0; border-bottom: 1px dashed rgba(240,233,255,0.12); font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; }
+  .ps4-sidecard__row:last-child { border-bottom: 0; }
+  .ps4-sidecard__lbl { color: rgba(240,233,255,0.55); }
+  .ps4-sidecard__val { color: #f0e9ff; font-weight: 600; }
+  .ps4-avail { color: #6ee870 !important; }
+
+  .ps4-cta { padding: 7rem 0; }
+  .ps4-cta__box { text-align: center; background: linear-gradient(135deg, rgba(138,58,255,0.1) 0%, rgba(0,229,255,0.08) 100%); border: 1px solid rgba(240,233,255,0.2); border-radius: 24px; padding: 5rem 3rem; backdrop-filter: blur(20px); box-shadow: 0 0 80px rgba(255,45,146,0.15); }
+  .ps4-cta__kicker { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #00e5ff; margin: 0 0 2rem; letter-spacing: 0.2em; }
+  .ps4-cta__title { font-size: clamp(3rem, 8vw, 7rem); line-height: 0.9; margin: 0 0 2rem; }
+  .ps4-cta__sub { font-size: 1.05rem; color: rgba(240,233,255,0.75); max-width: 500px; margin: 0 auto 3rem; line-height: 1.65; }
+
+  .ps4-foot { border-top: 1px solid rgba(240,233,255,0.1); padding: 3.5rem 0 2rem; background: rgba(10,5,18,0.6); backdrop-filter: blur(20px); }
+  .ps4-foot__inner { display: flex; justify-content: space-between; gap: 3rem; align-items: flex-start; flex-wrap: wrap; margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px dashed rgba(240,233,255,0.1); }
+  .ps4-foot__tag { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: rgba(240,233,255,0.5); margin: 0.5rem 0 0; }
+  .ps4-foot__cols { display: flex; flex-wrap: wrap; gap: 1.5rem; }
+  .ps4-foot__cols a { color: rgba(240,233,255,0.7); text-decoration: none; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; }
+  .ps4-foot__cols a:hover { color: #00e5ff; }
+  .ps4-foot__credit { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: rgba(240,233,255,0.4); text-align: center; margin: 0; }
+
   @media (max-width: 768px) {
-    .home-stats__grid { grid-template-columns: 1fr; }
-    .home-stat { border-right: none; border-bottom: 1px solid var(--mm-border-light); }
-    .home-stat:last-child { border-bottom: none; }
-    .home-strade__grid { grid-template-columns: 1fr; }
-    .home-build__grid { grid-template-columns: 1fr; }
-    .home-method__inner { grid-template-columns: 1fr; gap: 2.5rem; }
-    .home-method-stat { grid-template-columns: 100px 1fr; gap: 1rem; }
-    .home-strada { padding: 2.5rem 1.8rem; }
-    .home-strada--primary { border-right: none; border-bottom: 2px solid #e85d00; }
-    .home-article-row { grid-template-columns: 2rem 1fr 2rem; }
-    .home-article-row__cat { display: none; }
-    .home-about__grid { grid-template-columns: 1fr; gap: 2.5rem; }
-    .home-about__photo { aspect-ratio: 4/3; }
-    .home-cta__inner { flex-direction: column; align-items: flex-start; }
-    .home-strade__header { max-width: 100%; }
-    .home-articles__header { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
-    .home-hero__content { padding-bottom: 4rem; }
+    .ps4-menu { gap: 0.6rem; }
+    .ps4-menu a:not(.ps4-menu__cta) { display: none; }
+    .ps4-services, .ps4-projects { grid-template-columns: 1fr; }
+    .ps4-tags { grid-template-columns: 1fr; }
+    .ps4-method, .ps4-bio { grid-template-columns: 1fr; gap: 2rem; }
+    .ps4-cta__box { padding: 3.5rem 2rem; }
   }
 </style>
-
-<script>
-  // Video meteo reattivo
-  (async () => {
-    const vid = document.getElementById('hero-vid') as HTMLVideoElement | null;
-    if (!vid) return;
-    let src = '/videos/hero-pomeriggio.mp4';
-    try {
-      const r = await fetch('https://api.open-meteo.com/v1/forecast?latitude=45.5455&longitude=11.5354&current=weather_code,is_day');
-      const d = await r.json();
-      const wc = d.current?.weather_code ?? 0;
-      const isDay = d.current?.is_day ?? 1;
-      if (!isDay) src = '/videos/hero-notte.mp4';
-      else if (wc <= 1) src = '/videos/hero-sole.mp4';
-      else if (wc <= 48) src = '/videos/hero-pomeriggio.mp4';
-      else if (wc <= 82) src = '/videos/hero-mattina.mp4';
-      else src = '/videos/hero-sera.mp4';
-    } catch {}
-    vid.src = src;
-    vid.load();
-  })();
-</script>
