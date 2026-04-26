@@ -49,7 +49,7 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
         Costruisco <strong>siti e applicazioni</strong> per chi vende se stesso. Lo faccio sapendo cosa stai vendendo, perché vengo da sette anni di personal branding nel settore olistico.
       </p>
       <div class="home-hero__ctas">
-        <a href="/dev/" class="mm-btn mm-btn-orange">Vedi cosa costruisco →</a>
+        <a href="#cosa-costruisco" class="mm-btn mm-btn-orange">Vedi cosa costruisco →</a>
         <a href="/contatti/" class="mm-btn mm-btn-outline">Lavoriamo insieme</a>
       </div>
     </div>
@@ -85,11 +85,11 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
         </p>
       </div>
       <div class="home-strade__grid">
-        <a href="/dev/" class="home-strada home-strada--primary">
+        <a href="#cosa-costruisco" class="home-strada home-strada--primary">
           <div class="mm-tag">Servizio principale</div>
           <h3 class="mm-h3">Costruisco siti e applicazioni.</h3>
           <p class="mm-body">Per chi vuole un sito vero, non un template — o un'applicazione web che fa qualcosa di specifico. Astro, FastAPI, codice pulito, performance verificabili, piena proprietà dei file. Niente plugin, niente manutenzione mensile.</p>
-          <span class="home-strada__cta">Vedi cosa costruisco →</span>
+          <span class="home-strada__cta">Vedi cosa costruisco ↓</span>
         </a>
         <a href="/servizi/" class="home-strada home-strada--secondary">
           <div class="mm-tag">Consulenza</div>
@@ -97,6 +97,73 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
           <p class="mm-body">Per coach, counselor, operatori olistici e professionisti che vendono se stessi. Sette anni di personal branding nel settore olistico, oltre duecento articoli, e un metodo per trovare un punto di vista che non sia il copia-incolla di tutti gli altri.</p>
           <span class="home-strada__cta">Scopri come →</span>
         </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── COSA COSTRUISCO ───────────────────────────────────────────────────── -->
+  <section class="mm-section-dark home-build" id="cosa-costruisco">
+    <div class="mm-container">
+      <div class="home-build__header">
+        <p class="mm-tag" style="margin-bottom:1rem">Cosa costruisco</p>
+        <h2 class="mm-h2">Quattro tipi di lavoro.</h2>
+        <p class="home-build__intro">
+          Quasi sempre il progetto cade in una di queste categorie. Ogni progetto è costruito da zero, su misura, con codice pulito e piena proprietà dei file alla consegna.
+        </p>
+      </div>
+      <div class="home-build__grid">
+        <div class="home-build-card">
+          <div class="home-build-card__num">01</div>
+          <h3 class="mm-h3">Siti vetrina</h3>
+          <p class="mm-body">Una presenza online che comunica chi sei e cosa fai, costruita sulla tua identità invece che su un template. Veloce, indicizzato bene, scritto in modo che chi cerca un professionista come te capisca subito che sei tu.</p>
+        </div>
+        <div class="home-build-card">
+          <div class="home-build-card__num">02</div>
+          <h3 class="mm-h3">Landing page</h3>
+          <p class="mm-body">Pagine singole pensate per convertire — campagne, lanci, prodotti specifici. Una struttura che porta il lettore dalla curiosità all'azione senza fargli perdere tempo, e analytics integrate per misurare cosa funziona.</p>
+        </div>
+        <div class="home-build-card">
+          <div class="home-build-card__num">03</div>
+          <h3 class="mm-h3">E-commerce</h3>
+          <p class="mm-body">Negozi online con pagamenti sicuri e gestione prodotti, scelti tra Stripe, PayPal e altre integrazioni a seconda del tuo caso. Niente plugin che si rompono, niente abbonamenti mensili a piattaforme che cambiano regole ogni anno.</p>
+        </div>
+        <div class="home-build-card">
+          <div class="home-build-card__num">04</div>
+          <h3 class="mm-h3">Web app su misura</h3>
+          <p class="mm-body">Applicazioni web custom: dashboard, area riservata, automazioni, integrazione con API esterne. Quando il sito normale non basta più e ti serve uno strumento che fa una cosa specifica per la tua attività, lo costruisco da zero.</p>
+        </div>
+      </div>
+      <div class="home-build__cta-row">
+        <a href="/portfolio/" class="mm-btn mm-btn-orange">Vedi i progetti →</a>
+        <a href="/contatti/" class="mm-btn mm-btn-outline">Parliamo del tuo</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── METODO MINI ───────────────────────────────────────────────────────── -->
+  <section class="mm-section-light home-method">
+    <div class="mm-container home-method__inner">
+      <div>
+        <p class="mm-tag mm-tag-dark" style="margin-bottom:1rem">Il metodo</p>
+        <h2 class="mm-h2" style="color:#0d0d0d;margin-bottom:1.2rem">Più veloce, stesso risultato.</h2>
+        <p style="font-size:0.95rem;line-height:1.85;color:#444;max-width:520px;margin-bottom:1.5rem">
+          Non scrivo codice riga per riga. Guido l'intelligenza artificiale per costruire siti e applicazioni che funzionano. Il risultato è lo stesso di uno sviluppo tradizionale, anzi è più veloce e più pulito, perché posso passare più tempo sulle decisioni che contano e meno sulla ripetizione meccanica.
+        </p>
+        <a href="/vibe-coding/" class="mm-btn" style="background:transparent;color:#0d0d0d;border:1.5px solid #0d0d0d">Come funziona →</a>
+      </div>
+      <div class="home-method__stats">
+        <div class="home-method-stat">
+          <div class="home-method-stat__num">100<span>/100</span></div>
+          <div class="home-method-stat__label">Google PageSpeed<br>Core Web Vitals</div>
+        </div>
+        <div class="home-method-stat">
+          <div class="home-method-stat__num">0</div>
+          <div class="home-method-stat__label">Plugin obbligatori<br>o abbonamenti mensili</div>
+        </div>
+        <div class="home-method-stat">
+          <div class="home-method-stat__num">100<span>%</span></div>
+          <div class="home-method-stat__label">Codice tuo, file tuoi.<br>Zero dipendenze esterne.</div>
+        </div>
       </div>
     </div>
   </section>
@@ -301,6 +368,88 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
   }
   .home-strada--secondary .home-strada__cta { color: rgba(255,255,255,0.85); }
 
+  /* ── COSA COSTRUISCO ── */
+  .home-build { padding: 5rem 0; }
+  .home-build__header { margin-bottom: 3.5rem; max-width: 720px; }
+  .home-build__intro {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: rgba(255,255,255,0.65);
+    margin-top: 1.2rem;
+  }
+  .home-build__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: #1a1a1a;
+    border: 1px solid #1a1a1a;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 3rem;
+  }
+  .home-build-card {
+    background: #0d0d0d;
+    padding: 2.5rem 2.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  .home-build-card:hover { background: #111; }
+  .home-build-card__num {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: 1.8rem;
+    color: #e85d00;
+    line-height: 1;
+    margin-bottom: 0.4rem;
+  }
+  .home-build-card .mm-h3 { color: #fff; font-size: 1.2rem; }
+  .home-build__cta-row {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  /* ── METODO MINI ── */
+  .home-method { padding: 5rem 0; }
+  .home-method__inner {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+  .home-method__stats {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .home-method-stat {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 1.5rem;
+    align-items: center;
+    padding: 1.5rem 0;
+    border-top: 1px solid #e5e2dc;
+  }
+  .home-method-stat:last-child { border-bottom: 1px solid #e5e2dc; }
+  .home-method-stat__num {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: 2.2rem;
+    color: #0d0d0d;
+    line-height: 1;
+  }
+  .home-method-stat__num span {
+    font-size: 1.1rem;
+    color: #e85d00;
+    font-weight: 700;
+  }
+  .home-method-stat__label {
+    font-size: 0.85rem;
+    line-height: 1.55;
+    color: #555;
+  }
+
   /* ── ARTICOLI ── */
   .home-articles { padding: 5rem 0; }
   .home-articles__header {
@@ -405,6 +554,9 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
     .home-stat { border-right: none; border-bottom: 1px solid var(--mm-border-light); }
     .home-stat:last-child { border-bottom: none; }
     .home-strade__grid { grid-template-columns: 1fr; }
+    .home-build__grid { grid-template-columns: 1fr; }
+    .home-method__inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    .home-method-stat { grid-template-columns: 100px 1fr; gap: 1rem; }
     .home-strada { padding: 2.5rem 1.8rem; }
     .home-strada--primary { border-right: none; border-bottom: 2px solid #e85d00; }
     .home-article-row { grid-template-columns: 2rem 1fr 2rem; }
