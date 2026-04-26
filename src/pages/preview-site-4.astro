@@ -22,6 +22,8 @@ import BaseLayout from '@layouts/BaseLayout.astro';
         <a href="#cosa">// cosa costruisco</a>
         <a href="#lavori">// lavori</a>
         <a href="#metodo">// metodo</a>
+        <a href="#chi">// chi sono</a>
+        <a href="/blog/">// articoli</a>
         <a href="/contatti/" class="ps4-menu__cta">[ contattami ]</a>
       </nav>
     </div>
@@ -310,6 +312,11 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 </BaseLayout>
 
 <style>
+  /* Nascondi header e footer del BaseLayout su questa pagina:
+     il sito qui ha il suo nav e il suo footer integrati. */
+  :global(.mm-header), :global(.mm-footer) { display: none !important; }
+  :global(body) { padding-top: 0 !important; }
+
   .ps4-page {
     background: #0a0512;
     color: #f0e9ff;
