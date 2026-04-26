@@ -1,7 +1,6 @@
 ---
 /**
- * [slug].astro  — Static (prerender = true)
- *
+ * [slug].astro — Y2K Chrome
  * Genera le pagine articolo a build time via Ghost Content API.
  */
 export const prerender = true;
@@ -11,7 +10,6 @@ import { getAllPosts, getPostBySlug, ghostPostToArticolo } from '@lib/ghost';
 import jsYaml from 'js-yaml';
 import Markdoc from '@markdoc/markdoc';
 
-// ── Carica articoli dev-blog (file .md legacy, integrati nel sito principale) ──
 const devRaw = import.meta.glob('/src/content/dev-blog/*.md', { eager: true, as: 'raw' }) as Record<string, string>;
 const devPosts = Object.entries(devRaw).map(([fp, content]) => {
   const slug    = fp.match(/\/([^/]+)\.md$/)?.[1] ?? '';
@@ -23,16 +21,10 @@ const devPosts = Object.entries(devRaw).map(([fp, content]) => {
 });
 const devPostBySlug = Object.fromEntries(devPosts.map(p => [p.slug, p]));
 
-// ── getStaticPaths ──────────────────────────────────────────────────────────
 export async function getStaticPaths() {
   const posts = await getAllPosts();
   const ghostSlugs = posts.map(p => ({ params: { slug: p.slug } }));
-  // Aggiungi anche slug dev-blog (collisioni Ghost > dev-blog gestite dopo)
   const ghostSet = new Set(posts.map(p => p.slug));
-  const devSlugs = Object.keys((globalThis as any).__DEV_POSTS_FOR_PATHS__ ?? {})
-    .filter((s: string) => !ghostSet.has(s))
-    .map((s: string) => ({ params: { slug: s } }));
-  // Fallback: se la global non è stata popolata, usa import diretto
   const devRawLocal = import.meta.glob('/src/content/dev-blog/*.md', { eager: true, as: 'raw' }) as Record<string, string>;
   const devLocalSlugs = Object.keys(devRawLocal)
     .map(fp => fp.match(/\/([^/]+)\.md$/)?.[1] ?? '')
@@ -43,7 +35,6 @@ export async function getStaticPaths() {
 
 const { slug } = Astro.params;
 
-// Prima prova Ghost, poi fallback dev-blog
 let title         = '';
 let htmlContent   = '';
 let imageUrl: string | null = null;
@@ -51,11 +42,9 @@ let rawDate       = '';
 let seoTitle      = '';
 let seoDesc       = '';
 let canonical: string | undefined = undefined;
-let ghostPost: any = null;
 
 const ghostFetched = await getPostBySlug(slug!);
 if (ghostFetched) {
-  ghostPost = ghostFetched;
   const art = ghostPostToArticolo(ghostFetched);
   title       = art.titolo;
   htmlContent = art.htmlContent;
@@ -65,17 +54,14 @@ if (ghostFetched) {
   seoDesc     = art.seo_description || art.descrizione || '';
   canonical   = art.canonical_url;
 } else if (devPostBySlug[slug!]) {
-  // Articolo da /src/content/dev-blog/{slug}.md
-  const dev = devPostBySlug[slug!];
+  const dev   = devPostBySlug[slug!];
   title       = dev.fm.title ?? slug;
   rawDate     = (dev.fm.date ?? '').slice(0, 10);
   seoTitle    = title;
   seoDesc     = dev.fm.description ?? '';
   imageUrl    = `/images/dev-blog/${slug}.png`;
-  // Render Markdown via Markdoc (stesso engine di /dev/blog/[slug])
-  const ast    = Markdoc.parse(dev.body);
-  const transformed = Markdoc.transform(ast);
-  htmlContent = Markdoc.renderers.html(transformed);
+  const ast   = Markdoc.parse(dev.body);
+  htmlContent = Markdoc.renderers.html(Markdoc.transform(ast));
 } else {
   return Astro.redirect('/404');
 }
@@ -84,18 +70,14 @@ const date = rawDate
   ? new Date(rawDate).toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' })
   : null;
 
-const art = { titolo: title, htmlContent, immagine: imageUrl, seo_title: seoTitle, seo_description: seoDesc, canonical_url: canonical, descrizione: seoDesc, seo_image: undefined as string | undefined };
 const siteUrl  = 'https://marcomunich.com';
-const seoImage = art.seo_image
-  ? (art.seo_image.startsWith('http') ? art.seo_image : `${siteUrl}${art.seo_image}`)
-  : imageUrl
-    ? (imageUrl.startsWith('http') ? imageUrl : `${siteUrl}${imageUrl}`)
-    : `${siteUrl}/og-image.jpg`;
+const seoImage = imageUrl
+  ? (imageUrl.startsWith('http') ? imageUrl : `${siteUrl}${imageUrl}`)
+  : `${siteUrl}/og-image.jpg`;
 
 function safeJsonLd(obj: unknown): string {
   return JSON.stringify(obj).replace(/<\/script>/gi, '<\\/script>');
 }
-
 const breadcrumbSchema = safeJsonLd({
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
@@ -115,94 +97,66 @@ const breadcrumbSchema = safeJsonLd({
   schemaType="Article"
   datePublished={rawDate}
   dateModified={rawDate}
-  canonicalOverride={art.canonical_url}
+  canonicalOverride={canonical}
 >
   <script slot="head" type="application/ld+json" set:html={breadcrumbSchema} />
 
-
-  <!-- HERO ARTICOLO -->
+  <!-- HERO -->
   <header class="art-hero">
     <div class="art-hero__inner">
       <nav class="art-breadcrumb" aria-label="Breadcrumb">
-        <a href="/">Home</a>
-        <span aria-hidden="true">/</span>
-        <a href="/blog/">Blog</a>
-        <span aria-hidden="true">/</span>
-        <span>{title}</span>
+        <a href="/">home</a>
+        <span aria-hidden="true">//</span>
+        <a href="/blog/">blog</a>
+        <span aria-hidden="true">//</span>
+        <span class="art-breadcrumb__cur">{title}</span>
       </nav>
       <h1 class="art-hero__title">{title}</h1>
-      {date && <time class="art-hero__date" datetime={rawDate}>Aggiornato il {date}</time>}
+      {date && <time class="art-hero__date" datetime={rawDate}>// aggiornato il {date}</time>}
     </div>
   </header>
 
-  <!-- LAYOUT ARTICOLO -->
+  <!-- LAYOUT -->
   <div class="art-layout">
 
-    <!-- Colonna principale -->
     <main class="art-main">
-
       {imageUrl && (
         <figure class="art-cover">
-          <img
-            src={imageUrl}
-            alt={title}
-            width="780"
-            height="440"
-            loading="eager"
-            decoding="async"
-          />
+          <img src={imageUrl} alt={title} width="780" height="440" loading="eager" decoding="async" />
         </figure>
       )}
 
-      <div class="prose-marcomunich art-content">
-        <Fragment set:html={htmlContent} />
-      </div>
-
-      <!-- FAQ (rese via HTML da Ghost) -->
+      <div class="art-prose" is:html={htmlContent} />
 
       <!-- Firma autore -->
       <div class="art-author">
-        <img
-          src="/og/marco-munich.png"
-          alt="Marco Munich"
-          class="art-author__photo"
-          width="72"
-          height="72"
-          loading="lazy"
-        />
+        <img src="/og/marco-munich.png" alt="Marco Munich" class="art-author__photo" width="72" height="72" loading="lazy" />
         <div class="art-author__body">
-          <p class="art-author__name">Marco Munich</p>
-          <p class="art-author__bio">
-            Personal branding olistico per coach, counselor e operatori olistici. Sette anni nel settore, oltre duecento articoli, decine di professionisti seguiti.
-          </p>
-          <a href="https://wa.link/zva8dp" class="art-author__cta" target="_blank" rel="noopener noreferrer">
-            Facciamo una chiacchierata →
-          </a>
+          <p class="art-author__name">// Marco Munich</p>
+          <p class="art-author__bio">Personal branding e sviluppo web. Sette anni nel settore, oltre duecento articoli, decine di professionisti seguiti.</p>
+          <a href="/#contatti" class="art-author__cta">[ Parliamone → ]</a>
         </div>
       </div>
-
     </main>
 
     <!-- Sidebar -->
     <aside class="art-sidebar">
 
-      <!-- Social -->
       <div class="art-sidebar__social">
         <a href="https://www.facebook.com/personalbrandingolistico/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.236 2.686.236v2.97h-1.514c-1.491 0-1.956.93-1.956 1.874v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.236 2.686.236v2.97h-1.514c-1.491 0-1.956.93-1.956 1.874v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
         </a>
         <a href="https://www.youtube.com/@personalbrandingolistico" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
         </a>
         <a href="https://www.instagram.com/marcomunich1983/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
         </a>
         <a href="https://www.linkedin.com/in/marcomunich/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
         </a>
       </div>
 
-      <!-- Donazione -->
       <div class="art-sidebar__widget">
         <p class="art-sidebar__widget-text">Se quello che pubblico ti ha aiutato, puoi fare una <a href="https://paypal.me/marcomunich83/" target="_blank" rel="noopener noreferrer">donazione qui</a>.</p>
         <a href="https://paypal.me/marcomunich83/" target="_blank" rel="noopener noreferrer" class="pp-donate-btn">
@@ -212,13 +166,11 @@ const breadcrumbSchema = safeJsonLd({
         </a>
       </div>
 
-      <!-- CTA consulenza -->
       <div class="art-sidebar__cta">
-        <p class="art-sidebar__cta-title">Vuoi parlarne?</p>
+        <p class="art-sidebar__cta-kicker">// hai un progetto?</p>
+        <p class="art-sidebar__cta-title">Parliamone.</p>
         <p class="art-sidebar__cta-text">Se ti senti in linea con quello che scrivo, posso aiutarti a costruire la tua presenza online.</p>
-        <a href="https://wa.link/zva8dp" class="art-sidebar__cta-btn" target="_blank" rel="noopener noreferrer">
-          Chiacchierata gratuita su WhatsApp
-        </a>
+        <a href="/#contatti" class="art-sidebar__cta-btn">[ contattami → ]</a>
       </div>
 
     </aside>
@@ -228,256 +180,88 @@ const breadcrumbSchema = safeJsonLd({
 </BaseLayout>
 
 <style>
-  /* ── Hero ──────────────────────────────────────────────────────────────── */
-  .art-hero {
-    background: #0d0d0d;
-    padding: 7rem 2rem 4rem;
-  }
-  .art-hero__inner {
-    max-width: 820px;
-    margin: 0 auto;
-  }
-  .art-breadcrumb {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.72rem;
-    color: rgba(255,255,255,0.3);
-    letter-spacing: 0.04em;
-    margin-bottom: 2rem;
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-    flex-wrap: wrap;
-  }
-  .art-breadcrumb a {
-    color: rgba(255,255,255,0.3);
-    text-decoration: none;
-    transition: color 0.15s;
-  }
-  .art-breadcrumb a:hover { color: #e85d00; opacity: 1; }
-  .art-breadcrumb span[aria-hidden] { color: rgba(255,255,255,0.15); }
-  .art-hero__title {
-    font-family: 'Inter', sans-serif;
-    font-weight: 900;
-    font-size: clamp(1.8rem, 4vw, 3.2rem);
-    line-height: 1.1;
-    letter-spacing: -0.025em;
-    color: #fff;
-    margin-bottom: 1rem;
-  }
-  .art-hero__date {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.72rem;
-    color: rgba(255,255,255,0.25);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
+  /* HERO */
+  .art-hero { padding: 4.5rem 2rem 3rem; border-bottom: 1px solid rgba(240,233,255,0.1); }
+  .art-hero__inner { max-width: 820px; margin: 0 auto; }
+  .art-breadcrumb { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: rgba(240,233,255,0.3); display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; margin-bottom: 1.8rem; }
+  .art-breadcrumb a { color: rgba(240,233,255,0.3); text-decoration: none; transition: color 0.15s; }
+  .art-breadcrumb a:hover { color: #00e5ff; }
+  .art-breadcrumb__cur { color: rgba(240,233,255,0.5); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 300px; }
+  .art-hero__title { font-family: 'Inter', sans-serif; font-weight: 900; font-size: clamp(1.7rem, 4vw, 3rem); line-height: 1.12; letter-spacing: -0.025em; color: #f0e9ff; margin: 0 0 1rem; }
+  .art-hero__date { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: rgba(240,233,255,0.3); }
 
-  /* ── Layout 2 colonne ──────────────────────────────────────────────────── */
-  .art-layout {
-    display: grid;
-    grid-template-columns: 1fr 280px;
-    gap: 4rem;
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 3.5rem 2rem 6rem;
-    background: #fff;
-  }
+  /* LAYOUT */
+  .art-layout { display: grid; grid-template-columns: 1fr 280px; gap: 4rem; max-width: 1100px; margin: 0 auto; padding: 3.5rem 2rem 6rem; }
 
-  /* ── Main ──────────────────────────────────────────────────────────────── */
+  /* MAIN */
   .art-main { min-width: 0; }
   .art-cover { margin: 0 0 2.5rem; }
-  .art-cover img { width: 100%; height: auto; display: block; border-radius: 2px; }
+  .art-cover img { width: 100%; height: auto; display: block; border-radius: 8px; border: 1px solid rgba(240,233,255,0.1); }
 
-  /* ── FAQ ───────────────────────────────────────────────────────────────── */
-  .art-faq {
-    margin-top: 3rem;
-    padding-top: 2rem;
-    border-top: 1px solid #eee;
-  }
-  .art-faq__title {
-    font-family: 'Inter', sans-serif;
-    font-weight: 800;
-    font-size: 1.1rem;
-    color: #0d0d0d;
-    letter-spacing: -0.01em;
-    margin-bottom: 1.2rem;
-  }
-  .art-faq__item { border-bottom: 1px solid #eee; padding: 0.9rem 0; }
-  .art-faq__q {
-    font-family: 'Inter', sans-serif;
-    font-weight: 600;
-    font-size: 0.9rem;
-    cursor: pointer;
-    list-style: none;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1rem;
-    color: #0d0d0d;
-  }
-  .art-faq__q::-webkit-details-marker { display: none; }
-  .art-faq__q::after { content: '+'; font-size: 1.1rem; flex-shrink: 0; color: #e85d00; }
-  details[open] .art-faq__q::after { content: '−'; }
-  .art-faq__a { font-size: 0.85rem; line-height: 1.75; color: #666; margin-top: 0.65rem; }
+  /* PROSE — stili per contenuto Ghost HTML su dark bg */
+  .art-prose { color: rgba(240,233,255,0.85); font-size: 1.05rem; line-height: 1.85; }
+  .art-prose :global(h1),
+  .art-prose :global(h2),
+  .art-prose :global(h3),
+  .art-prose :global(h4) { font-family: 'Inter', sans-serif; font-weight: 800; color: #f0e9ff; letter-spacing: -0.02em; margin: 2.5rem 0 1rem; line-height: 1.2; }
+  .art-prose :global(h2) { font-size: 1.6rem; border-bottom: 1px solid rgba(255,45,146,0.25); padding-bottom: 0.5rem; }
+  .art-prose :global(h3) { font-size: 1.2rem; color: #f0e9ff; }
+  .art-prose :global(p) { margin: 0 0 1.4rem; }
+  .art-prose :global(a) { color: #00e5ff; text-decoration: none; border-bottom: 1px solid rgba(0,229,255,0.4); transition: border-color 0.15s; }
+  .art-prose :global(a:hover) { border-bottom-color: #00e5ff; }
+  .art-prose :global(ul), .art-prose :global(ol) { margin: 0 0 1.4rem 1.2rem; padding-left: 1rem; }
+  .art-prose :global(li) { margin-bottom: 0.5rem; }
+  .art-prose :global(strong), .art-prose :global(b) { color: #f0e9ff; font-weight: 700; }
+  .art-prose :global(em) { color: rgba(240,233,255,0.9); }
+  .art-prose :global(blockquote) { border-left: 3px solid #ff2d92; margin: 2rem 0; padding: 1rem 1.5rem; background: rgba(255,45,146,0.06); border-radius: 0 8px 8px 0; font-style: italic; color: rgba(240,233,255,0.75); }
+  .art-prose :global(code) { font-family: 'JetBrains Mono', monospace; font-size: 0.85em; background: rgba(0,229,255,0.1); color: #00e5ff; padding: 0.15em 0.4em; border-radius: 4px; }
+  .art-prose :global(pre) { background: rgba(10,5,18,0.8); border: 1px solid rgba(240,233,255,0.15); border-radius: 8px; padding: 1.5rem; overflow-x: auto; margin: 2rem 0; }
+  .art-prose :global(pre code) { background: none; color: #f0e9ff; padding: 0; font-size: 0.88rem; }
+  .art-prose :global(img) { max-width: 100%; height: auto; border-radius: 8px; margin: 1.5rem 0; border: 1px solid rgba(240,233,255,0.1); }
+  .art-prose :global(hr) { border: none; border-top: 1px dashed rgba(240,233,255,0.15); margin: 3rem 0; }
+  .art-prose :global(table) { width: 100%; border-collapse: collapse; margin: 2rem 0; font-size: 0.88rem; display: block; overflow-x: auto; }
+  .art-prose :global(thead) { background: rgba(255,45,146,0.15); }
+  .art-prose :global(th) { padding: 0.65rem 1rem; text-align: left; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; color: #ff2d92; border: 1px solid rgba(240,233,255,0.1); }
+  .art-prose :global(td) { padding: 0.6rem 1rem; border: 1px solid rgba(240,233,255,0.08); vertical-align: top; color: rgba(240,233,255,0.78); }
+  .art-prose :global(tbody tr:nth-child(even)) { background: rgba(255,255,255,0.02); }
+  /* figure/figcaption */
+  .art-prose :global(figure) { margin: 2rem 0; }
+  .art-prose :global(figcaption) { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: rgba(240,233,255,0.4); text-align: center; margin-top: 0.5rem; }
 
-  /* ── Autore ────────────────────────────────────────────────────────────── */
-  .art-author {
-    display: flex;
-    gap: 1.5rem;
-    align-items: flex-start;
-    margin-top: 4rem;
-    padding-top: 2rem;
-    border-top: 2px solid #e85d00;
-  }
-  .art-author__photo {
-    width: 72px;
-    height: 72px;
-    object-fit: cover;
-    border-radius: 50%;
-    filter: grayscale(20%);
-    flex-shrink: 0;
-  }
-  .art-author__name {
-    font-family: 'Inter', sans-serif;
-    font-weight: 700;
-    font-size: 0.85rem;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: #0d0d0d;
-    margin-bottom: 0.4rem;
-  }
-  .art-author__bio { font-size: 0.82rem; line-height: 1.65; color: #666; margin-bottom: 0.7rem; }
-  .art-author__cta {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.78rem;
-    font-weight: 700;
-    color: #e85d00;
-    text-decoration: none;
-  }
-  .art-author__cta:hover { opacity: 0.75; }
+  /* AUTORE */
+  .art-author { display: flex; gap: 1.4rem; align-items: flex-start; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid rgba(255,45,146,0.4); }
+  .art-author__photo { width: 64px; height: 64px; object-fit: cover; border-radius: 50%; border: 2px solid rgba(255,45,146,0.5); flex-shrink: 0; }
+  .art-author__name { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: #ff2d92; letter-spacing: 0.08em; margin-bottom: 0.4rem; }
+  .art-author__bio { font-size: 0.82rem; line-height: 1.65; color: rgba(240,233,255,0.65); margin-bottom: 0.8rem; }
+  .art-author__cta { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; font-weight: 700; color: #00e5ff; text-decoration: none; border-bottom: 1px solid rgba(0,229,255,0.4); padding-bottom: 0.1rem; }
 
-  /* ── Sidebar ───────────────────────────────────────────────────────────── */
-  .art-sidebar { display: flex; flex-direction: column; gap: 2rem; }
-  .art-sidebar__social {
-    display: flex;
-    gap: 0.85rem;
-    flex-wrap: wrap;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid #eee;
-  }
-  .art-sidebar__social a { display: flex; align-items: center; opacity: 0.65; transition: opacity 0.15s; }
-  .art-sidebar__social a:hover { opacity: 1; }
-  .art-sidebar__widget { border: 1px solid #eee; padding: 1.25rem; border-radius: 4px; }
-  .art-sidebar__widget-text { font-size: 0.8rem; line-height: 1.65; color: #666; text-align: center; }
-  .art-sidebar__widget-text a { color: #0d0d0d; }
-  .pp-donate-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    margin: 0.85rem auto 0;
-    width: fit-content;
-    padding: 11px 22px;
-    background: linear-gradient(180deg, #ffc439 0%, #f5a623 100%);
-    border: 1px solid #e09000;
-    border-bottom-color: #c07800;
-    border-radius: 24px;
-    box-shadow: 0 1px 3px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.45);
-    text-decoration: none;
-    cursor: pointer;
-    transition: box-shadow 0.15s, filter 0.15s;
-  }
-  .pp-donate-btn:hover {
-    filter: brightness(1.05);
-    box-shadow: 0 3px 8px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.45);
-  }
-  .pp-wordmark {
-    display: inline-flex;
-    align-items: baseline;
-    gap: 0;
-    line-height: 1;
-  }
-  .pp-pay, .pp-pal {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 17px;
-    font-weight: 900;
-    font-style: italic;
-    letter-spacing: -0.3px;
-  }
-  .pp-pay { color: #003087; }
-  .pp-pal { color: #009cde; }
-  .pp-divider {
-    display: inline-block;
-    width: 1px;
-    height: 18px;
-    background: rgba(0,0,0,.2);
-    border-radius: 1px;
-  }
-  .pp-donate-label {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 15px;
-    font-weight: 700;
-    font-style: italic;
-    color: #003087;
-    letter-spacing: 0.1px;
-  }
-  .art-sidebar__cta { background: #f5f5f5; padding: 1.5rem; border-radius: 4px; }
-  .art-sidebar__cta-title {
-    font-family: 'Inter', sans-serif;
-    font-weight: 800;
-    font-size: 1rem;
-    color: #0d0d0d;
-    margin-bottom: 0.5rem;
-    letter-spacing: -0.01em;
-  }
-  .art-sidebar__cta-text { font-size: 0.82rem; line-height: 1.65; color: #666; margin-bottom: 1rem; }
-  .art-sidebar__cta-btn {
-    display: block;
-    background: #25d366;
-    color: #fff;
-    font-family: 'Inter', sans-serif;
-    font-weight: 700;
-    font-size: 0.78rem;
-    text-align: center;
-    padding: 0.75rem 1rem;
-    border-radius: 50px;
-    text-decoration: none;
-    transition: background 0.15s;
-  }
-  .art-sidebar__cta-btn:hover { background: #1fb959; opacity: 1; }
+  /* SIDEBAR */
+  .art-sidebar { display: flex; flex-direction: column; gap: 1.8rem; }
+  .art-sidebar__social { display: flex; gap: 0.8rem; flex-wrap: wrap; padding-bottom: 1.5rem; border-bottom: 1px dashed rgba(240,233,255,0.1); }
+  .art-sidebar__social a { display: flex; align-items: center; color: rgba(240,233,255,0.4); transition: color 0.15s; }
+  .art-sidebar__social a:hover { color: #00e5ff; }
 
-  /* Tabelle negli articoli */
-  .art-content :global(table) {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 2rem 0;
-    font-size: 0.88rem;
-    overflow-x: auto;
-    display: block;
-  }
-  .art-content :global(table.has-fixed-layout) { display: table; table-layout: fixed; }
-  .art-content :global(thead) { background-color: #0d0d0d; color: #fff; }
-  .art-content :global(th) {
-    padding: 0.65rem 1rem;
-    text-align: left;
-    font-weight: 700;
-    font-size: 0.8rem;
-    letter-spacing: 0.04em;
-    border: 1px solid #0d0d0d;
-  }
-  .art-content :global(td) {
-    padding: 0.6rem 1rem;
-    border: 1px solid rgba(10,10,10,0.1);
-    vertical-align: top;
-  }
-  .art-content :global(tbody tr:nth-child(even)) { background-color: #f9f9f9; }
-  .art-content :global(tbody tr:hover) { background-color: #f0f0f0; }
-  @media (max-width: 680px) {
-    .art-content :global(table) { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-  }
+  .art-sidebar__widget { background: rgba(255,255,255,0.03); border: 1px solid rgba(240,233,255,0.12); border-radius: 10px; padding: 1.3rem; backdrop-filter: blur(10px); }
+  .art-sidebar__widget-text { font-size: 0.8rem; line-height: 1.65; color: rgba(240,233,255,0.55); text-align: center; }
+  .art-sidebar__widget-text a { color: #00e5ff; text-decoration: none; }
+  .pp-donate-btn { display: inline-flex; align-items: center; gap: 10px; margin: 0.85rem auto 0; width: fit-content; padding: 10px 20px; background: linear-gradient(180deg, #ffc439 0%, #f5a623 100%); border: 1px solid #e09000; border-radius: 24px; box-shadow: 0 1px 3px rgba(0,0,0,.3); text-decoration: none; transition: filter 0.15s; }
+  .pp-donate-btn:hover { filter: brightness(1.08); }
+  .pp-wordmark { display: inline-flex; align-items: baseline; }
+  .pp-pay, .pp-pal { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 900; font-style: italic; }
+  .pp-pay { color: #003087; } .pp-pal { color: #009cde; }
+  .pp-divider { display: inline-block; width: 1px; height: 16px; background: rgba(0,0,0,.2); margin: 0 2px; }
+  .pp-donate-label { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 700; font-style: italic; color: #003087; }
 
-  /* Responsive */
+  .art-sidebar__cta { background: linear-gradient(135deg, rgba(138,58,255,0.08) 0%, rgba(0,229,255,0.06) 100%); border: 1px solid rgba(240,233,255,0.18); border-radius: 12px; padding: 1.5rem; backdrop-filter: blur(10px); }
+  .art-sidebar__cta-kicker { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: #00e5ff; letter-spacing: 0.1em; margin: 0 0 0.4rem; }
+  .art-sidebar__cta-title { font-family: 'Inter', sans-serif; font-weight: 900; font-size: 1.4rem; color: #f0e9ff; letter-spacing: -0.02em; margin: 0 0 0.6rem; }
+  .art-sidebar__cta-text { font-size: 0.82rem; line-height: 1.65; color: rgba(240,233,255,0.65); margin: 0 0 1.2rem; }
+  .art-sidebar__cta-btn { display: block; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 0.82rem; text-align: center; padding: 0.85rem 1rem; background: linear-gradient(180deg, #ffffff 0%, #cccccc 100%); color: #0a0512; border-radius: 4px; text-decoration: none; transition: box-shadow 0.2s, transform 0.2s; box-shadow: 0 0 20px rgba(255,45,146,0.3); }
+  .art-sidebar__cta-btn:hover { box-shadow: 0 0 40px rgba(255,45,146,0.5); transform: translateY(-1px); }
+
   @media (max-width: 900px) {
-    .art-layout { grid-template-columns: 1fr; padding: 2.5rem 1.5rem 4rem; }
-    .art-sidebar { border-top: 1px solid #eee; padding-top: 2rem; }
+    .art-layout { grid-template-columns: 1fr; padding: 2.5rem 1.5rem 4rem; gap: 3rem; }
+    .art-sidebar { border-top: 1px dashed rgba(240,233,255,0.1); padding-top: 2rem; }
+    .art-breadcrumb__cur { max-width: 200px; }
   }
 </style>
