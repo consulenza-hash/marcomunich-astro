@@ -54,3 +54,23 @@
 # Testimonianze → Chi sono
 /testimonianza/                       /chi-sono/                      301
 /testimonianze/                       /chi-sono/                      301
+
+# Pagine oscurate 042626 — pivot dev-first
+/metterci-la-faccia-online/         /                               301
+/metterci-la-faccia-online          /                               301
+/creazione-messaggio-autentico/     /                               301
+/creazione-messaggio-autentico      /                               301
+/creazione-video-autentici/         /                               301
+/creazione-video-autentici          /                               301
+/lavorare-senzasito/                /                               301
+/lavorare-senzasito                 /                               301
+/cmfo-lezione1/                     /                               301
+/cmfo-lezione1                      /                               301
+/cmfo-lezione2/                     /                               301
+/cmfo-lezione2                      /                               301
+/libri/                             /                               301
+/libri                              /                               301
+/libri/*                            /                               301
+/prompt-pack/                       /                               301
+/prompt-pack                        /                               301
+/prompt-pack/*                      /                               301
