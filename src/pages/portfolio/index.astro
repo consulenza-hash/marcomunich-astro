@@ -1,313 +1,153 @@
 ---
+import BaseLayout from '@layouts/BaseLayout.astro';
 export const prerender = true;
+
+const demos = [
+  { href: "/portfolio/ecommerce",        tag: "SHOP",      title: "E-commerce",        desc: "Shop online con carrello, pagamenti Stripe e gestione ordini integrata.", accent: "#00e5ff" },
+  { href: "/portfolio/corso-online",     tag: "PLATFORM",  title: "Corso Online",      desc: "Piattaforma di formazione con area riservata, video-lezioni e progressi.", accent: "#ff2d92" },
+  { href: "/portfolio/sito-vetrina",     tag: "VETRINA",   title: "Sito Vetrina",      desc: "Pagina professionale con bio, servizi offerti e form di contatto.", accent: "#00e5ff" },
+  { href: "/portfolio/landing-page",     tag: "LANDING",   title: "Landing Page",      desc: "Pagina di lancio ottimizzata per conversione e raccolta contatti.", accent: "#ff2d92" },
+  { href: "/portfolio/blog",             tag: "MAGAZINE",  title: "Blog & Magazine",   desc: "Sito editoriale con articoli, categorie e ottimizzazione SEO.", accent: "#00e5ff" },
+  { href: "/portfolio/booking",          tag: "BOOKING",   title: "Booking",           desc: "Sistema di prenotazioni online con calendario e conferma automatica.", accent: "#ff2d92" },
+  { href: "/portfolio/portfolio-creativo", tag: "CREATIVE", title: "Portfolio Creativo", desc: "Galleria lavori con lightbox, filtri per categoria e animazioni.", accent: "#00e5ff" },
+  { href: "/portfolio/ristorante",       tag: "FOOD",      title: "Ristorante",        desc: "Menu digitale, prenotazione tavolo online e mappa interattiva.", accent: "#ff2d92" },
+  { href: "/portfolio/saas",             tag: "APP",       title: "SaaS Dashboard",    desc: "Applicazione web con area utente, analytics e gestione dati.", accent: "#00e5ff" },
+  { href: "/portfolio/non-profit",       tag: "ORG",       title: "Non-Profit",        desc: "Sito per associazioni con donazioni online, eventi e volontariato.", accent: "#ff2d92" },
+  { href: "/portfolio/immobiliare",      tag: "REALTY",    title: "Immobiliare",       desc: "Catalogo proprietà con filtri avanzati, mappa e schede dettaglio.", accent: "#00e5ff" },
+  { href: "/portfolio/wedding",          tag: "EVENT",     title: "Wedding & Eventi",  desc: "Inviti digitali, conferma RSVP, countdown e gallery fotografica.", accent: "#ff2d92" },
+];
 ---
 
-<html lang="it">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sviluppo Siti Web — Marco Munich</title>
-  <meta name="description" content="Progettazione e sviluppo siti web professionali. E-commerce, landing page, SaaS, portfolio e molto altro." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-</head>
-<body>
-  <nav class="topbar">
-    <a href="https://marcomunich.com" class="back-link">← marcomunich.com</a>
-  </nav>
+<BaseLayout
+  title="Portfolio — Siti e App — Marco Munich"
+  description="Demo navigabili di siti web e applicazioni costruiti con Astro, Tailwind e stack moderno. E-commerce, landing, booking, SaaS, non-profit e altro."
+  currentPath="/portfolio/"
+>
 
-  <header class="hero">
-    <p class="hero-label">Web Development</p>
-    <h1 class="hero-title">Sviluppo Siti Web</h1>
-    <p class="hero-subtitle">
-      Siti web veloci, moderni e costruiti su misura. Ogni progetto parte dalle tue esigenze
-      e diventa un prodotto digitale che funziona davvero.
-    </p>
-  </header>
+<div class="pf-page">
 
-  <main class="grid-section">
-    <div class="card-grid">
-
-      <a href="/portfolio/ecommerce" class="card" style="--accent: #10b981;">
-        <span class="card-icon">🛒</span>
-        <h2 class="card-title">E-commerce</h2>
-        <p class="card-desc">Shop online con carrello, pagamenti sicuri e gestione ordini integrata.</p>
-        <span class="card-link">Vedi Demo →</span>
-      </a>
-
-      <a href="/portfolio/corso-online" class="card" style="--accent: #8b5cf6;">
-        <span class="card-icon">🎓</span>
-        <h2 class="card-title">Corso Online</h2>
-        <p class="card-desc">Piattaforma di formazione con area riservata, video-lezioni e progressi.</p>
-        <span class="card-link">Vedi Demo →</span>
-      </a>
-
-      <a href="/portfolio/sito-vetrina" class="card" style="--accent: #3b82f6;">
-        <span class="card-icon">💼</span>
-        <h2 class="card-title">Sito Vetrina</h2>
-        <p class="card-desc">Pagina professionale con bio, servizi offerti e form di contatto.</p>
-        <span class="card-link">Vedi Demo →</span>
-      </a>
-
-      <a href="/portfolio/landing-page" class="card" style="--accent: #f59e0b;">
-        <span class="card-icon">🚀</span>
-        <h2 class="card-title">Landing Page</h2>
-        <p class="card-desc">Pagina di lancio ottimizzata per conversione e raccolta contatti.</p>
-        <span class="card-link">Vedi Demo →</span>
-      </a>
-
-      <a href="/portfolio/blog" class="card" style="--accent: #ec4899;">
-        <span class="card-icon">📝</span>
-        <h2 class="card-title">Blog &amp; Magazine</h2>
-        <p class="card-desc">Sito editoriale con articoli, categorie e ottimizzazione SEO.</p>
-        <span class="card-link">Vedi Demo →</span>
-      </a>
-
-      <a href="/portfolio/booking" class="card" style="--accent: #14b8a6;">
-        <span class="card-icon">📅</span>
-        <h2 class="card-title">Booking</h2>
-        <p class="card-desc">Sistema di prenotazioni online con calendario e conferma automatica.</p>
-        <span class="card-link">Vedi Demo →</span>
-      </a>
-
-      <a href="/portfolio/portfolio-creativo" class="card" style="--accent: #a855f7;">
-        <span class="card-icon">🎨</span>
-        <h2 class="card-title">Portfolio Creativo</h2>
-        <p class="card-desc">Galleria lavori con lightbox, filtri per categoria e animazioni.</p>
-        <span class="card-link">Vedi Demo →</span>
-      </a>
-
-      <a href="/portfolio/ristorante" class="card" style="--accent: #ef4444;">
-        <span class="card-icon">🍽️</span>
-        <h2 class="card-title">Ristorante</h2>
-        <p class="card-desc">Menu digitale, prenotazione tavolo online e mappa interattiva.</p>
-        <span class="card-link">Vedi Demo →</span>
-      </a>
-
-      <a href="/portfolio/saas" class="card" style="--accent: #06b6d4;">
-        <span class="card-icon">📊</span>
-        <h2 class="card-title">SaaS Dashboard</h2>
-        <p class="card-desc">Applicazione web con area utente, analytics e gestione dati.</p>
-        <span class="card-link">Vedi Demo →</span>
-      </a>
-
-      <a href="/portfolio/non-profit" class="card" style="--accent: #22c55e;">
-        <span class="card-icon">💚</span>
-        <h2 class="card-title">Non-Profit</h2>
-        <p class="card-desc">Sito per associazioni con donazioni online, eventi e volontariato.</p>
-        <span class="card-link">Vedi Demo →</span>
-      </a>
-
-      <a href="/portfolio/immobiliare" class="card" style="--accent: #f97316;">
-        <span class="card-icon">🏠</span>
-        <h2 class="card-title">Immobiliare</h2>
-        <p class="card-desc">Catalogo proprietà con filtri avanzati, mappa e schede dettaglio.</p>
-        <span class="card-link">Vedi Demo →</span>
-      </a>
-
-      <a href="/portfolio/wedding" class="card" style="--accent: #e879f9;">
-        <span class="card-icon">💍</span>
-        <h2 class="card-title">Wedding &amp; Eventi</h2>
-        <p class="card-desc">Inviti digitali, conferma RSVP, countdown e gallery fotografica.</p>
-        <span class="card-link">Vedi Demo →</span>
-      </a>
-
+  <!-- HERO -->
+  <section class="pf-hero">
+    <div class="pf-container">
+      <div class="pf-status-bar">
+        <span class="pf-pill"><span class="pf-pulse"></span> DEMO NAVIGABILI</span>
+        <span class="pf-pill">SYS · portfolio</span>
+        <span class="pf-pill">{demos.length} progetti</span>
+      </div>
+      <h1 class="pf-h1">
+        <span class="pf-h1__chrome">LAVORI.</span>
+      </h1>
+      <p class="pf-hero__tag">
+        Demo navigabili costruiti con stack moderno — Astro, React, Tailwind, Stripe, API esterne. Ogni sito simula un cliente diverso: puoi aprirli, cliccare, esplorare. ✦
+      </p>
+      <div class="pf-window">
+        <div class="pf-window__bar">
+          <span></span><span></span><span></span>
+          <span class="pf-window__title">marcomunich.com / portfolio</span>
+        </div>
+        <div class="pf-window__body">
+          <div class="pf-cmd">$ ls demos/</div>
+          <div class="pf-output">ecommerce/ corso-online/ sito-vetrina/ landing-page/</div>
+          <div class="pf-output">blog/ booking/ portfolio-creativo/ ristorante/</div>
+          <div class="pf-output">saas/ non-profit/ immobiliare/ wedding/ <span class="pf-output--ok">...</span></div>
+        </div>
+      </div>
     </div>
-  </main>
+  </section>
 
-  <footer class="footer">
-    <p>&copy; 2026 Marco Munich — Tutti i diritti riservati</p>
-  </footer>
+  <!-- GRID DEMO -->
+  <section class="pf-section">
+    <div class="pf-container">
+      <h2 class="pf-section__title"><span class="pf-arrow">▸</span> DEMO NAVIGABILI · {demos.length} PROGETTI</h2>
+      <div class="pf-grid">
+        {demos.map((d, i) => (
+          <a href={d.href} class="pf-card" style={`--ac: ${d.accent}`}>
+            <div class="pf-card__head">
+              <span class="pf-card__num">[ {String(i + 1).padStart(2, '0')} ]</span>
+              <span class="pf-card__tag">{d.tag}</span>
+            </div>
+            <h3 class="pf-card__title">{d.title}</h3>
+            <p class="pf-card__desc">{d.desc}</p>
+            <span class="pf-card__cta">// vedi demo →</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+  <!-- CTA -->
+  <section class="pf-cta">
+    <div class="pf-container">
+      <div class="pf-cta__box">
+        <p class="pf-cta__kicker">// hai un progetto in testa?</p>
+        <h2 class="pf-cta__title"><span class="pf-h1__chrome">COSTRUIAMOLO.</span></h2>
+        <p class="pf-cta__sub">
+          Queste demo mostrano il tipo di lavoro. Il tuo sito parte da zero, costruito su misura per te.
+        </p>
+        <a href="/#contatti" class="pf-btn">[ INIZIA UN PROGETTO → ]</a>
+      </div>
+    </div>
+  </section>
 
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #0a0a0a;
-      color: #e5e5e5;
-      min-height: 100vh;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
+</div>
 
-    /* Top bar */
-    .topbar {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 24px 24px 0;
-    }
+</BaseLayout>
 
-    .back-link {
-      color: #737373;
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 500;
-      transition: color 0.2s;
-    }
+<style>
+  .pf-page { color: #f0e9ff; font-family: 'Inter', system-ui, sans-serif; position: relative; min-height: 100vh; }
+  .pf-container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; width: 100%; position: relative; z-index: 2; }
 
-    .back-link:hover {
-      color: #ffffff;
-    }
+  /* HERO */
+  .pf-hero { padding: 5rem 0 4rem; }
+  .pf-status-bar { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2.5rem; }
+  .pf-pill { display: inline-flex; align-items: center; gap: 0.4rem; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 600; color: #00e5ff; background: rgba(0,229,255,0.08); border: 1px solid rgba(0,229,255,0.4); padding: 0.35rem 0.8rem; border-radius: 999px; }
+  .pf-pulse { width: 7px; height: 7px; background: #6ee870; border-radius: 50%; animation: pfpulse 2s infinite; }
+  @keyframes pfpulse { 0%,100% { box-shadow: 0 0 0 0 rgba(110,232,112,0.5); } 50% { box-shadow: 0 0 0 6px transparent; } }
 
-    /* Hero */
-    .hero {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 80px 24px 64px;
-      text-align: center;
-    }
+  .pf-h1 { font-family: 'Inter', sans-serif; font-weight: 900; font-size: clamp(3.5rem, 12vw, 10rem); line-height: 0.9; letter-spacing: -0.05em; margin: 0 0 2rem; }
+  .pf-h1__chrome { display: block; background: linear-gradient(180deg, #ffffff 0%, #d8d8d8 25%, #909090 45%, #ffffff 55%, #f5f5f5 75%, #b5b5b5 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; }
+  .pf-hero__tag { font-size: 1.1rem; line-height: 1.7; color: rgba(240,233,255,0.78); max-width: 620px; margin: 0 0 3rem; }
 
-    .hero-label {
-      font-size: 13px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: #525252;
-      margin-bottom: 20px;
-    }
+  .pf-window { background: rgba(10,5,18,0.6); border: 1px solid rgba(240,233,255,0.15); border-radius: 8px; overflow: hidden; backdrop-filter: blur(20px); max-width: 580px; box-shadow: 0 0 40px rgba(138,58,255,0.25); }
+  .pf-window__bar { background: rgba(255,255,255,0.05); padding: 0.55rem 1rem; display: flex; align-items: center; gap: 0.4rem; border-bottom: 1px solid rgba(240,233,255,0.1); }
+  .pf-window__bar > span:nth-child(1) { width: 11px; height: 11px; border-radius: 50%; background: #ff5f57; }
+  .pf-window__bar > span:nth-child(2) { width: 11px; height: 11px; border-radius: 50%; background: #febc2e; }
+  .pf-window__bar > span:nth-child(3) { width: 11px; height: 11px; border-radius: 50%; background: #28c840; }
+  .pf-window__title { margin-left: 1rem; font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: rgba(240,233,255,0.55); }
+  .pf-window__body { padding: 1.2rem 1.5rem; font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; line-height: 1.9; }
+  .pf-cmd { color: #00e5ff; }
+  .pf-output { color: rgba(240,233,255,0.65); margin-left: 1rem; }
+  .pf-output--ok { color: #6ee870; }
 
-    .hero-title {
-      font-size: clamp(36px, 6vw, 64px);
-      font-weight: 700;
-      color: #ffffff;
-      letter-spacing: -0.03em;
-      line-height: 1.1;
-      margin-bottom: 24px;
-      background: linear-gradient(to bottom right, #ffffff, #a3a3a3);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
+  /* SECTION */
+  .pf-section { padding: 5rem 0 6rem; }
+  .pf-section__title { font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; font-weight: 700; letter-spacing: 0.2em; color: #ff2d92; margin: 0 0 3rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,45,146,0.3); }
+  .pf-arrow { color: #00e5ff; }
 
-    .hero-subtitle {
-      font-size: 18px;
-      line-height: 1.7;
-      color: #737373;
-      max-width: 560px;
-      margin: 0 auto;
-    }
+  /* GRID */
+  .pf-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+  .pf-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(240,233,255,0.15); border-top: 3px solid var(--ac); border-radius: 12px; padding: 1.8rem; text-decoration: none; color: #f0e9ff; display: flex; flex-direction: column; gap: 0.6rem; backdrop-filter: blur(10px); transition: all 0.2s ease; }
+  .pf-card:hover { border-color: var(--ac); box-shadow: 0 0 40px rgba(0,229,255,0.12); transform: translateY(-3px); }
+  .pf-card__head { display: flex; justify-content: space-between; align-items: center; }
+  .pf-card__num { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: #ff2d92; letter-spacing: 0.1em; }
+  .pf-card__tag { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; letter-spacing: 0.15em; color: rgba(240,233,255,0.45); }
+  .pf-card__title { font-family: 'Inter', sans-serif; font-weight: 800; font-size: 1.25rem; color: #fff; letter-spacing: -0.01em; margin: 0.3rem 0 0; }
+  .pf-card__desc { font-size: 0.88rem; line-height: 1.65; color: rgba(240,233,255,0.65); flex-grow: 1; margin: 0; }
+  .pf-card__cta { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: var(--ac); margin-top: 0.8rem; transition: color 0.2s; }
 
-    /* Grid */
-    .grid-section {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 24px 96px;
-    }
+  /* CTA */
+  .pf-cta { padding: 5rem 0 7rem; }
+  .pf-cta__box { text-align: center; background: linear-gradient(135deg, rgba(138,58,255,0.1) 0%, rgba(0,229,255,0.08) 100%); border: 1px solid rgba(240,233,255,0.2); border-radius: 24px; padding: 5rem 3rem; backdrop-filter: blur(20px); box-shadow: 0 0 80px rgba(255,45,146,0.15); }
+  .pf-cta__kicker { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #00e5ff; margin: 0 0 2rem; letter-spacing: 0.2em; }
+  .pf-cta__title { font-size: clamp(2.5rem, 7vw, 5.5rem); line-height: 0.9; margin: 0 0 2rem; }
+  .pf-cta__sub { font-size: 1.05rem; color: rgba(240,233,255,0.75); max-width: 500px; margin: 0 auto 3rem; line-height: 1.7; }
+  .pf-btn { font-family: 'JetBrains Mono', monospace; font-size: 1rem; font-weight: 700; letter-spacing: 0.05em; padding: 1.3rem 2.4rem; text-decoration: none; border-radius: 4px; display: inline-block; background: linear-gradient(180deg, #ffffff 0%, #cccccc 100%); color: #0a0512; box-shadow: 0 0 40px rgba(255,45,146,0.4); border: 1px solid #fff; transition: all 0.2s ease; }
+  .pf-btn:hover { box-shadow: 0 0 60px rgba(255,45,146,0.7); transform: translateY(-2px); }
 
-    .card-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 16px;
-    }
-
-    @media (min-width: 640px) {
-      .card-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (min-width: 1024px) {
-      .card-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
-
-    /* Card */
-    .card {
-      display: flex;
-      flex-direction: column;
-      padding: 32px;
-      border-radius: 16px;
-      background: #141414;
-      border: 1px solid #1f1f1f;
-      text-decoration: none;
-      color: inherit;
-      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: var(--accent);
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-
-    .card:hover {
-      border-color: #2a2a2a;
-      transform: translateY(-4px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-    }
-
-    .card:hover::before {
-      opacity: 1;
-    }
-
-    .card:hover .card-link {
-      color: var(--accent);
-    }
-
-    .card-icon {
-      font-size: 32px;
-      margin-bottom: 20px;
-      display: block;
-      width: 56px;
-      height: 56px;
-      line-height: 56px;
-      text-align: center;
-      background: #1a1a1a;
-      border-radius: 12px;
-      border: 1px solid #252525;
-    }
-
-    .card-title {
-      font-size: 18px;
-      font-weight: 600;
-      color: #ffffff;
-      margin-bottom: 10px;
-      letter-spacing: -0.01em;
-    }
-
-    .card-desc {
-      font-size: 14px;
-      line-height: 1.6;
-      color: #737373;
-      flex-grow: 1;
-      margin-bottom: 20px;
-    }
-
-    .card-link {
-      font-size: 14px;
-      font-weight: 500;
-      color: #525252;
-      transition: color 0.3s;
-    }
-
-    /* Footer */
-    .footer {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 32px 24px;
-      border-top: 1px solid #1a1a1a;
-      text-align: center;
-    }
-
-    .footer p {
-      font-size: 13px;
-      color: #404040;
-    }
-  </style>
-</body>
-</html>
+  @media (max-width: 1024px) { .pf-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 640px) {
+    .pf-grid { grid-template-columns: 1fr; }
+    .pf-cta__box { padding: 3rem 1.6rem; }
+    .pf-section__title { font-size: 0.78rem; }
+  }
+</style>
