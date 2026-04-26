@@ -1,8 +1,8 @@
 name: Publish Daily — Carosello + Post Singolo + Reel
 
 on:
-  schedule:
-    - cron: '00 8 * * *'
+  # schedule:
+  #   - cron: '00 8 * * *'
   workflow_dispatch:
     inputs:
       dry_run:
