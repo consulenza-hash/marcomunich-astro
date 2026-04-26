@@ -1,14 +1,12 @@
 ---
 /**
- * blog/index.astro
- * Archivio articoli — griglia 3 colonne con immagine in evidenza
- * Fonte dati: Ghost CMS via Content API
+ * blog/index.astro — Y2K Chrome
+ * Archivio articoli con ricerca live + griglia glass cards
  */
 import BaseLayout from '@layouts/BaseLayout.astro';
 import { getAllPosts, ghostPostToArticolo } from '@lib/ghost';
 import jsYaml from 'js-yaml';
 
-// Formatta data leggibile
 function formatData(dateStr: string): string {
   if (!dateStr) return '';
   try {
@@ -17,7 +15,6 @@ function formatData(dateStr: string): string {
   } catch { return dateStr; }
 }
 
-// 1) Articoli da Ghost CMS
 const ghostPosts = await getAllPosts();
 const ghostMapped = ghostPosts.map(p => {
   const a = ghostPostToArticolo(p);
@@ -32,13 +29,12 @@ const ghostMapped = ghostPosts.map(p => {
   };
 });
 
-// 2) Articoli da /src/content/dev-blog/*.md (legacy, mantenuti come file)
 const devRaw = import.meta.glob('/src/content/dev-blog/*.md', { eager: true, as: 'raw' }) as Record<string, string>;
 const devMapped = Object.entries(devRaw).map(([filePath, content]) => {
-  const slug   = filePath.match(/\/([^/]+)\.md$/)?.[1] ?? '';
-  const fmStr  = content.match(/^---\r?\n([\s\S]*?)\r?\n---/)?.[1] ?? '';
-  const fm     = (jsYaml.load(fmStr) as Record<string, any>) ?? {};
-  const data   = (fm.date ?? '').slice(0, 10);
+  const slug  = filePath.match(/\/([^/]+)\.md$/)?.[1] ?? '';
+  const fmStr = content.match(/^---\r?\n([\s\S]*?)\r?\n---/)?.[1] ?? '';
+  const fm    = (jsYaml.load(fmStr) as Record<string, any>) ?? {};
+  const data  = (fm.date ?? '').slice(0, 10);
   return {
     slug,
     titolo:      fm.title       ?? slug,
@@ -50,83 +46,84 @@ const devMapped = Object.entries(devRaw).map(([filePath, content]) => {
   };
 });
 
-// Merge + ordina per data desc
 const posts = [...ghostMapped, ...devMapped].sort((a, b) => (b.data || '').localeCompare(a.data || ''));
 ---
 
 <BaseLayout
   title="Articoli — Marco Munich"
-  description="Oltre 200 articoli su personal branding olistico, marketing autentico e presenza online per coach, counselor e operatori olistici."
+  description="Oltre 200 articoli su personal branding, sviluppo web e presenza online per professionisti."
   currentPath="/blog/"
 >
 
-<div class="mm-page">
+<div class="bl-page">
 
   <!-- HERO -->
   <section class="bl-hero">
-    <div class="bl-hero__inner mm-container">
-      <p class="mm-tag" style="margin-bottom:1.2rem">Articoli</p>
-      <h1 class="mm-h1" style="margin-bottom:2rem">Blog.</h1>
-      <p class="bl-hero__sub">
-        {posts.length} articoli su personal branding olistico, marketing autentico e presenza online per chi lavora nel settore del benessere.
+    <div class="bl-container">
+      <div class="bl-status-bar">
+        <span class="bl-pill"><span class="bl-pulse"></span> ARCHIVIO · LIVE</span>
+        <span class="bl-pill">SYS · blog</span>
+        <span class="bl-pill">{posts.length} articoli</span>
+      </div>
+      <h1 class="bl-h1">
+        <span class="bl-h1__chrome">ARTICOLI.</span>
+      </h1>
+      <p class="bl-hero__tag">
+        {posts.length} articoli su personal branding, sviluppo web e presenza online per chi lavora in proprio. ✦
       </p>
     </div>
   </section>
 
   <!-- RICERCA + GRIGLIA -->
-  <section class="mm-section-light bl-body">
-    <div class="mm-container">
+  <section class="bl-section">
+    <div class="bl-container">
 
-      <!-- Search + contatore -->
+      <!-- Toolbar -->
       <div class="bl-toolbar">
-        <input
-          type="search"
-          id="bl-search-input"
-          placeholder="Cerca tra gli articoli…"
-          aria-label="Cerca articoli"
-          class="bl-search__input"
-        />
-        <span class="bl-count" id="bl-count">{posts.length} articoli</span>
+        <div class="bl-search">
+          <span class="bl-search__icon">$_</span>
+          <input
+            type="search"
+            id="bl-search-input"
+            placeholder="cerca articoli..."
+            aria-label="Cerca articoli"
+            class="bl-search__input"
+          />
+        </div>
+        <span class="bl-count" id="bl-count">// {posts.length} articoli</span>
       </div>
 
-      <!-- Griglia card -->
+      <!-- Griglia -->
       <div id="bl-grid" class="bl-grid">
-        {posts.map((post) => (
+        {posts.map((post, i) => (
           <a
             href={`/${post.slug}/`}
             class="bl-card"
             data-search={`${post.titolo} ${post.categoria} ${post.descrizione}`.toLowerCase()}
           >
-            <!-- Immagine -->
             <div class="bl-card__img">
               {post.immagine
                 ? <img src={post.immagine} alt={post.titolo} loading="lazy" width="600" height="340" />
-                : <div class="bl-card__img-placeholder" aria-hidden="true">
-                    <span class="bl-card__img-letter">{post.titolo.charAt(0).toUpperCase()}</span>
+                : <div class="bl-card__placeholder" aria-hidden="true">
+                    <span class="bl-card__letter">{post.titolo.charAt(0).toUpperCase()}</span>
                   </div>
               }
             </div>
-
-            <!-- Corpo card -->
             <div class="bl-card__body">
-              {post.categoria && (
-                <span class="bl-card__cat">{post.categoria}</span>
-              )}
-              <h2 class="bl-card__title">{post.titolo}</h2>
-              {post.descrizione && (
-                <p class="bl-card__desc">{post.descrizione}</p>
-              )}
-              <div class="bl-card__footer">
+              <div class="bl-card__meta">
+                {post.categoria && <span class="bl-card__cat">{post.categoria}</span>}
                 {post.dataLegg && <time class="bl-card__date" datetime={post.data}>{post.dataLegg}</time>}
-                <span class="bl-card__arrow">→</span>
               </div>
+              <h2 class="bl-card__title">{post.titolo}</h2>
+              {post.descrizione && <p class="bl-card__desc">{post.descrizione}</p>}
+              <span class="bl-card__cta">// leggi →</span>
             </div>
           </a>
         ))}
       </div>
 
       <p class="bl-noresults" id="bl-noresults" aria-live="polite" hidden>
-        Nessun articolo trovato per questa ricerca.
+        // nessun articolo trovato.
       </p>
 
     </div>
@@ -138,25 +135,25 @@ const posts = [...ghostMapped, ...devMapped].sort((a, b) => (b.data || '').local
 
 <script>
   function setupBlog() {
-    const input  = document.getElementById('bl-search-input') as HTMLInputElement | null;
-    const grid   = document.getElementById('bl-grid');
-    const noRes  = document.getElementById('bl-noresults');
-    const count  = document.getElementById('bl-count');
-    const items  = grid?.querySelectorAll<HTMLElement>('.bl-card');
-    const total  = items?.length ?? 0;
+    const input = document.getElementById('bl-search-input') as HTMLInputElement | null;
+    const grid  = document.getElementById('bl-grid');
+    const noRes = document.getElementById('bl-noresults');
+    const count = document.getElementById('bl-count');
+    const items = grid?.querySelectorAll<HTMLElement>('.bl-card');
+    const total = items?.length ?? 0;
 
     input?.addEventListener('input', () => {
       const q = input.value.trim().toLowerCase();
       let visible = 0;
-      items?.forEach((item) => {
+      items?.forEach(item => {
         const match = !q || (item.getAttribute('data-search') ?? '').includes(q);
         item.style.display = match ? '' : 'none';
         if (match) visible++;
       });
       if (noRes) noRes.hidden = visible > 0;
       if (count) count.textContent = q
-        ? `${visible} risultat${visible === 1 ? 'o' : 'i'}`
-        : `${total} articoli`;
+        ? `// ${visible} risultat${visible === 1 ? 'o' : 'i'}`
+        : `// ${total} articoli`;
     });
   }
   setupBlog();
@@ -164,193 +161,64 @@ const posts = [...ghostMapped, ...devMapped].sort((a, b) => (b.data || '').local
 </script>
 
 <style>
-  /* ── HERO ─────────────────────────────────────────────────────────────── */
-  .bl-hero {
-    background: #0d0d0d;
-    padding: 9rem 0 5rem;
-    min-height: 46vh;
-    display: flex;
-    align-items: center;
-  }
-  .bl-hero__sub {
-    font-size: 1rem;
-    line-height: 1.75;
-    color: rgba(255,255,255,0.52);
-    max-width: 480px;
-    font-weight: 300;
-  }
+  .bl-page { color: #f0e9ff; font-family: 'Inter', system-ui, sans-serif; position: relative; min-height: 100vh; }
+  .bl-container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; width: 100%; position: relative; z-index: 2; }
 
-  /* ── BODY ─────────────────────────────────────────────────────────────── */
-  .bl-body { padding: 4rem 0 6rem; }
+  /* HERO */
+  .bl-hero { padding: 5rem 0 3.5rem; }
+  .bl-status-bar { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2.5rem; }
+  .bl-pill { display: inline-flex; align-items: center; gap: 0.4rem; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 600; color: #00e5ff; background: rgba(0,229,255,0.08); border: 1px solid rgba(0,229,255,0.4); padding: 0.35rem 0.8rem; border-radius: 999px; }
+  .bl-pulse { width: 7px; height: 7px; background: #6ee870; border-radius: 50%; animation: blpulse 2s infinite; }
+  @keyframes blpulse { 0%,100% { box-shadow: 0 0 0 0 rgba(110,232,112,0.5); } 50% { box-shadow: 0 0 0 6px transparent; } }
 
-  /* ── TOOLBAR ──────────────────────────────────────────────────────────── */
-  .bl-toolbar {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    margin-bottom: 3rem;
-    flex-wrap: wrap;
-  }
-  .bl-search__input {
-    flex: 1;
-    min-width: 220px;
-    max-width: 420px;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.88rem;
-    padding: 0.7rem 1.2rem;
-    border: 1.5px solid #e0e0e0;
-    border-radius: 50px;
-    background: #fff;
-    color: #0d0d0d;
-    outline: none;
-    transition: border-color 0.15s;
-  }
-  .bl-search__input::placeholder { color: #aaa; }
-  .bl-search__input:focus { border-color: #0d0d0d; }
-  .bl-count {
-    font-size: 0.78rem;
-    color: #aaa;
-    white-space: nowrap;
-  }
+  .bl-h1 { font-family: 'Inter', sans-serif; font-weight: 900; font-size: clamp(3.5rem, 12vw, 10rem); line-height: 0.9; letter-spacing: -0.05em; margin: 0 0 2rem; }
+  .bl-h1__chrome { display: block; background: linear-gradient(180deg, #ffffff 0%, #d8d8d8 25%, #909090 45%, #ffffff 55%, #f5f5f5 75%, #b5b5b5 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; }
+  .bl-hero__tag { font-size: 1.05rem; line-height: 1.7; color: rgba(240,233,255,0.75); max-width: 580px; margin: 0; }
 
-  /* ── GRIGLIA ──────────────────────────────────────────────────────────── */
-  .bl-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-  }
+  /* SECTION */
+  .bl-section { padding: 3rem 0 6rem; }
 
-  /* ── CARD ─────────────────────────────────────────────────────────────── */
-  .bl-card {
-    display: flex;
-    flex-direction: column;
-    text-decoration: none;
-    border-radius: 10px;
-    overflow: hidden;
-    border: 1px solid #ebebeb;
-    background: #fff;
-    transition: transform 0.18s ease, box-shadow 0.18s ease;
-  }
-  .bl-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 28px rgba(0,0,0,0.10);
-  }
+  /* TOOLBAR */
+  .bl-toolbar { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 3rem; flex-wrap: wrap; }
+  .bl-search { display: flex; align-items: center; gap: 0.6rem; flex: 1; min-width: 220px; max-width: 460px; background: rgba(10,5,18,0.6); border: 1px solid rgba(240,233,255,0.2); border-radius: 8px; padding: 0.7rem 1rem; backdrop-filter: blur(10px); transition: border-color 0.2s; }
+  .bl-search:focus-within { border-color: #00e5ff; box-shadow: 0 0 20px rgba(0,229,255,0.15); }
+  .bl-search__icon { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #00e5ff; flex-shrink: 0; }
+  .bl-search__input { background: transparent; border: none; outline: none; color: #f0e9ff; font-family: 'JetBrains Mono', monospace; font-size: 0.88rem; width: 100%; }
+  .bl-search__input::placeholder { color: rgba(240,233,255,0.3); }
+  .bl-count { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: rgba(240,233,255,0.45); white-space: nowrap; }
 
-  /* Immagine */
-  .bl-card__img {
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    overflow: hidden;
-    background: #f3f3f3;
-    flex-shrink: 0;
-  }
-  .bl-card__img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.3s ease;
-  }
-  .bl-card:hover .bl-card__img img {
-    transform: scale(1.04);
-  }
+  /* GRID */
+  .bl-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; }
 
-  /* Placeholder senza immagine */
-  .bl-card__img-placeholder {
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .bl-card__img-letter {
-    font-size: 3rem;
-    font-weight: 800;
-    color: rgba(255,255,255,0.15);
-    font-family: 'Inter', sans-serif;
-    user-select: none;
-  }
+  /* CARD */
+  .bl-card { display: flex; flex-direction: column; text-decoration: none; background: rgba(255,255,255,0.03); border: 1px solid rgba(240,233,255,0.15); border-radius: 12px; overflow: hidden; backdrop-filter: blur(10px); transition: all 0.2s ease; color: #f0e9ff; }
+  .bl-card:hover { border-color: #00e5ff; box-shadow: 0 0 40px rgba(0,229,255,0.12); transform: translateY(-3px); }
+  .bl-card:nth-child(even) { border-color: rgba(255,45,146,0.2); }
+  .bl-card:nth-child(even):hover { border-color: #ff2d92; box-shadow: 0 0 40px rgba(255,45,146,0.12); }
 
-  /* Corpo */
-  .bl-card__body {
-    padding: 1.25rem 1.4rem 1.4rem;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    gap: 0.5rem;
-  }
-  .bl-card__cat {
-    font-size: 0.62rem;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: #e85d00;
-    line-height: 1;
-  }
-  .bl-card__title {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: #0d0d0d;
-    line-height: 1.38;
-    margin: 0;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    transition: color 0.15s;
-  }
-  .bl-card:hover .bl-card__title { color: #e85d00; }
-  .bl-card__desc {
-    font-size: 0.82rem;
-    color: #666;
-    line-height: 1.6;
-    margin: 0;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    flex: 1;
-  }
-  .bl-card__footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: auto;
-    padding-top: 0.75rem;
-    border-top: 1px solid #f0f0f0;
-  }
-  .bl-card__date {
-    font-size: 0.72rem;
-    color: #aaa;
-    font-variant-numeric: tabular-nums;
-  }
-  .bl-card__arrow {
-    font-size: 0.85rem;
-    color: #ccc;
-    transition: color 0.15s, transform 0.15s;
-  }
-  .bl-card:hover .bl-card__arrow {
-    color: #e85d00;
-    transform: translateX(3px);
-  }
+  .bl-card__img { width: 100%; aspect-ratio: 16/9; overflow: hidden; flex-shrink: 0; background: rgba(10,5,18,0.6); }
+  .bl-card__img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.3s ease; }
+  .bl-card:hover .bl-card__img img { transform: scale(1.04); }
+  .bl-card__placeholder { width: 100%; height: 100%; background: linear-gradient(135deg, rgba(138,58,255,0.2) 0%, rgba(0,229,255,0.1) 100%); display: flex; align-items: center; justify-content: center; }
+  .bl-card__letter { font-size: 3rem; font-weight: 900; color: rgba(240,233,255,0.12); font-family: 'Inter', sans-serif; }
 
-  /* No results */
-  .bl-noresults {
-    font-size: 0.85rem;
-    color: #999;
-    padding: 3rem 0;
-    text-align: center;
-  }
+  .bl-card__body { padding: 1.3rem; display: flex; flex-direction: column; flex: 1; gap: 0.55rem; }
+  .bl-card__meta { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+  .bl-card__cat { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #ff2d92; }
+  .bl-card:nth-child(even) .bl-card__cat { color: #00e5ff; }
+  .bl-card__date { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: rgba(240,233,255,0.35); }
+  .bl-card__title { font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 700; color: #f0e9ff; line-height: 1.38; margin: 0; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .bl-card__desc { font-size: 0.82rem; color: rgba(240,233,255,0.6); line-height: 1.6; margin: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; flex: 1; }
+  .bl-card__cta { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: rgba(240,233,255,0.4); margin-top: auto; padding-top: 0.6rem; border-top: 1px dashed rgba(240,233,255,0.1); transition: color 0.15s; }
+  .bl-card:hover .bl-card__cta { color: #00e5ff; }
+  .bl-card:nth-child(even):hover .bl-card__cta { color: #ff2d92; }
 
-  /* ── RESPONSIVE ───────────────────────────────────────────────────────── */
-  @media (max-width: 1024px) {
-    .bl-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
-  }
+  .bl-noresults { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: rgba(240,233,255,0.4); padding: 3rem 0; text-align: center; }
+
+  @media (max-width: 1024px) { .bl-grid { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 600px) {
-    .bl-grid { grid-template-columns: 1fr; gap: 1.25rem; }
+    .bl-grid { grid-template-columns: 1fr; gap: 1rem; }
     .bl-toolbar { gap: 1rem; }
-    .bl-search__input { max-width: 100%; }
+    .bl-search { max-width: 100%; }
   }
 </style>
