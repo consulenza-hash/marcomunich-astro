@@ -1,0 +1,553 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Preview Home 7 — Bauhaus"
+  description="Mockup direzione Bauhaus geometrico."
+  currentPath="/preview-home-7/"
+>
+
+<div class="bh7-page">
+
+  <!-- ── HERO BAUHAUS ─────────────────────────────────────────────────── -->
+  <section class="bh7-hero">
+    <div class="bh7-hero__grid">
+      <!-- Cell 1: titolo grande -->
+      <div class="bh7-cell bh7-cell--title">
+        <p class="bh7-meta">M.M. <span class="bh7-meta__sep">·</span> Studio</p>
+        <h1 class="bh7-h1">
+          <span>Sviluppo</span>
+          <span class="bh7-h1--red">siti.</span>
+          <span>Costruisco</span>
+          <span class="bh7-h1--blue">app.</span>
+          <span>Posiziono</span>
+          <span class="bh7-h1--yellow">brand.</span>
+        </h1>
+      </div>
+
+      <!-- Cell 2: red square -->
+      <div class="bh7-cell bh7-cell--red"></div>
+
+      <!-- Cell 3: yellow circle -->
+      <div class="bh7-cell bh7-cell--yellow">
+        <span class="bh7-circle"></span>
+      </div>
+
+      <!-- Cell 4: blue triangle -->
+      <div class="bh7-cell bh7-cell--blue">
+        <span class="bh7-triangle"></span>
+      </div>
+
+      <!-- Cell 5: tagline -->
+      <div class="bh7-cell bh7-cell--tag">
+        <p>
+          Per chi vende se stesso. Costruiti come si deve. Niente template, niente abbonamenti, codice pulito e piena proprietà dei file.
+        </p>
+        <a href="/contatti/" class="bh7-arrow-link">→ Lavoriamo insieme</a>
+      </div>
+
+      <!-- Cell 6: black square with year -->
+      <div class="bh7-cell bh7-cell--black">
+        <span class="bh7-year">26</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SERVICES ────────────────────────────────────────────────────── -->
+  <section class="bh7-services">
+    <div class="bh7-services__row">
+      <div class="bh7-marker bh7-marker--red"></div>
+      <h2 class="bh7-services__title">01 Sviluppo.</h2>
+      <p class="bh7-services__desc">
+        Siti, landing, e-commerce, web app. Astro + FastAPI. Codice pulito, performance verificabili, file tutti tuoi alla consegna.
+      </p>
+      <a href="/portfolio/" class="bh7-arrow-link bh7-arrow-link--inline">Vedi i progetti →</a>
+    </div>
+    <div class="bh7-services__row bh7-services__row--alt">
+      <div class="bh7-marker bh7-marker--blue"></div>
+      <h2 class="bh7-services__title">02 Posizionamento.</h2>
+      <p class="bh7-services__desc">
+        Per chi vende se stesso. Sette anni di consulenza nel settore olistico, oltre duecento articoli, un metodo che non si compra in un corso.
+      </p>
+      <a href="/servizi/posizionamento-online/" class="bh7-arrow-link bh7-arrow-link--inline">Scopri il metodo →</a>
+    </div>
+  </section>
+
+  <!-- ── NUMBERS GEOMETRIC ─────────────────────────────────────────── -->
+  <section class="bh7-stats">
+    <div class="bh7-stats__inner">
+      <div class="bh7-stat">
+        <div class="bh7-stat__shape bh7-stat__shape--circle bh7-stat__shape--red">
+          <span>218</span>
+        </div>
+        <p class="bh7-stat__label">Articoli<br>pubblicati</p>
+      </div>
+      <div class="bh7-stat">
+        <div class="bh7-stat__shape bh7-stat__shape--square bh7-stat__shape--blue">
+          <span>07</span>
+        </div>
+        <p class="bh7-stat__label">Anni<br>di lavoro</p>
+      </div>
+      <div class="bh7-stat">
+        <div class="bh7-stat__shape bh7-stat__shape--triangle">
+          <span>100</span>
+        </div>
+        <p class="bh7-stat__label">PageSpeed<br>verificato</p>
+      </div>
+      <div class="bh7-stat">
+        <div class="bh7-stat__shape bh7-stat__shape--square bh7-stat__shape--black">
+          <span>00</span>
+        </div>
+        <p class="bh7-stat__label">Template<br>usati</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PROJECTS LEDGER ──────────────────────────────────────────── -->
+  <section class="bh7-projects">
+    <div class="bh7-projects__head">
+      <div class="bh7-marker bh7-marker--yellow"></div>
+      <h2 class="bh7-projects__title">03 Progetti.</h2>
+    </div>
+    <ul class="bh7-projects__list">
+      <li>
+        <a href="/portfolio/" class="bh7-prow">
+          <span class="bh7-prow__num">001</span>
+          <span class="bh7-prow__name">marcomunich.com</span>
+          <span class="bh7-prow__type">sito + cms custom</span>
+          <span class="bh7-prow__year">2026</span>
+        </a>
+      </li>
+      <li>
+        <a href="/portfolio/" class="bh7-prow">
+          <span class="bh7-prow__num">002</span>
+          <span class="bh7-prow__name">vela</span>
+          <span class="bh7-prow__type">web app · fastapi</span>
+          <span class="bh7-prow__year">2026</span>
+        </a>
+      </li>
+      <li>
+        <a href="/portfolio/" class="bh7-prow">
+          <span class="bh7-prow__num">003</span>
+          <span class="bh7-prow__name">cms.marcomunich.com</span>
+          <span class="bh7-prow__type">migrazione ghost</span>
+          <span class="bh7-prow__year">2026</span>
+        </a>
+      </li>
+      <li>
+        <a href="/portfolio/" class="bh7-prow">
+          <span class="bh7-prow__num">004</span>
+          <span class="bh7-prow__name">inspiration bot</span>
+          <span class="bh7-prow__type">pipeline contenuti</span>
+          <span class="bh7-prow__year">2026</span>
+        </a>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ── CTA BAUHAUS ────────────────────────────────────────────── -->
+  <section class="bh7-cta">
+    <div class="bh7-cta__grid">
+      <div class="bh7-cta__cell bh7-cta__cell--red">
+        <span class="bh7-circle bh7-circle--small"></span>
+      </div>
+      <div class="bh7-cta__cell bh7-cta__cell--text">
+        <h2 class="bh7-cta__title">
+          Hai un<br>
+          <span class="bh7-cta__title--accent">progetto?</span>
+        </h2>
+        <p>Una chiamata gratuita di 30 min. Capisco la situazione, ti dico cosa farei.</p>
+        <a href="/contatti/" class="bh7-cta__btn">Contattami →</a>
+      </div>
+      <div class="bh7-cta__cell bh7-cta__cell--blue">
+        <span class="bh7-triangle bh7-triangle--small"></span>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+</BaseLayout>
+
+<style>
+  :root {
+    --bh-red: #d23e2c;
+    --bh-blue: #2453b0;
+    --bh-yellow: #f5c83a;
+    --bh-black: #0d0d0d;
+    --bh-paper: #f5f3ee;
+  }
+  .bh7-page {
+    background: var(--bh-paper);
+    color: var(--bh-black);
+    font-family: 'Inter', system-ui, sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ─── HERO GRID ─── */
+  .bh7-hero {
+    border-bottom: 4px solid var(--bh-black);
+  }
+  .bh7-hero__grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 0;
+    border: 4px solid var(--bh-black);
+    border-bottom: 0;
+    border-top: 0;
+    background: var(--bh-paper);
+  }
+  .bh7-cell {
+    padding: 3rem;
+    border-right: 4px solid var(--bh-black);
+    border-bottom: 4px solid var(--bh-black);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 280px;
+  }
+  .bh7-cell--title {
+    grid-row: span 2;
+    padding: 5rem 4rem;
+  }
+  .bh7-cell--red { background: var(--bh-red); }
+  .bh7-cell--yellow {
+    background: var(--bh-yellow);
+    align-items: center;
+    justify-content: center;
+  }
+  .bh7-cell--blue {
+    background: var(--bh-blue);
+    align-items: center;
+    justify-content: center;
+  }
+  .bh7-cell--tag {
+    background: var(--bh-paper);
+    padding: 3rem;
+  }
+  .bh7-cell--black {
+    background: var(--bh-black);
+    color: var(--bh-paper);
+    align-items: flex-end;
+    justify-content: flex-end;
+    border-right: 4px solid var(--bh-black);
+  }
+  .bh7-meta {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin: 0 0 2.5rem;
+    color: var(--bh-black);
+  }
+  .bh7-meta__sep { margin: 0 0.4em; color: var(--bh-red); }
+  .bh7-h1 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: clamp(2.6rem, 6vw, 5.5rem);
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.05em;
+  }
+  .bh7-h1 span { display: block; }
+  .bh7-h1--red { color: var(--bh-red); }
+  .bh7-h1--blue { color: var(--bh-blue); }
+  .bh7-h1--yellow {
+    color: var(--bh-paper);
+    background: var(--bh-yellow);
+    padding: 0 0.2em;
+    align-self: flex-start;
+    -webkit-text-stroke: 2px var(--bh-black);
+  }
+  .bh7-circle {
+    display: block;
+    width: 70%;
+    aspect-ratio: 1/1;
+    background: var(--bh-paper);
+    border-radius: 50%;
+  }
+  .bh7-circle--small {
+    width: 50%;
+    background: var(--bh-paper);
+  }
+  .bh7-triangle {
+    width: 0; height: 0;
+    border-left: 70px solid transparent;
+    border-right: 70px solid transparent;
+    border-bottom: 120px solid var(--bh-paper);
+  }
+  .bh7-triangle--small {
+    border-left-width: 50px;
+    border-right-width: 50px;
+    border-bottom-width: 90px;
+  }
+  .bh7-cell--tag p {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin: 0 0 1.5rem;
+    max-width: 380px;
+  }
+  .bh7-arrow-link {
+    font-weight: 800;
+    text-decoration: none;
+    color: var(--bh-black);
+    border-bottom: 3px solid var(--bh-red);
+    padding-bottom: 0.2rem;
+    align-self: flex-start;
+  }
+  .bh7-arrow-link--inline { border-bottom: 2px solid var(--bh-black); }
+  .bh7-year {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: 6rem;
+    letter-spacing: -0.05em;
+    line-height: 1;
+    color: var(--bh-yellow);
+  }
+
+  /* ─── SERVICES ─── */
+  .bh7-services {
+    border-bottom: 4px solid var(--bh-black);
+  }
+  .bh7-services__row {
+    display: grid;
+    grid-template-columns: 60px 1fr 2fr auto;
+    gap: 2rem;
+    align-items: center;
+    padding: 3rem 3rem;
+    border-bottom: 2px solid var(--bh-black);
+  }
+  .bh7-services__row:last-child { border-bottom: 0; }
+  .bh7-services__row--alt { background: var(--bh-paper); }
+  .bh7-marker {
+    width: 50px; height: 50px;
+  }
+  .bh7-marker--red { background: var(--bh-red); border-radius: 50%; }
+  .bh7-marker--blue {
+    width: 0; height: 0;
+    background: transparent;
+    border-left: 25px solid transparent;
+    border-right: 25px solid transparent;
+    border-bottom: 50px solid var(--bh-blue);
+  }
+  .bh7-marker--yellow {
+    background: var(--bh-yellow);
+    border: 4px solid var(--bh-black);
+  }
+  .bh7-services__title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    margin: 0;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  .bh7-services__desc {
+    font-size: 0.98rem;
+    line-height: 1.65;
+    margin: 0;
+    max-width: 620px;
+  }
+
+  /* ─── STATS ─── */
+  .bh7-stats {
+    background: var(--bh-black);
+    color: var(--bh-paper);
+    padding: 5rem 3rem;
+    border-bottom: 4px solid var(--bh-black);
+  }
+  .bh7-stats__inner {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 3rem;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  .bh7-stat {
+    text-align: center;
+  }
+  .bh7-stat__shape {
+    width: 180px;
+    height: 180px;
+    margin: 0 auto 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--bh-paper);
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: 3.2rem;
+    letter-spacing: -0.04em;
+    position: relative;
+  }
+  .bh7-stat__shape--circle {
+    border-radius: 50%;
+    background: var(--bh-red);
+  }
+  .bh7-stat__shape--square {
+    background: var(--bh-blue);
+  }
+  .bh7-stat__shape--triangle {
+    width: 0; height: 0;
+    border-left: 90px solid transparent;
+    border-right: 90px solid transparent;
+    border-bottom: 160px solid var(--bh-yellow);
+    color: var(--bh-black);
+    background: transparent;
+  }
+  .bh7-stat__shape--triangle span {
+    position: absolute;
+    bottom: -130px;
+    color: var(--bh-black);
+  }
+  .bh7-stat__shape--black {
+    background: var(--bh-paper);
+    color: var(--bh-black);
+    border: 4px solid var(--bh-paper);
+  }
+  .bh7-stat__label {
+    font-weight: 700;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    letter-spacing: 0.05em;
+    margin: 0;
+  }
+
+  /* ─── PROJECTS ─── */
+  .bh7-projects {
+    padding: 5rem 3rem;
+    border-bottom: 4px solid var(--bh-black);
+  }
+  .bh7-projects__head {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+  .bh7-projects__title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    margin: 0;
+    letter-spacing: -0.03em;
+  }
+  .bh7-projects__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .bh7-projects__list li {
+    border-top: 2px solid var(--bh-black);
+  }
+  .bh7-projects__list li:last-child {
+    border-bottom: 2px solid var(--bh-black);
+  }
+  .bh7-prow {
+    display: grid;
+    grid-template-columns: 80px 1fr 1fr 80px;
+    gap: 2rem;
+    padding: 1.6rem 0.5rem;
+    color: var(--bh-black);
+    text-decoration: none;
+    align-items: baseline;
+    transition: padding 0.2s ease, background 0.2s ease;
+  }
+  .bh7-prow:hover {
+    padding-left: 1.5rem;
+    background: var(--bh-yellow);
+  }
+  .bh7-prow__num {
+    font-weight: 700;
+    color: var(--bh-red);
+    letter-spacing: 0.1em;
+  }
+  .bh7-prow__name {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: 1.4rem;
+    letter-spacing: -0.02em;
+  }
+  .bh7-prow__type {
+    font-size: 0.92rem;
+    color: #555;
+  }
+  .bh7-prow__year {
+    text-align: right;
+    font-weight: 700;
+    color: var(--bh-blue);
+  }
+
+  /* ─── CTA ─── */
+  .bh7-cta {
+    border-bottom: 4px solid var(--bh-black);
+  }
+  .bh7-cta__grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+  }
+  .bh7-cta__cell {
+    padding: 3rem;
+    min-height: 380px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 4px solid var(--bh-black);
+  }
+  .bh7-cta__cell:last-child { border-right: 0; }
+  .bh7-cta__cell--red { background: var(--bh-red); }
+  .bh7-cta__cell--blue { background: var(--bh-blue); }
+  .bh7-cta__cell--text {
+    text-align: center;
+    flex-direction: column;
+    background: var(--bh-paper);
+  }
+  .bh7-cta__title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: clamp(2rem, 4.5vw, 3.6rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin: 0 0 1.2rem;
+  }
+  .bh7-cta__title--accent { color: var(--bh-red); }
+  .bh7-cta__cell--text p {
+    font-size: 1rem;
+    line-height: 1.6;
+    max-width: 380px;
+    margin: 0 auto 2rem;
+  }
+  .bh7-cta__btn {
+    background: var(--bh-black);
+    color: var(--bh-paper);
+    padding: 1.2rem 2.4rem;
+    font-weight: 800;
+    text-decoration: none;
+    font-size: 0.95rem;
+    letter-spacing: 0.05em;
+    transition: background 0.2s ease;
+  }
+  .bh7-cta__btn:hover { background: var(--bh-red); }
+
+  @media (max-width: 768px) {
+    .bh7-hero__grid {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto;
+    }
+    .bh7-cell--title { grid-row: span 1; grid-column: span 2; padding: 3rem 2rem; }
+    .bh7-cell { min-height: 200px; padding: 2rem; }
+    .bh7-services__row { grid-template-columns: 40px 1fr; gap: 1rem; padding: 2rem; }
+    .bh7-services__row > p, .bh7-services__row > a { grid-column: 1 / -1; }
+    .bh7-stats__inner { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .bh7-stat__shape { width: 120px; height: 120px; font-size: 2rem; }
+    .bh7-prow { grid-template-columns: 50px 1fr 60px; gap: 0.6rem; padding: 1.2rem 0.5rem; }
+    .bh7-prow__type { display: none; }
+    .bh7-cta__grid { grid-template-columns: 1fr; }
+    .bh7-cta__cell { border-right: 0; border-bottom: 4px solid var(--bh-black); min-height: 200px; }
+  }
+</style>
