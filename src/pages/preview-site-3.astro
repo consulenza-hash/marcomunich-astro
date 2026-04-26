@@ -1,0 +1,513 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Preview Sito 3 — Asciutto" description="Sito completo, mood asciutto/typographic." currentPath="/preview-site-3/">
+
+<div class="ps3-page">
+  <header class="ps3-nav">
+    <div class="ps3-container ps3-nav__inner">
+      <a href="#" class="ps3-logo">Marco Munich</a>
+      <nav class="ps3-menu">
+        <a href="#cosa">Cosa faccio</a>
+        <a href="#lavori">Lavori</a>
+        <a href="#chi">Chi sono</a>
+        <a href="/contatti/">Contatti</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ── HERO ──────────────────────────────────────────────────── -->
+  <section class="ps3-hero">
+    <div class="ps3-container">
+      <div class="ps3-hero__grid">
+        <div class="ps3-hero__col1">
+          <p class="ps3-meta">01 — Studio · Sviluppo Web</p>
+        </div>
+        <div class="ps3-hero__col2">
+          <h1 class="ps3-h1">
+            Sviluppo siti<br>
+            e applicazioni web<br>
+            su misura.
+          </h1>
+        </div>
+      </div>
+      <div class="ps3-hero__bottom">
+        <p class="ps3-hero__sub">
+          Vicenza, IT. Costruisco siti veloci e solidi per professionisti, studi e attività che vogliono un lavoro fatto bene. Senza template, senza abbonamenti mensili, con il codice consegnato a fine progetto.
+        </p>
+        <div class="ps3-hero__ctas">
+          <a href="/contatti/" class="ps3-btn">Inizia un progetto</a>
+          <a href="#lavori" class="ps3-link">Vedi i lavori →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── COSA FACCIO ───────────────────────────────────────────── -->
+  <section class="ps3-section" id="cosa">
+    <div class="ps3-container">
+      <div class="ps3-grid">
+        <div class="ps3-grid__side">
+          <p class="ps3-meta">02 — Cosa faccio</p>
+        </div>
+        <div class="ps3-grid__main">
+          <h2 class="ps3-h2">Quattro tipi di progetto.</h2>
+
+          <ul class="ps3-list">
+            <li>
+              <span class="ps3-list__num">A.</span>
+              <div>
+                <h3>Siti vetrina</h3>
+                <p>Pagine pensate per professionisti, studi e attività locali. Ogni testo e ogni sezione è costruita su come lavori e su chi vuoi attirare.</p>
+              </div>
+            </li>
+            <li>
+              <span class="ps3-list__num">B.</span>
+              <div>
+                <h3>Landing page</h3>
+                <p>Una pagina sola, calibrata per convertire. Per lanci di prodotto, campagne, raccolta contatti.</p>
+              </div>
+            </li>
+            <li>
+              <span class="ps3-list__num">C.</span>
+              <div>
+                <h3>E-commerce</h3>
+                <p>Negozi online con pagamenti sicuri e gestione prodotti. Stripe o PayPal a seconda del progetto.</p>
+              </div>
+            </li>
+            <li>
+              <span class="ps3-list__num">D.</span>
+              <div>
+                <h3>Web app custom</h3>
+                <p>Quando il sito non basta più. Dashboard, area riservata, automazioni, integrazione con API.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── LAVORI ────────────────────────────────────────────── -->
+  <section class="ps3-section ps3-section--works" id="lavori">
+    <div class="ps3-container">
+      <div class="ps3-grid">
+        <div class="ps3-grid__side">
+          <p class="ps3-meta">03 — Lavori selezionati</p>
+        </div>
+        <div class="ps3-grid__main">
+          <h2 class="ps3-h2">Demo navigabili.</h2>
+          <p class="ps3-lead">
+            Una selezione di siti progettati come dimostrazioni del tipo di lavoro che faccio. Sono <em>demo</em>, non clienti reali. Ognuna è completamente navigabile.
+          </p>
+
+          <div class="ps3-works">
+            <a href="/portfolio/yoga-studio" class="ps3-work">
+              <div class="ps3-work__cover ps3-work__cover--01">
+                <span class="ps3-work__label">Studio yoga</span>
+              </div>
+              <div class="ps3-work__meta">
+                <span>2026 · Demo</span>
+                <span>Vetrina + booking</span>
+              </div>
+            </a>
+            <a href="/portfolio/ristorante" class="ps3-work">
+              <div class="ps3-work__cover ps3-work__cover--02">
+                <span class="ps3-work__label">Ristorante</span>
+              </div>
+              <div class="ps3-work__meta">
+                <span>2026 · Demo</span>
+                <span>Menu + storia</span>
+              </div>
+            </a>
+            <a href="/portfolio/ecommerce" class="ps3-work">
+              <div class="ps3-work__cover ps3-work__cover--03">
+                <span class="ps3-work__label">E-commerce</span>
+              </div>
+              <div class="ps3-work__meta">
+                <span>2026 · Demo</span>
+                <span>Catalogo + checkout</span>
+              </div>
+            </a>
+            <a href="/portfolio/booking" class="ps3-work">
+              <div class="ps3-work__cover ps3-work__cover--04">
+                <span class="ps3-work__label">Studio professionale</span>
+              </div>
+              <div class="ps3-work__meta">
+                <span>2026 · Demo</span>
+                <span>Booking + area cliente</span>
+              </div>
+            </a>
+            <a href="/portfolio/non-profit" class="ps3-work">
+              <div class="ps3-work__cover ps3-work__cover--05">
+                <span class="ps3-work__label">Non-profit</span>
+              </div>
+              <div class="ps3-work__meta">
+                <span>2026 · Demo</span>
+                <span>Storia + donazioni</span>
+              </div>
+            </a>
+            <a href="/portfolio/" class="ps3-work ps3-work--all">
+              <div class="ps3-work__cover ps3-work__cover--more">
+                <span class="ps3-work__label">+ Tutti i lavori</span>
+              </div>
+              <div class="ps3-work__meta">
+                <span>Archivio</span>
+                <span>Vai →</span>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CHI SONO ─────────────────────────────────────────── -->
+  <section class="ps3-section" id="chi">
+    <div class="ps3-container">
+      <div class="ps3-grid">
+        <div class="ps3-grid__side">
+          <p class="ps3-meta">04 — Chi sono</p>
+        </div>
+        <div class="ps3-grid__main">
+          <h2 class="ps3-h2">Marco Munich.</h2>
+          <p class="ps3-bio">
+            Da sette anni lavoro su come ci si presenta online. Ho seguito coach, counselor, operatori olistici e professionisti di vario tipo nel costruire la loro presenza online.
+          </p>
+          <p class="ps3-bio">
+            A un certo punto ho cominciato a costruire io stesso i siti, perché vedere coach con siti tutti uguali aveva stancato anche me. Oggi è quello che faccio principalmente: <em>siti e applicazioni costruiti su misura</em>, con uno sguardo che viene da anni di lavoro sul brand di chi li commissiona.
+          </p>
+          <a href="/chi-sono/" class="ps3-link">Storia completa →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA ─────────────────────────────────────────────── -->
+  <section class="ps3-cta">
+    <div class="ps3-container">
+      <div class="ps3-grid">
+        <div class="ps3-grid__side">
+          <p class="ps3-meta ps3-meta--light">05 — Lavoriamo insieme</p>
+        </div>
+        <div class="ps3-grid__main">
+          <h2 class="ps3-h2 ps3-h2--light">Hai un progetto in mente?</h2>
+          <p class="ps3-cta__sub">
+            Una chiamata gratuita di trenta minuti. Capisco la situazione, ti dico cosa farei al tuo posto. Se non posso esserti utile te lo dico subito e ti indirizzo verso qualcun altro.
+          </p>
+          <a href="/contatti/" class="ps3-btn ps3-btn--light">Fissa una chiamata →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ────────────────────────────────────────────── -->
+  <footer class="ps3-foot">
+    <div class="ps3-container ps3-foot__inner">
+      <p class="ps3-foot__sig">— Marco Munich · Vicenza · IT</p>
+      <nav class="ps3-foot__menu">
+        <a href="/portfolio/">Lavori</a>
+        <a href="/blog/">Blog</a>
+        <a href="/chi-sono/">Chi sono</a>
+        <a href="/contatti/">Contatti</a>
+      </nav>
+      <p class="ps3-foot__credit">2019 — 2026</p>
+    </div>
+  </footer>
+</div>
+
+</BaseLayout>
+
+<style>
+  .ps3-page {
+    background: #fafaf7;
+    color: #0d0d0d;
+    font-family: 'Inter', system-ui, sans-serif;
+    overflow-x: hidden;
+  }
+  .ps3-container { max-width: 1280px; margin: 0 auto; padding: 0 2.5rem; width: 100%; }
+
+  /* ─── NAV ─── */
+  .ps3-nav {
+    border-bottom: 1px solid #0d0d0d;
+    background: #fafaf7;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  .ps3-nav__inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1.4rem;
+    padding-bottom: 1.4rem;
+  }
+  .ps3-logo {
+    color: #0d0d0d;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.05rem;
+    letter-spacing: -0.01em;
+  }
+  .ps3-menu { display: flex; gap: 2rem; }
+  .ps3-menu a {
+    color: #0d0d0d;
+    text-decoration: none;
+    font-size: 0.92rem;
+    font-weight: 500;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 0.1rem;
+  }
+  .ps3-menu a:hover { border-bottom-color: #0d0d0d; }
+
+  /* ─── HERO ─── */
+  .ps3-hero {
+    padding: 6rem 0 6rem;
+    border-bottom: 1px solid #0d0d0d;
+  }
+  .ps3-hero__grid {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 4rem;
+    margin-bottom: 5rem;
+  }
+  .ps3-meta {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 0.82rem;
+    letter-spacing: 0.05em;
+    color: #6e6e6e;
+    margin: 0;
+    padding-top: 0.5rem;
+  }
+  .ps3-meta--light { color: rgba(250,250,247,0.6); }
+  .ps3-h1 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: clamp(2.5rem, 6.5vw, 6.5rem);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: #0d0d0d;
+    margin: 0;
+  }
+  .ps3-hero__bottom {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 4rem;
+    align-items: end;
+    border-top: 1px solid #0d0d0d;
+    padding-top: 2rem;
+  }
+  .ps3-hero__bottom > .ps3-hero__sub { grid-column: 2; }
+  .ps3-hero__sub {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: #2a2a2a;
+    max-width: 580px;
+    margin: 0 0 2rem;
+  }
+  .ps3-hero__ctas {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    flex-wrap: wrap;
+    grid-column: 2;
+  }
+  .ps3-btn {
+    display: inline-block;
+    background: #0d0d0d;
+    color: #fafaf7;
+    padding: 1rem 1.6rem;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.92rem;
+    border-radius: 0;
+    transition: background 0.2s ease;
+  }
+  .ps3-btn:hover { background: #2a2a2a; }
+  .ps3-btn--light {
+    background: #fafaf7;
+    color: #0d0d0d;
+  }
+  .ps3-btn--light:hover { background: #e8e8e0; }
+  .ps3-link {
+    color: #0d0d0d;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.92rem;
+    border-bottom: 1px solid #0d0d0d;
+    padding-bottom: 0.15rem;
+  }
+
+  /* ─── SECTION GRID ─── */
+  .ps3-section {
+    padding: 6rem 0;
+    border-bottom: 1px solid #0d0d0d;
+  }
+  .ps3-grid {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 4rem;
+  }
+  .ps3-grid__main { max-width: 880px; }
+  .ps3-h2 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: clamp(2rem, 4.5vw, 3.6rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: #0d0d0d;
+    margin: 0 0 2.5rem;
+  }
+  .ps3-h2--light { color: #fafaf7; }
+  .ps3-lead {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: #2a2a2a;
+    max-width: 580px;
+    margin: 0 0 3rem;
+  }
+  .ps3-lead em { font-style: italic; }
+
+  /* ─── LIST (cosa faccio) ─── */
+  .ps3-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .ps3-list li {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 1.5rem;
+    padding: 2rem 0;
+    border-top: 1px solid rgba(13,13,13,0.15);
+    align-items: start;
+  }
+  .ps3-list li:last-child { border-bottom: 1px solid rgba(13,13,13,0.15); }
+  .ps3-list__num {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #6e6e6e;
+  }
+  .ps3-list h3 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 1.5rem;
+    color: #0d0d0d;
+    margin: 0 0 0.5rem;
+    letter-spacing: -0.02em;
+  }
+  .ps3-list p {
+    font-size: 0.98rem;
+    line-height: 1.7;
+    color: #2a2a2a;
+    margin: 0;
+    max-width: 580px;
+  }
+
+  /* ─── WORKS ─── */
+  .ps3-works {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  .ps3-work {
+    text-decoration: none;
+    color: #0d0d0d;
+  }
+  .ps3-work__cover {
+    aspect-ratio: 4/3;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    padding: 1.5rem;
+    color: #fafaf7;
+    transition: transform 0.25s ease;
+  }
+  .ps3-work:hover .ps3-work__cover { transform: scale(0.985); }
+  .ps3-work__cover--01 { background: #2a8a5e; }
+  .ps3-work__cover--02 { background: #c43e00; }
+  .ps3-work__cover--03 { background: #1a5a85; }
+  .ps3-work__cover--04 { background: #5a2a8a; }
+  .ps3-work__cover--05 { background: #d6884a; }
+  .ps3-work__cover--more {
+    background: transparent;
+    border: 1px dashed #0d0d0d;
+    color: #0d0d0d;
+  }
+  .ps3-work__label {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    letter-spacing: -0.01em;
+  }
+  .ps3-work__meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: #6e6e6e;
+  }
+
+  /* ─── BIO ─── */
+  .ps3-bio {
+    font-size: 1.05rem;
+    line-height: 1.85;
+    color: #2a2a2a;
+    margin: 0 0 1.2rem;
+    max-width: 640px;
+  }
+  .ps3-bio em { font-style: italic; }
+  .ps3-bio:last-of-type { margin-bottom: 2rem; }
+
+  /* ─── CTA ─── */
+  .ps3-cta {
+    background: #0d0d0d;
+    color: #fafaf7;
+    padding: 8rem 0;
+    border-bottom: 1px solid #0d0d0d;
+  }
+  .ps3-cta__sub {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: rgba(250,250,247,0.7);
+    margin: 0 0 3rem;
+    max-width: 560px;
+  }
+
+  /* ─── FOOT ─── */
+  .ps3-foot {
+    padding: 2rem 0;
+  }
+  .ps3-foot__inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .ps3-foot__sig, .ps3-foot__credit {
+    font-size: 0.82rem;
+    color: #6e6e6e;
+    margin: 0;
+  }
+  .ps3-foot__menu { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+  .ps3-foot__menu a {
+    color: #0d0d0d;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+  .ps3-foot__menu a:hover { text-decoration: underline; }
+
+  @media (max-width: 768px) {
+    .ps3-menu { gap: 1rem; }
+    .ps3-menu a:nth-child(2), .ps3-menu a:nth-child(3) { display: none; }
+    .ps3-hero__grid, .ps3-hero__bottom, .ps3-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+    .ps3-hero__bottom > .ps3-hero__sub, .ps3-hero__ctas { grid-column: 1; }
+    .ps3-works { grid-template-columns: 1fr; }
+    .ps3-list li { grid-template-columns: 40px 1fr; gap: 1rem; }
+  }
+</style>
