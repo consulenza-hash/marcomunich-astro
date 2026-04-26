@@ -141,7 +141,9 @@ export function ghostPostToArticolo(post: GhostPost) {
     titolo:          post.title,
     descrizione:     post.custom_excerpt ?? post.excerpt ?? undefined,
     data:            post.published_at?.slice(0, 10),
-    immagine:        post.feature_image ?? undefined,
+    // Fallback: se feature_image non è set su Ghost (es. articoli importati senza img),
+    // prova /images/articoli/{slug}.jpg — convenzione della migrazione WP→Ghost.
+    immagine:        post.feature_image ?? `/images/articoli/${post.slug}.jpg`,
     seo_title:       post.meta_title ?? undefined,
     seo_description: post.meta_description ?? undefined,
     seo_image:       post.og_image ?? undefined,
