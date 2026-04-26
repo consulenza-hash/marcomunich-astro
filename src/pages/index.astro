@@ -197,9 +197,11 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 </BaseLayout>
 
 <style>
-  /* Nascondi header e footer del BaseLayout: questa pagina ha il suo nav e footer integrati */
+  /* Nascondi header, footer e padding-top del BaseLayout: la pagina ha nav e footer integrati */
   :global(.mm-header), :global(.mm-footer) { display: none !important; }
-  :global(body) { padding-top: 0 !important; }
+  :global(.pt-16) { padding-top: 0 !important; }
+  :global(body) { padding-top: 0 !important; margin: 0 !important; }
+  :global(main#main-content) { margin-top: 0 !important; padding-top: 0 !important; }
 
   .ps4-page { background: #0a0512; color: #f0e9ff; font-family: 'Inter', system-ui, sans-serif; overflow-x: hidden; position: relative; min-height: 100vh; }
   .ps4-container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; width: 100%; position: relative; z-index: 2; }

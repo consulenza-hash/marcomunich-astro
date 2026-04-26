@@ -312,10 +312,11 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 </BaseLayout>
 
 <style>
-  /* Nascondi header e footer del BaseLayout su questa pagina:
-     il sito qui ha il suo nav e il suo footer integrati. */
+  /* Nascondi header, footer e padding-top del BaseLayout */
   :global(.mm-header), :global(.mm-footer) { display: none !important; }
-  :global(body) { padding-top: 0 !important; }
+  :global(.pt-16) { padding-top: 0 !important; }
+  :global(body) { padding-top: 0 !important; margin: 0 !important; }
+  :global(main#main-content) { margin-top: 0 !important; padding-top: 0 !important; }
 
   .ps4-page {
     background: #0a0512;
