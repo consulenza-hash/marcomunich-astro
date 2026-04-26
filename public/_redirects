@@ -9,6 +9,40 @@
 /dev/vibe-coding/                    /vibe-coding/                   301
 /dev/vibe-coding                     /vibe-coding/                   301
 
+# Pagine /dev/ legacy eliminate
+/dev/ai-growth-partner/             /                               301
+/dev/ai-growth-partner              /                               301
+/dev/case-study-valentina-russo/    /                               301
+/dev/case-study-valentina-russo     /                               301
+/dev/come-lavoro/                   /#metodo                        301
+/dev/come-lavoro                    /#metodo                        301
+/dev/contatti/                      /#contatti                      301
+/dev/contatti                       /#contatti                      301
+/dev/newsletter/                    /                               301
+/dev/newsletter                     /                               301
+/dev/portfolio/                     /portfolio/                     301
+/dev/portfolio                      /portfolio/                     301
+/dev/prezzi/                        /#contatti                      301
+/dev/prezzi                         /#contatti                      301
+
+# Guide legacy eliminate
+/guide/gestione-clienti/            /                               301
+/guide/gestione-clienti             /                               301
+/guide/prezzo-e-valore/             /                               301
+/guide/prezzo-e-valore              /                               301
+
+# Showcase e duplicati home
+/sviluppo-siti-web/                 /                               301
+/sviluppo-siti-web                  /                               301
+/siti-web-showcase/                 /portfolio/                     301
+/siti-web-showcase                  /portfolio/                     301
+
+# Corsi legacy
+/corso-come-parlare-in-video/       /                               301
+/corso-come-parlare-in-video        /                               301
+/creare-prodotti-gratuiti/          /                               301
+/creare-prodotti-gratuiti           /                               301
+
 # Blog (vecchio slug WP)
 /blog-consulenza-marketing/         /blog/                          301
 /blog-2/                            /blog/                          301
