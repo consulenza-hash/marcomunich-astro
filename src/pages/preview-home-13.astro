@@ -1,0 +1,129 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Preview 13 — Blueprint" description="Architectural blueprint." currentPath="/preview-home-13/">
+
+<div class="bp-page">
+  <div class="bp-grid-bg" aria-hidden="true"></div>
+
+  <header class="bp-header">
+    <div class="bp-mark"><span class="bp-mark__sym">⊿</span><span class="bp-mark__name">M.M. STUDIO</span></div>
+    <div class="bp-meta"><span>DWG · 001</span><span>SCALE · 1:1</span><span>REV · 4.26.26</span></div>
+  </header>
+
+  <section class="bp-hero">
+    <div class="bp-rule"><span>0</span><span>50</span><span>100</span><span>150</span><span>200</span></div>
+    <h1 class="bp-h1">
+      <span class="bp-h1__line">SVILUPPO</span>
+      <span class="bp-h1__line">SITI · APP · BRAND</span>
+      <span class="bp-h1__line bp-h1__line--accent">PER CHI VENDE SE STESSO.</span>
+    </h1>
+    <div class="bp-hero__plan">
+      <span class="bp-corner bp-corner--tl"></span><span class="bp-corner bp-corner--tr"></span>
+      <span class="bp-corner bp-corner--bl"></span><span class="bp-corner bp-corner--br"></span>
+      <p>Marco Munich · Studio indipendente di Vicenza. Sviluppo siti e applicazioni web custom. Sette anni di consulenza sul personal branding nel settore olistico, oggi tradotti in codice.</p>
+      <a href="/contatti/" class="bp-btn">→ INIZIA UN PROGETTO</a>
+    </div>
+  </section>
+
+  <section class="bp-section">
+    <h2 class="bp-h2">SECTION-A · SERVIZI</h2>
+    <div class="bp-spec-grid">
+      <div class="bp-spec">
+        <div class="bp-spec__id">A.01</div>
+        <h3>SVILUPPO</h3>
+        <ul><li>· Siti vetrina</li><li>· Landing page</li><li>· E-commerce</li><li>· Web app custom</li></ul>
+        <p>Astro + FastAPI · Codice pulito · Performance verificabili</p>
+        <a href="/portfolio/" class="bp-link">VEDI PROGETTI →</a>
+      </div>
+      <div class="bp-arrow">⟶</div>
+      <div class="bp-spec">
+        <div class="bp-spec__id">A.02</div>
+        <h3>POSIZIONAMENTO</h3>
+        <ul><li>· Punto di vista</li><li>· Voce autentica</li><li>· Strategia contenuti</li><li>· Differenziazione</li></ul>
+        <p>7 anni di consulenza · 218 articoli · Settore olistico</p>
+        <a href="/servizi/posizionamento-online/" class="bp-link">SCOPRI METODO →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="bp-section">
+    <h2 class="bp-h2">SECTION-B · MEASUREMENTS</h2>
+    <table class="bp-measure">
+      <tr><td>articoli pubblicati</td><td>—</td><td class="bp-mval">218</td><td>UN.</td></tr>
+      <tr><td>anni di lavoro</td><td>—</td><td class="bp-mval">07</td><td>YR.</td></tr>
+      <tr><td>google pagespeed</td><td>—</td><td class="bp-mval">100<span>/100</span></td><td>SCORE</td></tr>
+      <tr><td>template usati</td><td>—</td><td class="bp-mval">00</td><td>UN.</td></tr>
+    </table>
+  </section>
+
+  <footer class="bp-footer">
+    <div class="bp-footer__inner">
+      <div>
+        <h2 class="bp-h2">PROCEED · CONTACT</h2>
+        <p>Una chiamata gratuita di 30 min. Capisco la situazione, ti dico se posso aiutarti.</p>
+        <a href="/contatti/" class="bp-btn bp-btn--solid">→ FISSA UNA CHIAMATA</a>
+      </div>
+      <div class="bp-footer__legend">
+        <p>★ APPROVED FOR<br>RELEASE · 26.04.26</p>
+        <span class="bp-stamp">M.M.<br>STUDIO</span>
+      </div>
+    </div>
+  </footer>
+</div>
+</BaseLayout>
+
+<style>
+  .bp-page { background: #0a2540; color: #d6e8ff; font-family: 'JetBrains Mono','Courier New',monospace; min-height: 100vh; padding: 2rem; position: relative; overflow-x: hidden; }
+  .bp-grid-bg { position: fixed; inset: 0; background-image: linear-gradient(rgba(214,232,255,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(214,232,255,0.07) 1px, transparent 1px); background-size: 40px 40px; pointer-events: none; z-index: 0; }
+  .bp-header { max-width: 1280px; margin: 0 auto 3rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #4a8bd6; padding-bottom: 1rem; position: relative; z-index: 1; flex-wrap: wrap; gap: 1rem; }
+  .bp-mark { display: flex; align-items: center; gap: 0.8rem; font-weight: 700; }
+  .bp-mark__sym { color: #ffd84d; font-size: 1.3rem; }
+  .bp-mark__name { letter-spacing: 0.15em; }
+  .bp-meta { display: flex; gap: 1.5rem; font-size: 0.78rem; color: #98b8df; letter-spacing: 0.1em; }
+  .bp-hero { max-width: 1280px; margin: 0 auto 5rem; position: relative; z-index: 1; }
+  .bp-rule { display: flex; justify-content: space-between; border-top: 1px solid #4a8bd6; padding: 0.4rem 0; margin-bottom: 2rem; font-size: 0.7rem; color: #6a98c8; }
+  .bp-rule span { position: relative; }
+  .bp-rule span::before { content: ''; position: absolute; top: -8px; left: 50%; width: 1px; height: 6px; background: #4a8bd6; }
+  .bp-h1 { margin: 0 0 3rem; line-height: 1; }
+  .bp-h1__line { display: block; font-family: 'JetBrains Mono',monospace; font-weight: 700; font-size: clamp(2.2rem,6vw,5rem); letter-spacing: -0.02em; color: #d6e8ff; }
+  .bp-h1__line--accent { color: #ffd84d; }
+  .bp-hero__plan { border: 1px solid #4a8bd6; padding: 2.5rem; position: relative; background: rgba(74,139,214,0.04); }
+  .bp-corner { position: absolute; width: 14px; height: 14px; border: 2px solid #ffd84d; }
+  .bp-corner--tl { top: -1px; left: -1px; border-right: 0; border-bottom: 0; }
+  .bp-corner--tr { top: -1px; right: -1px; border-left: 0; border-bottom: 0; }
+  .bp-corner--bl { bottom: -1px; left: -1px; border-right: 0; border-top: 0; }
+  .bp-corner--br { bottom: -1px; right: -1px; border-left: 0; border-top: 0; }
+  .bp-hero__plan p { font-family: 'Inter',sans-serif; font-size: 1rem; line-height: 1.75; color: #d6e8ff; margin: 0 0 1.5rem; max-width: 640px; }
+  .bp-btn { display: inline-block; padding: 0.8rem 1.4rem; border: 1px solid #ffd84d; color: #ffd84d; text-decoration: none; font-family: inherit; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.1em; transition: all 0.2s ease; }
+  .bp-btn:hover { background: #ffd84d; color: #0a2540; }
+  .bp-btn--solid { background: #ffd84d; color: #0a2540; }
+  .bp-section { max-width: 1280px; margin: 0 auto 5rem; position: relative; z-index: 1; }
+  .bp-h2 { font-family: 'JetBrains Mono',monospace; font-size: 0.95rem; font-weight: 700; letter-spacing: 0.2em; color: #ffd84d; margin: 0 0 2rem; padding-bottom: 0.6rem; border-bottom: 1px dashed #4a8bd6; }
+  .bp-spec-grid { display: grid; grid-template-columns: 1fr auto 1fr; gap: 2rem; }
+  .bp-spec { border: 1px solid #4a8bd6; padding: 2rem; background: rgba(74,139,214,0.04); }
+  .bp-spec__id { color: #ffd84d; font-size: 0.78rem; letter-spacing: 0.15em; margin-bottom: 0.8rem; }
+  .bp-spec h3 { font-family: 'JetBrains Mono',monospace; font-weight: 700; font-size: 1.6rem; letter-spacing: 0.05em; color: #d6e8ff; margin: 0 0 1.2rem; }
+  .bp-spec ul { list-style: none; margin: 0 0 1.2rem; padding: 0; font-size: 0.92rem; line-height: 1.85; color: #98b8df; font-family: 'Inter',sans-serif; }
+  .bp-spec p { font-family: 'Inter',sans-serif; font-size: 0.85rem; color: #b8d0ee; margin: 0 0 1.5rem; }
+  .bp-link { color: #ffd84d; font-size: 0.82rem; text-decoration: none; border-bottom: 1px solid #ffd84d; padding-bottom: 0.2rem; letter-spacing: 0.1em; }
+  .bp-arrow { align-self: center; color: #4a8bd6; font-size: 2rem; }
+  .bp-measure { width: 100%; border-collapse: collapse; border: 1px solid #4a8bd6; background: rgba(74,139,214,0.04); }
+  .bp-measure td { padding: 1rem 1.2rem; border-bottom: 1px dashed #2a5a90; font-size: 0.95rem; font-family: 'Inter',sans-serif; color: #d6e8ff; }
+  .bp-measure tr:last-child td { border-bottom: 0; }
+  .bp-measure td:nth-child(2) { color: #4a8bd6; text-align: center; width: 60%; }
+  .bp-mval { font-family: 'JetBrains Mono',monospace !important; font-weight: 700; font-size: 1.5rem; color: #ffd84d !important; text-align: right !important; width: 100px; }
+  .bp-mval span { font-size: 0.8rem; opacity: 0.6; }
+  .bp-measure td:last-child { color: #98b8df !important; font-size: 0.78rem !important; letter-spacing: 0.1em; text-align: right; width: 60px; }
+  .bp-footer { max-width: 1280px; margin: 0 auto; position: relative; z-index: 1; }
+  .bp-footer__inner { display: grid; grid-template-columns: 1fr auto; gap: 3rem; padding-top: 2rem; border-top: 1px solid #4a8bd6; }
+  .bp-footer p { font-family: 'Inter',sans-serif; color: #b8d0ee; margin: 0 0 1.5rem; line-height: 1.7; max-width: 480px; }
+  .bp-footer__legend { display: flex; align-items: center; gap: 2rem; }
+  .bp-footer__legend p { font-size: 0.78rem; color: #ffd84d; letter-spacing: 0.1em; line-height: 1.5; margin: 0; }
+  .bp-stamp { border: 2px solid #ffd84d; padding: 1rem 1.4rem; text-align: center; color: #ffd84d; font-size: 0.95rem; font-weight: 700; line-height: 1.2; letter-spacing: 0.1em; transform: rotate(-8deg); }
+  @media (max-width: 768px) {
+    .bp-spec-grid { grid-template-columns: 1fr; } .bp-arrow { display: none; }
+    .bp-footer__inner { grid-template-columns: 1fr; }
+  }
+</style>

@@ -1,0 +1,148 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Preview 14 — Sketchbook" description="Hand-drawn sketchbook." currentPath="/preview-home-14/">
+
+<div class="sk-page">
+  <div class="sk-paper" aria-hidden="true"></div>
+
+  <section class="sk-hero">
+    <p class="sk-scribble">// 26 aprile, 2026</p>
+    <h1 class="sk-h1">
+      Costruisco
+      <svg class="sk-circle" viewBox="0 0 200 100"><ellipse cx="100" cy="50" rx="92" ry="38" fill="none" stroke="#ff5e3a" stroke-width="3" stroke-linecap="round" stroke-dasharray="4 6"/></svg>
+      <span class="sk-circled">siti.</span>
+      Costruisco <em class="sk-italic">app.</em><br>
+      Posiziono <span class="sk-highlight">brand</span> online.
+    </h1>
+    <p class="sk-doodle-arrow">↓ tutto qui sotto</p>
+    <p class="sk-tag">
+      Studio indipendente di Vicenza. Sviluppo web e consulenza posizionamento per chi vende se stesso. <span class="sk-strike">Niente template,</span> niente abbonamenti, niente fuffa.
+    </p>
+    <a href="/contatti/" class="sk-btn">Lavoriamo insieme →</a>
+
+    <svg class="sk-doodle sk-doodle--tl" viewBox="0 0 80 80"><path d="M 10 50 Q 30 10 50 30 T 70 60" fill="none" stroke="#1a1814" stroke-width="2" stroke-linecap="round"/></svg>
+    <svg class="sk-doodle sk-doodle--br" viewBox="0 0 80 80"><circle cx="40" cy="40" r="25" fill="none" stroke="#1a1814" stroke-width="2" stroke-dasharray="3 4"/></svg>
+  </section>
+
+  <section class="sk-section">
+    <h2 class="sk-h2"><span class="sk-marker">Cosa faccio</span> →</h2>
+    <div class="sk-cards">
+      <div class="sk-card">
+        <span class="sk-card__sticker">SVILUPPO</span>
+        <h3>Siti, app,<br>e-commerce.</h3>
+        <p>Astro + FastAPI. Codice pulito. Performance verificabili. <span class="sk-underline">File tutti tuoi</span> alla consegna.</p>
+        <a href="/portfolio/" class="sk-link">Vedi i progetti →</a>
+        <svg class="sk-card__doodle" viewBox="0 0 60 60"><path d="M 10 40 L 25 25 L 35 35 L 50 15" fill="none" stroke="#ff5e3a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="sk-card sk-card--alt">
+        <span class="sk-card__sticker sk-card__sticker--alt">POSIZIONAMENTO</span>
+        <h3>Per chi<br>vende se stesso.</h3>
+        <p>7 anni di consulenza. <span class="sk-underline">218 articoli</span>. Un metodo che non si compra in un corso.</p>
+        <a href="/servizi/posizionamento-online/" class="sk-link">Scopri il metodo →</a>
+        <svg class="sk-card__doodle" viewBox="0 0 60 60"><circle cx="30" cy="30" r="18" fill="none" stroke="#ff5e3a" stroke-width="3" stroke-dasharray="2 4"/></svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="sk-section">
+    <h2 class="sk-h2"><span class="sk-marker">In numeri</span> ★</h2>
+    <div class="sk-stats">
+      <div class="sk-stat">
+        <span class="sk-stat__big">218</span>
+        <p>articoli pubblicati</p>
+        <svg class="sk-stat__line" viewBox="0 0 200 20"><path d="M 5 10 Q 50 0 100 10 T 195 10" fill="none" stroke="#ff5e3a" stroke-width="2.5" stroke-linecap="round"/></svg>
+      </div>
+      <div class="sk-stat">
+        <span class="sk-stat__big">07</span>
+        <p>anni di lavoro</p>
+        <svg class="sk-stat__line" viewBox="0 0 200 20"><path d="M 5 10 Q 50 0 100 10 T 195 10" fill="none" stroke="#1a1814" stroke-width="2.5" stroke-linecap="round"/></svg>
+      </div>
+      <div class="sk-stat">
+        <span class="sk-stat__big">100<i>/100</i></span>
+        <p>PageSpeed</p>
+        <svg class="sk-stat__line" viewBox="0 0 200 20"><path d="M 5 10 Q 50 0 100 10 T 195 10" fill="none" stroke="#ff5e3a" stroke-width="2.5" stroke-linecap="round"/></svg>
+      </div>
+      <div class="sk-stat">
+        <span class="sk-stat__big">00</span>
+        <p>template usati</p>
+        <svg class="sk-stat__line" viewBox="0 0 200 20"><path d="M 5 10 Q 50 0 100 10 T 195 10" fill="none" stroke="#1a1814" stroke-width="2.5" stroke-linecap="round"/></svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="sk-cta">
+    <h2 class="sk-h2">
+      <span class="sk-marker sk-marker--lg">Hai un progetto?</span>
+    </h2>
+    <p class="sk-cta__sub">Una chiamata gratuita di 30 min. Ti dico se posso aiutarti, e cosa farei al tuo posto.</p>
+    <a href="/contatti/" class="sk-btn sk-btn--big">→ Fissa una chiamata</a>
+    <p class="sk-signature">— M. Munich, 2026 ✦</p>
+  </section>
+</div>
+
+</BaseLayout>
+
+<style>
+  .sk-page { background: #faf6ee; color: #1a1814; font-family: 'Caveat','Comic Sans MS',cursive; min-height: 100vh; padding: 2rem; position: relative; overflow-x: hidden; }
+  .sk-paper { position: fixed; inset: 0; pointer-events: none; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='r'><feTurbulence type='fractalNoise' baseFrequency='0.95' /></filter><rect width='100%' height='100%' filter='url(%23r)' opacity='0.08'/></svg>"); z-index: 0; }
+  .sk-page > section, .sk-page > svg { position: relative; z-index: 1; }
+  .sk-hero { max-width: 900px; margin: 4rem auto; padding: 3rem 2rem; text-align: center; position: relative; z-index: 1; }
+  .sk-scribble { font-family: 'Caveat',cursive; font-size: 1.4rem; color: #ff5e3a; margin: 0 0 1.5rem; transform: rotate(-2deg); }
+  .sk-h1 { font-family: 'Caveat',cursive; font-weight: 700; font-size: clamp(3rem,8vw,7rem); line-height: 1.05; color: #1a1814; margin: 0 0 1rem; }
+  .sk-circle { display: inline-block; width: 180px; height: 90px; vertical-align: middle; margin: 0 -50px 0 -10px; position: relative; }
+  .sk-circled { color: #ff5e3a; padding: 0 0.4rem; position: relative; z-index: 1; }
+  .sk-italic { font-style: italic; color: #ff5e3a; }
+  .sk-highlight { background: #ffe07a; padding: 0 0.4rem; transform: rotate(-1deg); display: inline-block; }
+  .sk-doodle-arrow { font-family: 'Caveat',cursive; font-size: 1.6rem; color: #ff5e3a; margin: 1rem 0; transform: rotate(-3deg); }
+  .sk-tag { font-family: 'Inter',sans-serif; font-size: 1.05rem; line-height: 1.7; color: #4a4438; max-width: 540px; margin: 1.5rem auto 2rem; }
+  .sk-strike { text-decoration: line-through; text-decoration-color: #ff5e3a; text-decoration-thickness: 2px; }
+  .sk-btn { display: inline-block; background: #1a1814; color: #faf6ee; padding: 1rem 2rem; border-radius: 999px; text-decoration: none; font-family: 'Inter',sans-serif; font-weight: 700; font-size: 1rem; box-shadow: 5px 5px 0 #ff5e3a; transition: transform 0.15s ease; }
+  .sk-btn:hover { transform: translate(-2px,-2px); box-shadow: 7px 7px 0 #ff5e3a; }
+  .sk-btn--big { padding: 1.3rem 2.4rem; font-size: 1.1rem; box-shadow: 6px 6px 0 #ff5e3a; }
+  .sk-doodle { position: absolute; width: 70px; height: 70px; opacity: 0.6; }
+  .sk-doodle--tl { top: -2rem; left: -1rem; transform: rotate(-15deg); }
+  .sk-doodle--br { bottom: -2rem; right: -1rem; transform: rotate(20deg); }
+
+  .sk-section { max-width: 1100px; margin: 5rem auto; padding: 0 2rem; position: relative; z-index: 1; }
+  .sk-h2 { font-family: 'Caveat',cursive; font-size: clamp(2.4rem,4.5vw,3.6rem); margin: 0 0 3rem; }
+  .sk-marker { background: linear-gradient(transparent 60%, #ffe07a 60%, #ffe07a 92%, transparent 92%); padding: 0 0.4rem; }
+  .sk-marker--lg { font-size: 1.2em; }
+
+  .sk-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .sk-card { background: #fff; border: 2px solid #1a1814; border-radius: 18px; padding: 2.5rem 2rem; box-shadow: 6px 6px 0 #1a1814; transform: rotate(-1deg); position: relative; }
+  .sk-card--alt { transform: rotate(1deg); box-shadow: 6px 6px 0 #ff5e3a; }
+  .sk-card__sticker { position: absolute; top: -12px; left: 1.5rem; background: #ffe07a; border: 2px solid #1a1814; padding: 0.3rem 0.8rem; font-family: 'Inter',sans-serif; font-weight: 800; font-size: 0.75rem; letter-spacing: 0.1em; transform: rotate(-3deg); }
+  .sk-card__sticker--alt { background: #ff5e3a; color: #fff; }
+  .sk-card h3 { font-family: 'Caveat',cursive; font-size: 2.2rem; margin: 1rem 0 1.2rem; line-height: 1.05; }
+  .sk-card p { font-family: 'Inter',sans-serif; font-size: 0.98rem; line-height: 1.65; color: #4a4438; margin: 0 0 1.5rem; }
+  .sk-underline { background: linear-gradient(transparent 70%, #ffe07a 70%); padding: 0 0.2rem; }
+  .sk-link { font-family: 'Caveat',cursive; font-size: 1.4rem; color: #ff5e3a; text-decoration: none; border-bottom: 2px dashed #ff5e3a; padding-bottom: 0.1rem; }
+  .sk-card__doodle { position: absolute; bottom: 1rem; right: 1rem; width: 45px; height: 45px; opacity: 0.5; }
+
+  .sk-stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 2rem; }
+  .sk-stat { text-align: center; transform: rotate(-1deg); }
+  .sk-stat:nth-child(even) { transform: rotate(1deg); }
+  .sk-stat__big { display: block; font-family: 'Caveat',cursive; font-weight: 700; font-size: clamp(3.5rem,6vw,5.5rem); color: #ff5e3a; line-height: 1; margin-bottom: 0.4rem; }
+  .sk-stat__big i { font-size: 0.4em; color: #1a1814; font-style: normal; }
+  .sk-stat p { font-family: 'Inter',sans-serif; font-size: 0.92rem; color: #4a4438; margin: 0; }
+  .sk-stat__line { width: 100%; max-width: 200px; height: 16px; margin-top: 0.4rem; }
+
+  .sk-cta { text-align: center; max-width: 720px; margin: 6rem auto; padding: 0 2rem; position: relative; z-index: 1; }
+  .sk-cta__sub { font-family: 'Inter',sans-serif; font-size: 1.1rem; line-height: 1.6; color: #4a4438; margin: 0 0 2.5rem; }
+  .sk-signature { font-family: 'Caveat',cursive; font-size: 1.4rem; color: #ff5e3a; margin: 3rem 0 0; transform: rotate(-3deg); }
+
+  @media (max-width: 768px) {
+    .sk-cards { grid-template-columns: 1fr; }
+    .sk-stats { grid-template-columns: 1fr 1fr; }
+    .sk-circle { width: 130px; height: 65px; margin: 0 -30px 0 -10px; }
+  }
+</style>
+<script>
+  if (!document.querySelector('link[href*="Caveat"]')) {
+    const l = document.createElement('link'); l.rel = 'stylesheet';
+    l.href = 'https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&display=swap';
+    document.head.appendChild(l);
+  }
+</script>

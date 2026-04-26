@@ -1,0 +1,291 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Preview 11 — Bento Grid" description="Bento grid modular." currentPath="/preview-home-11/">
+
+<div class="bg-page">
+  <main class="bg-grid">
+    <!-- Hero — large -->
+    <section class="bg-card bg-card--hero">
+      <p class="bg-eyebrow">— Marco Munich, 2026</p>
+      <h1>
+        Sviluppo siti, applicazioni e
+        <span class="bg-h1__accent">presenze online.</span>
+      </h1>
+      <p class="bg-hero__sub">Per chi vende se stesso. Niente template, niente fuffa.</p>
+      <div class="bg-hero__cta">
+        <a href="/contatti/" class="bg-btn">Lavoriamo insieme →</a>
+      </div>
+    </section>
+
+    <!-- Sviluppo -->
+    <a href="/portfolio/" class="bg-card bg-card--orange">
+      <span class="bg-card__icon">⚡</span>
+      <h3>Sviluppo</h3>
+      <p>Siti, landing, e-commerce, web app. Astro + FastAPI.</p>
+      <span class="bg-card__arrow">→</span>
+    </a>
+
+    <!-- Posizionamento -->
+    <a href="/servizi/posizionamento-online/" class="bg-card bg-card--mint">
+      <span class="bg-card__icon">✦</span>
+      <h3>Posizionamento</h3>
+      <p>Per chi vende se stesso. 7 anni di consulenza.</p>
+      <span class="bg-card__arrow">→</span>
+    </a>
+
+    <!-- Stat 1 -->
+    <div class="bg-card bg-card--stat bg-card--ink">
+      <span class="bg-stat__big">218</span>
+      <span class="bg-stat__lbl">articoli pubblicati</span>
+    </div>
+
+    <!-- Stat 2 -->
+    <div class="bg-card bg-card--stat bg-card--paper">
+      <span class="bg-stat__big">07</span>
+      <span class="bg-stat__lbl">anni di lavoro</span>
+    </div>
+
+    <!-- Stat 3 (wider) -->
+    <div class="bg-card bg-card--stat-wide bg-card--orange-soft">
+      <span class="bg-stat__big">100<i>/100</i></span>
+      <span class="bg-stat__lbl">PageSpeed verificato su tutti i siti che costruisco</span>
+    </div>
+
+    <!-- Vibe coding -->
+    <a href="/vibe-coding/" class="bg-card bg-card--code">
+      <p class="bg-eyebrow">— Il metodo</p>
+      <h3>Vibe Coding.</h3>
+      <p>Guido l'AI per costruire più velocemente, con codice migliore.</p>
+      <code class="bg-code">$ npm run build</code>
+    </a>
+
+    <!-- Recent project 1 -->
+    <a href="/portfolio/" class="bg-card bg-card--proj">
+      <span class="bg-eyebrow">2026</span>
+      <h3>marcomunich.com</h3>
+      <p>Sito + CMS custom · Astro</p>
+    </a>
+
+    <!-- Recent project 2 -->
+    <a href="/portfolio/" class="bg-card bg-card--proj bg-card--blue">
+      <span class="bg-eyebrow">2026</span>
+      <h3>Vela</h3>
+      <p>Web app · FastAPI</p>
+    </a>
+
+    <!-- Disponibilità -->
+    <div class="bg-card bg-card--avail">
+      <span class="bg-pulse"></span>
+      <span>Disponibile<br>da Maggio 2026</span>
+    </div>
+
+    <!-- CTA -->
+    <a href="/contatti/" class="bg-card bg-card--cta">
+      <h3>Hai un progetto in mente?</h3>
+      <p>Una chiamata gratuita di 30 min.</p>
+      <span class="bg-card__arrow bg-card__arrow--big">→</span>
+    </a>
+  </main>
+</div>
+
+</BaseLayout>
+
+<style>
+  .bg-page {
+    background: #ece6dc;
+    color: #1a1814;
+    font-family: 'Inter', system-ui, sans-serif;
+    padding: 2rem;
+    min-height: 100vh;
+  }
+  .bg-grid {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 200px;
+    gap: 1rem;
+  }
+  .bg-card {
+    background: #fff;
+    border-radius: 24px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    overflow: hidden;
+    position: relative;
+  }
+  .bg-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 30px rgba(26,24,20,0.12);
+  }
+  .bg-eyebrow {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: #8b8170;
+    margin: 0 0 0.6rem;
+    text-transform: uppercase;
+  }
+  .bg-card h3 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: 1.5rem;
+    letter-spacing: -0.02em;
+    margin: 0 0 0.6rem;
+  }
+  .bg-card p {
+    font-size: 0.92rem;
+    line-height: 1.55;
+    margin: 0;
+    color: #4a4438;
+  }
+  .bg-card__icon { font-size: 1.8rem; }
+  .bg-card__arrow {
+    align-self: flex-end;
+    font-size: 1.4rem;
+    margin-top: auto;
+  }
+  .bg-card__arrow--big { font-size: 2rem; }
+
+  /* HERO — span 4 col, 2 row */
+  .bg-card--hero {
+    grid-column: span 4;
+    grid-row: span 2;
+    background: #1a1814;
+    color: #ece6dc;
+    padding: 3rem;
+    justify-content: center;
+  }
+  .bg-card--hero h1 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: clamp(2.4rem, 5.5vw, 4.8rem);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    margin: 1rem 0 1.5rem;
+  }
+  .bg-h1__accent {
+    color: #ff6b2c;
+    font-style: italic;
+    font-weight: 600;
+  }
+  .bg-hero__sub { font-size: 1.05rem; color: rgba(236,230,220,0.7); margin: 0 0 2rem; }
+  .bg-btn {
+    display: inline-block;
+    background: #ff6b2c;
+    color: #fff;
+    padding: 1rem 1.8rem;
+    border-radius: 999px;
+    font-weight: 700;
+    text-decoration: none;
+    align-self: flex-start;
+    font-size: 0.95rem;
+  }
+  .bg-card--hero .bg-eyebrow { color: rgba(236,230,220,0.55); }
+
+  /* COLOR VARIANTS */
+  .bg-card--orange { background: #ff6b2c; color: #fff; grid-column: span 2; grid-row: span 2; }
+  .bg-card--orange p, .bg-card--orange .bg-eyebrow { color: rgba(255,255,255,0.85); }
+  .bg-card--orange h3 { font-size: 2rem; }
+  .bg-card--orange .bg-card__icon { font-size: 2.4rem; }
+
+  .bg-card--mint { background: #b8e0c8; grid-column: span 2; grid-row: span 2; }
+  .bg-card--mint h3 { font-size: 2rem; }
+  .bg-card--mint .bg-card__icon { font-size: 2.4rem; }
+
+  .bg-card--ink { background: #1a1814; color: #ece6dc; }
+  .bg-card--ink p, .bg-card--ink .bg-stat__lbl { color: rgba(236,230,220,0.6); }
+
+  .bg-card--paper { background: #faf6ee; }
+
+  .bg-card--orange-soft { background: #ffd9bc; grid-column: span 2; }
+
+  .bg-card--blue { background: #80a4d6; color: #fff; }
+
+  .bg-card--code { grid-column: span 2; background: #fff; border: 2px solid #1a1814; }
+  .bg-code {
+    display: inline-block;
+    margin-top: 0.8rem;
+    background: #f0eadd;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 0.85rem;
+    color: #ff6b2c;
+  }
+
+  .bg-card--proj h3 { font-size: 1.3rem; }
+
+  .bg-card--avail {
+    background: #faf6ee;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    font-weight: 700;
+    font-size: 1.1rem;
+    line-height: 1.3;
+  }
+  .bg-pulse {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #4ade80;
+    box-shadow: 0 0 0 0 rgba(74,222,128,0.5);
+    animation: bgpulse 2s infinite;
+    flex-shrink: 0;
+  }
+  @keyframes bgpulse {
+    0% { box-shadow: 0 0 0 0 rgba(74,222,128,0.6); }
+    70% { box-shadow: 0 0 0 14px rgba(74,222,128,0); }
+    100% { box-shadow: 0 0 0 0 rgba(74,222,128,0); }
+  }
+
+  .bg-card--cta {
+    grid-column: span 2;
+    background: #1a1814;
+    color: #ece6dc;
+    grid-row: span 1;
+  }
+  .bg-card--cta p { color: rgba(236,230,220,0.65); }
+
+  /* STAT */
+  .bg-stat__big {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: clamp(2.8rem, 5vw, 4.4rem);
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    color: #ff6b2c;
+    margin-bottom: 0.5rem;
+  }
+  .bg-card--ink .bg-stat__big { color: #fff; }
+  .bg-stat__big i {
+    font-size: 0.4em;
+    color: rgba(0,0,0,0.4);
+    font-style: normal;
+  }
+  .bg-card--orange-soft .bg-stat__big { color: #1a1814; }
+  .bg-card--ink .bg-stat__big i { color: rgba(255,255,255,0.4); }
+  .bg-stat__lbl {
+    font-size: 0.85rem;
+    color: #4a4438;
+    line-height: 1.4;
+  }
+
+  @media (max-width: 900px) {
+    .bg-grid { grid-template-columns: repeat(2, 1fr); }
+    .bg-card--hero, .bg-card--orange-soft, .bg-card--code, .bg-card--cta { grid-column: span 2; }
+    .bg-card--orange, .bg-card--mint { grid-column: span 1; grid-row: span 2; }
+  }
+  @media (max-width: 600px) {
+    .bg-grid { grid-template-columns: 1fr; }
+    .bg-card { grid-column: span 1 !important; grid-row: span 1; min-height: 200px; }
+  }
+</style>
