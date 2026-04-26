@@ -1,0 +1,530 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Preview Home 5 — Cinematic"
+  description="Mockup direzione cinematic full-bleed."
+  currentPath="/preview-home-5/"
+>
+
+<div class="c5-page">
+
+  <!-- ── HERO CINEMATIC FULL-BLEED ───────────────────────────────────────── -->
+  <section class="c5-hero">
+    <div class="c5-hero__overlay"></div>
+    <div class="c5-hero__grain"></div>
+    <video
+      class="c5-hero__media"
+      autoplay muted loop playsinline
+      poster="/og/marco-munich.png"
+    ></video>
+
+    <div class="c5-hero__top">
+      <span class="c5-hero__corner-l">M.M. — STUDIO</span>
+      <span class="c5-hero__corner-r">VICENZA — IT</span>
+    </div>
+
+    <div class="c5-hero__center">
+      <p class="c5-hero__subtle">— Capitolo I</p>
+      <h1 class="c5-hero__title">
+        Costruisco
+        <span class="c5-hero__line">cose</span>
+        <span class="c5-hero__line">che</span>
+        <span class="c5-hero__line c5-hero__line--accent">funzionano.</span>
+      </h1>
+      <p class="c5-hero__byline">
+        Siti, applicazioni e presenze online per chi vende se stesso. <br>
+        Sette anni di consulenza sul personal branding, oggi tradotti in codice.
+      </p>
+    </div>
+
+    <div class="c5-hero__bottom">
+      <span class="c5-hero__credit">Marco Munich · Sviluppo & Posizionamento · 2019—2026</span>
+      <a href="#cap-2" class="c5-hero__scroll">Scroll ↓</a>
+    </div>
+  </section>
+
+  <!-- ── CAPITOLO II — SERVIZI (split asimmetrico image) ─────────────────── -->
+  <section class="c5-chapter" id="cap-2">
+    <div class="c5-chapter__head">
+      <span class="c5-chapter__num">Cap. II</span>
+      <h2 class="c5-chapter__title">Cosa faccio.</h2>
+    </div>
+    <div class="c5-services">
+      <div class="c5-service c5-service--lg">
+        <div class="c5-service__visual c5-service__visual--orange"></div>
+        <div class="c5-service__content">
+          <p class="c5-service__type">— Sviluppo</p>
+          <h3 class="c5-service__name">Siti, app, e-commerce.</h3>
+          <p class="c5-service__desc">
+            Costruiti da zero, codice pulito, performance verificabili. Astro per il front, FastAPI per il back, niente plugin che si rompono ogni sei mesi.
+          </p>
+          <a href="/portfolio/" class="c5-service__cta">Vedi i progetti →</a>
+        </div>
+      </div>
+
+      <div class="c5-service">
+        <div class="c5-service__visual c5-service__visual--dark"></div>
+        <div class="c5-service__content">
+          <p class="c5-service__type">— Consulenza</p>
+          <h3 class="c5-service__name">Posizionamento online.</h3>
+          <p class="c5-service__desc">
+            Per chi vende se stesso e vuole una presenza che corrisponda davvero a chi è.
+          </p>
+          <a href="/servizi/posizionamento-online/" class="c5-service__cta">Scopri il percorso →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── INTERLUDE — QUOTE PIENA SCHERMO ───────────────────────────────── -->
+  <section class="c5-interlude">
+    <div class="c5-interlude__inner">
+      <p class="c5-interlude__quote">
+        <span class="c5-quote-mark">"</span>Ho passato sette anni a dire ai coach come dovevano apparire online.
+        <em>A un certo punto ho cominciato a costruirli io stesso quei siti.</em><span class="c5-quote-mark">"</span>
+      </p>
+      <p class="c5-interlude__author">— M.M.</p>
+    </div>
+  </section>
+
+  <!-- ── CAPITOLO III — PROGETTI ─────────────────────────────────────────── -->
+  <section class="c5-chapter">
+    <div class="c5-chapter__head">
+      <span class="c5-chapter__num">Cap. III</span>
+      <h2 class="c5-chapter__title">Lavori recenti.</h2>
+    </div>
+    <div class="c5-projects">
+      <a href="/portfolio/" class="c5-pcard">
+        <div class="c5-pcard__visual c5-pcard__visual--01"></div>
+        <div class="c5-pcard__meta">
+          <span class="c5-pcard__year">2026</span>
+          <h3 class="c5-pcard__name">marcomunich.com</h3>
+          <p class="c5-pcard__type">Sito vetrina + CMS custom · Astro + Ghost</p>
+        </div>
+      </a>
+      <a href="/portfolio/" class="c5-pcard">
+        <div class="c5-pcard__visual c5-pcard__visual--02"></div>
+        <div class="c5-pcard__meta">
+          <span class="c5-pcard__year">2026</span>
+          <h3 class="c5-pcard__name">Vela</h3>
+          <p class="c5-pcard__type">Web app social media · FastAPI + instagrapi</p>
+        </div>
+      </a>
+      <a href="/portfolio/" class="c5-pcard">
+        <div class="c5-pcard__visual c5-pcard__visual--03"></div>
+        <div class="c5-pcard__meta">
+          <span class="c5-pcard__year">2026</span>
+          <h3 class="c5-pcard__name">cms.marcomunich.com</h3>
+          <p class="c5-pcard__type">Migrazione Ghost + integrazione Admin API</p>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ── EPILOGO — CTA ───────────────────────────────────────────────────── -->
+  <section class="c5-end">
+    <div class="c5-end__inner">
+      <p class="c5-chapter__num">Epilogo</p>
+      <h2 class="c5-end__title">
+        Hai un progetto<br>
+        <em>in mente?</em>
+      </h2>
+      <p class="c5-end__sub">
+        Una chiamata gratuita di trenta minuti. Capisco la tua situazione, ti dico cosa farei al tuo posto. Se non posso esserti utile, te lo dico subito.
+      </p>
+      <a href="/contatti/" class="c5-end__btn">Fissa una chiamata</a>
+      <p class="c5-end__credit">— Fine —</p>
+    </div>
+  </section>
+
+</div>
+
+</BaseLayout>
+
+<style>
+  .c5-page {
+    background: #08070a;
+    color: #f7f4ee;
+    font-family: 'Inter', system-ui, sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ─── HERO ─── */
+  .c5-hero {
+    position: relative;
+    height: 100vh;
+    min-height: 700px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    color: #f7f4ee;
+  }
+  .c5-hero__media {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    filter: brightness(0.55) saturate(0.85) contrast(1.05);
+  }
+  .c5-hero__overlay {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at center, transparent 0%, rgba(8,7,10,0.7) 80%),
+      linear-gradient(180deg, rgba(8,7,10,0.55) 0%, rgba(8,7,10,0.3) 40%, rgba(8,7,10,0.95) 100%);
+    z-index: 1;
+  }
+  .c5-hero__grain {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.85" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23n)" opacity="0.5"/></svg>');
+    opacity: 0.18;
+    mix-blend-mode: overlay;
+    z-index: 2;
+  }
+
+  .c5-hero__top,
+  .c5-hero__bottom {
+    position: relative;
+    z-index: 3;
+    padding: 2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .c5-hero__corner-l,
+  .c5-hero__corner-r {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.72rem;
+    letter-spacing: 0.25em;
+    color: rgba(247,244,238,0.7);
+  }
+
+  .c5-hero__center {
+    flex: 1;
+    z-index: 3;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 2rem;
+  }
+  .c5-hero__subtle {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: rgba(247,244,238,0.65);
+    letter-spacing: 0.1em;
+    margin: 0 0 2rem;
+  }
+  .c5-hero__title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(3rem, 8vw, 7rem);
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    margin: 0 0 2.5rem;
+    font-style: italic;
+  }
+  .c5-hero__line {
+    display: block;
+  }
+  .c5-hero__line--accent {
+    color: #ff8b4a;
+    font-weight: 500;
+  }
+  .c5-hero__byline {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: rgba(247,244,238,0.75);
+    max-width: 540px;
+    margin: 0 auto;
+  }
+
+  .c5-hero__credit {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: rgba(247,244,238,0.55);
+  }
+  .c5-hero__scroll {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.15em;
+    color: rgba(247,244,238,0.65);
+    text-decoration: none;
+  }
+
+  /* ─── CHAPTERS ─── */
+  .c5-chapter {
+    padding: 7rem 3rem;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  .c5-chapter__head {
+    text-align: center;
+    margin-bottom: 4.5rem;
+  }
+  .c5-chapter__num {
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    color: #ff8b4a;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+  }
+  .c5-chapter__title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-style: italic;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    line-height: 1.1;
+    color: #f7f4ee;
+    margin: 0;
+    letter-spacing: -0.02em;
+  }
+
+  /* ─── SERVICES ─── */
+  .c5-services {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+  }
+  .c5-service {
+    display: flex;
+    flex-direction: column;
+  }
+  .c5-service__visual {
+    aspect-ratio: 16/10;
+    width: 100%;
+    margin-bottom: 1.8rem;
+  }
+  .c5-service__visual--orange {
+    background:
+      radial-gradient(circle at 30% 30%, #ff8b4a 0%, #c43e00 60%, #1a0c08 100%);
+  }
+  .c5-service__visual--dark {
+    background:
+      linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+    border: 1px solid rgba(247,244,238,0.1);
+  }
+  .c5-service__type {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: #ff8b4a;
+    margin: 0 0 0.8rem;
+  }
+  .c5-service__name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-style: italic;
+    font-size: 2rem;
+    line-height: 1.1;
+    color: #f7f4ee;
+    margin: 0 0 1.2rem;
+    letter-spacing: -0.02em;
+  }
+  .c5-service__desc {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: rgba(247,244,238,0.7);
+    margin: 0 0 1.5rem;
+  }
+  .c5-service__cta {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 0.92rem;
+    color: #ff8b4a;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255,139,74,0.4);
+    padding-bottom: 0.2rem;
+    align-self: flex-start;
+    transition: border-color 0.2s ease;
+  }
+  .c5-service__cta:hover { border-bottom-color: #ff8b4a; }
+
+  /* ─── INTERLUDE QUOTE ─── */
+  .c5-interlude {
+    background: #0d0c10;
+    padding: 9rem 3rem;
+    text-align: center;
+    border-top: 1px solid rgba(247,244,238,0.08);
+    border-bottom: 1px solid rgba(247,244,238,0.08);
+  }
+  .c5-interlude__inner {
+    max-width: 880px;
+    margin: 0 auto;
+  }
+  .c5-interlude__quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    line-height: 1.45;
+    color: #f7f4ee;
+    margin: 0 0 2rem;
+    letter-spacing: -0.01em;
+  }
+  .c5-interlude__quote em {
+    color: #ff8b4a;
+    font-style: italic;
+  }
+  .c5-quote-mark {
+    color: #ff8b4a;
+    font-style: italic;
+    font-size: 1.3em;
+  }
+  .c5-interlude__author {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: rgba(247,244,238,0.5);
+    margin: 0;
+    letter-spacing: 0.1em;
+  }
+
+  /* ─── PROJECTS ─── */
+  .c5-projects {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+  .c5-pcard {
+    text-decoration: none;
+    color: #f7f4ee;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease;
+  }
+  .c5-pcard:hover { transform: translateY(-6px); }
+  .c5-pcard__visual {
+    aspect-ratio: 4/5;
+    width: 100%;
+    margin-bottom: 1.4rem;
+    border-radius: 2px;
+  }
+  .c5-pcard__visual--01 {
+    background: linear-gradient(135deg, #ff8b4a 0%, #c43e00 50%, #1a0c08 100%);
+  }
+  .c5-pcard__visual--02 {
+    background: linear-gradient(135deg, #2a3a55 0%, #0a1018 100%);
+  }
+  .c5-pcard__visual--03 {
+    background: linear-gradient(135deg, #4a3a2a 0%, #1a1208 100%);
+  }
+  .c5-pcard__year {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.95rem;
+    color: rgba(247,244,238,0.55);
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+  .c5-pcard__name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-style: italic;
+    font-size: 1.5rem;
+    color: #f7f4ee;
+    margin: 0 0 0.5rem;
+    letter-spacing: -0.01em;
+  }
+  .c5-pcard__type {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    color: rgba(247,244,238,0.6);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* ─── EPILOGUE ─── */
+  .c5-end {
+    padding: 9rem 3rem 6rem;
+    text-align: center;
+  }
+  .c5-end__inner {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .c5-end__title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: clamp(2.5rem, 5.5vw, 5rem);
+    line-height: 1.05;
+    color: #f7f4ee;
+    margin: 1rem 0 1.5rem;
+    letter-spacing: -0.02em;
+  }
+  .c5-end__title em {
+    color: #ff8b4a;
+    font-style: italic;
+  }
+  .c5-end__sub {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: rgba(247,244,238,0.7);
+    max-width: 540px;
+    margin: 0 auto 3rem;
+  }
+  .c5-end__btn {
+    display: inline-block;
+    border: 1px solid #ff8b4a;
+    color: #ff8b4a;
+    background: transparent;
+    padding: 1.1rem 2.6rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+  .c5-end__btn:hover {
+    background: #ff8b4a;
+    color: #08070a;
+  }
+  .c5-end__credit {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.95rem;
+    color: rgba(247,244,238,0.4);
+    margin: 4rem 0 0;
+    letter-spacing: 0.2em;
+  }
+
+  @media (max-width: 768px) {
+    .c5-hero__top, .c5-hero__bottom { padding: 1.5rem; }
+    .c5-services { grid-template-columns: 1fr; gap: 3rem; }
+    .c5-projects { grid-template-columns: 1fr; gap: 2rem; }
+    .c5-chapter { padding: 5rem 1.5rem; }
+    .c5-interlude { padding: 6rem 2rem; }
+  }
+</style>
+
+<script>
+if (!document.querySelector('link[href*="Cormorant+Garamond"]')) {
+  const link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.href = 'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap';
+  document.head.appendChild(link);
+}
+const vid = document.querySelector('.c5-hero__media') as HTMLVideoElement | null;
+if (vid) {
+  // Try to use existing site's hero video pool
+  const hour = new Date().getHours();
+  const tod = hour < 12 ? 'mattina' : hour < 18 ? 'pomeriggio' : hour < 22 ? 'sera' : 'notte';
+  vid.src = `/videos/hero-${tod}.mp4`;
+}
+</script>

@@ -1,0 +1,352 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Preview Home 4 — Terminal"
+  description="Mockup direzione terminale/CRT."
+  currentPath="/preview-home-4/"
+>
+
+<div class="t4-page">
+
+  <div class="t4-scanlines" aria-hidden="true"></div>
+
+  <!-- TERMINAL HEADER -->
+  <header class="t4-header">
+    <div class="t4-header__inner">
+      <div class="t4-dots">
+        <span class="t4-dot t4-dot--red"></span>
+        <span class="t4-dot t4-dot--yellow"></span>
+        <span class="t4-dot t4-dot--green"></span>
+      </div>
+      <span class="t4-header__title">marcomunich.dev — zsh — 80×24</span>
+      <span class="t4-header__time">26.04.2026</span>
+    </div>
+  </header>
+
+  <!-- HERO TERMINAL -->
+  <section class="t4-hero">
+    <div class="t4-line"><span class="t4-prompt">marco@studio</span><span class="t4-sep">:</span><span class="t4-path">~/work</span><span class="t4-sep">$</span> <span class="t4-cmd">whoami --verbose</span></div>
+    <div class="t4-output">
+      <p>Marco Munich. Sviluppatore web · Consulente posizionamento online.</p>
+      <p>Costruisco siti e applicazioni per chi vende se stesso.</p>
+    </div>
+
+    <div class="t4-line"><span class="t4-prompt">marco@studio</span><span class="t4-sep">:</span><span class="t4-path">~/work</span><span class="t4-sep">$</span> <span class="t4-cmd">cat services.txt</span></div>
+    <div class="t4-output">
+      <p><span class="t4-tag">[01]</span> Siti vetrina, landing, e-commerce</p>
+      <p><span class="t4-tag">[02]</span> Web app custom (FastAPI, Astro)</p>
+      <p><span class="t4-tag">[03]</span> Posizionamento online · Personal branding</p>
+    </div>
+
+    <div class="t4-line t4-line--big">
+      <span class="t4-prompt">marco@studio</span><span class="t4-sep">:</span><span class="t4-path">~/work</span><span class="t4-sep">$</span> <span class="t4-cmd t4-cmd--cta">./contattami</span><span class="t4-cursor"></span>
+    </div>
+  </section>
+
+  <!-- ── PROJECTS LOG ────────────────────────────────────────────────────── -->
+  <section class="t4-section">
+    <div class="t4-line"><span class="t4-prompt">marco@studio</span><span class="t4-sep">:</span><span class="t4-path">~/work</span><span class="t4-sep">$</span> <span class="t4-cmd">ls -la projects/</span></div>
+    <div class="t4-table">
+      <div class="t4-row t4-row--head">
+        <span>permissions</span><span>size</span><span>date</span><span>name</span><span>type</span>
+      </div>
+      <a href="/portfolio/" class="t4-row">
+        <span>drwxr-xr-x</span><span>4.2K</span><span>apr 26</span><span class="t4-name">marcomunich.com</span><span>sito + cms custom</span>
+      </a>
+      <a href="/portfolio/" class="t4-row">
+        <span>drwxr-xr-x</span><span>2.8K</span><span>apr 25</span><span class="t4-name">vela</span><span>web app · fastapi</span>
+      </a>
+      <a href="/portfolio/" class="t4-row">
+        <span>drwxr-xr-x</span><span>1.6K</span><span>apr 14</span><span class="t4-name">cms.marcomunich.com</span><span>migrazione ghost</span>
+      </a>
+      <a href="/portfolio/" class="t4-row">
+        <span>drwxr-xr-x</span><span>0.9K</span><span>apr 20</span><span class="t4-name">inspiration-bot</span><span>pipeline contenuti</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ── STATS ──────────────────────────────────────────────────────────── -->
+  <section class="t4-section">
+    <div class="t4-line"><span class="t4-prompt">marco@studio</span><span class="t4-sep">:</span><span class="t4-path">~/work</span><span class="t4-sep">$</span> <span class="t4-cmd">stats --year=2019-2026</span></div>
+    <div class="t4-stats">
+      <div class="t4-stat">
+        <span class="t4-stat__num">218</span>
+        <span class="t4-stat__label">articoli pubblicati</span>
+        <span class="t4-bar"><i style="width:100%"></i></span>
+      </div>
+      <div class="t4-stat">
+        <span class="t4-stat__num">07</span>
+        <span class="t4-stat__label">anni di lavoro</span>
+        <span class="t4-bar"><i style="width:70%"></i></span>
+      </div>
+      <div class="t4-stat">
+        <span class="t4-stat__num">100<i>/100</i></span>
+        <span class="t4-stat__label">google pagespeed</span>
+        <span class="t4-bar"><i style="width:100%"></i></span>
+      </div>
+      <div class="t4-stat">
+        <span class="t4-stat__num">00</span>
+        <span class="t4-stat__label">template usati</span>
+        <span class="t4-bar"><i style="width:0%"></i></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── METHOD ────────────────────────────────────────────────────────── -->
+  <section class="t4-section">
+    <div class="t4-line"><span class="t4-prompt">marco@studio</span><span class="t4-sep">:</span><span class="t4-path">~/work</span><span class="t4-sep">$</span> <span class="t4-cmd">man method</span></div>
+    <div class="t4-output t4-output--lead">
+      <p>
+        Non scrivo codice riga per riga. Guido <span class="t4-hl">l'intelligenza artificiale</span> per costruire siti e applicazioni che funzionano. Risultato: stesso output di sviluppo tradizionale, più veloce e più pulito.
+      </p>
+      <p><a href="/vibe-coding/" class="t4-link">[ man vibe-coding(7) → ]</a></p>
+    </div>
+  </section>
+
+  <!-- ── CTA ──────────────────────────────────────────────────────────── -->
+  <section class="t4-cta-section">
+    <div class="t4-line"><span class="t4-prompt">marco@studio</span><span class="t4-sep">:</span><span class="t4-path">~/work</span><span class="t4-sep">$</span> <span class="t4-cmd">./connect.sh --type=consultation</span></div>
+    <div class="t4-output">
+      <p>Hai un progetto? Una chiamata gratuita di 30 min, ti dico se posso aiutarti.</p>
+    </div>
+    <a href="/contatti/" class="t4-btn">[ FISSA UNA CHIAMATA ]</a>
+  </section>
+
+</div>
+
+</BaseLayout>
+
+<style>
+  .t4-page {
+    background: #0a0e0a;
+    color: #6ee870;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+  }
+  .t4-scanlines {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent 0,
+      transparent 2px,
+      rgba(0,0,0,0.15) 2px,
+      rgba(0,0,0,0.15) 4px
+    );
+    z-index: 100;
+  }
+
+  .t4-header {
+    background: #1a1f1a;
+    border-bottom: 1px solid #2d3a2d;
+    padding: 0.6rem 1.2rem;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .t4-header__inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    justify-content: space-between;
+  }
+  .t4-dots { display: flex; gap: 0.5rem; }
+  .t4-dot {
+    width: 12px; height: 12px; border-radius: 50%;
+    display: inline-block;
+  }
+  .t4-dot--red { background: #ff5f57; }
+  .t4-dot--yellow { background: #febc2e; }
+  .t4-dot--green { background: #28c840; }
+  .t4-header__title {
+    font-size: 0.78rem;
+    color: #8ba78d;
+    flex: 1;
+    text-align: center;
+  }
+  .t4-header__time {
+    font-size: 0.78rem;
+    color: #5a7a5c;
+  }
+
+  .t4-hero,
+  .t4-section,
+  .t4-cta-section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem;
+  }
+  .t4-hero { padding-top: 4rem; }
+
+  .t4-line {
+    display: block;
+    margin: 1.4rem 0 0.5rem;
+    font-size: 0.95rem;
+    word-break: break-word;
+  }
+  .t4-line--big { margin-top: 3rem; font-size: 1.15rem; }
+  .t4-prompt { color: #57b6f5; font-weight: 600; }
+  .t4-sep { color: #6ee870; opacity: 0.7; }
+  .t4-path { color: #d8a35a; }
+  .t4-cmd { color: #f5f3ee; font-weight: 500; }
+  .t4-cmd--cta {
+    color: #e85d00;
+    font-weight: 700;
+    background: rgba(232,93,0,0.1);
+    padding: 0.2rem 0.5rem;
+    border-radius: 2px;
+  }
+  .t4-cursor {
+    display: inline-block;
+    width: 0.6em;
+    height: 1.1em;
+    background: #6ee870;
+    margin-left: 0.3em;
+    vertical-align: text-bottom;
+    animation: t4blink 1s steps(1) infinite;
+  }
+  @keyframes t4blink {
+    50% { opacity: 0; }
+  }
+
+  .t4-output {
+    padding-left: 1.5rem;
+    margin-bottom: 2rem;
+    color: #b8d4ba;
+  }
+  .t4-output p { margin: 0.4rem 0; line-height: 1.85; }
+  .t4-output--lead p {
+    font-size: 1.15rem;
+    line-height: 1.85;
+    color: #d4e8d6;
+    max-width: 720px;
+  }
+  .t4-tag {
+    color: #d8a35a;
+    font-weight: 700;
+    margin-right: 0.5rem;
+  }
+  .t4-hl {
+    color: #e85d00;
+    font-weight: 700;
+    background: rgba(232,93,0,0.1);
+    padding: 0.05em 0.3em;
+  }
+  .t4-link {
+    color: #57b6f5;
+    text-decoration: none;
+    border-bottom: 1px dashed #57b6f5;
+  }
+  .t4-link:hover { color: #6ee870; border-bottom-color: #6ee870; }
+
+  /* TABLE PROJECTS */
+  .t4-table {
+    margin: 1.5rem 0 0 1.5rem;
+    border: 1px solid #2d3a2d;
+    background: rgba(20,30,20,0.4);
+  }
+  .t4-row {
+    display: grid;
+    grid-template-columns: 130px 80px 100px 1fr 1.2fr;
+    gap: 1rem;
+    padding: 0.7rem 1rem;
+    border-bottom: 1px solid #2d3a2d;
+    color: #b8d4ba;
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: background 0.15s ease;
+  }
+  .t4-row:last-child { border-bottom: none; }
+  .t4-row--head {
+    background: #1a2a1a;
+    color: #d8a35a;
+    font-weight: 700;
+    font-size: 0.78rem;
+  }
+  .t4-row:not(.t4-row--head):hover {
+    background: rgba(110,232,112,0.06);
+    color: #6ee870;
+  }
+  .t4-name {
+    color: #f5f3ee;
+    font-weight: 600;
+  }
+
+  /* STATS */
+  .t4-stats {
+    margin: 1.5rem 0 0 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+  }
+  .t4-stat {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 1.5rem;
+    align-items: center;
+    padding: 0.6rem 0;
+  }
+  .t4-stat__num {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #e85d00;
+    letter-spacing: -0.02em;
+  }
+  .t4-stat__num i { font-size: 0.9rem; opacity: 0.6; font-style: normal; }
+  .t4-stat__label {
+    font-size: 0.85rem;
+    color: #b8d4ba;
+  }
+  .t4-bar {
+    grid-column: 2;
+    display: block;
+    height: 6px;
+    background: #1a2a1a;
+    border: 1px solid #2d3a2d;
+    margin-top: 0.4rem;
+    overflow: hidden;
+  }
+  .t4-bar i {
+    display: block;
+    height: 100%;
+    background: linear-gradient(90deg, #6ee870 0%, #e85d00 100%);
+  }
+
+  /* CTA */
+  .t4-cta-section { padding-bottom: 6rem; }
+  .t4-btn {
+    display: inline-block;
+    margin: 2rem 0 0 1.5rem;
+    padding: 1rem 1.8rem;
+    background: rgba(232,93,0,0.1);
+    border: 1px solid #e85d00;
+    color: #e85d00;
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: all 0.2s ease;
+  }
+  .t4-btn:hover {
+    background: #e85d00;
+    color: #0a0e0a;
+  }
+
+  @media (max-width: 768px) {
+    .t4-row { grid-template-columns: 1fr 1fr; gap: 0.4rem; font-size: 0.78rem; padding: 1rem; }
+    .t4-row--head { display: none; }
+    .t4-stat { grid-template-columns: 90px 1fr; gap: 1rem; }
+    .t4-line { font-size: 0.85rem; }
+    .t4-line--big { font-size: 0.95rem; }
+  }
+</style>
