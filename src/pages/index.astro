@@ -44,17 +44,17 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
 
     <div class="home-hero__content mm-container">
       <p class="home-hero__byline">Marco Munich —</p>
-      <h1 class="mm-h1">Personal Branding<br>Olistico.</h1>
+      <h1 class="mm-h1">Siti, app,<br>e il tuo brand online.</h1>
       <p class="home-hero__sub">
-        Se lavori come <strong>coach, counselor o operatore olistico</strong>, ti aiuto a costruire una presenza online che corrisponde a quello che fai davvero e attira le persone giuste.
+        Costruisco <strong>siti e applicazioni</strong> per chi vende se stesso. Lo faccio sapendo cosa stai vendendo, perché vengo da sette anni di personal branding nel settore olistico.
       </p>
       <div class="home-hero__ctas">
-        <a href="/contatti/" class="mm-btn mm-btn-orange">Parliamo →</a>
-        <a href="/risorse/" class="mm-btn mm-btn-outline">Risorse gratuite</a>
+        <a href="/dev/" class="mm-btn mm-btn-orange">Vedi cosa costruisco →</a>
+        <a href="/contatti/" class="mm-btn mm-btn-outline">Lavoriamo insieme</a>
       </div>
     </div>
 
-    <span class="home-hero__caption" aria-hidden="true">Coach · Counselor · Operatori Olistici</span>
+    <span class="home-hero__caption" aria-hidden="true">Sviluppo · Personal Branding · Contenuti</span>
   </section>
 
   <!-- ── NUMERI ─────────────────────────────────────────────────────────────── -->
@@ -62,42 +62,41 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
     <div class="home-stats__grid mm-container">
       <div class="home-stat">
         <div class="home-stat__num">200<span>+</span></div>
-        <div class="home-stat__label">Articoli sul personal branding<br>per il mondo olistico</div>
+        <div class="home-stat__label">Articoli pubblicati<br>sul blog</div>
       </div>
       <div class="home-stat">
         <div class="home-stat__num">50<span>+</span></div>
-        <div class="home-stat__label">Coach, counselor e operatori<br>olistici già seguiti</div>
+        <div class="home-stat__label">Professionisti seguiti<br>in sette anni</div>
       </div>
       <div class="home-stat">
         <div class="home-stat__num">0</div>
-        <div class="home-stat__label">Percorsi identici fatti<br>in sette anni di lavoro</div>
+        <div class="home-stat__label">Template usati. Ogni progetto<br>è costruito da zero.</div>
       </div>
     </div>
   </section>
 
-  <!-- ── SERVIZI ───────────────────────────────────────────────────────────── -->
-  <section class="mm-section-dark home-services">
+  <!-- ── DUE STRADE ────────────────────────────────────────────────────────── -->
+  <section class="mm-section-dark home-strade">
     <div class="mm-container">
-      <div class="home-services__header">
-        <h2 class="mm-h2">Cosa faccio per<br>coach, counselor e operatori olistici.</h2>
-        <a href="/servizi/" class="home-services__all">Tutti i servizi →</a>
+      <div class="home-strade__header">
+        <h2 class="mm-h2">Due strade.<br>Lo stesso modo di lavorare.</h2>
+        <p class="home-strade__intro">
+          Da una parte costruisco. Dall'altra ti aiuto a posizionarti. Spesso le due cose vanno insieme — ma non è obbligatorio.
+        </p>
       </div>
-      <div class="home-services__grid">
-        <div class="home-service-card">
-          <div class="mm-tag">01 / Per coach e counselor</div>
-          <h3 class="mm-h3">Personal Branding Olistico</h3>
-          <p class="mm-body">Lavoriamo su come ti presenti online partendo da quello che già sai fare bene. Il risultato è una comunicazione che le persone giuste riconoscono come loro prima ancora di contattarti.</p>
-        </div>
-        <div class="home-service-card">
-          <div class="mm-tag">02 / Per operatori olistici</div>
-          <h3 class="mm-h3">Sito Web su misura</h3>
-          <p class="mm-body">Costruisco siti per chi lavora nel mondo olistico e vuole essere trovato online. Ogni pagina è scritta e strutturata per il tuo tipo di cliente, con il tuo linguaggio.</p>
-        </div>
-        <div class="home-service-card">
-          <div class="mm-tag">03 / Contenuti & Presenza</div>
-          <h3 class="mm-h3">Strategia di Contenuto</h3>
-          <p class="mm-body">Ti aiuto a pubblicare articoli e contenuti che portano traffico da ricerca organica. Chi cerca un counselor o un coach olistico online deve trovare prima te.</p>
-        </div>
+      <div class="home-strade__grid">
+        <a href="/dev/" class="home-strada home-strada--primary">
+          <div class="mm-tag">Servizio principale</div>
+          <h3 class="mm-h3">Costruisco siti e applicazioni.</h3>
+          <p class="mm-body">Per chi vuole un sito vero, non un template — o un'applicazione web che fa qualcosa di specifico. Astro, FastAPI, codice pulito, performance verificabili, piena proprietà dei file. Niente plugin, niente manutenzione mensile.</p>
+          <span class="home-strada__cta">Vedi cosa costruisco →</span>
+        </a>
+        <a href="/servizi/" class="home-strada home-strada--secondary">
+          <div class="mm-tag">Consulenza</div>
+          <h3 class="mm-h3">Ti aiuto a posizionarti online.</h3>
+          <p class="mm-body">Per coach, counselor, operatori olistici e professionisti che vendono se stessi. Sette anni di personal branding nel settore olistico, oltre duecento articoli, e un metodo per trovare un punto di vista che non sia il copia-incolla di tutti gli altri.</p>
+          <span class="home-strada__cta">Scopri come →</span>
+        </a>
       </div>
     </div>
   </section>
@@ -130,10 +129,10 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
         <div class="mm-tag" style="margin-bottom:1.2rem">Chi sono</div>
         <h2 class="mm-h2" style="margin-bottom:1.5rem">Marco Munich.</h2>
         <p class="mm-body" style="margin-bottom:1rem">
-          Da sette anni mi occupo di personal branding per chi lavora nel settore olistico. Ho scritto oltre duecento articoli, seguito coach, counselor e operatori di ogni tipo, e costruito siti che portano clienti reali.
+          Da sette anni mi occupo di presenza online per professionisti che vendono se stessi. Ho scritto oltre duecento articoli, seguito coach, counselor e operatori di ogni tipo, e a un certo punto ho iniziato a costruire io stesso i loro siti — perché vedere coach con siti tutti uguali aveva stancato anche me.
         </p>
         <p class="mm-body" style="margin-bottom:2rem">
-          Il mio punto di partenza è sempre la persona. Cosa sa fare, come parla, a chi si rivolge. Da lì costruiamo una presenza online che funziona perché è vera, non perché segue una formula.
+          Oggi lavoro su due fronti che si parlano: costruisco siti e applicazioni web custom, e aiuto chi vende se stesso a trovare un modo di presentarsi online che non sia il copia-incolla di tutti gli altri.
         </p>
         <a href="/chi-sono/" class="mm-btn mm-btn-orange">Scopri di più →</a>
       </div>
@@ -144,8 +143,8 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
   <section class="home-cta">
     <div class="mm-container home-cta__inner">
       <div>
-        <h2 class="mm-h2">Lavori nel mondo<br>olistico?</h2>
-        <p style="color:rgba(255,255,255,0.75);font-size:0.9rem;margin-top:0.5rem">Fissa una chiamata gratuita. Ti dico subito cosa farei per la tua situazione specifica.</p>
+        <h2 class="mm-h2">Hai un progetto<br>in mente?</h2>
+        <p style="color:rgba(255,255,255,0.75);font-size:0.9rem;margin-top:0.5rem">Fissa una chiamata gratuita. Ti dico subito se posso aiutarti e come lo farei.</p>
       </div>
       <a href="/contatti/" class="mm-btn mm-btn-white">Parliamo →</a>
     </div>
@@ -254,38 +253,53 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
     line-height: 1.55;
   }
 
-  /* ── SERVIZI ── */
-  .home-services { padding: 5rem 0; }
-  .home-services__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
+  /* ── DUE STRADE ── */
+  .home-strade { padding: 5rem 0; }
+  .home-strade__header {
     margin-bottom: 3rem;
+    max-width: 720px;
   }
-  .home-services__all {
-    font-size: 0.82rem;
-    font-weight: 600;
-    color: #e85d00;
-    text-decoration: none;
+  .home-strade__intro {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: rgba(255,255,255,0.65);
+    margin-top: 1.2rem;
   }
-  .home-services__grid {
+  .home-strade__grid {
     display: grid;
-    grid-template-columns: repeat(3,1fr);
+    grid-template-columns: 1.15fr 1fr;
     gap: 1px;
     background: #1a1a1a;
     border: 1px solid #1a1a1a;
     border-radius: 4px;
     overflow: hidden;
   }
-  .home-service-card {
+  .home-strada {
     background: #0d0d0d;
-    padding: 2.2rem;
+    padding: 3rem 2.5rem;
     display: flex;
     flex-direction: column;
-    gap: 0.8rem;
+    gap: 1rem;
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.2s ease;
   }
-  .home-service-card:hover { background: #111; }
-  .home-service-card .mm-h3 { color: #fff; }
+  .home-strada:hover { background: #141414; }
+  .home-strada .mm-h3 { color: #fff; line-height: 1.25; }
+  .home-strada--primary {
+    background: #111111;
+    border-right: 2px solid #e85d00;
+  }
+  .home-strada--primary:hover { background: #181818; }
+  .home-strada--primary .mm-tag { color: #e85d00; }
+  .home-strada__cta {
+    margin-top: auto;
+    padding-top: 1.5rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #e85d00;
+  }
+  .home-strada--secondary .home-strada__cta { color: rgba(255,255,255,0.85); }
 
   /* ── ARTICOLI ── */
   .home-articles { padding: 5rem 0; }
@@ -390,13 +404,15 @@ const latestPosts = Object.entries(rawFiles).map(([filePath, content]) => {
     .home-stats__grid { grid-template-columns: 1fr; }
     .home-stat { border-right: none; border-bottom: 1px solid var(--mm-border-light); }
     .home-stat:last-child { border-bottom: none; }
-    .home-services__grid { grid-template-columns: 1fr; }
+    .home-strade__grid { grid-template-columns: 1fr; }
+    .home-strada { padding: 2.5rem 1.8rem; }
+    .home-strada--primary { border-right: none; border-bottom: 2px solid #e85d00; }
     .home-article-row { grid-template-columns: 2rem 1fr 2rem; }
     .home-article-row__cat { display: none; }
     .home-about__grid { grid-template-columns: 1fr; gap: 2.5rem; }
     .home-about__photo { aspect-ratio: 4/3; }
     .home-cta__inner { flex-direction: column; align-items: flex-start; }
-    .home-services__header { flex-direction: column; align-items: flex-start; gap: 0.8rem; }
+    .home-strade__header { max-width: 100%; }
     .home-articles__header { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
     .home-hero__content { padding-bottom: 4rem; }
   }
