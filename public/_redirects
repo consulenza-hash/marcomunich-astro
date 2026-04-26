@@ -5,6 +5,10 @@
 /inizia-da-qui/                      /risorse/                       301
 /inizia-da-qui                       /risorse/                       301
 
+# Vibe coding (ex /dev/)
+/dev/vibe-coding/                    /vibe-coding/                   301
+/dev/vibe-coding                     /vibe-coding/                   301
+
 # Blog (vecchio slug WP)
 /blog-consulenza-marketing/         /blog/                          301
 /blog-2/                            /blog/                          301
