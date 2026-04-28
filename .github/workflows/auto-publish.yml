@@ -1,9 +1,10 @@
 name: Auto-Publish Articles
 
 on:
-  schedule:
-    # Runs daily at 08:00 UTC (10:00 CEST)
-    - cron: '0 8 * * *'
+  # schedule DISATTIVATO 042826 — duplicava daily-rebuild.yml (cron orario, unico cron articoli attivo)
+  # schedule:
+  #   # Runs daily at 08:00 UTC (10:00 CEST)
+  #   - cron: '0 8 * * *'
   workflow_dispatch:  # Allow manual trigger
 
 jobs:
