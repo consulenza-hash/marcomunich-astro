@@ -32,7 +32,7 @@ export const prerender = true;
         <span class="e-window__title">error.log</span>
       </div>
       <div class="e-window__body">
-        <div class="e-cmd">$ GET /{window?.location?.pathname ?? '...'}</div>
+        <div class="e-cmd">$ GET <span id="e-cmd-path">/...</span></div>
         <div class="e-output e-output--err">→ 404 Not Found</div>
         <div class="e-output">→ route non registrata nel sistema</div>
         <div class="e-output e-output--dim">→ usa il menu per navigare</div>
@@ -40,6 +40,10 @@ export const prerender = true;
     </div>
   </div>
 </div>
+
+<script is:inline>
+  (function(){ var el = document.getElementById('e-cmd-path'); if (el) el.textContent = window.location.pathname; })();
+</script>
 
 </BaseLayout>
 
