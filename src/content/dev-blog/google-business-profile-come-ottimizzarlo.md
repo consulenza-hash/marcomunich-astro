@@ -10,7 +10,6 @@ Google Business Profile è il modo più veloce per comparire nelle ricerche loca
 
 ## Quali campi fanno davvero la differenza nel ranking?
 
-![Google Business Profile ottimizzato](/images/dev-blog/google-business-profile.png)
 
 I campi che incidono di più sul posizionamento locale sono spesso quelli meno compilati. La descrizione dell'attività accetta fino a 750 caratteri: usali tutti, con termini specifici del settore e della zona in cui lavori. I prodotti e i servizi con descrizioni specifiche aiutano Google a capire con precisione cosa offri. Gli attributi — accessibilità, pagamenti accettati, servizi disponibili — sono informazioni aggiuntive che Google usa per rispondere a ricerche filtrate come "ristorante con parcheggio vicino a me". Le foto aggiornate segnalano che il profilo è attivo.
 

@@ -10,7 +10,6 @@ Fare SEO nel 2026 richiede due strategie parallele: una per Google classico, una
 
 ## Quali sono i due tipi di ricerca oggi?
 
-![SEO nel 2026 con l'intelligenza artificiale](/images/dev-blog/seo-nel-2025.png)
 
 Quando un potenziale cliente cerca un servizio, usa almeno due canali che funzionano in modo molto diverso.
 

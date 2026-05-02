@@ -10,7 +10,6 @@ Google ha pubblicato un dato concreto: ogni secondo di ritardo nel caricamento d
 
 ## Perché i siti lenti esistono ancora?
 
-![Sito web lento: quanto costa in clienti persi](/images/dev-blog/sito-web-lento.png)
 
 La causa più comune è tecnica ma evitabile: siti costruiti con molti componenti aggiuntivi che si caricano tutti insieme, immagini pesanti non ottimizzate, e server che devono fare molto lavoro prima di mostrare qualcosa all'utente.
 

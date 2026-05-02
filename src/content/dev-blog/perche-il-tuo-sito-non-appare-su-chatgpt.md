@@ -10,7 +10,6 @@ Qualcuno scrive "migliore agenzia web a Milano" su ChatGPT. Oppure chiede a Perp
 
 ## Come i motori AI scelgono cosa citare?
 
-![Perché il sito non appare su ChatGPT](/images/dev-blog/perche-non-appare-chatgpt.png)
 
 ChatGPT, Perplexity, Google AI e gli altri motori AI costruiscono risposte partendo da ciò che riescono a capire con certezza di ogni sito. Tre domande che un motore AI si pone ogni volta che incontra un sito:
 
