@@ -56,10 +56,13 @@
         .then(function (r) { return r.json(); })
         .then(function (data) {
           if (data.ok) {
-            // Imposta anche stats_auth (1 anno) — usato da app.html e PHP APIs su Netsons
-            document.cookie = 'stats_auth=' + encodeURIComponent(pwd) + ';path=/;max-age=31536000;SameSite=Lax';
-            overlay.remove();
-            location.reload();
+            // SEC-019/020 fix: SHA-256 hash — mai plaintext in cookie
+            crypto.subtle.digest('SHA-256', new TextEncoder().encode(pwd)).then(function(buf) {
+              var h = Array.from(new Uint8Array(buf)).map(function(b) { return b.toString(16).padStart(2,'0'); }).join('');
+              document.cookie = 'stats_auth=' + h + ';path=/;max-age=31536000;SameSite=Lax';
+              overlay.remove();
+              location.reload();
+            });
           } else {
             document.getElementById('mm-err').style.display = 'block';
             document.getElementById('mm-pwd').value = '';

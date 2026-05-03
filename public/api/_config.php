@@ -63,7 +63,8 @@ function getAdminPassword(): string {
 function checkAuth(): void {
     $password = getAdminPassword();
     $cookie = $_COOKIE['stats_auth'] ?? '';
-    if (urldecode($cookie) !== $password) {
+    // SEC-019 fix: confronta contro SHA-256 hash, mai plaintext in cookie
+    if ($cookie !== hash('sha256', $password)) {
         http_response_code(401);
         echo json_encode(['error' => 'Non autorizzato']);
         exit;

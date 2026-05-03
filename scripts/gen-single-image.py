@@ -9,7 +9,7 @@ Usage:
 Output:
   public/images/articoli/<slug>/<slug>.jpg
 """
-import sys, os, base64, requests
+import sys, os, base64, subprocess, requests
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -43,6 +43,8 @@ def generate(prompt, out_path, key):
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_bytes(base64.b64decode(b64))
     print(f'OK — saved {out_path} ({out_path.stat().st_size // 1024}KB)')
+    # Auto-add to git to prevent untracked asset 404s in production
+    subprocess.run(['git', 'add', str(out_path)], cwd=str(ROOT), capture_output=True)
     return True
 
 if __name__ == '__main__':

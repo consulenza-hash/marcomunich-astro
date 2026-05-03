@@ -11,7 +11,7 @@ Usage:
   python generate-article-images.py 1 10      # articles 1-10
   python generate-article-images.py sito-web-counselor-coach-generico  # single slug
 """
-import requests, base64, json, re, time, sys, os
+import requests, base64, json, re, time, sys, os, subprocess
 from pathlib import Path
 
 KEY = os.environ.get('IMAGEN_API_KEY', '')
@@ -114,6 +114,8 @@ def generate_image(prompt, output_path, retries=2):
                     # Save as JPEG
                     raw = base64.b64decode(img_b64)
                     output_path.write_bytes(raw)
+                    # Auto-add to git to prevent untracked asset 404s in production
+                    subprocess.run(['git', 'add', str(output_path)], cwd=str(PROJECT_ROOT), capture_output=True)
                     return True
                 else:
                     print(f'    No image in response: {str(data)[:200]}')
