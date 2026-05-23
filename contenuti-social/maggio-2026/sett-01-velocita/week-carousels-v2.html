@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="it"><head>
+<meta charset="UTF-8"><title>Sett-01 Caroselli Settimana</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', sans-serif; background: #1a1a1a; }
+  .slide {
+    width: 1080px; height: 1350px;
+    background: #0a0512;
+    position: relative;
+    padding: 80px 80px 120px;
+    display: flex; flex-direction: column;
+    overflow: hidden;
+    color: white;
+  }
+  .slide.bg-magenta { background: linear-gradient(160deg, #ff2d92 0%, #8a3aff 100%); color: #0a0512; }
+  .slide.bg-violet { background: #8a3aff; color: white; }
+  .slide.bg-magenta-flat { background: #ff2d92; color: #0a0512; }
+  .slide::before {
+    content: ''; position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at 20% 30%, rgba(255,45,146,0.08) 0%, transparent 50%),
+      radial-gradient(circle at 80% 70%, rgba(0,229,255,0.06) 0%, transparent 50%),
+      radial-gradient(circle at 50% 100%, rgba(138,58,255,0.05) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .slide.bg-magenta::before, .slide.bg-violet::before, .slide.bg-magenta-flat::before { display: none; }
+  .slide > * { position: relative; z-index: 1; }
+  .footer {
+    position: absolute; left: 80px; right: 80px; bottom: 60px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 22px; font-weight: 400; color: rgba(255,255,255,0.4);
+    z-index: 2;
+  }
+  .footer .pill {
+    padding: 8px 18px;
+    background: rgba(255,45,146,0.15); color: #ff2d92;
+    border-radius: 999px;
+    font-weight: 600; font-size: 18px; letter-spacing: 0.5px;
+  }
+  .footer .swipe { color: rgba(255,255,255,0.5); font-weight: 600; font-size: 22px; letter-spacing: 1px; }
+  .bg-magenta .footer, .bg-violet .footer, .bg-magenta-flat .footer { color: rgba(10,5,18,0.65); }
+  .bg-magenta .footer .pill, .bg-magenta-flat .footer .pill { background: rgba(10,5,18,0.2); color: #0a0512; }
+  .bg-magenta .footer .swipe, .bg-magenta-flat .footer .swipe { color: rgba(10,5,18,0.7); }
+  .bg-violet .footer .pill { background: rgba(255,255,255,0.2); color: white; }
+  .bg-violet .footer .swipe { color: rgba(255,255,255,0.7); }
+
+  /* Common typography helpers */
+  .center-y { justify-content: center; }
+  .center-all { justify-content: center; align-items: center; text-align: center; }
+  .pill-top {
+    align-self: flex-start;
+    padding: 10px 22px;
+    border-radius: 999px;
+    font-size: 22px; font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 40px;
+  }
+  .pill-cyan { background: rgba(0,229,255,0.15); color: #00e5ff; border: 1px solid rgba(0,229,255,0.4); }
+  .pill-magenta { background: rgba(255,45,146,0.15); color: #ff2d92; border: 1px solid rgba(255,45,146,0.4); }
+  .pill-violet { background: rgba(138,58,255,0.15); color: #8a3aff; border: 1px solid rgba(138,58,255,0.4); }
+
+  .hero-num {
+    font-weight: 900; line-height: 0.85;
+    letter-spacing: -0.04em;
+  }
+  .glow-magenta { color: #ff2d92; text-shadow: 0 0 80px rgba(255,45,146,0.5), 0 0 160px rgba(255,45,146,0.25); }
+  .glow-cyan { color: #00e5ff; text-shadow: 0 0 60px rgba(0,229,255,0.4); }
+  .glow-violet { color: #8a3aff; text-shadow: 0 0 60px rgba(138,58,255,0.4); }
+
+  h2.title {
+    font-size: 56px; font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 40px;
+  }
+  h2.title-lg { font-size: 88px; }
+  .body {
+    font-size: 30px; font-weight: 400;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.5;
+  }
+  .body p { margin-bottom: 22px; }
+  .body .em { color: #ff2d92; font-weight: 700; }
+  .body .em-cyan { color: #00e5ff; font-weight: 700; }
+  .body .em-white { color: white; font-weight: 700; }
+  .closing-italic {
+    margin-top: 30px;
+    font-size: 24px; font-weight: 300; font-style: italic;
+    color: rgba(255,255,255,0.55);
+  }
+  .btn-cta {
+    background: #0a0512;
+    color: white;
+    padding: 26px 50px;
+    font-size: 28px; font-weight: 700;
+    border-radius: 999px;
+    letter-spacing: 0.5px;
+    display: inline-block;
+    margin-top: 30px;
+  }
+  .btn-cta span { color: #ff2d92; }
+  .btn-cta.btn-white { background: white; color: #0a0512; }
+  .btn-cta.btn-white span { color: #8a3aff; }
+  .phone-number {
+    margin-top: 24px;
+    font-size: 36px; font-weight: 900;
+    letter-spacing: 1px;
+    font-variant-numeric: tabular-nums;
+  }
+  .phone-note {
+    margin-top: 6px;
+    font-size: 20px; font-weight: 400; font-style: italic;
+    opacity: 0.6;
+  }
+
+  /* Split screen for SAB */
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; flex: 1; align-items: center; }
+  .split-col { padding: 30px 20px; }
+  .split-col.left { border-right: 1px solid rgba(255,45,146,0.3); padding-right: 40px; opacity: 0.55; }
+  .split-col h3 { font-size: 22px; font-weight: 700; letter-spacing: 2px; color: rgba(255,255,255,0.5); margin-bottom: 24px; }
+  .split-col.right h3 { color: #ff2d92; }
+  .split-col p { font-size: 24px; font-weight: 400; color: rgba(255,255,255,0.85); line-height: 1.5; margin-bottom: 14px; }
+  .split-banner {
+    grid-column: 1 / -1;
+    font-size: 20px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+    margin-bottom: -10px;
+  }
+
+  /* Pagella for MER slide 3 */
+  .pagella-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; margin: 0 auto 50px; }
+  .circle {
+    width: 240px; height: 240px; border-radius: 50%;
+    border: 7px solid #ff2d92;
+    box-shadow: 0 0 50px rgba(255,45,146,0.35), inset 0 0 30px rgba(255,45,146,0.1);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 94px; font-weight: 900; color: white;
+    position: relative;
+  }
+  .circle .label {
+    position: absolute; bottom: -42px; left: 0; right: 0;
+    text-align: center; font-size: 20px; font-weight: 400; color: rgba(255,255,255,0.7);
+    letter-spacing: 1px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== MAR — 5 slide ===================== -->
+
+<!-- MAR slide 1 — Hook 3 secondi -->
+<section class="slide center-all" id="mar-01">
+  <div class="hero-num glow-magenta" style="font-size: 500px; margin-bottom: 40px;">3</div>
+  <div style="font-size: 34px; font-weight: 400; color: rgba(255,255,255,0.85); max-width: 800px;">
+    I secondi che hai<br>per non perdere il cliente.
+  </div>
+  <div class="footer"><span class="pill">@marcomunich.dev</span><span class="swipe">scorri →</span></div>
+</section>
+
+<!-- MAR slide 2 — Secondo 1 -->
+<section class="slide center-y" id="mar-02">
+  <div class="pill-top pill-cyan">SECONDO 1</div>
+  <h2 class="title">Il cliente ha trovato<br>il tuo nome.</h2>
+  <div class="body">
+    <p>Ha cliccato il link.</p>
+    <p>Adesso aspetta. Il telefono è in mano.</p>
+    <p>La pazienza è già in conto alla rovescia.</p>
+  </div>
+  <div class="footer"><span class="pill">@marcomunich.dev</span><span class="swipe">scorri →</span></div>
+</section>
+
+<!-- MAR slide 3 — Secondo 2 -->
+<section class="slide center-y" id="mar-03">
+  <div class="pill-top pill-magenta">SECONDO 2</div>
+  <h2 class="title">Il sito ancora<br>non è comparso.</h2>
+  <div class="body">
+    <p>Non pensa "è lento".</p>
+    <p>Preme il tasto indietro <span class="em">senza nemmeno rendersene conto</span>.</p>
+    <p>È automatico.</p>
+  </div>
+  <div class="footer"><span class="pill">@marcomunich.dev</span><span class="swipe">scorri →</span></div>
+</section>
+
+<!-- MAR slide 4 — Secondo 3 -->
+<section class="slide center-y" id="mar-04">
+  <div class="pill-top pill-violet">SECONDO 3</div>
+  <h2 class="title">Il consulente successivo<br>ha già il suo numero.</h2>
+  <div class="body">
+    <p>Nessuna telefonata.</p>
+    <p>Nessun messaggio di scuse.</p>
+    <p>Solo silenzio. <span class="em-cyan">Ogni giorno, in silenzio.</span></p>
+  </div>
+  <div class="footer"><span class="pill">@marcomunich.dev</span><span class="swipe">scorri →</span></div>
+</section>
+
+<!-- MAR slide 5 — CTA -->
+<section class="slide bg-magenta center-all" id="mar-05">
+  <div style="font-size: 50px; font-weight: 900; line-height: 1.15; margin-bottom: 40px; max-width: 800px;">
+    I siti di Marco Munich<br>caricano in 0,8 secondi.
+  </div>
+  <div style="font-size: 26px; max-width: 700px; margin-bottom: 30px;">
+    Tre secondi non li usi per aspettare.<br>Li usi per convincere.
+  </div>
+  <div class="btn-cta">Scrivimi su <span>WhatsApp →</span></div>
+  <div class="phone-number">+39 380 5776332</div>
+  <div class="phone-note">solo messaggi</div>
+  <div class="footer"><span class="pill">@marcomunich.dev</span><span class="swipe">marcomunich.com</span></div>
+</section>
+
+<!-- ===================== MER — 4 slide ===================== -->
+
+<!-- MER slide 1 — Google entra -->
+<section class="slide center-y" id="mer-01">
+  <h2 class="title-lg title">Google entra<br>nel tuo sito<br>ogni settimana.</h2>
+  <div class="body" style="color: #00e5ff; font-weight: 600;">
+    E prende nota di tutto.
+  </div>
+  <div class="footer"><span class="pill">@marcomunich.dev</span><span class="swipe">scorri →</span></div>
+</section>
+
+<!-- MER slide 2 — Cosa misura -->
+<section class="slide center-y" id="mer-02">
+  <h2 class="title" style="color: #ff2d92;">Quanto ci mette<br>a comparire.</h2>
+  <div class="body">
+    <p>Non legge cosa scrivi.<br>Non guarda i colori.<br><span class="em-white">Guarda il cronometro.</span></p>
+    <p>Se compare in meno di 1 secondo,<br>prende nota positiva.</p>
+    <p>Se ci mette 4-5 secondi,<br><span class="em">ti tiene sotto ai concorrenti</span>.</p>
+  </div>
+  <div class="footer"><span class="pill">@marcomunich.dev</span><span class="swipe">scorri →</span></div>
+</section>
+
+<!-- MER slide 3 — Pagella -->
+<section class="slide center-y" id="mer-03">
+  <div class="pill-top pill-cyan" style="align-self: center; margin-bottom: 60px;">PAGELLA GOOGLE — marcomunich.com</div>
+  <div class="pagella-grid">
+    <div class="circle">100<span class="label">Veloce</span></div>
+    <div class="circle">100<span class="label">Accessibile</span></div>
+    <div class="circle">100<span class="label">Pulito</span></div>
+    <div class="circle">100<span class="label">Trovabile</span></div>
+  </div>
+  <div class="body" style="text-align: center; margin-top: 30px;">
+    Non per il numerino.<br>Per i clienti che Google gli manda.
+  </div>
+  <div class="footer"><span class="pill">@marcomunich.dev</span><span class="swipe">scorri →</span></div>
+</section>
+
+<!-- MER slide 4 — CTA -->
+<section class="slide bg-violet center-all" id="mer-04">
+  <h2 class="title" style="color: white; margin-bottom: 40px;">Vuoi sapere<br>che voto prende<br>il tuo sito?</h2>
+  <div class="body" style="color: rgba(255,255,255,0.85);">
+    Scrivimi. Te lo dico in 5 minuti,<br>senza impegno.
+  </div>
+  <div class="btn-cta btn-white">Scrivimi su <span>WhatsApp →</span></div>
+  <div class="phone-number" style="color: white;">+39 380 5776332</div>
+  <div class="phone-note" style="color: rgba(255,255,255,0.7);">solo messaggi</div>
+  <div class="footer"><span class="pill">@marcomunich.dev</span><span class="swipe">marcomunich.com</span></div>
+</section>
+
+<!-- ===================== VEN — 4 slide ===================== -->
+
+<!-- VEN slide 1 — Hook -->
+<section class="slide center-y" id="ven-01">
+  <div style="font-size: 44px; font-weight: 900; color: #ff2d92; margin-bottom: 4px;">Il sito lento</div>
+  <div style="font-size: 110px; font-weight: 900; color: white; letter-spacing: -0.03em; line-height: 1; margin-bottom: 50px;">HA UN PREZZO.</div>
+  <div class="body">
+    <p>Non lo vedi sulla fattura.</p>
+    <p><span class="em-white">Lo vedi sul telefono.</span></p>
+    <p>Che non squilla.</p>
+  </div>
+  <div class="footer"><span class="pill">@marcomunich.dev</span><span class="swipe">scorri →</span></div>
+</section>
+
+<!-- VEN slide 2 — Meccanismo -->
+<section class="slide center-y" id="ven-02">
+  <h2 class="title">Il meccanismo<br>è semplice.</h2>
+  <div class="body">
+    <p>Qualcuno cerca un consulente come te.</p>
+    <p>Trova il tuo nome. Apre il sito.</p>
+    <p><span class="em">Aspetta 4 secondi. Chiude.</span></p>
+    <p>Vai al prossimo. Nessuna telefonata.<br>E tu non lo sai mai.</p>
+  </div>
+  <div class="footer"><span class="pill">@marcomunich.dev</span><span class="swipe">scorri →</span></div>
+</section>
+
+<!-- VEN slide 3 — Conto Marco -->
+<section class="slide center-y" id="ven-03">
+  <h2 class="title" style="color: #00e5ff;">I siti che costruisco:</h2>
+  <div class="hero-num glow-magenta" style="font-size: 200px; margin: 30px 0;">0,8s</div>
+  <div class="body">
+    <p>Di media, dal tap alla pagina caricata.</p>
+    <p>Non si aspetta.<br>Si legge subito chi sei e cosa fai.</p>
+  </div>
+  <div class="footer"><span class="pill">@marcomunich.dev</span><span class="swipe">scorri →</span></div>
+</section>
+
+<!-- VEN slide 4 — CTA -->
+<section class="slide bg-magenta center-all" id="ven-04">
+  <h2 style="font-size: 56px; font-weight: 900; line-height: 1.1; margin-bottom: 40px;">Quanto ci mette<br>il tuo sito adesso?</h2>
+  <div style="font-size: 28px; font-weight: 400; margin-bottom: 20px;">
+    Se non lo sai,<br>è già troppo.
+  </div>
+  <div class="btn-cta">Scrivimi su <span>WhatsApp →</span></div>
+  <div class="phone-number">+39 380 5776332</div>
+  <div class="phone-note">solo messaggi</div>
+  <div class="footer"><span class="pill">@marcomunich.dev</span><span class="swipe">marcomunich.com</span></div>
+</section>
+
+<!-- ===================== SAB — 5 slide ===================== -->
+
+<!-- SAB slide 1 — Setup -->
+<section class="slide center-y" id="sab-01">
+  <div class="split" style="height: 100%; align-items: stretch;">
+    <div class="split-col left" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+      <h3>SITO GENERICO</h3>
+    </div>
+    <div class="split-col right" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+      <h3 style="color: #ff2d92;">SITO MARCO MUNICH</h3>
+    </div>
+  </div>
+  <div style="text-align: center; font-size: 26px; color: rgba(255,255,255,0.7); margin-top: 30px;">
+    Stessa persona. Stesso telefono.<br>Due esperienze diverse.
+  </div>
+  <div class="footer"><span class="pill">@marcomunich.dev</span><span class="swipe">scorri →</span></div>
+</section>
+
+<!-- SAB slide 2 — Caricamento -->
+<section class="slide center-y" id="sab-02">
+  <div class="split-banner" style="margin-top: 30px;">AL CLICK</div>
+  <div class="split" style="margin-top: 30px;">
+    <div class="split-col left">
+      <p>Spinner.</p><p>1 secondo.</p><p>2 secondi.</p><p>3 secondi.</p><p>Ancora aspetta.</p>
+    </div>
+    <div class="split-col right">
+      <div style="font-size: 80px; font-weight: 900; color: #ff2d92; line-height: 1; margin-bottom: 20px;">0,8s.</div>
+      <p>Caricato.</p><p>Si legge già.</p>
+    </div>
+  </div>
+  <div class="footer"><span class="pill">@marcomunich.dev</span><span class="swipe">scorri →</span></div>
+</section>
+
+<!-- SAB slide 3 — Scroll -->
+<section class="slide center-y" id="sab-03">
+  <div class="split-banner" style="margin-top: 30px;">MENTRE SCROLLA</div>
+  <div class="split" style="margin-top: 30px;">
+    <div class="split-col left">
+      <p>La pagina salta.</p><p>Immagine che compare in ritardo.</p><p>Testo che si sposta.</p><p>Fastidio.</p>
+    </div>
+    <div class="split-col right">
+      <p>Scorre fluida.</p><p>Nessun salto.</p><p>Nessun ritardo.</p><p>Si legge tutto.</p>
+    </div>
+  </div>
+  <div class="footer"><span class="pill">@marcomunich.dev</span><span class="swipe">scorri →</span></div>
+</section>
+
+<!-- SAB slide 4 — Esito -->
+<section class="slide center-y" id="sab-04">
+  <div class="split-banner" style="margin-top: 30px;">RISULTATO</div>
+  <div class="split" style="margin-top: 30px;">
+    <div class="split-col left" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+      <div style="font-size: 52px; font-weight: 900; color: rgba(255,255,255,0.45);">Chiude.</div>
+    </div>
+    <div class="split-col right" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+      <div style="font-size: 38px; font-weight: 900; color: #00e5ff; line-height: 1.15;">Legge fino<br>alla pagina<br>contatti.</div>
+    </div>
+  </div>
+  <div class="body" style="text-align: center; margin-top: 30px;">
+    La differenza non è estetica.<br><span class="em-white">È se il telefono squilla o no.</span>
+  </div>
+  <div class="footer"><span class="pill">@marcomunich.dev</span><span class="swipe">scorri →</span></div>
+</section>
+
+<!-- SAB slide 5 — CTA -->
+<section class="slide center-all" id="sab-05">
+  <h2 class="title-lg title" style="color: white;">Ti piacerebbe<br>avere quella<br>colonna destra<br>nel tuo sito?</h2>
+  <div class="body">
+    Scrivimi. Ne parliamo senza impegno.
+  </div>
+  <div class="btn-cta" style="background: #ff2d92; color: #0a0512;">Scrivimi su <span style="color: #0a0512;">WhatsApp →</span></div>
+  <div class="phone-number">+39 380 5776332</div>
+  <div class="phone-note">solo messaggi</div>
+  <div class="footer"><span class="pill">@marcomunich.dev</span><span class="swipe">marcomunich.com</span></div>
+</section>
+
+<!-- ===================== DOM — 3 slide ===================== -->
+
+<!-- DOM slide 1 — Bilancio -->
+<section class="slide center-y" id="dom-01">
+  <h2 class="title-lg title" style="color: #ff2d92;">Una settimana<br>di velocità.</h2>
+  <div class="body">
+    <p><span class="em-white">Lun:</span> il dato. 0,8 secondi.</p>
+    <p><span class="em-white">Mar:</span> i 3 secondi che decidono.</p>
+    <p><span class="em-white">Gio:</span> la catena cliente → sito → telefono.</p>
+    <p><span class="em-white">Ven:</span> il costo invisibile.</p>
+    <p><span class="em-white">Sab:</span> il confronto diretto.</p>
+  </div>
+  <div class="closing-italic">Ti è restato qualcosa?</div>
+  <div class="footer"><span class="pill">@marcomunich.dev</span><span class="swipe">scorri →</span></div>
+</section>
+
+<!-- DOM slide 2 — La cosa che conta -->
+<section class="slide center-y" id="dom-02">
+  <h2 class="title">Un sito lento<br>non è un problema<br>tecnico.</h2>
+  <div class="body">
+    <p>È <span class="em">clienti che non arrivano</span><br>fino alla fine.</p>
+    <p>Persone che avrebbero chiamato,<br>che non sanno nemmeno di averti trovato.</p>
+    <p>Il sito veloce non risolve tutto.<br>Ma rimuove il primo ostacolo.</p>
+  </div>
+  <div style="font-size: 32px; font-weight: 700; color: #00e5ff; margin-top: 30px;">
+    0,8 secondi. Quello costruisco.
+  </div>
+  <div class="footer"><span class="pill">@marcomunich.dev</span><span class="swipe">scorri →</span></div>
+</section>
+
+<!-- DOM slide 3 — CTA + teaser -->
+<section class="slide bg-magenta-flat center-all" id="dom-03">
+  <h2 style="font-size: 48px; font-weight: 900; line-height: 1.15; margin-bottom: 30px;">Se il tuo sito<br>fa ancora aspettare,<br>scrivimi.</h2>
+  <div style="font-size: 26px; font-weight: 400; margin-bottom: 30px; max-width: 700px;">
+    Guardo il tuo sito.<br>Ti dico cosa si può fare.<br>Senza impegno.
+  </div>
+  <div class="btn-cta">WhatsApp → <span>+39 380 5776332</span></div>
+  <div class="phone-note">solo messaggi</div>
+  <div style="height: 1px; background: rgba(10,5,18,0.3); margin: 40px auto; width: 60%;"></div>
+  <div style="font-size: 22px; font-weight: 700; max-width: 700px;">
+    La prossima settimana:<br>come ti trovano Google e ChatGPT.
+  </div>
+  <div class="footer"><span class="pill">@marcomunich.dev</span><span class="swipe">marcomunich.com</span></div>
+</section>
+
+<!-- ===================== GIO — 6 slide ===================== -->
+
+<!-- GIO slide 1 — Hook domanda -->
+<section class="slide center-y" id="gio-01">
+  <h2 class="title-lg title">Perché un sito lento<br>ti fa perdere clienti?</h2>
+  <div class="body" style="color: #00e5ff; font-weight: 600;">
+    Non per motivi tecnici.<br>Per motivi umani.
+  </div>
+  <div class="footer"><span class="pill">@marcomunich.dev</span><span class="swipe">scorri →</span></div>
+</section>
+
+<!-- GIO slide 2 -->
+<section class="slide center-y" id="gio-02">
+  <div style="font-size: 130px; font-weight: 900; color: #ff2d92; line-height: 1; margin-bottom: 30px;">01</div>
+  <div style="font-size: 38px; font-weight: 700; color: white; margin-bottom: 30px;">Il cliente trova il tuo nome.</div>
+  <div class="body">
+    Su Google. In un gruppo Facebook.<br>Da un passaparola.<br>Clicca il link del tuo sito.<br>
+    <span class="em-white">Adesso ha 3 secondi di pazienza. Non di più.</span>
+  </div>
+  <div class="footer"><span class="pill">@marcomunich.dev</span><span class="swipe">scorri →</span></div>
+</section>
+
+<!-- GIO slide 3 -->
+<section class="slide center-y" id="gio-03">
+  <div style="font-size: 130px; font-weight: 900; color: #ff2d92; line-height: 1; margin-bottom: 30px;">02</div>
+  <div style="font-size: 38px; font-weight: 700; color: white; margin-bottom: 30px;">Il sito non carica in tempo.</div>
+  <div class="body">
+    Non si arrabbia. Non ti manda un messaggio.<br>
+    <span class="em">Chiude e passa al consulente successivo.</span><br>
+    Succede in silenzio, ogni volta.<br>Tu non lo sai mai.
+  </div>
+  <div class="footer"><span class="pill">@marcomunich.dev</span><span class="swipe">scorri →</span></div>
+</section>
+
+<!-- GIO slide 4 -->
+<section class="slide center-y" id="gio-04">
+  <div style="font-size: 130px; font-weight: 900; color: #ff2d92; line-height: 1; margin-bottom: 30px;">03</div>
+  <div style="font-size: 36px; font-weight: 700; color: white; line-height: 1.15; margin-bottom: 30px;">Ogni cliente che scappa<br>è una chiamata che non ricevi.</div>
+  <div class="body">
+    Non un bounce rate. Non una metrica.<br>
+    Una persona reale che voleva capire se potevi aiutarla<br>
+    e ha trovato un muro.
+  </div>
+  <div class="footer"><span class="pill">@marcomunich.dev</span><span class="swipe">scorri →</span></div>
+</section>
+
+<!-- GIO slide 5 -->
+<section class="slide center-y" id="gio-05">
+  <div style="font-size: 130px; font-weight: 900; color: #ff2d92; line-height: 1; margin-bottom: 30px;">04</div>
+  <div style="font-size: 36px; font-weight: 700; color: white; line-height: 1.15; margin-bottom: 30px;">Un sito che carica subito<br>non è un lusso.</div>
+  <div class="body">
+    È la differenza tra qualcuno<br>che arriva fino alla pagina contatti<br>o qualcuno che non ci arriva mai.<br><br>
+    Costruisco siti che caricano in media in <span class="em">0,8 secondi</span>.<br>Perché quel secondo conta.
+  </div>
+  <div class="footer"><span class="pill">@marcomunich.dev</span><span class="swipe">scorri →</span></div>
+</section>
+
+<!-- GIO slide 6 — CTA -->
+<section class="slide bg-violet center-all" id="gio-06">
+  <h2 style="font-size: 56px; font-weight: 900; line-height: 1.15; margin-bottom: 30px;">Quanto ci mette<br>il tuo sito adesso?</h2>
+  <div style="font-size: 28px; font-weight: 400; margin-bottom: 30px;">
+    Se non lo sai, scrivimi.<br>Te lo dico in 5 minuti.
+  </div>
+  <div class="btn-cta btn-white">Scrivimi su <span>WhatsApp →</span></div>
+  <div class="phone-number" style="color: white;">+39 380 5776332</div>
+  <div class="phone-note" style="color: rgba(255,255,255,0.7);">solo messaggi</div>
+  <div class="footer"><span class="pill">@marcomunich.dev</span><span class="swipe">marcomunich.com</span></div>
+</section>
+
+</body></html>
