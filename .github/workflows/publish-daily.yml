@@ -10,6 +10,10 @@ on:
         description: 'Dry run (no actual publish)'
         type: boolean
         default: false
+      force_id:
+        description: 'Force publish carousel id N (ignora data)'
+        type: string
+        default: ''
 
 jobs:
   publish:
@@ -33,8 +37,12 @@ jobs:
           INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
         run: |
           cd scripts
+          ARGS=""
+          if [ -n "${{ github.event.inputs.force_id }}" ]; then
+            ARGS="--force-id ${{ github.event.inputs.force_id }}"
+          fi
           if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then
-            python publish_carousel.py --dry-run
+            python publish_carousel.py --dry-run $ARGS
           else
-            python publish_carousel.py --confirm
+            python publish_carousel.py --confirm $ARGS
           fi
