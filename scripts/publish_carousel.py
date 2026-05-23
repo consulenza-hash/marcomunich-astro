@@ -231,12 +231,17 @@ def publish_entry(entry, config, dry_run=False):
         print("  Alt texts: none in schedule — slides will publish without accessibility text")
 
     # Pre-check: verify all slide URLs are accessible before touching Instagram API
+    # Use a realistic UA — Cloudflare WAF/Bot Fight Mode blocks python-requests/* from datacenter IPs (GH Actions runners)
     print("  Pre-check: verifying slide URLs are accessible…")
+    precheck_headers = {
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+        "Accept": "image/avif,image/webp,image/jpeg,image/png,*/*;q=0.8",
+    }
     for attempt in range(1, 6):
         failed = []
         for url in urls:
             try:
-                r = requests.get(url, timeout=15, stream=True)
+                r = requests.get(url, timeout=15, stream=True, headers=precheck_headers)
                 chunk = b""
                 for data in r.iter_content(chunk_size=1024):
                     chunk += data
