@@ -250,8 +250,12 @@ def publish_entry(entry, config, dry_run=False):
                 r.close()
                 if r.status_code != 200 or len(chunk) < 10000:
                     failed.append(url)
-            except Exception:
+                    if attempt == 1:
+                        print(f"    DEBUG {url.rsplit('/',1)[-1]}: status={r.status_code} bytes_read={len(chunk)} ctype={r.headers.get('content-type','?')} cf-ray={r.headers.get('cf-ray','none')}")
+            except Exception as e:
                 failed.append(url)
+                if attempt == 1:
+                    print(f"    DEBUG {url.rsplit('/',1)[-1]}: EXCEPTION {type(e).__name__}: {e}")
         if not failed:
             print(f"  ✓ All {len(urls)} URLs accessible")
             break
