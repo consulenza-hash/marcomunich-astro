@@ -37,7 +37,7 @@ curl -s -X POST "https://api.telegram.org/bot$(cat D:/marcomunich.com/.env.teleg
 
 Prima di generare qualsiasi contenuto, leggi sempre:
 
-1. `.claude/business-dna/knowledge-files/08-tone-voice.md` — **PRIMA DI TUTTO**: tono e voce di Marco, analizzato dal suo profilo reale @marcomunich1983
+1. `.claude/business-dna/knowledge-files/08-tone-voice.md` — **PRIMA DI TUTTO**: tono e voce di Marco, analizzato dal suo profilo reale @marcomunich.dev
 2. `.claude/business-dna/knowledge-files/` — strategia, avatar, voce, posizionamento
 3. `.claude/business-dna/knowledge-files/07-content-engine-rules.md` — vincoli operativi
 4. `contenuti-social/swipe-file.md` — ispirazione da contenuti che Marco ha salvato (aggiornato periodicamente)

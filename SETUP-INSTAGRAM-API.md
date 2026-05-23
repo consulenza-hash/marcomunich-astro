@@ -27,7 +27,7 @@ Quando finisci e salvi il token come GitHub Secret, l'automazione è pronta e il
 
 Prima di iniziare, conferma che valgano queste 2 cose (dovrebbero, le abbiamo già verificate):
 
-- [ ] `@marcomunich1983` è un account **Business** o **Creator** (non Personal)
+- [ ] `@marcomunich.dev` è un account **Business** o **Creator** (non Personal)
 - [ ] È collegato alla Pagina Facebook **Personal Branding Olistico**
 
 Se manca qualcosa vai nell'app Instagram → Impostazioni → Account → Tipo di account → Business/Creator.
@@ -157,7 +157,7 @@ Se il dry-run è pulito:
 2. **Force id**: metti `1`
 3. Clicca Run
 
-Il workflow farà il publish vero. Tra 30 secondi controlla Instagram `@marcomunich1983` → dovresti vedere il Carosello 1 pubblicato.
+Il workflow farà il publish vero. Tra 30 secondi controlla Instagram `@marcomunich.dev` → dovresti vedere il Carosello 1 pubblicato.
 
 Il workflow aggiornerà `schedule.json` marcando il Carosello 1 come "published" e farà commit automatico.
 

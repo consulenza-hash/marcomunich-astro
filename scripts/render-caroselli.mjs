@@ -186,7 +186,7 @@ function generateSlideHTML(carouselNum, slide, idx, total, carouselTitle) {
         <div class="service"><span class="num">06</span><span>Lavorare Senza Sito Web</span></div>
       </div>
     </div>
-    <div class="cta">→ marcomunich.com · @marcomunich1983</div>
+    <div class="cta">→ marcomunich.com · @marcomunich.dev</div>
   </div>
   <div></div>
 </section>`;

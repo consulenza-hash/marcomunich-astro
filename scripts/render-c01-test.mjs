@@ -120,7 +120,7 @@ for (let i = 0; i < slides.length; i++) {
           </div>
         </div>
       </div>
-      <div style="font-family:'Inter',sans-serif;font-size:22px;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:#0d0d0d;margin-top:36px;padding-top:24px;border-top:3px solid #0d0d0d;max-width:860px">→ marcomunich.com · @marcomunich1983</div>
+      <div style="font-family:'Inter',sans-serif;font-size:22px;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:#0d0d0d;margin-top:36px;padding-top:24px;border-top:3px solid #0d0d0d;max-width:860px">→ marcomunich.com · @marcomunich.dev</div>
     </div>
     <div></div>
   </div>
