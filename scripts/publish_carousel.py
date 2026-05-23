@@ -217,6 +217,7 @@ def wait_for_container_ready(ig_user_id, access_token, container_id, timeout=120
 
 def publish_entry(entry, config, dry_run=False):
     """Execute the full publish flow for a single schedule entry."""
+    _require_requests()  # pre-check uses requests.get; lazy import must happen here, not only in __main__
     cid = entry["id"]
     print(f"> Publishing Carosello {cid}: {entry['title']}")
     print(f"  Date: {entry['date']}")
@@ -250,12 +251,8 @@ def publish_entry(entry, config, dry_run=False):
                 r.close()
                 if r.status_code != 200 or len(chunk) < 10000:
                     failed.append(url)
-                    if attempt == 1:
-                        print(f"    DEBUG {url.rsplit('/',1)[-1]}: status={r.status_code} bytes_read={len(chunk)} ctype={r.headers.get('content-type','?')} cf-ray={r.headers.get('cf-ray','none')}")
-            except Exception as e:
+            except Exception:
                 failed.append(url)
-                if attempt == 1:
-                    print(f"    DEBUG {url.rsplit('/',1)[-1]}: EXCEPTION {type(e).__name__}: {e}")
         if not failed:
             print(f"  ✓ All {len(urls)} URLs accessible")
             break
