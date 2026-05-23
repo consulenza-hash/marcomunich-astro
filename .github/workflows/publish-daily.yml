@@ -1,4 +1,4 @@
-name: Publish Daily — Carousel + Post + Reel
+name: Publish Daily — Carousel only
 
 on:
   schedule:
@@ -27,16 +27,14 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests instagrapi pillow
 
-      - name: Publish daily (carousel + post + reel)
+      - name: Publish carousel
         env:
           META_ACCESS_TOKEN: ${{ secrets.META_ACCESS_TOKEN }}
           INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
-          STORIES_BASE_URL: https://marcomunich.com/contenuti-social
-          REELS_BASE_URL: https://marcomunich.com/contenuti-social/video-reels
         run: |
           cd scripts
           if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then
-            python publish_daily.py --dry-run
+            python publish_carousel.py --dry-run
           else
-            python publish_daily.py
+            python publish_carousel.py --confirm
           fi
