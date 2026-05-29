@@ -1,11 +1,11 @@
 # Memory
 
 ## Now
-- **PRESTAZIONI SITO** (040926) — redirect apex→www aggiunto (.htaccess), ora marcomunich.com passa per CF Pages CDN. Immagini compresse -162MB. /siti-web-showcase/ live.
-- **Email contatti aggiornata**: consulenza@marcomunich.com (era ciao@)
-- **CF Pages env vars** — ⚠️ Marco deve ancora aggiungere ADMIN_PASSWORD_HASH + ADMIN_SESSION_TOKEN su CF Pages Settings
-- **Pipeline IG Graph API OPERATIVA** — C01 pubblicato, stories + reels workflow attivi
-- **WIP libro**: "Content Marketing Olistico" — bozza in `content-marketing-olistico-bozza.md`
+- **PENTEST HIGH aperti** (050426) — cookie `stats_auth` + `admin_auth` senza flag `Secure`/`HttpOnly`. **Prima priorità prossima sessione code** (regola permanente, bloccato 35 gg).
+- **/sec-review OVERDUE** (35 gg da 24/04) — eseguire prima di scrivere codice nuovo.
+- **IG sett-01**: 101-106 pubblicati, 107 cron Sab 30/05 11:00 (date allineate).
+- **IG sett-02 "Farsi trovare"**: piano + schedule + caption + alt_texts pronti (id 201-207), MANCANO 35 slide JPG da renderizzare → bloccante per Lun 02/06.
+- **SEC-022 APERTO** — Ghost v5.130 CVE critici. Richiede SSH: `ghost update`.
 
 ## Project
 - **Nome**: marcomunich-astro — sito di Marco Munich, consulente Personal Branding Olistico
@@ -13,20 +13,23 @@
 - **Obiettivo**: acquisire clienti per consulenze e siti web €2.500+
 
 ## Stack
-- Astro 6.1.4 SSG + Tailwind CSS (design system v2, token in `src/styles/global.css`)
-- @anthropic-ai/sdk (generatore AI articoli)
+- Astro SSG + Tailwind CSS (design system v2, token in `src/styles/global.css`)
+- **Ghost CMS v5.130** su `cms.marcomunich.com` — editor articoli principale
+- Ghost Content API Key: `7d68c14ee140db23b05d66c572`
+- Ghost Admin API Key: in env var `GHOST_ADMIN_API_KEY` (GH Secret)
 - Deploy: push main → GitHub Actions → **Cloudflare Pages**
-- PHP APIs (checkout Stripe, etc.) → rimangono su Netsons via FTP
+- PHP APIs (Ghost proxy, auth, stats) → Netsons `89.40.173.242` via CF Pages proxy
 
 ## Key Files
 - Config: `astro.config.mjs`, `tailwind.config.mjs`
+- Ghost client: `src/lib/ghost.ts` (Content API)
+- Ghost helpers PHP: `public/api/_ghost.php` (Admin API, JWT, mobiledoc, rebuild)
+- PHP APIs: `public/api/lista-articoli.php`, `articolo.php`, `salva-bozza.php`, `pubblica-articolo.php`, `elimina-articolo.php`, `ripristina-articolo.php`, `salva-batch.php`
+- CF Proxy: `functions/api/[[path]].js` → `http://89.40.173.242` con Host header
+- Admin auth: `src/components/AdminGuard.astro` + `functions/admin/verify.js`
+- Admin: `src/pages/admin/index.astro` (hub), `app.html`, `genera.astro`, `riscrivi.astro`
 - Stili: `src/styles/global.css` · Middleware: `src/middleware.ts`
-- Contenuto: `src/content/articoli/` (253 articoli .mdoc — 52 nuovi dal piano 6 mesi)
-- Admin auth: `src/components/AdminGuard.astro` + `functions/admin/verify.js` + `functions/_middleware.js`
-- Admin: `genera.astro`, `articoli.astro`, `clienti.astro`, `social-piano.astro`
-- Portfolio: `src/pages/portfolio/` (13 demo) · `public/images/portfolio/` (61 img)
-- Dev: `src/pages/dev/` (6 pagine + case study)
-- Content Machine: `.claude/business-dna/` + `.claude/agents/art-director.md` + `scripts/telegram-webhook-server.mjs`
+- Content Machine: `.claude/business-dna/` + `.claude/agents/art-director.md`
 
 ## Pagine principali
 index, chi-sono, servizi, risorse, contatti, libri, cmfo-lezione1/2,
@@ -56,19 +59,19 @@ lavorare-senzasito, [slug].astro, blog/, categoria/, tag/, admin/, 404
 - Copy italiano: no "non X ma Y", no triplette, no emdash, no meta-frasi, ritmo disteso
 
 ## Open Threads
-- **⚠️ CF Pages env vars** — Marco deve aggiungere ADMIN_PASSWORD_HASH + ADMIN_SESSION_TOKEN in CF Pages Settings → Environment Variables → Production (vedi Daily Note 040726)
-- **Token IG rotation** — scade intorno al 04/06/2026. Rigenera da Meta dev console, aggiorna secret `META_ACCESS_TOKEN`
-- **Legal/GEO fix** (10 item) — vedi Daily Note 040126 per lista completa
-- **Wikidata entry** — da creare manualmente (20 min, nessun codice)
+- **⚠️ PENTEST 050426** — 2 HIGH: cookie `stats_auth` + `admin_auth` senza flag `Secure`/`HttpOnly`. 4 MEDIUM: CSP `unsafe-inline`, /admin/ in robots.txt, route wp-json residua, Netlify headers.
+- **⚠️ SEC-022 APERTO** — Ghost v5.130 CVE critici. Richiede SSH: `ghost update`.
+- **⚠️ YouTube Postiz** — GCP OAuth client pronto (ID: 653999554080-...282n). Marco deve: 1) salvare redirect URI Postiz in GCP, 2) generare nuovo secret, 3) darmelo. Poi: enable YouTube Data API v3, add Railway env vars.
+- **⚠️ CF Pages env vars** — GHOST_URL + GHOST_ADMIN_API_KEY + GITHUB_TOKEN da aggiungere
+- **Token IG rotation** — scade ~062326. Promemoria: ~062026 rigenerare.
+- **Legal/GEO fix** (10 item) — vedi Daily Note 040126
+- **Daily rebuild workflow failing** — `Daily Rebuild — Publish Scheduled` failure in GH Actions
+- **Wikidata entry** — da creare manualmente (20 min)
 - **P.IVA in privacy policy** — da commercialista
-- Icone social /risorse: non visibili Safari mobile (SVG inline, irrisolto)
-- Stripe webhook test mode failing (non impatta live)
-- LinkedIn API 403 — person URN non autorizzato
-- Batch rewrite: 1 solo commit per tutti gli articoli (API Trees/Commits)
 - 100+ click ads, 0 acquisti Prompt Pack — funnel da verificare
 - SEO: 27 articoli senza schema_faq (GEO-008)
-- `/llms-full.txt` mancante (GEO-004)
-- `admin-panel.astro` (root level) non ha AdminGuard — da valutare
+- og:image è 330×330 (sub-ottimale per OG card) → da creare dedicata 1200×630
+- ~~`/llms-full.txt` mancante (GEO-004)~~ ✅ RESOLVED 052926 (443 righe, 7 sezioni)
 
 ## Blockers
 - Nessuno
