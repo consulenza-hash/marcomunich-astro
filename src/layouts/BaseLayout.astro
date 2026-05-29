@@ -22,7 +22,7 @@ import '@styles/global.css';
 const {
   title = 'Marco Munich - Personal Branding Olistico',
   description = "L'autenticità è la strada per fare qualsiasi cosa nella vita",
-  image = 'https://marcomunich.com/og-image.jpg',
+  image = 'https://marcomunich.com/og/marco-munich.png',
   currentPath = '/',
   ctaLink = '',
   ctaLabel = '',
@@ -50,6 +50,14 @@ const schemaGraph = [
       "@id": `${siteUrl}/#logo`
     },
     "knowsAbout": [
+      "Sviluppo Siti Web",
+      "Sviluppo Applicazioni Web",
+      "Web Performance",
+      "Core Web Vitals",
+      "SEO",
+      "GEO Generative Engine Optimization",
+      "Astro Framework",
+      "Cloudflare Pages",
       "Personal Branding",
       "Marketing Autentico",
       "Content Marketing",
@@ -60,18 +68,28 @@ const schemaGraph = [
       "Settore Olistico",
       "Creazione di Contenuti",
       "Intelligenza Artificiale per Contenuti",
-      "Benessere e Crescita Personale",
       "Personal Branding Olistico"
     ],
-    "hasOccupation": {
-      "@type": "Occupation",
-      "name": "Consulente di Personal Branding Olistico",
-      "description": "Specializzato in marketing autentico e comunicazione online per coach, counselor, terapeuti e operatori olistici in Italia",
-      "occupationLocation": {
-        "@type": "Country",
-        "name": "Italia"
+    "hasOccupation": [
+      {
+        "@type": "Occupation",
+        "name": "Sviluppatore di Siti Web e Applicazioni Web",
+        "description": "Studio indipendente di Vicenza. Costruisce siti veloci (sotto 1 secondo di caricamento), pulizia di codice, file consegnati al cliente, senza template e senza abbonamenti mensili. Stack Astro + Cloudflare Pages.",
+        "occupationLocation": {
+          "@type": "City",
+          "name": "Vicenza"
+        }
+      },
+      {
+        "@type": "Occupation",
+        "name": "Consulente di Personal Branding Olistico",
+        "description": "Specializzato in marketing autentico e comunicazione online per coach, counselor, terapeuti e operatori olistici in Italia",
+        "occupationLocation": {
+          "@type": "Country",
+          "name": "Italia"
+        }
       }
-    },
+    ],
     "areaServed": {
       "@type": "Country",
       "name": "Italia"
@@ -89,7 +107,7 @@ const schemaGraph = [
   {
     "@type": "ImageObject",
     "@id": `${siteUrl}/#logo`,
-    "url": `${siteUrl}/og-image.jpg`,
+    "url": `${siteUrl}/og/marco-munich.png`,
     "width": "330",
     "height": "330",
     "caption": "Marco Munich - Personal Branding Olistico",
