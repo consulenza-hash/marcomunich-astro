@@ -32,6 +32,9 @@ tmp_*.png
 null
 *.txt
 !package*.json
+!public/llms.txt
+!public/llms-full.txt
+!public/robots.txt
 scripts/redownload-images.mjs
 "Gemini-Specifiche Tecniche Sito Web Spiegate.md"
 "chat 13 mm2.txt"
@@ -40,3 +43,4 @@ images-upload.zip
 .meta-app-info
 .meta-token-temp
 .meta-token-long-lived
+.token.tmp
