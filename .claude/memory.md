@@ -1,10 +1,10 @@
 # Memory
 
 ## Now
-- **PENTEST HIGH aperti** (050426) — cookie `stats_auth` + `admin_auth` senza flag `Secure`/`HttpOnly`. **Prima priorità prossima sessione code** (regola permanente, bloccato 35 gg).
-- **/sec-review OVERDUE** (35 gg da 24/04) — eseguire prima di scrivere codice nuovo.
-- **IG sett-01**: 101-106 pubblicati, 107 cron Sab 30/05 11:00 (date allineate).
-- **IG sett-02 "Farsi trovare"**: piano + schedule + caption + alt_texts pronti (id 201-207), MANCANO 35 slide JPG da renderizzare → bloccante per Lun 02/06.
+- 🚨 **META API BLOCKED** (060426) — App `marcomunich-social` restrizione attiva. Error 400 OAuthException 200 "API access blocked". Marco DEVE risolvere via email Meta nativa (link "Risolvi la violazione"). **205-207 sett-02 BLOCCATI** finché non sblocca.
+- **PENTEST HIGH aperti** (050426) — cookie `stats_auth` + `admin_auth` senza flag `Secure`/`HttpOnly`. **Prima priorità prossima sessione code** (regola permanente, bloccato 42 gg).
+- **/sec-review OVERDUE** (42 gg da 24/04) — eseguire prima di scrivere codice nuovo.
+- **IG sett-02**: 201, 202, 204 pubblicati. 203 saltato (decisione narrative-flow). 205-207 bloccati API.
 - **SEC-022 APERTO** — Ghost v5.130 CVE critici. Richiede SSH: `ghost update`.
 
 ## Project
